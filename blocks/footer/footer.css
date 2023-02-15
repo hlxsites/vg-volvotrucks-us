@@ -1,14 +1,38 @@
+footer * {
+  box-sizing: border-box;
+}
+
 footer {
-  padding: 2rem;
-  background-color: var(--overlay-background-color);
-  font-size: var(--body-font-size-s);
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 footer .footer {
-  max-width: 1200px;
-  margin: auto;
+  background-color: #000;
+  
 }
 
-footer .footer p {
-  margin: 0;
+footer .footer ul {
+  text-align: center;
+  font-size: 14px;
+  font-family: var(--ff-volvo-novum);
+}
+
+footer .footer ul li {
+  margin: 8px 0;
+  padding: 0 12px;
+  display: inline-block;
+  list-style: none;
+  border-right: 1px solid #fff;
+}
+
+footer .footer ul li:last-child {
+  border-right: none;
+}
+
+footer .footer ul li a {
+  text-decoration: none;
+  color: #fff;
 }
