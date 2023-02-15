@@ -55,8 +55,8 @@
   --body-font-size-xs: 1.6rem;
 
   /* heading sizes */
-  --heading-font-size-xxl: 4.8rem;
-  --heading-font-size-xl: 4.0rem;
+  --heading-font-size-xxl: 3.6rem;
+  --heading-font-size-xl: 3.4rem;
   --heading-font-size-l: 3.2rem;
   --heading-font-size-m: 2.4rem;
   --heading-font-size-s: 2.0rem;
@@ -92,7 +92,7 @@ header {
 h1, h2, h3,
 h4, h5, h6 {
   font-family: var(--heading-font-family);
-  font-weight: 600;
+  font-weight: normal;
   line-height: 1.25;
   margin-top: 1em;
   margin-bottom: .5em;
@@ -138,7 +138,7 @@ pre {
 /* buttons */
 
 a.button:any-link, button {
-  font-family: var(--body-font-family);
+  font-family: var(--ff-volvo-novum-medium);
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
@@ -146,7 +146,7 @@ a.button:any-link, button {
   padding: 5px 30px;
   text-align: center;
   font-style: normal;
-  font-weight: 600;
+  font-weight: normal;
   cursor: pointer;
   color: var(--background-color);
   background-color: var(--link-color);
@@ -236,7 +236,6 @@ main img {
 
 @media (min-width: 768px) {
   main .section {
-    padding: 0;
     width: 756px;
     margin: auto;
   }
@@ -244,8 +243,8 @@ main img {
 
 @media (min-width: 992px) {
   :root {
-    --heading-font-size-xxl: 6.0rem;
-    --heading-font-size-xl: 4.8rem;
+    --heading-font-size-xxl: 4.8rem;
+    --heading-font-size-xl: 4.6rem;
     --heading-font-size-l: 3.6rem;
     --heading-font-size-m: 3.0rem;
     --heading-font-size-s: 2.4rem;
