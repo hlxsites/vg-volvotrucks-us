@@ -234,6 +234,11 @@ main img {
   height: auto;
 }
 
+main p img {
+  display: block;
+  margin: auto;
+}
+
 @media (min-width: 768px) {
   main .section {
     width: 756px;
