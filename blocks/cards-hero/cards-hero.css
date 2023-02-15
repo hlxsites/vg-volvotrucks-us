@@ -1,0 +1,35 @@
+.block.cards-hero ul {
+  display: grid;
+  grid-template: 'lg sm-1' 1fr 'lg sm-2' 1fr / 7fr 3fr;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.block.cards-hero img {
+  display: block;
+  object-fit: cover;
+  height: 100%;
+}
+
+.block.cards-hero ul li {
+  position: relative;
+}
+
+.block.cards-hero ul li:first-of-type {
+  grid-area: lg;
+}
+
+.block.cards-hero ul li > div {
+  pointer-events: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  color: white;
+}
+
+.block.cards-hero ul li > div a:any-link {
+  color: white;
+}
