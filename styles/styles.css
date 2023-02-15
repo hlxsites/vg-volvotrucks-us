@@ -10,6 +10,28 @@
  * governing permissions and limitations under the License.
  */
 
+/*
+   Fonts
+   When using fonts, please see "best practices for fonts" in Readme
+*/
+@font-face {
+  font-family: 'VolvoNovum Fallback';
+  src: local("arial");
+  size-adjust: 102%;
+  ascent-override: 95%;
+  descent-override: normal;
+  line-gap-override: normal;
+}
+
+@font-face {
+  font-family: 'VolvoNovum-Medium Fallback';
+  src: local("arial");
+  size-adjust: 103%;
+  ascent-override: 92%;
+  descent-override: normal;
+  line-gap-override: normal;
+}
+
  :root {
   /* colors */
   --link-color: #035fe6;
@@ -17,29 +39,36 @@
   --background-color: #fff;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
-  --text-color: #000;
+  --volvo-text-gray: #53565A;
+  --text-color: var(--volvo-text-gray);
 
   /* fonts */
-  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
-  --heading-font-family: var(--body-font-family);
+  --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
+  --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
+  --body-font-family: var(--ff-volvo-novum);
+  --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 18px;
-  --body-font-size-xs: 16px;
+  --body-font-size-m: 2.2rem;
+  --body-font-size-s: 1.8rem;
+  --body-font-size-xs: 1.6rem;
 
   /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+  --heading-font-size-xxl: 4.8rem;
+  --heading-font-size-xl: 4.0rem;
+  --heading-font-size-l: 3.2rem;
+  --heading-font-size-m: 2.4rem;
+  --heading-font-size-s: 2.0rem;
+  --heading-font-size-xs: 1.8rem;
 
   /* nav height */
   --nav-height: 64px;
 
+}
+
+html {
+  font-size: 10px;
 }
 
 body {
@@ -80,6 +109,7 @@ h6 { font-size: var(--heading-font-size-xs) }
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
   margin-bottom: 1em;
+  font-size: var(--body-font-size-xs);
 }
 
 a:any-link {
@@ -115,7 +145,7 @@ a.button:any-link, button {
   border: 2px solid transparent;
   padding: 5px 30px;
   text-align: center;
-  font-style: normal; 
+  font-style: normal;
   font-weight: 600;
   cursor: pointer;
   color: var(--background-color);
@@ -141,7 +171,7 @@ a.button.secondary, button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
   color: var(--text-color)
-} 
+}
 
 
 main input {
@@ -150,7 +180,7 @@ main input {
   max-width: 50rem;
   display: block;
   margin-bottom: 1rem;
-  padding: 0.75rem 0.6rem;    
+  padding: 0.75rem 0.6rem;
   border-radius: 0.25rem;
   box-sizing: border-box;
   border: 1px solid var(--text-color);
@@ -207,19 +237,19 @@ main img {
 @media (min-width: 600px) {
   main .section {
     padding: 64px 32px;
-  }  
+  }
 }
 
 @media (min-width: 900px) {
   :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;  
+    --heading-font-size-xxl: 6.0rem;
+    --heading-font-size-xl: 4.8rem;
+    --heading-font-size-l: 3.6rem;
+    --heading-font-size-m: 3.0rem;
+    --heading-font-size-s: 2.4rem;
+    --heading-font-size-xs: 2.2rem;
   }
-  
+
   .section > div {
     max-width: 1200px;
     margin: auto;

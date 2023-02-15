@@ -1,1 +1,17 @@
 /* below the fold CSS goes here */
+
+@font-face {
+  font-family: VolvoNovum;
+  src: url('/fonts/volvonovum-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: VolvoNovum-Medium;
+  src: url('/fonts/VolvoNovum-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
