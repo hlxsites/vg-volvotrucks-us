@@ -1,6 +1,7 @@
 .section.cards-hero-container {
   margin: 0;
   padding: 0;
+  width: unset;
 }
 
 .section.cards-hero-container .cards-hero-wrapper {
