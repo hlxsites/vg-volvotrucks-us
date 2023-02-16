@@ -14,5 +14,13 @@ export default function decorate(block) {
 
     // Move link outside wrapper
     li.append(link);
+
+    const textItems = contentContainer.innerHTML
+      .split('<br>').filter((text) => text.trim() !== '');
+
+    contentContainer.innerHTML = `
+      <h3>${textItems[0]}</h3>
+      <p>${textItems.slice(1).join('</p><p>')}</p>
+    `;
   });
 }
