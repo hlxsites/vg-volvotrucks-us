@@ -2,25 +2,27 @@ footer * {
   box-sizing: border-box;
 }
 
-footer {
+.footer-wrapper {
   padding-left: 15px;
   padding-right: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 48px auto 0 auto;
 }
 
-footer .footer {
-  background-color: #000;
-  
-}
-
-footer .footer ul {
-  text-align: center;
-  font-size: 14px;
+.footer-wrapper p, .footer-wrapper ul {
   font-family: var(--ff-volvo-novum);
+  font-size: 14px;
 }
 
-footer .footer ul li {
+.footer-wrapper .footer--links {
+  margin: 0 -15px;
+  background-color: #000;
+}
+
+.footer-wrapper .footer--links ul {
+  text-align: center;
+}
+
+.footer-wrapper .footer--links ul li {
   margin: 8px 0;
   padding: 0 12px;
   display: inline-block;
@@ -28,11 +30,22 @@ footer .footer ul li {
   border-right: 1px solid #fff;
 }
 
-footer .footer ul li:last-child {
+.footer-wrapper .footer--links ul li:last-child {
   border-right: none;
 }
 
-footer .footer ul li a {
+.footer-wrapper .footer--links ul li a {
   text-decoration: none;
   color: #fff;
+}
+
+.footer-wrapper .footer--copyright {
+  margin: 0 -15px;
+  padding: 32px 0;
+  text-align: center;
+}
+
+.footer-wrapper .footer--copyright p {
+  margin: 0;
+  color: #A7A8A9;
 }
