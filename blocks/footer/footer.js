@@ -16,8 +16,8 @@ export default async function decorate(block) {
   footer.innerHTML = html.replaceAll('{year}', currentYear);
   const footerItems = [...footer.children];
   if (footerItems.length >= 2) {
-    footerItems[0].classList.add('footer--links');
-    footerItems[1].classList.add('footer--copyright');
+    footerItems[0].classList.add('footer-links');
+    footerItems[1].classList.add('footer-copyright');
   }
   await decorateIcons(footer);
   block.append(footer);
