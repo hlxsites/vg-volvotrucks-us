@@ -11,6 +11,7 @@ footer * {
 .footer-wrapper p, .footer-wrapper ul {
   font-family: var(--ff-volvo-novum);
   font-size: 14px;
+  margin: 0;
 }
 
 .footer-wrapper .footer-links {
