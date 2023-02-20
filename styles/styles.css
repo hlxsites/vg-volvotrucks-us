@@ -40,6 +40,7 @@
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
+  --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
 
   /* fonts */

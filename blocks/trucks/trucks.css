@@ -1,0 +1,42 @@
+.trucks-container {
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+.trucks-container .default-content-wrapper h3 {
+    color: var(--volvo-text-light-gray);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: var(--heading-font-size-m);
+}
+
+ .trucks-container .default-content-wrapper h2 {
+    font-size: var(--heading-font-size-m);
+     margin-top: 0;
+ }
+
+ .trucks-container .trucks-wrapper {
+    padding: 0 15px;
+ }
+
+.trucks-wrapper ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 30px;
+}
+
+.trucks-wrapper p, .trucks-wrapper h3 {
+    font-size: var(--body-font-size-xs);
+    margin: 0;
+}
+
+.trucks-wrapper ul > li img {
+    width: 100%;
+    object-fit: cover;
+}
