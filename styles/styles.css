@@ -32,6 +32,14 @@
   line-gap-override: normal;
 }
 
+@font-face {
+  font-family: 'fontawesome';
+  src: url('../fonts/fontawesome-webfont.woff') format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
  :root {
   /* colors */
   --link-color: #035fe6;
@@ -53,6 +61,7 @@
   --body-font-size-m: 2.2rem;
   --body-font-size-s: 1.8rem;
   --body-font-size-xs: 1.6rem;
+  --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
   --heading-font-size-xxl: 3.6rem;
