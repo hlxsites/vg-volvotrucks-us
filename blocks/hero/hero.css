@@ -106,11 +106,9 @@ main .hero img {
     }
 
     main .hero-headings {
-        position: relative;
-        top: -325px;
         width: 913px;
-        margin-left: auto;
-        margin-right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         padding-left: 47px;
         text-align: left;
     }
@@ -122,7 +120,6 @@ main .hero img {
     }
 
     main .hero-headings {
-        top: -413px;
         width: 1153px;
     }
 }
