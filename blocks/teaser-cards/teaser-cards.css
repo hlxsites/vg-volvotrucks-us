@@ -28,17 +28,15 @@
 /* each teaser div in the row */
 .block.teaser-cards .teaser {
   flex: 0 1 auto;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding: 0px 30px 15px 30px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 30px 15px;
 }
 
 /* teaser image */
 .block.teaser-cards .teaser p.image {
   margin: 0;
 }
-
-.block.teaser-cards .teaser p.image picture {}
 
 /* teaser title */
 .block.teaser-cards .teaser h3 {
@@ -56,7 +54,8 @@
   color: var(--link-color);
   content: "\f105";
   padding-left: 8px;
-  font-family: 'fontawesome';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
 }
 
 /* teaser text */
@@ -65,9 +64,9 @@
   margin: 0 0 8px;
 }
 
-/* cta's (maybe remove button container completely)*/
+/* cta's (maybe remove button container completely) */
 .block.teaser-cards .teaser .button-container {
-  margin: 0px;
+  margin: 0;
 }
 
 .block.teaser-cards .teaser .cta {
@@ -76,14 +75,15 @@
   background-color: transparent;
   border: none;
   padding: 0;
-  margin: 0px;
+  margin: 0;
   font-family: var(--ff-volvo-novum-regular);
   font-size: var(--body-font-size-xs);
 }
 
 .block.teaser-cards .teaser .cta::after {
   content: '\f105';
-  font-family: 'fontawesome';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
   padding-left: 8px;
 
 }
@@ -108,9 +108,7 @@
   }
 }
 
-
 @media (min-width: 992px) {
-
   .block.teaser-cards {
     width: 1170px;
     margin-left: auto;
@@ -128,5 +126,3 @@
     font-size: var(--heading-font-size-s)
   }
 }
-
-@media (min-width: 1300px) {}
