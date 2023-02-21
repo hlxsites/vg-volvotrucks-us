@@ -21,19 +21,99 @@
     padding: 0 15px;
  }
 
-.trucks-wrapper ul {
+ .trucks-wrapper {
+    overflow: hidden;
+ }
+
+.trucks-wrapper ul.trucks-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
+    transition: transform 200ms;
+}
+
+.trucks-wrapper ul.trucks-list li.clone {
+    display: none;
+}
+
+.trucks-wrapper ul.controls {
+    display: none;
+    list-style: none;
+    justify-content: center;
+    margin: 0;
+    
+ }
+
+ .trucks-wrapper ul.controls li {
+    width: 20px;
+    justify-items: center;
+    height: 20px;
+    margin: 0 5px;
+ }
+
+ .trucks-wrapper ul.controls li button {
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    background: 0 0;
+ }
+
+ .trucks-wrapper ul.controls li button::before {
+    font-family: fontawesome;
+    font-size: 1.6rem;
+    line-height: 3.2rem;
+    position: absolute;
+    content: "\f10c";
+    color: var(--volvo-text-light-gray);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+ }
+
+ .trucks-wrapper ul.controls li.active button::before {
+    content: "\f192";
+ }
+
+@media screen and (max-width: 767px) {
+    .trucks-wrapper ul.trucks-list {
+        display: flex;
+    }
+
+    .trucks-wrapper ul.trucks-list li {
+        flex: 0 0 auto;
+    }
+
+    .trucks-wrapper ul.trucks-list li.clone {
+        display: list-item;
+    }
+
+    .trucks-wrapper ul.controls {
+        display: flex;
+    }
 }
 
 .trucks-wrapper p, .trucks-wrapper h3 {
     font-size: var(--body-font-size-xs);
     margin: 0;
+}
+
+.trucks-wrapper .wrapper p:last-child {
+    display: none;
+}
+
+@media  screen and (min-width: 992px) {
+    .trucks-wrapper .wrapper p:last-child {
+        display: block;
+    }
 }
 
 .trucks-wrapper ul > li img {
