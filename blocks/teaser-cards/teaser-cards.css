@@ -11,7 +11,7 @@
 
 /* boilerplate: the block element itself that gets passed into js decorate() */
 .block.teaser-cards {
-  margin: 0;
+  margin: 48px 0 0;
   padding: 0;
 }
 
@@ -90,7 +90,6 @@
 
 @media (min-width: 768px) {
   .block.teaser-cards {
-    width: 726px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -110,7 +109,6 @@
 
 @media (min-width: 992px) {
   .block.teaser-cards {
-    width: 1170px;
     margin-left: auto;
     margin-right: auto;
   }
