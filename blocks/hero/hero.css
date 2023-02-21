@@ -1,40 +1,125 @@
 /* block specific CSS goes here */
 
+main .hero-container {
+    padding: 0;
+    width: 100%;
+    max-width: unset;
+}
+
 main .hero-container > div {
     max-width: unset;
 }
-  
-main .hero-container {
-    padding: 0;
-}
-  
+
 main .hero {
     position: relative;
-    padding: 32px;
-    min-height: 300px;
 }
 
-main .hero h1 {
+main .hero-headings {
+    color: var(--volvo-text-gray);
+    text-align: center;
+}
+
+main .hero-headings h1,
+main .hero-headings h4 {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    color: white;
 }
 
+main .hero-headings h1 {
+    margin-top: 0;
+    margin-bottom: 36px;
+    font-family: var(--ff-volov-broadprodigital);
+    font-size: 6rem;
+    letter-spacing: 3.6px;
+    line-height: 1em;
+}
+
+main .hero-headings h4 {
+    margin-bottom: 8px;
+    font-size: 1.6rem;
+    letter-spacing: -0.1px;
+    line-height: 1.5em;
+}
 
 main .hero picture {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     object-fit: cover;
     box-sizing: border-box;
 }
 
 main .hero img {
+    display: block;
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height: 34.415%;
+}
+
+@media screen and (min-width: 481px) {
+    main .hero-headings {
+        color: white;
+        position: absolute;
+        bottom: 16px;
+        padding-left: 32px;
+    }
+
+    main .hero-headings h1 {
+        margin-bottom: 8px;
+    }
+    
+    main .hero-headings h4 {
+        margin-top: 0;
+    }
+
+    main .hero picture::after {
+        display: block;
+        content: '';
+        position: absolute;
+        top: 50%;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: linear-gradient(-180deg,rgb(0 0 0 / 0%),rgb(0 0 0 / 80%)) repeat-x;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    main .hero img {
+        height: 250px;
+    }
+
+    main .hero-headings {
+        padding-top: 48px;
+        top: 0;
+        bottom: unset;
+    }
+
+    main .hero picture::after {
+        top: 0;
+        background-image: linear-gradient(-30deg,rgba(0 0 0 / 0%),rgba(0 0 0 / 40%));
+    }
+}
+
+
+@media screen and (min-width: 992px) {
+    main .hero img {
+        height: 325px;
+    }
+
+    main .hero-headings {
+        width: 913px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-left: 47px;
+        text-align: left;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    main .hero img {
+        height: 413px;
+    }
+
+    main .hero-headings {
+        width: 1153px;
+    }
 }
