@@ -18,11 +18,8 @@
  }
 
  .trucks-container .trucks-wrapper {
-    padding: 0 15px;
- }
-
- .trucks-wrapper {
     overflow: hidden;
+    padding: 0 15px;
  }
 
 .trucks-wrapper ul.trucks-list {
@@ -68,7 +65,7 @@
  }
 
  .trucks-wrapper ul.controls li button::before {
-    font-family: fontawesome;
+    font-family: FontAwesome, sans-serif;
     font-size: 1.6rem;
     line-height: 3.2rem;
     position: absolute;
@@ -101,7 +98,7 @@
     }
 }
 
-.trucks-wrapper p, .trucks-wrapper h3 {
+.trucks-wrapper .wrapper p, .trucks-wrapper .wrapper h3 {
     font-size: var(--body-font-size-xs);
     margin: 0;
 }

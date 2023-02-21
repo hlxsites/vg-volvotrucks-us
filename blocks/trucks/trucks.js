@@ -10,9 +10,9 @@ function updateSlide(index, $block) {
 
 export default function decorate($block) {
   const $gridContainer = $block.querySelector('ul');
-  $gridContainer.classList.add("trucks-list");
+  $gridContainer.classList.add('trucks-list');
   $block.append($gridContainer);
-  
+
   const $truckItems = $block.querySelectorAll('ul > li');
   $truckItems.forEach(($li) => {
     // Add wrapper around the content
@@ -40,24 +40,24 @@ export default function decorate($block) {
   });
 
   // create carousel controls for mobile
-  const $controlsContainer = document.createElement('ul')
-  $controlsContainer.classList.add('controls')
+  const $controlsContainer = document.createElement('ul');
+  $controlsContainer.classList.add('controls');
   $block.append($controlsContainer);
   $truckItems.forEach((item, j) => {
     const $controlItem = document.createElement('li');
+    const index = j + 1;
     $controlItem.innerHTML = `
-      <button type="button">` + (j + 1) + `</button>
+      <button type="button">${index}</button>
     `;
     $controlsContainer.append($controlItem);
   });
-
   $block.querySelector('ul.controls li:first-child').classList.add('active');
   const $controls = $block.querySelectorAll('ul.controls > li > button');
   $controls.forEach(($control, j) => {
     $control.addEventListener('click', () => {
       updateSlide(j, $block);
     });
-  })
+  });
 
   // clone first and last truck item for carousel
   const $firstItem = $block.querySelector('ul.trucks-list li:first-child');
