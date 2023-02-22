@@ -79,6 +79,7 @@
   font-weight: 700;
   background-color: transparent;
   border: none;
+  border-radius: unset;
   padding: 0;
   margin: 0;
   font-family: var(--ff-volvo-novum-regular);
