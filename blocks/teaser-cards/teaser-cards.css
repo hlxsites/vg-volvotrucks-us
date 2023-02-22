@@ -38,6 +38,11 @@
   margin: 0;
 }
 
+.block.teaser-cards .teaser img {
+  width: 100%;
+  object-fit: cover;
+}
+
 /* teaser title */
 .block.teaser-cards .teaser h3 {
   margin-bottom: 10px;
