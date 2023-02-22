@@ -41,14 +41,6 @@
     flex: 0 0 65%;
 }
 
- .carousel-wrapper ul.carousel-list li:first-child {
-    padding-left: 20%;
-}
-
-.carousel-wrapper ul.carousel-list li:last-child {
-    padding-right: 20%;
-}
-
 .carousel-wrapper ul.controls {
     display: flex;
     list-style: none;
@@ -77,6 +69,14 @@
     outline: 0;
     background: 0 0;
  }
+
+.carousel-wrapper ul.carousel-list li:first-child {
+    padding-left: 20%;
+}
+
+.carousel-wrapper ul.carousel-list li:last-child {
+    padding-right: 20%;
+}
 
  .carousel-wrapper ul.controls li button::before {
     font-family: var(--ff-fontawesome);

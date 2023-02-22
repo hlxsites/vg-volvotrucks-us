@@ -2,8 +2,9 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function updateSlide(index, carousel) {
   const item = carousel.children[index];
-  const left = item.offsetLeft + item.offsetWidth / 2 - (item.parentNode.offsetLeft + item.parentNode.offsetWidth / 2);
-  carousel.scrollTo({ top: 0, left: left, behavior: 'smooth' });
+  const left = item.offsetLeft + item.offsetWidth / 2
+    - (item.parentNode.offsetLeft + item.parentNode.offsetWidth / 2);
+  carousel.scrollTo({ top: 0, left, behavior: 'smooth' });
 }
 
 export default function decorate($block) {
@@ -48,7 +49,7 @@ export default function decorate($block) {
     $controlsContainer.append($controlItem);
   });
   $gridContainer.parentNode.append($controlsContainer);
-  
+
   const $controlItems = $block.querySelectorAll('ul.controls > li');
   $controlItems.forEach(($controlItem, j) => {
     if (!j) $controlItem.classList.add('active');
