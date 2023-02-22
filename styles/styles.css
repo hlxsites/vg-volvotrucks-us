@@ -43,6 +43,17 @@
   size-adjust: 69.25%;
 }
 
+@font-face {
+  font-family: 'fontawesome Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  ascent-override: 93.75%;
+  descent-override: 6.25%;
+  line-gap-override: 0.00%;
+  size-adjust: 100.00%;
+}
+
  :root {
   /* colors */
   --link-color: #035fe6;
@@ -58,6 +69,7 @@
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
   --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;

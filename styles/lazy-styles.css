@@ -23,3 +23,11 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'fontawesome';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fontawesome-webfont.woff') format('woff');
+}

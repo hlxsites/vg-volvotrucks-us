@@ -1,17 +1,13 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-function updateSlide(index, $block) {
-  const $trucksContainer = $block.querySelector('.trucks-list');
-  $block.querySelector('.controls li.active').classList.remove('active');
-  $block.querySelectorAll('.controls li')[index].classList.add('active');
-
-  $trucksContainer.style.transform = `translateX(-${index * 380 + 80}px)`;
+function updateSlide(index, carousel) {
+  const item = carousel.children[index];
+  carousel.scrollTo({ top: 0, left: item.offsetLeft - item.parentNode.offsetLeft, behavior: 'smooth' });
 }
 
 export default function decorate($block) {
   const $gridContainer = $block.querySelector('ul');
   $gridContainer.classList.add('trucks-list');
-  $block.append($gridContainer);
 
   const $truckItems = $block.querySelectorAll('ul > li');
   $truckItems.forEach(($li) => {
@@ -42,7 +38,6 @@ export default function decorate($block) {
   // create carousel controls for mobile
   const $controlsContainer = document.createElement('ul');
   $controlsContainer.classList.add('controls');
-  $block.append($controlsContainer);
   $truckItems.forEach((item, j) => {
     const $controlItem = document.createElement('li');
     const index = j + 1;
@@ -51,21 +46,16 @@ export default function decorate($block) {
     `;
     $controlsContainer.append($controlItem);
   });
-  $block.querySelector('ul.controls li:first-child').classList.add('active');
-  const $controls = $block.querySelectorAll('ul.controls > li > button');
-  $controls.forEach(($control, j) => {
-    $control.addEventListener('click', () => {
-      updateSlide(j, $block);
+  $gridContainer.parentNode.append($controlsContainer);
+  
+  const $controlItems = $block.querySelectorAll('ul.controls > li');
+  $controlItems.forEach(($controlItem, j) => {
+    if (!j) $controlItem.classList.add('active');
+    const $button = $controlItem.querySelector('button');
+    $button.addEventListener('click', () => {
+      [...$controlItems].forEach((item) => item.classList.remove('active'));
+      $controlItem.classList.add('active');
+      updateSlide(j, $gridContainer);
     });
   });
-
-  // clone first and last truck item for carousel
-  const $firstItem = $block.querySelector('ul.trucks-list li:first-child');
-  const $lastItem = $block.querySelector('ul.trucks-list li:last-child');
-  const $firstItemClone = $firstItem.cloneNode(true);
-  const $lastItemClone = $lastItem.cloneNode(true);
-  $firstItemClone.classList.add('clone');
-  $lastItemClone.classList.add('clone');
-  $lastItem.after($firstItemClone);
-  $firstItem.before($lastItemClone);
 }
