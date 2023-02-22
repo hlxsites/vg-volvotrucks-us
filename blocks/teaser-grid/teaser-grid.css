@@ -14,6 +14,7 @@
     --grid-col-count: 2;
     --grid-col-gap: 15px;
     --grid-row-gap: 15px;
+
     position: relative;
     padding-bottom: calc(100% * var(--grid-col-count) + var(--grid-row-gap) * (var(--grid-col-count) - 1));
 }
@@ -35,6 +36,7 @@
 
 .block.teaser-grid>ul>li {
     --grid-row-span: 1;
+
     grid-row: span var(--grid-row-span);
     position: relative;
 }
@@ -80,6 +82,7 @@
 @media screen and (min-width: 992px) {
     .block.teaser-grid {
         --grid-row-gap: 10px;
+
         padding-bottom: 50%;
     }
 
