@@ -2,15 +2,16 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function updateSlide(index, carousel) {
   const item = carousel.children[index];
-  carousel.scrollTo({ top: 0, left: item.offsetLeft - item.parentNode.offsetLeft, behavior: 'smooth' });
+  const left = item.offsetLeft + item.offsetWidth / 2 - (item.parentNode.offsetLeft + item.parentNode.offsetWidth / 2);
+  carousel.scrollTo({ top: 0, left: left, behavior: 'smooth' });
 }
 
 export default function decorate($block) {
   const $gridContainer = $block.querySelector('ul');
-  $gridContainer.classList.add('trucks-list');
+  $gridContainer.classList.add('carousel-list');
 
-  const $truckItems = $block.querySelectorAll('ul > li');
-  $truckItems.forEach(($li) => {
+  const $carouselItems = $block.querySelectorAll('ul > li');
+  $carouselItems.forEach(($li) => {
     // Add wrapper around the content
     const $contentContainer = document.createElement('div');
     $contentContainer.classList.add('wrapper');
@@ -38,7 +39,7 @@ export default function decorate($block) {
   // create carousel controls for mobile
   const $controlsContainer = document.createElement('ul');
   $controlsContainer.classList.add('controls');
-  $truckItems.forEach((item, j) => {
+  $carouselItems.forEach((item, j) => {
     const $controlItem = document.createElement('li');
     const index = j + 1;
     $controlItem.innerHTML = `
