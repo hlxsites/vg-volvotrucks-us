@@ -1,0 +1,132 @@
+/* boilderplate: the section containing the block */
+.section.teaser-cards-container {
+  padding: 0;
+}
+
+/* boilerplate: the wrapper around the block element */
+.section.cards-hero-container .cards-hero-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+/* boilerplate: the block element itself that gets passed into js decorate() */
+.block.teaser-cards {
+  margin: 48px 0 0;
+  padding: 0;
+}
+
+/* mobile */
+
+/* first row div */
+.block.teaser-cards>div {
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+  padding: 0;
+}
+
+/* each teaser div in the row */
+.block.teaser-cards .teaser {
+  flex: 0 1 auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0 30px 15px;
+}
+
+/* teaser image */
+.block.teaser-cards .teaser p.image {
+  margin: 0;
+}
+
+.block.teaser-cards .teaser img {
+  width: 100%;
+  object-fit: cover;
+}
+
+/* teaser title */
+.block.teaser-cards .teaser h3 {
+  margin-bottom: 10px;
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--heading-font-size-m)
+}
+
+/* teaser title link */
+.block.teaser-cards .teaser h3 a {
+  color: var(--text-color);
+}
+
+.block.teaser-cards .teaser h3 a::after {
+  color: var(--link-color);
+  content: "\f105";
+  padding-left: 8px;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
+}
+
+/* teaser text */
+.block.teaser-cards .teaser p.text {
+  font-size: var(--body-font-size-xxs);
+  margin: 0 0 8px;
+}
+
+/* cta's (maybe remove button container completely) */
+.block.teaser-cards .teaser .button-container {
+  margin: 0;
+}
+
+.block.teaser-cards .teaser .cta {
+  color: var(--link-color);
+  font-weight: 700;
+  background-color: transparent;
+  border: none;
+  border-radius: unset;
+  padding: 0;
+  margin: 0;
+  font-family: var(--ff-volvo-novum-regular);
+  font-size: var(--body-font-size-xs);
+}
+
+.block.teaser-cards .teaser .cta::after {
+  content: '\f105';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
+  padding-left: 8px;
+
+}
+
+@media (min-width: 768px) {
+  .block.teaser-cards {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* first row div */
+  .block.teaser-cards>div {
+    flex-flow: row;
+  }
+
+  /* each teaser div in the row */
+  .block.teaser-cards .teaser {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .block.teaser-cards {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .block.teaser-cards .teaser {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .block.teaser-cards .teaser h3 {
+    margin-bottom: 10px;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-s)
+  }
+}
