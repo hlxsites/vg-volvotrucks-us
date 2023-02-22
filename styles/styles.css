@@ -25,7 +25,7 @@
 
 @font-face {
   font-family: 'VolvoNovum-Medium Fallback';
-  src: local("arial");
+  src: local('arial');
   size-adjust: 103%;
   ascent-override: 92%;
   descent-override: normal;
@@ -38,6 +38,17 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'VolvoBroadProDigital Fallback';
+  src: local('Arial');
+  font-style: normal;
+  font-weight: 400;
+  ascent-override: 120.58%;
+  descent-override: 23.83%;
+  line-gap-override: 0.00%;
+  size-adjust: 69.25%;
 }
 
  :root {
@@ -53,6 +64,7 @@
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
+  --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
