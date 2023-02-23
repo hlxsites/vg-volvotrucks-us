@@ -33,14 +33,6 @@
 }
 
 @font-face {
-  font-family: fontawesome;
-  src: url('../fonts/fontawesome-webfont.woff') format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'VolvoBroadProDigital Fallback';
   src: local('Arial');
   font-style: normal;
@@ -51,6 +43,17 @@
   size-adjust: 69.25%;
 }
 
+@font-face {
+  font-family: 'fontawesome Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  ascent-override: 93.75%;
+  descent-override: 6.25%;
+  line-gap-override: 0.00%;
+  size-adjust: 100.00%;
+}
+
  :root {
   /* colors */
   --link-color: #035fe6;
@@ -59,12 +62,14 @@
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
+  --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
   --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
