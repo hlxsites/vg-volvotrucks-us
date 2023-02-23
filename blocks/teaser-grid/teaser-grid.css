@@ -95,7 +95,11 @@
         grid-template-columns: repeat(var(--grid-col-count), 1fr);
     }
 
-    .block.teaser-grid.layout-66-33>ul {
+    .block.teaser-grid.layout-8-4>ul {
         grid-template-columns: 8fr 4fr;
+    }
+
+    .block.teaser-grid.layout-7-5>ul {
+        grid-template-columns: 7fr 5fr;
     }
 }
