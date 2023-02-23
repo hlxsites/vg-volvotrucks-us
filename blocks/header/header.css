@@ -28,13 +28,14 @@ header nav[aria-expanded=true] {
   min-height: 100vh;
 }
 
-@media (min-width: 600px) {
+/* at 768 hamburger navigation only covers 50% on the right */
+@media (min-width: 768px) {
   header nav {
-    padding: 0 2rem;
+    width: 50vw;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 992px) {
   header nav {
     display: flex;
     justify-content: space-between;
@@ -129,7 +130,8 @@ header nav[aria-expanded=true] .nav-hamburger-icon::after {
   transform: rotate(-45deg);
 }
 
-@media (min-width: 900px) {
+/* at 992px the hamburger button disappears */
+@media (min-width: 992px) {
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
