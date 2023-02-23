@@ -56,8 +56,8 @@
 
  :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
+  --link-color: #004FBC;
+  --link-hover-color: #0b326f;
   --background-color: #fff;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
@@ -136,6 +136,10 @@ p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
   margin-bottom: 1em;
   font-size: var(--body-font-size-xs);
+}
+
+[data-align="center"] {
+  text-align: center;
 }
 
 a:any-link {
