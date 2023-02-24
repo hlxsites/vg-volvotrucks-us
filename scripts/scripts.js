@@ -9,6 +9,7 @@ import {
   decorateBlocks,
   decorateTemplateAndTheme,
   waitForLCP,
+  readBlockConfig,
   loadBlocks,
   loadCSS,
 } from './lib-franklin.js';
@@ -37,6 +38,50 @@ function buildHeroBlock(main) {
   }
 }
 
+function buildTabbedCarouselBlock(main) {
+  const tabItems = [];
+  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+    const sectionMeta = section.querySelector('.section-metadata');
+    if (sectionMeta) {
+      const meta = readBlockConfig(sectionMeta);
+      if (meta?.carousel !== '') {
+        // get header from previous section and set it as a new header
+        const preSection = section.previousElementSibling;
+        if (preSection) {
+          const preSectionHeadings = preSection.querySelector('h2');
+          if (preSectionHeadings) {
+            const h2 = document.createElement('h2');
+            h2.innerHTML = preSectionHeadings.innerHTML;
+            preSection.remove();
+            tabItems.push(h2);
+          }
+        }
+        const tabContent = document.createElement('div');
+        tabContent.dataset.carousel = meta.carousel;
+        tabContent.className = 'tab-content';
+        tabContent.innerHTML = section.innerHTML;
+        const picture = tabContent.querySelector('picture');
+        tabContent.prepend(picture);
+        tabContent.querySelector('.section-metadata').remove();
+        tabContent.querySelectorAll('p').forEach(($paragraph) => {
+          if ($paragraph.innerHTML.trim() === '') {
+            $paragraph.remove();
+          }
+        });
+        tabItems.push(tabContent);
+        section.remove();
+      }
+    } else {
+      if (tabItems.length > 0) {
+        const tabSection = document.createElement('div');
+        tabSection.append(buildBlock('tabbed-carousel', [tabItems]));
+        section.parentNode.insertBefore(tabSection, section);
+      }
+      tabItems.splice(0, tabItems.length);
+    }
+  });
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -44,6 +89,7 @@ function buildHeroBlock(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    buildTabbedCarouselBlock(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
