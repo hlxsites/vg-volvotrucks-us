@@ -52,10 +52,13 @@ function buildTabbedCarouselBlock(main) {
     } else {
       if (tabItems.length > 0) {
         const tabSection = document.createElement('div');
+        tabSection.classList.add('section', 'tabbed-carousel-container');
+        tabSection.dataset.sectionStatus = 'initialized';
+        const wrapper = document.createElement('div');
+        tabSection.append(wrapper);
         const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
-        tabSection.append(tabBlock);
+        wrapper.append(tabBlock);
         section.parentNode.insertBefore(tabSection, section);
-        decorateSections(main);
         decorateBlock(tabBlock);
       }
       tabItems.splice(0, tabItems.length);
