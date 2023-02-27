@@ -47,7 +47,7 @@ function createTabbedCarouselSection(tabItems) {
   const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
-};
+}
 
 function buildTabbedCarouselBlock(main) {
   const tabItems = [];
