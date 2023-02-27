@@ -38,11 +38,22 @@ function buildHeroBlock(main) {
   }
 }
 
+function createTabbedCarouselSection(tabItems) {
+  const tabSection = document.createElement('div');
+  tabSection.classList.add('section', 'tabbed-carousel-container');
+  tabSection.dataset.sectionStatus = 'initialized';
+  const wrapper = document.createElement('div');
+  tabSection.append(wrapper);
+  const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
+  wrapper.append(tabBlock);
+  return tabSection;
+};
+
 function buildTabbedCarouselBlock(main) {
   const tabItems = [];
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const sectionMeta = section.dataset.carousel;
-    if(sectionMeta) {
+    if (sectionMeta) {
       const tabContent = document.createElement('div');
       tabContent.dataset.carousel = sectionMeta;
       tabContent.className = 'tab-content';
@@ -51,19 +62,19 @@ function buildTabbedCarouselBlock(main) {
       section.remove();
     } else {
       if (tabItems.length > 0) {
-        const tabSection = document.createElement('div');
-        tabSection.classList.add('section', 'tabbed-carousel-container');
-        tabSection.dataset.sectionStatus = 'initialized';
-        const wrapper = document.createElement('div');
-        tabSection.append(wrapper);
-        const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
-        wrapper.append(tabBlock);
-        section.parentNode.insertBefore(tabSection, section);
-        decorateBlock(tabBlock);
+        const tabbedCarouselSection = createTabbedCarouselSection(tabItems);
+        section.parentNode.insertBefore(tabbedCarouselSection, section);
+        decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
       }
       tabItems.splice(0, tabItems.length);
     }
   });
+  if (tabItems.length > 0) {
+    const tabbedCarouselSection = createTabbedCarouselSection(tabItems);
+    main.append(tabbedCarouselSection);
+    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+  }
+  tabItems.splice(0, tabItems.length);
 }
 
 /**
