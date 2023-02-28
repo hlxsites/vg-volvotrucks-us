@@ -35,6 +35,8 @@
 .tabbed-carousel-wrapper .tab-container {
     display: flex;
     overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none;
 }
 
@@ -42,8 +44,14 @@
     display: none;
  }
 
-.tabbed-carousel-wrapper .tab-container .tab-item {
+.tabbed-carousel-wrapper .tab-item {
     flex: 0 0 100%;
+    scroll-snap-align: start;
+}
+
+.tabbed-carousel-wrapper .tab-item img {
+    display: block;
+    margin: 0 auto;
 }
 
 .tabbed-carousel-wrapper .tab-content {
