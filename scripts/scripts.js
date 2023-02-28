@@ -39,9 +39,10 @@ function buildHeroBlock(main) {
   }
 }
 
-function createTabbedCarouselSection(tabItems) {
+function createTabbedCarouselSection(tabItems, fullWidth) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-carousel-container');
+  if (fullWidth) tabSection.classList.add('tabbed-carousel-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
   tabSection.append(wrapper);
@@ -51,31 +52,33 @@ function createTabbedCarouselSection(tabItems) {
 }
 
 function buildTabbedCarouselBlock(main) {
-  const tabItems = [];
+  let tabItems = [];
+  let fullWidth = false;
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const sectionMeta = section.dataset.carousel;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
       tabContent.dataset.carousel = sectionMeta;
       tabContent.className = 'tab-content';
+      fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
     } else {
       if (tabItems.length > 0) {
-        const tabbedCarouselSection = createTabbedCarouselSection(tabItems);
+        const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
         section.parentNode.insertBefore(tabbedCarouselSection, section);
         decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+        tabItems = [];
+        fullWidth = false;
       }
-      tabItems.splice(0, tabItems.length);
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedCarouselSection(tabItems);
+    const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
   }
-  tabItems.splice(0, tabItems.length);
 }
 
 /**
