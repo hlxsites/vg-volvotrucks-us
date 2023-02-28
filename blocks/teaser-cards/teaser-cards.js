@@ -1,6 +1,7 @@
 export default function decorate(block) {
+  block.classList.add(`teaser-cards-${block.firstElementChild.children.length}`);
   // go through all teasers
-  [...block.children[0].children].forEach((elem) => {
+  [...block.firstElementChild.children].forEach((elem) => {
     // add teaser class for each entry
     elem.classList.add('teaser');
     // give p containing the image a specific class

@@ -12,6 +12,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -90,6 +91,15 @@ function buildAutoBlocks(main) {
   }
 }
 
+function decorateSectionBackgrounds(main) {
+  main.querySelectorAll(':scope > .section[data-background]').forEach((section) => {
+    const src = section.dataset.background;
+    const picture = createOptimizedPicture(src, '', false);
+    section.appendChild(picture);
+    section.classList.add('section-with-background');
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -102,6 +112,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionBackgrounds(main);
   buildTabbedCarouselBlock(main);
 }
 
