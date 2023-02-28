@@ -1,0 +1,73 @@
+.section.tabbed-carousel-container {
+    padding: 0;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.tabbed-carousel-wrapper {
+    text-align: center;
+}
+
+.tabbed-carousel-wrapper ul.carousel-buttons {
+    padding: 0;
+    margin: 25px;
+}
+
+.tabbed-carousel-wrapper ul.carousel-buttons li {
+    margin: 0 auto;
+    padding: 0 1% 8px;
+    display: block;
+    width: 35%;
+}
+
+.tabbed-carousel-wrapper ul.carousel-buttons button {
+    background: 0 0;
+    color: var(--volvo-text-gray);
+    padding: 0;
+    margin: 0;
+}
+
+.tabbed-carousel-wrapper ul.carousel-buttons li.active,
+.tabbed-carousel-wrapper ul.carousel-buttons li:hover {
+    border-bottom: 3px solid #004FBC;
+}
+
+.tabbed-carousel-wrapper .tab-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.tabbed-carousel-wrapper .tab-container::-webkit-scrollbar {
+    display: none;
+ }
+
+.tabbed-carousel-wrapper .tab-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+}
+
+.tabbed-carousel-wrapper .tab-item img {
+    display: block;
+    margin: 0 auto;
+}
+
+.tabbed-carousel-wrapper .tab-content {
+    text-align: left;
+}
+
+.tabbed-carousel-wrapper .tab-content > div,
+.tabbed-carousel-wrapper .tab-content > p {
+    width: 70%;
+    margin: 30px auto 0;
+}
+
+@media screen and (min-width: 496px) {
+    .tabbed-carousel-wrapper ul.carousel-buttons li {
+        margin: 0 3%;
+        display: inline-block;
+        width: unset;
+    }
+}
