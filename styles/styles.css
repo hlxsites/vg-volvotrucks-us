@@ -167,6 +167,10 @@ pre {
   overflow: scroll;
 }
 
+strong {
+  font-family: var(--ff-volvo-novum-medium);
+}
+
 /* buttons */
 
 a.button:any-link, button {
