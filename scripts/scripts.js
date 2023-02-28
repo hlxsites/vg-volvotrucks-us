@@ -64,14 +64,12 @@ function buildTabbedCarouselBlock(main) {
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
-    } else {
-      if (tabItems.length > 0) {
-        const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
-        section.parentNode.insertBefore(tabbedCarouselSection, section);
-        decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
-        tabItems = [];
-        fullWidth = false;
-      }
+    } else if (tabItems.length > 0) {
+      const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
+      section.parentNode.insertBefore(tabbedCarouselSection, section);
+      decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+      tabItems = [];
+      fullWidth = false;
     }
   });
   if (tabItems.length > 0) {
