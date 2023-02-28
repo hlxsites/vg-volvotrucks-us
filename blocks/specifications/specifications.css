@@ -35,6 +35,24 @@
     display: none;
 }
 
+.block.specifications .cell[role="rowheader"] {
+    font-family: var(--ff-volvo-novum-medium);
+}
+
+.block.specifications .column-header {
+    display: none;
+}
+
+.block.specifications .column-header .cell {
+    background-color: #53565A;
+    color: white;
+}
+
+.block.specifications .image-header .cell {
+    background-color: unset;
+    grid-column: span 2;
+}
+
 .block.specifications .cell.expand,
 .block.specifications .row .cell:first-child {
     display: flex;
@@ -44,50 +62,7 @@
     background-color: #F2F2F2;
 }
 
-.block.specifications .column-header {
-    display: none;
-}
-
-.block.specifications .column-header-mobile,
-.block.specifications .column-header-mobile select,
-.block.specifications .column-header .cell {
-    background-color: #53565A;
-    color: white;
-}
-
-.block.specifications .column-header-mobile {
-    position: relative;
-}
-
-.block.specifications .column-header-mobile select {
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    text-align: center;
-    appearance: none;
-    position: relative;
-}
-
-.block.specifications .column-header-mobile::after {
-    display: block;
-    content: '\f078';
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-    font-family: fontawesome;
-    position: absolute;
-    font-size: 11px;
-    top: 17px;
-    right: 17px;
-}
-
-.block.specifications .image-header .cell {
-    background-color: unset;
-    grid-column: span 2;
-}
-
-.block.specifications [role="rowheader"] {
-    font-family: var(--ff-volvo-novum-medium);
-}
-
+/* row group and row group header */
 .block.specifications [role="rowgroup"] {
     height: 0;
     overflow: hidden;
@@ -113,7 +88,6 @@
     border-top: solid #F2F2F2;
 }
 
-.block.specifications .rowgroup-header:focus,
 .block.specifications .rowgroup-header:hover {
     background-color: #E1DFDD;
 }
@@ -123,6 +97,34 @@
     content: '\f067';
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: fontawesome;
+}
+
+/* column header mobile */
+.block.specifications .column-header-mobile {
+    position: relative;
+}
+
+.block.specifications .column-header-mobile select {
+    background-color: #53565A;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+    appearance: none;
+    position: relative;
+}
+
+.block.specifications .column-header-mobile::after {
+    display: block;
+    content: '\f078';
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: fontawesome;
+    color: white;
+    position: absolute;
+    font-size: 11px;
+    top: 17px;
+    right: 17px;
 }
 
 @media screen and (min-width: 481px) {

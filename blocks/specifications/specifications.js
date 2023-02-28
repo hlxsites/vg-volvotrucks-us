@@ -31,12 +31,12 @@ function normalizeCells(cells, rowheaderRole = 'rowheader', cellRole = 'cell') {
 function activateMobileColumn(block, index) {
   block.querySelectorAll('.cell.expand')
     .forEach((cell) => cell.classList.remove('expand'));
-    block.querySelectorAll(`.image-header .cell:nth-child(${index}),.row .cell:nth-child(${index + 1})`)
+  block.querySelectorAll(`.image-header .cell:nth-child(${index}),.row .cell:nth-child(${index + 1})`)
     .forEach((cell) => cell.classList.add('expand'));
 }
 
 function changeMobileColumn(event) {
-  activateMobileColumn(event.target.closest('.block'), parseInt(event.target.value));
+  activateMobileColumn(event.target.closest('.block'), parseInt(event.target.value, 10));
 }
 
 export default async function decorate(block) {
@@ -68,8 +68,8 @@ export default async function decorate(block) {
   mobileColumnHeader.className = 'column-header-mobile';
   mobileColumnHeader.innerHTML = `<select>
     ${[...header.querySelectorAll('[role="columnheader"]')]
-      .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
-      .join('')}
+    .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
+    .join('')}
     </select>`;
   mobileColumnHeader.firstElementChild.addEventListener('change', changeMobileColumn);
   header.insertAdjacentElement('afterend', mobileColumnHeader);
@@ -77,7 +77,7 @@ export default async function decorate(block) {
   // rowgroups and rows
   const rows = [...block.children];
   let rowCount = 0;
-  for (let i = 3, rowgroup = null; i < rows.length; i++) {
+  for (let i = 3, rowgroup = null; i < rows.length; i += 1) {
     const row = rows[i];
     const cells = row.children;
 
@@ -102,7 +102,7 @@ export default async function decorate(block) {
       }
       normalizeCells(cells);
     }
-  };
+  }
 
   block.ariaRowCount = rowCount;
   block.ariaColCount = colCount;
