@@ -7,11 +7,13 @@ function expand(event) {
   const rowgroup = event.target.nextElementSibling;
   if (button.ariaExpanded === 'true') {
     rowgroup.style.height = 0;
+    rowgroup.ariaHidden = true;
     button.ariaExpanded = false;
   } else {
     rowgroup.style.height = `${[...rowgroup.children]
       .map((child) => child.clientHeight)
       .reduce((l, r) => l + r, 0)}px`;
+    rowgroup.ariaHidden = false;
     button.ariaExpanded = true;
   }
 }
@@ -93,6 +95,7 @@ export default async function decorate(block) {
       rowgroup = row;
       rowgroup.role = 'rowgroup';
       rowgroup.id = newId();
+      rowgroup.ariaHidden = true;
       button.setAttribute('aria-controls', rowgroup.id);
     } else {
       row.className = 'row';
