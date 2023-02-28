@@ -84,6 +84,7 @@ export default async function decorate(block) {
     if (cells.length === 1) {
       const button = document.createElement('button');
       button.className = 'rowgroup-header';
+      button.type = 'button';
       button.appendChild(cells[0]);
       button.addEventListener('click', expand);
       button.ariaExpanded = false;
