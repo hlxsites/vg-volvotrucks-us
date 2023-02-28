@@ -4,7 +4,7 @@ function newId() {
 
 function expand(event) {
   const button = event.target;
-  const rowgroup = event.target.closest('.row').nextElementSibling;
+  const rowgroup = event.target.nextElementSibling;
   if (button.ariaExpanded === 'true') {
     rowgroup.style.height = 0;
     button.ariaExpanded = false;
@@ -16,17 +16,41 @@ function expand(event) {
   }
 }
 
+function normalizeCells(cells, rowheaderRole = 'rowheader', cellRole = 'cell') {
+  [...cells].forEach((cell, j) => {
+    // wrap text-only cells with a <p>
+    if (!cell.children.length && cell.textContent !== '') {
+      cell.innerHTML = `<p>${cell.textContent}</p>`;
+    }
+    if (j === 0) cell.role = rowheaderRole;
+    else cell.role = cellRole;
+    cell.className = 'cell';
+  });
+}
+
+function activateMobileColumn(block, index) {
+  block.querySelectorAll('.cell.expand')
+    .forEach((cell) => cell.classList.remove('expand'));
+    block.querySelectorAll(`.image-header .cell:nth-child(${index}),.row .cell:nth-child(${index + 1})`)
+    .forEach((cell) => cell.classList.add('expand'));
+}
+
+function changeMobileColumn(event) {
+  activateMobileColumn(event.target.closest('.block'), parseInt(event.target.value));
+}
+
 export default async function decorate(block) {
+  block.role = 'table';
+
   const colCount = block.firstElementChild.children.length;
   block.style.setProperty('--grid-col-count', colCount);
   const header = block.firstElementChild;
   const pictures = header.querySelectorAll('picture');
-  let columnHeaderRow = 0;
 
+  // table image header
   if (pictures.length) {
-    columnHeaderRow = 1;
     const row = document.createElement('div');
-    row.className = 'row image-header';
+    row.className = 'image-header';
     pictures.forEach((picture) => {
       const cell = document.createElement('div');
       cell.className = 'cell';
@@ -34,43 +58,54 @@ export default async function decorate(block) {
       row.appendChild(cell);
     });
     header.insertAdjacentElement('beforebegin', row);
+    normalizeCells(row.children, 'cell');
   }
 
-  let currentRowGroupButton = null;
-  let currentRowGroup = null;
-  [...block.children].forEach((row, i) => {
+  // column header and mobile column header
+  header.className = 'column-header';
+  normalizeCells(header.children, 'rowheader', 'columnheader');
+  const mobileColumnHeader = document.createElement('div');
+  mobileColumnHeader.className = 'column-header-mobile';
+  mobileColumnHeader.innerHTML = `<select>
+    ${[...header.querySelectorAll('[role="columnheader"]')]
+      .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
+      .join('')}
+    </select>`;
+  mobileColumnHeader.firstElementChild.addEventListener('change', changeMobileColumn);
+  header.insertAdjacentElement('afterend', mobileColumnHeader);
+
+  // rowgroups and rows
+  const rows = [...block.children];
+  let rowCount = 0;
+  for (let i = 3, rowgroup = null; i < rows.length; i++) {
+    const row = rows[i];
     const cells = row.children;
-    row.classList.add('row');
 
     if (cells.length === 1) {
-      row.classList.add('rowgroup-header');
-      row.innerHTML = `<button>${cells[0].innerHTML}</button>`;
-      currentRowGroupButton = row.firstElementChild;
-      currentRowGroupButton.addEventListener('click', expand);
-      currentRowGroupButton.ariaExpanded = false;
-      currentRowGroup = document.createElement('div');
-      currentRowGroup.role = 'rowgroup';
-      currentRowGroup.id = newId();
-      currentRowGroupButton.setAttribute('aria-controls', currentRowGroup.id);
-      row.insertAdjacentElement('afterend', currentRowGroup);
-      return;
-    }
-    if (currentRowGroup) {
-      currentRowGroup.appendChild(row);
-    }
-    if (i === columnHeaderRow) {
-      row.classList.add('column-header');
-    }
+      const button = document.createElement('button');
+      button.className = 'rowgroup-header';
+      button.appendChild(cells[0]);
+      button.addEventListener('click', expand);
+      button.ariaExpanded = false;
+      row.insertAdjacentElement('beforebegin', button);
 
-    [...cells].forEach((cell, j) => {
-      // wrap text-only cells with a <p>
-      if (!cell.children.length && cell.textContent !== '') {
-        cell.innerHTML = `<p>${cell.textContent}</p>`;
+      rowgroup = row;
+      rowgroup.role = 'rowgroup';
+      rowgroup.id = newId();
+      button.setAttribute('aria-controls', rowgroup.id);
+    } else {
+      row.className = 'row';
+      row.role = 'row';
+      rowCount += 1;
+      if (rowgroup) {
+        rowgroup.appendChild(row);
       }
-      if (j === 0) cell.role = 'rowheader';
-      else if (i === columnHeaderRow) cell.role = 'columnheader';
-      else cell.role = 'cell';
-      cell.className = 'cell';
-    });
-  });
+      normalizeCells(cells);
+    }
+  };
+
+  block.ariaRowCount = rowCount;
+  block.ariaColCount = colCount;
+
+  activateMobileColumn(block, 1);
 }
