@@ -37,4 +37,17 @@ export default function decorate(block) {
   });
   buttons.className = 'carousel-buttons';
   block.parentElement.prepend(buttons);
+
+  // update the button indicator on scroll
+  tabContainer.addEventListener('scroll', () => {
+    const activeIndex = tabContainer.scrollLeft / tabContainer.clientWidth;
+    if (Number.isInteger(activeIndex)) {
+      const actiiveButton = buttons.children[activeIndex];
+      if (!actiiveButton.classList.contains('active')) {
+        // make active
+        buttons.querySelector('li.active').classList.remove('active');
+        actiiveButton.classList.add('active');
+      }
+    }
+  });
 }
