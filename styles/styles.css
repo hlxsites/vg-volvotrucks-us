@@ -59,6 +59,7 @@
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
   --background-color: #fff;
+  --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
@@ -81,6 +82,7 @@
   --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
+  --heading-font-size-xxxl: 4.8rem;
   --heading-font-size-xxl: 3.6rem;
   --heading-font-size-xl: 3.4rem;
   --heading-font-size-l: 3.2rem;
