@@ -31,3 +31,84 @@
   font-display: swap;
   src: url('/fonts/fontawesome-webfont.woff') format('woff');
 }
+
+/*!
+ *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+ .fa {
+  font: normal normal normal 14px/1 var(--ff-fontawesome);
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0,0)
+}
+
+.fa-angle-right::before {
+  content: "\f105"
+}
+
+.fa-angle-up::before {
+  content: "\f106"
+}
+
+.fa-search::before {
+  content: "\f002"
+}
+
+.fa-plug::before {
+  content: "\f1e6"
+}
+
+.fa-facebook-f::before,.fa-facebook::before {
+  content: "\f09a"
+}
+
+.fa-bold::before {
+  content: "\f032"
+}
+
+.fa-engine-power::before {
+  content: "\e60c"
+}
+
+.fa-play::before {
+  content: "\f04b"
+}
+
+.fa-play-circle-o::before {
+  content: "\f01d"
+}
+
+.fa-youtube::before {
+  content: "\f167"
+}
+
+.fa-linkedin::before {
+  content: "\f0e1"
+}
+
+.fa-instagram::before {
+  content: "\f16d"
+}
+
+.fa-twitter::before {
+  content: "\f099"
+}
+
+.fa-bolt::before,.fa-flash::before {
+  content: "\f0e7"
+}
+
+.fa-plus::before {
+  content: "\f067"
+}
+
+.fa-info-circle::before {
+  content: "\f05a"
+}
+
+.fa-close::before,.fa-remove::before,.fa-times::before {
+  content: "\f00d"
+}

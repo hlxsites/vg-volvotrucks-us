@@ -7,10 +7,12 @@ import {
   decorateIcons,
   decorateSections,
   decorateBlocks,
+  decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
   loadBlocks,
   loadCSS,
+  createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -37,6 +39,46 @@ function buildHeroBlock(main) {
   }
 }
 
+function createTabbedCarouselSection(tabItems, fullWidth) {
+  const tabSection = document.createElement('div');
+  tabSection.classList.add('section', 'tabbed-carousel-container');
+  if (fullWidth) tabSection.classList.add('tabbed-carousel-container-full-width');
+  tabSection.dataset.sectionStatus = 'initialized';
+  const wrapper = document.createElement('div');
+  tabSection.append(wrapper);
+  const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
+  wrapper.append(tabBlock);
+  return tabSection;
+}
+
+function buildTabbedCarouselBlock(main) {
+  let tabItems = [];
+  let fullWidth = false;
+  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+    const sectionMeta = section.dataset.carousel;
+    if (sectionMeta) {
+      const tabContent = document.createElement('div');
+      tabContent.dataset.carousel = sectionMeta;
+      tabContent.className = 'tab-content';
+      fullWidth = fullWidth || section.matches('.full-width');
+      tabContent.innerHTML = section.innerHTML;
+      tabItems.push(tabContent);
+      section.remove();
+    } else if (tabItems.length > 0) {
+      const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
+      section.parentNode.insertBefore(tabbedCarouselSection, section);
+      decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+      tabItems = [];
+      fullWidth = false;
+    }
+  });
+  if (tabItems.length > 0) {
+    const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
+    main.append(tabbedCarouselSection);
+    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+  }
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -48,6 +90,15 @@ function buildAutoBlocks(main) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+function decorateSectionBackgrounds(main) {
+  main.querySelectorAll(':scope > .section[data-background]').forEach((section) => {
+    const src = section.dataset.background;
+    const picture = createOptimizedPicture(src, '', false);
+    section.appendChild(picture);
+    section.classList.add('section-with-background');
+  });
 }
 
 /**
@@ -62,6 +113,8 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionBackgrounds(main);
+  buildTabbedCarouselBlock(main);
 }
 
 /**

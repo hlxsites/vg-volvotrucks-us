@@ -1,0 +1,35 @@
+.key-facts-wrapper {
+  text-align: center;
+}
+
+.key-facts-wrapper .key-facts > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 30px;
+}
+
+.key-facts-wrapper .key-fact {
+  flex: 0 0 33.33%;
+}
+
+.key-facts-wrapper .key-fact h3 {
+  margin: 0;
+  font-family: var(--ff-volov-broadprodigital);
+  font-size: 6.0rem;
+  line-height: 4.8rem;
+}
+
+.key-facts-wrapper .key-fact p {
+  margin: 0 0 2.4rem;
+}
+
+.key-facts-wrapper .key-fact i.fa {
+  font-size: 30px;
+}
+
+@media screen and (min-width: 768px) {
+  .key-facts-wrapper .key-fact {
+    flex: 0 0 16.6667%;
+  }
+}
