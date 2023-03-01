@@ -341,19 +341,4 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-/* The injected widget should be customized in the SDK UI by an administrator.
-   see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
-   Just overriding the bare minimum to make it readable: */
-.cookies #ot-sdk-cookie-policy .ot-sdk-container {
-  font-size: var(--body-font-size-s) !important;
-}
-
-.cookies .section#ot-sdk-cookie-policy {
-  /* reduce padding introduced by new section */
-  margin-top: -32px;
-  margin-bottom: -32px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 
