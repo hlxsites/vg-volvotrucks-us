@@ -95,6 +95,12 @@
 
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html {
   font-size: 10px;
 }
@@ -107,6 +113,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 body.appear {
@@ -229,7 +236,7 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 16px;
+  padding: 64px 0;
 }
 
 main pre {
@@ -266,7 +273,6 @@ hr {
 
 main img {
   max-width: 100%;
-  width: auto;
   height: auto;
 }
 
