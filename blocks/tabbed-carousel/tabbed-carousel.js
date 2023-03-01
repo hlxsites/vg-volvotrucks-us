@@ -40,14 +40,12 @@ export default function decorate(block) {
 
   // update the button indicator on scroll
   tabContainer.addEventListener('scroll', () => {
-    const activeIndex = tabContainer.scrollLeft / tabContainer.clientWidth;
-    if (Number.isInteger(activeIndex)) {
-      const actiiveButton = buttons.children[activeIndex];
-      if (!actiiveButton.classList.contains('active')) {
-        // make active
-        buttons.querySelector('li.active').classList.remove('active');
-        actiiveButton.classList.add('active');
-      }
+    const activeIndex = Math.floor(tabContainer.scrollLeft / tabContainer.clientWidth);
+    const actiiveButton = buttons.children[activeIndex];
+    if (!actiiveButton.classList.contains('active')) {
+      // make active
+      buttons.querySelector('li.active').classList.remove('active');
+      actiiveButton.classList.add('active');
     }
   });
 }

@@ -4,6 +4,14 @@
     margin-bottom: 50px;
 }
 
+.section.tabbed-carousel-container-full-width {
+    width: unset;
+}
+
+.section.tabbed-carousel-container-full-width > div {
+    max-width: unset;
+} 
+
 .tabbed-carousel-wrapper {
     text-align: center;
 }
