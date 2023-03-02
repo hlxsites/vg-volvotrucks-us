@@ -23,16 +23,7 @@ export default async function decorate(block) {
   loadScript('/blocks/dealer-locator/vendor/my-dealer.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
   block.innerHTML = `
- <form method="post" action="/find-a-dealer/" id="Form1">
-
-<input type="hidden" class="predictionCharLimit" value="1" />
-
-    <div class="container main-content allow-full-width no-subnav">
-        
-
-
-<div class="dealer-locator">
-	<input id="hoverText" value="Please unselect the selected option to click this option" hidden />
+    <input id="hoverText" value="Please unselect the selected option to click this option" hidden />
    <!-- PartsASIST Datasource Selection -->
    <div class="datasource-option" style="display:none;">
     <div class="backdrop"></div>
@@ -482,62 +473,5 @@ export default async function decorate(block) {
     </div>
    </script>
 
-</div>
-
-    </div>
-    
-    <div class="ovelay-mask"></div>
-
-    
-
-   </form>
- `;
-
-  let theForm = block;
-  if (!theForm) {
-    theForm = document.Form1;
-  }
-
-  function __doPostBack(eventTarget, eventArgument) {
-    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
-      theForm.__EVENTTARGET.value = eventTarget;
-      theForm.__EVENTARGUMENT.value = eventArgument;
-      theForm.submit();
-    }
-  }
-
-    window.volvo.init.push(function () {
-        $('.side-menu-open').on('click', function (e) {
-            e.preventDefault();
-            $('.side-menu-open').hide();
-            $('.side-menu-close').show();
-            $('.side-nav-container').addClass('open');
-            $('html').addClass('side-nav-visible');
-        });
-        $('.side-menu-close , .ovelay-mask').on('click', function (e) {
-            e.preventDefault();
-            $('.side-menu-open').show();
-            $('.side-menu-close').hide();
-            $('.side-nav-container').removeClass('open');
-            $('html').removeClass('side-nav-visible');
-        });
-        $('.side-nav-accordion').accordion({
-            "transitionSpeed": 400
-        });
-        /*//
-        $('.typeahead').typeahead({
-            hint: false,
-            highlight: true,
-            minLength: 2
-        },
-        window.volvo.components.searchResults.config);
-        //*/
-    });
-    $(document).ready(function () {
-        $('#search-expand').on('click', function () {
-            $('.dealer-locator').toggleClass('search-bar-added');
-        });
-
-    });
-
+</div> `;
 }
