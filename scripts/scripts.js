@@ -56,7 +56,7 @@ function buildTabbedBlock(main) {
   let tabType;
   let fullWidth = false;
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
-    const sectionMeta = section.dataset?.carousel || section.dataset?.tabs;
+    const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
       tabType = tabType || (section.dataset.carousel ? 'carousel' : 'accordion');
