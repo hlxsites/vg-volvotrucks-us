@@ -1,0 +1,137 @@
+.section.carousel-container {
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    padding: unset;
+}
+
+.carousel-container .default-content-wrapper h3 {
+    color: var(--volvo-text-light-gray);
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: var(--heading-font-size-m);
+}
+
+ .carousel-container .default-content-wrapper h2 {
+    font-size: var(--heading-font-size-m);
+     margin-top: 0;
+ }
+
+ .carousel-container .carousel-wrapper {
+    overflow: hidden;
+    padding: 0 15px;
+ }
+
+.carousel-wrapper ul.carousel-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.carousel-wrapper ul.carousel-list::-webkit-scrollbar {
+    display: none;
+ }
+
+.carousel-wrapper ul.carousel-list li {
+    flex: 0 0 65%;
+}
+
+.carousel-wrapper ul.controls {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    gap: 5px;
+ }
+
+ .carousel-wrapper ul.controls li {
+    width: 20px;
+    justify-items: center;
+    height: 20px;
+ }
+
+ .carousel-wrapper ul.controls li button {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    background: 0 0;
+ }
+
+.carousel-wrapper ul.carousel-list li:first-child {
+    padding-left: 20%;
+}
+
+.carousel-wrapper ul.carousel-list li:last-child {
+    padding-right: 20%;
+}
+
+ .carousel-wrapper ul.controls li button::before {
+    font-family: var(--ff-fontawesome);
+    font-size: 1.6rem;
+    line-height: 3.2rem;
+    position: absolute;
+    content: "\f10c";
+    color: var(--volvo-text-light-gray);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+ }
+
+ .carousel-wrapper ul.controls li.active button::before {
+    content: "\f192";
+ }
+
+.carousel-wrapper .wrapper p, .carousel-wrapper .wrapper h3 {
+    font-size: var(--body-font-size-xs);
+    margin: 0;
+}
+
+.carousel-wrapper .wrapper p:last-child {
+    display: none;
+}
+
+.carousel-wrapper ul > li img {
+    width: 100%;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+    .carousel-wrapper .grid-on-desktop ul.carousel-list {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 30px;
+    }
+
+    .carousel-wrapper .grid-on-desktop ul.controls {
+        display: none;
+    }
+
+    .carousel-wrapper ul.carousel-list li:first-child {
+        padding-left: unset;
+    }
+    
+    .carousel-wrapper ul.carousel-list li:last-child {
+        padding-right: unset;
+    }
+}
+
+@media  screen and (min-width: 992px) {
+    .carousel-wrapper .wrapper p:last-child {
+        display: block;
+    }
+}

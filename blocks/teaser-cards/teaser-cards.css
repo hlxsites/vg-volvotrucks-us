@@ -27,6 +27,7 @@
 
 /* each teaser div in the row */
 .block.teaser-cards .teaser {
+  box-sizing: border-box;
   flex: 0 1 auto;
   margin-top: 0;
   margin-bottom: 0;
@@ -34,28 +35,36 @@
 }
 
 /* teaser image */
-.block.teaser-cards .teaser p.image {
-  margin: 0;
+.block.teaser-cards p.image {
+  display: block;
+  margin: 0 0 1em;
 }
 
-.block.teaser-cards .teaser img {
+.block.teaser-cards img {
   width: 100%;
   object-fit: cover;
 }
 
 /* teaser title */
-.block.teaser-cards .teaser h3 {
-  margin-bottom: 10px;
-  font-family: var(--ff-volvo-novum-medium);
+.block.teaser-cards h2,
+.block.teaser-cards h3 {
+  margin: 0;
   font-size: var(--heading-font-size-m)
 }
 
+.block.teaser-cards  h2 {
+  letter-spacing: 3.6px;
+  font-family: var(--ff-volov-broadprodigital);
+  font-size: var(--heading-font-size-xxxl);
+  line-height: 1em;
+}
+
 /* teaser title link */
-.block.teaser-cards .teaser h3 a {
+.block.teaser-cards h3 a {
   color: var(--text-color);
 }
 
-.block.teaser-cards .teaser h3 a::after {
+.block.teaser-cards h3 a::after {
   color: var(--link-color);
   content: "\f105";
   padding-left: 8px;
@@ -64,17 +73,17 @@
 }
 
 /* teaser text */
-.block.teaser-cards .teaser p.text {
-  font-size: var(--body-font-size-xxs);
+.block.teaser-cards p.text {
+  font-size: var(--body-font-size-xs);
   margin: 0 0 8px;
 }
 
 /* cta's (maybe remove button container completely) */
-.block.teaser-cards .teaser .button-container {
+.block.teaser-cards .button-container {
   margin: 0;
 }
 
-.block.teaser-cards .teaser .cta {
+.block.teaser-cards a.cta {
   color: var(--link-color);
   font-weight: 700;
   background-color: transparent;
@@ -86,13 +95,39 @@
   font-size: var(--body-font-size-xs);
 }
 
-.block.teaser-cards .teaser .cta::after {
+.block.teaser-cards a.cta:hover {
+  color: var(--link-hover-color);
+}
+
+.block.teaser-cards .cta::after {
   content: '\f105';
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: fontawesome;
   padding-left: 8px;
 
 }
+
+/* single teaser */
+.block.teaser-cards.teaser-cards-1 .teaser {
+  width: 100%;
+  padding: 0 0 24px;
+  background-color: var(--background-light-gray);
+  text-align: center;
+}
+
+.block.teaser-cards.teaser-cards-1 p.text {
+  display: none;
+}
+
+/* link list on mobile */
+.block.teaser-cards.link-list-on-mobile>div {
+  flex-flow: column;
+}
+
+.block.teaser-cards.link-list-on-mobile p.image {
+  display: none;
+}
+
 
 @media (min-width: 768px) {
   .block.teaser-cards {
@@ -101,7 +136,8 @@
   }
 
   /* first row div */
-  .block.teaser-cards>div {
+  .block.teaser-cards>div,
+  .block.teaser-cards.link-list-on-mobile>div {
     flex-flow: row;
   }
 
@@ -110,6 +146,47 @@
     padding-left: 15px;
     padding-right: 15px;
     width: 50%;
+  }
+
+  /* image */
+  .block.teaser-cards.link-list-on-mobile p.image {
+    display: block;
+  }
+
+  /* single teaser */
+  .block.teaser-cards.teaser-cards-1 .teaser {
+    padding: 8px 0;
+    min-height: 250px;
+    position: relative;
+    background: none;
+    color: white;
+  }
+  
+  .block.teaser-cards.teaser-cards-1 h2,
+  .block.teaser-cards.teaser-cards-1 h3,
+  .block.teaser-cards.teaser-cards-1 p.text {
+    display: block;
+    max-width: 426px;
+    margin: 0 auto;
+  }
+
+  .block.teaser-cards.teaser-cards-1 h2,
+  .block.teaser-cards.teaser-cards-1 h3 {
+    margin-bottom: 16px;
+  }
+
+  .block.teaser-cards.teaser-cards-1 p.image {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  .block.teaser-cards.teaser-cards-1 p.image img {
+    height: 100%;
   }
 }
 
@@ -124,9 +201,25 @@
     padding-right: 15px;
   }
 
-  .block.teaser-cards .teaser h3 {
-    margin-bottom: 10px;
-    font-family: var(--ff-volvo-novum-medium);
+  .block.teaser-cards h2,
+  .block.teaser-cards h3 {
+    margin-bottom: 16px;
+  }
+
+  .block.teaser-cards h3 {
     font-size: var(--heading-font-size-s)
+  }
+
+  /* single teaser */
+  .block.teaser-cards.teaser-cards-1 .teaser {
+    min-height: 402px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+
+  .block.teaser-cards.teaser-cards-1 p.text {
+    display: block;
+    max-width: 870px;
   }
 }

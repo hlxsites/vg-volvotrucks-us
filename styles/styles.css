@@ -33,14 +33,6 @@
 }
 
 @font-face {
-  font-family: fontawesome;
-  src: url('../fonts/fontawesome-webfont.woff') format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'VolvoBroadProDigital Fallback';
   src: local('Arial');
   font-style: normal;
@@ -51,20 +43,34 @@
   size-adjust: 69.25%;
 }
 
+@font-face {
+  font-family: 'fontawesome Fallback';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arial');
+  ascent-override: 93.75%;
+  descent-override: 6.25%;
+  line-gap-override: 0.00%;
+  size-adjust: 100.00%;
+}
+
  :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
+  --link-color: #004FBC;
+  --link-hover-color: #0b326f;
   --background-color: #fff;
+  --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
+  --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
   --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
@@ -76,6 +82,7 @@
   --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
+  --heading-font-size-xxxl: 4.8rem;
   --heading-font-size-xxl: 3.6rem;
   --heading-font-size-xl: 3.4rem;
   --heading-font-size-l: 3.2rem;
@@ -86,6 +93,12 @@
   /* nav height */
   --nav-height: 64px;
 
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 html {
@@ -100,6 +113,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 body.appear {
@@ -133,6 +147,10 @@ p, dl, ol, ul, pre, blockquote {
   font-size: var(--body-font-size-xs);
 }
 
+[data-align="center"] {
+  text-align: center;
+}
+
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
@@ -154,6 +172,10 @@ code, samp {
 
 pre {
   overflow: scroll;
+}
+
+strong {
+  font-family: var(--ff-volvo-novum-medium);
 }
 
 /* buttons */
@@ -214,7 +236,7 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 16px;
+  padding: 64px 0;
 }
 
 main pre {
@@ -251,13 +273,35 @@ hr {
 
 main img {
   max-width: 100%;
-  width: auto;
   height: auto;
 }
 
 main p img {
   display: block;
   margin: auto;
+}
+
+main .section-with-background {
+  --text-color: white;
+
+  box-sizing: border-box;
+  position: relative;
+  min-height: 405px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+main .section-with-background>picture:last-of-type img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  object-fit: cover;
 }
 
 @media (min-width: 768px) {
@@ -302,3 +346,5 @@ main .section[data-section-status='initialized'] {
 main .section.highlight {
   background-color: var(--highlight-background-color);
 }
+
+
