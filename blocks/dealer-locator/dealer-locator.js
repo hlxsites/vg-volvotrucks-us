@@ -1,7 +1,6 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
-  loadCSS('/blocks/dealer-locator/jquery-ui.css');
   await loadScript('/blocks/dealer-locator/jquery.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
   window.locatorConfig = {
@@ -13,12 +12,10 @@ export default async function decorate(block) {
     amenities: ['Appointments Accepted', 'Bilingual Service', 'Driver Lounge', 'Free Pickup and Delivery', 'Hotel Shuttle', 'Internet Service', 'Laundry', 'Showers', 'Telephones', 'Trailer Parking', 'Video Games'],
   };
 
-  loadCSS('/blocks/dealer-locator/main.css');
   loadScript('/blocks/dealer-locator/moment.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/moment-timezone.min.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/dealer-locator-map.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/my-dealer.js', { type: 'text/javascript', charset: 'UTF-8' });
-  loadScript('/blocks/dealer-locator/bootstrap.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
   block.innerHTML = `
  <form method="post" action="/find-a-dealer/" id="Form1">
