@@ -112,16 +112,16 @@
         padding: 0;
     }
 
+    .carousel-wrapper ul.carousel-list li {
+        padding: 0;
+    }
+
     .carousel-wrapper .grid-on-desktop ul.carousel-list li {
         flex: 0 0 calc(33.33% - 20px);
     }
 
     .carousel-wrapper ul.controls {
         display: none;
-    }
-
-    .carousel-wrapper ul.carousel-list li {
-        padding: 0;
     }
 }
 
