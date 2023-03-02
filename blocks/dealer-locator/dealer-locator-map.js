@@ -573,7 +573,7 @@
       templateClone.find('#head-marker').css('height', '43px');
       const myDealer = $.fn.getCookie('my-dealer');
       myDealer == markerDetails.IDENTIFIER_VALUE ? (templateClone.find('#set-dealer').html('<img src="/images/dealer-locator/volvo/VOLVO-MACK_Dealer-Locator-Icons/VOLVO-MACK_Dealer-Locator-Icons/Vector-3.svg" />'),
-      templateClone.find('#head-marker').attr('src', $viewingPin.icon)) : templateClone.find('#set-dealer').html('<img src="/images/dealer-locator/volvo/VOLVO-MACK_Dealer-Locator-Icons/VOLVO-MACK_Dealer-Locator-Icons/Star 1.svg" />'),
+      templateClone.find('#head-marker').attr('src', $viewingPin.icon)) : templateClone.find('#set-dealer').html('<img src="/images/dealer-locator/volvo/VOLVO-MACK_Dealer-Locator-Icons/VOLVO-MACK_Dealer-Locator-Icons/Star-1.svg" />'),
       templateClone.find('#set-dealer').attr('data-pin', markerDetails.IDENTIFIER_VALUE);
       const isOpen = $.fn.isOpen(markerDetails);
       let isOpenHtml = '';
