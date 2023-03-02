@@ -11,6 +11,38 @@
     height: calc(100vh);
     position: absolute
 }
+.dealer-locator input[type=text],
+.dealer-locator select,
+.dealer-locator textarea {
+    display: block;
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: none;
+    border-radius: 0;
+    background-color: #ebebea;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+.dealer-locator button {
+    font-family: var(--ff-volvo-novum);
+    display: unset;
+    box-sizing: unset;
+    text-decoration: unset;
+    border: unset;
+    padding: 1px 6px;
+    font-style: unset;
+    font-weight: unset;
+    cursor: unset;
+    color: unset;
+    background-color: unset;
+    margin: unset;
+    white-space: unset;
+    overflow: unset;
+    text-overflow: unset;
+    border-radius: unset;
+}
 
 @media (max-width: 992px) {
     .dealer-locator {
@@ -125,8 +157,6 @@
     border-radius: 0;
     user-select: none;
     user-select: none;
-    user-select: none;
-    user-select: none;
     color: #4d4e53;
     background-color: #FFF
 }
@@ -138,8 +168,6 @@
 }
 
 .dealer-locator *,.dealer-locator ::after,.dealer-locator ::before {
-    box-sizing: initial;
-    box-sizing: initial;
     box-sizing: initial
 }
 
@@ -326,7 +354,6 @@
 .dealer-locator .nearby-pins article.teaser .teaser-top .heading {
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between
@@ -352,7 +379,6 @@
     font-size: 10px;
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
@@ -493,7 +519,6 @@
 .dealer-locator .nearby-select article.teaser .teaser-top .heading {
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between
@@ -519,7 +544,6 @@
     font-size: 12px;
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between
@@ -532,7 +556,6 @@
 .dealer-locator .nearby-select article.teaser .teaser-bottom {
     display: flex;
     -webkit-box-pack: justify;
-    justify-content: space-between;
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
@@ -560,6 +583,8 @@
     right: 10px
 }
 
+
+
 @media (max-width: 992px) {
     .dealer-locator .nearby-select .panel-card:hover {
         background-color:unset!important
@@ -579,7 +604,8 @@
     border: #fff;
     border-radius: 2px;
     width: 28px;
-    height: 38px
+    height: 38px;
+    margin: 0;
 }
 
 @media (max-width: 1024px) {
@@ -592,10 +618,16 @@
     }
 }
 
+
+.dealer-locator .map-geo-container button {
+    padding: 1px 6px;
+}
+
 .dealer-locator .map-geo-container button img {
     width: 18px;
     height: 18px
 }
+
 
 .dealer-locator .go-back-direction button,.dealer-locator .go-back-filter button {
     position: relative;
@@ -671,7 +703,6 @@
         top: 0;
         z-index: 10;
         transition: left .5s;
-        transform: translateX(0);
         transform: translateX(0);
         transition-property: -webkit-transform,transform,visibility,opacity;
         transition-duration: .2s;
@@ -907,7 +938,10 @@
     float: right;
     border: 1px solid #A7A8A9;
     right: 0;
-    left: 0
+    left: 0;
+    padding: 1px 6px;
+    font-family: var(--ff-volvo-novum);
+    margin: 0;
 }
 
 .dealer-locator .sidebar {
@@ -920,7 +954,6 @@
     width: 483px;
     position: absolute;
     top: 0;
-    transform: translateX(0);
     transform: translateX(0);
     transition-property: -webkit-transform,transform,opacity;
     transition-duration: .2s;
@@ -1270,14 +1303,12 @@
     display: inline-block;
     padding: 3px;
     transform: rotate(45deg);
-    transform: rotate(45deg);
     margin-left: 10px;
     position: absolute;
     top: 14px
 }
 
 .dealer-locator .sidebar .sidebar-content .accordion .close {
-    transform: rotate(-135deg);
     transform: rotate(-135deg);
     top: 17px
 }
@@ -1338,14 +1369,12 @@
     display: inline-block;
     padding: 3px;
     transform: rotate(45deg);
-    transform: rotate(45deg);
     margin-left: 10px;
     position: absolute;
     top: 14px
 }
 
 .dealer-locator .sidebar .sidebar-content .pin-actions .accordion .close {
-    transform: rotate(-135deg);
     transform: rotate(-135deg);
     top: 17px
 }
@@ -1404,14 +1433,12 @@
     display: inline-block;
     padding: 3px;
     transform: rotate(45deg);
-    transform: rotate(45deg);
     margin-left: 10px;
     position: absolute;
     top: 14px
 }
 
 .dealer-locator .sidebar .sidebar-content ul.pin-details .accordion .close {
-    transform: rotate(-135deg);
     transform: rotate(-135deg);
     top: 17px
 }
@@ -1511,10 +1538,6 @@
 }
 
 .dealer-locator .sidebar .sidebar-content ul[id=services] {
-    column-count: 4;
-    column-gap: 20px;
-    column-count: 4;
-    column-gap: 20px;
     column-count: 2;
     list-style: none;
     column-gap: 20px;
@@ -1530,10 +1553,6 @@
 }
 
 .dealer-locator .sidebar .sidebar-content ul[id=drivers] {
-    column-count: 4;
-    column-gap: 20px;
-    column-count: 4;
-    column-gap: 20px;
     column-count: 2;
     list-style: none;
     column-gap: 20px;
@@ -1560,7 +1579,6 @@
     top: 0;
     z-index: 10;
     transition: left .5s;
-    transform: translateX(0);
     transform: translateX(0);
     transition-property: -webkit-transform,transform,visibility,opacity;
     transition-duration: .2s;
@@ -1820,10 +1838,8 @@
 }
 
 .dealer-locator .sidebar .panel-card .panel-container button {
-    display: flex;
     display: flexbox;
     display: flex;
-    align-items: center;
     -ms-flex-align: center;
     align-items: center;
     padding: 12px 16px;
@@ -1857,17 +1873,11 @@
 
 .dealer-locator .sidebar .panel-card .panel-container button .text {
     min-width: 0;
-    display: flex;
     display: flexbox;
     display: flex;
-    flex-direction: column;
-    flex-direction: column;
-    flex: 1;
-    flex: 1;
     flex: 1;
     flex-direction: column;
     height: 36px;
-    justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
     line-height: 18px;
@@ -1899,7 +1909,6 @@
 }
 
 .dealer-locator .sidebar .panel-card .panel-container .range-filter::-webkit-slider-thumb {
-    appearance: none;
     appearance: none;
     width: 25px;
     height: 25px;
@@ -1985,8 +1994,6 @@
     padding: 1px;
     cursor: pointer;
     user-select: none;
-    user-select: none;
-    user-select: none;
     user-select: none
 }
 
@@ -1996,8 +2003,6 @@
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    user-select: none;
-    user-select: none;
     user-select: none;
     user-select: none;
     font-size: 12px;
@@ -2204,7 +2209,6 @@
 
 .dealer-locator #locator-snackbar.show {
     visibility: visible;
-    animation: fadein .5s,fadeout .5s 5s;
     animation: fadein .5s,fadeout .5s 5s
 }
 
@@ -2410,4 +2414,118 @@ footer {
 
 .desktop-header {
     display: none
+}
+
+
+
+
+
+.tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    font-size: 16px;
+    line-height: 1.4;
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+.tooltip.in {
+    opacity: .9;
+    filter: alpha(opacity=90)
+}
+
+.tooltip.top {
+    margin-top: -3px;
+    padding: 5px 0
+}
+
+.tooltip.right {
+    margin-left: 3px;
+    padding: 0 5px
+}
+
+.tooltip.bottom {
+    margin-top: 3px;
+    padding: 5px 0
+}
+
+.tooltip.left {
+    margin-left: -3px;
+    padding: 0 5px
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #FFF;
+    text-decoration: none;
+    background-color: #000;
+    border-radius: 3px
+}
+
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid
+}
+
+.tooltip.top .tooltip-arrow,.tooltip.top-left .tooltip-arrow,.tooltip.top-right .tooltip-arrow {
+    bottom: 0;
+    border-width: 5px 5px 0;
+    border-top-color: #000
+}
+
+.tooltip.top .tooltip-arrow {
+    left: 50%;
+    margin-left: -5px
+}
+
+.tooltip.top-left .tooltip-arrow {
+    right: 5px;
+    margin-bottom: -5px
+}
+
+.tooltip.top-right .tooltip-arrow {
+    left: 5px;
+    margin-bottom: -5px
+}
+
+.tooltip.right .tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #000
+}
+
+.tooltip.left .tooltip-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -5px;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #000
+}
+
+.tooltip.bottom .tooltip-arrow,.tooltip.bottom-left .tooltip-arrow,.tooltip.bottom-right .tooltip-arrow {
+    border-width: 0 5px 5px;
+    border-bottom-color: #000;
+    top: 0
+}
+
+.tooltip.bottom .tooltip-arrow {
+    left: 50%;
+    margin-left: -5px
+}
+
+.tooltip.bottom-left .tooltip-arrow {
+    right: 5px;
+    margin-top: -5px
+}
+
+.tooltip.bottom-right .tooltip-arrow {
+    left: 5px;
+    margin-top: -5px
 }
