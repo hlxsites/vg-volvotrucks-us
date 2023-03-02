@@ -1,4 +1,4 @@
-import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
+import { loadScript } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
   await loadScript('/blocks/dealer-locator/vendor/jquery.min.js', { type: 'text/javascript', charset: 'UTF-8' });
@@ -14,8 +14,13 @@ export default async function decorate(block) {
 
   loadScript('/blocks/dealer-locator/vendor/moment.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/vendor/moment-timezone.min.js', { type: 'text/javascript', charset: 'UTF-8' });
-  loadScript('/blocks/dealer-locator/vendor/dealer-locator-map.js', { type: 'text/javascript', charset: 'UTF-8' });
-  loadScript('/blocks/dealer-locator/vendor/my-dealer.js', { type: 'text/javascript', charset: 'UTF-8' });
+
+  // TODO: Project Franklin currently does not support spaces in file names, therefore the icon
+  // eslint-disable-next-line max-len
+  // "/images/dealer-locator/volvo/VOLVO-MACK_Dealer-Locator-Icons/VOLVO-MACK_Dealer-Locator-Icons/Star 1.svg"
+  // cannot be loaded. This icon is used when a cookie with the favorite dealer was set.
+  loadScript('/blocks/dealer-locator/vendor/sidebar-dealer-locator.min.js', { type: 'text/javascript', charset: 'UTF-8' });
+  loadScript('/blocks/dealer-locator/vendor/my-dealer.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
   block.innerHTML = `
  <form method="post" action="/find-a-dealer/" id="Form1">
