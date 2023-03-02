@@ -6,12 +6,36 @@ function stripEmptyTags(main, child) {
   }
 }
 
+function buildTabNavigation(tabItems, clickHandler) {
+  const tabNavigation = document.createElement('ul');
+  [...tabItems].forEach((tabItem, i) => {
+    const listItem = document.createElement('li');
+    if (!i) listItem.classList.add('active');
+    const button = document.createElement('button');
+    button.addEventListener('click', () => clickHandler.call(this, tabNavigation, tabItem, listItem));
+    const tabContent = tabItem.querySelector(':scope > div');
+    button.innerHTML = tabContent.dataset.carousel;
+    listItem.append(button);
+    tabNavigation.append(listItem);
+  });
+  tabNavigation.className = 'tab-navigation';
+  return tabNavigation;
+}
+
 export default function decorate(block) {
-  const buttons = document.createElement('ul');
   const tabContainer = block.querySelector(':scope > div');
   tabContainer.classList.add('tab-container');
   const tabItems = block.querySelectorAll(':scope > div > div');
-  tabItems.forEach((tabItem, i) => {
+  const tabNavigation = buildTabNavigation(tabItems, (nav, tabItem, listItem) => {
+    tabContainer.scrollTo({
+      top: 0,
+      left: tabItem.offsetLeft - tabItem.parentNode.offsetLeft,
+      behavior: 'smooth',
+    });
+    [...nav.children].forEach((r) => r.classList.remove('active'));
+    listItem.classList.add('active');
+  });
+  tabItems.forEach((tabItem) => {
     tabItem.classList.add('tab-item');
     const tabContent = tabItem.querySelector(':scope > div');
     const picture = tabItem.querySelector('picture');
@@ -19,32 +43,16 @@ export default function decorate(block) {
     tabContent.querySelectorAll('p, div').forEach((item) => {
       stripEmptyTags(tabContent, item);
     });
-    const listItem = document.createElement('li');
-    if (!i) listItem.classList.add('active');
-    const button = document.createElement('button');
-    button.innerHTML = tabContent.dataset.carousel;
-    listItem.append(button);
-    button.addEventListener('click', () => {
-      tabContainer.scrollTo({
-        top: 0,
-        left: tabItem.offsetLeft - tabItem.parentNode.offsetLeft,
-        behavior: 'smooth',
-      });
-      [...buttons.children].forEach((r) => r.classList.remove('active'));
-      listItem.classList.add('active');
-    });
-    buttons.append(listItem);
   });
-  buttons.className = 'carousel-buttons';
-  block.parentElement.prepend(buttons);
+  block.parentElement.prepend(tabNavigation);
 
   // update the button indicator on scroll
   tabContainer.addEventListener('scroll', () => {
     const activeIndex = Math.floor(tabContainer.scrollLeft / tabContainer.clientWidth);
-    const actiiveButton = buttons.children[activeIndex];
+    const actiiveButton = tabNavigation.children[activeIndex];
     if (!actiiveButton.classList.contains('active')) {
       // make active
-      buttons.querySelector('li.active').classList.remove('active');
+      tabNavigation.querySelector('li.active').classList.remove('active');
       actiiveButton.classList.add('active');
     }
   });
