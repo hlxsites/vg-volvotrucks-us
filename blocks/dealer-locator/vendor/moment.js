@@ -1,3 +1,4 @@
+/* eslint-disable */
 //! moment.js
 
 ;(function (global, factory) {
