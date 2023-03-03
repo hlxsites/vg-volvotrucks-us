@@ -347,6 +347,7 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-body.disable-scroll {
+body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
 }
+
