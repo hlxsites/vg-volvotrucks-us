@@ -90,7 +90,6 @@
  }
 
  @media screen and (min-width: 481px) {
-
     .block.carousel .mobile-controls button::after {
         font-size: 1.6rem;
     }
@@ -98,7 +97,6 @@
  }
 
  @media screen and (min-width: 768px) {
-
     .block.carousel .items {
         padding: 0;
         margin: 0 auto;

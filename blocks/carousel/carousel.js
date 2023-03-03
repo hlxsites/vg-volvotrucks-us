@@ -7,19 +7,19 @@ function adjustWidthAndControls(block, carousel, ...controls) {
     const documentWidth = document.documentElement.clientWidth;
     const isDesktop = documentWidth > 767 && !block.matches('.grid-on-desktop');
     const gap = parseInt(window.getComputedStyle(carousel).gap, 10);
-    const itemWidth = parseInt(window.getComputedStyle(carousel.firstElementChild).width);
-    const itemsFullWidth = itemWidth * carousel.children.length + gap * (carousel.children.length - 1);
-    let containerWidth = parseInt(window.getComputedStyle(carousel.parentElement).width);
+    const itemWidth = parseInt(window.getComputedStyle(carousel.firstElementChild).width, 10);
+    const itemsWidth = itemWidth * carousel.children.length + gap * (carousel.children.length - 1);
+    let containerWidth = parseInt(window.getComputedStyle(carousel.parentElement).width, 10);
     if (isDesktop) {
       // on desktop the container width is 2x50px smaller due to the controls
       containerWidth -= 100;
     }
-    const showControls = itemsFullWidth > containerWidth;
-    controls.forEach((ul) => showControls ? ul.classList.remove('hidden') : ul.classList.add('hidden'));
+    const showControls = itemsWidth > containerWidth;
+    controls.forEach((ul) => (showControls ? ul.classList.remove('hidden') : ul.classList.add('hidden')));
     if (showControls) carousel.classList.remove('centered'); else carousel.classList.add('centered');
     if (isDesktop) {
       // set the width only on desktop
-      const maxItems = Math.floor((containerWidth - 100) / (itemsFullWidth / carousel.children.length));
+      const maxItems = Math.floor((containerWidth - 100) / (itemsWidth / carousel.children.length));
       const width = maxItems * itemWidth + gap * (maxItems - 1);
       carousel.style.width = `${width}px`;
     } else {
@@ -86,7 +86,7 @@ function createMobileControls(ul) {
       const scrollOffset = second.getBoundingClientRect().x - first.getBoundingClientRect().x;
       let index = 0;
       // how many items have scrolled out?
-      while (ul.scrollLeft - scrollOffset * (index + 1) > 0) index++;
+      while (ul.scrollLeft - scrollOffset * (index + 1) > 0) index += 1;
       mobileControls.querySelector('li.active').classList.remove('active');
       mobileControls.children[index].classList.add('active');
     }, debounceDelay);
@@ -131,7 +131,7 @@ export default function decorate(block) {
   });
 
   const desktopControls = createDesktopControls(ul);
-  const mobileControls = createMobileControls(ul)
+  const mobileControls = createMobileControls(ul);
 
   adjustWidthAndControls(block, ul, mobileControls, desktopControls);
 }
