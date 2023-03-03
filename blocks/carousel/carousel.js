@@ -60,4 +60,18 @@ export default function decorate($block) {
       updateSlide(j, $gridContainer);
     });
   });
+
+  $gridContainer.addEventListener('scroll', () => {
+    const computedStyle = window.getComputedStyle($gridContainer);
+    const padding = Math.round(parseFloat(computedStyle.paddingLeft)
+      + parseFloat(computedStyle.paddingRight));
+    const width = $gridContainer.clientWidth - padding;
+    const activeIndex = Math.round($gridContainer.scrollLeft / width);
+    const activeButton = $controlsContainer.children[activeIndex];
+    if (!activeButton.classList.contains('active')) {
+      // make active
+      $controlsContainer.querySelector('li.active').classList.remove('active');
+      activeButton.classList.add('active');
+    }
+  });
 }
