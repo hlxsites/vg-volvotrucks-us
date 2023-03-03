@@ -15,10 +15,6 @@ export default async function decorate(block) {
   loadScript('/blocks/dealer-locator/vendor/moment.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/vendor/moment-timezone.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
-  // TODO: Project Franklin currently does not support spaces in file names, therefore the icon
-  // eslint-disable-next-line max-len
-  // "/images/dealer-locator/volvo/VOLVO-MACK_Dealer-Locator-Icons/VOLVO-MACK_Dealer-Locator-Icons/Star 1.svg"
-  // cannot be loaded. This icon is used when a cookie with the favorite dealer was set.
   loadScript('/blocks/dealer-locator/vendor/sidebar-dealer-locator.min.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/vendor/my-dealer.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
@@ -59,19 +55,19 @@ export default async function decorate(block) {
             <input type="text" id="location2" placeholder="Enter City, State, or Zip Code"/>
             <div class="search-container">
                 <button type="button" id="search" onclick="$.fn.setAddress2();">
-                    <img src="/images/dealer-locator/volvo/search.svg"/>
+                    <img src="/blocks/dealer-locator/images/search.svg"/>
                 </button>
             </div>
             <div class="filter-container">
                 <button type="button" onclick="$.fn.switchSidebarPane('sidebar-filter');">
                     <div style="width:44px;">
-                        <div class="icon"><img src="/images/dealer-locator/volvo/filter.svg"/></div>
+                        <div class="icon"><img src="/blocks/dealer-locator/images/filter.svg"/></div>
                     </div>
                 </button>
             </div>
             <div class="geo-container">
                 <button type="button" id="search" onclick="$.fn.setLocation();"><img
-                        src="/images/dealer-locator/volvo/location.svg"/></button>
+                        src="/blocks/dealer-locator/images/location.svg"/></button>
             </div>
 
         </div>
@@ -79,7 +75,7 @@ export default async function decorate(block) {
     <div id="map"></div>
     <div class="map-geo-container">
         <button type="button" id="search" onclick="$.fn.setLocation();"><img
-                src="/images/dealer-locator/volvo/location.svg"/></button>
+                src="/blocks/dealer-locator/images/location.svg"/></button>
     </div>
     <div class="sidebar" style="left:0px;">
         <div class="row main-header">
@@ -87,19 +83,19 @@ export default async function decorate(block) {
                 <input type="text" id="location" placeholder="Enter City, State, or Zip Code"/>
                 <div class="search-container">
                     <button type="button" id="search" onclick="$.fn.setAddress();">
-                        <img src="/images/dealer-locator/volvo/search.svg"/>
+                        <img src="/blocks/dealer-locator/images/search.svg"/>
                     </button>
                 </div>
                 <div class="filter-container">
                     <button type="button" onclick="$.fn.switchSidebarPane('sidebar-filter');">
                         <div style="width:44px;">
-                            <div class="icon"><img src="/images/dealer-locator/volvo/filter.svg"/></div>
+                            <div class="icon"><img src="/blocks/dealer-locator/images/filter.svg"/></div>
                         </div>
                     </button>
                 </div>
                 <div class="geo-container">
                     <button type="button" id="search" onclick="$.fn.setLocation();"><img
-                            src="/images/dealer-locator/volvo/location.svg"/></button>
+                            src="/blocks/dealer-locator/images/location.svg"/></button>
                 </div>
 
             </div>
@@ -111,7 +107,7 @@ export default async function decorate(block) {
                  <span id="dealer-tag">
                  <div class="dealer" id="filterDealer">
                      <div>
-                     <img src="/images/dealer-locator/volvo/volvo-pin-dealer.svg" class="legend-icon"/> 
+                     <img src="/blocks/dealer-locator/images/volvo-pin-dealer.svg" class="legend-icon"/> 
                      <span>Dealer</span>
                       </div>
                  </div>
@@ -119,31 +115,31 @@ export default async function decorate(block) {
                 <span id="uptime-tag">
                  <div class="uptime-dealer" id="filterUptime">
                      <div>
-                     <img src="/images/dealer-locator/volvo/volvo-pin-uptime.svg" class="legend-icon"/> <span>Certified Uptime Dealer</span>
+                     <img src="/blocks/dealer-locator/images/volvo-pin-uptime.svg" class="legend-icon"/> <span>Certified Uptime Dealer</span>
                 </div>
                          </div>
                      </span>
                 <span id="electric-tag">
                  <div class="electric-dealer" id="filterElectricDealer">
                      <div>
-                     <img src="/images/dealer-locator/volvo/bolt.svg" class="legend-icon"/> <span>Certified Electric Dealer</span>
+                     <img src="/blocks/dealer-locator/images/bolt.svg" class="legend-icon"/> <span>Certified Electric Dealer</span>
                  </div>
                      </div>
                       </span>
                 <div class="mobile-dealer" id="filterDealerMobile">
                     <div>
-                        <img src="/images/dealer-locator/volvo/volvo-pin-dealer.svg" class="legend-icon"/>
+                        <img src="/blocks/dealer-locator/images/volvo-pin-dealer.svg" class="legend-icon"/>
                         <span>Dealer</span>
                     </div>
                 </div>
                 <div class="mobile-uptime-dealer" id="filterUptimeMobile">
                     <div>
-                        <img src="/images/dealer-locator/volvo/volvo-pin-uptime.svg" class="legend-icon"/> <span>Certified Uptime</span>
+                        <img src="/blocks/dealer-locator/images/volvo-pin-uptime.svg" class="legend-icon"/> <span>Certified Uptime</span>
                     </div>
                 </div>
                 <div class="mobile-electric-dealer" id="filterElectricDealerMobile">
                     <div>
-                        <img src="/images/dealer-locator/volvo/bolt.svg" class="legend-icon"/>
+                        <img src="/blocks/dealer-locator/images/bolt.svg" class="legend-icon"/>
                         <span>Certified Electric</span>
                     </div>
                 </div>
@@ -211,12 +207,12 @@ export default async function decorate(block) {
         <div class="dealer-deatils-header">
             <div class="detail-website">
                 <a target="_blank">
-                    <img src="/images/dealer-locator/volvo/Globe-4.png"/>
+                    <img src="/blocks/dealer-locator/images/Globe-4.png"/>
                     Website</a>
             </div>
             <div class="detail-direction">
                 <a id="directions" data-id="" onclick="$.fn.switchSidebarPane('sidebar-directions', this);">
-                    <img src="/images/dealer-locator/volvo/GPS-2.png"/>
+                    <img src="/blocks/dealer-locator/images/GPS-2.png"/>
                     Directions</a>
             </div>
             <div class="detail-call">
@@ -225,7 +221,7 @@ export default async function decorate(block) {
             <div class="detail-share">
 
                 <button type="button" class="accordion"><img
-                        src="/images/dealer-locator/volvo/Share-2.png"/><span>SHARE</span></button>
+                        src="/blocks/dealer-locator/images/Share-2.png"/><span>SHARE</span></button>
                 <div class="accordion-panel">
                     <input type="text" id="share-link" value="" onclick="this.select();"/>
                 </div>
@@ -242,7 +238,7 @@ export default async function decorate(block) {
 
                 <ul class="pin-details">
                     <li>
-                        <img src="/images/dealer-locator/volvo/Map.png"/>
+                        <img src="/blocks/dealer-locator/images/Map.png"/>
                         <div id="title2"></div>
                         <br/>
                         <div id="address1">
@@ -261,11 +257,11 @@ export default async function decorate(block) {
                         </div>
                     </li>
                     <li id="hours">
-                        <img src="/images/dealer-locator/volvo/Clock.png"/>
+                        <img src="/blocks/dealer-locator/images/Clock.png"/>
                         <div></div>
                     </li>
                     <li>
-                        <img src="/images/dealer-locator/volvo/Globe.png"/>
+                        <img src="/blocks/dealer-locator/images/Globe.png"/>
                         <div id="website">No website available</div>
                         <div class="controls">
                             <i class="tooltip fa fa-external-link" id="open-website" onclick=""><span
@@ -394,12 +390,12 @@ export default async function decorate(block) {
             <div class="directions-panel">
                 <div class="pin-actions directions">
                     <button type="button" id="gmaps-link"><img
-                            src="/images/dealer-locator/volvo/Google-Maps-Old.svg"/><span>Open in<br>Google Maps</span>
+                            src="/blocks/dealer-locator/images/Google-Maps-Old.svg"/><span>Open in<br>Google Maps</span>
                     </button>
                     <button type="button" id="print"><img
-                            src="/images/dealer-locator/volvo/Print.svg"/><span>Print</span></button>
+                            src="/blocks/dealer-locator/images/Print.svg"/><span>Print</span></button>
                     <button type="button" id="add-directions" onclick="$.fn.switchSidebarPane('sidebar-select-pins');">
-                        <img src="/images/dealer-locator/volvo/MacOS-Maximize.svg"/></i><span>Modify Dealer<br>Waypoints</span>
+                        <img src="/blocks/dealer-locator/images/MacOS-Maximize.svg"/></i><span>Modify Dealer<br>Waypoints</span>
                     </button>
                 </div>
                 <div id="directions-container"></div>
@@ -415,12 +411,12 @@ export default async function decorate(block) {
             <div class="directions-panel">
                 <div class="pin-actions directions">
                     <button type="button" id="gmaps-link"><img
-                            src="/images/dealer-locator/volvo/Google-Maps-Old.svg"/><span>Open in<br>Google Maps</span>
+                            src="/blocks/dealer-locator/images/Google-Maps-Old.svg"/><span>Open in<br>Google Maps</span>
                     </button>
                     <button type="button" id="print"><img
-                            src="/images/dealer-locator/volvo/Print.svg"/><span>Print</span></button>
+                            src="/blocks/dealer-locator/images/Print.svg"/><span>Print</span></button>
                     <button type="button" id="add-directions" onclick="$.fn.switchSidebarPane('sidebar-select-pins');">
-                        <img src="/images/dealer-locator/volvo/MacOS-Maximize.svg"/></i><span>Modify Dealer<br>Waypoints</span>
+                        <img src="/blocks/dealer-locator/images/MacOS-Maximize.svg"/></i><span>Modify Dealer<br>Waypoints</span>
                     </button>
                 </div>
                 <div id="directions-container"></div>
