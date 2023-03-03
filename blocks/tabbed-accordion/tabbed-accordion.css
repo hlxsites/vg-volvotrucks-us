@@ -1,0 +1,65 @@
+.tabbed-accordion-wrapper {
+  padding: 0 4%;
+}
+
+.tabbed-accordion-wrapper .tab-navigation {
+  display: none;
+}
+
+.tabbed-accordion-wrapper .accordion-header {
+  border-top: 1px solid #CBCBCB;
+}
+
+.tabbed-accordion-wrapper .accordion-header button {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: initial;
+  color: var(--volvo-text-grey);
+  font-size: 1.6rem;
+  position: relative;
+  padding: 20px 16px;
+  margin-top: 1px;
+  height: 60px;
+}
+
+.tabbed-accordion-wrapper .accordion-header button::after {
+  position: absolute;
+  display: inline-block;
+  right: 10px;
+  font-family: var(--ff-fontawesome);
+  font-size: 2.5rem;
+  content: "\f106"
+}
+
+
+.tabbed-accordion-wrapper .accordion-header button.collapsed::after {
+  content: "\f107";
+}
+
+.tabbed-accordion-wrapper .columns-wrapper {
+  margin-bottom: 50px;
+}
+
+.tabbed-accordion-wrapper .accordion-collapse {
+  overflow: hidden;
+  transition: 0.4s linear;
+  transition-property: opacity, height;
+  will-change: opacity, contents;
+}
+
+.tabbed-accordion-wrapper .accordion-collapse:not(.is-active) {
+  height: 0;
+  opacity: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .tabbed-accordion-wrapper .tab-navigation {
+    display: block;
+  }
+
+  .tabbed-accordion-wrapper .accordion-header {
+    display: none;
+  }
+  
+}
