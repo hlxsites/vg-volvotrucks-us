@@ -24,6 +24,10 @@
     display: none;
 }
 
+.block.carousel .items p {
+    margin: 0;
+}
+
 .block.carousel .items li {
     display: block;
     scroll-snap-align: center;
@@ -159,6 +163,27 @@
     .block.carousel .desktop-controls li:last-child button::after {
         content: "\f105";
     }
+
+    .block.carousel.grid-on-desktop .items {
+        margin: 0 15px;
+        column-gap: 30px;
+        row-gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .block.carousel.grid-on-desktop .items li {
+        flex: 1 0 30%;
+    }
+
+    .block.carousel.grid-on-desktop .items img {
+        height: auto;
+        max-height: 208px;
+    }
+
+    .block.carousel.grid-on-desktop .desktop-controls {
+        display: none;
+    }
  }
 
  @media screen and (min-width: 992px) {
@@ -173,4 +198,5 @@
     .block.carousel .desktop-controls {
         top: 15px;
     }
+
  }

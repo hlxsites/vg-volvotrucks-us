@@ -2,28 +2,39 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 const debounceDelay = 30;
 
-function adjustWidthAndControls(carousel, ...controls) {
-  function toggleControls() {
-    const containerWidth = carousel.parentElement.clientWidth;
+function adjustWidthAndControls(block, carousel, ...controls) {
+  function toggle() {
+    const documentWidth = document.documentElement.clientWidth;
+    const isDesktop = documentWidth > 767 && !block.matches('.grid-on-desktop');
     const gap = parseInt(window.getComputedStyle(carousel).gap, 10);
-    const itemWidth = carousel.firstElementChild.clientWidth;
+    const itemWidth = parseInt(window.getComputedStyle(carousel.firstElementChild).width);
     const itemsFullWidth = itemWidth * carousel.children.length + gap * (carousel.children.length - 1);
+    let containerWidth = parseInt(window.getComputedStyle(carousel.parentElement).width);
+    if (isDesktop) {
+      // on desktop the container width is 2x50px smaller due to the controls
+      containerWidth -= 100;
+    }
     const showControls = itemsFullWidth > containerWidth;
     controls.forEach((ul) => showControls ? ul.classList.remove('hidden') : ul.classList.add('hidden'));
     if (showControls) carousel.classList.remove('centered'); else carousel.classList.add('centered');
-    // 2x50px minimum margin left and right
-    const maxItems = Math.floor((containerWidth - 100) / (itemsFullWidth / carousel.children.length));
-    const width = maxItems * itemWidth + gap * (maxItems - 1);
-    carousel.style.width = `${width}px`;
+    if (isDesktop) {
+      // set the width only on desktop
+      const maxItems = Math.floor((containerWidth - 100) / (itemsFullWidth / carousel.children.length));
+      const width = maxItems * itemWidth + gap * (maxItems - 1);
+      carousel.style.width = `${width}px`;
+    } else {
+      // remove on mobile viewports
+      delete carousel.style.width;
+    }
   }
 
   let resizeTimeout;
   window.addEventListener('resize', () => {
     if (resizeTimeout) clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(toggleControls, debounceDelay);
+    resizeTimeout = setTimeout(toggle, debounceDelay);
   });
 
-  window.setTimeout(toggleControls);
+  window.setTimeout(toggle);
 }
 
 function createDesktopControls(ul) {
@@ -122,5 +133,5 @@ export default function decorate(block) {
   const desktopControls = createDesktopControls(ul);
   const mobileControls = createMobileControls(ul)
 
-  adjustWidthAndControls(ul, mobileControls, desktopControls);
+  adjustWidthAndControls(block, ul, mobileControls, desktopControls);
 }
