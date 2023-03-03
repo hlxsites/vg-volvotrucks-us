@@ -171,27 +171,23 @@ pre {
 
 a.button:any-link, button {
   font-family: var(--ff-volvo-novum-medium);
-  display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
   text-align: center;
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
+  color: currentColor;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
+a.button::after {
+  content: ' \f105';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
 }
 
 button:disabled, button:disabled:hover {
@@ -199,10 +195,30 @@ button:disabled, button:disabled:hover {
   cursor: unset;
 }
 
+a.button:is(.primary, .secondary),
+button:is(.primary, .secondary) {
+  display: inline-block;
+  padding: 5px 30px;
+  color: var(--text-color);
+}
+
+a.button.primary, button.primary {
+  background-color: #fff;
+  border: 2px solid #fff;
+}
+
+a.button.primary:hover, button.primary:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hero a.button.primary:hover, .hero button.primary:hover {
+  background-color: #e1dfdd;
+  border-color: #e0e0e0;
+}
+
 a.button.secondary, button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
-  color: var(--text-color)
 }
 
 
@@ -271,7 +287,7 @@ main p img {
   margin: auto;
 }
 
-main .section-with-background { 
+main .section-with-background {
   --text-color: white;
 
   box-sizing: border-box;
