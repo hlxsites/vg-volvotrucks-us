@@ -41,43 +41,45 @@ function buildHeroBlock(main) {
   }
 }
 
-function createTabbedCarouselSection(tabItems, fullWidth) {
+function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabSection = document.createElement('div');
-  tabSection.classList.add('section', 'tabbed-carousel-container');
-  if (fullWidth) tabSection.classList.add('tabbed-carousel-container-full-width');
+  tabSection.classList.add('section', 'tabbed-container');
+  if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
   tabSection.append(wrapper);
-  const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
+  const tabBlock = buildBlock(`tabbed-${tabType}`, [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
 }
 
-function buildTabbedCarouselBlock(main) {
+function buildTabbedBlock(main) {
   let tabItems = [];
+  let tabType;
   let fullWidth = false;
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
-    const sectionMeta = section.dataset.carousel;
+    const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
-      tabContent.dataset.carousel = sectionMeta;
+      tabType = tabType || (section.dataset.carousel ? 'carousel' : 'accordion');
+      tabContent.dataset[tabType] = sectionMeta;
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
-      section.parentNode.insertBefore(tabbedCarouselSection, section);
-      decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+      const tabbedSection = createTabbedSection(tabItems, fullWidth, tabType);
+      section.parentNode.insertBefore(tabbedSection, section);
+      decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
       fullWidth = false;
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
+    const tabbedCarouselSection = createTabbedSection(tabItems, fullWidth, tabType);
     main.append(tabbedCarouselSection);
-    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
 }
 
@@ -128,8 +130,8 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
-  buildTabbedCarouselBlock(main);
   addDefaultYoutubeLinkBehaviour(main);
+  buildTabbedBlock(main);
 }
 
 /**
