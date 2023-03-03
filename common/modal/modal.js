@@ -1,3 +1,7 @@
+import { loadCSS } from '../../scripts/lib-franklin.js';
+
+loadCSS('/common/modal/modal.css');
+
 const HIDE_MODAL_CLASS = 'modal-hidden';
 
 const createVideoIframe = (parent) => {
