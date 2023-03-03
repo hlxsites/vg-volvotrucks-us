@@ -95,6 +95,12 @@
 
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html {
   font-size: 10px;
 }
@@ -107,6 +113,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 body.appear {
@@ -165,6 +172,10 @@ code, samp {
 
 pre {
   overflow: scroll;
+}
+
+strong {
+  font-family: var(--ff-volvo-novum-medium);
 }
 
 /* buttons */
@@ -241,7 +252,7 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 16px;
+  padding: 64px 0;
 }
 
 main pre {
@@ -278,7 +289,6 @@ hr {
 
 main img {
   max-width: 100%;
-  width: auto;
   height: auto;
 }
 
@@ -351,4 +361,51 @@ main .section[data-section-status='initialized'] {
 
 main .section.highlight {
   background-color: var(--highlight-background-color);
+}
+
+.section.tabbed-container {
+  padding: 0;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.section.tabbed-container-full-width {
+  width: unset;
+}
+
+.section.tabbed-container-full-width > div {
+  max-width: unset;
+}
+
+.section.tabbed-container ul.tab-navigation {
+  padding: 0;
+  margin: 25px;
+  text-align: center;
+}
+
+.section.tabbed-container ul.tab-navigation li {
+  margin: 0 auto;
+  padding: 0 1% 8px;
+  display: block;
+  width: 35%;
+}
+
+.section.tabbed-container ul.tab-navigation button {
+  background: 0 0;
+  color: var(--volvo-text-gray);
+  padding: 0;
+  margin: 0;
+}
+
+.section.tabbed-container ul.tab-navigation li.active,
+.section.tabbed-container ul.tab-navigation li:hover {
+  border-bottom: 3px solid #004FBC;
+}
+
+@media screen and (min-width: 496px) {
+  .section.tabbed-container ul.tab-navigation li {
+    margin: 0 3%;
+    display: inline-block;
+    width: unset;
+  }
 }
