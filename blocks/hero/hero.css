@@ -51,7 +51,30 @@ main .hero img {
     display: block;
     object-fit: cover;
     width: 100%;
-    height: 34.415%;
+}
+
+main .hero a.cta {
+    color: currentColor;
+    font-weight: 700;
+    background-color: transparent;
+    border: none;
+    border-radius: unset;
+    padding: 0;
+    margin: 0;
+    font-family: var(--ff-volvo-novum-regular);
+    font-size: var(--body-font-size-xs);
+}
+
+/* main .hero a.cta:hover {
+    color: var(--link-hover-color);
+} */
+
+main .hero .cta::after {
+    content: '\f105';
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font-family: fontawesome;
+    padding-left: 8px;
+
 }
 
 @media screen and (min-width: 481px) {
@@ -65,7 +88,7 @@ main .hero img {
     main .hero-headings h1 {
         margin-bottom: 8px;
     }
-    
+
     main .hero-headings h4 {
         margin-top: 0;
     }
@@ -83,10 +106,6 @@ main .hero img {
 }
 
 @media screen and (min-width: 768px) {
-    main .hero img {
-        height: 250px;
-    }
-
     main .hero-headings {
         padding-top: 48px;
         top: 0;
@@ -101,24 +120,16 @@ main .hero img {
 
 
 @media screen and (min-width: 992px) {
-    main .hero img {
-        height: 325px;
-    }
-
     main .hero-headings {
         width: 913px;
-        left: 50%;
-        transform: translateX(-50%);
+        /* left: 50%; */
+        /* transform: translateX(-50%); */
         padding-left: 47px;
         text-align: left;
     }
 }
 
 @media screen and (min-width: 1300px) {
-    main .hero img {
-        height: 413px;
-    }
-
     main .hero-headings {
         width: 1153px;
     }
