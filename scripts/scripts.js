@@ -15,6 +15,8 @@ import {
   createOptimizedPicture,
 } from './lib-franklin.js';
 
+import { showModal } from '../common/modal/modal.js';
+
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
@@ -101,6 +103,18 @@ function decorateSectionBackgrounds(main) {
   });
 }
 
+function addDefaultYoutubeLinkBehaviour(main) {
+  [...main.querySelectorAll('a')]
+    .filter((link) => link.getAttribute('href')
+      .includes('youtube.com/embed/')).forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        showModal(link.getAttribute('href'));
+      });
+    });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -115,6 +129,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
   buildTabbedCarouselBlock(main);
+  addDefaultYoutubeLinkBehaviour(main);
 }
 
 /**
