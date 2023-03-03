@@ -178,7 +178,7 @@ a.button:any-link, button {
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
-  color: currentColor;
+  color: currentcolor;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -190,16 +190,16 @@ a.button::after {
   font-family: fontawesome;
 }
 
-button:disabled, button:disabled:hover {
-  background-color: var(--overlay-background-color);
-  cursor: unset;
-}
-
 a.button:is(.primary, .secondary),
 button:is(.primary, .secondary) {
   display: inline-block;
   padding: 5px 30px;
   color: var(--text-color);
+}
+
+button:disabled, button:disabled:hover {
+  background-color: var(--overlay-background-color);
+  cursor: unset;
 }
 
 a.button.primary, button.primary {
@@ -208,7 +208,7 @@ a.button.primary, button.primary {
 }
 
 a.button.primary:hover, button.primary:hover {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 80%);
 }
 
 .hero a.button.primary:hover, .hero button.primary:hover {
