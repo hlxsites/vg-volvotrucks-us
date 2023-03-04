@@ -1,8 +1,6 @@
 import { loadScript } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
-  await loadScript('/blocks/dealer-locator/vendor/jquery.min.js', { type: 'text/javascript', charset: 'UTF-8' });
-
   window.locatorConfig = {
     asist: false,
     showAsistDialog: true,
@@ -15,8 +13,12 @@ export default async function decorate(block) {
   loadScript('/blocks/dealer-locator/vendor/moment.js', { type: 'text/javascript', charset: 'UTF-8' });
   loadScript('/blocks/dealer-locator/vendor/moment-timezone.min.js', { type: 'text/javascript', charset: 'UTF-8' });
 
-  loadScript('/blocks/dealer-locator/sidebar-dealer-locator.js', { type: 'text/javascript', charset: 'UTF-8' });
-  loadScript('/blocks/dealer-locator/my-dealer.js', { type: 'text/javascript', charset: 'UTF-8' });
+  loadScript('/blocks/dealer-locator/vendor/jquery.min.js', { type: 'text/javascript', charset: 'UTF-8' })
+    .then(() => {
+      // these scripts depend on jquery:
+      loadScript('/blocks/dealer-locator/sidebar-dealer-locator.js', { type: 'text/javascript', charset: 'UTF-8' });
+      loadScript('/blocks/dealer-locator/my-dealer.js', { type: 'text/javascript', charset: 'UTF-8' });
+    });
 
   block.innerHTML = `<input id="hoverText" value="Please unselect the selected option to click this option" hidden/>
 <!-- PartsASIST Datasource Selection -->
