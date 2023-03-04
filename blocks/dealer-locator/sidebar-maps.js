@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable  */
 $('.slider-arrow').click(function () {
   if ($(window).width() <= 700) {
     if ($(this).hasClass('show')) {
