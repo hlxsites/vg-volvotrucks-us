@@ -185,4 +185,4 @@ function MyDealer() {
 }
 
 const myDealer = new MyDealer();
-MyDealer.init();
+myDealer.init();
