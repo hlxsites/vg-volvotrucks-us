@@ -22,9 +22,6 @@ indices:
       description:
         select: head > meta[name="description"]
         value: attribute(el, "content")
-      logo:
-        select: head > meta[name="logo"]
-        value: attribute(el, "content")
   press-releases:
     include:
       - '/news-and-stories/press-releases/**'
