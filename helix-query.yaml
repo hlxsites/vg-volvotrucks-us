@@ -42,5 +42,5 @@ indices:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
       publishDate:
-        select: main > div > p:nth-of-type(1)
-        value: textContent(el)
+        select: head > meta[name="publish-date"]
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
