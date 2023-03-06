@@ -44,3 +44,25 @@ indices:
       publishDate:
         select: head > meta[name="publish-date"]
         value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
+  magazine-articles:
+    include:
+      - '/news-and-stories/volvo-trucks-magazine/**'
+    exclude:
+      - '/news-and-stories/volvo-trucks-magazine/'
+    target: /magazine-articles.json
+    properties:
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      publishDate:
+        select: head > meta[name="publish-date"]
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
