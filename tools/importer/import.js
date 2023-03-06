@@ -25,6 +25,11 @@ const createMetadata = (main, document) => {
     meta.Description = desc.content;
   }
 
+  const publishDate = document.querySelector('div.postFullDate');
+  if (publishDate) {
+    meta.publishDate = publishDate.textContent;
+  }
+
   const img = document.querySelector('[property="og:image"]');
   if (img && img.content) {
     const el = document.createElement('img');
@@ -46,9 +51,7 @@ function makeIndexPage(url) {
 const createArticleColumns = (main, document, url) => {
   const mainContent = document.querySelector('#Form1 > div.container.main-content > section.hubArticle > article > div');
   if (mainContent) {
-
     const mainImgs = mainContent.querySelectorAll('img');
-
     mainImgs.forEach((img) => {
       img.src = img.src.replace('.ashx', '.jpg');
       img.src = new URL(url).pathname + img.src;
@@ -74,6 +77,24 @@ const createArticleColumns = (main, document, url) => {
     main.append(WebImporter.DOMUtils.createTable(cards, document));
   }
 };
+
+function createPRDownloadBlock(main, document) {
+  const h3s = document.querySelectorAll('h3');
+  h3s.forEach((heads) => {
+    if (heads.textContent.includes('Download Press Release Images')) {
+      const cells = [['Download Images']];
+      cells.push([heads.innerHTML]);
+      const dimg = heads.parentNode.querySelectorAll('#img-grid > div');
+      dimg.forEach((imgs) => {
+        if (imgs.innerHTML.length > 0) {
+          cells.push([imgs.innerHTML]);
+        }
+      });
+      const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
+      heads.parentNode.replaceWith(downloadBlock);
+    }
+  });
+}
 
 function swapHero(main, document) {
   const heroImg = document.querySelector('#Form1 > div.container.main-content > section.hubArticleHero > div > div:nth-child(1)');
@@ -112,6 +133,7 @@ export default {
     ]);
 
     swapHero(main, document);
+    createPRDownloadBlock(main, document);
 
     createArticleColumns(main, document, url);
     // create the metadata block and append it to the main element
@@ -134,6 +156,6 @@ export default {
     document, url, html, params,
   }) => {
     url = makeIndexPage(url);
-    WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''))
+    WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
   },
 };
