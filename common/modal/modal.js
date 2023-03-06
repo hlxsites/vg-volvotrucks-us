@@ -63,6 +63,7 @@ const createModal = () => {
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
+    updateVideo('');
   }
 
   return {
