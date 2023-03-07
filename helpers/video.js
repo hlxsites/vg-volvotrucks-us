@@ -1,7 +1,8 @@
 import { showModal } from '../common/modal/modal.js';
 
 function isVideoLink(link) {
-  return link.includes('youtube.com/embed/');
+  return link.getAttribute('href').includes('youtube.com/embed/')
+    && link.closest('.block.embed') === null;
 }
 
 function addVideoShowHandler(link) {

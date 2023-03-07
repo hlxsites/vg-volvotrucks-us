@@ -407,7 +407,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .link-with-video .video-icon-wrapper {
   background: rgb(255 255 255 / 90%);
-  color: #53565A;
+  color: var(--volvo-text-gray);
   width: 50px;
   height: 50px;
   font-size: 25px;
@@ -430,7 +430,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .link-with-video .video-icon-wrapper:hover {
   background: rgb(230 230 230 / 90%);
-  color: #53565A;
+  color: var(--volvo-text-gray);
   font-size: 30px;
   opacity: .8;
 }

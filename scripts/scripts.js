@@ -107,7 +107,7 @@ function decorateSectionBackgrounds(main) {
 
 function addDefaultVideoLinkBehaviour(main) {
   [...main.querySelectorAll('a')]
-    .filter((link) => videoHelper.isVideoLink(link.getAttribute('href')))
+    .filter((link) => videoHelper.isVideoLink(link))
     .forEach(videoHelper.addVideoShowHandler);
 }
 

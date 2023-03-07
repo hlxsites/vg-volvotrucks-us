@@ -55,7 +55,7 @@ export default function decorate(block) {
   // iterating through the list after the HTML manipulation
   const links = [...block.querySelectorAll('a')];
 
-  links.filter((link) => videoHelper.isVideoLink(link.getAttribute('href'))).forEach((link) => {
+  links.filter((link) => videoHelper.isVideoLink(link)).forEach((link) => {
     videoHelper.addVideoShowHandler(link);
     videoHelper.wrapImageWithVideoLink(link, link.querySelector('picture'));
   });

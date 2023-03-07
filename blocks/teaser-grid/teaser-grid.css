@@ -86,7 +86,7 @@
 .block.teaser-grid>ul>li .link-with-video .video-icon-wrapper {
     top: 50%;
     left: 50%;
-    color: #53565A;
+    color: var(--volvo-text-gray);
     pointer-events: inherit;
 }
 
