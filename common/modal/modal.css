@@ -1,0 +1,55 @@
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  z-index: 1;
+  transition: opacity 0.15s linear, visibility 0.15s linear;
+  opacity: 1;
+}
+
+.modal-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.modal-content.modal-content-fade-in {
+  transform: translateY(0);
+}
+
+.modal-content {
+  margin-top: 100px;
+  aspect-ratio: 16/9;
+  width: 100%;
+  position: relative;
+  transform: translateY(-100vh);
+  transition: transform 0.3s ease-out;
+  background-color: #e1dfdd;
+}
+
+.modal-content .modal-video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    margin: 100px auto;
+    width: 726px;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-content {
+    width: 930px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .modal-content {
+    width: 1170px;
+  }
+}

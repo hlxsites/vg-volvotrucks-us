@@ -347,6 +347,10 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
 .section.tabbed-container {
   padding: 0;
   margin-top: 50px;
@@ -392,4 +396,45 @@ main .section.highlight {
     display: inline-block;
     width: unset;
   }
+}
+
+
+/* image as video link */
+.link-with-video {
+  position: relative;
+  display: block;
+}
+
+.link-with-video .video-icon-wrapper {
+  background: rgb(255 255 255 / 90%);
+  color: var(--volvo-text-gray);
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  border: 0;
+  border-radius: 40px;
+  transition: .3s;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
+  margin-right: 7.5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px 5px rgb(0 0 0 / 30%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 1;
+  line-height: 50px;
+}
+
+.link-with-video .video-icon-wrapper:hover {
+  background: rgb(230 230 230 / 90%);
+  color: var(--volvo-text-gray);
+  font-size: 30px;
+  opacity: .8;
+}
+
+.link-with-video .video-icon::before {
+  padding-left: 5px;
 }
