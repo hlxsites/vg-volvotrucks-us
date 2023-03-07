@@ -15,8 +15,6 @@ import {
   createOptimizedPicture,
 } from './lib-franklin.js';
 
-import videoHelper from '../helpers/video.js';
-
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
@@ -107,8 +105,10 @@ function decorateSectionBackgrounds(main) {
 
 function addDefaultVideoLinkBehaviour(main) {
   [...main.querySelectorAll('a')]
-    .filter((link) => videoHelper.isVideoLink(link))
-    .forEach(videoHelper.addVideoShowHandler);
+    // eslint-disable-next-line no-use-before-define
+    .filter((link) => isVideoLink(link))
+    // eslint-disable-next-line no-use-before-define
+    .forEach(addVideoShowHandler);
 }
 
 /**
@@ -196,3 +196,34 @@ async function loadPage() {
 }
 
 loadPage();
+
+/* video helpers */
+export function isVideoLink(link) {
+  return link.getAttribute('href').includes('youtube.com/embed/')
+    && link.closest('.block.embed') === null;
+}
+
+export function addVideoShowHandler(link) {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    import('../common/modal/modal.js').then((modal) => {
+      modal.showModal(link.getAttribute('href'));
+    });
+  });
+}
+
+export function wrapImageWithVideoLink(videoLink, image) {
+  videoLink.innerText = '';
+  videoLink.appendChild(image);
+  videoLink.classList.add('link-with-video');
+  videoLink.classList.remove('button', 'primary');
+
+  // play icon
+  const iconWrapper = document.createElement('div');
+  iconWrapper.classList.add('video-icon-wrapper');
+  const icon = document.createElement('i');
+  icon.classList.add('fa', 'fa-play', 'video-icon');
+  iconWrapper.appendChild(icon);
+  videoLink.appendChild(iconWrapper);
+}

@@ -1,4 +1,4 @@
-import videoHelper from '../../helpers/video.js';
+import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const grid = document.createElement('ul');
@@ -55,8 +55,8 @@ export default function decorate(block) {
   // iterating through the list after the HTML manipulation
   const links = [...block.querySelectorAll('a')];
 
-  links.filter((link) => videoHelper.isVideoLink(link)).forEach((link) => {
-    videoHelper.addVideoShowHandler(link);
-    videoHelper.wrapImageWithVideoLink(link, link.querySelector('picture'));
+  links.filter((link) => isVideoLink(link)).forEach((link) => {
+    addVideoShowHandler(link);
+    wrapImageWithVideoLink(link, link.querySelector('picture'));
   });
 }

@@ -1,4 +1,4 @@
-import videoHelper from '../../helpers/video.js';
+import { wrapImageWithVideoLink } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   block.classList.add(`teaser-cards-${block.firstElementChild.children.length}`);
@@ -17,7 +17,7 @@ export default function decorate(block) {
       // display image as link with play icon
       const image = elem.querySelector('.image');
 
-      videoHelper.wrapImageWithVideoLink(link, image);
+      wrapImageWithVideoLink(link, image);
     }
 
     // give cta's link(s) a specific class name
