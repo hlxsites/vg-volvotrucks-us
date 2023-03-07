@@ -5,6 +5,7 @@ loadCSS('/common/modal/modal.css');
 const HIDE_MODAL_CLASS = 'modal-hidden';
 
 const createVideoIframe = (parent, url) => {
+  // iframe must be recreated every time otherwise the new history record would be created
   const iframe = document.createElement('iframe');
 
   iframe.classList.add('modal-video');
