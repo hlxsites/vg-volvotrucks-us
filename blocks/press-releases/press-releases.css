@@ -1,0 +1,75 @@
+.section.press-releases-container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.section.press-releases-container h1,
+.section.press-releases-container h2 {
+    font-family: var(--ff-volov-broadprodigital);
+    font-size: 6.0rem;
+    margin-top: unset;
+    margin-bottom: 1em;
+    display: block;
+    text-align: center;
+}
+
+.block.press-releases article img {
+    display: block;
+}
+
+.block.press-releases article p {
+    margin-top: unset;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
+
+.block.press-releases article h4.date {
+    line-height: 1.4rem;
+    font-size: 1.6rem;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: var(--volvo-text-light-gray);
+}
+
+.block.press-releases article h3 {
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+    margin-bottom: 10px;
+}
+
+.block.press-releases article h3 a {
+    color: var(--volvo-text-gray);
+}
+
+.block.press-releases p.button-container {
+    text-align: center;
+}
+
+.block.press-releases p.button-container a {
+    background-color: unset;
+    color: var(--volvo-text-gray);
+    border-radius: 0;
+    border: 2px solid var(--volvo-text-gray);
+}
+
+.block.press-releases p.button-container a:hover {
+    background-color: var(--background-hover-color);
+}
+
+.block.press-releases p.button-container a::after {
+    padding-left: 8px;
+    font-family: var(--ff-fontawesome);
+    content: "\f105"
+}
+
+@media screen and (min-width: 768px){
+    .block.press-releases .press-releases-cards {
+        display: flex;
+    }
+
+    .block.press-releases article {
+        flex: 0 0 33.33%;
+        padding: 0 15px;
+    }
+}
+

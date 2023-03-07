@@ -158,6 +158,175 @@ export function addFavIcon(href) {
   }
 }
 
+async function* request(url, context) {
+  const { chunks: chunkSize, fetch } = context;
+  for (let offset = 0, total = Infinity; offset < total; offset += chunkSize) {
+    // eslint-disable-next-line no-await-in-loop
+    const resp = await fetch(`${url}?offset=${offset}&limit=${chunkSize}`);
+    if (resp.ok) {
+      // eslint-disable-next-line no-await-in-loop
+      const json = await resp.json();
+      total = json.total;
+      // eslint-disable-next-line no-restricted-syntax
+      for (const entry of json.data) yield entry;
+    } else {
+      return;
+    }
+  }
+}
+
+// Operations:
+
+function withFetch(upstream, context, fetch) {
+  context.fetch = fetch;
+  return upstream;
+}
+
+function withHtmlParser(upstream, context, parseHtml) {
+  context.parseHtml = parseHtml;
+  return upstream;
+}
+
+function chunks(upstream, context, chunkSize) {
+  context.chunks = chunkSize;
+  return upstream;
+}
+
+async function* skip(upstream, context, skipItems) {
+  let skipped = 0;
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const entry of upstream) {
+    if (skipped < skipItems) {
+      skipped += 1;
+    } else {
+      yield entry;
+    }
+  }
+}
+
+async function* limit(upstream, context, limitSize) {
+  let yielded = 0;
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const entry of upstream) {
+    yield entry;
+    yielded += 1;
+    if (yielded === limitSize) {
+      return;
+    }
+  }
+}
+
+async function* map(upstream, context, fn, maxInFlight = 5) {
+  const promises = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for await (let entry of upstream) {
+    promises.push(fn(entry));
+    if (promises.length === maxInFlight) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (entry of promises) {
+        // eslint-disable-next-line no-await-in-loop
+        entry = await entry;
+        if (entry) yield entry;
+      }
+      promises.splice(0, promises.length);
+    }
+  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (let entry of promises) {
+    // eslint-disable-next-line no-await-in-loop
+    entry = await entry;
+    if (entry) yield entry;
+  }
+}
+
+async function* filter(upstream, context, fn) {
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const entry of upstream) {
+    if (fn(entry)) {
+      yield entry;
+    }
+  }
+}
+
+function slice(upstream, context, from, to) {
+  return limit(skip(upstream, context, from), context, to - from);
+}
+
+function follow(upstream, context, name, maxInFlight = 5) {
+  const { fetch, parseHtml } = context;
+  return map(upstream, context, async (entry) => {
+    const value = entry[name];
+    if (value) {
+      const resp = await fetch(value);
+      return { ...entry, [name]: resp.ok ? parseHtml(await resp.text()) : null };
+    }
+    return entry;
+  }, maxInFlight);
+}
+
+async function all(upstream) {
+  const result = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const entry of upstream) {
+    result.push(entry);
+  }
+  return result;
+}
+
+async function first(upstream) {
+  /* eslint-disable-next-line no-unreachable-loop,no-restricted-syntax */
+  for await (const entry of upstream) {
+    return entry;
+  }
+  return null;
+}
+
+// Helper
+
+function assignOperations(generator, context) {
+  // operations that return a new generator
+  function createOperation(fn) {
+    return (...rest) => assignOperations(fn.apply(null, [generator, context, ...rest]), context);
+  }
+  const operations = {
+    skip: createOperation(skip),
+    limit: createOperation(limit),
+    slice: createOperation(slice),
+    map: createOperation(map),
+    filter: createOperation(filter),
+    follow: createOperation(follow),
+  };
+
+  // functions that either return the upstream generator or no generator at all
+  const functions = {
+    chunks: chunks.bind(null, generator, context),
+    all: all.bind(null, generator, context),
+    first: first.bind(null, generator, context),
+    withFetch: withFetch.bind(null, generator, context),
+    withHtmlParser: withHtmlParser.bind(null, generator, context),
+  };
+
+  return Object.assign(generator, operations, functions);
+}
+
+export function ffetch(url) {
+  let chunkSize = 255;
+  const fetch = (...rest) => window.fetch.apply(null, rest);
+  const parseHtml = (html) => new window.DOMParser().parseFromString(html, 'text/html');
+
+  try {
+    if ('connection' in window.navigator && window.navigator.connection.saveData === true) {
+      // request smaller chunks in save data mode
+      chunkSize = 64;
+    }
+  } catch (e) { /* ignore */ }
+
+  const context = { chunks: chunkSize, fetch, parseHtml };
+  const generator = request(url, context);
+
+  return assignOperations(generator, context);
+}
+
 /**
  * loads everything that doesn't need to be delayed.
  */
