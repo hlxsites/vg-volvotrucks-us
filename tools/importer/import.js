@@ -12,6 +12,8 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
+const hr = (doc) => doc.createElement('hr');
+
 const createMetadata = (main, document) => {
   const meta = {};
 
@@ -27,7 +29,7 @@ const createMetadata = (main, document) => {
 
   const publishDate = document.querySelector('div.postFullDate');
   if (publishDate) {
-    meta.publishDate = publishDate.textContent;
+    meta['publish-date'] = new Date(publishDate.textContent).toISOString();
   }
 
   const img = document.querySelector('[property="og:image"]');
@@ -87,7 +89,7 @@ function createPRDownloadBlock(main, document) {
       const dimg = heads.parentNode.querySelectorAll('#img-grid > div');
       dimg.forEach((imgs) => {
         if (imgs.innerHTML.length > 0) {
-          cells.push([imgs.innerHTML]);
+          cells.push([imgs.innerHTML.replaceAll('http://localhost:3001', '')]);
         }
       });
       const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
@@ -99,6 +101,49 @@ function createPRDownloadBlock(main, document) {
 function swapHero(main, document) {
   const heroImg = document.querySelector('#Form1 > div.container.main-content > section.hubArticleHero > div > div:nth-child(1)');
   WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document);
+}
+
+function makeTruckHero(main, document) {
+  const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div.heroImage.full-width');
+  if (mainHero) {
+    const subhead = mainHero.querySelector('div > div.wrapper > div > div > h4');
+    const herohead = mainHero.querySelector('div > div.wrapper > div > div > h1');
+    const normal = document.createElement('p');
+    normal.innerHTML = subhead.innerHTML;
+    console.log(subhead.innerHTML);
+    mainHero.after(hr(document));
+    mainHero.after(normal);
+    mainHero.after(herohead);
+    subhead.remove();
+  }
+}
+
+function makeTabbedCarousel(main, document) {
+  const tc = document.querySelectorAll('#Form1 div.tabbedCarousel');
+  if (tc) {
+    console.log('tabbed carousel(s) found: ' + tc.length);
+  }
+}
+
+function makeGenericGrid(main, document) {
+  const gg = document.querySelectorAll('#Form1 div.generic-grid.full-width');
+  if (gg) {
+    console.log('generic grid(s) found: ' + gg.length);
+  }
+}
+
+function makeProductCarousel(main, document) {
+  const pc = document.querySelectorAll('#Form1 div.productCarousel');
+  if (pc) {
+    console.log('product carousel(s) found: ' + pc.length);
+  }
+}
+
+function makeImageText(main, document) {
+  const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText');
+  if (it) {
+    console.log('image text(s) found: ' + it.length);
+  }
 }
 
 export default {
@@ -133,6 +178,11 @@ export default {
     ]);
 
     swapHero(main, document);
+    makeTruckHero(main, document);
+    makeTabbedCarousel(main, document);
+    makeGenericGrid(main, document);
+    makeProductCarousel(main, document);
+    makeImageText(main, document);
     createPRDownloadBlock(main, document);
 
     createArticleColumns(main, document, url);
