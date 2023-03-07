@@ -1,6 +1,6 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 
-function scrollTopFunction(buttonEl) {
+function displayScrollToTop(buttonEl) {
   if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
     buttonEl.style.display = 'block';
   } else {
@@ -17,10 +17,10 @@ function goToTopFunction() {
   }
 }
 
-function displayScrollToTop(mainEl) {
+function addScrollToTopButton(mainEl) {
   const scrollToTopButton = document.createElement('button');
   scrollToTopButton.addEventListener('click', goToTopFunction);
-  window.addEventListener('scroll', () => scrollTopFunction(scrollToTopButton));
+  window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));
   scrollToTopButton.classList.add('scroll-to-top');
   scrollToTopButton.setAttribute('title', 'Go to the top of the page');
   scrollToTopButton.innerHTML = `
@@ -60,5 +60,5 @@ export default async function decorate(block) {
   }
   await decorateIcons(footer);
   block.append(footer);
-  displayScrollToTop(block);
+  addScrollToTopButton(block);
 }
