@@ -15,7 +15,7 @@ import {
   createOptimizedPicture,
 } from './lib-franklin.js';
 
-import { showModal } from '../common/modal/modal.js';
+import videoHelper from '../helpers/video.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
@@ -105,16 +105,10 @@ function decorateSectionBackgrounds(main) {
   });
 }
 
-function addDefaultYoutubeLinkBehaviour(main) {
+function addDefaultVideoLinkBehaviour(main) {
   [...main.querySelectorAll('a')]
-    .filter((link) => link.getAttribute('href')
-      .includes('youtube.com/embed/')).forEach((link) => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        showModal(link.getAttribute('href'));
-      });
-    });
+    .filter((link) => videoHelper.isVideoLink(link.getAttribute('href')))
+    .forEach(videoHelper.addVideoShowHandler);
 }
 
 /**
@@ -130,7 +124,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
-  addDefaultYoutubeLinkBehaviour(main);
+  addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
 }
 
