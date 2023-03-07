@@ -1,0 +1,16 @@
+.embed-video-iframe {
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .embed-video {
+    width: 726px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .embed-video {
+    width: 1170px;
+  }
+}
