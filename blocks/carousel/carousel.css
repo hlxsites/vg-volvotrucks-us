@@ -1,132 +1,200 @@
-.section.carousel-container {
-    text-align: center;
-    margin-top: 48px;
-    margin-bottom: 48px;
-    padding: unset;
-}
-
-.carousel-container .default-content-wrapper h3 {
-    color: var(--volvo-text-light-gray);
-    text-transform: uppercase;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: var(--heading-font-size-m);
-}
-
- .carousel-container .default-content-wrapper h2 {
-    font-size: var(--heading-font-size-m);
-     margin-top: 0;
- }
-
- .carousel-container .carousel-wrapper {
-    overflow: hidden;
- }
-
-.carousel-wrapper ul.carousel-list {
-    list-style: none;
-    margin: 0;
-    padding: 0 20%;
+.block.carousel > div > div {
+    position: relative;
     display: flex;
-    gap: 0;
-    overflow-x: scroll;
+    flex-direction: column-reverse;
+}
+
+.block.carousel ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.block.carousel .items {
+    padding: 0 50%;
+    gap: 20px;
+    overflow: scroll hidden;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
-    scroll-padding: 20%;
-    scrollbar-width: none;
+    scrollbar-width: none;    
 }
 
-.carousel-wrapper ul.carousel-list::-webkit-scrollbar {
+.block.carousel .items::-webkit-scrollbar {
     display: none;
- }
-
-.carousel-wrapper ul.carousel-list li {
-    flex: 0 0 100%;
-    scroll-snap-align: start;
 }
 
-.carousel-wrapper ul.controls {
-    display: flex;
-    list-style: none;
+.block.carousel .items p {
+    margin: 0;
+}
+
+.block.carousel .items li {
+    display: block;
+    scroll-snap-align: center;
+    text-align: center;
+    flex: 0 0 288px;
+}
+
+.block.carousel .items img {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    object-fit: cover;
+    height: 170px;
+}
+
+.block.carousel .mobile-controls {
     justify-content: center;
-    margin: 0;
-    padding: 0;
     gap: 5px;
- }
+}
 
- .carousel-wrapper ul.controls li {
-    width: 20px;
-    justify-items: center;
-    height: 20px;
- }
-
- .carousel-wrapper ul.controls li button {
-    display: inline-block;
+.block.carousel .mobile-controls button {
+    display: block;
+    position: relative;
     margin: 0;
     padding: 0;
-    font-size: 0;
-    line-height: 0;
     width: 20px;
     height: 20px;
     cursor: pointer;
     border: 0;
     outline: 0;
     background: 0 0;
- }
+    font-size: 0;
+}
 
-.carousel-wrapper ul.controls li button::before {
-    font-family: var(--ff-fontawesome);
-    font-size: 1.6rem;
-    line-height: 3.2rem;
+.block.carousel .mobile-controls button::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     content: "\f10c";
-    color: var(--volvo-text-light-gray);
-    width: 20px;
-    height: 20px;
+    font-family: var(--ff-fontawesome);
+    font-size: 1.2rem;
+    line-height: 1;
     text-align: center;
+    color: var(--volvo-text-light-gray);
  }
 
- .carousel-wrapper ul.controls li.active button::before {
+ .block.carousel .mobile-controls .active button::after {
     content: "\f192";
  }
 
-.carousel-wrapper .wrapper p, .carousel-wrapper .wrapper h3 {
-    font-size: var(--body-font-size-xs);
-    margin: 0;
-}
+ .block.carousel .desktop-controls,
+ .block.carousel .mobile-controls.hidden,
+ .block.carousel .desktop-controls.hidden {
+     display: none;
+ }
 
-.carousel-wrapper .wrapper p:last-child {
-    display: none;
-}
+ @media screen and (min-width: 481px) {
+    .block.carousel .mobile-controls button::after {
+        font-size: 1.6rem;
+    }
+    
+ }
 
-.carousel-wrapper ul > li img {
-    width: 100%;
-    object-fit: cover;
-}
+ @media screen and (min-width: 768px) {
+    .block.carousel .items {
+        padding: 0;
+        margin: 0 auto;
+        z-index: 1;
+    }
 
-@media screen and (min-width: 768px) {
-    .carousel-wrapper .grid-on-desktop ul.carousel-list {
-        overflow-x: visible;
+    .block.carousel .items.centered {
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 30px;
-        padding: 0;
     }
 
-    .carousel-wrapper ul.carousel-list li {
-        padding: 0;
+    .block.carousel .items li {
+        flex-basis: 101px;
+        scroll-snap-align: start;
     }
 
-    .carousel-wrapper .grid-on-desktop ul.carousel-list li {
-        flex: 0 0 calc(33.33% - 20px);
+    .block.carousel .items img {
+        height: 101px;
     }
 
-    .carousel-wrapper ul.controls {
+    .block.carousel .mobile-controls {
         display: none;
     }
-}
 
-@media  screen and (min-width: 992px) {
-    .carousel-wrapper .wrapper p:last-child {
-        display: block;
+    .block.carousel .desktop-controls {
+        display: flex;
+        position: absolute;
+        justify-content: space-between;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
-}
+
+    .block.carousel .desktop-controls button {
+        position: relative;
+        margin: 0;
+        width: 50px;
+        height: 100px;
+        border: 0;
+        border-radius: 0;
+        background-color: rgba(216 215 213 / 90%);
+        font-size: 0;
+    }
+
+    .block.carousel .desktop-controls button::after {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: "\f104";
+        font-family: var(--ff-fontawesome);
+        font-size: 2rem;
+        line-height: 1;
+        text-align: center;
+        color: var(--volvo-text-gray);
+    }
+
+    .block.carousel .desktop-controls li:last-child button::after {
+        content: "\f105";
+    }
+
+    .block.carousel.grid-on-desktop .items {
+        margin: 0 15px;
+        column-gap: 30px;
+        row-gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .block.carousel.grid-on-desktop .items li {
+        flex: 1 0 30%;
+    }
+
+    .block.carousel.grid-on-desktop .items img {
+        height: auto;
+        max-height: 208px;
+    }
+
+    .block.carousel.grid-on-desktop .desktop-controls {
+        display: none;
+    }
+ }
+
+ @media screen and (min-width: 992px) {
+    .block.carousel .items li {
+        flex-basis: 175px;
+    }
+
+    .block.carousel .items img {
+        height: 130px;
+    }
+
+    .block.carousel .desktop-controls {
+        top: 15px;
+    }
+
+ }
