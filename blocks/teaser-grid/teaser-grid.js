@@ -31,7 +31,7 @@ export default function decorate(block) {
         link.remove();
       }
 
-      li.appendChild(link);
+      li.appendChild(link ?? image);
 
       const textItems = contentContainer.innerHTML.split('<br>').filter((text) => text.trim() !== '');
       if (textItems.length) {
