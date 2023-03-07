@@ -56,9 +56,10 @@
 
  :root {
   /* colors */
+  --c-white: #fff;
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
-  --background-color: #fff;
+  --background-color: var(--c-white);
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
@@ -161,6 +162,14 @@ a:hover {
   color: var(--link-hover-color);
 }
 
+:is(h1, h2, h3, h4, h5, h6) a:any-link {
+  color: currentcolor;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after {
+  color: var(--link-color);
+}
+
 code, pre, samp {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
@@ -189,33 +198,30 @@ a.button:any-link, button {
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
-  color: currentcolor;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 a.button::after {
   content: ' \f105';
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: fontawesome;
 }
 
-a.button:is(.primary, .secondary),
-button:is(.primary, .secondary) {
+a.button.primary,
+button.primary {
   display: inline-block;
   padding: 5px 30px;
   color: var(--text-color);
+  background-color: var(--c-white);
+  border: 2px solid var(--c-white);
 }
 
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
-}
-
-a.button.primary, button.primary {
-  background-color: #fff;
-  border: 2px solid #fff;
 }
 
 a.button.primary:hover, button.primary:hover {
@@ -226,12 +232,6 @@ a.button.primary:hover, button.primary:hover {
   background-color: #e1dfdd;
   border-color: #e0e0e0;
 }
-
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-}
-
 
 main input {
   font-size: 1.25rem;
