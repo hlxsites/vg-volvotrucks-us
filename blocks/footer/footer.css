@@ -8,6 +8,7 @@
   font-family: var(--ff-volvo-novum);
   font-size: 14px;
   margin: 0;
+  padding: 0;
 }
 
 .block.footer .footer-links {
