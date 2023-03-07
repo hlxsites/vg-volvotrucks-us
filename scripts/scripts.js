@@ -199,24 +199,16 @@ loadPage();
 
 /* video helpers */
 export function isVideoLink(link) {
-  return link.getAttribute('data-video-src')
-    || (link.getAttribute('href').includes('youtube.com/embed/')
-      && link.closest('.block.embed') === null);
+  return link.getAttribute('href').includes('youtube.com/embed/')
+      && link.closest('.block.embed') === null;
 }
 
 export function addVideoShowHandler(link) {
-  const href = link.getAttribute('href');
-
-  if (href && href !== '#') {
-    link.setAttribute('href', '#');
-    link.setAttribute('data-video-src', href);
-  }
-
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
     import('../common/modal/modal.js').then((modal) => {
-      modal.showModal(link.getAttribute('data-video-src'));
+      modal.showModal(link.getAttribute('href'));
     });
   });
 }

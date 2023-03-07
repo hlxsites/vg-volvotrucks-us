@@ -4,20 +4,15 @@ loadCSS('/common/modal/modal.css');
 
 const HIDE_MODAL_CLASS = 'modal-hidden';
 
-const createVideoIframe = (parent) => {
+const createVideoIframe = (parent, url) => {
   const iframe = document.createElement('iframe');
 
   iframe.classList.add('modal-video');
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+  iframe.setAttribute('src', url);
 
   parent.appendChild(iframe);
-
-  const changeIframUrl = (newUrl) => {
-    iframe.setAttribute('src', newUrl);
-  };
-
-  return changeIframUrl;
 };
 
 const createModal = () => {
@@ -38,9 +33,6 @@ const createModal = () => {
 
   const modalContent = document.createElement('div');
   modalContent.classList.add('modal-content');
-
-  const updateVideo = createVideoIframe(modalContent);
-
   modalBackground.appendChild(modalContent);
   document.body.appendChild(modalBackground);
 
@@ -48,7 +40,7 @@ const createModal = () => {
     window.addEventListener('keydown', keyDownAction);
 
     if (newUrl) {
-      updateVideo(newUrl);
+      createVideoIframe(modalContent, newUrl);
     }
 
     modalContent.classList.add('modal-content-fade-in');
@@ -63,7 +55,7 @@ const createModal = () => {
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
-    updateVideo('');
+    modalContent.querySelector('iframe').remove();
   }
 
   return {
