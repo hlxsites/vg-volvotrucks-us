@@ -1,3 +1,5 @@
+import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const grid = document.createElement('ul');
   const columns = [...block.firstElementChild.children];
@@ -20,17 +22,16 @@ export default function decorate(block) {
       li.innerHTML = '';
 
       const link = contentContainer.querySelector('a');
-      let image = contentContainer.querySelector('picture');
+      const image = contentContainer.querySelector('picture');
 
       if (image && link) {
         // wrap the image with the link, remove the link from the content container
         link.innerText = '';
         link.appendChild(image);
         link.remove();
-        image = link;
       }
 
-      li.appendChild(image);
+      li.appendChild(link ?? image);
 
       const textItems = contentContainer.innerHTML.split('<br>').filter((text) => text.trim() !== '');
       if (textItems.length) {
@@ -50,4 +51,12 @@ export default function decorate(block) {
   });
 
   block.innerHTML = grid.outerHTML;
+
+  // iterating through the list after the HTML manipulation
+  const links = [...block.querySelectorAll('a')];
+
+  links.filter((link) => isVideoLink(link)).forEach((link) => {
+    addVideoShowHandler(link);
+    wrapImageWithVideoLink(link, link.querySelector('picture'));
+  });
 }
