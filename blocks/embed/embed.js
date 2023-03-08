@@ -20,7 +20,6 @@ export default function decorate(block) {
     iframe.setAttribute('loading', 'lazy');
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('src', selectedLink);
-    iframe.setAttribute('src', selectedLink);
     iframe.classList.add('embed-video-iframe');
     iframe.classList.add('embed-video-iframe-loaded');
 
