@@ -66,6 +66,8 @@
   --volvo-text-gray: #53565A;
   --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
+  --btn-background-hover: #e1dfdd;
+  --btn-border-hover: #030333;
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
@@ -216,7 +218,7 @@ button.primary {
   padding: 5px 30px;
   color: var(--text-color);
   background-color: var(--c-white);
-  border: 2px solid var(--c-white);
+  border: 2px solid var(--text-color);
 }
 
 button:disabled, button:disabled:hover {
@@ -225,12 +227,8 @@ button:disabled, button:disabled:hover {
 }
 
 a.button.primary:hover, button.primary:hover {
-  background-color: rgb(255 255 255 / 80%);
-}
-
-.hero a.button.primary:hover, .hero button.primary:hover {
-  background-color: #e1dfdd;
-  border-color: #e0e0e0;
+  background-color: var(--btn-background-hover);
+  border-color: var(--btn-border-hover);
 }
 
 main input {
