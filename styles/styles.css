@@ -168,6 +168,10 @@ a:hover {
   color: currentcolor;
 }
 
+:is(h1, h2, h3, h4, h5, h6) a:any-link:hover {
+  text-decoration: none;
+}
+
 :is(h1, h2, h3, h4, h5, h6) a:any-link::after {
   color: var(--link-color);
 }
