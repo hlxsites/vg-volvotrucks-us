@@ -3,7 +3,7 @@ import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 // media query match that indicates mobile/tablet width
 const MQ = window.matchMedia('(min-width: 992px)');
 
-function closeOnEscape(e) {
+/* function closeOnEscape(e) {
   if (e.code === 'Escape') {
     const nav = document.getElementById('nav');
     const navSections = nav.querySelector('.nav-sections');
@@ -39,7 +39,7 @@ function focusNavSection() {
  * Toggles all nav sections
  * @param {Element} sections The container element
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
- */
+ *
 function toggleAllNavSections(sections, expanded = false) {
   sections.querySelectorAll('.nav-sections > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
@@ -51,9 +51,10 @@ function toggleAllNavSections(sections, expanded = false) {
  * @param {Element} nav The container element
  * @param {Element} navSections The nav sections within the container element
  * @param {*} forceExpanded Optional param to force nav expand behavior when not null
- */
+ *
 function toggleMenu(nav, navSections, forceExpanded = null) {
-  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
+  const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded')
+   === 'true';
   const button = nav.querySelector('.nav-hamburger button');
   document.body.style.overflowY = (expanded || MQ.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
@@ -84,13 +85,16 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
     window.removeEventListener('keydown', closeOnEscape);
   }
 }
+*/
 
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
+  // not really needed
   const config = readBlockConfig(block);
+  // clear the block
   block.textContent = '';
 
   // fetch nav content
@@ -98,20 +102,95 @@ export default async function decorate(block) {
   const resp = await fetch(`${navPath}.plain.html`);
 
   if (resp.ok) {
-    const html = await resp.text();
+    // get the navigation text, turn it into html elements
+    const navContent = document.createRange().createContextualFragment(await resp.text());
 
-    // decorate nav DOM
+    // start the nav DOM
     const nav = document.createElement('nav');
     nav.id = 'nav';
-    nav.innerHTML = html;
+    // add all the divs that will be part of the nav
+    nav.innerHTML = `
+      <div class='brand'>
+        <div class='logo'>
+        </div>
+        <div class='vgsection-location'>
+          <div class='vgsection'>
+          </div>
+          <div class='location'>
+          </div>
+        </div>
+      </div>
 
-    const classes = ['brand', 'sections', 'tools'];
-    classes.forEach((c, i) => {
-      const section = nav.children[i];
-      if (section) section.classList.add(`nav-${c}`);
+      <a class="search-toggle" aria-expanded="false">
+        <img class="search-icon" src="icons/search-icon.png" >
+      </a>
+
+      <a class="hamburger-toggle" aria-expanded="false" >
+        <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
+      </a>
+
+      <div class='search' aria-expanded="false">
+        <div>
+          <label for="searchInput">Search Term</label>
+          <input autocomplete="off" type="text" id="searchInput" placeholder="Search for"
+          onkeypress="searchKeyCheck(event, this, 'us', '/search-results/')" >
+          <a class="search-button" href="javascript:submitSearch($('#searchText_mobile'), 'us', '/search-results/')" >
+            <i class="fa fa-search"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class='tools'>
+        <div class='hamburger-close'>
+          <img src="/icons/Close-Icons.png">
+        </div>
+      </div>
+
+      <div class='sections'>
+      </div>
+
+      <div class='semitrans'>
+      </div>
+    `;
+
+    // fill in the content from nav doc
+    // logo
+    nav.querySelector('.logo').append(navContent.querySelector('div:first-of-type > p:first-of-type > span'));
+    // vg_section
+    nav.querySelector('.vgsection').append(navContent.querySelector('div:first-of-type > p:nth-of-type(2)').textContent);
+    // location
+    nav.querySelector('.location').append(navContent.querySelector('div:first-of-type > p:nth-of-type(3)').textContent);
+    // tools
+    nav.querySelector('.tools').prepend(navContent.querySelector('div:nth-of-type(2) ul'));
+    // sections
+    nav.querySelector('.sections').append(navContent.querySelector('div:nth-of-type(3) ul'));
+
+    // add event listeners
+
+    // for the mobile search icon
+    nav.querySelector('.search-toggle').addEventListener('click', (e) => {
+      const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
+      e.currentTarget.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      document.querySelector('nav .search').setAttribute('aria-expanded', expanded ? 'false' : 'true');
     });
 
-    const navSections = nav.querySelector('.nav-sections');
+    // for the hamburger toggle icon
+    nav.querySelector('.hamburger-toggle').addEventListener('click', (e) => {
+      e.currentTarget.setAttribute('aria-expanded', 'true');
+      document.querySelector('nav .semitrans').setAttribute('aria-expanded', 'true');
+    });
+
+    // for the hamburger close icon
+    nav.querySelector('.hamburger-close').addEventListener('click', () => {
+      document.querySelector('nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+    });
+
+    // force hamburger close when in destop size
+    MQ.addEventListener('change', () => {
+      document.querySelector('nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+    });
+
+    /* const navSections = nav.querySelector('.nav-sections');
     if (navSections) {
       navSections.querySelectorAll(':scope > ul > li').forEach((navSection) => {
         if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
@@ -124,21 +203,11 @@ export default async function decorate(block) {
         });
       });
     }
+    */
 
-    // hamburger for mobile
-    const hamburger = document.createElement('div');
-    hamburger.classList.add('nav-hamburger');
-    hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-        <span class="nav-hamburger-icon"></span>
-      </button>`;
-    hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-    nav.prepend(hamburger);
-    nav.setAttribute('aria-expanded', 'false');
-    // prevent mobile nav behavior on window resize
-    toggleMenu(nav, navSections, MQ.matches);
-    MQ.addEventListener('change', () => toggleMenu(nav, navSections, MQ.matches));
-
+    /* set volvo icon */
     decorateIcons(nav);
+    /* append result */
     block.append(nav);
   }
 }
