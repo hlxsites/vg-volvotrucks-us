@@ -9,6 +9,7 @@ export default function decorate(block) {
   const iframe = document.createElement('iframe');
 
   iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('loading', 'lazy');
   iframe.setAttribute('allowfullscreen', '');
   iframe.setAttribute('src', selectedLink);
   iframe.classList.add('embed-video-iframe');
