@@ -42,6 +42,14 @@ main .hero-headings h4 {
     line-height: 1.5em;
 }
 
+main .hero-headings:has(.button) h1 {
+    margin-block-end: 8px;
+}
+
+main .hero .button-container {
+    margin-block: 0;
+}
+
 main .hero picture {
     object-fit: cover;
     box-sizing: border-box;
@@ -54,8 +62,8 @@ main .hero img {
 }
 
 main .hero a.cta {
-    color: currentColor;
-    font-weight: 700;
+    display: initial;
+    color: currentcolor;
     background-color: transparent;
     border: none;
     border-radius: unset;
@@ -65,24 +73,13 @@ main .hero a.cta {
     font-size: var(--body-font-size-xs);
 }
 
-/* main .hero a.cta:hover {
-    color: var(--link-hover-color);
-} */
-
-main .hero .cta::after {
-    content: '\f105';
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-    font-family: fontawesome;
-    padding-left: 8px;
-
-}
-
 @media screen and (min-width: 481px) {
     main .hero-headings {
         color: white;
         position: absolute;
         bottom: 16px;
         padding-left: 32px;
+        text-align: initial;
     }
 
     main .hero-headings h1 {
@@ -112,6 +109,22 @@ main .hero .cta::after {
         bottom: unset;
     }
 
+    main .hero-headings:has(.button) h1 {
+        margin-block-end: 24px;
+    }
+
+    main .hero-headings a.cta {
+        padding: 12px 32px;
+        color: var(--text-color);
+        background-color: var(--c-white);
+        border: 2px solid var(--c-white);
+    }
+
+    main .hero-headings a.cta:hover {
+        background-color: var(--btn-background-hover);
+        border-color: #e0e0e0;
+    }
+
     main .hero picture::after {
         top: 0;
         background-image: linear-gradient(-30deg,rgba(0 0 0 / 0%),rgba(0 0 0 / 40%));
@@ -122,8 +135,8 @@ main .hero .cta::after {
 @media screen and (min-width: 992px) {
     main .hero-headings {
         width: 913px;
-        /* left: 50%; */
-        /* transform: translateX(-50%); */
+        left: 50%;
+        transform: translateX(-50%);
         padding-left: 47px;
         text-align: left;
     }

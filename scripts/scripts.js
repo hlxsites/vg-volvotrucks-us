@@ -18,27 +18,18 @@ import {
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
-function isCTALinkCheck(ctaLink) {
-  const btnContainer = ['strong', 'em'].includes(ctaLink.parentElement.localName)
+function getCTAContainer(ctaLink) {
+  return ['strong', 'em'].includes(ctaLink.parentElement.localName)
     ? ctaLink.parentElement.parentElement
     : ctaLink.parentElement;
+}
+
+function isCTALinkCheck(ctaLink) {
+  const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
   const previousSibiling = btnContainer.previousElementSibling;
   const twoPreviousSibiling = previousSibiling.previousElementSibling;
   return previousSibiling.localName === 'h1' || twoPreviousSibiling.localName === 'h1';
-}
-
-function resizeButtonListener(btn) {
-  const MQ = window.matchMedia('(min-width: 992px)');
-  const primary = 'primary';
-  window.onresize = () => {
-    const hasPrimary = btn.classList.contains(primary);
-    if (MQ.matches && !hasPrimary) {
-      btn.classList.add(primary);
-    } else if (!MQ.matches && hasPrimary) {
-      btn.classList.remove(primary);
-    }
-  };
 }
 
 function buildHeroBlock(main) {
@@ -60,10 +51,7 @@ function buildHeroBlock(main) {
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
-    if (ctaLink && isCTALink) {
-      headings.appendChild(ctaLink.parentElement);
-      resizeButtonListener(ctaLink);
-    }
+    if (ctaLink && isCTALink) headings.appendChild(getCTAContainer(ctaLink));
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
     // remove the empty pre-section to avoid decorate it as empty section

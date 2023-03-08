@@ -117,6 +117,7 @@ body {
   background-color: var(--background-color);
   display: none;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body.appear {
