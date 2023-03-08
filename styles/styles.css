@@ -56,15 +56,18 @@
 
  :root {
   /* colors */
+  --c-white: #fff;
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
-  --background-color: #fff;
+  --background-color: var(--c-white);
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
   --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
+  --btn-background-hover: #e1dfdd;
+  --btn-border-hover: #030333;
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
@@ -161,6 +164,18 @@ a:hover {
   color: var(--link-hover-color);
 }
 
+:is(h1, h2, h3, h4, h5, h6) a:any-link {
+  color: currentcolor;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:any-link:hover {
+  text-decoration: none;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after {
+  color: var(--link-color);
+}
+
 code, pre, samp {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
@@ -182,27 +197,32 @@ strong {
 
 a.button:any-link, button {
   font-family: var(--ff-volvo-novum-medium);
-  display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
   text-align: center;
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after,
+a.button::after {
+  content: ' \f105';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
+}
+
+a.button.primary,
+button.primary {
+  display: inline-block;
+  padding: 5px 30px;
+  color: var(--text-color);
+  background-color: var(--c-white);
+  border: 2px solid var(--text-color);
 }
 
 button:disabled, button:disabled:hover {
@@ -210,12 +230,10 @@ button:disabled, button:disabled:hover {
   cursor: unset;
 }
 
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
+a.button.primary:hover, button.primary:hover {
+  background-color: var(--btn-background-hover);
+  border-color: var(--btn-border-hover);
 }
-
 
 main input {
   font-size: 1.25rem;
