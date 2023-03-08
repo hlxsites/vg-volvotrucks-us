@@ -1,63 +1,137 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-function updateSlide(index, carousel) {
-  const item = carousel.children[index];
-  const left = item.offsetLeft + item.offsetWidth / 2
-    - (item.parentNode.offsetLeft + item.parentNode.offsetWidth / 2);
-  carousel.scrollTo({ top: 0, left, behavior: 'smooth' });
+const debounceDelay = 30;
+
+function adjustWidthAndControls(block, carousel, ...controls) {
+  function toggle() {
+    const documentWidth = document.documentElement.clientWidth;
+    const isDesktop = documentWidth > 767 && !block.matches('.grid-on-desktop');
+    const gap = parseInt(window.getComputedStyle(carousel).gap, 10);
+    const itemWidth = parseInt(window.getComputedStyle(carousel.firstElementChild).width, 10);
+    const itemsWidth = itemWidth * carousel.children.length + gap * (carousel.children.length - 1);
+    let containerWidth = parseInt(window.getComputedStyle(carousel.parentElement).width, 10);
+    if (isDesktop) {
+      // on desktop the container width is 2x50px smaller due to the controls
+      containerWidth -= 100;
+    }
+    const showControls = itemsWidth > containerWidth;
+    controls.forEach((ul) => (showControls ? ul.classList.remove('hidden') : ul.classList.add('hidden')));
+    if (showControls) carousel.classList.remove('centered'); else carousel.classList.add('centered');
+    if (isDesktop) {
+      // set the width only on desktop
+      const maxItems = Math.floor((containerWidth - 100) / (itemsWidth / carousel.children.length));
+      const width = maxItems * itemWidth + gap * (maxItems - 1);
+      carousel.style.width = `${width}px`;
+    } else {
+      // remove on mobile viewports
+      delete carousel.style.width;
+    }
+  }
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    if (resizeTimeout) clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(toggle, debounceDelay);
+  });
+
+  window.setTimeout(toggle);
 }
 
-export default function decorate($block) {
-  const $gridContainer = $block.querySelector('ul');
-  $gridContainer.classList.add('carousel-list');
+function createDesktopControls(ul) {
+  function scroll(direction) {
+    const first = ul.firstElementChild;
+    const second = first.nextElementSibling;
+    const scrollOffset = second.getBoundingClientRect().x - first.getBoundingClientRect().x;
+    const left = direction === 'left' ? -1 * scrollOffset : scrollOffset;
+    ul.scrollBy({ top: 0, left, behavior: 'smooth' });
+  }
 
-  const $carouselItems = $block.querySelectorAll('ul > li');
-  $carouselItems.forEach(($li) => {
+  const desktopControls = document.createElement('ul');
+  desktopControls.className = 'desktop-controls hidden';
+  desktopControls.innerHTML = '<li><button type="button">Left</button></li><li><button type="button">Right</button></li>';
+  ul.insertAdjacentElement('beforebegin', desktopControls);
+  const [prevButton, nextButton] = desktopControls.querySelectorAll(':scope button');
+  prevButton.addEventListener('click', () => scroll('left'));
+  nextButton.addEventListener('click', () => scroll('right'));
+  return desktopControls;
+}
+
+function createMobileControls(ul) {
+  // create carousel controls for mobile
+  const mobileControls = document.createElement('ul');
+  mobileControls.className = 'mobile-controls';
+  [...ul.children].forEach((item, j) => {
+    const control = document.createElement('li');
+    if (!j) control.className = 'active';
+    control.innerHTML = `<button type="button">${j + 1}</button>`;
+    control.firstElementChild.addEventListener('click', () => {
+      mobileControls.querySelector('li.active').classList.remove('active');
+      control.classList.add('active');
+
+      const left = item.offsetLeft + item.offsetWidth / 2
+        - (item.parentNode.offsetLeft + item.parentNode.offsetWidth / 2);
+      ul.scrollTo({ top: 0, left, behavior: 'smooth' });
+    });
+
+    mobileControls.append(control);
+  });
+  ul.insertAdjacentElement('beforebegin', mobileControls);
+
+  let scrollTimeout;
+  ul.addEventListener('scroll', () => {
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const first = ul.firstElementChild;
+      const second = first.nextElementSibling;
+      const scrollOffset = second.getBoundingClientRect().x - first.getBoundingClientRect().x;
+      let index = 0;
+      // how many items have scrolled out?
+      while (ul.scrollLeft - scrollOffset * (index + 1) > 0) index += 1;
+      mobileControls.querySelector('li.active').classList.remove('active');
+      mobileControls.children[index].classList.add('active');
+    }, debounceDelay);
+  });
+  return mobileControls;
+}
+
+export default function decorate(block) {
+  const ul = block.querySelector('ul');
+  ul.classList.add('items');
+
+  [...ul.children].forEach((li) => {
     // Add wrapper around the content
-    const $contentContainer = document.createElement('div');
-    $contentContainer.classList.add('wrapper');
-    $contentContainer.innerHTML = $li.innerHTML;
-    $li.innerHTML = '';
-    $li.append($contentContainer);
+    const container = document.createElement('div');
+    container.className = 'wrapper';
+    container.innerHTML = li.innerHTML;
+    li.innerHTML = '';
+    li.append(container);
 
     // add link to the image and move it outside of the wrapper
-    const $link = $li.querySelector('a');
-    const $imageLink = $link.cloneNode(false);
-    $li.prepend($imageLink);
+    const a = li.querySelector('a');
+    let picture = li.querySelector('picture');
+    if (picture) {
+      const img = picture.lastElementChild;
+      const newPicture = createOptimizedPicture(img.src, img.alt, false, [{ width: '370' }]);
+      picture.replaceWith(newPicture);
+      picture = newPicture;
+    }
+    if (a && picture) {
+      const clone = a.cloneNode(false);
+      picture.replaceWith(clone);
+      clone.append(picture);
+      li.prepend(clone);
+    }
 
-    const $image = $li.querySelector('picture');
-    $imageLink.append($image);
-    $imageLink.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '370' }])));
-
-    const $textItems = $contentContainer.innerHTML
+    const textItems = container.innerHTML
       .split('<br>').filter((text) => text.trim() !== '');
 
-    $contentContainer.innerHTML = `
-      <p>${$textItems.join('</p><p>')}</p>
+    container.innerHTML = `
+      <p>${textItems.join('</p><p>')}</p>
     `;
   });
 
-  // create carousel controls for mobile
-  const $controlsContainer = document.createElement('ul');
-  $controlsContainer.classList.add('controls');
-  $carouselItems.forEach((item, j) => {
-    const $controlItem = document.createElement('li');
-    const index = j + 1;
-    $controlItem.innerHTML = `
-      <button type="button">${index}</button>
-    `;
-    $controlsContainer.append($controlItem);
-  });
-  $gridContainer.parentNode.append($controlsContainer);
+  const desktopControls = createDesktopControls(ul);
+  const mobileControls = createMobileControls(ul);
 
-  const $controlItems = $block.querySelectorAll('ul.controls > li');
-  $controlItems.forEach(($controlItem, j) => {
-    if (!j) $controlItem.classList.add('active');
-    const $button = $controlItem.querySelector('button');
-    $button.addEventListener('click', () => {
-      [...$controlItems].forEach((item) => item.classList.remove('active'));
-      $controlItem.classList.add('active');
-      updateSlide(j, $gridContainer);
-    });
-  });
+  adjustWidthAndControls(block, ul, mobileControls, desktopControls);
 }

@@ -76,43 +76,45 @@ function buildHeroBlock(main) {
   }
 }
 
-function createTabbedCarouselSection(tabItems, fullWidth) {
+function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabSection = document.createElement('div');
-  tabSection.classList.add('section', 'tabbed-carousel-container');
-  if (fullWidth) tabSection.classList.add('tabbed-carousel-container-full-width');
+  tabSection.classList.add('section', 'tabbed-container');
+  if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
   tabSection.append(wrapper);
-  const tabBlock = buildBlock('tabbed-carousel', [tabItems]);
+  const tabBlock = buildBlock(`tabbed-${tabType}`, [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
 }
 
-function buildTabbedCarouselBlock(main) {
+function buildTabbedBlock(main) {
   let tabItems = [];
+  let tabType;
   let fullWidth = false;
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
-    const sectionMeta = section.dataset.carousel;
+    const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
-      tabContent.dataset.carousel = sectionMeta;
+      tabType = tabType || (section.dataset.carousel ? 'carousel' : 'accordion');
+      tabContent.dataset[tabType] = sectionMeta;
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
-      section.parentNode.insertBefore(tabbedCarouselSection, section);
-      decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+      const tabbedSection = createTabbedSection(tabItems, fullWidth, tabType);
+      section.parentNode.insertBefore(tabbedSection, section);
+      decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
       fullWidth = false;
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedCarouselSection(tabItems, fullWidth);
+    const tabbedCarouselSection = createTabbedSection(tabItems, fullWidth, tabType);
     main.append(tabbedCarouselSection);
-    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel'));
+    decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
 }
 
@@ -138,6 +140,14 @@ function decorateSectionBackgrounds(main) {
   });
 }
 
+function addDefaultVideoLinkBehaviour(main) {
+  [...main.querySelectorAll('a')]
+    // eslint-disable-next-line no-use-before-define
+    .filter((link) => isVideoLink(link))
+    // eslint-disable-next-line no-use-before-define
+    .forEach(addVideoShowHandler);
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -151,7 +161,8 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
-  buildTabbedCarouselBlock(main);
+  addDefaultVideoLinkBehaviour(main);
+  buildTabbedBlock(main);
 }
 
 /**
@@ -222,3 +233,34 @@ async function loadPage() {
 }
 
 loadPage();
+
+/* video helpers */
+export function isVideoLink(link) {
+  return link.getAttribute('href').includes('youtube.com/embed/')
+      && link.closest('.block.embed') === null;
+}
+
+export function addVideoShowHandler(link) {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    import('../common/modal/modal.js').then((modal) => {
+      modal.showModal(link.getAttribute('href'));
+    });
+  });
+}
+
+export function wrapImageWithVideoLink(videoLink, image) {
+  videoLink.innerText = '';
+  videoLink.appendChild(image);
+  videoLink.classList.add('link-with-video');
+  videoLink.classList.remove('button', 'primary');
+
+  // play icon
+  const iconWrapper = document.createElement('div');
+  iconWrapper.classList.add('video-icon-wrapper');
+  const icon = document.createElement('i');
+  icon.classList.add('fa', 'fa-play', 'video-icon');
+  iconWrapper.appendChild(icon);
+  videoLink.appendChild(iconWrapper);
+}
