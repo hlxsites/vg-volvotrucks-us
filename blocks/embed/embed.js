@@ -1,23 +1,19 @@
+import { selectVideoLink } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const videoWrapper = document.createElement('div');
   videoWrapper.classList.add('embed-video');
 
-  const videoLinkEl = block.querySelector('a');
+  const links = block.querySelectorAll('a');
+  const selectedLink = selectVideoLink(links);
+  const iframe = document.createElement('iframe');
 
-  if (videoLinkEl) {
-    const link = videoLinkEl.getAttribute('href');
-    const iframe = document.createElement('iframe');
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('src', selectedLink);
+  iframe.classList.add('embed-video-iframe');
 
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('src', link);
-    iframe.classList.add('embed-video-iframe');
-
-    block.innerHTML = '';
-
-    videoWrapper.appendChild(iframe);
-    block.appendChild(videoWrapper);
-  }
-
+  block.innerHTML = '';
+  videoWrapper.appendChild(iframe);
   block.appendChild(videoWrapper);
 }

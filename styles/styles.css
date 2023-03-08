@@ -438,3 +438,19 @@ body.disable-scroll, body.disable-scroll main {
 .link-with-video .video-icon::before {
   padding-left: 5px;
 }
+
+a.button.text-link-with-video {
+  display: inline-flex;
+  align-items: center;
+  color: var(--volvo-text-gray);
+  background: transparent;
+  border-radius: 0;
+}
+
+a.button.text-link-with-video:hover {
+  color: #030304;
+}
+
+a.button.text-link-with-video i {
+  font-size: 48px;
+}

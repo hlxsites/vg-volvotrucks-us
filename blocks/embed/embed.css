@@ -1,3 +1,7 @@
+.embed-video {
+  margin: auto;
+}
+
 .embed-video-iframe {
   aspect-ratio: 16/9;
   width: 100%;
@@ -9,7 +13,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1300px) {
   .embed-video {
     width: 1170px;
   }
