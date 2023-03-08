@@ -206,7 +206,7 @@ export function isVideoLink(link) {
 }
 
 export function selectVideoLink(links) {
-  // logic for selecting the video based on the setting in the cookie
+  // logic for selecting the video based on the cookies
   // will be implemented in #41
   return links[0];
 }

@@ -463,6 +463,7 @@ a.button.text-link-with-video {
   color: var(--volvo-text-gray);
   background: transparent;
   border-radius: 0;
+  border: none;
 }
 
 a.button.text-link-with-video:hover {
