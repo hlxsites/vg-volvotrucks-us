@@ -146,10 +146,15 @@ h6 { font-size: var(--heading-font-size-xs) }
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   font-size: var(--body-font-size-xs);
   letter-spacing: -.1px
 }
+
+main em {
+  letter-spacing: normal;
+}
+
 
 [data-align="center"] {
   text-align: center;
@@ -191,7 +196,8 @@ pre {
 }
 
 strong {
-  font-family: var(--ff-volvo-novum-medium);
+  font-family: var(--ff-volvo-novum);
+  letter-spacing: normal;
 }
 
 /* buttons */
