@@ -206,9 +206,11 @@ export function isVideoLink(link) {
 }
 
 export function selectVideoLink(links) {
-  // logic for selecting the video based on the cookies
-  // will be implemented in #41
-  return links[0];
+  const youTubeLinks = [...links].filter((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const localMedia = [...links].filter((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1'));
+
+  return shouldUseYouTubeLinks ? youTubeLinks[0] : localMedia[0];
 }
 
 export function addVideoShowHandler(link) {
