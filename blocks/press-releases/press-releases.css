@@ -63,5 +63,9 @@
         flex: 0 0 33.33%;
         padding: 0 15px;
     }
+
+    .block.press-releases article img {
+        width: 370px;
+    }
 }
 
