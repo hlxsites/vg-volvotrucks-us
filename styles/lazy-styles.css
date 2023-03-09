@@ -131,3 +131,7 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+
+:is(h1, h2, h3, h4, h5, h6) > em {
+  color: #A7A8A9;
+}
