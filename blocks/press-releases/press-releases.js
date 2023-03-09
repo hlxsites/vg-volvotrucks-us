@@ -1,4 +1,4 @@
-import { ffetch } from '../../scripts/scripts.js';
+import ffetch from '../../scripts/lib-ffetch.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function buildPressReleaseCard(entry) {
