@@ -1,7 +1,53 @@
 import getPerformanceChart from './performance-chart.js';
 
-const addEventListeners = () => {
-  console.log('hola');
+const addAnimations = (hpSelector, chartContainer) => {
+  const initialButton = hpSelector.querySelector('.rating-item');
+  initialButton.dataset.active = true;
+
+  const allButtons = hpSelector.querySelectorAll('.rating-list');
+
+  const initialPower = hpSelector.querySelector('.power-item');
+  initialPower.dataset.active = true;
+  const powerParent = initialPower.closest('ul');
+
+  const initialTorque = hpSelector.querySelector('.torque-item');
+  initialTorque.dataset.active = true;
+  const torqueParent = initialTorque.closest('ul');
+
+  const initialChart = chartContainer.children[0];
+  initialChart.dataset.active = true;
+  const chartParent = initialChart.closest('.performance-chart-wrapper');
+
+  allButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const buttonParent = button.closest('ul');
+      const selectedNumber = e.target.innerText.slice(0, 3);
+
+      const clickedButton = buttonParent.querySelector(`.title-${selectedNumber}`).closest('.rating-item');
+      const activeButton = buttonParent.querySelector('[data-active]');
+
+      const clickedPower = powerParent.querySelector(`.power-${selectedNumber}`).closest('.power-item');
+      const activePower = powerParent.querySelector('[data-active]');
+
+      const clickedTorque = torqueParent.querySelector(`.torque-${selectedNumber}`).closest('.torque-item');
+      const activeTorque = torqueParent.querySelector('[data-active]');
+
+      const clickedChart = chartParent.querySelector(`.chart-${selectedNumber}`);
+      const activeChart = chartParent.querySelector('[data-active]');
+
+      clickedChart.dataset.active = true;
+      delete activeChart.dataset.active;
+
+      clickedTorque.dataset.active = true;
+      delete activeTorque.dataset.active;
+
+      clickedPower.dataset.active = true;
+      delete activePower.dataset.active;
+
+      clickedButton.dataset.active = true;
+      delete activeButton.dataset.active;
+    });
+  });
 };
 
 const buildEngineSpecifications = (block) => {
@@ -41,10 +87,10 @@ const buildPerformanceSpecifications = (block) => {
   const title = titleDiv.querySelector('h2');
   title.classList.add('performance-title');
 
-  const hpselector = document.createElement('div');
-  hpselector.classList.add('performance-selector-wrapper');
+  const hpSelector = document.createElement('div');
+  hpSelector.classList.add('performance-selector-wrapper');
 
-  const chartContainer = document.createElement('div');
+  const chartContainer = document.createElement('ul');
   chartContainer.classList.add('performance-chart-wrapper');
 
   const ratings = [];
@@ -91,33 +137,33 @@ const buildPerformanceSpecifications = (block) => {
 
     const SVGengine = getPerformanceChart(engine.values);
 
-    const div = document.createElement('div');
-    div.classList.add('performance-chart');
-    div.classList.add(`${engineNum}-engine`);
-    div.innerHTML = SVGengine;
+    const chart = document.createElement('li');
+    chart.classList.add('performance-chart');
+    chart.classList.add(`chart-${engineNum}`);
+    chart.innerHTML = SVGengine;
 
-    chartContainer.append(div);
+    chartContainer.append(chart);
   });
 
   const buildSelectors = (data, powerRating) => {
-    const div = document.createElement('div');
-    div.classList.add('engine-rating');
-    div.innerHTML = `
+    const horsepower = document.createElement('div');
+    horsepower.classList.add('engine-rating');
+    horsepower.innerHTML = `
       <h6 class="rating-title">Engine Ratings</h6>
       <ul class="rating-list">
         <li class="rating-item">
           <h5 class="title-${powerRating[0]}">
-            <a>${powerRating[0]}</a>
+            <a>${powerRating[0]} HP</a>
           </h5>
         </li>
         <li class="rating-item">
           <h5 class="title-${powerRating[1]}">
-            <a>${powerRating[1]}</a>
+            <a>${powerRating[1]} HP</a>
           </h5>
         </li>
         <li class="rating-item">
           <h5 class="title-${powerRating[2]}">
-            <a>${powerRating[2]}</a>
+            <a>${powerRating[2]} HP</a>
           </h5>
         </li>
       </ul>
@@ -155,21 +201,17 @@ const buildPerformanceSpecifications = (block) => {
         </ul>
       </div>
     `;
-    hpselector.append(div);
-    hpselector.append(powerAndTorque);
+    hpSelector.append(horsepower);
+    hpSelector.append(powerAndTorque);
   };
 
   buildSelectors(engines, ratings);
-
-  const startingChart = chartContainer.children[0]
-  startingChart.dataset.active = true
-  // startingChart.classList.add('active')
-  console.log(startingChart)
+  addAnimations(hpSelector, chartContainer);
 
   block.textContent = '';
 
   block.append(title);
-  block.append(hpselector);
+  block.append(hpSelector);
   block.append(chartContainer);
 };
 
@@ -180,6 +222,5 @@ export default function decorate(block) {
     buildEngineSpecifications(block);
   } else if (typeDetector.includes('performance')) {
     buildPerformanceSpecifications(block);
-    addEventListeners();
   }
 }
