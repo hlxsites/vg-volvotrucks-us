@@ -50,12 +50,11 @@ async function decoratePressReleases(mainEl) {
   const articleCards = document.createElement('div');
   articleCards.classList.add('press-releases-cards');
   mainEl.appendChild(articleCards);
-  const entries = ffetch('/press-releases.json').slice(0, 3);
-  // eslint-disable-next-line no-restricted-syntax
-  for await (const entry of entries) {
+  const entries = await ffetch('/press-releases.json').slice(0, 3).all();
+  entries.forEach((entry) => {
     const pressReleaseCard = buildPressReleaseCard(entry);
     articleCards.appendChild(pressReleaseCard);
-  }
+  });
   buildButtonContainer(mainEl);
 }
 
