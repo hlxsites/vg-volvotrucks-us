@@ -464,12 +464,18 @@ a.button.text-link-with-video {
   background: transparent;
   border-radius: 0;
   border: none;
+  padding: 5px;
 }
 
 a.button.text-link-with-video:hover {
   color: #030304;
+  background: transparent;
 }
 
 a.button.text-link-with-video i {
   font-size: 48px;
+}
+
+a.button.text-link-with-video::after {
+  content: unset;
 }
