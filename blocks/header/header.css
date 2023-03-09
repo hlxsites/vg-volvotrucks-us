@@ -159,7 +159,7 @@ header nav .tools {
 }
 
 header nav .hamburger-toggle[aria-expanded=true]~.tools {
-  right: 0vw;
+  right: 0;
 }
 
 /* list of tools */
@@ -215,7 +215,7 @@ header nav .sections {
 }
 
 header nav .hamburger-toggle[aria-expanded=true]~.sections {
-  right: 0vw;
+  right: 0;
 }
 
 /* section entries */
@@ -244,6 +244,7 @@ header nav .sections ul li a {
  header nav .sections ul li a::after {
   position:absolute;
   right: 15px;
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
   font-family: fontawesome;
   content: "\f105";
   font-size: 20px;
@@ -273,7 +274,7 @@ header nav .sections ul li a {
 
   header nav .hamburger-toggle[aria-expanded=true]~.tools {
     width: 50vw;
-    right: 0vw;
+    right: 0;
   }
 
   /* sections only use 50% of width */
@@ -284,7 +285,7 @@ header nav .sections ul li a {
 
   header nav .hamburger-toggle[aria-expanded=true]~.sections {
     width: 50vw;
-    right: 0vw;
+    right: 0;
   }
 
   /* list of tools */
@@ -295,7 +296,6 @@ header nav .sections ul li a {
 
 /* ------ Desktop -------------------------------------------------------- */
 @media (min-width: 992px) {
-
   /* hide mobile search toggle */
   header nav .search-toggle  {
     display: none;
@@ -320,12 +320,11 @@ header nav .sections ul li a {
   header nav {
     width: 100%;
     display : grid;
-    grid-template-columns: 3.5% auto max-content 3.5%;
-    grid-template-rows: max-content auto 48px;
-    grid-template-areas: 
-    '. brand tools .' 
-    '. brand search .'
-    'sections sections sections sections' ;
+    grid-template: 
+    '. brand tools .' max-content
+    '. brand search .' auto
+    'sections sections sections sections' 48px
+    / 3.5% auto max-content 3.5%;
     padding:0;
   }
 
@@ -347,7 +346,7 @@ header nav .sections ul li a {
   /* list of tools */
   header nav .tools ul {
     margin:0;
-    padding: 20px 45px 0px 0px;
+    padding: 20px 45px 0 0;
     gap:20px;
   }
 
@@ -410,7 +409,7 @@ header nav .sections ul li a {
 
   header nav .search .search-button {
     position: absolute;
-    color: #bbbbbb;
+    color: #bbb;
     padding-top: 5px;
     border-radius: 0;
     background-color: transparent;
@@ -450,6 +449,7 @@ header nav .sections ul li a {
 
   header nav .sections ul li a::after {
     position:initial;
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: fontawesome;
     content: "\f105";
     font-size: 12px;
@@ -459,17 +459,15 @@ header nav .sections ul li a {
 
 /* ---- Desktop Wide  ------ */
 @media (min-width: 1300px) {
-
   /* nav get fixed width of 1200px */
   header nav {
     grid-template-columns: auto  600px 600px auto;
   }
 
-  /* section nav  fixed width of 1200px */
+  /* section nav fixed width of 1200px */
   header nav .sections ul {
     width: 1200px;
     margin: 0 auto;
   }
-
 }
 
