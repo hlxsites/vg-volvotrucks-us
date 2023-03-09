@@ -227,7 +227,6 @@ header nav .hamburger-toggle[aria-expanded=true]~.hamburger-menu {
 header nav .hamburger-menu .sections-list {
   display: flex;
   flex-flow: column;
-  list-style-type: none;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -439,7 +438,6 @@ header nav .hamburger-menu .sections-list .section a {
   header nav .sections .sections-list{
     display: flex;
     flex-flow:row;
-    list-style-type: none;
     gap:45px;
     height:48px;
     align-items: center;
@@ -447,7 +445,7 @@ header nav .hamburger-menu .sections-list .section a {
     margin: 0 auto;
   }
 
-  header nav .sections .section a {
+  header nav .sections .section  {
     text-transform: uppercase;
     color: #53565A;
     font-size: 12px;
