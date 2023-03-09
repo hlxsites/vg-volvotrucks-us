@@ -95,8 +95,7 @@
 .block.specifications .rowgroup-header::after {
     display: block;
     content: '\f067';
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-    font-family: fontawesome;
+    font-family: var(--fontawesome);
 }
 
 /* column header mobile */
@@ -118,8 +117,7 @@
 .block.specifications .column-header-mobile::after {
     display: block;
     content: '\f078';
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-    font-family: fontawesome;
+    font-family: var(--fontawesome);
     color: white;
     position: absolute;
     font-size: 11px;

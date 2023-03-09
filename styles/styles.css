@@ -72,11 +72,14 @@
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
-  --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-volvo-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
   --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+
+  /* buttons */
+  --btn-padding: 12px 32px;
 
   /* body sizes */
   --body-font-size-m: 2.2rem;
@@ -200,7 +203,6 @@ a.button:any-link, button {
   font-family: var(--ff-volvo-novum-medium);
   box-sizing: border-box;
   text-decoration: none;
-  border: 2px solid transparent;
   text-align: center;
   font-style: normal;
   font-weight: normal;
@@ -213,14 +215,13 @@ a.button:any-link, button {
 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 a.button::after {
   content: ' \f105';
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font-family: fontawesome;
+  font-family: var(--ff-fontawesome);
 }
 
 a.button.primary,
 button.primary {
   display: inline-block;
-  padding: 5px 30px;
+  padding: var(--btn-padding);
   color: var(--text-color);
   background-color: var(--c-white);
   border: 2px solid var(--text-color);

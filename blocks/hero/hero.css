@@ -29,7 +29,7 @@ main .hero-headings h4 {
 main .hero-headings h1 {
     margin-top: 0;
     margin-bottom: 36px;
-    font-family: var(--ff-volov-broadprodigital);
+    font-family: var(--ff-volvo-broadprodigital);
     font-size: 6rem;
     letter-spacing: 3.6px;
     line-height: 1em;
@@ -114,7 +114,7 @@ main .hero a.cta {
     }
 
     main .hero-headings a.cta {
-        padding: 12px 32px;
+        padding: var(--btn-padding);
         color: var(--text-color);
         background-color: var(--c-white);
         border: 2px solid var(--c-white);
