@@ -198,8 +198,13 @@ header nav .tools .hamburger-close img {
   height: 14px;
 }
 
-/* hamburger menu: sections */
+/* hide desktop sections menu */
 header nav .sections {
+  display: none;
+}
+
+/* hamburger menu*/
+header nav .hamburger-menu {
   display: flex;
   align-items:start;
   justify-content:start;
@@ -214,12 +219,12 @@ header nav .sections {
   border-bottom: 1px solid #E1DFDD;
 }
 
-header nav .hamburger-toggle[aria-expanded=true]~.sections {
+header nav .hamburger-toggle[aria-expanded=true]~.hamburger-menu {
   right: 0;
 }
 
 /* section entries */
-header nav .sections ul {
+header nav .hamburger-menu .sections-list {
   display: flex;
   flex-flow: column;
   list-style-type: none;
@@ -228,12 +233,12 @@ header nav .sections ul {
   width: 100%;
 }
 
-header nav .sections ul li {
+header nav .hamburger-menu .sections-list .section {
   padding: 15px;
   border-bottom: 1px solid #E1DFDD;
 }
 
-header nav .sections ul li a {
+header nav .hamburger-menu .sections-list .section a {
   display:inline-block;
   text-transform: uppercase;
   font-size: 14px;
@@ -241,7 +246,7 @@ header nav .sections ul li a {
   width: 100%;
 }
 
- header nav .sections ul li a::after {
+ header nav .hamburger-menu .sections-list .section a::after {
   position:absolute;
   right: 15px;
   /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
@@ -278,12 +283,12 @@ header nav .sections ul li a {
   }
 
   /* sections only use 50% of width */
-  header nav .sections {
+  header nav .hamburger-menu {
     width: 50vw;
     right: -50vw;
   }
 
-  header nav .hamburger-toggle[aria-expanded=true]~.sections {
+  header nav .hamburger-toggle[aria-expanded=true]~.hamburger-menu {
     width: 50vw;
     right: 0;
   }
@@ -296,6 +301,11 @@ header nav .sections ul li a {
 
 /* ------ Desktop -------------------------------------------------------- */
 @media (min-width: 992px) {
+  /* hide hamburger menu */
+  header nav .hamburger-menu {
+    display: none;
+  }
+
   /* hide mobile search toggle */
   header nav .search-toggle  {
     display: none;
@@ -418,6 +428,7 @@ header nav .sections ul li a {
 
   /* sections */
   header nav .sections {
+    display: initial;
     position:initial;
     grid-area: sections;
     height: 48px;
@@ -425,29 +436,30 @@ header nav .sections ul li a {
     background-color: #E1DFDD;
   }
 
-  header nav .sections ul{
+  header nav .sections .sections-list{
     display: flex;
     flex-flow:row;
     list-style-type: none;
-    gap:15px;
+    gap:45px;
     height:48px;
     align-items: center;
     width:93%;
     margin: 0 auto;
   }
 
-  header nav .sections ul li {
-    border: none;
-  }
-
-  header nav .sections ul li a {
+  header nav .section  {
     text-transform: uppercase;
     color: #53565A;
     font-size: 12px;
-
   }
 
-  header nav .sections ul li a::after {
+  header nav .sections a {
+    text-transform: uppercase;
+    color: #53565A;
+    font-size: 12px;
+  }
+
+  header nav .sections a::after {
     position:initial;
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: fontawesome;
@@ -465,7 +477,7 @@ header nav .sections ul li a {
   }
 
   /* section nav fixed width of 1200px */
-  header nav .sections ul {
+  header nav .sections .sections-list {
     width: 1200px;
     margin: 0 auto;
   }
