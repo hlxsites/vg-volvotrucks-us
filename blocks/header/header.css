@@ -203,7 +203,7 @@ header nav .sections {
   display: none;
 }
 
-/* hamburger menu*/
+/* hamburger menu */
 header nav .hamburger-menu {
   display: flex;
   align-items:start;
@@ -447,19 +447,13 @@ header nav .hamburger-menu .sections-list .section a {
     margin: 0 auto;
   }
 
-  header nav .section  {
+  header nav .sections .section a {
     text-transform: uppercase;
     color: #53565A;
     font-size: 12px;
   }
 
-  header nav .sections a {
-    text-transform: uppercase;
-    color: #53565A;
-    font-size: 12px;
-  }
-
-  header nav .sections a::after {
+  header nav .sections .section a::after {
     position:initial;
     /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
     font-family: fontawesome;
