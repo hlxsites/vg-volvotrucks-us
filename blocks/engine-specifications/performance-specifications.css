@@ -1,5 +1,6 @@
 .performance-specifications-table {
   width: 100%;
+  z-index: 2;
 }
 
 .performance {
@@ -7,7 +8,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 20px;
-  padding: 20px 0;
+  padding: 20px 0 0;
   padding-left: 0;
 }
 
@@ -31,7 +32,7 @@
 .performance .power-item h5,
 .performance .torque-item h5{
   font-size: 14px;
-  margin-top: 0;
+  margin-top: 7px !important;
 }
 
 .performance .engine-rating {
@@ -41,7 +42,7 @@
 .performance .engine-rating .rating-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   padding-left: 0;
 }
@@ -52,6 +53,7 @@
   width: 25%;
   list-style: none;
   text-align: center;
+  margin: 0 1px;
 }
 
 .performance a,
@@ -76,9 +78,12 @@
 .performance .peak-rating {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   width: 100%;
   padding: 5px;
+}
+
+.performance .peak-rating div {
+  margin-right: 20px;
 }
 
 .performance .torque-list,
@@ -117,9 +122,7 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: 200ms opacity ease-in-out;
-  transition-delay: 200ms;
-
+  transition: 0 opacity ;
 }
 
 .performance-chart > svg {
@@ -128,10 +131,57 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  margin-top: 50px;
 }
 
 .performance-chart[data-active] {
   opacity: 1;
   transition-delay: 0;
 }
+
+@media (min-width: 496px){
+  .performance-selector-wrapper {
+    margin: 0 25px;
+  }
+}
+
+@media (min-width: 769px){
+  .performance .performance-title {
+    text-align: left;
+  }
+
+  .performance-selector-wrapper {
+    margin: 0 ;
+  }
+
+  .performance .engine-rating .rating-list {
+    justify-content: flex-start;
+    width: 60%;
+  }
+}
+
+@media (min-width: 821px){
+  .engine-specifications.performance {
+    position: absolute;
+    right: 5%;
+    width: 50%;
+  }
+
+  .performance .engine-rating .rating-list {
+    justify-content: flex-start;
+    width: 80%;
+  }
+
+  .performance-chart {
+    bottom: 35%;
+    padding: 0;
+    width: 55vw;
+    max-height: fit-content;
+    max-width: 640px;
+    left: -5%;
+  }
+
+  .performance .engine-rating .rating-item {
+    width: 100px;
+  }
+}
+

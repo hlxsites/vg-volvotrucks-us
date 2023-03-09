@@ -1,8 +1,12 @@
 @import url('./performance-specifications.css');
 
+main .engine-specifications-container {
+  padding: 0;
+}
+
 .engine-specifications.engine {
   overflow: hidden;
-  padding-left: 40px;
+  padding-left: 30px;
   display: flex;
   flex-direction: column;
 }
@@ -77,6 +81,10 @@
 @media (min-width: 821px){
   .engine-specifications .item-list {
     flex-direction: column;
-    max-width: 70%;
+    max-width: 50%;
+  }
+
+  .engine-specifications.engine {
+    padding: 20px 0 0;
   }
 }
