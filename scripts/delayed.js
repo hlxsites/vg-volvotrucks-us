@@ -27,5 +27,14 @@ loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', {
   'data-domain-script': 'ec7e1b30-6b41-4e0f-ae45-623aa2563922',
 });
 
-window.OptanonWrapper = () => {};
+window.OptanonWrapper = () => {
+  const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
+
+  window.OneTrust.OnConsentChanged(() => {
+    // reloading the page only when the active group has chaned
+    if (currentOnetrustActiveGroups !== window.OnetrustActiveGroups) {
+      window.location.reload();
+    }
+  });
+};
 // OneTrust Cookies Consent Notice end

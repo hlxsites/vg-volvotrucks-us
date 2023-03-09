@@ -12,14 +12,14 @@ export default function decorate(block) {
   block.appendChild(videoWrapper);
 
   const loadEmbed = () => {
-    if (iframe.classList.contains('embed-video-iframe-loaded')) {
+    if (iframe.classList.contains('embed-video-iframe-loaded') || !selectedLink) {
       return;
     }
 
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('loading', 'lazy');
     iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('src', selectedLink);
+    iframe.setAttribute('src', selectedLink.getAttribute('href'));
     iframe.classList.add('embed-video-iframe');
     iframe.classList.add('embed-video-iframe-loaded');
 
