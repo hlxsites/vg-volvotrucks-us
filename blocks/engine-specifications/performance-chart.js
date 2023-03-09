@@ -54,7 +54,7 @@ const getPerformanceChart = (data) => {
   };
 
   const svg = `
-    <svg class="performance-specifications-table" version="1.1" style="font-family:${fontFamily}x;" 
+    <svg version="1.1" style="font-family:${fontFamily}x;" 
       xmlns="http://www.w3.org/2000/svg" width="${chartMeasures[0]}" height="${chartMeasures[1]}" 
       viewBox="0 -5 700 290" aria-hidden="false" aria-label="Interactive chart">
 
