@@ -56,15 +56,18 @@
 
  :root {
   /* colors */
+  --c-white: #fff;
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
-  --background-color: #fff;
+  --background-color: var(--c-white);
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
   --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
+  --btn-background-hover: #e1dfdd;
+  --btn-border-hover: #030333;
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
@@ -160,6 +163,18 @@ a:hover {
   color: var(--link-hover-color);
 }
 
+:is(h1, h2, h3, h4, h5, h6) a:any-link {
+  color: currentcolor;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:any-link:hover {
+  text-decoration: none;
+}
+
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after {
+  color: var(--link-color);
+}
+
 code, pre, samp {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
@@ -181,27 +196,32 @@ strong {
 
 a.button:any-link, button {
   font-family: var(--ff-volvo-novum-medium);
-  display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
   text-align: center;
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
-  background-color: var(--link-hover-color);
-  cursor: pointer;
+:is(h1, h2, h3, h4, h5, h6) a:any-link::after,
+a.button::after {
+  content: ' \f105';
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: fontawesome;
+}
+
+a.button.primary,
+button.primary {
+  display: inline-block;
+  padding: 5px 30px;
+  color: var(--text-color);
+  background-color: var(--c-white);
+  border: 2px solid var(--text-color);
 }
 
 button:disabled, button:disabled:hover {
@@ -209,12 +229,10 @@ button:disabled, button:disabled:hover {
   cursor: unset;
 }
 
-a.button.secondary, button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color)
+a.button.primary:hover, button.primary:hover {
+  background-color: var(--btn-background-hover);
+  border-color: var(--btn-border-hover);
 }
-
 
 main input {
   font-size: 1.25rem;
@@ -347,4 +365,94 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
 
+.section.tabbed-container {
+  padding: 0;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.section.tabbed-container-full-width {
+  width: unset;
+}
+
+.section.tabbed-container-full-width > div {
+  max-width: unset;
+}
+
+.section.tabbed-container ul.tab-navigation {
+  padding: 0;
+  margin: 25px;
+  text-align: center;
+}
+
+.section.tabbed-container ul.tab-navigation li {
+  margin: 0 auto;
+  padding: 0 1% 8px;
+  display: block;
+  width: 35%;
+}
+
+.section.tabbed-container ul.tab-navigation button {
+  background: 0 0;
+  color: var(--volvo-text-gray);
+  padding: 0;
+  margin: 0;
+}
+
+.section.tabbed-container ul.tab-navigation li.active,
+.section.tabbed-container ul.tab-navigation li:hover {
+  border-bottom: 3px solid #004FBC;
+}
+
+@media screen and (min-width: 496px) {
+  .section.tabbed-container ul.tab-navigation li {
+    margin: 0 3%;
+    display: inline-block;
+    width: unset;
+  }
+}
+
+
+/* image as video link */
+.link-with-video {
+  position: relative;
+  display: block;
+}
+
+.link-with-video .video-icon-wrapper {
+  background: rgb(255 255 255 / 90%);
+  color: var(--volvo-text-gray);
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  border: 0;
+  border-radius: 40px;
+  transition: .3s;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
+  margin-right: 7.5px;
+  cursor: pointer;
+  box-shadow: 0 0 10px 5px rgb(0 0 0 / 30%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 1;
+  line-height: 50px;
+}
+
+.link-with-video .video-icon-wrapper:hover {
+  background: rgb(230 230 230 / 90%);
+  color: var(--volvo-text-gray);
+  font-size: 30px;
+  opacity: .8;
+}
+
+.link-with-video .video-icon::before {
+  padding-left: 5px;
+}
