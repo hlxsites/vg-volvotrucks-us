@@ -46,7 +46,11 @@
 }
 
 .fa-angle-right::before {
-  content: "\f105"
+  content: "\f105";
+}
+
+.fa-angle-left::before {
+  content: "\f104";
 }
 
 .fa-angle-up::before {
@@ -130,4 +134,19 @@
   margin-bottom: -32px;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.body-dealer-locator footer.footer-wrapper{
+  display: none;
+}
+
+.body-dealer-locator main .section {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .body-dealer-locator main .section {
+    padding: 0;
+    margin: 0;
+  }
 }
