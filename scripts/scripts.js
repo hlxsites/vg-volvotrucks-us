@@ -211,11 +211,24 @@ loadPage();
 
 /* video helpers */
 export function isVideoLink(link) {
-  return link.getAttribute('href').includes('youtube.com/embed/')
-      && link.closest('.block.embed') === null;
+  const linkString = link.getAttribute('href');
+  return (linkString.includes('youtube.com/embed/')
+    || (linkString.split('?')[0].endsWith('.mp4')))
+    && link.closest('.block.embed') === null;
+}
+
+export function selectVideoLink(links) {
+  // logic for selecting the video based on the cookies
+  // will be implemented in #41
+  return links[0];
 }
 
 export function addVideoShowHandler(link) {
+  const icon = document.createElement('i');
+  icon.classList.add('fa', 'fa-play-circle-o');
+  link.prepend(icon);
+  link.classList.add('text-link-with-video');
+
   link.addEventListener('click', (event) => {
     event.preventDefault();
 

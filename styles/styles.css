@@ -428,6 +428,29 @@ body.disable-scroll, body.disable-scroll main {
   padding-left: 5px;
 }
 
+a.button.text-link-with-video {
+  display: inline-flex;
+  align-items: center;
+  color: var(--volvo-text-gray);
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
+}
+
+a.button.text-link-with-video:hover {
+  color: #030304;
+  background: transparent;
+}
+
+a.button.text-link-with-video i {
+  font-size: 48px;
+}
+
+a.button.text-link-with-video::after {
+  content: unset;
+}
+
 @media screen and (min-width: 496px) {
   .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
