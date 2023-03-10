@@ -63,16 +63,11 @@ export default async function decorate(block) {
       </div>
 
       <div class='sections'>
-        <div class='sections-list'>
-        </div>
+        <ul class='sections-list'>
+        </ul>
       </div>
 
       <div class='semitrans'>
-      </div>
-
-      <div class='hamburger-menu'>
-        <div class='sections-list'>
-        </div>
       </div>
     `;
 
@@ -88,7 +83,6 @@ export default async function decorate(block) {
 
     // get through all section menus
     let sectionMenu = '';
-    let hamburgerMenu = '';
 
     const sections = navContent.querySelectorAll('.menu');
     if (sections) {
@@ -100,8 +94,6 @@ export default async function decorate(block) {
             case 'Name':
               // add to section menu
               sectionMenu += `<div class='section'><a href='#'>${entry.children[1].textContent}</a></div>`;
-              // add to hamburger menu
-              hamburgerMenu += `<div class='section'><a href='#'>${entry.children[1].textContent}</a></div>`;
               break;
             default:
               break;
@@ -110,8 +102,6 @@ export default async function decorate(block) {
       });
       // write the section menu
       nav.querySelector('.sections .sections-list').innerHTML = sectionMenu;
-      // write the hamburger menu
-      nav.querySelector('.hamburger-menu .sections-list').innerHTML = hamburgerMenu;
     }
 
     // add event listeners
