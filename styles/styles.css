@@ -209,6 +209,7 @@ a.button:any-link, button {
   text-overflow: ellipsis;
 }
 
+.default-content-wrapper ul a::after,
 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 a.button::after {
   content: ' \f105';
@@ -334,6 +335,26 @@ main .section.highlight {
 
 body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
+}
+
+.default-content-wrapper {
+  text-align: center;
+}
+
+.default-content-wrapper ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.default-content-wrapper ul li {
+  padding: 0 50px;
+}
+
+@media (min-width: 768px) {
+  .default-content-wrapper ul {
+    display: inline-flex;
+  }
 }
 
 .section.tabbed-container {
@@ -495,4 +516,8 @@ a.button.text-link-with-video::after {
   main .section {
     width: 1200px;
   }
+}
+
+.video-link-wrapper {
+  text-align: center;
 }
