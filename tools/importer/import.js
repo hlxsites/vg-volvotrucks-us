@@ -29,7 +29,8 @@ const createMetadata = (main, document) => {
 
   const publishDate = document.querySelector('div.postFullDate');
   if (publishDate) {
-    meta['publish-date'] = new Date(publishDate.textContent).toISOString();
+    meta['publish-date'] = publishDate.textContent;
+    publishDate.remove();
   }
 
   const img = document.querySelector('[property="og:image"]');
@@ -121,28 +122,103 @@ function makeTruckHero(main, document) {
 function makeTabbedCarousel(main, document) {
   const tc = document.querySelectorAll('#Form1 div.tabbedCarousel');
   if (tc) {
-    console.log('tabbed carousel(s) found: ' + tc.length);
+    console.log(`tabbed carousel(s) found: ${tc.length}`);
   }
+}
+
+function makeGridItem(teaser) {
+  const img = new Image();
+  if (teaser.style.backgroundImage) {
+    img.src = teaser.style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
+  }
+  const anchor = teaser.querySelector('a');
+  let newA = '';
+  if (anchor) {
+    if (anchor.getAttribute('data-video-src')) {
+      newA = anchor.getAttribute('data-video-src');
+    } else {
+      newA = anchor.href;
+    }
+  }
+
+  const txtH3 = teaser.querySelector('a > div > h3');
+  const txtH4 = teaser.querySelector('a > div > h4');
+  let h3 = '';
+  let h4 = '';
+  if (txtH3 && txtH4) {
+    h3 = txtH3.innerHTML;
+    h4 = txtH4.innerHTML;
+  }
+  const gi = document.createElement('div');
+  gi.innerHTML = `<img src='${img.src}'><div><a href='${newA}'>${newA}</a></div><div>${h3}</div><div>${h4}</div>`;
+
+  if (newA === '') {
+    gi.querySelector('a').remove();
+  }
+
+  return gi.outerHTML;
 }
 
 function makeGenericGrid(main, document) {
   const gg = document.querySelectorAll('#Form1 div.generic-grid.full-width');
-  if (gg) {
-    console.log('generic grid(s) found: ' + gg.length);
-  }
+  console.log(`generic grid(s) found: ${gg.length}`);
+  gg.forEach((grid) => {
+    const cells = [['Teaser Grid']];
+    const col1ul = document.createElement('ul');
+    const col2ul = document.createElement('ul');
+    const gridCol = grid.querySelectorAll('div.generic-grid-col');
+    const columns = [];
+    const rows = [];
+    gridCol.forEach((gc, idxCol) => {
+      columns[idxCol] = document.createElement('ul');
+      // each one of these is a column
+      Array.from(gc.children).forEach((colContent, idxRow) => {
+        // each one of these is col content (row)
+        rows[idxRow] = document.createElement('li');
+        rows[idxRow].innerHTML = makeGridItem(colContent);
+        columns[idxCol].append(rows[idxRow]);
+      });
+    });
+
+    cells.push(columns);
+    const teaserGrid = WebImporter.DOMUtils.createTable(cells, document);
+    grid.replaceWith(teaserGrid);
+  });
 }
 
 function makeProductCarousel(main, document) {
   const pc = document.querySelectorAll('#Form1 div.productCarousel');
   if (pc) {
-    console.log('product carousel(s) found: ' + pc.length);
+    console.log(`product carousel(s) found: ${pc.length}`);
+    const cells = [['Carousel']];
+
+    pc.forEach((car) => {
+      const wrap = car.querySelector('div.carousel-wrapper');
+      const caritems = wrap.querySelectorAll('div.product');
+      const carlist = document.createElement('ul');
+      caritems.forEach((it) => {
+        const item = document.createElement('li');
+        item.innerHTML = it.innerHTML;
+        carlist.appendChild(item);
+      });
+      cells.push([carlist]);
+      const carousel = WebImporter.DOMUtils.createTable(cells, document);
+      wrap.replaceWith(carousel);
+    });
+    // pc.replaceWith(carousel);
   }
 }
 
 function makeImageText(main, document) {
   const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText');
   if (it) {
-    console.log('image text(s) found: ' + it.length);
+    console.log(`image text(s) found: ${it.length}`);
+    it.forEach((its) => {
+      const cells = [['Teaser Cards']];
+      cells.push([its.innerHTML]);
+      const teaserCards = WebImporter.DOMUtils.createTable(cells, document);
+      its.replaceWith(teaserCards);
+    });
   }
 }
 
@@ -175,6 +251,7 @@ export default {
       'body > img[src="tcpauth.ashx?"]',
       'body > img[src="https://www.macktrucks.com/tcpauth.ashx?"]',
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
+      'div.modal',
     ]);
 
     swapHero(main, document);
