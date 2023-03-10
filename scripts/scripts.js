@@ -216,9 +216,6 @@ export function selectVideoLink(links) {
 }
 
 export function addVideoShowHandler(link) {
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play-circle-o');
-  link.prepend(icon);
   link.classList.add('text-link-with-video');
 
   link.addEventListener('click', (event) => {
