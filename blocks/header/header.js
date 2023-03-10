@@ -1,6 +1,6 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 
-// media query match that indicates mobile/tablet width
+// media query match that indicates mobile/desktop switch
 const MQ = window.matchMedia('(min-width: 992px)');
 
 /**
@@ -14,6 +14,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
+  // temporary points to drafts until PR is approved, to not mess up layout
   const navPath = config.nav || '/drafts/mirko/nav';
   const resp = await fetch(`${navPath}.plain.html`);
 
@@ -103,6 +104,7 @@ export default async function decorate(block) {
               // add to hamburger menu
               hamburgerMenu += `<div class='section'><a href='#'>${entry.children[1].textContent}</a></div>`;
               break;
+            // TODO : read config props to build menus (overview, sub sections, subtitles, layout)
             default:
               break;
           }
