@@ -119,13 +119,6 @@ function makeTruckHero(main, document) {
   }
 }
 
-function makeTabbedCarousel(main, document) {
-  const tc = document.querySelectorAll('#Form1 div.tabbedCarousel');
-  if (tc) {
-    console.log(`tabbed carousel(s) found: ${tc.length}`);
-  }
-}
-
 function makeGridItem(teaser) {
   const img = new Image();
   if (teaser.style.backgroundImage) {
@@ -222,6 +215,103 @@ function makeImageText(main, document) {
   }
 }
 
+function makeImageTextGrid(main, document) {
+  const itg = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageTextGrid');
+  if (itg) {
+    console.log('image text grd(s) found: ' + itg.length);
+    itg.forEach((grids) => {
+      const cells = [['Columns']];
+      const rows = [];
+      const item = grids.querySelectorAll('div.col-sm-3, div.col-sm-6, div.col-sm-4');
+      const title = grids.querySelector('div.title-wrapper > h3');
+      item.forEach((col, idx) => {
+        // check for weird nesting
+        rows.push(col);
+      });
+      if (rows.length > 0) {
+        cells.push(rows);
+        const columnBlock = WebImporter.DOMUtils.createTable(cells, document);
+        if (title) {
+          //prepend title here
+        } else {
+          console.log('no title present');
+        }
+        grids.replaceWith(columnBlock);
+      } else {
+        console.log(`not imported: ${grids.id}`);
+      }
+    });
+  }
+}
+
+function makeTabbedFeatures(main, document) {
+  const tm = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedFeatures');
+  if (tm) {
+    console.log(`tabbed features found: ${tm.length}`);
+  }
+}
+
+function makeTabbedCarousel(main, document) {
+  const tc = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedCarousel');
+  if (tc) {
+    console.log(`tabbed carousel found: ${tc.length}`);
+  }
+}
+function makeHubTextBlock(main, document) {
+  const htb = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > section.hubTextBlock');
+  if (htb) {
+    console.log(`hub text block found: ${htb.length}`);
+    htb.forEach((block) => {
+      const cells = [['Eloqua Form']];
+      const img = new Image();
+      img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');;
+      cells.push(['background', `<img src='${img.src}'>`]);
+      const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
+      cells.push(['elqFormName', formName.value]);
+      const form = WebImporter.DOMUtils.createTable(cells, document);
+      block.replaceWith(form);
+    });
+  }
+}
+
+function makeNewsFeaturesPanel(main, document) {
+  const nfp = document.querySelectorAll('#DocumentBody_maincontent_6_NewsFeaturesPanel, #DocumentBody_maincontent_7_NewsFeaturesPanel, #DocumentBody_maincontent_8_NewsFeaturesPanel, #DocumentBody_maincontent_9_NewsFeaturesPanel');
+  if (nfp) {
+    console.log(`news features panel found: ${nfp.length}`);
+    nfp.forEach((panel) => {
+      const cells = [['Columns']];
+      const rows = [];
+      const item = panel.querySelectorAll('div.col-sm-4, div.col-sm-6');
+      item.forEach((column) => {
+        rows.push(column);
+      });
+      if (rows.length > 0) {
+        cells.push(rows);
+        const cols = WebImporter.DOMUtils.createTable(cells, document);
+        panel.replaceWith(cols);
+      } else {
+        console.log('not imported');
+      }
+    });
+  }
+}
+
+function make360Image(main, document) {
+  const image360 = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div._360-view');
+  if (image360) {
+    console.log('360 image(s) found: ' + image360.length);
+    image360.forEach((img360) => {
+      const cells = [['Image 360']];
+      const imgs = img360.querySelectorAll('img.slide');
+      imgs.forEach((img) => {
+        cells.push([img]);
+      });
+      const block360 = WebImporter.DOMUtils.createTable(cells, document);
+      img360.replaceWith(block360);
+    });
+  }
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -260,6 +350,12 @@ export default {
     makeGenericGrid(main, document);
     makeProductCarousel(main, document);
     makeImageText(main, document);
+    makeImageTextGrid(main, document);
+    makeNewsFeaturesPanel(main, document);
+    makeTabbedFeatures(main, document);
+    makeTabbedCarousel(main, document);
+    make360Image(main, document);
+    makeHubTextBlock(main, document);
     createPRDownloadBlock(main, document);
 
     createArticleColumns(main, document, url);
