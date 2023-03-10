@@ -39,6 +39,16 @@ function buildHeroBlock(main) {
   }
 }
 
+function buildSubNavigation(main, head) {
+  const subnav = head.querySelector('meta[name="sub-navigation"]');
+  if (subnav) {
+    const nav = document.createElement('div');
+    const block = buildBlock('sub-nav', []);
+    nav.appendChild(block);
+    main.prepend(nav);
+  }
+}
+
 function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
@@ -85,9 +95,10 @@ function buildTabbedBlock(main) {
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks(main) {
+function buildAutoBlocks(main, head) {
   try {
     buildHeroBlock(main);
+    buildSubNavigation(main, head);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -116,11 +127,11 @@ function addDefaultVideoLinkBehaviour(main) {
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
-export function decorateMain(main) {
+export function decorateMain(main, head) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
-  buildAutoBlocks(main);
+  buildAutoBlocks(main, head);
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
@@ -135,8 +146,9 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
+  const { head } = doc;
   if (main) {
-    decorateMain(main);
+    decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
 }
