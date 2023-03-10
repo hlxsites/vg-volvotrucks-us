@@ -60,93 +60,25 @@ const getPerformanceChart = (data) => {
 
       <g data-z-index="1" aria-hidden="true">
     
-        <!-- horizontal lines -->
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 225.5 L ${stopsX[16]} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 203 L ${stopsX[16]} 203" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 180.5 L ${stopsX[16]} 180.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 158.5 L ${stopsX[16]} 158.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 114 L ${stopsX[16]} 114" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 136.5 L ${stopsX[16]} 136.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 91.5 L ${stopsX[16]} 91.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 68.5 L ${stopsX[16]} 68.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 45.5 L ${stopsX[16]} 45.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 22.5 L ${stopsX[16]} 22.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M 68 -0.5 L ${stopsX[16]} -0.5" opacity="1">
-        </path>
-
+      <!-- horizontal lines -->
+${
+  stopsX.map((e, idx) => {
+    if (e<420) {
+      return `<path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
+          d="M 68 ${(idx*22.5)-0.5} L ${stopsX[16]} ${(idx*22.5)-0.5}" opacity="1">
+      </path>`
+    }
+  })
+}
         <!-- vertical lines -->
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[0]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[0]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[1]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[1]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[2]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[2]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[3]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[3]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[4]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[4]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[5]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[5]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[6]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[6]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[7]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[7]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[8]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[8]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[9]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[9]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[10]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[10]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[11]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[11]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[12]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[12]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[13]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[13]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[14]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[14]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[15]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[15]))} 225.5" opacity="1">
-        </path>
-        <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-          d="M ${getRPMPosition(checkLineDisplay(RPM.values[16]))} 0 L ${getRPMPosition(checkLineDisplay(RPM.values[16]))} 225.5" opacity="1">
-        </path>
+${
+  RPM.values.map((e) => {
+    return `
+      <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
+        d="M ${getRPMPosition(checkLineDisplay(e))} 0 L ${getRPMPosition(checkLineDisplay(e))} 225.5" opacity="1">
+      </path>`
+  })
+}
 
         <!-- Manually add 1100 line -->
 ${
