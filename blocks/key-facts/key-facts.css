@@ -1,3 +1,11 @@
+.key-facts-container h2 {
+  font-size: calc(var(--heading-font-size-m) + 0.2rem);
+}
+
+.default-content-wrapper {
+  text-align: center;
+}
+
 .key-facts-wrapper {
   text-align: center;
 }
