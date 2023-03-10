@@ -322,39 +322,6 @@ main .section-with-background>picture:last-of-type img {
   object-fit: cover;
 }
 
-@media (min-width: 768px) {
-  main .section {
-    width: 756px;
-    margin: auto;
-  }
-}
-
-@media (min-width: 992px) {
-  :root {
-    --heading-font-size-xxl: 4.8rem;
-    --heading-font-size-xl: 4.6rem;
-    --heading-font-size-l: 3.6rem;
-    --heading-font-size-m: 3.0rem;
-    --heading-font-size-s: 2.4rem;
-    --heading-font-size-xs: 2.2rem;
-  }
-
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  main .section {
-    width: 960px;
-  }
-}
-
-@media (min-width: 1300px) {
-  main .section {
-    width: 1200px;
-  }
-}
-
 /* progressive section appearance */
 main .section[data-section-status='loading'],
 main .section[data-section-status='initialized'] {
@@ -408,14 +375,18 @@ body.disable-scroll, body.disable-scroll main {
   border-bottom: 3px solid #004FBC;
 }
 
-@media screen and (min-width: 496px) {
-  .section.tabbed-container ul.tab-navigation li {
-    margin: 0 3%;
-    display: inline-block;
-    width: unset;
-  }
+.section.sub-nav-container {
+  position: relative;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  background-color: #7F7F7F;
+  width: 100%;
 }
 
+.section.sub-nav-container > div {
+  margin: auto;
+}
 
 /* image as video link */
 .link-with-video {
@@ -455,4 +426,50 @@ body.disable-scroll, body.disable-scroll main {
 
 .link-with-video .video-icon::before {
   padding-left: 5px;
+}
+
+@media screen and (min-width: 496px) {
+  .section.tabbed-container ul.tab-navigation li {
+    margin: 0 3%;
+    display: inline-block;
+    width: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  main .section {
+    width: 756px;
+    margin: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  :root {
+    --heading-font-size-xxl: 4.8rem;
+    --heading-font-size-xl: 4.6rem;
+    --heading-font-size-l: 3.6rem;
+    --heading-font-size-m: 3.0rem;
+    --heading-font-size-s: 2.4rem;
+    --heading-font-size-xs: 2.2rem;
+  }
+
+  .section > div {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  main .section {
+    width: 960px;
+  }
+
+  .section.sub-nav-container {
+    min-height: 48px;
+    background-color: #53565A;
+  }
+}
+
+@media (min-width: 1300px) {
+  main .section {
+    width: 1200px;
+  }
 }
