@@ -57,6 +57,9 @@ indices:
       title:
         select: head > meta[property="og:title"]
         value: attribute(el, "content")
+      linkText:
+        select: head > meta[property="linkText"]
+        value: attribute(el, "content")
       description:
         select: head > meta[property="og:description"]
         value: attribute(el, "content")

@@ -1,9 +1,73 @@
-.section.magazine-article-container {
+/* Related magazine articles */
+/* Latest magazine articles */
+.block .latest-magazine-articles, .block .related-magazine-articles {
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    width: 1170px;
+}
+.block .latest-magazine-articles article, .block .related-magazine-articles article {
+    width: 33.33333333%;
+    position: relative;
+    min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-.block.magazine-articles article a {
+.block .latest-magazine-articles article picture,  .block .related-magazine-articles article picture {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.block.magazine-articles article h3 {
+    margin-bottom: 10px;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-s);
+    letter-spacing: -.1px!important;
+    color: var(--volvo-text-gray);
+}
+
+.block .latest-magazine-articles article p,  .block .related-magazine-articles article p {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.block .latest-magazine-articles article .content a {
+    color: var(--link-color);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    white-space: nowrap;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 0;
+    user-select: none;
+}
+
+/* Magazine articles */
+.block.magazine-articles .articles {
+    display: grid;
+}
+
+.block.magazine-articles .articles article {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--background-light-gray);
+    display: inline-flex;
+}
+
+.block.magazine-articles .articles article a {
     float: left;
     margin-bottom: 16px;
     padding-right: 15px;
@@ -11,15 +75,13 @@
     z-index: 50;
 }
 
-.block.magazine-articles article picture img, .block.magazine-articles article picture source {
+.block.magazine-articles .articles article picture img {
     margin-bottom: 16px;
     height: 214px;
     width: 380px;
-    background-position: center;
-    background-size: cover;
 }
 
-.block.magazine-articles article .content {
+.block.magazine-articles .articles article .content {
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -28,67 +90,95 @@
     width: 75%;
 }
 
-.block.magazine-articles article .content ul {
+.block.magazine-articles article p {
+    margin-top: unset;
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+}
+
+.block.magazine-articles .articles article ul {
     list-style-type: none;
     padding-left: 0;
     font-size: 12px;
 }
 
-.block.magazine-articles article .content ul li {
+.block.magazine-articles .articles article ul li{
     display: inline;
 }
 
-article .content h3 {
-    margin-top: 24px;
-    margin-bottom: 16px;
-    display: table;
+.block.magazine-articles .articles article ul li:nth-child(2) {
+    color: var(--highlight-background-color);
 }
 
-.MediumTitleSentence {
-    font-family: VolvoNovumMedium,sans-serif!important;
-    font-size: 24px!important;
-    letter-spacing: -.1px!important;
-    color: #53565A;
-    line-height: 32px!important;
-}
-
-.block.magazine-articles article ul li:nth-child(2) {
-    color: #ccc;
-}
-
-.block.magazine-articles article ul li+li::before {
+.block.magazine-articles .articles article ul li+li::before {
     content: " | ";
     padding: 0 5px;
 }
 
-p {
-    position: relative;
-    margin: 0 0 24px;
-    letter-spacing: -.1px;
-    font-weight: 400;
-}
-
-.block.magazine-articles article {
+.block.magazine-articles .pager {
+    font-size: 1.4rem;
     display: grid;
+    margin-bottom: 1em;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-.block.magazine-articles article {
-    padding: 30px 0;
-    border-bottom: 1px solid #ebebea;
+.block.magazine-articles .pagination {
+    justify-self: end;
+}
+
+.block.magazine-articles .pagination .scroll {
+    padding: 0;
+    margin: 0 0 0 15px;
     display: inline-flex;
+    gap: 5px;
+    list-style: none;
 }
 
-@media screen and (max-width: 991px){
-    .block.magazine-articles article {
-        display: block;
-    }
-    .block.magazine-articles article a {
-        width: 100%;
-        height: 250px;
-    }
-    .block.magazine-articles article picture img, .block.magazine-articles article picture source {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.block.magazine-articles .pagination .scroll a {
+    color: var(--volvo-text-gray);
+    font-family: var(--ff-volvo-novum-medium);
+}
+
+.pagination ol li .last::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f051";
+    font-size: 12px;
+    text-decoration: none;
+}
+.pagination ol li .first::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f048";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li .next::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f054";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li .prev::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f053";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li:not(:first-child) {
+    float: right;
+    padding: 10px;
+    margin-top: -10px;
+}
+
+.block.magazine-articles .article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.block.magazine-articles .article-list article {
+    padding: 2em 0;
+    border-top: 1px solid var(--background-light-gray);
 }
