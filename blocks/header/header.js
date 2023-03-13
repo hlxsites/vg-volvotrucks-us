@@ -170,11 +170,10 @@ export default async function decorate(block) {
       <div class='search' aria-expanded="false">
         <div>
           <label for="searchInput">Search Term</label>
-          <input autocomplete="off" type="text" id="searchInput" placeholder="Search for"
-          onkeypress="searchKeyCheck(event, this, 'us', '/search-results/')" >
-          <a class="search-button" href="javascript:submitSearch($('#searchText_mobile'), 'us', '/search-results/')" >
+          <input autocomplete="off" type="text" id="searchInput" placeholder="Search for">
+          <button class="search-button" aria-label="submit" >
             <i class="fa fa-search"></i>
-          </a>
+          </button>
         </div>
       </div>
 

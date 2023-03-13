@@ -110,14 +110,15 @@ header nav .search input {
 
 header nav .search .search-button {
   height: 44px;
-  padding-top: 8px;
-  padding-right: 10px;
+  padding: 0 10px;
   color: #A7A8A9;
   border: none;
   border-radius: 0;
   background-color: #ebebea;
   box-shadow: none;
   font-size: 16px;
+  text-overflow: clip;
+  white-space: unset;
 }
 
 header nav .search label {
@@ -495,9 +496,9 @@ header nav .sections .section .navigation-cta {
   }
 
   header nav .search .search-button {
+    height: 40px;
     position: absolute;
     color: #bbb;
-    padding-top: 5px;
     border-radius: 0;
     background-color: transparent;
     font-size: 18px;
