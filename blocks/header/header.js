@@ -1,6 +1,6 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 
-// media query match that indicates mobile/tablet width
+// media query match that indicates mobile/desktop switch
 const MQ = window.matchMedia('(min-width: 992px)');
 const ONCE = { once: true };
 
@@ -127,6 +127,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
+  // temporary points to drafts until PR is approved, to not mess up layout
   const navPath = config.nav || '/drafts/mirko/nav';
   const resp = await fetch(`${navPath}.plain.html`);
 
