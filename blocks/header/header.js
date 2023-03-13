@@ -2,6 +2,116 @@ import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 
 // media query match that indicates mobile/tablet width
 const MQ = window.matchMedia('(min-width: 992px)');
+const ONCE = { once: true };
+
+function toggleMenu(li, event) {
+  const ul = li.querySelector(':scope > ul');
+  if (!MQ.matches && ul) event.preventDefault();
+  if (li.classList.contains('expand')) {
+    // collapse 
+    if (!MQ.matches && ul) {
+      requestAnimationFrame(() => {
+        ul.style.height = `${ul.scrollHeight}px`;
+        ul.addEventListener('transitionend', () => {
+          ul.style.height = '0px';
+          ul.addEventListener('transitionend', () => {
+            ul.style.height = null;
+            li.classList.remove('expand');        
+          }, ONCE)
+        }, ONCE);
+      })
+    } else {
+      li.classList.remove('expand');
+    }
+  } else {
+    if (!MQ.matches && ul) {
+      ul.style.height = `${ul.scrollHeight}px`;
+      ul.addEventListener('transitionend', () => ul.style.height = '100%', ONCE)
+    } else {
+      li.parentElement.querySelectorAll('.expand').forEach((li) => li.classList.remove('expand'));
+    }
+    li.classList.add('expand');
+  }
+}
+
+function toggleSectionMenu(sectionMenu, menuBlock, event) {
+  const a = event.target;
+  if (!sectionMenu.querySelector(':scope > ul')) {
+    buildSectionMenuContent(sectionMenu, menuBlock);
+  }
+  toggleMenu(sectionMenu, event);
+}
+
+function buildSectionMenuContent(sectionMenu, menuBlock) {
+  sectionMenu.classList.add('link-list');
+  const content = document.createElement('ul');
+  const [firstRow, ...flyoutSections] = menuBlock.children;
+  const overviewLink = firstRow.querySelector('a');
+  overviewLink.className = 'primary-link';
+  overviewLink.textContent = 'Overview';
+  const overviewLi = document.createElement('li');
+  overviewLi.className = "overview";
+  overviewLi.append(overviewLink)
+
+  const subSectionMenus = flyoutSections.map((section) => {
+    const li = document.createElement('li');
+    li.className = 'sub-section';
+    const ul = section.querySelector(':scope ul');
+    ul.className = 'entries';
+    li.append(ul);
+
+    if (ul.querySelector('picture')) {
+      sectionMenu.classList.remove('link-list');
+      sectionMenu.classList.add('image-list');
+    }
+
+    const [title, subtitle] = section.querySelectorAll('p');
+    if (subtitle) {
+      subtitle.className = 'subtitle';
+      li.prepend(subtitle);
+    }
+    if (title) {
+      title.className = 'title';
+      li.prepend(title);
+      const titleLink = title.querySelector('a');
+      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, li));
+    }
+
+    li.querySelectorAll('a').forEach((link) => {
+      if (link.matches(':first-of-type')) {
+        const picture = link.parentElement.querySelector('picture');
+        if (picture) {
+          const clone = link.cloneNode(false);
+          picture.replaceWith(clone);
+          clone.append(picture);
+        }
+        link.className = 'primary-link button secondary cta';
+      } else {
+        link.className = 'button secondary cta';
+      }
+    });
+
+    // normalize the li content: wrap orphan texts in <p>, remove <br>
+    ul.querySelectorAll('li').forEach((child) => [...child.childNodes].forEach((node) => {
+      if (node.nodeType === 3) {
+        const content = node.textContent.trim();
+        if (content) {
+          const p = document.createElement('p');
+          p.textContent = content;
+          node.replaceWith(p);
+        } else {
+          node.remove();
+        }
+      }
+      if (node.nodeName === 'BR') node.remove();
+    }));
+
+    return li;
+  });
+
+  content.append(overviewLi, ...subSectionMenus);
+  sectionMenu.append(content);
+}
 
 /**
  * decorates the header, mainly the nav
@@ -82,26 +192,19 @@ export default async function decorate(block) {
     nav.querySelector('.tools').prepend(navContent.querySelector('div:nth-of-type(2) ul'));
 
     // get through all section menus
-    let sectionMenu = '';
-
-    const sections = navContent.querySelectorAll('.menu');
-    if (sections) {
-      sections.forEach((section) => {
-        // go through each entry in the menu table
-        [...section.children].forEach((entry) => {
-          switch (entry.children[0].textContent) {
-            // name of the section
-            case 'Name':
-              // add to section menu
-              sectionMenu += `<div class='section'><a href='#'>${entry.children[1].textContent}</a></div>`;
-              break;
-            default:
-              break;
-          }
-        });
-      });
-      // write the section menu
-      nav.querySelector('.sections .sections-list').innerHTML = sectionMenu;
+    const sectionMenus = [...navContent.querySelectorAll('.menu')].map((menuBlock) => {
+      const sectionMenu = document.createElement('li');
+      sectionMenu.className = 'section';
+      const sectionTitle = menuBlock.firstElementChild.textContent;
+      const a = document.createElement('a');
+      a.textContent = sectionTitle;
+      a.addEventListener('click', toggleSectionMenu.bind(a, sectionMenu, menuBlock));
+      sectionMenu.appendChild(a);
+      return sectionMenu;
+    });
+    // write the section menu
+    if (sectionMenus.length) {
+      nav.querySelector('.sections .sections-list').append(...sectionMenus);
     }
 
     // add event listeners
@@ -109,23 +212,31 @@ export default async function decorate(block) {
     nav.querySelector('.search-toggle').addEventListener('click', (e) => {
       const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
       e.currentTarget.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      document.querySelector('nav .search').setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      document.querySelector('header nav .search').setAttribute('aria-expanded', expanded ? 'false' : 'true');
     });
 
     // for the hamburger toggle icon
     nav.querySelector('.hamburger-toggle').addEventListener('click', (e) => {
       e.currentTarget.setAttribute('aria-expanded', 'true');
-      document.querySelector('nav .semitrans').setAttribute('aria-expanded', 'true');
+      document.querySelector('header nav .semitrans').setAttribute('aria-expanded', 'true');
+      if (!MQ.matches) {
+        document.body.classList.add('disable-scroll');
+      }
     });
 
     // for the hamburger close icon
     nav.querySelector('.hamburger-close').addEventListener('click', () => {
-      document.querySelector('nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+      document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('disable-scroll');
     });
 
     // force hamburger close when in destop size
     MQ.addEventListener('change', () => {
-      document.querySelector('nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+      document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
+      document.querySelectorAll('header nav .sections .expand').forEach((el) => el.classList.remove('expand'));
+      // remove hard styled heights (from animations)
+      document.querySelectorAll('header nav .sections ul').forEach((ul) => ul.style.height = null);
+      document.body.classList.remove('disable-scroll');
     });
 
     /* set volvo icon */

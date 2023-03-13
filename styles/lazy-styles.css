@@ -32,6 +32,10 @@
   src: url('/fonts/fontawesome-webfont.woff') format('woff');
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -112,10 +116,6 @@
 .fa-close::before,.fa-remove::before,.fa-times::before {
   content: "\f00d"
 }
-
-
-
-
 
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6

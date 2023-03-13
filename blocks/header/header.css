@@ -149,7 +149,7 @@ header nav .tools {
   justify-content: space-between;
   position: fixed;
   width: 97vw;
-  height: 73;
+  height: 73px;
   right: -97vw;
   top: 0;
   z-index: 100;
@@ -210,13 +210,13 @@ header nav .sections {
   justify-content: start;
   position: fixed;
   width: 97vw;
-  height: 100vh;
+  height: calc(100% - 73px);
   right: -97vw;
-  top: 76px;
+  top: 73px;
   z-index: 100;
   background-color: white;
   transition: right .4s linear;
-  border-bottom: 1px solid #E1DFDD;
+  overflow: hidden scroll;
 }
 
 header nav .hamburger-toggle[aria-expanded=true]~.sections {
@@ -224,32 +224,55 @@ header nav .hamburger-toggle[aria-expanded=true]~.sections {
 }
 
 /* section entries */
-header nav .sections {
-  display: flex;
-  flex-flow: column;
+header nav .sections ul {
+  list-style: none;
   margin: 0;
   padding: 0;
-  width: 100%;
+}
+
+header nav .sections * {
+  font-size: 14px;
 }
 
 header nav .sections .sections-list {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header nav .sections .sections-list ul {
+  height: 0;
+  overflow: hidden;
+  transition: height 200ms ease-out;
 }
 
 header nav .sections .section {
-  padding: 15px;
-  border-bottom: 1px solid #E1DFDD;
-  font-size: 14px;
   line-height: 1.5;
   color: #53565A;
 }
 
+header nav .sections .section.expand {
+  padding-left: 15px;
+}
+
 header nav .sections .section a {
-  display: inline-block;
-  text-transform: uppercase;
+  display: block;
   width: 100%;
+  position: relative;
+  text-align: left;
+  font-family: var(--ff-volvo-novum);
+  border: 0;
+}
+
+header nav .sections .section > a {
+  padding: 15px;
+  border-bottom: 1px solid #E1DFDD;
+  text-transform: uppercase;
+}
+
+header nav .sections .section a:hover {
+  color: currentColor;
+  text-decoration: none;
 }
 
 header nav .sections .section a::after {
@@ -262,6 +285,54 @@ header nav .sections .section a::after {
   width: 8px;
   height: 8px;
   margin-top: -4px;
+}
+
+header nav .sections .section.expand > a::after {
+  content: '\f104';
+  right: unset;
+  left: 0
+}
+
+header nav .sections .section ul > li > *:not(a.primary-link,ul) {
+  display: none;
+}
+
+/* 1st level */
+header nav .sections .section > ul > li a {
+  padding: 15px 0 30px;
+}
+
+header nav .sections .section > ul > li.overview > *,
+header nav .sections .section > ul > li > p.title {
+  display: block;
+  margin: 0;
+}
+
+header nav .sections .section ul > li.overview a::after {
+  content: unset;
+}
+
+header nav .sections .section ul > li a::after {
+  content: '\f067';
+  font-size: 14px;
+  margin-top: 0;
+}
+
+/* 2nd and deeper levels */
+header nav .sections .section > ul > li > ul > li a {
+  padding-top: 0;
+}
+
+header nav .sections .section ul > li.expand a::after {
+  content: '\f068';
+}
+
+header nav .sections .section ul > li.expand > ul li a::after {
+  content: unset;
+}
+
+header nav .sections .section ul li.expand > ul {
+  padding-left: 15px;
 }
 
 /* ----- tablet ------------------------------------------------------ */
@@ -337,7 +408,7 @@ header nav .sections .section a::after {
       '. brand tools .' max-content
       '. brand search .' auto
       'sections sections sections sections' 48px
-      / 3.5% auto max-content 3.5%;
+      / auto auto max-content auto;
     padding: 0;
   }
 
@@ -431,8 +502,9 @@ header nav .sections .section a::after {
 
   /* sections */
   header nav .sections {
-    display: initial;
-    position: initial;
+    display: block;
+    position: unset;
+    overflow: unset;
     grid-area: sections;
     height: 48px;
     width: 100%;
@@ -440,29 +512,170 @@ header nav .sections .section a::after {
   }
 
   header nav .sections .sections-list {
+    position: relative;
     display: flex;
     flex-flow: row;
     gap: 48px;
     height: 48px;
     align-items: center;
-    width: 93%;
+    width: 960px;
     margin: 0 auto;
   }
 
-  header nav .sections .section {
-    border: 0;
-    padding: 0;
+  header nav .sections * {
     font-size: 12px;
+  }
+
+  header nav .sections .section {
     line-height: 1;
   }
 
-  header nav .sections .section a::after {
+  header nav .sections .section > ul {
+    position: absolute;
+    left: 0;
+  }
+
+  header nav .sections .section.expand {
+    padding: 0;
+  }
+
+  header nav .sections .section > a::after {
     position: initial;
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-    font-family: fontawesome;
     content: "\f105";
     font-size: 12px;
     padding-left: 8px;
+  }
+
+  header nav .sections .section.expand a::after {
+    content: "\f107";
+  }
+
+  header nav .sections .section .overview {
+    display: none;
+  }
+
+  /* flyout */
+  header nav .sections .section > ul {
+    display: none;
+    background-color: #fff;
+    padding: 40px 15px 0 92.5px;
+    width: 100%;
+  }
+
+  header nav .sections .section.expand > ul {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  header nav .sections .section > ul > li {
+    margin-bottom: 20px;
+  }
+
+  header nav .sections .section.image-list > ul > li {
+    width: 775px;
+  }
+
+  header nav .sections .section ul ul,
+  header nav .sections .section ul > li > *:not(a.primary-link,ul) {
+    height: auto;
+    display: block;
+  }
+
+  header nav .sections .section > ul > li > p.title {
+    font-size: 24px;
+    line-height: 1.333;
+    border-bottom: 1px solid var(--background-light-gray);
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+  }
+
+  header nav .sections .section > ul > li > p.title a {
+    font-family: var(--ff-volvo-novum-medium);
+  }
+
+  header nav .sections .section > ul > li > p.subtitle {
+    margin: 8px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 12px;
+    color: var(--volvo-text-light-gray);
+  }
+
+  header nav .sections .section > ul > li > p.title > *,
+  header nav .sections .section > ul > li > p.subtitle > * {
+    text-align: left;
+    font-size: inherit;
+    padding: 0;
+  }
+
+  header nav .sections .section > ul > li a::after,
+  header nav .sections .section.expand > ul > li a::after {
+    content: unset;
+  }
+
+  header nav .sections .section > ul > li > ul a {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  header nav .sections .section > ul > li > ul p {
+    padding: 8px 0;
+    margin: 0;
+    color: var(--volvo-text-light-gray);
+  }
+
+  header nav .sections .section > ul > li > ul a.cta {
+    display: inline;
+    white-space: normal;
+  }
+
+  header nav .sections .section > ul > li > ul a.cta::after {
+    content: '\f105';
+    position: unset;
+    margin-left: 8px;
+    font-size: inherit;
+    color: var(--link-color);
+    font-weight: 700;
+  }
+
+  header nav .sections .section.image-list > ul > li > ul {
+    display: flex;
+    column-gap: 30px;
+    row-gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  header nav .sections .section.image-list > ul > li > ul::after {
+    content: '';
+    display: block;
+    flex: 2;
+  }
+
+  header nav .sections .section.image-list > ul > li > ul > li,
+  header nav .sections .section.link-list > ul > li > ul > li {
+    width: 125px;
+  }
+
+  header nav .sections .section.image-list > ul > li > ul > li img {
+    max-width: 100%;
+    height: 70.5px;
+    object-fit: cover;
+  }
+
+  header nav .sections .section.link-list > ul > li > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  header nav .sections .section.link-list > ul > li > ul > li a {
+    font-size: 14px;
   }
 }
 
@@ -477,6 +690,18 @@ header nav .sections .section a::after {
   /* section nav fixed width of 1200px */
   header nav .sections .sections-list {
     width: 1200px;
-    margin: 0 auto;
+  }
+
+  header nav .sections .section.image-list > ul > li {
+    width: 975px;
+  }
+
+  header nav .sections .section.link-list > ul > li > ul > li,
+  header nav .sections .section.image-list > ul > li > ul > li {
+    width: 165px;
+  }
+
+  header nav .sections .section.image-list > ul > li > ul > li img {
+    height: 92.5px;
   }
 }

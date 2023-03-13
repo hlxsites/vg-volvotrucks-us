@@ -331,10 +331,6 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-body.disable-scroll, body.disable-scroll main {
-  overflow: hidden;
-}
-
 .section.tabbed-container {
   padding: 0;
   margin-top: 50px;
@@ -371,7 +367,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .section.tabbed-container ul.tab-navigation li.active,
 .section.tabbed-container ul.tab-navigation li:hover {
-  border-bottom: 3px solid #004FBC;
+  border-bottom: 3px solid var(--link-color);
 }
 
 .section.sub-nav-container {
