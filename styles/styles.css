@@ -368,6 +368,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .section.tabbed-container ul.tab-navigation button {
   background: 0 0;
+  border: none;
   color: var(--volvo-text-gray);
   padding: 0;
   margin: 0;
