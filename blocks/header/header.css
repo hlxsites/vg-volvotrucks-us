@@ -5,19 +5,24 @@ header nav a:any-link {
   text-decoration: none;
 }
 
+header .header {
+  display: flex;
+}
+
 /* nav */
 header nav {
-  height: var(--nav-height);
-  margin: 0 auto;
+  margin: 30px auto 0;
   padding-left: 15px;
   padding-right: 15px;
   display: flex;
-  flex-flow: row;
-  align-items: center;
+  flex-flow: row wrap;
+  z-index: 1000;
 }
 
 /* the brand  */
 header nav .brand {
+  height: 35px;
+  margin: 0 0 30px;
   display: flex;
   flex-flow: row;
   flex: 1 0 auto;
@@ -25,11 +30,13 @@ header nav .brand {
 
 /* the volvo logo svg */
 header nav .brand .logo .icon-logo svg {
+  display: block;
   width: 98px;
 }
 
 /* the section/location info to the right of the logo */
 header nav .brand .vgsection-location {
+  font-size: 12px;
   margin-left: 24px;
   display: flex;
   flex-flow: column;
@@ -37,7 +44,6 @@ header nav .brand .vgsection-location {
 
 /* volvo group section */
 header nav .brand .vgsection-location .vgsection {
-  font-size: 14px;
   font-family: var(--body-font-family);
   color: var(--text-color);
   font-weight: 700;
@@ -45,7 +51,6 @@ header nav .brand .vgsection-location .vgsection {
 
 /* location */
 header nav .vgsection-location .location {
-  font-size: 14px;
   font-family: var(--body-font-family);
   font-weight: 400;
   color: #A7A8A9;
@@ -72,12 +77,8 @@ header nav .search {
   height: 0;
   overflow: hidden;
   transition: height 400ms ease-out;
-  z-index: 1;
-  padding: 0 15px;
   background-color: white;
   display: flex;
-  position: absolute;
-  left: 0;
   top: var(--nav-height);
   width: 100%;
 }
@@ -402,10 +403,12 @@ header nav .sections .section .navigation-cta {
     width: 100%;
     display: grid;
     grid-template:
-      '. brand tools .' max-content
+      '. brand tools .' 26px
       '. brand search .' auto
+      '. . . . ' 27px
       'sections sections sections sections' 48px
       / auto auto max-content auto;
+    margin: 25px 0 0;
     padding: 0;
   }
 
@@ -417,17 +420,18 @@ header nav .sections .section .navigation-cta {
 
   /* tools */
   header nav .tools {
-    position: initial;
+    position: unset;
+    align-items: start;
     grid-area: tools;
     border: none;
     justify-content: end;
     width: 100%;
+    height: auto;
   }
 
   /* list of tools */
   header nav .tools ul {
     margin: 0;
-    padding: 20px 45px 0 0;
     gap: 20px;
   }
 
@@ -448,6 +452,7 @@ header nav .sections .section .navigation-cta {
   header nav .tools ul li img {
     width: 14px;
     height: 14px;
+    object-fit: contain;
   }
 
   /* search */
@@ -456,14 +461,14 @@ header nav .sections .section .navigation-cta {
     justify-self: start;
     position: initial;
     grid-area: search;
-    height: fit-content;
+    height: 50px;
     width: 100%;
     padding: 0;
     margin: 0;
   }
 
   header nav .search div {
-    padding: 10px 45px 0 0;
+    padding: 10px 0 0;
     display: flex;
     flex-flow: row;
     justify-content: right;
@@ -472,7 +477,7 @@ header nav .sections .section .navigation-cta {
   header nav .search input {
     position: relative;
     display: block;
-    padding: 10px 40px 10px 15px;
+    padding: 10px 35px 10px 15px;
     width: 290px;
     height: 40px;
     color: #53565A;

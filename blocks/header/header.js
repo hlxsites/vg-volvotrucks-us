@@ -159,7 +159,7 @@ export default async function decorate(block) {
       </div>
 
       <a class="search-toggle" aria-expanded="false">
-        <img class="search-icon" src="icons/search-icon.png" >
+        <img class="search-icon" src="/icons/search-icon.png" >
       </a>
 
       <a class="hamburger-toggle" aria-expanded="false" >
