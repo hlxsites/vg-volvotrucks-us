@@ -136,7 +136,7 @@ export default async function decorate(block) {
 
   // fetch nav content
   // temporary points to drafts until PR is approved, to not mess up layout
-  const navPath = config.nav || '/drafts/mirko/nav';
+  const navPath = config.nav || '/nav';
   const resp = await fetch(`${navPath}.plain.html`);
 
   if (resp.ok) {
