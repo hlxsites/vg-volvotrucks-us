@@ -1,5 +1,10 @@
 /* block specific CSS goes here */
 
+main .section.hero-container {
+    margin: 0;
+    padding: 0;
+}
+
 main .section .hero-wrapper {
     padding: 0;
     width: 100%;

@@ -1,7 +1,7 @@
 import { wrapImageWithVideoLink } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.classList.add(`teaser-cards-${block.firstElementChild.children.length}`);
+  block.parentElement.classList.add(`teaser-cards-${block.firstElementChild.children.length}`);
   // go through all teasers
   [...block.firstElementChild.children].forEach((elem) => {
     // add teaser class for each entry
