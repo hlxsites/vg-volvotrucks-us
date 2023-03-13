@@ -117,6 +117,31 @@
   content: "\f00d"
 }
 
+.fa-star::before {
+  content: "\f005"
+}
+
+.fa-star-o::before {
+  content: "\f006"
+}
+
+.fa-cut::before,.fa-scissors::before {
+  content: "\f0c4"
+}
+
+.fa-copy::before,.fa-files-o::before {
+  content: "\f0c5"
+}
+
+.fa-external-link::before {
+  content: "\f08e"
+}
+
+.fa-refresh::before {
+  content: "\f021"
+}
+
+
 
 
 
