@@ -8,7 +8,7 @@ function toggleMenu(li, event) {
   const ul = li.querySelector(':scope > ul');
   if (!MQ.matches && ul) event.preventDefault();
   if (li.classList.contains('expand')) {
-    // collapse 
+    // collapse
     if (!MQ.matches && ul) {
       requestAnimationFrame(() => {
         ul.style.height = `${ul.scrollHeight}px`;
@@ -16,17 +16,17 @@ function toggleMenu(li, event) {
           ul.style.height = '0px';
           ul.addEventListener('transitionend', () => {
             ul.style.height = null;
-            li.classList.remove('expand');        
-          }, ONCE)
+            li.classList.remove('expand');
+          }, ONCE);
         }, ONCE);
-      })
+      });
     } else {
       li.classList.remove('expand');
     }
   } else {
     if (!MQ.matches && ul) {
       ul.style.height = `${ul.scrollHeight}px`;
-      ul.addEventListener('transitionend', () => ul.style.height = '100%', ONCE)
+      ul.addEventListener('transitionend', () => ul.style.height = '100%', ONCE);
     } else {
       li.parentElement.querySelectorAll('.expand').forEach((li) => li.classList.remove('expand'));
     }
@@ -50,8 +50,8 @@ function buildSectionMenuContent(sectionMenu, menuBlock) {
   overviewLink.className = 'primary-link';
   overviewLink.textContent = 'Overview';
   const overviewLi = document.createElement('li');
-  overviewLi.className = "overview";
-  overviewLi.append(overviewLink)
+  overviewLi.className = 'overview';
+  overviewLi.append(overviewLink);
 
   const subSectionMenus = flyoutSections.map((section) => {
     const li = document.createElement('li');
