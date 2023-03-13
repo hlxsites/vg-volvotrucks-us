@@ -96,21 +96,21 @@
     font-size: 1.3rem;
 }
 
-.block.magazine-articles .articles article ul {
+.block.magazine-articles article ul {
     list-style-type: none;
     padding-left: 0;
     font-size: 12px;
 }
 
-.block.magazine-articles .articles article ul li{
+.block.magazine-articles article ul li{
     display: inline;
 }
 
-.block.magazine-articles .articles article ul li:nth-child(2) {
+.block.magazine-articles article ul li:nth-child(2) {
     color: var(--highlight-background-color);
 }
 
-.block.magazine-articles .articles article ul li+li::before {
+.block.magazine-articles article ul li+li::before {
     content: " | ";
     padding: 0 5px;
 }
