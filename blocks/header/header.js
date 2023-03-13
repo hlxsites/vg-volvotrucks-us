@@ -38,7 +38,7 @@ function toggleMenu(li, event) {
   }
 }
 
-function buildSectionMenuContent(sectionMenu, menuBlock) {
+function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
   sectionMenu.classList.add('link-list');
   const content = document.createElement('ul');
   const [firstRow, ...flyoutSections] = menuBlock.children;
@@ -105,13 +105,20 @@ function buildSectionMenuContent(sectionMenu, menuBlock) {
     return li;
   });
 
+  if (navCta) {
+    const li = document.createElement('li');
+    li.className = 'navigation-cta';
+    li.innerHTML = navCta.innerHTML;
+    subSectionMenus.push(li);
+  }
+
   content.append(overviewLi, ...subSectionMenus);
   sectionMenu.append(content);
 }
 
-function toggleSectionMenu(sectionMenu, menuBlock, event) {
+function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
   if (!sectionMenu.querySelector(':scope > ul')) {
-    buildSectionMenuContent(sectionMenu, menuBlock);
+    buildSectionMenuContent(sectionMenu, navCta, menuBlock);
   }
   toggleMenu(sectionMenu, event);
 }
@@ -187,22 +194,24 @@ export default async function decorate(block) {
 
     // fill in the content from nav doc
     // logo
-    nav.querySelector('.logo').append(navContent.querySelector('div:first-of-type > p:first-of-type > span'));
+    nav.querySelector('.logo').append(navContent.children[0].querySelector('p:first-of-type > span'));
     // vg_section
-    nav.querySelector('.vgsection').append(navContent.querySelector('div:first-of-type > p:nth-of-type(2)').textContent);
+    nav.querySelector('.vgsection').append(navContent.children[0].querySelector('div:first-of-type > p:nth-of-type(2)').textContent);
     // location
-    nav.querySelector('.location').append(navContent.querySelector('div:first-of-type > p:nth-of-type(3)').textContent);
+    nav.querySelector('.location').append(navContent.children[0].querySelector('div:first-of-type > p:nth-of-type(3)').textContent);
     // tools
-    nav.querySelector('.tools').prepend(navContent.querySelector('div:nth-of-type(2) ul'));
+    nav.querySelector('.tools').prepend(navContent.children[1].querySelector('ul'));
+
+    const navCta = navContent.children[3];
 
     // get through all section menus
-    const sectionMenus = [...navContent.querySelectorAll('.menu')].map((menuBlock) => {
+    const sectionMenus = [...navContent.children[2].querySelectorAll('.menu')].map((menuBlock) => {
       const sectionMenu = document.createElement('li');
       sectionMenu.className = 'section';
       const sectionTitle = menuBlock.firstElementChild.textContent;
       const a = document.createElement('a');
       a.textContent = sectionTitle;
-      a.addEventListener('click', toggleSectionMenu.bind(a, sectionMenu, menuBlock));
+      a.addEventListener('click', toggleSectionMenu.bind(a, sectionMenu, navCta, menuBlock));
       sectionMenu.appendChild(a);
       return sectionMenu;
     });

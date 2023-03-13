@@ -268,8 +268,7 @@ header nav .sections .section > a {
 header nav .sections .section a::after {
   position: absolute;
   right: 15px;
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font-family: fontawesome;
+  font-family: var(--ff-fontawesome);
   content: "\f105";
   font-size: 20px;
   width: 8px;
@@ -329,6 +328,10 @@ header nav .sections .section > ul > li.expand > ul li a::after {
 header nav .sections .section a:hover {
   color: currentcolor;
   text-decoration: none;
+}
+
+header nav .sections .section .navigation-cta {
+  display: none;
 }
 
 /* ----- tablet ------------------------------------------------------ */
@@ -549,8 +552,23 @@ header nav .sections .section a:hover {
     left: 0;
     display: none;
     background-color: #fff;
-    padding: 40px 15px 0 92.5px;
+    padding: 40px 0 0 92px;
     width: 100%;
+  }
+
+  header nav .sections .section.expand .navigation-cta {
+    margin: 0 0 0 -92px !important;
+    width: calc(100% + 92px) !important;
+    padding: 16px 0;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-light-gray);
+  }
+
+  header nav .sections .section .navigation-cta p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
   }
 
   header nav .sections .section.expand ul {
@@ -562,6 +580,7 @@ header nav .sections .section a:hover {
     gap: 30px;
     flex-wrap: wrap;
     height: auto;
+    box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
   }
 
   header nav .sections .section.expand > ul > li {
@@ -583,6 +602,22 @@ header nav .sections .section a:hover {
     text-align: left;
     font-size: 16px;
     line-height: 1.5;
+  }
+
+  header nav .sections .section.expand .navigation-cta a {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    font-size: 14px;
+    margin-left: 8px;
+    color: var(--link-color);
+  }
+
+  header nav .sections .section.expand .navigation-cta a::after {
+    display: inline;
+    position: unset;
+    margin-left: 8px;
+    content: '\f105';
   }
 
   header nav .sections .section.expand > ul > li > p.title {
@@ -683,16 +718,16 @@ header nav .sections .section a:hover {
     width: 1200px;
   }
 
-  header nav .sections .section.image-list > ul > li {
+  header nav .sections .section.expand.image-list > ul > li {
     width: 975px;
   }
 
-  header nav .sections .section.link-list > ul > li > ul > li,
-  header nav .sections .section.image-list > ul > li > ul > li {
+  header nav .sections .section.expand.link-list > ul > li > ul > li,
+  header nav .sections .section.expand.image-list > ul > li > ul > li {
     width: 165px;
   }
 
-  header nav .sections .section.image-list > ul > li > ul > li img {
+  header nav .sections .section.expand.image-list > ul > li > ul > li img {
     height: 92.5px;
   }
 }
