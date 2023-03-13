@@ -256,7 +256,11 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 15px;
+  padding: 64px 0;
+}
+
+main .section > div {
+  padding: 0 15px;
 }
 
 main pre {
@@ -464,7 +468,7 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 768px) {
-  main .section {
+  main .section > div {
     width: 756px;
     margin: auto;
   }
@@ -480,12 +484,9 @@ a.button.text-link-with-video::after {
     --heading-font-size-xs: 2.2rem;
   }
 
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  main .section {
+  main .section > div {
+    padding-left: 0;
+    padding-right: 0;
     width: 960px;
   }
 
@@ -496,7 +497,7 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 1300px) {
-  main .section {
+  main .section > div {
     width: 1200px;
   }
 }

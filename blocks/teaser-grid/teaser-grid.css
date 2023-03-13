@@ -1,12 +1,7 @@
-.section.teaser-grid-container {
+.section .teaser-grid-wrapper {
     margin: 0;
     padding: 0;
-    width: unset;
-}
-
-.section.teaser-grid-container .teaser-grid-wrapper {
-    margin: 0;
-    max-width: unset;
+    width: 100%;
 }
 
 .block.teaser-grid {

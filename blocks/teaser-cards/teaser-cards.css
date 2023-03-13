@@ -4,11 +4,6 @@
   --text-color-80: rgb(83 86 90 / 80%);
 }
 
-/* boilderplate: the section containing the block */
-.section.teaser-cards-container {
-  padding: 0;
-}
-
 /* boilerplate: the block element itself that gets passed into js decorate() */
 .block.teaser-cards {
   margin-block-start: 48px;
@@ -19,6 +14,7 @@
 /* first row div */
 .block.teaser-cards > div {
   display: flex;
+  column-gap: 30px;
   flex-flow: column;
 }
 
@@ -26,7 +22,6 @@
 .block.teaser-cards .teaser {
   box-sizing: border-box;
   flex: 0 1 auto;
-  padding: 0 30px 15px;
 }
 
 /* teaser image */
@@ -115,7 +110,6 @@
 
   /* each teaser div in the row */
   .block.teaser-cards .teaser {
-    padding-inline: 15px;
     width: 50%;
   }
 

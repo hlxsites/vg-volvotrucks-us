@@ -1,13 +1,8 @@
 /* block specific CSS goes here */
 
-main .hero-container {
+main .section .hero-wrapper {
     padding: 0;
     width: 100%;
-    max-width: unset;
-}
-
-main .hero-container > div {
-    max-width: unset;
 }
 
 main .hero {

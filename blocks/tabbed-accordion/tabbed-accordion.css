@@ -28,7 +28,6 @@
   content: "\f106"
 }
 
-
 .tabbed-accordion-wrapper .accordion-header button.collapsed::after {
   content: "\f107";
 }
