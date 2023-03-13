@@ -513,7 +513,6 @@ header nav .sections .section .navigation-cta {
     display: flex;
     flex-flow: row;
     gap: 48px;
-    height: 48px;
     align-items: center;
     width: 960px;
     margin: 0 auto;
@@ -524,11 +523,17 @@ header nav .sections .section .navigation-cta {
   }
 
   header nav .sections .section {
-    line-height: 1;
+    display: block;
+  }
+
+  header nav .sections .section > a {
+      border: 0;
+      height: 48px;
   }
 
   header nav .sections .section.expand {
     padding: 0;
+    background-color: white;
   }
 
   header nav .sections .section > a::after {
