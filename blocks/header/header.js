@@ -26,20 +26,16 @@ function toggleMenu(li, event) {
   } else {
     if (!MQ.matches && ul) {
       ul.style.height = `${ul.scrollHeight}px`;
-      ul.addEventListener('transitionend', () => ul.style.height = '100%', ONCE);
+      ul.addEventListener('transitionend', () => {
+        ul.style.height = '100%';
+      }, ONCE);
     } else {
-      li.parentElement.querySelectorAll('.expand').forEach((li) => li.classList.remove('expand'));
+      li.parentElement.querySelectorAll('.expand').forEach((expanded) => {
+        expanded.classList.remove('expand');
+      });
     }
     li.classList.add('expand');
   }
-}
-
-function toggleSectionMenu(sectionMenu, menuBlock, event) {
-  const a = event.target;
-  if (!sectionMenu.querySelector(':scope > ul')) {
-    buildSectionMenuContent(sectionMenu, menuBlock);
-  }
-  toggleMenu(sectionMenu, event);
 }
 
 function buildSectionMenuContent(sectionMenu, menuBlock) {
@@ -94,10 +90,10 @@ function buildSectionMenuContent(sectionMenu, menuBlock) {
     // normalize the li content: wrap orphan texts in <p>, remove <br>
     ul.querySelectorAll('li').forEach((child) => [...child.childNodes].forEach((node) => {
       if (node.nodeType === 3) {
-        const content = node.textContent.trim();
-        if (content) {
+        const textContent = node.textContent.trim();
+        if (textContent) {
           const p = document.createElement('p');
-          p.textContent = content;
+          p.textContent = textContent;
           node.replaceWith(p);
         } else {
           node.remove();
@@ -111,6 +107,13 @@ function buildSectionMenuContent(sectionMenu, menuBlock) {
 
   content.append(overviewLi, ...subSectionMenus);
   sectionMenu.append(content);
+}
+
+function toggleSectionMenu(sectionMenu, menuBlock, event) {
+  if (!sectionMenu.querySelector(':scope > ul')) {
+    buildSectionMenuContent(sectionMenu, menuBlock);
+  }
+  toggleMenu(sectionMenu, event);
 }
 
 /**
@@ -235,7 +238,9 @@ export default async function decorate(block) {
       document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
       document.querySelectorAll('header nav .sections .expand').forEach((el) => el.classList.remove('expand'));
       // remove hard styled heights (from animations)
-      document.querySelectorAll('header nav .sections ul').forEach((ul) => ul.style.height = null);
+      document.querySelectorAll('header nav .sections ul').forEach((ul) => {
+        ul.style.height = null;
+      });
       document.body.classList.remove('disable-scroll');
     });
 
