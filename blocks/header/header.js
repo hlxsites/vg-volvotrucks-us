@@ -196,9 +196,9 @@ export default async function decorate(block) {
     // logo
     nav.querySelector('.logo').append(navContent.children[0].querySelector('p:first-of-type > span'));
     // vg_section
-    nav.querySelector('.vgsection').append(navContent.children[0].querySelector('div:first-of-type > p:nth-of-type(2)').textContent);
+    nav.querySelector('.vgsection').append(navContent.children[0].querySelector('p:nth-of-type(2)').textContent);
     // location
-    nav.querySelector('.location').append(navContent.children[0].querySelector('div:first-of-type > p:nth-of-type(3)').textContent);
+    nav.querySelector('.location').append(navContent.children[0].querySelector('p:nth-of-type(3)').textContent);
     // tools
     nav.querySelector('.tools').prepend(navContent.children[1].querySelector('ul'));
 
