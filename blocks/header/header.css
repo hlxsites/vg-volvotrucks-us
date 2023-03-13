@@ -29,6 +29,7 @@ header nav .brand {
 }
 
 /* the volvo logo svg */
+header nav .brand .logo .icon-logo,
 header nav .brand .logo .icon-logo svg {
   display: block;
   width: 98px;

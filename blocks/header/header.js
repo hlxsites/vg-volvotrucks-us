@@ -39,6 +39,8 @@ function toggleMenu(li, event) {
 }
 
 function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
+  // per default the section menus are link-list
+  // if there is at least one picture they will become image-list
   sectionMenu.classList.add('link-list');
   const content = document.createElement('ul');
   const [firstRow, ...flyoutSections] = menuBlock.children;
@@ -51,9 +53,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
 
   const subSectionMenus = flyoutSections.map((section) => {
     const li = document.createElement('li');
-    li.className = 'sub-section';
     const ul = section.querySelector(':scope ul');
-    ul.className = 'entries';
     li.append(ul);
 
     if (ul.querySelector('picture')) {
@@ -73,6 +73,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
       if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, li));
     }
 
+    // find all links, first-of-type becomes .primary-link and wraps the picture if there is one
     li.querySelectorAll('a').forEach((link) => {
       if (link.matches(':first-of-type')) {
         const picture = link.parentElement.querySelector('picture');
