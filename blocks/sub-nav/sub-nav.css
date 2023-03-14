@@ -1,3 +1,7 @@
+.header.block[data-block-status="loaded"] ~ .block.sub-nav {
+    position: relative;
+}
+
 .block.sub-nav nav {
     position: relative;
     margin: 0;

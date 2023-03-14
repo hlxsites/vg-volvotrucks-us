@@ -207,11 +207,12 @@ async function loadLazy(doc) {
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
+  const header = doc.querySelector('header');
 
-  loadHeader(doc.querySelector('header'));
+  loadHeader(header);
   loadFooter(doc.querySelector('footer'));
 
-  const subnav = doc.querySelector('header .block.sub-nav');
+  const subnav = header.querySelector('.block.sub-nav');
   if (subnav) {
     loadBlock(subnav);
   }

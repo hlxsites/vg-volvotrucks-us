@@ -128,8 +128,6 @@ body.appear {
 }
 
 header {
-  display: flex;
-  flex-direction: column-reverse;
   min-height: var(--nav-height);
   position: --webkit-sticky;
   position: sticky;
@@ -138,14 +136,20 @@ header {
   z-index: 1000;
 }
 
+header .header.block {
+  min-height: var(--nav-height);
+}
+
 header.sub-nav-wrapper {
   min-height: calc(var(--nav-height) + var(--sub-nav-height));
 }
 
 header .sub-nav.block {
   min-height: var(--sub-nav-height);
-  position: relative;
+  position: absolute;
   background-color: #7F7F7F;
+  width: 100%;
+  bottom: 0;
 }
 
 h1, h2, h3,
