@@ -1,0 +1,96 @@
+@import url('./performance-specifications.css');
+
+main .engine-specifications-container {
+  padding: 0;
+}
+
+.engine-specifications.engine {
+  color: #141414;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+}
+
+.engine-specifications .engine-title {
+  font-size: var(--heading-font-size-l);
+  margin: 0;
+  text-align: center;
+}
+
+.engine-specifications .item-list {
+  display: flex;
+  flex-direction: column;
+  padding-left: 16px;
+  list-style: none;
+  margin: 40px 0 0;
+}
+
+.engine-specifications .item-wrapper {
+  margin: 0 0 24px;
+}
+
+.engine-specifications .rating-title,
+.engine-specifications .power-title,
+.engine-specifications .torque-title,
+.engine-specifications .item-title {
+  color: #888B8D;
+  font-family: var(--ff-volvo-novum);
+  margin: 0;
+  font-size: 16px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+.engine-specifications .rating-item h5,
+.engine-specifications .power-item h5,
+.engine-specifications .torque-item h5,
+.engine-specifications .item-content {
+  font-family: var(--ff-volvo-novum);
+  margin: 4px 0 0;
+  font-size: 16px;
+  line-height: 130%;
+  font-weight: 400;
+  letter-spacing: 0.15px;
+}
+
+@media (min-width: 745px){
+  .engine-specifications .item-list {
+    flex-flow: wrap;
+    flex-direction: row;
+    overflow: auto;
+    padding: 0 32px;
+  }
+
+  .engine-specifications .item-list li {
+    width: 50%;
+    padding-right: 5px;
+  }
+}
+
+@media (min-width: 1440px){
+  main .engine-specifications-container {
+    background-color: #F7F7F7;
+    width: 100vw;
+    margin: 0 !important;
+  }
+
+  .engine-specifications-wrapper {
+    padding: 120px 0  116px;
+  }
+
+  .engine-specifications.engine {
+    background-color: var(--c-white);
+    border-radius: 12px;
+    margin: 0;
+  }
+
+  .engine-specifications .engine-title {
+    margin-top: 40px;
+  }
+
+  .engine-specifications .item-list li {
+    width: 25%;
+    gap: 12px;
+  }
+}
