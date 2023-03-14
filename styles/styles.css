@@ -255,7 +255,7 @@ main input:hover {
 }
 
 main .section {
-  margin: 48px auto;
+  margin: 48px 0;
 }
 
 main .section:first-child {
@@ -264,6 +264,7 @@ main .section:first-child {
 
 main .section > div {
   padding: 0 15px;
+  margin: 0 auto;
 }
 
 main pre {
