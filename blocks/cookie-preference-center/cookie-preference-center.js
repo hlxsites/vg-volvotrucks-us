@@ -4,10 +4,10 @@ export default function decorate(block) {
 
   const button = document.createElement('button');
   button.classList.add('button');
-  button.classList.add('secondary');
-  button.classList.add('ot-sdk-show-settings');
-
+  button.classList.add('cta');
+  button.setAttribute('onclick', 'OneTrust.ToggleInfoDisplay();');
   button.textContent = block.textContent;
+
   buttonContainer.append(button);
 
   block.textContent = '';
