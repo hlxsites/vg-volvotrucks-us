@@ -26,9 +26,9 @@ async function* request(url, context) {
     }
   }
 }
-  
+
 // Operations:
-  
+
 function withFetch(upstream, context, fetch) {
   context.fetch = fetch;
   return upstream;

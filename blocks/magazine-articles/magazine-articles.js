@@ -20,7 +20,6 @@ function buildMagazineArticle(entry) {
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
   const categoryItem = document.createElement('li');
-  const timeItem = document.createElement('li');
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
     </a>
@@ -29,8 +28,10 @@ function buildMagazineArticle(entry) {
     ${(category ? categoryItem.textContent(category) : '')}</ul>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
-    <ul><li>${(author ? author : '')}</li>
-    ${(readingTime ? timeItem.textContent(readingTime) : '')}</ul>
+    <ul>
+    <li>${author}</li>
+    <li>${readingTime}</li>
+    </ul>
     </div>`;
   return card;
 }
@@ -70,15 +71,16 @@ function buildRelatedMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
-  const timeItem = document.createElement('li');
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
     </a>
     <div class="content">
     <ul><li>${date.toLocaleDateString()}</li></ul>
     <h3><a href="${path}">${title}</a></h3>
-    <ul><li>${(author ? author : '')}</li>
-    ${(readingTime ? timeItem.textContent(readingTime) : '')}</ul>
+    <ul>
+    <li>${author}</li>
+    <li>${readingTime}</li>
+    </ul>
     </div>`;
   return card;
 }
@@ -121,7 +123,7 @@ function createPagination(entries, page, limit) {
     }
     const list = document.createElement('ol');
     list.className = 'scroll';
-    if (page == 1) {
+    if (page === 1) {
       list.append(createPaginationLink(page + 1, 'next'));
       list.append(createPaginationLink(maxPages, 'last'));
     } else if (page > 1 && page < maxPages) {
@@ -129,7 +131,7 @@ function createPagination(entries, page, limit) {
       list.append(createPaginationLink(page - 1, 'prev'));
       list.append(createPaginationLink(page + 1, 'next'));
       list.append(createPaginationLink(maxPages, 'last'));
-    } else if (page == maxPages) {
+    } else if (page === maxPages) {
       list.append(createPaginationLink(1, 'first'));
       list.append(createPaginationLink(page - 1, 'prev'));
     }
@@ -157,7 +159,7 @@ async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
   mainEl.appendChild(pagination.cloneNode(true));
 }
 
-async function createLatestMagazineArticles(mainEl,magazineArticles) {
+async function createLatestMagazineArticles(mainEl, magazineArticles) {
   mainEl.innerHTML = '';
   const articleCards = document.createElement('div');
   articleCards.classList.add('latest-magazine-articles');
@@ -168,7 +170,7 @@ async function createLatestMagazineArticles(mainEl,magazineArticles) {
   });
 }
 
-async function createRelatedtMagazineArticles(mainEl,magazineArticles) {
+async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
   mainEl.innerHTML = '';
   const articleCards = document.createElement('div');
   articleCards.classList.add('related-magazine-articles');
