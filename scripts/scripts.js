@@ -245,15 +245,16 @@ export function isVideoLink(link) {
 }
 
 export function selectVideoLink(links) {
-  // logic for selecting the video based on the cookies
-  // will be implemented in #41
-  return links[0];
+  const linksList = [...links];
+  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1'));
+  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
+
+  return videoLink;
 }
 
 export function addVideoShowHandler(link) {
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play-circle-o');
-  link.prepend(icon);
   link.classList.add('text-link-with-video');
 
   link.addEventListener('click', (event) => {

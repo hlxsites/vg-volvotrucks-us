@@ -1,0 +1,22 @@
+.video-link a.text-link-with-video {
+  display: inline-flex;
+  align-items: center;
+  color: var(--volvo-text-gray);
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  padding: 5px;
+}
+
+.video-link a.text-link-with-video:hover {
+  color: #030304;
+  background: transparent;
+}
+
+.video-link i {
+  font-size: 48px;
+}
+
+.video-link a.text-link-with-video::after {
+  content: unset;
+}
