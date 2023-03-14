@@ -60,6 +60,7 @@
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
   --background-color: var(--c-white);
+  --background-hover-color: #E1DFDD;
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
@@ -163,7 +164,7 @@ a:any-link {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--link-hover-color);
 }
 
