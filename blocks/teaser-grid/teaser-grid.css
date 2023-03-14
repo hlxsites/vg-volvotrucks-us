@@ -71,12 +71,14 @@
     font-size: 2.4rem;
     line-height: 1.3333;
     margin: 0 0 0.3333em;
+    font-weight: bold;
 }
 
 .block.teaser-grid>ul>li p {
     font-family: var(--ff-volvo-novum-medium);
     line-height: 1.5;
     margin: 0;
+    font-weight: bold;
 }
 
 .block.teaser-grid>ul>li a:any-link {
