@@ -10,6 +10,7 @@ import {
   decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
+  loadBlock,
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
@@ -69,10 +70,9 @@ function buildHeroBlock(main) {
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
   if (subnav) {
-    const nav = document.createElement('div');
     const block = buildBlock('sub-nav', []);
-    nav.appendChild(block);
-    main.prepend(nav);
+    main.previousElementSibling.prepend(block);
+    decorateBlock(block);
   }
 }
 
@@ -210,6 +210,11 @@ async function loadLazy(doc) {
 
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
+
+  const subnav = doc.querySelector('header .block.sub-nav');
+  if (subnav) {
+    loadBlock(subnav);
+  }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
