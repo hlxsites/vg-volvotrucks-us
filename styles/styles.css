@@ -131,6 +131,7 @@ header {
   display: flex;
   flex-direction: column-reverse;
   min-height: var(--nav-height);
+  position: --webkit-sticky;
   position: sticky;
   top: 0;
   background: white;
