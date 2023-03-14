@@ -125,6 +125,30 @@ body.disable-scroll, body.disable-scroll main {
   content: "\f00d"
 }
 
+.fa-star::before {
+  content: "\f005"
+}
+
+.fa-star-o::before {
+  content: "\f006"
+}
+
+.fa-cut::before,.fa-scissors::before {
+  content: "\f0c4"
+}
+
+.fa-copy::before,.fa-files-o::before {
+  content: "\f0c5"
+}
+
+.fa-external-link::before {
+  content: "\f08e"
+}
+
+.fa-refresh::before {
+  content: "\f021"
+}
+
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
    Just overriding the bare minimum to make it readable: */

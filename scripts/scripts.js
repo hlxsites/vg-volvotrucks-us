@@ -37,21 +37,23 @@ function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
   const ctaLink = main.querySelector('a');
   // check if the previous element or the previous of that is an h1
-  const isCTALink = isCTALinkCheck(ctaLink);
+  const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
     const headings = document.createElement('div');
     headings.className = 'hero-headings';
     const elems = [picture, headings];
-    if (h1.nextElementSibling && h1.nextElementSibling.matches('p,h2,h3,h4')) {
+    if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
+      // also consider a <p> without any children as sub heading
+      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
       const h4 = document.createElement('h4');
       h4.innerHTML = h1.nextElementSibling.innerHTML;
       h1.nextElementSibling.remove();
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
-    if (ctaLink && isCTALink) headings.appendChild(getCTAContainer(ctaLink));
+    if (isCTALink) headings.appendChild(getCTAContainer(ctaLink));
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
     // remove the empty pre-section to avoid decorate it as empty section
