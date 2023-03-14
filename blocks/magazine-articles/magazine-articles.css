@@ -1,15 +1,47 @@
-/* Related magazine articles */
+/* pagination */
+.pagination ol li .last::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f051";
+    font-size: 12px;
+    text-decoration: none;
+}
+.pagination ol li .first::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f048";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li .next::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f054";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li .prev::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f053";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pagination ol li:not(:first-child) {
+    float: right;
+    padding: 10px;
+    margin-top: -10px;
+}
+
 /* Latest magazine articles */
 .block .latest-magazine-articles, .block .related-magazine-articles {
     display: flex;
-    margin-left: -15px;
-    margin-right: -15px;
-    margin-top: 48px;
-    margin-bottom: 48px;
+    margin: 48px -15px;
     width: 1170px;
 }
-.block .latest-magazine-articles article, .block .related-magazine-articles article {
-    width: 33.33333333%;
+
+.block .latest-magazine-articles article,
+.block .related-magazine-articles article {
+    width: 33.3333%;
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -18,13 +50,15 @@
     margin-bottom: 0;
 }
 
-.block .latest-magazine-articles article picture,  .block .related-magazine-articles article picture {
+.block .latest-magazine-articles article picture,
+.block .related-magazine-articles article picture {
     display: block;
     max-width: 100%;
     height: auto;
 }
 
-.block .latest-magazine-articles article p,  .block .related-magazine-articles article p {
+.block .latest-magazine-articles article p,
+.block .related-magazine-articles article p {
     margin-bottom: 8px;
     font-size: 13px;
 }
@@ -138,39 +172,6 @@
 .block.magazine-articles .pagination .scroll a {
     color: var(--volvo-text-gray);
     font-family: var(--ff-volvo-novum-medium);
-}
-
-.pagination ol li .last::before {
-    font-family: var(--ff-fontawesome);
-    content: "\f051";
-    font-size: 12px;
-    text-decoration: none;
-}
-.pagination ol li .first::before {
-    font-family: var(--ff-fontawesome);
-    content: "\f048";
-    font-size: 12px;
-    text-decoration: none;
-}
-
-.pagination ol li .next::before {
-    font-family: var(--ff-fontawesome);
-    content: "\f054";
-    font-size: 12px;
-    text-decoration: none;
-}
-
-.pagination ol li .prev::before {
-    font-family: var(--ff-fontawesome);
-    content: "\f053";
-    font-size: 12px;
-    text-decoration: none;
-}
-
-.pagination ol li:not(:first-child) {
-    float: right;
-    padding: 10px;
-    margin-top: -10px;
 }
 
 .block.magazine-articles .article-list {
