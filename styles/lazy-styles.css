@@ -32,6 +32,10 @@
   src: url('/fonts/fontawesome-webfont.woff') format('woff');
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
 :is(h1, h2, h3, h4, h5, h6) > em {
   color: #A7A8A9;
 }
