@@ -70,7 +70,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
       title.className = 'title';
       li.prepend(title);
       const titleLink = title.querySelector('a');
-      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, false, li));
+      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, li, false));
     }
 
     // find all links, first-of-type becomes .primary-link and wraps the picture if there is one
