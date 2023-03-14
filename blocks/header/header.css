@@ -352,7 +352,7 @@ header nav .sections .section .navigation-cta {
   /* the search input  */
   header nav .search>div {
     width: 756px;
-    margin: 0 auto;
+    margin: 0 0 0 auto;
   }
 
   /* tools only use 50% of width */
