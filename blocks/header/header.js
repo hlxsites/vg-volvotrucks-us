@@ -4,9 +4,9 @@ import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 const MQ = window.matchMedia('(min-width: 992px)');
 const ONCE = { once: true };
 
-function toggleMenu(li, event) {
+function toggleMenu(li, preventDefault, event) {
   const ul = li.querySelector(':scope > ul');
-  if (!MQ.matches && ul) event.preventDefault();
+  if (preventDefault || (!MQ.matches && ul)) event.preventDefault();
   if (li.classList.contains('expand')) {
     // collapse
     if (!MQ.matches && ul) {
@@ -70,7 +70,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
       title.className = 'title';
       li.prepend(title);
       const titleLink = title.querySelector('a');
-      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, li));
+      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, false, li));
     }
 
     // find all links, first-of-type becomes .primary-link and wraps the picture if there is one
@@ -81,6 +81,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
           const clone = link.cloneNode(false);
           picture.replaceWith(clone);
           clone.append(picture);
+          clone.tabIndex = -1;
         }
         link.className = 'primary-link button secondary cta';
       } else {
@@ -121,7 +122,7 @@ function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
   if (!sectionMenu.querySelector(':scope > ul')) {
     buildSectionMenuContent(sectionMenu, navCta, menuBlock);
   }
-  toggleMenu(sectionMenu, event);
+  toggleMenu(sectionMenu, true, event);
 }
 
 /**
@@ -167,6 +168,12 @@ export default async function decorate(block) {
         <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
       </a>
 
+      <div class='tools'>
+        <div class='hamburger-close'>
+          <img src="/icons/Close-Icons.png">
+        </div>
+      </div>
+
       <div class='search' aria-expanded="false">
         <div>
           <label for="searchInput">Search Term</label>
@@ -174,12 +181,6 @@ export default async function decorate(block) {
           <button class="search-button" aria-label="submit" >
             <i class="fa fa-search"></i>
           </button>
-        </div>
-      </div>
-
-      <div class='tools'>
-        <div class='hamburger-close'>
-          <img src="/icons/Close-Icons.png">
         </div>
       </div>
 
@@ -210,6 +211,7 @@ export default async function decorate(block) {
       sectionMenu.className = 'section';
       const sectionTitle = menuBlock.firstElementChild.textContent;
       const a = document.createElement('a');
+      a.href = '#';
       a.textContent = sectionTitle;
       a.addEventListener('click', toggleSectionMenu.bind(a, sectionMenu, navCta, menuBlock));
       sectionMenu.appendChild(a);
