@@ -1,7 +1,7 @@
 import ffetch from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
-  toClassName
+  toClassName,
 } from '../../scripts/lib-franklin.js';
 
 function buildMagazineArticle(entry) {
@@ -24,13 +24,13 @@ function buildMagazineArticle(entry) {
     </a>
     <div class="content">
     <ul><li>${date.toLocaleDateString()}</li>
-    ${(category?'<li>'+category+'</li>':'')}</ul>
+    ${(category ? '<li>' + category + '</li>' : '')}</ul>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
-    <ul>${(author?'<li>'+author+'</li>':'')}</li>
-    <li>${(readingTime?'<li>'+readingTime+'</li>':'')}</ul>
+    <ul>${(author ? '<li>' + author + '</li>' : '')}</li>
+    <li>${(readingTime ? '<li>' + readingTime + '</li>' : '')}</ul>
     </div>`;
-    return card;
+  return card;
 }
 
 function buildLatestMagazineArticle(entry) {
@@ -40,12 +40,10 @@ function buildLatestMagazineArticle(entry) {
     title,
     description,
     linkText,
-    publishDate,
   } = entry;
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
     </a>
@@ -54,7 +52,7 @@ function buildLatestMagazineArticle(entry) {
     <p>${description}</p>
     <a href="${path}">${linkText}</a>
     </div>`;
-    return card;
+  return card;
 }
 
 function buildRelatedMagazineArticle(entry) {
@@ -76,49 +74,16 @@ function buildRelatedMagazineArticle(entry) {
     <div class="content">
     <ul><li>${date.toLocaleDateString()}</li>
     <h3><a href="${path}">${title}</a></h3>
-    <ul>${(author?'<li>'+author+'</li>':'')}</li>
-    <li>${(readingTime?'<li>'+readingTime+'</li>':'')}</ul>
+    <ul>${(author ? '<li>' + author + '</li>' : '')}</li>
+    <li>${(readingTime ? '<li>' + readingTime + '</li>' : '')}</ul>
     </div>`;
-    return card;
+  return card;
 }
 
-async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
-  let page = parseInt(getSelectionFromUrl('page'), 10);
-  page = Number.isNaN(page) ? 1 : page;
-  const start = (page - 1) * limitPerPage;
-  const dataToDisplay = magazineArticles.slice(start, start + limitPerPage);
-  const pagination = createPagination(magazineArticles, page, limitPerPage);
-  mainEl.appendChild(pagination);
-  const articleCards = document.createElement('div');
-  articleCards.className = 'articles';
-  dataToDisplay.forEach((article) => {
-    const magazineArticle = buildMagazineArticle(article);
-    articleCards.appendChild(magazineArticle);
-  });
-  mainEl.appendChild(articleCards);
-  mainEl.appendChild(pagination.cloneNode(true));
-}
-
-async function createLatestMagazineArticles(mainEl,magazineArticles) {
-  mainEl.innerHTML = '';
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('latest-magazine-articles');
-  mainEl.appendChild(articleCards);
-  magazineArticles.forEach((entry) => {
-    const articleCard = buildLatestMagazineArticle(entry);
-    articleCards.appendChild(articleCard);
-  });
-}
-
-async function createRelatedtMagazineArticles(mainEl,magazineArticles) {
-  mainEl.innerHTML = '';
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('related-magazine-articles');
-  mainEl.appendChild(articleCards);
-  magazineArticles.forEach((entry) => {
-    const articleCard = buildRelatedMagazineArticle(entry);
-    articleCards.appendChild(articleCard);
-  });
+function getSelectionFromUrl(field) {
+  return (
+    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
+  );
 }
 
 function createPaginationLink(page, label) {
@@ -172,10 +137,43 @@ function createPagination(entries, page, limit) {
   return listPagination;
 }
 
-function getSelectionFromUrl(field) {
-  return (
-    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
-  );
+async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
+  let page = parseInt(getSelectionFromUrl('page'), 10);
+  page = Number.isNaN(page) ? 1 : page;
+  const start = (page - 1) * limitPerPage;
+  const dataToDisplay = magazineArticles.slice(start, start + limitPerPage);
+  const pagination = createPagination(magazineArticles, page, limitPerPage);
+  mainEl.appendChild(pagination);
+  const articleCards = document.createElement('div');
+  articleCards.className = 'articles';
+  dataToDisplay.forEach((article) => {
+    const magazineArticle = buildMagazineArticle(article);
+    articleCards.appendChild(magazineArticle);
+  });
+  mainEl.appendChild(articleCards);
+  mainEl.appendChild(pagination.cloneNode(true));
+}
+
+async function createLatestMagazineArticles(mainEl,magazineArticles) {
+  mainEl.innerHTML = '';
+  const articleCards = document.createElement('div');
+  articleCards.classList.add('latest-magazine-articles');
+  mainEl.appendChild(articleCards);
+  magazineArticles.forEach((entry) => {
+    const articleCard = buildLatestMagazineArticle(entry);
+    articleCards.appendChild(articleCard);
+  });
+}
+
+async function createRelatedtMagazineArticles(mainEl,magazineArticles) {
+  mainEl.innerHTML = '';
+  const articleCards = document.createElement('div');
+  articleCards.classList.add('related-magazine-articles');
+  mainEl.appendChild(articleCards);
+  magazineArticles.forEach((entry) => {
+    const articleCard = buildRelatedMagazineArticle(entry);
+    articleCards.appendChild(articleCard);
+  });
 }
 
 async function getMagazineArticles(limit) {
@@ -193,7 +191,7 @@ export default async function decorate(block) {
   const latest = block.classList.contains('latest');
   const related = block.classList.contains('related');
   const limit = (latest || related) ? 3 : undefined;
-  const limitPerPage = 8;
+  const limitPerPage = 2;
   const magazineArticles = await getMagazineArticles(limit);
   if (latest) {
     createLatestMagazineArticles(block, magazineArticles);
