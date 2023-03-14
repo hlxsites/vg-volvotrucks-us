@@ -3,6 +3,7 @@
 header nav a:any-link {
   color: currentcolor;
   text-decoration: none;
+  cursor: pointer;
 }
 
 header .header {
@@ -11,9 +12,9 @@ header .header {
 
 /* nav */
 header nav {
+  flex: 1;
   margin: 30px auto 0;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 21px;
   display: flex;
   flex-flow: row wrap;
   z-index: 1000;
@@ -342,6 +343,7 @@ header nav .sections .section .navigation-cta {
   /* the main mobile div */
   header nav {
     width: 756px;
+    flex: 0;
   }
 
   /* the search input  */
@@ -380,6 +382,21 @@ header nav .sections .section .navigation-cta {
 
 /* ------ Desktop -------------------------------------------------------- */
 @media (min-width: 992px) {
+  /* nav turns into css grid */
+  header nav {
+    flex: 1;
+    width: 100%;
+    display: grid;
+    grid-template:
+      '. brand tools .' 26px
+      '. brand search .' auto
+      '. . . . ' 27px
+      'sections sections sections sections' 48px
+      / calc(3.5% + 15px) auto max-content calc(3.5% + 15px);
+    margin: 25px 0 0;
+    padding: 0;
+  }
+
   /* hide mobile search toggle */
   header nav .search-toggle {
     display: none;
@@ -398,20 +415,6 @@ header nav .sections .section .navigation-cta {
   /* hide hamburger close button */
   header nav .hamburger-close {
     display: none;
-  }
-
-  /* nav turns into css grid */
-  header nav {
-    width: 100%;
-    display: grid;
-    grid-template:
-      '. brand tools .' 26px
-      '. brand search .' auto
-      '. . . . ' 27px
-      'sections sections sections sections' 48px
-      / auto auto max-content auto;
-    margin: 25px 0 0;
-    padding: 0;
   }
 
   /* brand */
@@ -521,7 +524,7 @@ header nav .sections .section .navigation-cta {
     flex-flow: row;
     gap: 48px;
     align-items: center;
-    width: 960px;
+    width: calc(93% - 30px);
     margin: 0 auto;
   }
 
@@ -536,10 +539,15 @@ header nav .sections .section .navigation-cta {
   header nav .sections .section > a {
       border: 0;
       height: 48px;
+      cursor: pointer;
   }
 
   header nav .sections .section.expand {
     padding: 0;
+  }
+
+  header nav .sections .section > a:hover,
+  header nav .sections .section.expand > a {
     background-color: white;
   }
 
