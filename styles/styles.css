@@ -255,7 +255,16 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 15px;
+  margin: 48px 0;
+}
+
+main .section:first-child {
+  margin-top: 0;
+}
+
+main .section > div {
+  padding: 0 15px;
+  margin: 0 auto;
 }
 
 main pre {
@@ -334,18 +343,9 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-.section.tabbed-container {
-  padding: 0;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.section.tabbed-container-full-width {
-  width: unset;
-}
-
 .section.tabbed-container-full-width > div {
-  max-width: unset;
+  padding: 0;
+  width: unset;
 }
 
 .section.tabbed-container ul.tab-navigation {
@@ -377,14 +377,14 @@ main .section.highlight {
 .section.sub-nav-container {
   position: relative;
   min-height: 44px;
-  padding: 0;
   margin: 0;
   background-color: #7F7F7F;
-  width: 100%;
 }
 
 .section.sub-nav-container > div {
   margin: auto;
+  padding: 0;
+  width: 100%;
 }
 
 /* image as video link */
@@ -450,7 +450,7 @@ a.button.text-link-with-video::after {
   content: unset;
 }
 
-@media screen and (min-width: 496px) {
+@media screen and (min-width: 480px) {
   .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
     display: inline-block;
@@ -459,9 +459,8 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 768px) {
-  main .section {
+  main .section > div {
     width: 756px;
-    margin: auto;
   }
 }
 
@@ -476,12 +475,7 @@ a.button.text-link-with-video::after {
     --nav-height: 176px;
   }
 
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  main .section {
+  main .section > div {
     width: 960px;
   }
 
@@ -492,7 +486,7 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 1300px) {
-  main .section {
+  main .section > div {
     width: 1200px;
   }
 }

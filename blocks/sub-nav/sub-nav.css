@@ -69,6 +69,7 @@
     .block.sub-nav ul {
         position: unset;
         margin: 0 auto;
+        padding: 0 15px;
         max-width: 960px;
 
         --item-height: 48px;
@@ -131,6 +132,6 @@
 
 @media screen and (min-width: 1300px) {
     .block.sub-nav ul {
-        max-width: 1170px;
+        max-width: 1200px;
     }
 }
