@@ -19,16 +19,18 @@ function buildMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
+  const categoryItem = document.createElement('li');
+  const timeItem = document.createElement('li');
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
     </a>
     <div class="content">
     <ul><li>${date.toLocaleDateString()}</li>
-    ${(category ? '<li>' + category + '</li>' : '')}</ul>
+    ${(category ? categoryItem.textContent(category) : '')}</ul>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
-    <ul>${(author ? '<li>' + author + '</li>' : '')}</li>
-    <li>${(readingTime ? '<li>' + readingTime + '</li>' : '')}</ul>
+    <ul><li>${(author ? author : '')}</li>
+    ${(readingTime ? timeItem.textContent(readingTime) : '')}</ul>
     </div>`;
   return card;
 }
@@ -68,14 +70,15 @@ function buildRelatedMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
+  const timeItem = document.createElement('li');
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
     </a>
     <div class="content">
-    <ul><li>${date.toLocaleDateString()}</li>
+    <ul><li>${date.toLocaleDateString()}</li></ul>
     <h3><a href="${path}">${title}</a></h3>
-    <ul>${(author ? '<li>' + author + '</li>' : '')}</li>
-    <li>${(readingTime ? '<li>' + readingTime + '</li>' : '')}</ul>
+    <ul><li>${(author ? author : '')}</li>
+    ${(readingTime ? timeItem.textContent(readingTime) : '')}</ul>
     </div>`;
   return card;
 }
