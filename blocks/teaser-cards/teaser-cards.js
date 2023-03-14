@@ -9,7 +9,7 @@ export default function decorate(block) {
     // give p containing the image a specific class
     elem.querySelector('picture').parentElement.classList.add('image');
     // give all the other p a text class
-    elem.querySelector('p:not(.image)').classList.add('text');
+    elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 
     const link = elem.querySelector('.button-container a');
 
