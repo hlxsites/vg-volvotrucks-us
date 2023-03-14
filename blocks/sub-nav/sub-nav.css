@@ -69,6 +69,7 @@
     .block.sub-nav ul {
         position: unset;
         margin: 0 auto;
+        padding: 0 15px;
         max-width: 960px;
 
         --item-height: 48px;
