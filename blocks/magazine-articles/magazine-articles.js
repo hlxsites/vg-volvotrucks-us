@@ -191,7 +191,7 @@ export default async function decorate(block) {
   const latest = block.classList.contains('latest');
   const related = block.classList.contains('related');
   const limit = (latest || related) ? 3 : undefined;
-  const limitPerPage = 2;
+  const limitPerPage = 8;
   const magazineArticles = await getMagazineArticles(limit);
   if (latest) {
     createLatestMagazineArticles(block, magazineArticles);
