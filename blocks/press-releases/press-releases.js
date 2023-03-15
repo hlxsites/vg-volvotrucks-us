@@ -1,31 +1,10 @@
-import ffetch from '../../scripts/lib-ffetch.js';
-import {
-  createOptimizedPicture,
-  toClassName,
-} from '../../scripts/lib-franklin.js';
-
-function buildPressReleaseArticle(entry) {
-  const {
-    path,
-    image,
-    title,
-    description,
-    publishDate,
-  } = entry;
-  const card = document.createElement('article');
-  const picture = createOptimizedPicture(image, title, false, [{ width: '414' }]);
-  const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}">
-    ${pictureTag}
-  </a>
-  <div>
-    <span class="date">${date.toLocaleDateString()}</span>
-    <h3><a href="${path}">${title}</a></h3>
-    <p>${description}</p>
-  </div>`;
-  return card;
-}
+import { 
+  ffetch,
+  createLatestPressReleases,
+  createList,
+  splitTags,
+} from '../../scripts/lib-ffetch.js';
+import { toClassName } from '../../scripts/lib-franklin.js';
 
 function buildHeader(mainEl) {
   const defaultWrapperEl = mainEl.parentNode.previousElementSibling;
@@ -49,95 +28,38 @@ function buildButtonContainer(mainEl) {
   }
 }
 
-function createLatestPressReleases(mainEl, pressReleases) {
-  mainEl.innerHTML = '';
-  buildHeader(mainEl);
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('press-releases-cards');
-  mainEl.appendChild(articleCards);
-  pressReleases.forEach((pressRelease) => {
-    const pressReleaseCard = buildPressReleaseArticle(pressRelease);
-    articleCards.appendChild(pressReleaseCard);
-  });
-  buildButtonContainer(mainEl);
-}
+function filterPressReleases(pressReleases, activeFilters) {
+  let filteredPressReleases = pressReleases;
 
-function createPaginationLink(page, label) {
-  const newUrl = new URL(window.location);
-  const listElement = document.createElement('li');
-  const link = document.createElement('a');
-  newUrl.searchParams.set('page', page);
-  link.href = newUrl.toString();
-  link.innerText = label;
-  listElement.append(link);
-  return listElement;
-}
-
-function createPagination(entries, page, limit) {
-  const listPagination = document.createElement('div');
-  listPagination.className = 'pager';
-
-  const totalResults = document.createElement('div');
-  totalResults.className = 'total';
-  totalResults.textContent = `${entries.length} results`;
-  listPagination.appendChild(totalResults);
-  const pagination = document.createElement('div');
-  pagination.className = 'pagination';
-
-  if (entries.length > limit) {
-    const maxPages = Math.ceil(entries.length / limit);
-
-    const listSize = document.createElement('span');
-    listSize.classList.add('size');
-    if (entries.length > limit) {
-      listSize.innerHTML = `<strong>Page ${page}</strong> of ${maxPages}`;
-    }
-    const list = document.createElement('ol');
-    list.className = 'scroll';
-    if (page > 1) {
-      list.append(createPaginationLink(page - 1, '<'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '<';
-      list.append(listElement);
-    }
-    if (page < maxPages) {
-      list.append(createPaginationLink(page + 1, '>'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '>';
-      list.append(listElement);
-    }
-
-    pagination.append(listSize, list);
-    listPagination.appendChild(pagination);
+  if (activeFilters.tags) {
+    filteredPressReleases = filteredPressReleases
+      .filter((n) => toClassName(n.tags).includes(activeFilters.tags));
   }
-  return listPagination;
+
+  if (activeFilters.search) {
+    const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
+    const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+    filteredPressReleases = filteredPressReleases
+      .filter((n) => {
+        const text = n.content.toLowerCase();    
+        return terms.every((term) => !stopWords.includes(term) && text.includes(term));
+      });
+  }
+  return filteredPressReleases;
 }
 
-function getSelectionFromUrl(field) {
-  return (
-    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
-  );
-}
-
-function createPressReleases(mainEl, pressReleases, limitPerPage) {
-  let page = parseInt(getSelectionFromUrl('page'), 10);
-  page = Number.isNaN(page) ? 1 : page;
-  const start = (page - 1) * limitPerPage;
-  const dataToDisplay = pressReleases.slice(start, start + limitPerPage);
-  const pagination = createPagination(pressReleases, page, limitPerPage);
-  mainEl.appendChild(pagination);
-  const articleList = document.createElement('ul');
-  articleList.className = 'article-list';
-  dataToDisplay.forEach((pressRelease) => {
-    const articleItem = document.createElement('li');
-    const pressReleaseArticle = buildPressReleaseArticle(pressRelease);
-    articleItem.appendChild(pressReleaseArticle);
-    articleList.appendChild(articleItem);
+function createFilter(pressReleases, activeFilters, createDropdown, createFullText) {
+  const tags = Array.from(new Set(pressReleases.flatMap((n) => n.filterTag).sort()));
+  const fullText = createFullText('search', activeFilters.search, 'type here to search');
+  const tagFilter = createDropdown(tags, activeFilters.tags, 'tags', 'All', 'filter by tags');
+  const tagSelection = tagFilter.querySelector('select');
+  tagSelection.addEventListener('change', (e) => {
+    e.target.form.submit();
   });
-  mainEl.appendChild(articleList);
-  mainEl.appendChild(pagination.cloneNode(true));
+  return [
+    fullText,
+    tagFilter
+  ];
 }
 
 async function getPressReleases(limit) {
@@ -151,6 +73,16 @@ async function getPressReleases(limit) {
   return pressReleases;
 }
 
+function createPressReleaseList(pressReleases, limit, block) {
+
+  // prepare custom "Month Year" date field
+  pressReleases.forEach((n) => {
+    n.filterTag = splitTags(n.tags);
+  });
+
+  createList(pressReleases, filterPressReleases, createFilter, limit, block);
+}
+
 export default async function decorate(block) {
   const latest = block.classList.contains('latest');
   const limit = latest ? 3 : undefined;
@@ -159,6 +91,6 @@ export default async function decorate(block) {
   if (latest) {
     createLatestPressReleases(block, pressReleases);
   } else {
-    createPressReleases(block, pressReleases, limitPerPage);
+    createPressReleaseList(pressReleases, limitPerPage, block);
   }
 }
