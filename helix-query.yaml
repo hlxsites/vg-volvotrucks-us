@@ -70,19 +70,19 @@ indices:
         select: head > meta[property="og:description"]
         value: attribute(el, "content")
       author:
-        select: head > meta[property="author"]
+        select: head > meta[name="author"]
         value: attribute(el, "content")
       category:
         select: head > meta[property="category"]
         value: attribute(el, "content")
       tags:
-        select: head > meta[property="tags"]
-        value: attribute(el, "content")
+        select: head > meta[property="article:tag"]
+        values: attribute(el, "content")
       image:
         select: head > meta[property="og:image"]
         value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
       readingTime:
-        select: head > meta[property="reading-time"]
+        select: head > meta[name="readingtime"]
         value: attribute(el, "content")
       lastModified:
         select: none
