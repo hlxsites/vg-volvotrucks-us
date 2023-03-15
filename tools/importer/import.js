@@ -172,8 +172,6 @@ function makeGenericGrid(main, document) {
   console.log(`generic grid(s) found: ${gg.length}`);
   gg.forEach((grid) => {
     const cells = [['Teaser Grid']];
-    const col1ul = document.createElement('ul');
-    const col2ul = document.createElement('ul');
     const gridCol = grid.querySelectorAll('div.generic-grid-col');
     const columns = [];
     const rows = [];
@@ -238,7 +236,7 @@ function makeImageTextGrid(main, document) {
       const cells = [['Columns']];
       const rows = [];
       const item = grids.querySelectorAll('div.col-sm-3, div.col-sm-6, div.col-sm-4');
-      item.forEach((col, idx) => {
+      item.forEach((col) => {
         // check for weird nesting
         rows.push(col);
       });
@@ -393,7 +391,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
-    url = makeIndexPage(url);
-    WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
+    const newUrl = makeIndexPage(url);
+    WebImporter.FileUtils.sanitizePath(new URL(newUrl).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
   },
 };

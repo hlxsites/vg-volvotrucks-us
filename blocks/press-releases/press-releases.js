@@ -1,10 +1,12 @@
-import { 
+import {
   ffetch,
-  createLatestPressReleases,
   createList,
   splitTags,
 } from '../../scripts/lib-ffetch.js';
-import { toClassName } from '../../scripts/lib-franklin.js';
+import {
+  toClassName,
+  createOptimizedPicture,
+} from '../../scripts/lib-franklin.js';
 
 function buildHeader(mainEl) {
   const defaultWrapperEl = mainEl.parentNode.previousElementSibling;
@@ -41,7 +43,7 @@ function filterPressReleases(pressReleases, activeFilters) {
     const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
     filteredPressReleases = filteredPressReleases
       .filter((n) => {
-        const text = n.content.toLowerCase();    
+        const text = n.content.toLowerCase();
         return terms.every((term) => !stopWords.includes(term) && text.includes(term));
       });
   }
@@ -58,7 +60,7 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
   });
   return [
     fullText,
-    tagFilter
+    tagFilter,
   ];
 }
 
@@ -73,14 +75,48 @@ async function getPressReleases(limit) {
   return pressReleases;
 }
 
-function createPressReleaseList(pressReleases, limit, block) {
+function buildPressReleaseArticle(entry) {
+  const {
+    path,
+    image,
+    title,
+    description,
+    publishDate,
+  } = entry;
+  const card = document.createElement('article');
+  const picture = createOptimizedPicture(image, title, false, [{ width: '414' }]);
+  const pictureTag = picture.outerHTML;
+  const date = new Date(publishDate * 1000);
+  card.innerHTML = `<a href="${path}">
+    ${pictureTag}
+  </a>
+  <div>
+    <span class="date">${date.toLocaleDateString()}</span>
+    <h3><a href="${path}">${title}</a></h3>
+    <p>${description}</p>
+  </div>`;
+  return card;
+}
 
-  // prepare custom "Month Year" date field
+function createPressReleaseList(pressReleases, limit, block) {
   pressReleases.forEach((n) => {
     n.filterTag = splitTags(n.tags);
   });
+  // eslint-disable-next-line max-len
+  createList(pressReleases, filterPressReleases, createFilter, buildPressReleaseArticle, limit, block);
+}
 
-  createList(pressReleases, filterPressReleases, createFilter, limit, block);
+function createLatestPressReleases(mainEl, pressReleases) {
+  mainEl.innerHTML = '';
+  buildHeader(mainEl);
+  const articleCards = document.createElement('div');
+  articleCards.classList.add('press-releases-cards');
+  mainEl.appendChild(articleCards);
+  pressReleases.forEach((pressRelease) => {
+    const pressReleaseCard = buildPressReleaseArticle(pressRelease);
+    articleCards.appendChild(pressReleaseCard);
+  });
+  buildButtonContainer(mainEl);
 }
 
 export default async function decorate(block) {

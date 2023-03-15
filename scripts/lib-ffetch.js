@@ -11,10 +11,7 @@
  */
 /* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax */
 
-import { 
-  toClassName,
-  createOptimizedPicture,
- } from './lib-franklin.js';
+import { toClassName } from './lib-franklin.js';
 
 async function* request(url, context) {
   const { chunks, sheet, fetch } = context;
@@ -232,29 +229,6 @@ export function ffetch(url) {
   return assignOperations(generator, context);
 }
 
-function buildPressReleaseArticle(entry) {
-  const {
-    path,
-    image,
-    title,
-    description,
-    publishDate,
-  } = entry;
-  const card = document.createElement('article');
-  const picture = createOptimizedPicture(image, title, false, [{ width: '414' }]);
-  const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}">
-    ${pictureTag}
-  </a>
-  <div>
-    <span class="date">${date.toLocaleDateString()}</span>
-    <h3><a href="${path}">${title}</a></h3>
-    <p>${description}</p>
-  </div>`;
-  return card;
-}
-
 function getSelectionFromUrl(field) {
   return (
     toClassName(new URLSearchParams(window.location.search).get(field)) || ''
@@ -342,34 +316,19 @@ function renderFilters(data, createFilters) {
   const formFieldSet = document.createElement('fieldset');
 
   const filters = createFilters(data, getActiveFilters(), createDropdown, createFullText);
-  
   formFieldSet.append(
     ...filters,
   );
   if (filters.length > 0) {
     form.append(formFieldSet);
     filter.append(form);
-    return filter;  
+    return filter;
   }
   return null;
 }
 
-
-export function createLatestPressReleases(mainEl, pressReleases) {
-  mainEl.innerHTML = '';
-  buildHeader(mainEl);
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('press-releases-cards');
-  mainEl.appendChild(articleCards);
-  pressReleases.forEach((pressRelease) => {
-    const pressReleaseCard = buildPressReleaseArticle(pressRelease);
-    articleCards.appendChild(pressReleaseCard);
-  });
-  buildButtonContainer(mainEl);
-}
-
-export function createList(pressReleases, filter, createFilters, limitPerPage, mainEl) {
-  
+// eslint-disable-next-line max-len
+export function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
   const filteredData = filter(pressReleases, getActiveFilters());
 
   let page = parseInt(getSelectionFromUrl('page'), 10);
