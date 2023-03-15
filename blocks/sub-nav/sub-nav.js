@@ -58,7 +58,16 @@ async function createSubNav(block, ref) {
       } else {
         block.classList.remove('sticky');
       }
-    })
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!block.contains(event.target)) {
+        const openItem = block.querySelector('.expand');
+        if (openItem) {
+          handleActiveClick(openItem, event);
+        }
+      }
+    });
   }
 }
 

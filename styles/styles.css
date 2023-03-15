@@ -132,7 +132,6 @@ header {
 }
 
 header .header.block {
-  width: 100%;
   background-color: white;
   min-height: var(--nav-height);
   z-index: 1050;
@@ -145,7 +144,6 @@ header.sub-nav-wrapper {
 header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
-  width: 100%;
   z-index: 1020;
 }
 
@@ -238,6 +236,7 @@ a.button::after {
 
 a.button.primary,
 button.primary {
+  max-width: 100%;
   display: inline-block;
   padding: var(--btn-padding);
   color: var(--text-color);
@@ -474,11 +473,15 @@ a.button.text-link-with-video::after {
   header .header.block {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
   }
 
   header .sub-nav.block {
     position: fixed;
     top: var(--nav-height);
+    left: 0;
+    right: 0;
   }
 }
 
