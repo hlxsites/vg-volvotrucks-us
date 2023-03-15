@@ -13,10 +13,8 @@
 /* eslint-disable no-console, class-methods-use-this */
 
 const hr = (doc) => doc.createElement('hr');
-
+const meta = {};
 const createMetadata = (main, document) => {
-  const meta = {};
-
   const title = document.querySelector('title');
   if (title) {
     meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
@@ -60,24 +58,41 @@ const createArticleColumns = (main, document, url) => {
       img.src = new URL(url).pathname + img.src;
     });
 
-    const cards = [
-      ['Cards'],
-    ];
+    const topics = document.querySelector('#Form1 > div.container.main-content > section.hubArticle > aside > div.topics');
 
-    const relatedContent = document.querySelectorAll('#Form1 > div.container.main-content > section.hubTeaser.related > div > div:nth-child(2) > div.teaser');
-    relatedContent.forEach((article) => {
-      console.log(article.querySelector('figure > a > img').src);
-      cards.push([article]);
+    if (topics) {
+      const tags = topics.querySelectorAll('ul > li');
+      let artTags = '';
+      tags.forEach((tag) => {
+        if (artTags.length > 0) {
+          artTags = `${artTags}, ${tag.textContent}`;
+        } else {
+          artTags = `${tag.textContent}`;
+        }
+      });
+      meta.tags = artTags;
+    }
+
+    const artDetails = document.querySelectorAll('div.details > ul > li');
+    artDetails.forEach((detail) => {
+      if (detail.classList.contains('author')) {
+        meta.author = detail.textContent;
+      }
+      if (detail.classList.contains('time')) {
+        meta.readingTime = detail.textContent;
+      }
+
+      if (detail.classList.contains('date')) {
+        meta['publish-date'] = detail.textContent;
+      }
     });
 
-    const topics = document.querySelector('#Form1 > div.container.main-content > section.hubArticle > aside > div.topics');
-    const cells = [
-      ['Columns'],
-      [topics, mainContent],
-    ];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    main.prepend(table);
-    main.append(WebImporter.DOMUtils.createTable(cards, document));
+    document.querySelector('aside.sidebar')?.remove();
+    document.querySelector('section.hubArticleHero')?.remove();
+    document.querySelector('section.hubTeaser.related')?.remove();
+    document.querySelector('section.hubTextBlock')?.remove();
+
+    mainContent.append(hr(document));
   }
 };
 
@@ -130,7 +145,7 @@ function makeGridItem(teaser) {
     if (anchor.getAttribute('data-video-src')) {
       newA = anchor.getAttribute('data-video-src');
     } else {
-      newA = anchor.href;
+      newA = `https://main--vg-volvotrucks-us--hlxsites.hlx.page${anchor.href}`;
     }
   }
 
@@ -143,7 +158,7 @@ function makeGridItem(teaser) {
     h4 = txtH4.innerHTML;
   }
   const gi = document.createElement('div');
-  gi.innerHTML = `<img src='${img.src}'><div><a href='${newA}'>${newA}</a></div><div>${h3}</div><div>${h4}</div>`;
+  gi.innerHTML = `<img src='${img.src}'><br /><a href='${newA}'>${newA}</a><br />${h3}<br />${h4}`;
 
   if (newA === '') {
     gi.querySelector('a').remove();
@@ -218,24 +233,24 @@ function makeImageText(main, document) {
 function makeImageTextGrid(main, document) {
   const itg = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageTextGrid');
   if (itg) {
-    console.log('image text grd(s) found: ' + itg.length);
+    console.log(`image text grd(s) found: ${itg.length}`);
     itg.forEach((grids) => {
       const cells = [['Columns']];
       const rows = [];
       const item = grids.querySelectorAll('div.col-sm-3, div.col-sm-6, div.col-sm-4');
-      const title = grids.querySelector('div.title-wrapper > h3');
       item.forEach((col, idx) => {
         // check for weird nesting
         rows.push(col);
       });
+      if (rows.length === 0) {
+        const gi = grids.querySelectorAll('div.imageText-grid > div');
+        gi.forEach((nItem) => {
+          rows.push([nItem, nItem]);
+        });
+      }
       if (rows.length > 0) {
         cells.push(rows);
         const columnBlock = WebImporter.DOMUtils.createTable(cells, document);
-        if (title) {
-          //prepend title here
-        } else {
-          console.log('no title present');
-        }
         grids.replaceWith(columnBlock);
       } else {
         console.log(`not imported: ${grids.id}`);
@@ -264,7 +279,7 @@ function makeHubTextBlock(main, document) {
     htb.forEach((block) => {
       const cells = [['Eloqua Form']];
       const img = new Image();
-      img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');;
+      img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
       cells.push(['background', `<img src='${img.src}'>`]);
       const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
       cells.push(['elqFormName', formName.value]);
@@ -299,7 +314,7 @@ function makeNewsFeaturesPanel(main, document) {
 function make360Image(main, document) {
   const image360 = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div._360-view');
   if (image360) {
-    console.log('360 image(s) found: ' + image360.length);
+    console.log(`360 image(s) found: ${image360.length}`);
     image360.forEach((img360) => {
       const cells = [['Image 360']];
       const imgs = img360.querySelectorAll('img.slide');
