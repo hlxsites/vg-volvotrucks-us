@@ -204,6 +204,7 @@ export default async function decorate(block) {
     nav.querySelector('.tools').prepend(navContent.children[1].querySelector('ul'));
 
     const navCta = navContent.children[3];
+    const sectionList = nav.querySelector('.sections .sections-list');
 
     // get through all section menus
     const sectionMenus = [...navContent.children[2].querySelectorAll('.menu')].map((menuBlock) => {
@@ -219,10 +220,20 @@ export default async function decorate(block) {
     });
     // write the section menu
     if (sectionMenus.length) {
-      nav.querySelector('.sections .sections-list').append(...sectionMenus);
+      sectionList.append(...sectionMenus);
     }
 
     // add event listeners
+    // for desktop when clicking anywhere on the document
+    document.addEventListener('click', (event) => {
+      if (!sectionList.contains(event.target)) {
+        const openItem = sectionList.querySelector('.section.expand');
+        if (openItem) {
+          toggleMenu(openItem, false, event);
+        }
+      }
+    });
+
     // for the mobile search icon
     nav.querySelector('.search-toggle').addEventListener('click', (e) => {
       const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';

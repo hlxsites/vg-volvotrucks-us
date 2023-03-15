@@ -129,15 +129,13 @@ body.appear {
 
 header {
   min-height: var(--nav-height);
-  position: --webkit-sticky;
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 1000;
 }
 
 header .header.block {
+  width: 100%;
+  background-color: white;
   min-height: var(--nav-height);
+  z-index: 1050;
 }
 
 header.sub-nav-wrapper {
@@ -145,11 +143,10 @@ header.sub-nav-wrapper {
 }
 
 header .sub-nav.block {
-  min-height: var(--sub-nav-height);
-  position: absolute;
+  height: var(--sub-nav-height);
   background-color: #7F7F7F;
   width: 100%;
-  bottom: 0;
+  z-index: 1020;
 }
 
 h1, h2, h3,
@@ -473,6 +470,18 @@ a.button.text-link-with-video::after {
   }
 }
 
+@media (max-width: 991px) {
+  header .header.block {
+    position: fixed;
+    top: 0;
+  }
+
+  header .sub-nav.block {
+    position: fixed;
+    top: var(--nav-height);
+  }
+}
+
 @media (min-width: 992px) {
   :root {
     --heading-font-size-xxl: 4.8rem;
@@ -483,10 +492,6 @@ a.button.text-link-with-video::after {
     --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
-  }
-
-  header {
-    top: calc(-1 * var(--nav-height));
   }
 
   main .section > div {
