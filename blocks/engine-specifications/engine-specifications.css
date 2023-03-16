@@ -89,8 +89,12 @@ main .engine-specifications-container {
     margin-top: 40px;
   }
 
+  .engine-specifications .item-list {
+    justify-content: space-around;
+    margin-bottom: 37px;
+  }
+
   .engine-specifications .item-list li {
     width: 25%;
-    gap: 12px;
   }
 }

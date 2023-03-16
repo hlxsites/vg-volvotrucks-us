@@ -1,18 +1,25 @@
 .performance {
+  width: 100vw;
+  background-color: #F7F7F7;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 20px;
-  padding: 20px 0 0;
+  /* margin: 0 20px; */
+  padding: 80px 0;
   padding-left: 0;
+
 }
 
 .performance .performance-title {
-  font-size: var(--heading-font-size-m);
+  font-size: var(--heading-font-size-l);
   color: #141414;
   margin: 0;
-  padding-bottom: 8.4px;
+  padding-bottom: 8px;
   text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%;
+  letter-spacing: 0.25px;
 }
 
 .performance .rating-item h5,
@@ -31,9 +38,9 @@
   margin-top: 7px !important;
 }
 
-.performance .engine-rating {
+/* .performance .engine-rating {
   margin: 14px 5px 20px;
-}
+} */
 
 .performance .engine-rating .rating-list {
   display: flex;
@@ -65,6 +72,16 @@
 
 .performance .engine-rating .rating-item[data-active] a {
   color: var(--c-white);
+}
+
+.performance .engine-rating .rating-title {
+  font-size: var(--heading-font-size-s);
+  color: #888B8D;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 125%;
+  text-align: center;
 }
 
 .performance .engine-rating .rating-item h5 {
@@ -108,13 +125,13 @@
 
 .performance-chart-wrapper {
   position: relative;
-  height: 50vw;
+  width: 100vw;
+  height: 100vw;
   list-style: none;
   padding: 0;
 }
 
 .performance-chart {
-  padding: 5px;
   position: absolute;
   inset: 0;
   opacity: 0;

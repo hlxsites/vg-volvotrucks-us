@@ -1,4 +1,4 @@
-import getPerformanceChart from './performance-chart.js';
+import {getPerformanceChart, buildAnimations} from './performance-chart.js';
 
 const addAnimations = (hpSelector, chartContainer) => {
   const initialButton = hpSelector.querySelector('.rating-item');
@@ -35,17 +35,22 @@ const addAnimations = (hpSelector, chartContainer) => {
       const clickedChart = chartParent.querySelector(`.chart-${selectedNumber}`);
       const activeChart = chartParent.querySelector('[data-active]');
 
-      clickedChart.dataset.active = true;
-      delete activeChart.dataset.active;
-
-      clickedTorque.dataset.active = true;
-      delete activeTorque.dataset.active;
-
-      clickedPower.dataset.active = true;
-      delete activePower.dataset.active;
-
-      clickedButton.dataset.active = true;
-      delete activeButton.dataset.active;
+      if (activeButton.innerText.slice(0,3) != selectedNumber) {
+        
+        // const animation = buildAnimations(selectedNumber)
+        
+        clickedChart.dataset.active = true;
+        delete activeChart.dataset.active;
+  
+        clickedTorque.dataset.active = true;
+        delete activeTorque.dataset.active;
+  
+        clickedPower.dataset.active = true;
+        delete activePower.dataset.active;
+  
+        clickedButton.dataset.active = true;
+        delete activeButton.dataset.active;
+      };
     });
   });
 };
@@ -95,9 +100,9 @@ const buildPerformanceSpecifications = (block) => {
 
   const ratings = [];
 
-  const engine455 = { ...[children[0], children[1]] };
-  const engine425 = { ...[children[2], children[3]] };
-  const engine405 = { ...[children[4], children[5]] };
+  const engine455 = { ...[children[0], children[1]] , name: 455};
+  const engine425 = { ...[children[2], children[3]] , name: 425 };
+  const engine405 = { ...[children[4], children[5]] , name: 405 };
 
   const buildEngineData = (data) => {
     const getRatings = [...data[0].querySelectorAll('p')].map((e) => e.innerHTML);
@@ -114,11 +119,12 @@ const buildPerformanceSpecifications = (block) => {
 
     const getValues = [...data[1].querySelectorAll('li')].map((e) => e.innerHTML);
 
-    const RPM = [getValues[0], getValues[1]];
-    const HP = [getValues[2], getValues[3]];
-    const Torque = [getValues[4], getValues[5]];
+    const rpm = [getValues[0], getValues[1]];
+    const hp = [getValues[2], getValues[3]];
+    const tq = [getValues[4], getValues[5]];
+    const engine = data.name
 
-    data.values = [RPM, HP, Torque];
+    data.values = [rpm, hp, tq, engine];
 
     delete data[1];
 
@@ -223,4 +229,5 @@ export default function decorate(block) {
   } else if (typeDetector.includes('performance')) {
     buildPerformanceSpecifications(block);
   }
+
 }

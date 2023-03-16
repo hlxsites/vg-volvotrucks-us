@@ -13,10 +13,33 @@ const arrangeData = (values) => {
   return valuesArray;
 };
 
+const buildAnimations = (engine) => {
+
+  console.log(engine)
+
+  const activeChart = document.querySelector('.performance-chart[data-active]')
+  const activeHPpath = activeChart.querySelector('.line-path-HP')
+  const activeTQpath = activeChart.querySelector('.line-path-TQ')
+  
+
+  // const letter = (idx === 0) ? 'M' : 'L';
+
+  // const initialValues = `${letter} ${getRPMPosition(e)} ${225}`
+  // const endingValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45)).toFixed(1)}`
+
+  // const middleValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.5).toFixed(1)}`
+  // const oneQuarterValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.25).toFixed(1)}`
+  // const threeQuarterValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.75).toFixed(1)}`
+
+
+  return activepath
+}
+
 const getPerformanceChart = (data) => {
   const engineSpeedData = data[0];
   const horsepowerData = data[1];
   const torqueData = data[2];
+  const engineName = data[3];
 
   const RPM = {
     content: engineSpeedData[0],
@@ -84,12 +107,6 @@ ${
 
 <!-- Reference titles -->
       <g>
-        <text font-family=${fontFamily} fill=${horsepower.color} x="16" y="128.5" transform="rotate(270,16,128.5)" style="font-size: ${horsepower.fontSize}px; font-weight:400;cursor:default;" text-anchor="middle">
-          ${horsepower.content}
-        </text>
-        <text font-family=${fontFamily} fill=${torque.color} x="610" y="70" transform="rotate(90,624,128.5)" style="font-size: ${torque.fontSize}px; font-weight:400;cursor:default;" text-anchor="middle">
-          ${torque.content}
-        </text>
         <text font-family=${fontFamily} fill=${RPM.color} x="317" y="280" style="font-size: ${RPM.fontSize}px; font-weight:400; cursor:default;" text-anchor="middle">
           ${RPM.content}
         </text>
@@ -98,15 +115,21 @@ ${
 <!-- Color lines -->
       <!-- HORSEPOWER line -->
       <g data-z-index="3" aria-hidden="false">
-        <path fill="none"
+        <path class="line-path-HP-${engineName}" fill="none"
           d="
 ${
   RPM.values.slice(0, 18).map((e, idx) => {
     const letter = (idx === 0) ? 'M' : 'L';
     return `
-      ${letter} ${getRPMPosition(e)} ${225 - (horsepower.values[(idx + 1)] * 0.45)}
+      ${letter} ${getRPMPosition(e)} ${225 - (horsepower.values[(idx + 1)] * 0.45 * 0.167)}
     `;
   })
+  // RPM.values.slice(0, 18).map((e, idx) => {
+  //   const letter = (idx === 0) ? 'M' : 'L';
+  //   return `
+  //     ${letter} ${getRPMPosition(e)} ${225}
+  //   `;
+  // })
 }
           "
           data-z-index="1" 
@@ -119,9 +142,15 @@ ${
       
 <!-- TORQUE line -->
       <g data-z-index="3" aria-hidden="false">
-        <path fill="none"
+        <path class="line-path-TQ-${engineName}" fill="none"
           d="
 ${
+  // RPM.values.slice(0, 18).map((e, idx) => {
+  //   const letter = (idx === 0) ? 'M' : 'L';
+  //   return `
+  //     ${letter} ${getRPMPosition(e)} ${225}
+  //   `;
+  // })
   RPM.values.slice(0, 18).map((e, idx) => {
     const letter = (idx === 0) ? 'M' : 'L';
     return `
@@ -157,29 +186,10 @@ ${
     </text>`
 }
       </g>
-<!-- vertical values - Horsepower -->
-      <g data-z-index="7" aria-hidden="true">
-${
-  valueHorsepower.map((e, idx) => `
-    <text font-family=${fontFamily} x="60" y="${(idx * 22.5) + 7}" text-anchor="end" style="color: rgb(102, 102, 102); cursor: default; font-size: 11px; fill: rgb(102, 102, 102);" opacity="1">
-      ${e}
-    </text>`)
-}
-      </g>
-    
-      <!-- vertical values - Torque -->
-      <g data-z-index="7" aria-hidden="true">
-${
-  valuesTorque.map((e, idx) => `
-    <text font-family=${fontFamily} x="640" y="${(idx * 22.5) + 7}" style="color: rgb(102, 102, 102); cursor: default; font-size: 11px; fill: rgb(102, 102, 102);" opacity="1">
-      ${e}
-    </text>`)
-}
-      </g>
     </svg>
   `;
 
   return svg;
 };
 
-export default getPerformanceChart;
+export {getPerformanceChart, buildAnimations};
