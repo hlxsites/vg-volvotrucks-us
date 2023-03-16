@@ -238,7 +238,6 @@ function createDropdown(options, selected, name, placeholder, label) {
   return container;
 }
 
-
 function createPaginationLink(page, label) {
   const newUrl = new URL(window.location);
   const listElement = document.createElement('li');

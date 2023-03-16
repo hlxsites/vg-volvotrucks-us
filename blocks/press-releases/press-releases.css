@@ -60,6 +60,8 @@
     gap: 11px;
     list-style: none;
     color: #d4d4d4;
+    font-size: 2.0rem;
+    line-height: 2.0rem;
 }
 
 .block.press-releases p.button-container a {
@@ -67,11 +69,6 @@
     color: var(--volvo-text-gray);
     border-radius: 0;
     border: 2px solid var(--volvo-text-gray);
-}
-
-.block.press-releases .pagination .scroll {
-    font-size: 2.0rem;
-    line-height: 2.0rem;
 }
 
 .block.press-releases .pagination .scroll a {
