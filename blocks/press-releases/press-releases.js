@@ -68,9 +68,9 @@ async function getPressReleases(limit) {
   const indexUrl = new URL('/press-releases.json', window.location.origin);
   let pressReleases;
   if (limit) {
-    pressReleases = ffetch(indexUrl).slice(0, 3).all();
+    pressReleases = ffetch(indexUrl).limit(limit).all();
   } else {
-    pressReleases = ffetch(indexUrl).all();
+    pressReleases = ffetch(indexUrl).chunks(500).all();
   }
   return pressReleases;
 }
