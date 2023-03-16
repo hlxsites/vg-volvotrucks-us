@@ -98,6 +98,7 @@
 
   /* nav height */
   --nav-height: 95px;
+  --sub-nav-height: 44px;
 }
 
 *,
@@ -128,6 +129,22 @@ body.appear {
 
 header {
   min-height: var(--nav-height);
+}
+
+header .header.block {
+  background-color: white;
+  min-height: var(--nav-height);
+  z-index: 1050;
+}
+
+header.sub-nav-wrapper {
+  min-height: calc(var(--nav-height) + var(--sub-nav-height));
+}
+
+header .sub-nav.block {
+  height: var(--sub-nav-height);
+  background-color: #7F7F7F;
+  z-index: 1020;
 }
 
 h1, h2, h3,
@@ -215,6 +232,7 @@ a.button::after {
 
 a.button.primary,
 button.primary {
+  max-width: 100%;
   display: inline-block;
   padding: var(--btn-padding);
   color: var(--text-color);
@@ -370,19 +388,6 @@ main .section.highlight {
   border-bottom: 3px solid var(--link-color);
 }
 
-.section.sub-nav-container {
-  position: relative;
-  min-height: 44px;
-  margin: 0;
-  background-color: #7F7F7F;
-}
-
-.section.sub-nav-container > div {
-  margin: auto;
-  padding: 0;
-  width: 100%;
-}
-
 /* image as video link */
 .link-with-video {
   position: relative;
@@ -460,6 +465,22 @@ a.button.text-link-with-video::after {
   }
 }
 
+@media (max-width: 991px) {
+  header .header.block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  header .sub-nav.block {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+  }
+}
+
 @media (min-width: 992px) {
   :root {
     --heading-font-size-xxl: 4.8rem;
@@ -469,14 +490,14 @@ a.button.text-link-with-video::after {
     --heading-font-size-s: 2.4rem;
     --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
+    --sub-nav-height: 48px;
   }
 
   main .section > div {
     width: 960px;
   }
 
-  .section.sub-nav-container {
-    min-height: 48px;
+  header .sub-nav.block {
     background-color: #53565A;
   }
 }
