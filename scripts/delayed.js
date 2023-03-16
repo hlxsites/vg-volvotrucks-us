@@ -7,7 +7,7 @@ sampleRUM('cwv');
 // add more delayed functionality here
 
 // OneTrust Cookies Consent Notice
-if (window.location.host.includes('volvotrucks.us')) {
+if (!window.location.host.includes('hlx.page') && !window.location.host.includes('localhost')) {
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
   // because the cookie is not persistent. To avoid this annoyance, disable unless on the
   // production page.
