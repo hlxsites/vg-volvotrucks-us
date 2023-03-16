@@ -2,17 +2,21 @@ function newId() {
   return (Math.random() + 1).toString(36).substring(7);
 }
 
+function calcScrollHeight(rowgroup) {
+  return [...rowgroup.children]
+    .map((child) => child.clientHeight)
+    .reduce((l, r) => l + r, 0);
+}
+
 function expand(event) {
-  const button = event.target;
-  const rowgroup = event.target.nextElementSibling;
+  const button = event.target.closest('button');
+  const rowgroup = button.nextElementSibling;
   if (button.ariaExpanded === 'true') {
     rowgroup.style.height = 0;
     rowgroup.ariaHidden = true;
     button.ariaExpanded = false;
   } else {
-    rowgroup.style.height = `${[...rowgroup.children]
-      .map((child) => child.clientHeight)
-      .reduce((l, r) => l + r, 0)}px`;
+    rowgroup.style.height = `${rowgroup.scrollHeight}px`;
     rowgroup.ariaHidden = false;
     button.ariaExpanded = true;
   }
@@ -35,6 +39,10 @@ function activateMobileColumn(block, index) {
     .forEach((cell) => cell.classList.remove('expand'));
   block.querySelectorAll(`.image-header .cell:nth-child(${index}),.row .cell:nth-child(${index + 1})`)
     .forEach((cell) => cell.classList.add('expand'));
+  // adjust the height of all expanded rowgroups
+  block.querySelectorAll('[role="rowgroup"][aria-hidden="false"]').forEach((rowgroup) => {
+    rowgroup.style.height = `${calcScrollHeight(rowgroup)}px`;
+  })
 }
 
 function changeMobileColumn(event) {
