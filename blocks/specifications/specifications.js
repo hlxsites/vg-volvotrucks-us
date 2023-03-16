@@ -42,7 +42,7 @@ function activateMobileColumn(block, index) {
   // adjust the height of all expanded rowgroups
   block.querySelectorAll('[role="rowgroup"][aria-hidden="false"]').forEach((rowgroup) => {
     rowgroup.style.height = `${calcScrollHeight(rowgroup)}px`;
-  })
+  });
 }
 
 function changeMobileColumn(event) {
