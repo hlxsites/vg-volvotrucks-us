@@ -15,6 +15,13 @@
 const hr = (doc) => doc.createElement('hr');
 const meta = {};
 
+function identifyTemplate(main, document) {
+  const pressRelease = document.querySelector('#Form1 > div.container.main-content > div.wb');
+  if (pressRelease) {
+    meta.template = 'article';
+  }
+}
+
 function setArticleTags(url) {
   const request = new XMLHttpRequest();
   request.open('GET', '/tools/importer/vtna-pa-tags.json', false);
@@ -376,8 +383,7 @@ function make360Image(main, document) {
 
 function makeNewsArticle(main, document) {
   const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
-  if (newsArticle) {
-    meta.template = 'article';
+  if (newsArticle && meta.template === 'article') {
     console.log(`newsArticle(s) found: ${newsArticle.length}`);
     newsArticle.forEach((article) => {
       const cells = [['Fragment']];
@@ -421,6 +427,7 @@ export default {
       'div.modal',
     ]);
 
+    identifyTemplate(main, document);
     swapHero(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
