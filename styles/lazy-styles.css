@@ -156,12 +156,14 @@ body.disable-scroll, body.disable-scroll main {
   font-size: var(--body-font-size-s) !important;
 }
 
-.cookies .section#ot-sdk-cookie-policy {
-  /* reduce padding introduced by new section */
-  margin-top: -32px;
-  margin-bottom: -32px;
-  padding-top: 0;
-  padding-bottom: 0;
+.cookies h1 {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 6rem;
+}
+
+.cookies h3 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--heading-font-size-s);
 }
 
 .body-dealer-locator footer.footer-wrapper{

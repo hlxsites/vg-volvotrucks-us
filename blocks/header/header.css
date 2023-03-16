@@ -17,7 +17,6 @@ header nav {
   padding: 0 21px;
   display: flex;
   flex-flow: row wrap;
-  z-index: 1000;
 }
 
 /* the brand  */
@@ -137,7 +136,7 @@ header nav .semitrans {
   position: fixed;
   opacity: 0;
   background-color: #7F7F7F;
-  transition: opacity .2s cubic-bezier(.4, 0, .2, 1);
+  transition: visibility .2s, opacity .2s cubic-bezier(.4, 0, .2, 1);
 }
 
 header nav .hamburger-toggle[aria-expanded=true]~.semitrans {
@@ -349,7 +348,7 @@ header nav .sections .section .navigation-cta {
   /* the search input  */
   header nav .search>div {
     width: 756px;
-    margin: 0 auto;
+    margin: 0 0 0 auto;
   }
 
   /* tools only use 50% of width */
@@ -392,7 +391,7 @@ header nav .sections .section .navigation-cta {
       '. brand search .' auto
       '. . . . ' 27px
       'sections sections sections sections' 48px
-      / calc(3.5% + 15px) auto max-content calc(3.5% + 15px);
+      / calc(3.5% + 15px) auto auto calc(3.5% + 15px);
     margin: 25px 0 0;
     padding: 0;
   }
@@ -574,6 +573,7 @@ header nav .sections .section .navigation-cta {
     background-color: #fff;
     padding: 40px 0 0 92px;
     width: 100%;
+    z-index: 1010;
   }
 
   header nav .sections .section.expand .navigation-cta {
