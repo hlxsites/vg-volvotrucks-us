@@ -160,6 +160,33 @@ function assignOperations(generator, context) {
   return Object.assign(generator, operations, functions);
 }
 
+export function ffetch(url) {
+  let chunks = 255;
+  const fetch = (...rest) => window.fetch.apply(null, rest);
+  const parseHtml = (html) => new window.DOMParser().parseFromString(html, 'text/html');
+
+  try {
+    if ('connection' in window.navigator && window.navigator.connection.saveData === true) {
+      // request smaller chunks in save data mode
+      chunks = 64;
+    }
+  } catch (e) { /* ignore */ }
+
+  const context = { chunks, fetch, parseHtml };
+  const generator = request(url, context);
+
+  return assignOperations(generator, context);
+}
+
+/*
+* Common functions for searching the press releases and magazines
+*/
+function getSelectionFromUrl(field) {
+  return (
+    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
+  );
+}
+
 function createFullText(name, searchTerm, placeholder) {
   const container = document.createElement('div');
   container.className = toClassName(`${name}-field`);
@@ -211,29 +238,6 @@ function createDropdown(options, selected, name, placeholder, label) {
   return container;
 }
 
-export function ffetch(url) {
-  let chunks = 255;
-  const fetch = (...rest) => window.fetch.apply(null, rest);
-  const parseHtml = (html) => new window.DOMParser().parseFromString(html, 'text/html');
-
-  try {
-    if ('connection' in window.navigator && window.navigator.connection.saveData === true) {
-      // request smaller chunks in save data mode
-      chunks = 64;
-    }
-  } catch (e) { /* ignore */ }
-
-  const context = { chunks, fetch, parseHtml };
-  const generator = request(url, context);
-
-  return assignOperations(generator, context);
-}
-
-function getSelectionFromUrl(field) {
-  return (
-    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
-  );
-}
 
 function createPaginationLink(page, label) {
   const newUrl = new URL(window.location);
@@ -268,17 +272,17 @@ function createPagination(entries, page, limit) {
     const list = document.createElement('ol');
     list.className = 'scroll';
     if (page > 1) {
-      list.append(createPaginationLink(page - 1, '<'));
+      list.append(createPaginationLink(page - 1, '‹'));
     } else {
       const listElement = document.createElement('li');
-      listElement.innerText = '<';
+      listElement.innerText = '‹';
       list.append(listElement);
     }
     if (page < maxPages) {
-      list.append(createPaginationLink(page + 1, '>'));
+      list.append(createPaginationLink(page + 1, '›'));
     } else {
       const listElement = document.createElement('li');
-      listElement.innerText = '>';
+      listElement.innerText = '›';
       list.append(listElement);
     }
 

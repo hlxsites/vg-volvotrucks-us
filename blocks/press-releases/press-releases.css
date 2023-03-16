@@ -57,8 +57,9 @@
     padding: 0;
     margin: 0 0 0 15px;
     display: inline-flex;
-    gap: 5px;
+    gap: 11px;
     list-style: none;
+    color: #d4d4d4;
 }
 
 .block.press-releases p.button-container a {
@@ -68,9 +69,14 @@
     border: 2px solid var(--volvo-text-gray);
 }
 
+.block.press-releases .pagination .scroll {
+    font-size: 2.0rem;
+    line-height: 2.0rem;
+}
+
 .block.press-releases .pagination .scroll a {
     color: var(--volvo-text-gray);
-    font-family: var(--ff-volvo-novum-medium);
+    font-weight: 700;
 }
 
 .block.press-releases p.button-container {
@@ -81,6 +87,12 @@
 
 .block.press-releases p.button-container a:hover {
     background-color: var(--background-hover-color);
+}
+
+.block.press-releases .list-filter input,
+.block.press-releases .list-filter select {
+    font-family: var(--ff-volvo-novum);
+    font-size: 1.6rem;
 }
 
 .block.press-releases .list-filter fieldset {
@@ -142,7 +154,7 @@
     .block.press-releases .list-filter fieldset {
         display: flex;
         justify-content: center;
-        gap: 15px;
+        gap: 30px;
     }
 
     .block.press-releases .list-filter fieldset > div {
@@ -151,7 +163,7 @@
 
     .block.press-releases .tags-field label {
         justify-self: right;
-        padding-right: 0.5em;
+        padding-right: 8px;
     }
 
     .block.press-releases .press-releases-cards {
