@@ -122,9 +122,24 @@
 
 .block.press-releases .tags-field {
     display: grid;
+    position: relative;
     grid-template-columns: 1fr 68%;
     align-items: center;
     margin-bottom: 0.75em;
+}
+
+.block.press-releases .tags-field::after {
+    font-family: var(--ff-fontawesome);
+    color: var(--c-white);
+    content: "\f107";
+    position: absolute;
+    display: inline-block;
+    right: 20px;
+    top: 50%;
+    margin-top: -1.2rem;
+    line-height: 2.4rem;
+    font-size: 2.4rem;
+    pointer-events: none;
 }
 
 .block.press-releases .tags-field label {
@@ -134,6 +149,7 @@
 
 .block.press-releases .tags-field select {
     width: 100%;
+    appearance: none;
     background-color: var(--link-color);
     color: var(--c-white);
     padding: 15px 40px 15px 15px;
