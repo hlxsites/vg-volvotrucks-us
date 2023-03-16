@@ -14,7 +14,46 @@
 
 const hr = (doc) => doc.createElement('hr');
 const meta = {};
-const createMetadata = (main, document) => {
+
+function setArticleTags(url) {
+  const request = new XMLHttpRequest();
+  request.open('GET', '/tools/importer/vtna-pa-tags.json', false);
+  request.send(null);
+  let inTags = {};
+  if (request.status === 200) {
+    inTags = JSON.parse(request.responseText);
+  }
+  const matchUrl = `https://www.volvotrucks.us${url.replaceAll('http://localhost:3001', '').replaceAll('?host=https%3A%2F%2Fwww.volvotrucks.us', '')}`;
+  const tags = inTags.data.find((el) => el['Page URL'] === matchUrl);
+  if (tags.t1) {
+    meta.tags = `${tags.t1}`;
+    if (tags.t2) {
+      meta.tags = `${meta.tags}, ${tags.t2}`;
+      if (tags.t3) {
+        meta.tags = `${meta.tags}, ${tags.t3}`;
+        if (tags.t4) {
+          meta.tags = `${meta.tags}, ${tags.t4}`;
+          if (tags.t5) {
+            meta.tags = `${meta.tags}, ${tags.t5}`;
+            if (tags.t6) {
+              meta.tags = `${meta.tags}, ${tags.t6}`;
+              if (tags.t7) {
+                meta.tags = `${meta.tags}, ${tags.t7}`;
+                if (tags.t8) {
+                  meta.tags = `${meta.tags}, ${tags.t8}`;
+                  if (tags.t9) {
+                    meta.tags = `${meta.tags}, ${tags.t9}`;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+const createMetadata = (main, document, url) => {
   const title = document.querySelector('title');
   if (title) {
     meta.Title = title.innerHTML.replace(/[\n\t]/gm, '');
@@ -38,6 +77,11 @@ const createMetadata = (main, document) => {
     meta.Image = el;
   }
 
+  if (meta.template === 'article') {
+    setArticleTags(url);
+    console.log(meta.tags);
+  }
+
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
   main.append(block);
 
@@ -49,7 +93,7 @@ function makeIndexPage(url) {
   return url.endsWith('/') ? newUrl.toString() : url;
 }
 
-const createArticleColumns = (main, document, url) => {
+const createMagazineArticles = (main, document, url) => {
   const mainContent = document.querySelector('#Form1 > div.container.main-content > section.hubArticle > article > div');
   if (mainContent) {
     const mainImgs = mainContent.querySelectorAll('img');
@@ -330,6 +374,21 @@ function make360Image(main, document) {
   }
 }
 
+function makeNewsArticle(main, document) {
+  const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
+  if (newsArticle) {
+    meta.template = 'article';
+    console.log(`newsArticle(s) found: ${newsArticle.length}`);
+    newsArticle.forEach((article) => {
+      const cells = [['Fragment']];
+      cells.push(['https://main--vg-volvotrucks-us--hlxsites.hlx.page/fragments/press-release-boilerplate']);
+      const na = WebImporter.DOMUtils.createTable(cells, document);
+      article.replaceWith(na);
+      na.insertAdjacentElement('afterend', hr(document));
+    });
+  }
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -375,10 +434,10 @@ export default {
     make360Image(main, document);
     makeHubTextBlock(main, document);
     createPRDownloadBlock(main, document);
-
-    createArticleColumns(main, document, url);
+    makeNewsArticle(main, document);
+    createMagazineArticles(main, document, url);
     // create the metadata block and append it to the main element
-    createMetadata(main, document);
+    createMetadata(main, document, url);
 
     return main;
   },
