@@ -172,10 +172,6 @@ p, dl, ol, ul, pre, blockquote {
   font-size: var(--body-font-size-xs);
 }
 
-[data-align="center"] {
-  text-align: center;
-}
-
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
