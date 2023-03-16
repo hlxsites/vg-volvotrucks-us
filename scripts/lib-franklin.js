@@ -542,7 +542,7 @@ export async function waitForLCP(lcpBlocks) {
  */
 export function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
-  header.append(headerBlock);
+  header.prepend(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
 }
