@@ -6,6 +6,8 @@
 .block.press-releases article img {
     display: block;
     width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     margin-bottom: 1em;
 }
 
@@ -144,7 +146,7 @@
     }
 
     .block.press-releases .list-filter fieldset > div {
-        flex: 0 0 33%;
+        flex: 0 0 33.3334%;
     }
 
     .block.press-releases .tags-field label {
@@ -154,21 +156,17 @@
 
     .block.press-releases .press-releases-cards {
         display: flex;
+        column-gap: 30px;
     }
 
     .block.press-releases .press-releases-cards article {
-        flex: 0 0 33.33%;
-        padding: 0 15px;
+        flex: 0 1 33.3334%;
     }
 
     .block.press-releases .article-list article {
         display: grid;
-        grid-template-columns: 1fr 3fr;
-        gap: 15px;
-    }
-
-    .block.press-releases article img {
-        width: 370px;
+        grid-template-columns: 25% 75%;
+        gap: 30px;
     }
 }
 
