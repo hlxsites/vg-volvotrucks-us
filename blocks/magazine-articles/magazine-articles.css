@@ -113,6 +113,24 @@
     padding: 0;
 }
 
+.block .related-magazine-articles .content a {
+    color: var(--volvo-text-gray);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.block .related-magazine-articles .content h3 {
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-xs);
+    letter-spacing: -.1px;
+    color: var(--volvo-text-gray);
+    margin: 16px 0;
+    font-weight: 400;
+    line-height: 32px;
+    position: relative;
+    text-rendering: optimizelegibility;
+}
 
 /* Magazine articles */
 
@@ -215,24 +233,6 @@
     border-radius: 0;
     user-select: none;
 }
-.block .related-magazine-articles .content a {
-    color: var(--volvo-text-gray);
-    font-weight: 700;
-    border: none;
-    padding: 0;
-}
-
-.block .related-magazine-articles .content h3 {
-    font-family: var(--ff-volvo-novum-medium);
-    font-size: var(--heading-font-size-xs);
-    letter-spacing: -.1px;
-    color: var(--volvo-text-gray);
-    margin: 16px 0;
-    font-weight: 400;
-    line-height: 32px;
-    position: relative;
-    text-rendering: optimizelegibility;
-}
 
 @media screen and (min-width: 767px) {
     .block .latest-magazine-articles,
@@ -276,9 +276,5 @@
         float: left!important;
         height: 214px!important;
         width: 380px!important;    
-    }
-
-    .block.magazine-articles article a.imgcover {
-        height: 214px!important;
     }
 }
