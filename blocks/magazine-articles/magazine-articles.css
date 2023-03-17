@@ -106,14 +106,14 @@
     font-weight: 400;
 }
 
-.block .latest-magazine-articles article .content a {
+.block .latest-magazine-articles article .content h3 a {
     color: var(--link-color);
     font-weight: 700;
     border: none;
     padding: 0;
 }
 
-.block .related-magazine-articles article .content a {
+.block .related-magazine-articles article .content h3 a {
     color: var(--volvo-text-gray);
     font-weight: 700;
     border: none;
