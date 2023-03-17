@@ -59,32 +59,32 @@
 
 /* Latest and related magazine articles */
 
-.latest-magazine-articles,
-.related-magazine-articles {
+.block .latest-magazine-articles,
+.block .related-magazine-articles {
     display: unset;
 }
 
-.latest-magazine-articles article,
-.related-magazine-articles article {
+.block .latest-magazine-articles article,
+.block .related-magazine-articles article {
     margin-top: 24px;
 }
 
-.latest-magazine-articles article:first-child,
-.related-magazine-articles article:first-child {
+.block .latest-magazine-articles article:first-child,
+.block .related-magazine-articles article:first-child {
     margin-top: -24px;
 }
 
-.latest-magazine-articles > article img,
-.latest-magazine-articles > article source,
-.related-magazine-articles article img,
-.related-magazine-articles article source{
+.block .latest-magazine-articles > article img,
+.block .latest-magazine-articles > article source,
+.block .related-magazine-articles article img,
+.block .related-magazine-articles article source{
     display: block;
     height: auto;
     border: 0;
     object-fit: cover;
 }
 
-.latest-magazine-articles .content h3 {
+.block .latest-magazine-articles .content h3 {
     margin-bottom: 10px;
     font-family: var(--ff-volvo-novum-medium);
     font-size: var(--heading-font-size-xs);
@@ -97,17 +97,16 @@
     text-rendering: optimizelegibility;
 }
 
-.latest-magazine-articles .content p,
-.related-magazine-articles .content p {
-    margin-bottom: 8px;
+.block .latest-magazine-articles .content p,
+.block .related-magazine-articles .content p {
     font-size: 13px;
     position: relative;
-    margin: 0 0;
+    margin: 0;
     letter-spacing: -.1px;
     font-weight: 400;
 }
 
-.latest-magazine-articles .content a {
+.block .latest-magazine-articles .content a {
     color: var(--link-color);
     font-weight: 700;
     border: none;
@@ -127,7 +126,7 @@
     display: block;
 }
 
-.block.magazine-articles article a.imgCover {
+.block.magazine-articles article a.imgcover {
     float: unset;
     margin-bottom: 16px;
     padding-right: 15px;
@@ -214,19 +213,16 @@
     font-size: 16px;
     line-height: 1.5;
     border-radius: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
-.related-magazine-articles .content a {
+.block .related-magazine-articles .content a {
     color: var(--volvo-text-gray);
     font-weight: 700;
     border: none;
     padding: 0;
 }
 
-.related-magazine-articles .content h3 {
+.block .related-magazine-articles .content h3 {
     font-family: var(--ff-volvo-novum-medium);
     font-size: var(--heading-font-size-xs);
     letter-spacing: -.1px;
@@ -239,36 +235,36 @@
 }
 
 @media screen and (min-width: 767px) {
-    .latest-magazine-articles,
-    .related-magazine-articles {
+    .block .latest-magazine-articles,
+    .block .related-magazine-articles {
         display: flex;
         margin: 0 -15px;
     }
 
-    .latest-magazine-articles article,
-    .related-magazine-articles article {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
         position: relative;
         min-height: 1px;
         padding-left: 15px;
         padding-right: 15px;
     }
 
-    .latest-magazine-articles article:first-child,
-    .related-magazine-articles article:first-child {
+    .block .latest-magazine-articles article:first-child,
+    .block .related-magazine-articles article:first-child {
         margin-top: 24px;
     }
 }
 
 @media screen and (min-width: 768px) {
-    .latest-magazine-articles article,
-    .related-magazine-articles article {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
         width: 33.3333%;
     }
 }
 
 @media screen and (min-width: 991px) {
-    .latest-magazine-articles article,
-    .related-magazine-articles article {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
         display: unset;
     }
 
@@ -276,13 +272,13 @@
         display: inline-flex!important;
     }
 
-    .block.magazine-articles .articles article a.imgCover {
+    .block.magazine-articles .articles article a.imgcover {
         float: left!important;
         height: 214px!important;
         width: 380px!important;    
     }
 
-    .block.magazine-articles article a.imgCover {
+    .block.magazine-articles article a.imgcover {
         height: 214px!important;
     }
 }

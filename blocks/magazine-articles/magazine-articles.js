@@ -20,7 +20,7 @@ function buildMagazineArticle(entry) {
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
   const categoryItem = document.createElement('li');
-  card.innerHTML = `<a href="${path}" class="imgCover">
+  card.innerHTML = `<a href="${path}" class="imgcover">
     ${pictureTag}
     </a>
     <div class="content">
@@ -48,7 +48,7 @@ function buildLatestMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '590', height: '410' }]);
   const pictureTag = picture.outerHTML;
   const readMore = (linkText || 'Read more...');
-  card.innerHTML = `<a href="${path}" class="imgCover">
+  card.innerHTML = `<a href="${path}" class="imgcover">
     ${pictureTag}
     </a>
     <div class="content">
@@ -72,7 +72,7 @@ function buildRelatedMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}" class="imgCover">
+  card.innerHTML = `<a href="${path}" class="imgcover">
     ${pictureTag}
     </a>
     <div class="content">
