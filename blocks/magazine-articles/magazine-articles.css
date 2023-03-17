@@ -1,4 +1,5 @@
 /* pagination */
+
 .pagination ol li .last::before {
     font-family: var(--ff-fontawesome);
     content: "\f051";
@@ -58,6 +59,7 @@
 }
 
 /* Latest and related magazine articles */
+
 .latest-magazine-articles,
 .related-magazine-articles {
     display: unset;
@@ -115,6 +117,7 @@
 
 
 /* Magazine articles */
+
 .magazine-articles-wrapper > div {
     margin: 48px auto;
 }
@@ -242,6 +245,7 @@
         display: flex;
         margin: 0 -15px;
     }
+
     .latest-magazine-articles article,
     .related-magazine-articles article {
         position: relative;
@@ -249,6 +253,7 @@
         padding-left: 15px;
         padding-right: 15px;
     }
+
     .latest-magazine-articles article:first-child,
     .related-magazine-articles article:first-child {
         margin-top: 24px;
@@ -267,17 +272,19 @@
     .related-magazine-articles article {
         display: unset;
     }
+
     .block.magazine-articles .articles article {
         display: inline-flex!important;
     }
+
     .block.magazine-articles .articles article a.imgCover {
         float: left!important;
         height: 214px!important;
         width: 380px!important;    
     }
+
     .block.magazine-articles article a.imgCover {
         height: 214px!important;
     }
 }
-
     
