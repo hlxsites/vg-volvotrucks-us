@@ -47,7 +47,7 @@ function buildLatestMagazineArticle(entry) {
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '590', height: '410' }]);
   const pictureTag = picture.outerHTML;
-  const readMore = linkText ? linkText : 'Read more...';
+  const readMore = (linkText || 'Read more...');
   card.innerHTML = `<a href="${path}" class="imgCover">
     ${pictureTag}
     </a>
