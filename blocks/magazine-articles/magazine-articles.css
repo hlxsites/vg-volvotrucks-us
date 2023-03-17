@@ -52,7 +52,7 @@
     list-style: none;
 }
 
-.block.magazine-articles .pager .pagination .scroll a {
+.block.magazine-articles .pager .pagination .scroll li a {
     color: var(--volvo-text-gray);
     font-family: var(--ff-volvo-novum-medium);
 }
