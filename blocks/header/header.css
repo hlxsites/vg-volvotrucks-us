@@ -521,7 +521,6 @@ header nav .sections .section .navigation-cta {
     position: relative;
     display: flex;
     flex-flow: row;
-    gap: 48px;
     align-items: center;
     width: calc(93% - 30px);
     margin: 0 auto;
@@ -537,6 +536,7 @@ header nav .sections .section .navigation-cta {
 
   header nav .sections .section > a {
       border: 0;
+      padding: 15px 24px;
       height: 48px;
       cursor: pointer;
   }
@@ -552,9 +552,11 @@ header nav .sections .section .navigation-cta {
 
   header nav .sections .section > a::after {
     position: initial;
+    display: inline-block;
+    width: 1px;
     content: "\f105";
     font-size: 12px;
-    padding-left: 8px;
+    margin-left: 6px;
   }
 
   header nav .sections .section.expand a::after {
