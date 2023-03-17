@@ -32,6 +32,14 @@
   src: url('/fonts/fontawesome-webfont.woff') format('woff');
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
+:is(h1, h2, h3, h4, h5, h6) > em {
+  color: #A7A8A9;
+}
+
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -46,7 +54,11 @@
 }
 
 .fa-angle-right::before {
-  content: "\f105"
+  content: "\f105";
+}
+
+.fa-angle-left::before {
+  content: "\f104";
 }
 
 .fa-angle-up::before {
@@ -113,9 +125,29 @@
   content: "\f00d"
 }
 
+.fa-star::before {
+  content: "\f005"
+}
 
+.fa-star-o::before {
+  content: "\f006"
+}
 
+.fa-cut::before,.fa-scissors::before {
+  content: "\f0c4"
+}
 
+.fa-copy::before,.fa-files-o::before {
+  content: "\f0c5"
+}
+
+.fa-external-link::before {
+  content: "\f08e"
+}
+
+.fa-refresh::before {
+  content: "\f021"
+}
 
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
@@ -124,10 +156,27 @@
   font-size: var(--body-font-size-s) !important;
 }
 
-.cookies .section#ot-sdk-cookie-policy {
-  /* reduce padding introduced by new section */
-  margin-top: -32px;
-  margin-bottom: -32px;
-  padding-top: 0;
-  padding-bottom: 0;
+.cookies h1 {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 6rem;
+}
+
+.cookies h3 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--heading-font-size-s);
+}
+
+.body-dealer-locator footer.footer-wrapper{
+  display: none;
+}
+
+.body-dealer-locator main .section {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .body-dealer-locator main .section {
+    padding: 0;
+    margin: 0;
+  }
 }

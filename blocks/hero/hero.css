@@ -1,13 +1,13 @@
 /* block specific CSS goes here */
 
-main .hero-container {
+main .section.hero-container {
+    margin: 0;
     padding: 0;
-    width: 100%;
-    max-width: unset;
 }
 
-main .hero-container > div {
-    max-width: unset;
+main .section .hero-wrapper {
+    padding: 0;
+    width: 100%;
 }
 
 main .hero {
@@ -29,7 +29,7 @@ main .hero-headings h4 {
 main .hero-headings h1 {
     margin-top: 0;
     margin-bottom: 36px;
-    font-family: var(--ff-volov-broadprodigital);
+    font-family: var(--ff-volvo-broadprodigital);
     font-size: 6rem;
     letter-spacing: 3.6px;
     line-height: 1em;
@@ -42,6 +42,14 @@ main .hero-headings h4 {
     line-height: 1.5em;
 }
 
+main .hero-headings:has(.button) h1 {
+    margin-block-end: 8px;
+}
+
+main .hero .button-container {
+    margin-block: 0;
+}
+
 main .hero picture {
     object-fit: cover;
     box-sizing: border-box;
@@ -51,7 +59,18 @@ main .hero img {
     display: block;
     object-fit: cover;
     width: 100%;
-    height: 34.415%;
+}
+
+main .hero a.cta {
+    display: initial;
+    color: currentcolor;
+    background-color: transparent;
+    border: none;
+    border-radius: unset;
+    padding: 0;
+    margin: 0;
+    font-family: var(--ff-volvo-novum-regular);
+    font-size: var(--body-font-size-xs);
 }
 
 @media screen and (min-width: 481px) {
@@ -60,12 +79,13 @@ main .hero img {
         position: absolute;
         bottom: 16px;
         padding-left: 32px;
+        text-align: initial;
     }
 
     main .hero-headings h1 {
         margin-bottom: 8px;
     }
-    
+
     main .hero-headings h4 {
         margin-top: 0;
     }
@@ -83,14 +103,26 @@ main .hero img {
 }
 
 @media screen and (min-width: 768px) {
-    main .hero img {
-        height: 250px;
-    }
-
     main .hero-headings {
         padding-top: 48px;
         top: 0;
         bottom: unset;
+    }
+
+    main .hero-headings:has(.button) h1 {
+        margin-block-end: 24px;
+    }
+
+    main .hero-headings a.cta {
+        padding: var(--btn-padding);
+        color: var(--text-color);
+        background-color: var(--c-white);
+        border: 2px solid var(--c-white);
+    }
+
+    main .hero-headings a.cta:hover {
+        background-color: var(--btn-background-hover);
+        border-color: #e0e0e0;
     }
 
     main .hero picture::after {
@@ -101,10 +133,6 @@ main .hero img {
 
 
 @media screen and (min-width: 992px) {
-    main .hero img {
-        height: 325px;
-    }
-
     main .hero-headings {
         width: 913px;
         left: 50%;
@@ -115,10 +143,6 @@ main .hero img {
 }
 
 @media screen and (min-width: 1300px) {
-    main .hero img {
-        height: 413px;
-    }
-
     main .hero-headings {
         width: 1153px;
     }

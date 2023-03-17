@@ -1,3 +1,7 @@
+.section .carousel-wrapper {
+    padding: 0;
+}
+
 .block.carousel > div > div {
     position: relative;
     display: flex;
