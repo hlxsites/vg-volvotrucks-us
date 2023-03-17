@@ -20,7 +20,7 @@ function buildMagazineArticle(entry) {
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
   const categoryItem = document.createElement('li');
-  card.innerHTML = `<a href="${path}">
+  card.innerHTML = `<a href="${path}" class="imgCover">
     ${pictureTag}
     </a>
     <div class="content">
@@ -45,15 +45,16 @@ function buildLatestMagazineArticle(entry) {
     linkText,
   } = entry;
   const card = document.createElement('article');
-  const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
+  const picture = createOptimizedPicture(image, title, false, [{ width: '590', height: '410' }]);
   const pictureTag = picture.outerHTML;
-  card.innerHTML = `<a href="${path}">
+  const readMore = linkText ? linkText : 'Read more...';
+  card.innerHTML = `<a href="${path}" class="imgCover">
     ${pictureTag}
     </a>
     <div class="content">
     <h3>${title}</h3>
     <p>${description}</p>
-    <a href="${path}">${linkText}</a>
+    <a href="${path}" class="cta">${readMore}</a>
     </div>`;
   return card;
 }
@@ -71,7 +72,7 @@ function buildRelatedMagazineArticle(entry) {
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}">
+  card.innerHTML = `<a href="${path}" class="imgCover">
     ${pictureTag}
     </a>
     <div class="content">
