@@ -1,6 +1,4 @@
-
 /* pagination */
-
 .pagination ol li .last::before {
     font-family: var(--ff-fontawesome);
     content: "\f051";
