@@ -106,14 +106,14 @@
     font-weight: 400;
 }
 
-.block .latest-magazine-articles .content a {
+.block .latest-magazine-articles article .content a {
     color: var(--link-color);
     font-weight: 700;
     border: none;
     padding: 0;
 }
 
-.block .related-magazine-articles .content a {
+.block .related-magazine-articles article .content a {
     color: var(--volvo-text-gray);
     font-weight: 700;
     border: none;
@@ -192,15 +192,15 @@
     font-size: 12px;
 }
 
-.block.magazine-articles article ul li{
+.block.magazine-articles article .content ul li{
     display: inline;
 }
 
-.block.magazine-articles article ul li:nth-child(2) {
+.block.magazine-articles article .content  ul li:nth-child(2) {
     color: var(--highlight-background-color);
 }
 
-.block.magazine-articles article ul li+li::before {
+.block.magazine-articles article .content  ul li+li::before {
     content: " | ";
     padding: 0 5px;
 }
