@@ -52,6 +52,20 @@
     list-style: none;
 }
 
+.block.latest .latest-magazine-articles article .content h3 a {
+    color: var(--link-color);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.block.related .related-magazine-articles article .content h3 a {
+    color: var(--volvo-text-gray);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
 .block.magazine-articles .pager .pagination .scroll li a {
     color: var(--volvo-text-gray);
     font-family: var(--ff-volvo-novum-medium);
@@ -104,20 +118,6 @@
     margin: 0;
     letter-spacing: -.1px;
     font-weight: 400;
-}
-
-.block.latest .latest-magazine-articles article .content h3 a {
-    color: var(--link-color);
-    font-weight: 700;
-    border: none;
-    padding: 0;
-}
-
-.block.related .related-magazine-articles article .content h3 a {
-    color: var(--volvo-text-gray);
-    font-weight: 700;
-    border: none;
-    padding: 0;
 }
 
 .block .related-magazine-articles .content h3 {
