@@ -1,33 +1,33 @@
 /* pagination */
-.pagination ol li .last::before {
+.pager .pagination ol li .last::before {
     font-family: var(--ff-fontawesome);
     content: "\f051";
     font-size: 12px;
     text-decoration: none;
 }
 
-.pagination ol li .first::before {
+.pager .pagination ol li .first::before {
     font-family: var(--ff-fontawesome);
     content: "\f048";
     font-size: 12px;
     text-decoration: none;
 }
 
-.pagination ol li .next::before {
+.pager .pagination ol li .next::before {
     font-family: var(--ff-fontawesome);
     content: "\f054";
     font-size: 12px;
     text-decoration: none;
 }
 
-.pagination ol li .prev::before {
+.pager .pagination ol li .prev::before {
     font-family: var(--ff-fontawesome);
     content: "\f053";
     font-size: 12px;
     text-decoration: none;
 }
 
-.pagination ol li:not(:first-child) {
+.pager .pagination ol li:not(:first-child) {
     float: right;
     padding: 10px;
     margin-top: -10px;
@@ -40,11 +40,11 @@
     grid-template-columns: repeat(2, 1fr);
 }
 
-.block.magazine-articles .pagination {
+.block.magazine-articles .pager .pagination {
     justify-self: end;
 }
 
-.block.magazine-articles .pagination .scroll {
+.block.magazine-articles .pager .pagination .scroll {
     padding: 0;
     margin: 0 0 0 15px;
     display: inline-flex;
@@ -52,7 +52,7 @@
     list-style: none;
 }
 
-.block.magazine-articles .pagination .scroll a {
+.block.magazine-articles .pager .pagination .scroll a {
     color: var(--volvo-text-gray);
     font-family: var(--ff-volvo-novum-medium);
 }
@@ -181,7 +181,7 @@
     width: 75%;
 }
 
-.block.magazine-articles article p {
+.block.magazine-articles .articles article p {
     margin-top: unset;
     margin-bottom: 8px;
 }
