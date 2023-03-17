@@ -37,7 +37,7 @@ header nav .brand .logo .icon-logo svg {
 
 /* the section/location info to the right of the logo */
 header nav .brand .vgsection-location {
-  font-size: 12px;
+  font-size: 1.4rem;
   margin-left: 24px;
   display: flex;
   flex-flow: column;
@@ -450,7 +450,7 @@ header nav .sections .section .navigation-cta {
 
   header nav .tools ul li a {
     color: #888B8D;
-    font-size: 8pt;
+    font-size: 1.2rem;
   }
 
   header nav .tools ul li img {
