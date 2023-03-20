@@ -243,10 +243,14 @@ async function loadPage() {
 loadPage();
 
 /* video helpers */
+export function isLowResolutionVideoUrl(url) {
+  return url.split('?')[0].endsWith('.mp4');
+}
+
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
   return (linkString.includes('youtube.com/embed/')
-    || (linkString.split('?')[0].endsWith('.mp4')))
+    || isLowResolutionVideoUrl(linkString))
     && link.closest('.block.embed') === null;
 }
 
@@ -267,7 +271,17 @@ export function addVideoShowHandler(link) {
     event.preventDefault();
 
     import('../common/modal/modal.js').then((modal) => {
-      modal.showModal(link.getAttribute('href'));
+      let beforeBanner = null;
+
+      if (isLowResolutionVideoUrl(link.getAttribute('href'))) {
+        beforeBanner = document.createElement('div');
+        beforeBanner.innerHTML = 'For a premium high resolution experience, please accept cookies. <button>Change cookie settings</button>';
+        beforeBanner.querySelector('button').addEventListener('click', () => {
+          window.OneTrust.ToggleInfoDisplay();
+        });
+      }
+
+      modal.showModal(link.getAttribute('href'), beforeBanner);
     });
   });
 }

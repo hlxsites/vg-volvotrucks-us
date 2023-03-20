@@ -14,6 +14,8 @@ const createVideoIframe = (parent, url) => {
   iframe.setAttribute('src', url);
 
   parent.appendChild(iframe);
+
+  return iframe;
 };
 
 const createModal = () => {
@@ -37,11 +39,26 @@ const createModal = () => {
   modalBackground.appendChild(modalContent);
   document.body.appendChild(modalBackground);
 
-  function showModal(newUrl) {
+  function showModal(newUrl, beforeBanner) {
     window.addEventListener('keydown', keyDownAction);
 
     if (newUrl) {
-      createVideoIframe(modalContent, newUrl);
+      const iframe = createVideoIframe(modalContent, newUrl);
+
+      if (beforeBanner) {
+        const bannerWrapper = document.createElement('div');
+        bannerWrapper.classList.add('modal-before-banner');
+        bannerWrapper.addEventListener('click', (event) => event.stopPropagation());
+        bannerWrapper.appendChild(beforeBanner);
+        const closeButton = document.createElement('button');
+        closeButton.classList.add('modal-close-button');
+        closeButton.innerHTML = '<i class="fa fa-close"></i>';
+        bannerWrapper.appendChild(closeButton);
+        // eslint-disable-next-line no-use-before-define
+        closeButton.addEventListener('click', () => hideModal());
+
+        iframe.parentElement.insertBefore(bannerWrapper, iframe);
+      }
     }
 
     modalContent.classList.add('modal-content-fade-in');
@@ -57,6 +74,7 @@ const createModal = () => {
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
     modalContent.querySelector('iframe').remove();
+    modalContent.querySelector('.modal-before-banner').remove();
   }
 
   return {
