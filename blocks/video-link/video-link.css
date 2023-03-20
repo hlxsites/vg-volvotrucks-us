@@ -6,6 +6,8 @@
   border-radius: 0;
   border: none;
   padding: 5px;
+  font-family: var(--ff-volvo-novum);
+  font-size: 16px;
 }
 
 .video-link a.text-link-with-video:hover {
