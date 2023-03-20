@@ -60,6 +60,7 @@
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
   --background-color: var(--c-white);
+  --background-hover-color: #E1DFDD;
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
@@ -68,15 +69,19 @@
   --text-color: var(--volvo-text-gray);
   --btn-background-hover: #e1dfdd;
   --btn-border-hover: #030333;
+  --input-background-color: #f1f0ef;
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
-  --ff-volov-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-volvo-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
   --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --body-font-family: var(--ff-volvo-novum);
   --heading-font-family: var(--ff-volvo-novum-medium);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+
+  /* buttons */
+  --btn-padding: 12px 32px;
 
   /* body sizes */
   --body-font-size-m: 2.2rem;
@@ -94,8 +99,8 @@
   --heading-font-size-xs: 1.8rem;
 
   /* nav height */
-  --nav-height: 64px;
-
+  --nav-height: 95px;
+  --sub-nav-height: 44px;
 }
 
 *,
@@ -112,11 +117,12 @@ body {
   font-size: var(--body-font-size-m);
   margin: 0;
   font-family: var(--body-font-family);
-  line-height: 1.6;
+  line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body.appear {
@@ -124,14 +130,30 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  min-height: var(--nav-height);
+}
+
+header .header.block {
+  background-color: white;
+  min-height: var(--nav-height);
+  z-index: 1050;
+}
+
+header.sub-nav-wrapper {
+  min-height: calc(var(--nav-height) + var(--sub-nav-height));
+}
+
+header .sub-nav.block {
+  height: var(--sub-nav-height);
+  background-color: #7F7F7F;
+  z-index: 1020;
 }
 
 h1, h2, h3,
 h4, h5, h6 {
   font-family: var(--heading-font-family);
   font-weight: normal;
-  line-height: 1.25;
+  line-height: 1;
   margin-top: 1em;
   margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
@@ -146,12 +168,8 @@ h6 { font-size: var(--heading-font-size-xs) }
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   font-size: var(--body-font-size-xs);
-}
-
-[data-align="center"] {
-  text-align: center;
 }
 
 a:any-link {
@@ -160,7 +178,7 @@ a:any-link {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--link-hover-color);
 }
 
@@ -190,7 +208,7 @@ pre {
 }
 
 strong {
-  font-family: var(--ff-volvo-novum-medium);
+  font-family: var(--ff-volvo-novum);
 }
 
 /* buttons */
@@ -199,7 +217,6 @@ a.button:any-link, button {
   font-family: var(--ff-volvo-novum-medium);
   box-sizing: border-box;
   text-decoration: none;
-  border: 2px solid transparent;
   text-align: center;
   font-style: normal;
   font-weight: normal;
@@ -212,14 +229,14 @@ a.button:any-link, button {
 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 a.button::after {
   content: ' \f105';
-  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
-  font-family: fontawesome;
+  font-family: var(--ff-fontawesome);
 }
 
 a.button.primary,
 button.primary {
+  max-width: 100%;
   display: inline-block;
-  padding: 5px 30px;
+  padding: var(--btn-padding);
   color: var(--text-color);
   background-color: var(--c-white);
   border: 2px solid var(--text-color);
@@ -254,7 +271,16 @@ main input:hover {
 }
 
 main .section {
-  padding: 64px 0;
+  margin: 48px 0;
+}
+
+main .section:first-child {
+  margin-top: 0;
+}
+
+main .section > div {
+  padding: 0 15px;
+  margin: 0 auto;
 }
 
 main pre {
@@ -292,6 +318,7 @@ hr {
 main img {
   max-width: 100%;
   height: auto;
+  vertical-align: middle
 }
 
 main p img {
@@ -332,22 +359,9 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-body.disable-scroll, body.disable-scroll main {
-  overflow: hidden;
-}
-
-.section.tabbed-container {
-  padding: 0;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.section.tabbed-container-full-width {
-  width: unset;
-}
-
 .section.tabbed-container-full-width > div {
-  max-width: unset;
+  padding: 0;
+  width: unset;
 }
 
 .section.tabbed-container ul.tab-navigation {
@@ -365,6 +379,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .section.tabbed-container ul.tab-navigation button {
   background: 0 0;
+  border: none;
   color: var(--volvo-text-gray);
   padding: 0;
   margin: 0;
@@ -372,20 +387,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .section.tabbed-container ul.tab-navigation li.active,
 .section.tabbed-container ul.tab-navigation li:hover {
-  border-bottom: 3px solid #004FBC;
-}
-
-.section.sub-nav-container {
-  position: relative;
-  min-height: 44px;
-  padding: 0;
-  margin: 0;
-  background-color: #7F7F7F;
-  width: 100%;
-}
-
-.section.sub-nav-container > div {
-  margin: auto;
+  border-bottom: 3px solid var(--link-color);
 }
 
 /* image as video link */
@@ -451,7 +453,7 @@ a.button.text-link-with-video::after {
   content: unset;
 }
 
-@media screen and (min-width: 496px) {
+@media screen and (min-width: 480px) {
   .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
     display: inline-block;
@@ -460,9 +462,24 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 768px) {
-  main .section {
+  main .section > div {
     width: 756px;
-    margin: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  header .header.block {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  header .sub-nav.block {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
   }
 }
 
@@ -474,25 +491,21 @@ a.button.text-link-with-video::after {
     --heading-font-size-m: 3.0rem;
     --heading-font-size-s: 2.4rem;
     --heading-font-size-xs: 2.2rem;
+    --nav-height: 176px;
+    --sub-nav-height: 48px;
   }
 
-  .section > div {
-    max-width: 1200px;
-    margin: auto;
-  }
-
-  main .section {
+  main .section > div {
     width: 960px;
   }
 
-  .section.sub-nav-container {
-    min-height: 48px;
+  header .sub-nav.block {
     background-color: #53565A;
   }
 }
 
 @media (min-width: 1300px) {
-  main .section {
+  main .section > div {
     width: 1200px;
   }
 }
