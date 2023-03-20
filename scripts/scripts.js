@@ -10,6 +10,7 @@ import {
   decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
+  loadBlock,
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
@@ -18,23 +19,50 @@ import {
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
+function getCTAContainer(ctaLink) {
+  return ['strong', 'em'].includes(ctaLink.parentElement.localName)
+    ? ctaLink.parentElement.parentElement
+    : ctaLink.parentElement;
+}
+
+function isCTALinkCheck(ctaLink) {
+  const btnContainer = getCTAContainer(ctaLink);
+  if (!btnContainer.classList.contains('button-container')) return false;
+  const previousSibiling = btnContainer.previousElementSibling;
+  const twoPreviousSibiling = previousSibiling.previousElementSibling;
+  return previousSibiling.localName === 'h1' || twoPreviousSibiling.localName === 'h1';
+}
+
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
+  const ctaLink = main.querySelector('a');
+  // check if the previous element or the previous of that is an h1
+  const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
+  if (isCTALink) ctaLink.classList.add('cta');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
     const headings = document.createElement('div');
     headings.className = 'hero-headings';
     const elems = [picture, headings];
-    if (h1.nextElementSibling && h1.nextElementSibling.matches('p,h2,h3,h4')) {
+    if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
+      // also consider a <p> without any children as sub heading
+      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
       const h4 = document.createElement('h4');
       h4.innerHTML = h1.nextElementSibling.innerHTML;
       h1.nextElementSibling.remove();
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
+    if (isCTALink) headings.appendChild(getCTAContainer(ctaLink));
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
+    // remove the empty pre-section to avoid decorate it as empty section
+    const containerChildren = main.children[0].children;
+    const wrapperChildren = containerChildren[0].children;
+    if (containerChildren.length <= 1 && wrapperChildren.length === 0) main.children[0].remove();
+    else if (wrapperChildren.length === 0) containerChildren[0].remove();
+    // after all are settled, the new section can be added
     main.prepend(section);
   }
 }
@@ -42,10 +70,9 @@ function buildHeroBlock(main) {
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
   if (subnav) {
-    const nav = document.createElement('div');
     const block = buildBlock('sub-nav', []);
-    nav.appendChild(block);
-    main.prepend(nav);
+    main.previousElementSibling.prepend(block);
+    decorateBlock(block);
   }
 }
 
@@ -59,6 +86,16 @@ function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabBlock = buildBlock(`tabbed-${tabType}`, [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
+}
+
+function buildCtaList(main) {
+  [...main.querySelectorAll('ul')].forEach((list) => {
+    const isCtaList = [...list.querySelectorAll('li > *')].every((el) => el.tagName.toLowerCase() === 'a');
+
+    if (isCtaList) {
+      list.classList.add('cta-list');
+    }
+  });
 }
 
 function buildTabbedBlock(main) {
@@ -137,6 +174,7 @@ export function decorateMain(main, head) {
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
+  buildCtaList(main);
 }
 
 /**
@@ -180,9 +218,15 @@ async function loadLazy(doc) {
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
+  const header = doc.querySelector('header');
 
-  loadHeader(doc.querySelector('header'));
+  loadHeader(header);
   loadFooter(doc.querySelector('footer'));
+
+  const subnav = header.querySelector('.block.sub-nav');
+  if (subnav) {
+    loadBlock(subnav);
+  }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);

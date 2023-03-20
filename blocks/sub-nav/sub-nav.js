@@ -50,6 +50,24 @@ async function createSubNav(block, ref) {
 
     // attach click listner for mobile
     (activeLink || ul.querySelector('a')).addEventListener('click', handleActiveClick.bind(null, ul));
+
+    window.addEventListener('scroll', () => {
+      const navHeight = block.previousElementSibling.clientHeight;
+      if (document.documentElement.scrollTop >= navHeight) {
+        block.classList.add('sticky');
+      } else {
+        block.classList.remove('sticky');
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!block.contains(event.target)) {
+        const openItem = block.querySelector('.expand');
+        if (openItem) {
+          handleActiveClick(openItem, event);
+        }
+      }
+    });
   }
 }
 
