@@ -383,16 +383,6 @@ ul.cta-list li {
   }
 }
 
-.section.tabbed-container {
-  padding: 0;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.section.tabbed-container-full-width {
-  width: unset;
-}
-
 .section.tabbed-container-full-width > div {
   padding: 0;
   width: unset;
