@@ -1,4 +1,6 @@
-import ffetch from '../../scripts/lib-ffetch.js';
+import {
+  ffetch,
+} from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
   toClassName,
