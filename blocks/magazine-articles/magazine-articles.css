@@ -1,0 +1,280 @@
+/* pagination */
+.pager .pagination ol li .last::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f051";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pager .pagination ol li .first::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f048";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pager .pagination ol li .next::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f054";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pager .pagination ol li .prev::before {
+    font-family: var(--ff-fontawesome);
+    content: "\f053";
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.pager .pagination ol li:not(:first-child) {
+    float: right;
+    padding: 10px;
+    margin-top: -10px;
+}
+
+.block.magazine-articles .pager {
+    font-size: 1.4rem;
+    display: grid;
+    margin-bottom: 1em;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.block.magazine-articles .pager .pagination {
+    justify-self: end;
+}
+
+.block.magazine-articles .pager .pagination .scroll {
+    padding: 0;
+    margin: 0 0 0 15px;
+    display: inline-flex;
+    gap: 5px;
+    list-style: none;
+}
+
+.block.latest .latest-magazine-articles article .content h3 a {
+    color: var(--link-color);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.block.related .related-magazine-articles article .content h3 a {
+    color: var(--volvo-text-gray);
+    font-weight: 700;
+    border: none;
+    padding: 0;
+}
+
+.block.magazine-articles .pager .pagination .scroll li a {
+    color: var(--volvo-text-gray);
+    font-family: var(--ff-volvo-novum-medium);
+}
+
+/* Latest and related magazine articles */
+
+.block .latest-magazine-articles,
+.block .related-magazine-articles {
+    display: unset;
+}
+
+.block .latest-magazine-articles article,
+.block .related-magazine-articles article {
+    margin-top: 24px;
+}
+
+.block .latest-magazine-articles article:first-child,
+.block .related-magazine-articles article:first-child {
+    margin-top: -24px;
+}
+
+.block .latest-magazine-articles > article img,
+.block .latest-magazine-articles > article source,
+.block .related-magazine-articles article img,
+.block .related-magazine-articles article source{
+    display: block;
+    height: auto;
+    border: 0;
+    object-fit: cover;
+}
+
+.block .latest-magazine-articles .content h3 {
+    margin-bottom: 10px;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-xs);
+    letter-spacing: -.1px;
+    color: var(--volvo-text-gray);
+    margin-top: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    position: relative;
+    text-rendering: optimizelegibility;
+}
+
+.block .latest-magazine-articles .content p,
+.block .related-magazine-articles .content p {
+    font-size: 13px;
+    position: relative;
+    margin: 0;
+    letter-spacing: -.1px;
+    font-weight: 400;
+}
+
+.block .related-magazine-articles .content h3 {
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-xs);
+    letter-spacing: -.1px;
+    color: var(--volvo-text-gray);
+    margin: 16px 0;
+    font-weight: 400;
+    line-height: 32px;
+    position: relative;
+    text-rendering: optimizelegibility;
+}
+
+/* Magazine articles */
+
+.magazine-articles-wrapper > div {
+    margin: 48px auto;
+}
+
+.block.magazine-articles .articles article {
+    padding: 30px 0;
+    border-bottom: 1px solid var(--background-light-gray);
+    display: block;
+}
+
+.block.magazine-articles article a.imgcover {
+    float: unset;
+    margin-bottom: 16px;
+    padding-right: 15px;
+    position: relative;
+    z-index: 50;
+    width: 100%;
+    height: 250px;
+    display: block;
+}
+
+.block.magazine-articles article picture img {
+    margin-bottom: 16px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.block.magazine-articles .articles article h3 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    display: table;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--heading-font-size-s);
+    letter-spacing: -.1px!important;
+    color: var(--volvo-text-gray);
+}
+
+.block.magazine-articles .articles article .content {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    clear: none;
+    width: 75%;
+}
+
+.block.magazine-articles .articles article p {
+    margin-top: unset;
+    margin-bottom: 8px;
+}
+
+.block.magazine-articles article ul {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 12px;
+}
+
+.block.magazine-articles article .content ul li{
+    display: inline;
+}
+
+.block.magazine-articles article .content  ul li:nth-child(2) {
+    color: var(--highlight-background-color);
+}
+
+.block.magazine-articles article .content  ul li+li::before {
+    content: " | ";
+    padding: 0 5px;
+}
+
+.block.magazine-articles .article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.block.magazine-articles .article-list article {
+    padding: 2em 0;
+    border-top: 1px solid var(--background-light-gray);
+}
+
+.cta {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 2px solid transparent;
+    white-space: nowrap;
+    padding: 12px 32px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-radius: 0;
+    user-select: none;
+}
+
+@media screen and (min-width: 767px) {
+    .block .latest-magazine-articles,
+    .block .related-magazine-articles {
+        display: flex;
+        margin: 0 -15px;
+    }
+
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
+        position: relative;
+        min-height: 1px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .block .latest-magazine-articles article:first-child,
+    .block .related-magazine-articles article:first-child {
+        margin-top: 24px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
+        width: 33.3333%;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
+        display: unset;
+    }
+
+    .block.magazine-articles .articles article {
+        display: inline-flex!important;
+    }
+
+    .block.magazine-articles .articles article a.imgcover {
+        float: left!important;
+        height: 214px!important;
+        width: 380px!important;    
+    }
+}
