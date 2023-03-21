@@ -107,7 +107,7 @@ function createPressReleaseList(pressReleases, limit, block) {
 }
 
 function createLatestPressReleases(mainEl, pressReleases) {
-  mainEl.innerHTML = '';
+  mainEl.innerText = '';
   buildHeader(mainEl);
   const articleCards = document.createElement('div');
   articleCards.classList.add('press-releases-cards');
