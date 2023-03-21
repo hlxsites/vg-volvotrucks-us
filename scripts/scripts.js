@@ -18,6 +18,15 @@ import {
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
+let placeholders = null;
+
+async function getPlaceholders() {
+  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
+}
+
+export function getTextLable(key) {
+  return placeholders.data.find((el) => el.Key === key).Text;
+}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -178,6 +187,8 @@ async function loadEager(doc) {
     decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
+
+  await getPlaceholders();
 }
 
 /**
@@ -274,8 +285,11 @@ export function addVideoShowHandler(link) {
       let beforeBanner = null;
 
       if (isLowResolutionVideoUrl(link.getAttribute('href'))) {
+        const lowResolutionMessage = getTextLable('Low resolution video message');
+        const changeCookieSettings = getTextLable('Change cookie settings');
+
         beforeBanner = document.createElement('div');
-        beforeBanner.innerHTML = 'For a premium high resolution experience, please accept cookies. <button>Change cookie settings</button>';
+        beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button`;
         beforeBanner.querySelector('button').addEventListener('click', () => {
           window.OneTrust.ToggleInfoDisplay();
         });

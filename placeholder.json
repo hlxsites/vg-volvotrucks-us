@@ -1,0 +1,16 @@
+{
+  "total": 2,
+  "offset": 0,
+  "limit": 2,
+  "data": [
+    {
+      "Key": "Low resolution video message",
+      "Text": "For a premium high resolution experience, please accept cookies."
+    },
+    {
+      "Key": "Change cookie settings",
+      "Text": "Change cookie settings"
+    }
+  ],
+  ":type": "sheet"
+}
