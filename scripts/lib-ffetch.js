@@ -212,12 +212,15 @@ function createFullText(name, searchTerm, placeholder) {
 function createDropdown(options, selected, name, placeholder, label) {
   const container = document.createElement('div');
   container.className = toClassName(`${name}-field`);
-  const labelEl = document.createElement('label');
-  labelEl.innerText = label;
-  labelEl.setAttribute('for', name);
-  container.append(labelEl);
+  if (label) {
+    const labelEl = document.createElement('label');
+    labelEl.innerText = label;
+    labelEl.setAttribute('for', name);
+    container.append(labelEl);
+  }
   const input = document.createElement('select');
   input.name = name;
+  input.id = name;
   if (placeholder) {
     const optionTag = document.createElement('option');
     optionTag.innerText = placeholder;
@@ -247,7 +250,7 @@ function createPaginationLink(page, label) {
   const link = document.createElement('a');
   newUrl.searchParams.set('page', page);
   link.href = newUrl.toString();
-  link.innerText = label;
+  link.className = label;
   listElement.append(link);
   return listElement;
 }
@@ -273,19 +276,17 @@ function createPagination(entries, page, limit) {
     }
     const list = document.createElement('ol');
     list.className = 'scroll';
-    if (page > 1) {
-      list.append(createPaginationLink(page - 1, '‹'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '‹';
-      list.append(listElement);
-    }
-    if (page < maxPages) {
-      list.append(createPaginationLink(page + 1, '›'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '›';
-      list.append(listElement);
+    if (page === 1) {
+      list.append(createPaginationLink(page + 1, 'next'));
+      list.append(createPaginationLink(maxPages, 'last'));
+    } else if (page > 1 && page < maxPages) {
+      list.append(createPaginationLink(1, 'first'));
+      list.append(createPaginationLink(page - 1, 'prev'));
+      list.append(createPaginationLink(page + 1, 'next'));
+      list.append(createPaginationLink(maxPages, 'last'));
+    } else if (page === maxPages) {
+      list.append(createPaginationLink(1, 'first'));
+      list.append(createPaginationLink(page - 1, 'prev'));
     }
 
     pagination.append(listSize, list);

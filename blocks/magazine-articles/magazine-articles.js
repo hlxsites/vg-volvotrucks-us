@@ -1,5 +1,7 @@
 import {
   ffetch,
+  createList,
+  splitTags,
 } from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
@@ -61,40 +63,59 @@ function buildLatestMagazineArticle(entry) {
   return card;
 }
 
-function buildRelatedMagazineArticle(entry) {
-  const {
-    path,
-    image,
-    title,
-    author,
-    readingTime,
-    publishDate,
-  } = entry;
-  const card = document.createElement('article');
-  const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
-  const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}" class="imgcover">
-    ${pictureTag}
-    </a>
-    <div class="content">
-    <ul><li>${date.toLocaleDateString()}</li></ul>
-    <h3><a href="${path}">${title}</a></h3>
-    <ul>
-    <li>${author}</li>
-    <li>${readingTime}</li>
-    </ul>
-    </div>`;
-  return card;
+function filterArticles(articles, activeFilters) {
+  let filteredArticles = articles;
+
+  if (activeFilters.tags) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.tags));
+  }
+
+  if (activeFilters.search) {
+    const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
+    const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+    filteredArticles = filteredArticles
+      .filter((n) => {
+        const text = n.content.toLowerCase();
+        return terms.every((term) => !stopWords.includes(term) && text.includes(term));
+      });
+  }
+  return filteredArticles;
 }
 
-function getSelectionFromUrl(field) {
+function createFilter(articles, activeFilters, createDropdown, createFullText) {
+  const tags = Array.from(new Set(articles.flatMap((n) => n.filterTag).sort()));
+  const fullText = createFullText('search', activeFilters.search, 'Search');
+  const categoryFilter = createDropdown(tags, activeFilters.tags, 'category', 'Category');
+  const categorySelection = categoryFilter.querySelector('select');
+  categorySelection.addEventListener('change', (e) => {
+    e.target.form.submit();
+  });
+  const tagFilter = createDropdown(tags, activeFilters.tags, 'topic', 'Topic');
+  const tagSelection = tagFilter.querySelector('select');
+  tagSelection.addEventListener('change', (e) => {
+    e.target.form.submit();
+  });
+  const truckFilter = createDropdown(tags, activeFilters.tags, 'truck', 'Truck Series');
+  const truckSelection = truckFilter.querySelector('select');
+  truckSelection.addEventListener('change', (e) => {
+    e.target.form.submit();
+  });
+  return [
+    fullText,
+    categoryFilter,
+    tagFilter,
+    truckFilter,
+  ];
+}
+
+/* function getSelectionFromUrl(field) {
   return (
     toClassName(new URLSearchParams(window.location.search).get(field)) || ''
   );
-}
+} */
 
-function createPaginationLink(page, label) {
+/* function createPaginationLink(page, label) {
   const newUrl = new URL(window.location);
   const listElement = document.createElement('li');
   const link = document.createElement('a');
@@ -144,8 +165,16 @@ function createPagination(entries, page, limit) {
   }
   return listPagination;
 }
+ */
+function createArticleList(block, articles, limit) {
+  articles.forEach((n) => {
+    n.filterTag = splitTags(n.tags);
+  });
+  // eslint-disable-next-line max-len
+  createList(articles, filterArticles, createFilter, buildMagazineArticle, limit, block);
+}
 
-async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
+/* async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
   let page = parseInt(getSelectionFromUrl('page'), 10);
   page = Number.isNaN(page) ? 1 : page;
   const start = (page - 1) * limitPerPage;
@@ -160,7 +189,7 @@ async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
   });
   mainEl.appendChild(articleCards);
   mainEl.appendChild(pagination.cloneNode(true));
-}
+} */
 
 async function createLatestMagazineArticles(mainEl, magazineArticles) {
   mainEl.innerHTML = '';
@@ -173,39 +202,25 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
   });
 }
 
-async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-  mainEl.innerHTML = '';
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('related-magazine-articles');
-  mainEl.appendChild(articleCards);
-  magazineArticles.forEach((entry) => {
-    const articleCard = buildRelatedMagazineArticle(entry);
-    articleCards.appendChild(articleCard);
-  });
-}
-
 async function getMagazineArticles(limit) {
   const indexUrl = new URL('/magazine-articles.json', window.location.origin);
   let articles;
   if (limit) {
-    articles = ffetch(indexUrl).slice(0, 3).all();
+    articles = ffetch(indexUrl).limit(limit).all();
   } else {
-    articles = ffetch(indexUrl).all();
+    articles = ffetch(indexUrl).chunks(500).all();
   }
   return articles;
 }
 
 export default async function decorate(block) {
   const latest = block.classList.contains('latest');
-  const related = block.classList.contains('related');
-  const limit = (latest || related) ? 3 : undefined;
+  const limit = latest ? 3 : undefined;
   const limitPerPage = 8;
   const magazineArticles = await getMagazineArticles(limit);
   if (latest) {
     createLatestMagazineArticles(block, magazineArticles);
-  } else if (related) {
-    createRelatedtMagazineArticles(block, magazineArticles);
   } else {
-    createMagazineArticles(block, magazineArticles, limitPerPage);
+    createArticleList(block, magazineArticles, limitPerPage);
   }
 }

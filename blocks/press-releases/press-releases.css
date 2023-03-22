@@ -42,38 +42,11 @@
     color: var(--volvo-text-gray);
 }
 
-.block.press-releases .pager {
-    font-size: 1.4rem;
-    display: grid;
-    margin-bottom: 1em;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.block.press-releases .pagination {
-    justify-self: end;
-}
-
-.block.press-releases .pagination .scroll {
-    padding: 0;
-    margin: 0 0 0 15px;
-    display: inline-flex;
-    gap: 11px;
-    list-style: none;
-    color: #d4d4d4;
-    font-size: 2.0rem;
-    line-height: 2.0rem;
-}
-
 .block.press-releases p.button-container a {
     background-color: unset;
     color: var(--volvo-text-gray);
     border-radius: 0;
     border: 2px solid var(--volvo-text-gray);
-}
-
-.block.press-releases .pagination .scroll a {
-    color: var(--volvo-text-gray);
-    font-weight: 700;
 }
 
 .block.press-releases p.button-container {
