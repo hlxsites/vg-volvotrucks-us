@@ -66,9 +66,17 @@ function buildLatestMagazineArticle(entry) {
 function filterArticles(articles, activeFilters) {
   let filteredArticles = articles;
 
-  if (activeFilters.tags) {
+  if (activeFilters.category) {
     filteredArticles = filteredArticles
-      .filter((n) => toClassName(n.tags).includes(activeFilters.tags));
+      .filter((n) => toClassName(n.tags).includes(activeFilters.category));
+  }
+  if (activeFilters.topic) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.topic));
+  }
+  if (activeFilters.truck) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.truck));
   }
 
   if (activeFilters.search) {
@@ -83,20 +91,23 @@ function filterArticles(articles, activeFilters) {
   return filteredArticles;
 }
 
-function createFilter(articles, activeFilters, createDropdown, createFullText) {
-  const tags = Array.from(new Set(articles.flatMap((n) => n.filterTag).sort()));
+async function createFilter(articles, activeFilters, createDropdown, createFullText) {
+  //const tags = Array.from(new Set(articles.flatMap((n) => n.filterTag).sort()));
   const fullText = createFullText('search', activeFilters.search, 'Search');
-  const categoryFilter = createDropdown(tags, activeFilters.tags, 'category', 'Category');
+  const categoryOptions = await getFilterOptions('category');
+  const categoryFilter = createDropdown(categoryOptions, activeFilters.tags, 'category', 'Category');
   const categorySelection = categoryFilter.querySelector('select');
   categorySelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
-  const tagFilter = createDropdown(tags, activeFilters.tags, 'topic', 'Topic');
+  const tagOptions = await getFilterOptions('topic');
+  const tagFilter = createDropdown(tagOptions, activeFilters.tags, 'topic', 'Topic');
   const tagSelection = tagFilter.querySelector('select');
   tagSelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
-  const truckFilter = createDropdown(tags, activeFilters.tags, 'truck', 'Truck Series');
+  const truckOptions = await getFilterOptions('truckseries');
+  const truckFilter = createDropdown(truckOptions, activeFilters.tags, 'truck', 'Truck Series');
   const truckSelection = truckFilter.querySelector('select');
   truckSelection.addEventListener('change', (e) => {
     e.target.form.submit();
@@ -109,63 +120,6 @@ function createFilter(articles, activeFilters, createDropdown, createFullText) {
   ];
 }
 
-/* function getSelectionFromUrl(field) {
-  return (
-    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
-  );
-} */
-
-/* function createPaginationLink(page, label) {
-  const newUrl = new URL(window.location);
-  const listElement = document.createElement('li');
-  const link = document.createElement('a');
-  newUrl.searchParams.set('page', page);
-  link.href = newUrl.toString();
-  link.className = label;
-  listElement.append(link);
-  return listElement;
-}
-
-function createPagination(entries, page, limit) {
-  const listPagination = document.createElement('div');
-  listPagination.className = 'pager';
-
-  const totalResults = document.createElement('div');
-  totalResults.className = 'total';
-  totalResults.textContent = `${entries.length} results`;
-  listPagination.appendChild(totalResults);
-  const pagination = document.createElement('div');
-  pagination.className = 'pagination';
-
-  if (entries.length > limit) {
-    const maxPages = Math.ceil(entries.length / limit);
-
-    const listSize = document.createElement('span');
-    listSize.classList.add('size');
-    if (entries.length > limit) {
-      listSize.innerHTML = `<strong>Page ${page}</strong> of ${maxPages}`;
-    }
-    const list = document.createElement('ol');
-    list.className = 'scroll';
-    if (page === 1) {
-      list.append(createPaginationLink(page + 1, 'next'));
-      list.append(createPaginationLink(maxPages, 'last'));
-    } else if (page > 1 && page < maxPages) {
-      list.append(createPaginationLink(1, 'first'));
-      list.append(createPaginationLink(page - 1, 'prev'));
-      list.append(createPaginationLink(page + 1, 'next'));
-      list.append(createPaginationLink(maxPages, 'last'));
-    } else if (page === maxPages) {
-      list.append(createPaginationLink(1, 'first'));
-      list.append(createPaginationLink(page - 1, 'prev'));
-    }
-
-    pagination.append(listSize, list);
-    listPagination.appendChild(pagination);
-  }
-  return listPagination;
-}
- */
 function createArticleList(block, articles, limit) {
   articles.forEach((n) => {
     n.filterTag = splitTags(n.tags);
@@ -173,23 +127,6 @@ function createArticleList(block, articles, limit) {
   // eslint-disable-next-line max-len
   createList(articles, filterArticles, createFilter, buildMagazineArticle, limit, block);
 }
-
-/* async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
-  let page = parseInt(getSelectionFromUrl('page'), 10);
-  page = Number.isNaN(page) ? 1 : page;
-  const start = (page - 1) * limitPerPage;
-  const dataToDisplay = magazineArticles.slice(start, start + limitPerPage);
-  const pagination = createPagination(magazineArticles, page, limitPerPage);
-  mainEl.appendChild(pagination);
-  const articleCards = document.createElement('div');
-  articleCards.className = 'articles';
-  dataToDisplay.forEach((article) => {
-    const magazineArticle = buildMagazineArticle(article);
-    articleCards.appendChild(magazineArticle);
-  });
-  mainEl.appendChild(articleCards);
-  mainEl.appendChild(pagination.cloneNode(true));
-} */
 
 async function createLatestMagazineArticles(mainEl, magazineArticles) {
   mainEl.innerHTML = '';
@@ -200,6 +137,12 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
     const articleCard = buildLatestMagazineArticle(entry);
     articleCards.appendChild(articleCard);
   });
+}
+
+async function getFilterOptions(sheet) {
+  const indexUrl = new URL('/news-and-stories/tags.json', window.location.origin);
+  const result = await ffetch(indexUrl).sheet(sheet).map(data => data[sheet]).all();
+  return result;
 }
 
 async function getMagazineArticles(limit) {

@@ -313,16 +313,17 @@ function getActiveFilters() {
   return result;
 }
 
-function renderFilters(data, createFilters) {
+async function renderFilters(data, createFilters) {
   // render filters
   const filter = document.createElement('div');
+  
   filter.className = 'list-filter';
   const form = document.createElement('form');
   form.method = 'get';
   form.name = 'list-filter';
   const formFieldSet = document.createElement('fieldset');
 
-  const filters = createFilters(data, getActiveFilters(), createDropdown, createFullText);
+  const filters = await createFilters(data, getActiveFilters(), createDropdown, createFullText);
   formFieldSet.append(
     ...filters,
   );
@@ -335,7 +336,7 @@ function renderFilters(data, createFilters) {
 }
 
 // eslint-disable-next-line max-len
-export function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
+export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
   const cfg = readBlockConfig(mainEl);
   mainEl.textContent = '';
   let actFilter = getActiveFilters();
@@ -354,7 +355,7 @@ export function createList(pressReleases, filter, createFilters, buildPressRelea
   const start = (page - 1) * limitPerPage;
   let pagination;
   if (!relatedPressReleases) {
-    const filterElements = renderFilters(pressReleases, createFilters);
+    const filterElements = await renderFilters(pressReleases, createFilters);
     mainEl.appendChild(filterElements);
     pagination = createPagination(filteredData, page, limitPerPage);
     mainEl.appendChild(pagination);

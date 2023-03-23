@@ -266,9 +266,10 @@ input[type=text],select,textarea {
   padding: 10px 40px 10px 15px;
   border: none;
   border-radius: 0;
-  background-color: #ebebea;
+  background-color: var(--background-light-gray);
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
 }
 
 main input {
