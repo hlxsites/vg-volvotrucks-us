@@ -74,7 +74,7 @@ const createModal = () => {
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
     modalContent.querySelector('iframe').remove();
-    modalContent.querySelector('.modal-before-banner').remove();
+    modalContent.querySelector('.modal-before-banner')?.remove();
   }
 
   return {

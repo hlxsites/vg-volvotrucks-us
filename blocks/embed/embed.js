@@ -1,4 +1,4 @@
-import { selectVideoLink, addPlayIcon } from '../../scripts/scripts.js';
+import { selectVideoLink, addPlayIcon, showVideoModal } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const isAutoplay = block.classList.contains('autoplay');
@@ -10,7 +10,7 @@ export default function decorate(block) {
   videoWrapper.classList.add('embed-video');
 
   const links = block.querySelectorAll('a');
-  const selectedLink = selectVideoLink(links);
+  const selectedLink = selectVideoLink(links, isFullWidth ? 'local' : 'auto');
   const video = document.createElement('video');
   const source = document.createElement('source');
 
@@ -43,8 +43,14 @@ export default function decorate(block) {
     videoWrapper.appendChild(video);
 
     if (isFullWidth) {
+      const link = document.createElement('a');
+      link.setAttribute('href', selectVideoLink(links).getAttribute('href'));
       block.classList.add('embed-full-width');
       addPlayIcon(block);
+
+      video.addEventListener('click', () => {
+        showVideoModal(selectVideoLink(links).getAttribute('href'));
+      });
     }
   };
 

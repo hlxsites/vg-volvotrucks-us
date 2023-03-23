@@ -1,3 +1,4 @@
+import { showModal } from '../common/modal/modal.js';
 import {
   sampleRUM,
   buildBlock,
@@ -269,14 +270,33 @@ export function isVideoLink(link) {
     && link.closest('.block.embed') === null;
 }
 
-export function selectVideoLink(links) {
+export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1'));
+  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
   const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
 
   return videoLink;
+}
+
+export function showVideoModal(linkUrl) {
+  import('../common/modal/modal.js').then((modal) => {
+    let beforeBanner = null;
+
+    if (isLowResolutionVideoUrl(linkUrl)) {
+      const lowResolutionMessage = getTextLable('Low resolution video message');
+      const changeCookieSettings = getTextLable('Change cookie settings');
+
+      beforeBanner = document.createElement('div');
+      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button`;
+      beforeBanner.querySelector('button').addEventListener('click', () => {
+        window.OneTrust.ToggleInfoDisplay();
+      });
+    }
+
+    modal.showModal(linkUrl, beforeBanner);
+  });
 }
 
 export function addVideoShowHandler(link) {
@@ -285,22 +305,7 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    import('../common/modal/modal.js').then((modal) => {
-      let beforeBanner = null;
-
-      if (isLowResolutionVideoUrl(link.getAttribute('href'))) {
-        const lowResolutionMessage = getTextLable('Low resolution video message');
-        const changeCookieSettings = getTextLable('Change cookie settings');
-
-        beforeBanner = document.createElement('div');
-        beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button`;
-        beforeBanner.querySelector('button').addEventListener('click', () => {
-          window.OneTrust.ToggleInfoDisplay();
-        });
-      }
-
-      modal.showModal(link.getAttribute('href'), beforeBanner);
-    });
+    showModal(link.getAttribute('href'));
   });
 }
 
