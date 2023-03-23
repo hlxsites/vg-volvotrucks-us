@@ -1,5 +1,3 @@
-import { selectVideoLink } from '../../scripts/scripts.js';
-
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
     const parent = child.parentNode;
