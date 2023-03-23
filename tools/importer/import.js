@@ -100,6 +100,23 @@ function makeIndexPage(url) {
   return url.endsWith('/') ? newUrl.toString() : url;
 }
 
+const makeTextBlockCentered = (main, document, url) => {
+  const theWindow = document.defaultView;
+  const rows = document.querySelectorAll('#Form1 > div.container.main-content > .newsArticle  > .row');
+  const isCentered = (element) => theWindow.getComputedStyle(element).textAlign === 'center';
+  rows.forEach((row) => {
+    if (row) {
+      if ([...row.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a')].every(isCentered)) {
+        const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
+          [...row.children],
+        ], document);
+        row.replaceWith(textBlock);
+      }
+    }
+  });
+  console.log(`text blocks(s) for center found: ${rows.length}`);
+};
+
 const createMagazineArticles = (main, document, url) => {
   const mainContent = document.querySelector('#Form1 > div.container.main-content > section.hubArticle > article > div');
   if (mainContent) {
@@ -443,6 +460,7 @@ export default {
     createPRDownloadBlock(main, document);
     makeNewsArticle(main, document);
     createMagazineArticles(main, document, url);
+    makeTextBlockCentered(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
