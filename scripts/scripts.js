@@ -34,7 +34,12 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
+  // don't create a hero if the first item is a block.
   const firstSection = main.querySelector('div');
+  const firstElement = firstSection.firstElementChild;
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
+    return;
+  }
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   const ctaLink = firstSection.querySelector('a');
