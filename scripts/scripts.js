@@ -34,9 +34,10 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  const ctaLink = main.querySelector('a');
+  const firstSection = main.querySelector('div');
+  const h1 = firstSection.querySelector('h1');
+  const picture = firstSection.querySelector('picture');
+  const ctaLink = firstSection.querySelector('a');
   // check if the previous element or the previous of that is an h1
   const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
@@ -58,9 +59,9 @@ function buildHeroBlock(main) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
     // remove the empty pre-section to avoid decorate it as empty section
-    const containerChildren = main.children[0].children;
+    const containerChildren = firstSection.children;
     const wrapperChildren = containerChildren[0].children;
-    if (containerChildren.length <= 1 && wrapperChildren.length === 0) main.children[0].remove();
+    if (containerChildren.length <= 1 && wrapperChildren.length === 0) firstSection.remove();
     else if (wrapperChildren.length === 0) containerChildren[0].remove();
     // after all are settled, the new section can be added
     main.prepend(section);
@@ -121,6 +122,7 @@ function buildTabbedBlock(main) {
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
+ * @param {Element} head The header element
  */
 function buildAutoBlocks(main, head) {
   try {
@@ -152,6 +154,7 @@ function addDefaultVideoLinkBehaviour(main) {
 /**
  * Decorates the main element.
  * @param {Element} main The main element
+ * @param {Element} head The header element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
