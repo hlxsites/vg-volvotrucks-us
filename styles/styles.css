@@ -396,7 +396,7 @@ main .section.highlight {
   display: block;
 }
 
-.link-with-video .video-icon-wrapper {
+.video-icon-wrapper {
   background: rgb(255 255 255 / 90%);
   color: var(--volvo-text-gray);
   width: 50px;
@@ -419,14 +419,14 @@ main .section.highlight {
   line-height: 50px;
 }
 
-.link-with-video .video-icon-wrapper:hover {
+.video-icon-wrapper:hover {
   background: rgb(230 230 230 / 90%);
   color: var(--volvo-text-gray);
   font-size: 30px;
   opacity: .8;
 }
 
-.link-with-video .video-icon::before {
+.video-icon-wrapper .video-icon::before {
   padding-left: 5px;
 }
 

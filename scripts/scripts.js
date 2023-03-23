@@ -38,8 +38,8 @@ function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
   const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling.previousElementSibling;
-  return previousSibiling.localName === 'h1' || twoPreviousSibiling.localName === 'h1';
+  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
+  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
 }
 
 function buildHeroBlock(main) {
@@ -85,10 +85,11 @@ function buildSubNavigation(main, head) {
   }
 }
 
-function createTabbedSection(tabItems, fullWidth, tabType) {
+function createTabbedSection(tabItems, tabType, { fullWidth, fullVideo }) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
+  if (fullVideo) tabSection.classList.add('tabbed-container-full-video');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
   tabSection.append(wrapper);
@@ -101,6 +102,8 @@ function buildTabbedBlock(main) {
   let tabItems = [];
   let tabType;
   let fullWidth = false;
+  let fullVideo = false;
+
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
@@ -109,11 +112,12 @@ function buildTabbedBlock(main) {
       tabContent.dataset[tabType] = sectionMeta;
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
+      fullVideo = fullVideo || section.matches('.full-video');
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedSection = createTabbedSection(tabItems, fullWidth, tabType);
+      const tabbedSection = createTabbedSection(tabItems, tabType, { fullWidth, fullVideo });
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
@@ -121,7 +125,7 @@ function buildTabbedBlock(main) {
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedSection(tabItems, fullWidth, tabType);
+    const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth, fullVideo });
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
@@ -300,17 +304,20 @@ export function addVideoShowHandler(link) {
   });
 }
 
+export function addPlayIcon(parent) {
+  const iconWrapper = document.createElement('div');
+  iconWrapper.classList.add('video-icon-wrapper');
+  const icon = document.createElement('i');
+  icon.classList.add('fa', 'fa-play', 'video-icon');
+  iconWrapper.appendChild(icon);
+  parent.appendChild(iconWrapper);
+}
+
 export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.innerText = '';
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
   videoLink.classList.remove('button', 'primary');
 
-  // play icon
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('video-icon-wrapper');
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play', 'video-icon');
-  iconWrapper.appendChild(icon);
-  videoLink.appendChild(iconWrapper);
+  addPlayIcon(videoLink);
 }

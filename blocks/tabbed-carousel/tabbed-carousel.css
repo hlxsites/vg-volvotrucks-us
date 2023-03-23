@@ -28,8 +28,17 @@
     text-align: left;
 }
 
+.tabbed-container-full-video .tabbed-carousel-wrapper .tab-content {
+    text-align: center;
+}
+
 .tabbed-carousel-wrapper .tab-content > div,
 .tabbed-carousel-wrapper .tab-content > p {
     width: 70%;
     margin: 30px auto 0;
+}
+
+.tabbed-container-full-video .tabbed-carousel-wrapper .tab-content > .embed-wrapper {
+    width: 100%;
+    margin: 0;
 }

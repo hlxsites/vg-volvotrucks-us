@@ -22,6 +22,20 @@ function buildTabNavigation(tabItems, clickHandler) {
   return tabNavigation;
 }
 
+function handlingVideo(tabItems, tabItem) {
+  tabItems.forEach((tab) => {
+    const video = tab.querySelector('video');
+
+    if (video) {
+      if (tab === tabItem) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  });
+}
+
 export default function decorate(block) {
   const tabContainer = block.querySelector(':scope > div');
   tabContainer.classList.add('tab-container');
@@ -34,12 +48,18 @@ export default function decorate(block) {
     });
     [...nav.children].forEach((r) => r.classList.remove('active'));
     listItem.classList.add('active');
+
+    handlingVideo(tabItems, tabItem);
   });
   tabItems.forEach((tabItem) => {
     tabItem.classList.add('tab-item');
     const tabContent = tabItem.querySelector(':scope > div');
     const picture = tabItem.querySelector('picture');
-    tabContent.prepend(picture);
+
+    if (picture) {
+      tabContent.prepend(picture);
+    }
+
     tabContent.querySelectorAll('p, div').forEach((item) => {
       stripEmptyTags(tabContent, item);
     });
@@ -54,6 +74,7 @@ export default function decorate(block) {
       // make active
       tabNavigation.querySelector('li.active').classList.remove('active');
       actiiveButton.classList.add('active');
+      handlingVideo(tabItems, tabItems[activeIndex]);
     }
   });
 }

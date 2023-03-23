@@ -1,29 +1,51 @@
-import { selectVideoLink } from '../../scripts/scripts.js';
+import { selectVideoLink, addPlayIcon } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
+  const isAutoplay = block.classList.contains('autoplay');
+  const isLoopedVideo = block.classList.contains('loop');
+  const isFullWidth = block.classList.contains('full-width');
   const videoWrapper = document.createElement('div');
+  // removing classes to avoid collision with other css
+  block.classList.remove('loop', 'autoplay', 'full-width');
   videoWrapper.classList.add('embed-video');
 
   const links = block.querySelectorAll('a');
   const selectedLink = selectVideoLink(links);
-  const iframe = document.createElement('iframe');
+  const video = document.createElement('video');
+  const source = document.createElement('source');
 
+  video.appendChild(source);
   block.innerHTML = '';
   block.appendChild(videoWrapper);
 
   const loadEmbed = () => {
-    if (iframe.classList.contains('embed-video-iframe-loaded') || !selectedLink) {
+    if (video.classList.contains('embed-video-loaded') || !selectedLink) {
       return;
     }
 
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('src', selectedLink.getAttribute('href'));
-    iframe.classList.add('embed-video-iframe');
-    iframe.classList.add('embed-video-iframe-loaded');
+    if (isAutoplay) {
+      video.autoplay = true;
+      // autoplay requires the video to be muted otherwise the autoplay
+      // can be block by the browser
+      // https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide
+      video.muted = true;
+    }
 
-    videoWrapper.appendChild(iframe);
+    if (isLoopedVideo) {
+      video.loop = true;
+    }
+
+    video.playsInline = true;
+    video.classList.add('embed-video-element');
+    video.classList.add('embed-video-loaded');
+    source.setAttribute('src', selectedLink.getAttribute('href'));
+    source.setAttribute('type', 'video/mp4');
+    videoWrapper.appendChild(video);
+
+    if (isFullWidth) {
+      block.classList.add('embed-full-width');
+      addPlayIcon(block);
+    }
   };
 
   const observer = new IntersectionObserver((entries) => {
