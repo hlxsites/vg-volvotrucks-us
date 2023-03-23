@@ -37,9 +37,12 @@ const createModal = () => {
   const modalContent = document.createElement('div');
   modalContent.classList.add('modal-content');
   modalBackground.appendChild(modalContent);
+  // preventing initial animation when added to DOM
+  modalBackground.style = 'display: none';
   document.body.appendChild(modalBackground);
 
   function showModal(newUrl, beforeBanner) {
+    modalBackground.style = '';
     window.addEventListener('keydown', keyDownAction);
 
     if (newUrl) {
