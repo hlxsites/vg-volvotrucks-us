@@ -60,6 +60,7 @@
   --link-color: #004FBC;
   --link-hover-color: #0b326f;
   --background-color: var(--c-white);
+  --background-hover-color: #E1DFDD;
   --background-light-gray: #ebebeb;
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
@@ -68,6 +69,7 @@
   --text-color: var(--volvo-text-gray);
   --btn-background-hover: #e1dfdd;
   --btn-border-hover: #030333;
+  --input-background-color: #f1f0ef;
 
   /* fonts */
   --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
@@ -176,7 +178,7 @@ a:any-link {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--link-hover-color);
 }
 
@@ -491,6 +493,10 @@ a.button.text-link-with-video::after {
     --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
+  }
+
+  main {
+    margin: 30px 0;
   }
 
   main .section > div {
