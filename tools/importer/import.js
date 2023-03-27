@@ -398,6 +398,7 @@ function make360Image(main, document) {
   }
 }
 
+/* this only is works with press-release 'articles' */
 function makeNewsArticle(main, document) {
   const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
   if (newsArticle && meta.template === 'article') {
