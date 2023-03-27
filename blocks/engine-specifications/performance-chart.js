@@ -1,195 +1,340 @@
-const valueHorsepower = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500];
-const valuesTorque = [0, 300, 600, 900, 1200, 1500, 1800, 2100, 2400, 2700, 3000];
-const chartMeasures = [640, 300];
-const stopsX = [
-  68, 103.25, 138.5, 173.75, 209,
-  244.25, 279.5, 314.75, 350, 385.25,
-  420.5, 455.75, 491, 526.25, 561.5,
-  596.75, 632, 667.25, 702.5, 737.75, 773];
-const fontFamily = 'var(--ff-volvo-novum)';
+// STYLING
+const colorLineHP = '#78B833';
+const colorLineTQ = '#004FBC';
 
-const arrangeData = (values) => {
-  const valuesArray = values.split(',');
-  return valuesArray;
-};
+const colorFillHP = '#C8E691';
+const colorFillTQ = '#76BAFF';
 
-const buildAnimations = (engine) => {
+const colorBackground = '#f7f7f7';
 
-  console.log(engine)
+const strokeWidth = 3;
 
-  const activeChart = document.querySelector('.performance-chart[data-active]')
-  const activeHPpath = activeChart.querySelector('.line-path-HP')
-  const activeTQpath = activeChart.querySelector('.line-path-TQ')
-  
+// MATH
+const conversionFactorHP = 0.815;
+const conversionFactorTQ = 0.15;
 
-  // const letter = (idx === 0) ? 'M' : 'L';
+const bezierFactor1 = 0.3;
+const bezierFactor2 = 0.6;
 
-  // const initialValues = `${letter} ${getRPMPosition(e)} ${225}`
-  // const endingValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45)).toFixed(1)}`
+// FUNCTIONS
+const createFakeValues = (type, values) => {
+  const firstValue = values[0];
+  const lastValue = values.pop();
 
-  // const middleValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.5).toFixed(1)}`
-  // const oneQuarterValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.25).toFixed(1)}`
-  // const threeQuarterValues = `${letter} ${getRPMPosition(e)} ${(225 - (horsepower.values[(idx + 1)] * 0.45) * 0.75).toFixed(1)}`
-
-
-  return activepath
-}
-
-const getPerformanceChart = (data) => {
-  const engineSpeedData = data[0];
-  const horsepowerData = data[1];
-  const torqueData = data[2];
-  const engineName = data[3];
-
-  const RPM = {
-    content: engineSpeedData[0],
-    fontSize: 16,
-    color: '#808285',
-    values: arrangeData(engineSpeedData[1]),
-    valuesToDisplay: [500, 700, 900, 1100, 1300, 1500, 1700, 1900],
+  let modifier = {};
+  const rpm = {
+    start: [200, 150, 100, 50],
+    end: [-50, -100, -150, -200],
   };
   const horsepower = {
-    content: horsepowerData[0],
-    fontSize: 16,
-    color: '#78B833',
-    values: arrangeData(horsepowerData[1]),
+    start: [20, 15, 10, 5],
+    end: [5, 10, 15, 20],
   };
   const torque = {
-    content: torqueData[0],
-    fontSize: 16,
-    color: '#808285',
-    values: arrangeData(torqueData[1]),
+    start: [20, 30, 40, 50],
+    end: [20, 30, 40, 50],
   };
 
-  const getRPMPosition = (number) => {
-    const result = parseFloat(((number - 500) * 0.363871) + 68).toFixed(2);
-    return result;
-  };
+  if (type === 'rpm') modifier = rpm;
+  if (type === 'horsepower') modifier = horsepower;
+  if (type === 'torque') modifier = torque;
 
-  const checkLineDisplay = (number) => {
-    const parsedNumber = parseFloat(number);
-    return RPM.valuesToDisplay.includes(parsedNumber) ? parsedNumber : 1100;
-  };
+  const startingValues = [
+    firstValue - modifier.start[0],
+    firstValue - modifier.start[1],
+    firstValue - modifier.start[2],
+    firstValue - modifier.start[3],
+  ];
+  const endingValues = [
+    lastValue - modifier.end[0],
+    lastValue - modifier.end[0],
+    lastValue - modifier.end[0],
+    lastValue - modifier.end[0],
+  ];
 
-  const checkLabelDisplay = (number) => {
-    const parsedNumber = parseFloat(number);
-    return RPM.valuesToDisplay.includes(parsedNumber) ? parsedNumber : '';
-  };
+  const completedValues = [...startingValues, ...values, ...endingValues];
+  return completedValues;
+};
+
+const generatePositionsX = (start, iterations, space) => {
+  const array = [];
+  for (let i = 0; i < iterations; i += 1) {
+    const section = start + space * i;
+    array.push(section);
+  }
+  return array;
+};
+
+const plotLine = (valuesOnX, typeOfLine, conversionFactor, totalWidth, sectionWidth) => {
+  const plotedLine = valuesOnX.map((e, idx) => {
+    const decimalCount = 2;
+
+    const pureValueX = e;
+    const pureValueY = Number(400 - (typeOfLine[idx] * conversionFactor));
+    const nextValueY = Number(400 - (typeOfLine[idx + 1] * conversionFactor));
+    const difference = nextValueY - pureValueY;
+
+    const bezierPointX1 = (pureValueX + (sectionWidth * 0.3)).toFixed(decimalCount);
+    const bezierPointX2 = (pureValueX + (sectionWidth * 0.6)).toFixed(decimalCount);
+
+    const bezierPointY1 = (pureValueY + (difference * bezierFactor1)).toFixed(decimalCount);
+    const bezierPointY2 = (pureValueY + (difference * bezierFactor2)).toFixed(decimalCount);
+
+    const valueX = pureValueX.toFixed(decimalCount);
+    const valueY = pureValueY.toFixed(decimalCount);
+
+    return (Number.isNaN(nextValueY)) ? `C ${valueX} ${valueY} ${valueX} ${valueY} ${valueX} ${valueY}` : `C ${valueX} ${valueY} ${bezierPointX1} ${bezierPointY1} ${bezierPointX2} ${bezierPointY2}`;
+  });
+  const point = plotedLine.pop();
+  const lastValueY = point.split(' ').pop();
+  const lastPoint = `C ${totalWidth} ${lastValueY} ${totalWidth} ${lastValueY} ${totalWidth} ${lastValueY}`;
+  plotedLine.push(lastPoint);
+
+  return plotedLine;
+};
+
+const getDevice = () => {
+  const width = window.innerWidth;
+  let device = {};
+
+  if (width < 375) {
+    device = {
+      name: 'mobile',
+      scale: 1.9,
+      translate: [-50, -70],
+      text1: [-55, 25],
+      text2: [-55, -15],
+      triangle: [50, 70],
+    };
+  }
+  if (width >= 375 && width < 745) {
+    device = {
+      name: 'tablet',
+      scale: 1.9,
+      translate: [-50, -70],
+      text1: [-55, 25],
+      text2: [-55, -15],
+      triangle: [50, 70],
+    };
+  }
+  if (width >= 745 && width < 1200) {
+    device = {
+      name: 'desktop',
+      scale: 1.5,
+      translate: [-20, -45],
+      text1: [-30, 40],
+      text2: [-30, 10],
+      triangle: [30, 40],
+    };
+  }
+  if (width >= 1200) {
+    device = {
+      name: 'desktop-l',
+      scale: 1.3,
+      translate: [-5, -25],
+      text1: [-20, 50],
+      text2: [-20, 20],
+      triangle: [20, 20],
+    };
+  }
+  return device;
+};
+
+const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
+  const peakValue = Math.max(...values);
+  const indexPosition = values.indexOf(peakValue);
+
+  const positionX = valuesX[indexPosition];
+  const positionY = Number(400 - (peakValue * conversionFactor));
+
+  const peakLabel = category === 'HP' ? ['HP', 'Power', colorLineHP] : ['lb-ft', 'Torque', colorLineTQ];
+
+  return `
+    <rect
+      x=${(positionX - (128 / 2))}
+      y=${(positionY - 76 - 18)}
+      width="${128 * device.scale}px"
+      height="${76 * device.scale}px"
+      rx="${8 * device.scale}"
+      ry="${8 * device.scale}"
+      data-z-index="5"
+      opacity="1"
+      class="peak-rectangle-${category.toLowerCase()}"
+    >
+    </rect>
+
+    <text
+      x=${positionX - device.text1[0]}
+      y=${positionY - device.text1[1]}
+      text-anchor="middle"
+      class="peak-value"
+    >
+      ${peakValue} ${peakLabel[0]}
+    </text>
+
+    <path 
+      fill="${peakLabel[2]}" 
+      d="
+        M ${positionX} ${positionY - 6},
+        L ${positionX + 14} ${positionY - 20},
+        L ${positionX - 14} ${positionY - 20},
+        L ${positionX} ${positionY - 6},
+        Z
+        "
+      data-z-index="1" 
+      stroke="${peakLabel[2]}" 
+      stroke-width="8" 
+      stroke-linejoin="round" 
+      stroke-linecap="round" 
+      opacity="1"
+      style="transform: translate(${device.triangle[0]}px, ${device.triangle[1]}px)"
+    ></path>
+
+    <text
+      x=${positionX - device.text2[0]}
+      y=${positionY - device.text2[1]}
+      text-anchor="middle"
+      class="peak-text"
+    >
+      Peak ${peakLabel[1]}
+    </text>
+  `;
+};
+
+const getPerformanceChart = (data) => {
+  const jasonDataRPM = JSON.parse(data.rpm);
+  const jasonDataTQ = JSON.parse(data.torque);
+  const jasonDataHP = JSON.parse(data.horsepower);
+
+  // Extrapolating and adding 4 fake values to beginning and end of chart to simulate fade
+  const valuesRPM = createFakeValues('rpm', jasonDataRPM);
+  const valuesHP = createFakeValues('horsepower', jasonDataHP);
+  const valuesTQ = createFakeValues('torque', jasonDataTQ);
+
+  const totalWidthChart = 1200;
+  const sectionWidth = totalWidthChart / valuesRPM.length;
+
+  const device = getDevice();
+
+  const valuesOnAxisX = generatePositionsX(0, valuesRPM.length, sectionWidth);
 
   const svg = `
-    <svg version="1.1" style="font-family:${fontFamily}x;" 
-      xmlns="http://www.w3.org/2000/svg" width="${chartMeasures[0]}" height="${chartMeasures[1]}" 
-      viewBox="0 -5 700 290" aria-hidden="false" aria-label="Interactive chart">
+    <svg 
+      version="1.1" 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="${totalWidthChart}"
+      height="${totalWidthChart * 0.4}"
+      viewBox="0 155 ${totalWidthChart} 10" 
+      aria-hidden="false" 
+      aria-label="Interactive chart"
+      class="chart"
+    >
+      <!-- GRADIENTS -->
+      <defs>
+        <linearGradient id="gradientHP" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="${colorFillHP}" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="${colorBackground}" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="gradientTQ" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="${colorFillTQ}" />
+          <stop offset="100%" stop-color="${colorBackground}" stop-opacity="0" />
+        </linearGradient>
+      </defs>
 
-      <g data-z-index="1" aria-hidden="true">
-    
-<!-- horizontal lines -->
-${
-  stopsX.slice(0, 11).map((e, idx) => `
-    <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-        d="M 68 ${(idx * 22.5) - 0.5} L 632 ${(idx * 22.5) - 0.5}" opacity="1">
-    </path>`)
-}
-
-<!-- vertical lines -->
-${
-  RPM.values.map((e) => `
-    <path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1"
-      d="M ${getRPMPosition(checkLineDisplay(e))} 0 L ${getRPMPosition(checkLineDisplay(e))} 225.5" opacity="1">
-    </path>`)
-}
-
-<!-- Manually add 1100 line -->
-${
-  (RPM.values.includes(1100)) ? '' : `<path fill="none" stroke="#e6e6e6" stroke-width="1" stroke-dasharray="none" data-z-index="1" d="M ${getRPMPosition(checkLineDisplay(1100))} 0 L ${getRPMPosition(checkLineDisplay(1100))} 225.5" opacity="1"></path>`
-}
-      </g>
-
-<!-- Reference titles -->
-      <g>
-        <text font-family=${fontFamily} fill=${RPM.color} x="317" y="280" style="font-size: ${RPM.fontSize}px; font-weight:400; cursor:default;" text-anchor="middle">
-          ${RPM.content}
-        </text>
-      </g>
-
-<!-- Color lines -->
-      <!-- HORSEPOWER line -->
+      <!-- HORSEPOWER -->
       <g data-z-index="3" aria-hidden="false">
-        <path class="line-path-HP-${engineName}" fill="none"
+        <g data-z-index="0.1" opacity="1"
+          aria-hidden="true"
+        >
+        <!-- FILL -->
+        <path
+          fill="url(#gradientHP)"
           d="
-${
-  RPM.values.slice(0, 18).map((e, idx) => {
-    const letter = (idx === 0) ? 'M' : 'L';
-    return `
-      ${letter} ${getRPMPosition(e)} ${225 - (horsepower.values[(idx + 1)] * 0.45 * 0.167)}
-    `;
-  })
-  // RPM.values.slice(0, 18).map((e, idx) => {
-  //   const letter = (idx === 0) ? 'M' : 'L';
-  //   return `
-  //     ${letter} ${getRPMPosition(e)} ${225}
-  //   `;
-  // })
-}
+            M ${valuesOnAxisX[0]} ${400 - (valuesHP[0] * conversionFactorHP)} 
+            ${plotLine(valuesOnAxisX, valuesHP, conversionFactorHP, totalWidthChart, sectionWidth)}
+            L ${totalWidthChart} 400 
+            L 0 400 
+            Z
           "
-          data-z-index="1" 
-          stroke=${horsepower.color} 
-          stroke-width="2" 
-          stroke-linejoin="round" 
-          stroke-linecap="round">
+          data-z-index="0"
+          opacity="0.5"
+        >
         </path>
-      </g>  
-      
-<!-- TORQUE line -->
-      <g data-z-index="3" aria-hidden="false">
-        <path class="line-path-TQ-${engineName}" fill="none"
+
+        <!-- STROKE -->
+        <path fill="none"
           d="
-${
-  // RPM.values.slice(0, 18).map((e, idx) => {
-  //   const letter = (idx === 0) ? 'M' : 'L';
-  //   return `
-  //     ${letter} ${getRPMPosition(e)} ${225}
-  //   `;
-  // })
-  RPM.values.slice(0, 18).map((e, idx) => {
-    const letter = (idx === 0) ? 'M' : 'L';
-    return `
-      ${letter} ${getRPMPosition(e)} ${225 - (torque.values[(idx + 1)] * 0.45 * 0.167)}
-    `;
-  })
-}
+            M ${valuesOnAxisX[0]} ${400 - (valuesHP[0] * conversionFactorHP)} 
+            ${plotLine(valuesOnAxisX, valuesHP, conversionFactorHP, totalWidthChart, sectionWidth)}
           "
           data-z-index="1" 
-          stroke=${torque.color} 
-          stroke-width="2" 
+          stroke="${colorLineHP}" 
+          stroke-width="${strokeWidth}" 
           stroke-linejoin="round" 
-          stroke-linecap="round">
+          stroke-linecap="round" 
+          opacity="1"
+        >
         </path>
       </g>
 
-<!-- Blue rectangle -->
-    <path d="M 300 0 L 300 225" transform="translate(0,0)" stroke="#265fa6" stroke-width="134" opacity="0.2"></path>
-  
-<!-- horizontal values - RPM -->
+      <!-- TORQUE -->
+      <g data-z-index="0.1" opacity="1"
+          aria-hidden="true"
+        >
+        <!-- FILL -->
+        <path 
+          fill="url(#gradientTQ)"
+          d="
+            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)} 
+            ${plotLine(valuesOnAxisX, valuesTQ, conversionFactorTQ, totalWidthChart, sectionWidth)}
+            L ${totalWidthChart} 400 
+            L 0 400 
+            Z
+          "
+          data-z-index="0"
+          opacity="0.5"
+        >
+        </path>
+        <!-- STROKE -->
+        <path fill="none"
+          d="
+            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)} 
+            ${plotLine(valuesOnAxisX, valuesTQ, conversionFactorTQ, totalWidthChart, sectionWidth)}
+          "
+          data-z-index="1" stroke="${colorLineTQ}" stroke-width="${strokeWidth}" stroke-linejoin="round" stroke-linecap="round" opacity="1">
+        </path>
+      </g>
+    </g>
+
+    <!-- PEAK LABELS -->
+
+    <g 
+      data-z-index="7" 
+      aria-hidden="true"
+      style="transform: translate(${device.translate[0]}px, ${device.translate[1]}px);)"
+    >
+      ${getPeakValue(valuesTQ, valuesOnAxisX, conversionFactorTQ, 'TQ', device)}
+      ${getPeakValue(valuesHP, valuesOnAxisX, conversionFactorHP, 'HP', device)}
+    </g>
+
+    <!-- HORIZONTAL VALUES - RPM -->
     <g data-z-index="7" aria-hidden="true">
-${
-  RPM.values.map((e) => `
-    <text font-family=${fontFamily} x=${getRPMPosition(e)} text-anchor="middle" style="color: rgb(102, 102, 102); cursor: default; font-size: 11px; font-weight: 600; fill: rgb(102, 102, 102);" y="244" opacity="1">
-      ${checkLabelDisplay(e)}
-    </text>`)
-}     
-<!-- Manually add 1100 label -->
-${
-  (RPM.values.includes(1100)) ? '' : `
-    <text font-family=${fontFamily} x=${getRPMPosition(1100)} text-anchor="middle" style="color: rgb(102, 102, 102); cursor: default; font-size: 11px; font-weight: 600; fill: rgb(102, 102, 102);" y="244" opacity="1">
-      ${checkLabelDisplay(1100)}
-    </text>`
-}
-      </g>
-    </svg>
-  `;
-
+    ${valuesOnAxisX.map((e, idx) => {
+    const displayable = ((idx % 2) && ((valuesRPM[idx] / 20) % 2));
+    return (displayable && `<text  y="410" x=${e} class="chart-label-numbers" text-anchor="middle">${valuesRPM[idx]}</text>`);
+  })}
+      <text 
+        x="${totalWidthChart / 2}"
+        y="500"
+        class="chart-label-text"
+        text-anchor="middle"
+      >
+        Engine Speed (RPM)
+      </text>  
+    </g>
+  </svg>
+`;
   return svg;
 };
 
-export {getPerformanceChart, buildAnimations};
+export default getPerformanceChart;

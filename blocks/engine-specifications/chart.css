@@ -1,0 +1,148 @@
+.performance-chart-list {
+  position: relative;
+  overflow: hidden;
+  height: 80vw;
+}
+
+.performance-chart {
+  --scale-factor: 2;
+
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 200ms opacity ease-in-out;
+  transition-delay: 200ms;
+  top: 0%;
+  list-style: none;
+  height: 80vw;
+}
+
+.performance-chart[data-active] {
+  opacity: 1;
+  transition-delay: 200ms;
+}
+
+.chart {
+  display: block;
+  height: inherit;
+  width: 100vw;
+  transform: scale(1.2);
+}
+
+.chart-label-numbers {
+  font-size: calc(12px * var(--scale-factor));
+  font-weight: 400;
+  line-height: 125%;
+  letter-spacing: 0.4px;
+}
+
+.chart-label-text {
+  font-size: calc(16px * var(--scale-factor));
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.5px;
+  fill: #888B8D;
+}
+
+.chart-label-numbers:first-child {
+  display: none;
+}
+
+.chart-label-numbers :last-of-type {
+  display: none;
+}
+
+.peak-rectangle-hp,
+.peak-triangle-hp {
+  fill: #78B833;
+  stroke: #78B833;
+}
+
+.peak-rectangle-tq,
+.peak-triangle-tq {
+  fill: #004FBC;
+  stroke: #004FBC;
+}
+
+.peak-text,
+.peak-value {
+  font-family: var(--ff-volvo-novum);
+  font-style: normal;
+  font-weight: 500;
+  fill: var(--c-white);
+  line-height: 125%;
+}
+
+.peak-value {
+  font-size: calc(var(--heading-font-size-s) * var(--scale-factor));
+}
+
+.peak-text {
+  font-size: calc(12px * var(--scale-factor));
+}
+
+/* Media queries */
+@media (min-width: 745px) {
+  .performance-chart {
+    --scale-factor: 1.6;
+  }
+
+  .performance-chart-list,
+  .performance-chart,
+  .performance-chart::before,
+  .performance-chart::after {
+    height: 60vw;
+  }
+
+  .chart {
+    transform: scale(1.2);
+  }
+}
+
+@media (min-width: 1200px) {
+  .performance-chart {
+    --scale-factor: 1.2;
+
+    padding: 0 calc(50vw - 600px);
+  }
+
+  .performance-chart-list {
+    width: 100vw;
+  }
+
+  .performance-chart-list,
+  .performance-chart,
+  .performance-chart::before,
+  .performance-chart::after {
+    height: calc(1200px * 0.6);
+  }
+
+  .performance-chart::before,
+  .performance-chart::after {
+    content: '';
+    position: absolute;
+    width: 15vw;
+    top: 0%;
+    z-index: 1;
+  }
+
+  .performance-chart::before {
+    background: linear-gradient(90deg, #F7F7F7 54.11%, rgba(247 247 247 0%) 100%);
+    left: calc(43vw - 600px);
+  }
+
+  .performance-chart::after {
+    background: linear-gradient(90deg, #F7F7F7 54.11%, rgba(247 247 247 0%) 100%);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    right: calc(43vw - 600px);
+  }
+
+  .performance-chart svg {
+    margin: auto;
+    width: 1200px;
+  }
+
+  .chart {
+    transform: scale(1);
+  }
+}

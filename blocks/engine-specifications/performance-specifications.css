@@ -1,13 +1,18 @@
-.performance {
-  width: 100vw;
+@import url('./chart.css');
+
+.engine-specifications-wrapper:first-of-type {
   background-color: #F7F7F7;
+  margin: 0;
+  width: 100vw;
+  height: fit-content;
+  padding: 0;
+}
+
+.performance {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin: 0 20px; */
   padding: 80px 0;
-  padding-left: 0;
-
 }
 
 .performance .performance-title {
@@ -22,131 +27,46 @@
   letter-spacing: 0.25px;
 }
 
-.performance .rating-item h5,
-.performance .power-item h5,
-.performance .torque-item h5 {
-  font-family: var(--ff-volvo-novum);
-  margin: 15px 0 0;
-  font-size: 18px;
-  line-height: 24px;
+.performance .engine-rating .rating-title {
+  font-size: var(--heading-font-size-s);
+  color: #888B8D;
+  font-style: normal;
   font-weight: 500;
+  line-height: 125%;
+  text-align: center;
 }
 
-.performance .power-item h5,
-.performance .torque-item h5{
-  font-size: 14px;
-  margin-top: 7px !important;
-}
-
-/* .performance .engine-rating {
-  margin: 14px 5px 20px;
-} */
-
-.performance .engine-rating .rating-list {
+.performance .rating-list {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
   padding-left: 0;
+  margin-top: 20px;
 }
 
-.performance .engine-rating .rating-item {
-  padding-top: 2px;
-  height: 30px;
-  width: 25%;
-  list-style: none;
+.performance .rating-item {
+  font-family: var(--ff-volvo-novum);
+  font-size: 14px;
+  font-weight: 400;
   text-align: center;
-  margin: 0 1px;
+  line-height: 100%;
+  list-style: none;
+  margin: 20px 21px 0;
 }
 
 .performance a,
 .performance a:visited {
   text-decoration: none;
   cursor: pointer;
+  padding-bottom: 12px;
 }
 
-.performance .engine-rating .rating-item[data-active] {
-  background-color: var(--link-color);
-  border-radius: 15px;
+.performance .engine-rating .rating-item a:hover {
+  border-bottom: 2px solid #888B8D;
 }
 
 .performance .engine-rating .rating-item[data-active] a {
-  color: var(--c-white);
-}
-
-.performance .engine-rating .rating-title {
-  font-size: var(--heading-font-size-s);
-  color: #888B8D;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 125%;
-  text-align: center;
-}
-
-.performance .engine-rating .rating-item h5 {
-  margin-top: 0;
-}
-
-.performance .peak-rating {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  padding: 5px;
-}
-
-.performance .peak-rating div {
-  margin-right: 20px;
-}
-
-.performance .torque-list,
-.performance .power-list {
-  width: 100%;
-  list-style: none;
-  position: relative;
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.performance .torque-item,
-.performance .power-item {
-  position: absolute;
-  text-align: left;
-  opacity: 0;
-}
-
-.performance .torque-item[data-active],
-.performance .power-item[data-active] {
-  position: absolute;
-  text-align: left;
-  opacity: 1;
-}
-
-.performance-chart-wrapper {
-  position: relative;
-  width: 100vw;
-  height: 100vw;
-  list-style: none;
-  padding: 0;
-}
-
-.performance-chart {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: 0 opacity ;
-}
-
-.performance-chart > svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.performance-chart[data-active] {
-  opacity: 1;
-  transition-delay: 0;
+  color: #141414;
+  border-bottom: 2px solid #141414;
 }
