@@ -542,7 +542,7 @@ export async function waitForLCP(lcpBlocks) {
  */
 export function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
-  header.append(headerBlock);
+  header.prepend(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
 }
@@ -574,6 +574,25 @@ export function setup() {
       console.log(error);
     }
   }
+}
+
+export async function loadScript(url, attrs) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = url;
+    if (attrs) {
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+
+    script.onload = () => resolve(script);
+    script.onerror = reject;
+
+    const head = document.querySelector('head');
+    head.append(script);
+  });
 }
 
 /**
