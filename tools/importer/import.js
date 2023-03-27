@@ -60,6 +60,19 @@ function setArticleTags(url) {
     }
   }
 }
+
+const linkToHlxPage = (main, document, url) => {
+  main.querySelectorAll('a').forEach((link) => {
+    // eslint-disable-next-line prefer-regex-literals
+    if (new RegExp('^(https?:)?//').test(link.href)) {
+      // leave links with domains as is
+    } else if (link.href.startsWith('/')) {
+      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us--hlxsites.hlx.page');
+      link.href = newUrl.href;
+    }
+  });
+};
+
 const createMetadata = (main, document, url) => {
   const title = document.querySelector('title');
   if (title) {
@@ -439,11 +452,14 @@ export default {
       'body > img:nth-child(1)',
       'body > img:nth-child(2)',
       'body > img:nth-child(3)',
-      'body > img[src="tcpauth.ashx?"]',
+      'body > img[src="/tcpauth.ashx?"]',
+      'body > img[src="/tcpauth.ashx?logout=1"]',
       'body > img[src="https://www.macktrucks.com/tcpauth.ashx?"]',
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
       'div.modal',
     ]);
+
+    linkToHlxPage(main, document, url);
 
     identifyTemplate(main, document);
     swapHero(main, document);
