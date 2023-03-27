@@ -76,7 +76,7 @@ main .engine-specifications-container {
   }
 
   .engine-specifications-wrapper {
-    padding: 120px 0  116px;
+    padding-bottom: 80px !important;
   }
 
   .engine-specifications.engine {
