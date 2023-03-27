@@ -159,6 +159,9 @@ function decorateHyperlinkImages(container) {
       const br = a.previousElementSibling;
       br.remove();
       a.innerHTML = picture.outerHTML;
+      // make sure the link is not decorated as a button
+      a.parentNode.classList.remove('button-container');
+      a.className = '';
     });
 
   // with link and image in separate paragraphs
@@ -181,6 +184,9 @@ function decorateHyperlinkImages(container) {
       const picture = a.parentNode.previousElementSibling.firstElementChild;
       picture.parentNode.remove();
       a.innerHTML = picture.outerHTML;
+      // make sure the link is not decorated as a button
+      a.parentNode.classList.remove('button-container');
+      a.className = '';
     });
 }
 
