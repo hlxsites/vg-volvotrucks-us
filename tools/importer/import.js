@@ -270,6 +270,19 @@ function getColumnWidth(div) {
   return [];
 }
 
+function fixAlternatingLeftRightColumns(main, document) {
+  const grids = document.querySelectorAll('#Form1 div.container .imageTextGrid .imageTextGrid-1-right .imageText-grid');
+  console.log(`alternating grid(s) found: ${grids.length}`);
+  grids.forEach((grid) => {
+    const childElements = Array.from(grid.children);
+    childElements.reverse();
+
+    childElements.forEach((child) => {
+      grid.appendChild(child);
+    });
+  });
+}
+
 function makeGenericGrid(main, document) {
   const gg = document.querySelectorAll('#Form1 div.generic-grid.full-width');
   console.log(`generic grid(s) found: ${gg.length}`);
@@ -512,6 +525,7 @@ export default {
     swapHero(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
+    fixAlternatingLeftRightColumns(main, document);
     makeGenericGrid(main, document);
     makeProductCarousel(main, document);
     makeImageText(main, document);
