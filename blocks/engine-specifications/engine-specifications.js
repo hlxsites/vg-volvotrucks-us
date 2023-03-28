@@ -111,7 +111,7 @@ const buildPerformanceSpecifications = (block, engineData) => {
     const hpList = document.createElement('ul');
     hpList.classList.add('rating-list');
 
-    for (const rating of powerRating) {
+    powerRating.forEach((rating) => {
       const item = document.createElement('li');
       item.classList.add('rating-item');
 
@@ -121,7 +121,7 @@ const buildPerformanceSpecifications = (block, engineData) => {
         </h5>`;
 
       hpList.appendChild(item);
-    }
+    });
 
     ratingSelector.append(ratingTitle);
     ratingSelector.append(hpList);

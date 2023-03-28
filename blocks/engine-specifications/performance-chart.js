@@ -19,7 +19,7 @@ const bezierFactor2 = 0.6;
 // FUNCTIONS
 const createFakeValues = (type, values) => {
   const firstValue = values[0];
-  const lastValue = values.pop();
+  const lastValue = [...values].pop();
 
   let modifier = {};
   const rpm = {
@@ -47,9 +47,9 @@ const createFakeValues = (type, values) => {
   ];
   const endingValues = [
     lastValue - modifier.end[0],
-    lastValue - modifier.end[0],
-    lastValue - modifier.end[0],
-    lastValue - modifier.end[0],
+    lastValue - modifier.end[1],
+    lastValue - modifier.end[2],
+    lastValue - modifier.end[3],
   ];
 
   const completedValues = [...startingValues, ...values, ...endingValues];
@@ -110,29 +110,29 @@ const getDevice = () => {
   if (width >= 375 && width < 745) {
     device = {
       name: 'tablet',
-      scale: 1.9,
-      translate: [-50, -70],
-      text1: [-55, 25],
-      text2: [-55, -15],
-      triangle: [50, 70],
+      scale: 1.8,
+      translate: [-40, -70],
+      text1: [-55, 30],
+      text2: [-55, -10],
+      triangle: [50, 60],
     };
   }
   if (width >= 745 && width < 1200) {
     device = {
       name: 'desktop',
       scale: 1.5,
-      translate: [-20, -45],
+      translate: [-20, -40],
       text1: [-30, 40],
       text2: [-30, 10],
-      triangle: [30, 40],
+      triangle: [30, 35],
     };
   }
   if (width >= 1200) {
     device = {
       name: 'desktop-l',
       scale: 1.3,
-      translate: [-5, -25],
-      text1: [-20, 50],
+      translate: [-10, -25],
+      text1: [-20, 45],
       text2: [-20, 20],
       triangle: [20, 20],
     };
@@ -201,6 +201,28 @@ const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
   `;
 };
 
+const getDisplayableLabels = (valuesX, rpm) => {
+  const rpmRevered = [...rpm].reverse();
+  const lowerLimit = rpm[3];
+  const higherLimit = rpmRevered[3];
+
+  const labels = valuesX.map((e, idx) => {
+    const withinLimits = rpm[idx] >= lowerLimit && rpm[idx] <= higherLimit;
+    const isDisplayable = idx % 2 && (rpm[idx] / 20) % 2;
+    return `
+      <text
+        x=${e}
+        y="410"
+        class="chart-label-numbers"
+        style="display:${(isDisplayable && withinLimits) ? 'block' : 'none'};"
+        text-anchor="middle"
+      >
+        ${rpm[idx]}
+      </text>`;
+  });
+  return labels;
+};
+
 const getPerformanceChart = (data) => {
   const jasonDataRPM = JSON.parse(data.rpm);
   const jasonDataTQ = JSON.parse(data.torque);
@@ -246,6 +268,7 @@ const getPerformanceChart = (data) => {
         <g data-z-index="0.1" opacity="1"
           aria-hidden="true"
         >
+
         <!-- FILL -->
         <path
           fill="url(#gradientHP)"
@@ -295,6 +318,7 @@ const getPerformanceChart = (data) => {
           opacity="0.5"
         >
         </path>
+
         <!-- STROKE -->
         <path fill="none"
           d="
@@ -307,7 +331,6 @@ const getPerformanceChart = (data) => {
     </g>
 
     <!-- PEAK LABELS -->
-
     <g 
       data-z-index="7" 
       aria-hidden="true"
@@ -319,10 +342,7 @@ const getPerformanceChart = (data) => {
 
     <!-- HORIZONTAL VALUES - RPM -->
     <g data-z-index="7" aria-hidden="true">
-    ${valuesOnAxisX.map((e, idx) => {
-    const displayable = ((idx % 2) && ((valuesRPM[idx] / 20) % 2));
-    return (displayable && `<text  y="410" x=${e} class="chart-label-numbers" text-anchor="middle">${valuesRPM[idx]}</text>`);
-  })}
+      ${getDisplayableLabels(valuesOnAxisX, valuesRPM)}
       <text 
         x="${totalWidthChart / 2}"
         y="500"

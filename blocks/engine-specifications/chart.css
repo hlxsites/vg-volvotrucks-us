@@ -84,13 +84,11 @@
 /* Media queries */
 @media (min-width: 745px) {
   .performance-chart {
-    --scale-factor: 1.3;
+    --scale-factor: 1.4;
   }
 
   .performance-chart-list,
-  .performance-chart,
-  .performance-chart::before,
-  .performance-chart::after {
+  .performance-chart {
     height: 60vw;
   }
 
@@ -111,14 +109,13 @@
   }
 
   .performance-chart-list,
-  .performance-chart,
-  .performance-chart::before,
-  .performance-chart::after {
+  .performance-chart {
     height: calc(1200px * 0.6);
   }
 
   .performance-chart::before,
   .performance-chart::after {
+    height: calc(1200px * 0.48);
     content: '';
     position: absolute;
     width: 15vw;
