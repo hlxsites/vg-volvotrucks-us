@@ -328,6 +328,15 @@ function makeProductCarousel(main, document) {
   }
 }
 
+function makeVideo(main, document) {
+  document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.embeddedVideo')
+    .forEach((video) => {
+      const embed = WebImporter.DOMUtils.createTable([['Embed'], [
+        video?.querySelector('iframe')?.src,
+      ]], document);
+      video.replaceWith(embed);
+    });
+}
 function convertArialCapsTitle(main, document) {
   const titles = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.newsArticle > .row p span.arialCapsTitle');
   titles.forEach((title) => {
@@ -516,6 +525,7 @@ export default {
     makeNewsArticle(main, document);
     createMagazineArticles(main, document, url);
     convertArialCapsTitle(main, document, url);
+    makeVideo(main, document, url);
     makeTextBlockCentered(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
