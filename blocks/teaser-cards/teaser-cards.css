@@ -41,8 +41,10 @@
 
 /* teaser title */
 .block.teaser-cards :is(h2, h3) {
-  margin: 0;
-  font-size: var(--heading-font-size-m)
+  margin: 0 0 10px;
+  font-size: var(--heading-font-size-m);
+  letter-spacing: -.1px;
+  line-height: 1.3333em;
 }
 
 .block.teaser-cards h2 {
@@ -56,6 +58,7 @@
 .block.teaser-cards p.text {
   font-size: var(--body-font-size-xs);
   margin: 0 0 8px;
+  letter-spacing: -.1px;
 }
 
 /* cta's (maybe remove button container completely) */
@@ -119,6 +122,10 @@
   /* each teaser div in the row */
   .block.teaser-cards .teaser {
     width: 50%;
+  }
+
+  .block.teaser-cards :is(h2, h3) {
+    margin: 24px 0 10px;
   }
 
   /* image */
