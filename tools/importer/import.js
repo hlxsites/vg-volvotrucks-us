@@ -253,15 +253,36 @@ function makeGridItem(teaser) {
   return gi.outerHTML;
 }
 
+/**
+ * @param div e.g. <div class="generic-grid-col col-sm-8">
+ * @return e.g. 8
+ */
+function getColumnWidth(div) {
+  const columns = [...div.classList]
+    .filter((name) => name.startsWith('col-'))
+    .map((name) => name.match(/\d+/)[0]);
+
+  if (columns) {
+    return columns[0];
+  }
+  return [];
+}
+
 function makeGenericGrid(main, document) {
   const gg = document.querySelectorAll('#Form1 div.generic-grid.full-width');
   console.log(`generic grid(s) found: ${gg.length}`);
   gg.forEach((grid) => {
+    const columnLayout = [];
     const cells = [['Teaser Grid']];
     const gridCol = grid.querySelectorAll('div.generic-grid-col');
     const columns = [];
     const rows = [];
     gridCol.forEach((gc, idxCol) => {
+      const columnWidth = getColumnWidth(gc);
+      if (columnWidth) {
+        columnLayout.push(columnWidth);
+      }
+
       columns[idxCol] = document.createElement('ul');
       // each one of these is a column
       Array.from(gc.children).forEach((colContent, idxRow) => {
@@ -271,6 +292,10 @@ function makeGenericGrid(main, document) {
         columns[idxCol].append(rows[idxRow]);
       });
     });
+
+    if (columnLayout.length >= 2) {
+      cells[0][0] += ` (layout ${columnLayout.join('-')})`;
+    }
 
     cells.push(columns);
     const teaserGrid = WebImporter.DOMUtils.createTable(cells, document);
@@ -299,6 +324,17 @@ function makeProductCarousel(main, document) {
     });
     // pc.replaceWith(carousel);
   }
+}
+
+function convertArialCapsTitle(main, document) {
+  const titles = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.newsArticle > .row p span.arialCapsTitle');
+  titles.forEach((title) => {
+    const h3 = document.createElement('h3');
+    h3.innerHTML = title.innerHTML;
+    // use copy "center" style from parent
+    h3.setAttribute('style', title.parentNode.getAttribute('style'));
+    title.replaceWith(h3);
+  });
 }
 
 function makeImageText(main, document) {
@@ -477,6 +513,7 @@ export default {
     createPRDownloadBlock(main, document);
     makeNewsArticle(main, document);
     createMagazineArticles(main, document, url);
+    convertArialCapsTitle(main, document, url);
     makeTextBlockCentered(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
