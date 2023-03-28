@@ -130,6 +130,7 @@ body.appear {
 }
 
 header {
+  position: relative;
   min-height: var(--nav-height);
 }
 
@@ -147,6 +148,10 @@ header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
   z-index: 1020;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
 }
 
 h1, h2, h3,
@@ -478,8 +483,7 @@ a.button.text-link-with-video::after {
   header .sub-nav.block {
     position: fixed;
     top: var(--nav-height);
-    left: 0;
-    right: 0;
+    bottom: unset;
   }
 }
 
