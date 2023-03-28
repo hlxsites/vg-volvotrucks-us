@@ -63,6 +63,12 @@ function buildLatestMagazineArticle(entry) {
   return card;
 }
 
+async function getFilterOptions(sheet) {
+  const indexUrl = new URL('/news-and-stories/tags.json', window.location.origin);
+  const result = await ffetch(indexUrl).sheet(sheet).map((data) => data[sheet]).all();
+  return result;
+}
+
 function filterArticles(articles, activeFilters) {
   let filteredArticles = articles;
 
@@ -136,12 +142,6 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
     const articleCard = buildLatestMagazineArticle(entry);
     articleCards.appendChild(articleCard);
   });
-}
-
-async function getFilterOptions(sheet) {
-  const indexUrl = new URL('/news-and-stories/tags.json', window.location.origin);
-  const result = await ffetch(indexUrl).sheet(sheet).map(data => data[sheet]).all();
-  return result;
 }
 
 async function getMagazineArticles(limit) {
