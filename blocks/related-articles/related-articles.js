@@ -39,13 +39,14 @@ function filterArticles(articles, filterTags, thisArticleTitle) {
   articles.forEach((n) => {
     n.filterTag = splitTags(n.tags).map((m) => toClassName(m.trim()));
   });
-  const filteredArticles = articles.filter(item => item.title !== thisArticleTitle)
-    .filter(item => item.filterTag.some(tag => filterTags.includes(tag))).slice(0, 3);
+  const filteredArticles = articles.filter((item) => item.title !== thisArticleTitle)
+    .filter(item => item.filterTag.some((tag) => filterTags.includes(tag))).slice(0, 3);
   return filteredArticles;
 }
 
 async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim())).filter(item => item !== 'volvo-trucks-magazine');
+  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()))
+    .filter((item) => item !== 'volvo-trucks-magazine');
   const articleTitle = getMetadata('og:title');
   const filteredData = filterArticles(magazineArticles, articleTags, articleTitle);
 
