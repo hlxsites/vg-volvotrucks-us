@@ -211,12 +211,14 @@ function makeTruckHero(main, document) {
     const subhead = mainHero.querySelector('div > div.wrapper > div > div > h4');
     const herohead = mainHero.querySelector('div > div.wrapper > div > div > h1');
     const normal = document.createElement('p');
-    normal.innerHTML = subhead.innerHTML;
-    console.log(subhead.innerHTML);
+    if (subhead) {
+      normal.innerHTML = subhead.innerHTML;
+      subhead.remove();
+    }
     mainHero.after(hr(document));
     mainHero.after(normal);
     mainHero.after(herohead);
-    subhead.remove();
+
   }
 }
 
