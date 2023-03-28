@@ -18,8 +18,7 @@
 /* first row div */
 .block.teaser-cards > div {
   display: flex;
-  column-gap: 30px;
-  row-gap: 60px;
+  gap: 30px;
   flex-flow: column;
 }
 
