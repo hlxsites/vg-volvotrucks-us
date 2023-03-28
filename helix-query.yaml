@@ -90,3 +90,6 @@ indices:
       publishDate:
         select: head > meta[name="publish-date"]
         value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
+      content:
+        select: main
+        value: textContent(el)
