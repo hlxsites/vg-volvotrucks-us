@@ -1,7 +1,7 @@
 /* block specific CSS goes here */
 
 main .section.hero-container {
-    margin: 0;
+    margin: -30px 0 0;
     padding: 0;
 }
 
