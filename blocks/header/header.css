@@ -169,7 +169,9 @@ header nav .hamburger-toggle[aria-expanded=true]~.tools {
 header nav .tools ul {
   display: flex;
   list-style-type: none;
-  gap: 22px;
+  margin: 0;
+  padding: 0 0 0 15px;
+  flex: 1;
 }
 
 /* tools entries */
@@ -178,6 +180,11 @@ header nav .tools ul li {
   flex-flow: column;
   align-items: center;
   justify-content: space-between;
+  margin-left: 4%;
+}
+
+header nav .tools ul li:first-child {
+  margin-left: 0;
 }
 
 header nav .tools ul li a {
@@ -372,11 +379,6 @@ header nav .sections .section .navigation-cta {
     width: 50vw;
     right: 0;
   }
-
-  /* list of tools */
-  header nav .tools ul {
-    gap: 10px;
-  }
 }
 
 /* ------ Desktop -------------------------------------------------------- */
@@ -436,7 +438,9 @@ header nav .sections .section .navigation-cta {
   /* list of tools */
   header nav .tools ul {
     margin: 0;
+    padding: 0;
     gap: 20px;
+    flex: unset;
   }
 
   /* tools entries */
@@ -446,6 +450,7 @@ header nav .sections .section .navigation-cta {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    margin: 0;
   }
 
   header nav .tools ul li a {
