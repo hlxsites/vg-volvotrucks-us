@@ -40,7 +40,7 @@ function filterArticles(articles, filterTags, thisArticleTitle) {
     n.filterTag = splitTags(n.tags).map((m) => toClassName(m.trim()));
   });
   const filteredArticles = articles.filter((item) => item.title !== thisArticleTitle)
-    .filter(item => item.filterTag.some((tag) => filterTags.includes(tag))).slice(0, 3);
+    .filter((item) => item.filterTag.some((tag) => filterTags.includes(tag))).slice(0, 3);
   return filteredArticles;
 }
 
