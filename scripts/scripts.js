@@ -34,9 +34,15 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  const ctaLink = main.querySelector('a');
+  // don't create a hero if the first item is a block.
+  const firstSection = main.querySelector('div');
+  const firstElement = firstSection.firstElementChild;
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
+    return;
+  }
+  const h1 = firstSection.querySelector('h1');
+  const picture = firstSection.querySelector('picture');
+  const ctaLink = firstSection.querySelector('a');
   // check if the previous element or the previous of that is an h1
   const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
@@ -58,9 +64,9 @@ function buildHeroBlock(main) {
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
     // remove the empty pre-section to avoid decorate it as empty section
-    const containerChildren = main.children[0].children;
+    const containerChildren = firstSection.children;
     const wrapperChildren = containerChildren[0].children;
-    if (containerChildren.length <= 1 && wrapperChildren.length === 0) main.children[0].remove();
+    if (containerChildren.length <= 1 && wrapperChildren.length === 0) firstSection.remove();
     else if (wrapperChildren.length === 0) containerChildren[0].remove();
     // after all are settled, the new section can be added
     main.prepend(section);
@@ -121,6 +127,7 @@ function buildTabbedBlock(main) {
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
+ * @param {Element} head The header element
  */
 function buildAutoBlocks(main, head) {
   try {
@@ -141,6 +148,55 @@ function decorateSectionBackgrounds(main) {
   });
 }
 
+function decorateHyperlinkImages(container) {
+  // picture + br + a in the same paragraph
+  [...container.querySelectorAll('picture + br + a')]
+  // link text is an unformatted URL paste, and matches the link href
+    .filter((a) => {
+      try {
+        // ignore domain in comparison
+        return new URL(a.href).pathname === new URL(a.textContent).pathname;
+      } catch (e) {
+        return false;
+      }
+    })
+    .forEach((a) => {
+      const picture = a.previousElementSibling.previousElementSibling;
+      picture.remove();
+      const br = a.previousElementSibling;
+      br.remove();
+      a.innerHTML = picture.outerHTML;
+      // make sure the link is not decorated as a button
+      a.parentNode.classList.remove('button-container');
+      a.className = '';
+    });
+
+  // with link and image in separate paragraphs
+  [...container.querySelectorAll('p > a[href]')]
+    // link (in a <p>) has no siblings
+    .filter((a) => a.parentNode.childElementCount === 1)
+    // is preceded by an image (in a <p>) and image has no other siblings
+    .filter((a) => a.parentNode.previousElementSibling?.firstElementChild?.tagName === 'PICTURE')
+    .filter((a) => a.parentNode.previousElementSibling?.childElementCount === 1)
+    // link text is an unformatted URL pastes and matches the link href
+    .filter((a) => {
+      try {
+        // ignore domain in comparison
+        return new URL(a.href).pathname === new URL(a.textContent)?.pathname;
+      } catch (e) {
+        return false;
+      }
+    })
+    .forEach((a) => {
+      const picture = a.parentNode.previousElementSibling.firstElementChild;
+      picture.parentNode.remove();
+      a.innerHTML = picture.outerHTML;
+      // make sure the link is not decorated as a button
+      a.parentNode.classList.remove('button-container');
+      a.className = '';
+    });
+}
+
 function addDefaultVideoLinkBehaviour(main) {
   [...main.querySelectorAll('a')]
     // eslint-disable-next-line no-use-before-define
@@ -152,6 +208,7 @@ function addDefaultVideoLinkBehaviour(main) {
 /**
  * Decorates the main element.
  * @param {Element} main The main element
+ * @param {Element} head The header element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
@@ -161,6 +218,7 @@ export function decorateMain(main, head) {
   buildAutoBlocks(main, head);
   decorateSections(main);
   decorateBlocks(main);
+  decorateHyperlinkImages(main);
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
