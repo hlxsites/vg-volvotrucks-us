@@ -32,7 +32,6 @@ function buildButtonContainer(mainEl) {
 
 function filterPressReleases(pressReleases, activeFilters) {
   let filteredPressReleases = pressReleases;
-
   if (activeFilters.tags) {
     filteredPressReleases = filteredPressReleases
       .filter((n) => toClassName(n.tags).includes(activeFilters.tags));

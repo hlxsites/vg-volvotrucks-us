@@ -1,8 +1,11 @@
 import {
     ffetch,
+    splitTags,
 } from '../../scripts/lib-ffetch.js';
 import {
     createOptimizedPicture,
+    getMetadata,
+    toClassName,
 } from '../../scripts/lib-franklin.js';
 
 function buildRelatedMagazineArticle(entry) {
@@ -32,26 +35,38 @@ function buildRelatedMagazineArticle(entry) {
     return card;
 }
 
+function filterArticles(articles, filterTags, thisArticleTitle) {
+    let filteredArticles;
+    articles.forEach((n) => {
+        n.filterTag = splitTags(n.tags).map((m) => toClassName(m.trim()));
+    });
+    filteredArticles = articles.filter(item => item.title !== thisArticleTitle).filter(item => item.filterTag.some(tag => filterTags.includes(tag))).slice(0,3);
+    return filteredArticles;
+}
+
 async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-    mainEl.innerHTML = '';
+    let articleTags = getMetadata("article:tag").split(',').map((m) => toClassName(m.trim())).filter(item => item !== "volvo-trucks-magazine");
+    let articleTitle = getMetadata("og:title");
+    const filteredData = filterArticles(magazineArticles, articleTags, articleTitle);
+
+    mainEl.textContent = '';
     const articleCards = document.createElement('div');
     articleCards.classList.add('related-magazine-articles');
     mainEl.appendChild(articleCards);
-    magazineArticles.forEach((entry) => {
+    filteredData.forEach((entry) => {
         const articleCard = buildRelatedMagazineArticle(entry);
         articleCards.appendChild(articleCard);
     });
 }
 
-async function getMagazineArticles(limit) {
+async function getRelatedMagazineArticles() {
     const indexUrl = new URL('/magazine-articles.json', window.location.origin);
     let articles;
-    articles = ffetch(indexUrl).slice(0, 3).all();
+    articles = ffetch(indexUrl).all();
     return articles;
 }
 
 export default async function decorate(block) {
-    const limit = 3;
-    const magazineArticles = await getMagazineArticles(limit);
+    const magazineArticles = await getRelatedMagazineArticles();
     createRelatedtMagazineArticles(block, magazineArticles);
 }

@@ -92,22 +92,21 @@ function filterArticles(articles, activeFilters) {
 }
 
 async function createFilter(articles, activeFilters, createDropdown, createFullText) {
-  //const tags = Array.from(new Set(articles.flatMap((n) => n.filterTag).sort()));
   const fullText = createFullText('search', activeFilters.search, 'Search');
   const categoryOptions = await getFilterOptions('category');
-  const categoryFilter = createDropdown(categoryOptions, activeFilters.tags, 'category', 'Category');
+  const categoryFilter = createDropdown(categoryOptions, activeFilters.category, 'category', 'All Categories');
   const categorySelection = categoryFilter.querySelector('select');
   categorySelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
-  const tagOptions = await getFilterOptions('topic');
-  const tagFilter = createDropdown(tagOptions, activeFilters.tags, 'topic', 'Topic');
-  const tagSelection = tagFilter.querySelector('select');
-  tagSelection.addEventListener('change', (e) => {
+  const topicOptions = await getFilterOptions('topic');
+  const topicFilter = createDropdown(topicOptions, activeFilters.topic, 'topic', 'All Topics');
+  const topicSelection = topicFilter.querySelector('select');
+  topicSelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
   const truckOptions = await getFilterOptions('truckseries');
-  const truckFilter = createDropdown(truckOptions, activeFilters.tags, 'truck', 'Truck Series');
+  const truckFilter = createDropdown(truckOptions, activeFilters.truck, 'truck', 'All Truck Series');
   const truckSelection = truckFilter.querySelector('select');
   truckSelection.addEventListener('change', (e) => {
     e.target.form.submit();
@@ -115,7 +114,7 @@ async function createFilter(articles, activeFilters, createDropdown, createFullT
   return [
     fullText,
     categoryFilter,
-    tagFilter,
+    topicFilter,
     truckFilter,
   ];
 }

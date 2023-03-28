@@ -316,7 +316,6 @@ function getActiveFilters() {
 async function renderFilters(data, createFilters) {
   // render filters
   const filter = document.createElement('div');
-  
   filter.className = 'list-filter';
   const form = document.createElement('form');
   form.method = 'get';
