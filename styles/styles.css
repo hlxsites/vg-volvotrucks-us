@@ -242,6 +242,12 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+button, input, select, textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
@@ -252,23 +258,12 @@ a.button.primary:hover, button.primary:hover {
   border-color: var(--btn-border-hover);
 }
 
-button, input, select, textarea {
-  font-size: inherit;
-  font-family: inherit;
-  line-height: inherit;
-  color: inherit;
-  font: inherit;
-  margin: 0;
-}
-
 input[type=text],select,textarea {
   display: block;
   padding: 10px 40px 10px 15px;
   border: none;
   border-radius: 0;
   background-color: var(--background-light-gray);
-  -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
@@ -405,6 +400,12 @@ main .section.highlight {
   margin: 0;
 }
 
+.pager .pagination ol li:not(:first-child) {
+  float: right;
+  padding: 10px;
+  margin-top: -10px;
+}
+
 .section.tabbed-container ul.tab-navigation li.active,
 .section.tabbed-container ul.tab-navigation li:hover {
   border-bottom: 3px solid var(--link-color);
@@ -500,12 +501,6 @@ a.button.text-link-with-video::after {
   content: "\f053";
   font-size: 12px;
   text-decoration: none;
-}
-
-.pager .pagination ol li:not(:first-child) {
-  float: right;
-  padding: 10px;
-  margin-top: -10px;
 }
 
 div.block div.pager {
