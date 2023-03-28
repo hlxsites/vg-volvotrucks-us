@@ -32,7 +32,7 @@ function setArticleTags(url) {
   }
   const matchUrl = `https://www.volvotrucks.us${url.replaceAll('http://localhost:3001', '').replaceAll('?host=https%3A%2F%2Fwww.volvotrucks.us', '')}`;
   const tags = inTags.data.find((el) => el['Page URL'] === matchUrl);
-  if (tags.t1) {
+  if (tags && tags.t1) {
     meta.tags = `${tags.t1}`;
     if (tags.t2) {
       meta.tags = `${meta.tags}, ${tags.t2}`;
@@ -211,12 +211,14 @@ function makeTruckHero(main, document) {
     const subhead = mainHero.querySelector('div > div.wrapper > div > div > h4');
     const herohead = mainHero.querySelector('div > div.wrapper > div > div > h1');
     const normal = document.createElement('p');
-    normal.innerHTML = subhead.innerHTML;
-    console.log(subhead.innerHTML);
+    if (subhead) {
+      normal.innerHTML = subhead.innerHTML;
+      subhead.remove();
+    }
     mainHero.after(hr(document));
     mainHero.after(normal);
     mainHero.after(herohead);
-    subhead.remove();
+
   }
 }
 
