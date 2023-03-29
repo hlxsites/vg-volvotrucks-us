@@ -10,9 +10,16 @@
  * governing permissions and limitations under the License.
  */
 /* global WebImporter */
-/* eslint-disable no-console, class-methods-use-this, no-unused-vars, no-plusplus */
+/* eslint-disable no-console, class-methods-use-this, no-unused-vars  */
+/* eslint-disable no-plusplus, no-use-before-define */
 
 const hr = (doc) => doc.createElement('hr');
+const br = (doc) => doc.createElement('br');
+const span = (doc, text) => {
+  const el = doc.createElement('span');
+  el.textContent = text;
+  return el;
+};
 const meta = {};
 
 function identifyTemplate(main, document) {
@@ -205,6 +212,28 @@ function swapHero(main, document) {
   WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document);
 }
 
+function makeTopTenHero(main, document) {
+  const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"] .hero');
+  if (mainHero) {
+    const ul = document.createElement('ul');
+    const li = document.createElement('li');
+    ul.append(li);
+    ul.append(br(document));
+    const heroImg = mainHero.querySelector('figure');
+    li.append(WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document));
+    li.append(br(document));
+    li.append(span(document, mainHero.querySelector('h1').textContent));
+    li.append(br(document));
+    li.append(span(document, mainHero.querySelector('p').textContent));
+
+    const cells = [['Teaser Grid (top ten)'], [
+      ul,
+    ]];
+    const table = WebImporter.DOMUtils.createTable(cells, document);
+    mainHero.replaceWith(table);
+  }
+}
+
 function makeTruckHero(main, document) {
   const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div.heroImage.full-width');
   if (mainHero) {
@@ -352,6 +381,8 @@ function makeVideo(main, document) {
       link.textContent = video.src;
       const embed = WebImporter.DOMUtils.createTable([['Embed'], [
         link,
+      ], [
+        span(document, 'PLEASE FIX LINK TO FALLBACK VIDEO'),
       ]], document);
       video.replaceWith(embed);
     });
@@ -571,7 +602,8 @@ export default {
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
-      'header',
+      'body > #Form1 > header',
+      'body > #Form1 > div > header',
       'footer',
       '#onetrust-pc-sdk',
       '#onetrust-consent-sdk',
@@ -589,6 +621,7 @@ export default {
 
     identifyTemplate(main, document);
     swapHero(main, document);
+    makeTopTenHero(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
