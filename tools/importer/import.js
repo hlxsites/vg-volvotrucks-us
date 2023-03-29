@@ -379,7 +379,7 @@ function makeImageText(main, document) {
 
 function mergeMultipleColumnsBlocks(main, document) {
   [...main.querySelectorAll('table')]
-    .filter((table) => table.querySelector('th').textContent === 'Columns')
+    .filter((table) => table.querySelector('th') && table.querySelector('th').textContent === 'Columns')
     .forEach((table) => {
       // merge if previous element is also a Columns node
       const previousTable = table.previousElementSibling;
