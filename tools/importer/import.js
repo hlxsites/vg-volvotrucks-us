@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 /* global WebImporter */
-/* eslint-disable no-console, class-methods-use-this */
+/* eslint-disable no-console, class-methods-use-this, no-unused-vars */
 
 const hr = (doc) => doc.createElement('hr');
 const meta = {};
@@ -380,10 +380,11 @@ function mergeMultipleColumnsBlocks(main, document) {
       // merge if previous element is also a Columns node
       const previousTable = table.previousElementSibling;
       if (previousTable.tagName === 'TABLE' && previousTable.querySelector('th').textContent === 'Columns') {
-        console.log(`merging Columns block`);
-        for (let i = 1; i < table.childNodes.length; i++) {
-          previousTable.appendChild(table.childNodes[i]);
-        }
+        console.log('merging Columns block');
+        table.childNodes.forEach((row, index) => {
+          if (index === 0) return;
+          previousTable.appendChild(row);
+        });
         table.remove();
       }
     });
