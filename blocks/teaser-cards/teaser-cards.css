@@ -4,11 +4,6 @@
   --text-color-80: rgb(83 86 90 / 80%);
 }
 
-/* boilerplate: the block element itself that gets passed into js decorate() */
-.block.teaser-cards {
-  margin-block-start: 48px;
-}
-
 .block.teaser-cards.center {
   text-align: center;
 }
