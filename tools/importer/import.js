@@ -218,7 +218,6 @@ function makeTruckHero(main, document) {
     mainHero.after(hr(document));
     mainHero.after(normal);
     mainHero.after(herohead);
-
   }
 }
 
@@ -372,6 +371,22 @@ function makeImageText(main, document) {
       its.replaceWith(teaserCards);
     });
   }
+}
+
+function mergeMultipleColumnsBlocks(main, document) {
+  [...main.querySelectorAll('table')]
+    .filter((table) => table.querySelector('th').textContent === 'Columns')
+    .forEach((table) => {
+      // merge if previous element is also a Columns node
+      const previousTable = table.previousElementSibling;
+      if (previousTable.tagName === 'TABLE' && previousTable.querySelector('th').textContent === 'Columns') {
+        console.log(`merging Columns block`);
+        for (let i = 1; i < table.childNodes.length; i++) {
+          previousTable.appendChild(table.childNodes[i]);
+        }
+        table.remove();
+      }
+    });
 }
 
 function makeImageTextGrid(main, document) {
@@ -541,6 +556,7 @@ export default {
     convertArialCapsTitle(main, document, url);
     makeVideo(main, document, url);
     makeTextBlockCentered(main, document, url);
+    mergeMultipleColumnsBlocks(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
