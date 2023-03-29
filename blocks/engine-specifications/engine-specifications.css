@@ -37,7 +37,7 @@ main .engine-specifications-container {
   color: #888B8D;
   font-family: var(--ff-volvo-novum);
   margin: 0;
-  font-size: 16px;
+  font-size: var(--body-font-size-xs);
   line-height: 14px;
   font-weight: 500;
 }
@@ -48,8 +48,8 @@ main .engine-specifications-container {
 .engine-specifications .item-content {
   font-family: var(--ff-volvo-novum);
   margin: 4px 0 0;
-  font-size: 16px;
-  line-height: 130%;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.5;
   font-weight: 400;
   letter-spacing: 0.15px;
 }
@@ -72,11 +72,11 @@ main .engine-specifications-container {
   main .engine-specifications-container {
     background-color: #F7F7F7;
     width: 100vw;
-    margin: 0 !important;
+    margin: 0;
   }
 
-  .engine-specifications-wrapper {
-    padding-bottom: 80px !important;
+  main .section .engine-specifications-wrapper  {
+    padding-bottom: 80px;
   }
 
   .engine-specifications.engine {

@@ -47,7 +47,7 @@
 
 .performance .rating-item {
   font-family: var(--ff-volvo-novum);
-  font-size: 14px;
+  font-size: var(--body-font-size-xs);
   font-weight: 400;
   text-align: center;
   line-height: 100%;

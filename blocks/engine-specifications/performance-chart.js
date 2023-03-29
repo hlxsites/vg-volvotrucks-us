@@ -1,4 +1,5 @@
 // STYLING
+
 const colorLineHP = '#78B833';
 const colorLineTQ = '#004FBC';
 
@@ -10,13 +11,17 @@ const colorBackground = '#f7f7f7';
 const strokeWidth = 3;
 
 // MATH
+
+// These conversion factors are to be used as a way to translate the values to chart positions.
 const conversionFactorHP = 0.815;
 const conversionFactorTQ = 0.15;
-
+// Bezier factors are used to get 2 more points in between each value in order to make the line curve
 const bezierFactor1 = 0.3;
 const bezierFactor2 = 0.6;
 
 // FUNCTIONS
+
+// From the array of values extrapolates 4 on each side to use as fading border.
 const createFakeValues = (type, values) => {
   const firstValue = values[0];
   const lastValue = [...values].pop();
@@ -55,7 +60,7 @@ const createFakeValues = (type, values) => {
   const completedValues = [...startingValues, ...values, ...endingValues];
   return completedValues;
 };
-
+// Gets the total width of the chart and divides it into the correct number of sections.
 const generatePositionsX = (start, iterations, space) => {
   const array = [];
   for (let i = 0; i < iterations; i += 1) {
@@ -64,7 +69,7 @@ const generatePositionsX = (start, iterations, space) => {
   }
   return array;
 };
-
+// From the values given applies the proportional conversion rate and plots the lines.
 const plotLine = (valuesOnX, typeOfLine, conversionFactor, totalWidth, sectionWidth) => {
   const plotedLine = valuesOnX.map((e, idx) => {
     const decimalCount = 2;
@@ -92,7 +97,7 @@ const plotLine = (valuesOnX, typeOfLine, conversionFactor, totalWidth, sectionWi
 
   return plotedLine;
 };
-
+// Identifies the width of the device and returns values for the position of the peak points.
 const getDevice = () => {
   const width = window.innerWidth;
   let device = {};
@@ -139,7 +144,7 @@ const getDevice = () => {
   }
   return device;
 };
-
+// Identifies the higher value and returns the label and its position on the chart.
 const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
   const peakValue = Math.max(...values);
   const indexPosition = values.indexOf(peakValue);
@@ -200,11 +205,11 @@ const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
     </text>
   `;
 };
-
+// Selects the middle values that should be displayed as rpm references.
 const getDisplayableLabels = (valuesX, rpm) => {
   const rpmRevered = [...rpm].reverse();
-  const lowerLimit = rpm[3];
-  const higherLimit = rpmRevered[3];
+  const lowerLimit = rpm[4];
+  const higherLimit = rpmRevered[4];
 
   const labels = valuesX.map((e, idx) => {
     const withinLimits = rpm[idx] >= lowerLimit && rpm[idx] <= higherLimit;
@@ -222,7 +227,7 @@ const getDisplayableLabels = (valuesX, rpm) => {
   });
   return labels;
 };
-
+// Gets data from engine-specifications.js block renders the SVG with all the values.
 const getPerformanceChart = (data) => {
   const jasonDataRPM = JSON.parse(data.rpm);
   const jasonDataTQ = JSON.parse(data.torque);

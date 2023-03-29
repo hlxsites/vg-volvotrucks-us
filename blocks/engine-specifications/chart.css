@@ -5,6 +5,9 @@
 }
 
 .performance-chart {
+  /* This scale factor affects the size of the fonts 
+  in the chart making them "responsive" without making 
+  them dependant on window size.  */
   --scale-factor: 2;
 
   position: absolute;
@@ -30,14 +33,14 @@
 }
 
 .chart-label-numbers {
-  font-size: calc(12px * var(--scale-factor));
+  font-size: calc(var(--body-font-size-xs) * 0.75 * var(--scale-factor));
   font-weight: 400;
   line-height: 125%;
   letter-spacing: 0.4px;
 }
 
 .chart-label-text {
-  font-size: calc(16px * var(--scale-factor));
+  font-size: calc(var(--body-font-size-xs) * var(--scale-factor));
   font-weight: 400;
   line-height: 130%;
   letter-spacing: 0.5px;
@@ -78,7 +81,7 @@
 }
 
 .peak-text {
-  font-size: calc(12px * var(--scale-factor));
+  font-size: calc(var(--body-font-size-xs) * 0.75 * var(--scale-factor));
 }
 
 /* Media queries */
