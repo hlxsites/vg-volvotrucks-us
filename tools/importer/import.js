@@ -430,6 +430,34 @@ function makeTabbedCarousel(main, document) {
   const tc = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedCarousel');
   if (tc) {
     console.log(`tabbed carousel found: ${tc.length}`);
+    tc.forEach((c) => {
+      const fullWidth = !c.matches('.hasArrows');
+      const slides = c.querySelectorAll('.slide:not(.slick-cloned)');
+      // create a section with metadata for each slide
+      const sections = [...slides].map((slide) => {
+        const section = document.createElement('div');
+        section.innerHTML = slide.innerHTML;
+        const metadata = [['Section Metadata']];
+        if (fullWidth) metadata.push(['Style', 'Full Width']);
+        metadata.push(['Carousel', slide.getAttribute('tab-title')]);
+        section.appendChild(WebImporter.DOMUtils.createTable(metadata, document));
+        section.appendChild(hr(document));
+        return section;
+      });
+      if (sections.length) {
+        const h2 = c.querySelector('h2');
+        if (h2) {
+          // center the heading
+          const heading = WebImporter.DOMUtils.createTable([
+            ['Text (center)'],
+            [h2]
+          ], document);
+          c.insertAdjacentElement('beforebegin', heading);
+        }
+        c.insertAdjacentElement('beforebegin', hr(document));
+        c.replaceWith(...sections);
+      }
+    });
   }
 }
 function makeHubTextBlock(main, document) {
@@ -548,7 +576,6 @@ export default {
     makeImageTextGrid(main, document);
     makeNewsFeaturesPanel(main, document);
     makeTabbedFeatures(main, document);
-    makeTabbedCarousel(main, document);
     make360Image(main, document);
     makeHubTextBlock(main, document);
     createPRDownloadBlock(main, document);
