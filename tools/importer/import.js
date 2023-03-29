@@ -329,7 +329,11 @@ function makeProductCarousel(main, document) {
       const carlist = document.createElement('ul');
       caritems.forEach((it) => {
         const item = document.createElement('li');
-        item.innerHTML = it.innerHTML;
+        item.append(
+          it.querySelector('img'),
+          document.createElement('br'),
+          it.querySelector('.product-title')
+        );
         carlist.appendChild(item);
       });
       cells.push([carlist]);
