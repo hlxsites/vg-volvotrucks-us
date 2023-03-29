@@ -12,10 +12,10 @@ const strokeWidth = 3;
 
 // MATH
 
-// These conversion factors are to be used as a way to translate the values to chart positions.
+// These are to be used as a way to translate the values to chart positions.
 const conversionFactorHP = 0.815;
 const conversionFactorTQ = 0.15;
-// Bezier factors are used to get 2 more points in between each value in order to make the line curve
+// These are used to get 2 points in between each value to make the line curve.
 const bezierFactor1 = 0.3;
 const bezierFactor2 = 0.6;
 

@@ -1,6 +1,6 @@
 import getPerformanceChart from './performance-chart.js';
 
-// Gets the HP buttons and charts and adds listeners in order to make the carousel work 
+// Gets the HP buttons and charts and adds listeners in order to make the carousel work.
 const addAnimations = (hpSelector, chartContainer) => {
   const initialButton = hpSelector.querySelector('.rating-item');
   initialButton.dataset.active = true;
@@ -143,7 +143,7 @@ const buildPerformanceSpecifications = (block, engineData) => {
 export default async function decorate(block) {
   const typeDetector = [...block.classList];
 
-// This detects what block needs to be render and calls the corresponding function.
+  // This detects what block needs to be render and calls the corresponding function.
   if (typeDetector.includes('engine')) {
     buildEngineSpecifications(block);
   } else if (typeDetector.includes('performance')) {
