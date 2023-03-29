@@ -341,10 +341,10 @@ function makeProductCarousel(main, document) {
 }
 
 function makeVideo(main, document) {
-  document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.embeddedVideo')
+  document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.embeddedVideo iframe[src]')
     .forEach((video) => {
       const embed = WebImporter.DOMUtils.createTable([['Embed'], [
-        video?.querySelector('iframe')?.src,
+        video.src,
       ]], document);
       video.replaceWith(embed);
     });
