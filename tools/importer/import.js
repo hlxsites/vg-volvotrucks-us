@@ -535,6 +535,20 @@ function makeNewsArticle(main, document) {
   }
 }
 
+function makeSpecificationTable(main, document) {
+  const specTable = document.querySelectorAll('#Form1 div.container > div.specificationsTable');
+  if (specTable) {
+    console.log(`Specification Table(s) found: ${specTable.length}`);
+    specTable.forEach((st) => {
+      // clean up invalid html
+      const ths = st.querySelectorAll('td[colspan="100%"]');
+      ths.forEach((th) => {
+        th.removeAttribute('colspan');
+      });
+    });
+  }
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -588,6 +602,7 @@ export default {
     createMagazineArticles(main, document, url);
     convertArialCapsTitle(main, document, url);
     makeVideo(main, document, url);
+    makeSpecificationTable(main, document);
     makeTextBlockCentered(main, document, url);
     mergeMultipleColumnsBlocks(main, document, url);
     // create the metadata block and append it to the main element
