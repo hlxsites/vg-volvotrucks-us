@@ -36,12 +36,12 @@ function adjustWidthAndControls(block, carousel, ...controls) {
 
   // wait for the section to be loaded before we initially resize the carousel
   const section = block.closest('.section');
-  new MutationObserver((mutations, observer) => mutations.forEach((mutation) => {
+  new MutationObserver((_, observer) => {
     if (section.dataset.sectionStatus === 'loaded') {
       observer.disconnect();
       setTimeout(toggle);
     }
-  })).observe(section, { attributes: true });
+  }).observe(section, { attributes: true });
 }
 
 function createDesktopControls(ul) {
