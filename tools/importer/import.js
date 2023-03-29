@@ -394,35 +394,6 @@ function mergeMultipleColumnsBlocks(main, document) {
     });
 }
 
-function makeImageTextGrid(main, document) {
-  const itg = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageTextGrid');
-  if (itg) {
-    console.log(`image text grd(s) found: ${itg.length}`);
-    itg.forEach((grids) => {
-      const cells = [['Columns']];
-      const rows = [];
-      const item = grids.querySelectorAll('div.col-sm-3, div.col-sm-6, div.col-sm-4');
-      item.forEach((col) => {
-        // check for weird nesting
-        rows.push(col);
-      });
-      if (rows.length === 0) {
-        const gi = grids.querySelectorAll('div.imageText-grid > div');
-        gi.forEach((nItem) => {
-          rows.push([nItem, nItem]);
-        });
-      }
-      if (rows.length > 0) {
-        cells.push(rows);
-        const columnBlock = WebImporter.DOMUtils.createTable(cells, document);
-        grids.replaceWith(columnBlock);
-      } else {
-        console.log(`not imported: ${grids.id}`);
-      }
-    });
-  }
-}
-
 function makeTabbedFeatures(main, document) {
   const tm = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedFeatures');
   if (tm) {
@@ -450,14 +421,7 @@ function makeTabbedCarousel(main, document) {
       });
       if (sections.length) {
         const h2 = c.querySelector('h2');
-        if (h2) {
-          // center the heading
-          const heading = WebImporter.DOMUtils.createTable([
-            ['Text (center)'],
-            [h2]
-          ], document);
-          c.insertAdjacentElement('beforebegin', heading);
-        }
+        if (h2) c.insertAdjacentElement('beforebegin', h2);
         c.insertAdjacentElement('beforebegin', hr(document));
         c.replaceWith(...sections);
       }
@@ -481,23 +445,60 @@ function makeHubTextBlock(main, document) {
   }
 }
 
-function makeNewsFeaturesPanel(main, document) {
-  const nfp = document.querySelectorAll('#DocumentBody_maincontent_6_NewsFeaturesPanel, #DocumentBody_maincontent_7_NewsFeaturesPanel, #DocumentBody_maincontent_8_NewsFeaturesPanel, #DocumentBody_maincontent_9_NewsFeaturesPanel');
+function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
+  const nfp = document.querySelectorAll('.newsFeatures, .imageTextGrid');
   if (nfp) {
     console.log(`news features panel found: ${nfp.length}`);
     nfp.forEach((panel) => {
-      const cells = [['Columns']];
-      const rows = [];
-      const item = panel.querySelectorAll('div.col-sm-4, div.col-sm-6');
-      item.forEach((column) => {
-        rows.push(column);
-      });
-      if (rows.length > 0) {
-        cells.push(rows);
-        const cols = WebImporter.DOMUtils.createTable(cells, document);
-        panel.replaceWith(cols);
+      let columns = -1;
+      if (panel.firstElementChild.matches('.newsFeatures-column-3')) columns = 3;
+      else if (panel.firstElementChild.matches('.newsFeatures-column-2, .imageTextGrid-2')) columns = 2;
+      else if (panel.firstElementChild.matches('.imageTextGrid-4')) columns = 4;
+
+      const cells = [['Teaser Cards']];
+
+      if (columns > 0) {
+        let row = [];
+        const items = panel.querySelectorAll('div.col-sm-4, div.col-sm-6, div.col-sm-3');
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          const link = item.querySelector('.news-item-links'); // display: none
+          if (link) link.remove();
+          row.push(item);
+          if (row.length === columns) {
+            cells.push(row);
+            row = [];
+          }
+        }
+        if (cells.length > 1) {
+          const cols = WebImporter.DOMUtils.createTable(cells, document);
+          const headings = panel.querySelectorAll('h3,h2');
+          if (headings && headings.length) headings.forEach((heading) => panel.insertAdjacentElement('beforebegin', heading));
+          panel.replaceWith(cols);
+        }
       } else {
-        console.log('not imported');
+        console.log(`unknown column count: ${panel.firstElementChild.className}`);
+      }
+    });
+  }
+}
+
+function makeImageTextGrid(main, document) {
+  const nfp = document.querySelectorAll('.imageTextGrid');
+  if (nfp) {
+    console.log(`image text grids found: ${nfp.length}`);
+    nfp.forEach((panel) => {
+      // use columns only for the image text grid 1
+      const imageLeft = panel.firstElementChild.matches('.imageTextGrid-1-left');
+      const imageRight = panel.firstElementChild.matches('.imageTextGrid-1-right');
+
+      if (imageLeft || imageRight) {
+        const cells = [['Columns']];
+        const imageContainer = panel.querySelector('.image-container');
+        const contentContainer = panel.querySelector('.wrapper');
+        if (imageLeft) cells.push([ imageContainer, contentContainer ])
+        else cells.push([ contentContainer, imageContainer ])
+        panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document))
       }
     });
   }
@@ -577,8 +578,8 @@ export default {
     makeGenericGrid(main, document);
     makeProductCarousel(main, document);
     makeImageText(main, document);
-    makeImageTextGrid(main, document);
-    makeNewsFeaturesPanel(main, document);
+    makeNewsFeaturesPanelAndImageTextGrid(main, document);
+    makeImageTextGrid(main, document)
     makeTabbedFeatures(main, document);
     make360Image(main, document);
     makeHubTextBlock(main, document);
