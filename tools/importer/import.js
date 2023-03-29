@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 /* global WebImporter */
-/* eslint-disable no-console, class-methods-use-this, no-unused-vars */
+/* eslint-disable no-console, class-methods-use-this, no-unused-vars, no-plusplus */
 
 const hr = (doc) => doc.createElement('hr');
 const meta = {};
@@ -332,7 +332,7 @@ function makeProductCarousel(main, document) {
         item.append(
           it.querySelector('img'),
           document.createElement('br'),
-          it.querySelector('.product-title')
+          it.querySelector('.product-title'),
         );
         carlist.appendChild(item);
       });
@@ -347,8 +347,11 @@ function makeProductCarousel(main, document) {
 function makeVideo(main, document) {
   document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.embeddedVideo iframe[src]')
     .forEach((video) => {
+      const link = document.createElement('a');
+      link.href = video.src;
+      link.textContent = video.src;
       const embed = WebImporter.DOMUtils.createTable([['Embed'], [
-        video.src,
+        link,
       ]], document);
       video.replaceWith(embed);
     });
@@ -496,9 +499,9 @@ function makeImageTextGrid(main, document) {
         const cells = [['Columns']];
         const imageContainer = panel.querySelector('.image-container');
         const contentContainer = panel.querySelector('.wrapper');
-        if (imageLeft) cells.push([ imageContainer, contentContainer ])
-        else cells.push([ contentContainer, imageContainer ])
-        panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document))
+        if (imageLeft) cells.push([imageContainer, contentContainer]);
+        else cells.push([contentContainer, imageContainer]);
+        panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
       }
     });
   }
@@ -593,7 +596,7 @@ export default {
     makeProductCarousel(main, document);
     makeImageText(main, document);
     makeNewsFeaturesPanelAndImageTextGrid(main, document);
-    makeImageTextGrid(main, document)
+    makeImageTextGrid(main, document);
     makeTabbedFeatures(main, document);
     make360Image(main, document);
     makeHubTextBlock(main, document);
