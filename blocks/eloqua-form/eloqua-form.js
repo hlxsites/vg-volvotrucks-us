@@ -21,11 +21,11 @@ export default async function decorate(block) {
 
     newScript.setAttribute('type', 'text/javascript');
     // coping all script attribute to the new one
-    [...script.attributes].forEach((attr) => {
-      const attrValue = script.getAttribute(attr.name);
-      newScript.setAttribute(attr.name, attrValue);
+    script.getAttributeNames().forEach((attrName) => {
+      const attrValue = script.getAttribute(attrName);
+      newScript.setAttribute(attrName, attrValue);
 
-      if (attr.name === 'src') {
+      if (attrName === 'src') {
         waitForLoad = new Promise((resolve) => {
           newScript.addEventListener('load', resolve);
         });
