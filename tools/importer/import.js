@@ -280,24 +280,24 @@ function makeImageText(main, document) {
 function makeImageTextGrid(main, document) {
   const itg = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageTextGrid');
   if (itg) {
-    console.log('image text grd(s) found: ' + itg.length);
+    console.log(`image text grd(s) found: ${itg.length}`);
     itg.forEach((grids) => {
       const cells = [['Columns']];
       const rows = [];
       const item = grids.querySelectorAll('div.col-sm-3, div.col-sm-6, div.col-sm-4');
-      const title = grids.querySelector('div.title-wrapper > h3');
-      item.forEach((col, idx) => {
+      item.forEach((col) => {
         // check for weird nesting
         rows.push(col);
       });
+      if (rows.length === 0) {
+        const gi = grids.querySelectorAll('div.imageText-grid > div');
+        gi.forEach((nItem) => {
+          rows.push([nItem, nItem]);
+        });
+      }
       if (rows.length > 0) {
         cells.push(rows);
         const columnBlock = WebImporter.DOMUtils.createTable(cells, document);
-        if (title) {
-          //prepend title here
-        } else {
-          console.log('no title present');
-        }
         grids.replaceWith(columnBlock);
       } else {
         console.log(`not imported: ${grids.id}`);
@@ -326,7 +326,7 @@ function makeHubTextBlock(main, document) {
     htb.forEach((block) => {
       const cells = [['Eloqua Form']];
       const img = new Image();
-      img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');;
+      img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
       cells.push(['background', `<img src='${img.src}'>`]);
       const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
       cells.push(['elqFormName', formName.value]);
@@ -361,7 +361,7 @@ function makeNewsFeaturesPanel(main, document) {
 function make360Image(main, document) {
   const image360 = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div._360-view');
   if (image360) {
-    console.log('360 image(s) found: ' + image360.length);
+    console.log(`360 image(s) found: ${image360.length}`);
     image360.forEach((img360) => {
       const cells = [['Image 360']];
       const imgs = img360.querySelectorAll('img.slide');
@@ -370,6 +370,21 @@ function make360Image(main, document) {
       });
       const block360 = WebImporter.DOMUtils.createTable(cells, document);
       img360.replaceWith(block360);
+    });
+  }
+}
+
+function makeNewsArticle(main, document) {
+  const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
+  if (newsArticle) {
+    meta.template = 'article';
+    console.log(`newsArticle(s) found: ${newsArticle.length}`);
+    newsArticle.forEach((article) => {
+      const cells = [['Fragment']];
+      cells.push(['https://main--vg-volvotrucks-us--hlxsites.hlx.page/fragments/press-release-boilerplate']);
+      const na = WebImporter.DOMUtils.createTable(cells, document);
+      article.replaceWith(na);
+      na.insertAdjacentElement('afterend', hr(document));
     });
   }
 }
