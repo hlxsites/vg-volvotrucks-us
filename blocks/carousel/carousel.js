@@ -34,7 +34,14 @@ function adjustWidthAndControls(block, carousel, ...controls) {
     resizeTimeout = setTimeout(toggle, debounceDelay);
   });
 
-  window.setTimeout(toggle);
+  // wait for the section to be loaded before we initially resize the carousel
+  const section = block.closest('.section');
+  new MutationObserver((mutations, observer) => mutations.forEach((mutation) => {
+    if (section.dataset.sectionStatus === 'loaded') {
+      observer.disconnect();
+      setTimeout(toggle);
+    }
+  })).observe(section, { attributes: true });
 }
 
 function createDesktopControls(ul) {
