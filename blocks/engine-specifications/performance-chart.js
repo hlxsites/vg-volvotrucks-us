@@ -21,7 +21,7 @@ const bezierFactor2 = 0.6;
 
 // FUNCTIONS
 
-// From the array of values extrapolates 4 on each side to use as fading border.
+// From the array of values, this extrapolates 4 on each side to use as fading border.
 const createFakeValues = (type, values) => {
   const firstValue = values[0];
   const lastValue = [...values].pop();
