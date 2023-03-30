@@ -109,6 +109,7 @@
     .block.sub-nav li:first-child,
     .block.sub-nav li:first-child:not(.active) {
         padding: 0;
+        display: block;
     }
 
     .block.sub-nav li:first-child a {
