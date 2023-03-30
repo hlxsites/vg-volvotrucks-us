@@ -9,7 +9,13 @@ main .engine-specifications-container {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
+  width: 100vw;
+  margin: 80px 0;
+}
+
+main .section .engine-specifications-wrapper {
+  margin: 0;
+  padding: 0;
 }
 
 .engine-specifications .engine-title {
@@ -54,7 +60,11 @@ main .engine-specifications-container {
   letter-spacing: 0.15px;
 }
 
-@media (min-width: 745px){
+@media (min-width: 744px){
+  .engine-specifications-wrapper {
+    margin-right: 0 !important;
+  }
+
   .engine-specifications .item-list {
     flex-flow: wrap;
     flex-direction: row;
@@ -69,20 +79,23 @@ main .engine-specifications-container {
 }
 
 @media (min-width: 1440px){
-  main .engine-specifications-container {
-    background-color: #F7F7F7;
+  .engine-specifications-container {
     width: 100vw;
     margin: 0;
   }
-
+  
   main .section .engine-specifications-wrapper  {
-    padding-bottom: 80px;
-  }
+    width: 100vw;
+    padding: 0 0 80px;
+    background-color: #F7F7F7;
 
+  }
+  
   .engine-specifications.engine {
     background-color: var(--c-white);
     border-radius: 12px;
-    margin: 0;
+    margin: 0 calc(50vw - 550px);
+    width: 1100px;
   }
 
   .engine-specifications .engine-title {

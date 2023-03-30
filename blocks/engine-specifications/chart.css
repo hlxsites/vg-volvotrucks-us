@@ -28,7 +28,7 @@
 .chart {
   display: block;
   height: inherit;
-  width: 100vw;
+  width: 100%;
   transform: scale(1.2);
 }
 
@@ -45,14 +45,6 @@
   line-height: 130%;
   letter-spacing: 0.5px;
   fill: #888B8D;
-}
-
-.chart-label-numbers:first-child {
-  display: none;
-}
-
-.chart-label-numbers :last-of-type {
-  display: none;
 }
 
 .peak-rectangle-hp,

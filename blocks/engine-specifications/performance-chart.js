@@ -122,7 +122,7 @@ const getDevice = () => {
       triangle: [50, 60],
     };
   }
-  if (width >= 745 && width < 1200) {
+  if (width >= 744 && width < 1200) {
     device = {
       name: 'desktop',
       scale: 1.5,
@@ -208,22 +208,22 @@ const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
 // Selects the middle values that should be displayed as rpm references.
 const getDisplayableLabels = (valuesX, rpm) => {
   const rpmRevered = [...rpm].reverse();
-  const lowerLimit = rpm[4];
-  const higherLimit = rpmRevered[4];
+  const lowerLimit = rpm[5];
+  const higherLimit = rpmRevered[5];
 
   const labels = valuesX.map((e, idx) => {
     const withinLimits = rpm[idx] >= lowerLimit && rpm[idx] <= higherLimit;
     const isDisplayable = idx % 2 && (rpm[idx] / 20) % 2;
-    return `
+    const label = `
       <text
         x=${e}
         y="410"
         class="chart-label-numbers"
-        style="display:${(isDisplayable && withinLimits) ? 'block' : 'none'};"
         text-anchor="middle"
       >
         ${rpm[idx]}
       </text>`;
+    return (isDisplayable && withinLimits) ? label : null;
   });
   return labels;
 };
