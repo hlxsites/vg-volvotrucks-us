@@ -450,7 +450,7 @@ function mergeMultipleColumnsBlocks(main, document) {
     .forEach((table) => {
       // merge if previous element is also a Columns node
       const previousTable = table.previousElementSibling;
-      if (previousTable.tagName === 'TABLE' && previousTable.querySelector('th').textContent === 'Columns') {
+      if (previousTable && previousTable.tagName === 'TABLE' && previousTable.querySelector('th').textContent === 'Columns') {
         console.log('merging Columns block');
         table.childNodes.forEach((row, index) => {
           if (index === 0) return;
