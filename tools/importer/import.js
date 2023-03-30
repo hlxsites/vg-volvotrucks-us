@@ -124,12 +124,27 @@ function isCentered(element, theWindow) {
   return theWindow.getComputedStyle(element).textAlign === 'center';
 }
 
+/**
+ * Subtitles are marked with italics and then rendered in gray.
+ */
+const styleSubtitleHeaders = (main, document, url) => {
+  document.querySelectorAll(':is(h1, h2, h3, h4, h5, h6):is(.subtitle, .product-grid-subtitle)')
+    .forEach((header) => {
+      const em = document.createElement('em');
+      em.innerHTML = header.innerHTML;
+
+      header.textContent = '';
+      header.appendChild(em);
+    });
+};
+
 const makeTextBlockCenteredBeforeProductCarousel = (main, document, url) => {
   const rows = document.querySelectorAll('#Form1 > div.container.main-content > .productCarousel  > .id');
   console.log(`text blocks(s) before carousel for center found: ${rows.length}`);
   rows.forEach((carouselId) => {
     const directChildren = [...carouselId.querySelectorAll(
-      ':scope > p, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > a')];
+      ':scope > p, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > a',
+    )];
 
     const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
       [directChildren],
@@ -672,6 +687,7 @@ export default {
     makeTextBlockCentered(main, document, url);
     mergeMultipleColumnsBlocks(main, document, url);
     makeTextBlockCenteredBeforeProductCarousel(main, document, url);
+    styleSubtitleHeaders(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
