@@ -525,6 +525,18 @@ function makeImageTextGrid(main, document) {
       // use columns only for the image text grid 1
       const imageLeft = panel.firstElementChild.matches('.imageTextGrid-1-left');
       const imageRight = panel.firstElementChild.matches('.imageTextGrid-1-right');
+      const threeCol = panel.firstElementChild.matches('.imageTextGrid-3');
+
+      if (threeCol) {
+        const cells = [['Teaser Cards']];
+        const cards = panel.querySelectorAll('div.col-sm-4');
+        const cardArr = [];
+        cards.forEach((card) => {
+          cardArr.push(card);
+        });
+        cells.push(cardArr);
+        panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+      }
 
       if (imageLeft || imageRight) {
         const cells = [['Columns']];
