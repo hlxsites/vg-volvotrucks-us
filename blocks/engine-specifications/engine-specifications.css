@@ -1,5 +1,3 @@
-@import url('./performance-specifications.css');
-
 main .engine-specifications-container {
   padding: 0;
 }
@@ -60,7 +58,152 @@ main .section .engine-specifications-wrapper {
   letter-spacing: 0.15px;
 }
 
-@media (min-width: 744px){
+.performance {
+  background-color: #F7F7F7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 0;
+  width: 100vw;
+  height: fit-content;
+}
+
+.performance .performance-title {
+  font-size: var(--heading-font-size-l);
+  color: #141414;
+  margin: 0;
+  padding-bottom: 8px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%;
+  letter-spacing: 0.25px;
+}
+
+.performance .engine-rating .rating-title {
+  font-size: var(--heading-font-size-s);
+  color: #888B8D;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%;
+  text-align: center;
+}
+
+.performance .rating-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0 5vw;
+  margin-top: 20px;
+}
+
+.performance .rating-item {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--body-font-size-xs);
+  font-weight: 400;
+  text-align: center;
+  line-height: 100%;
+  list-style: none;
+  margin: 20px 0 0;
+}
+
+.performance a,
+.performance a:visited {
+  text-decoration: none;
+  cursor: pointer;
+  padding-bottom: 12px;
+}
+
+.performance .engine-rating .rating-item a:hover {
+  border-bottom: 2px solid #888B8D;
+}
+
+.performance .engine-rating .rating-item[data-active] a {
+  color: #141414;
+  border-bottom: 2px solid #141414;
+}
+
+.performance-chart-list {
+  position: relative;
+  overflow: hidden;
+  height: 80vw;
+}
+
+.performance-chart {
+  /* This scale factor affects the size of the fonts 
+  in the chart making them "responsive" without making 
+  them dependant on window size.  */
+  --scale-factor: 2;
+
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 200ms opacity ease-in-out;
+  transition-delay: 200ms;
+  top: 0%;
+  list-style: none;
+  height: 80vw;
+}
+
+.performance-chart[data-active] {
+  opacity: 1;
+  transition-delay: 200ms;
+}
+
+.chart {
+  display: block;
+  height: inherit;
+  width: 100%;
+  transform: scale(1.2);
+}
+
+.chart-label-numbers {
+  font-size: calc(var(--body-font-size-xs) * 0.75 * var(--scale-factor));
+  font-weight: 400;
+  line-height: 125%;
+  letter-spacing: 0.4px;
+}
+
+.chart-label-text {
+  font-size: calc(var(--body-font-size-xs) * var(--scale-factor));
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.5px;
+  fill: #888B8D;
+}
+
+.peak-rectangle-hp,
+.peak-triangle-hp {
+  fill: #78B833;
+  stroke: #78B833;
+}
+
+.peak-rectangle-tq,
+.peak-triangle-tq {
+  fill: #004FBC;
+  stroke: #004FBC;
+}
+
+.peak-text,
+.peak-value {
+  font-family: var(--ff-volvo-novum);
+  font-style: normal;
+  font-weight: 500;
+  fill: var(--c-white);
+  line-height: 125%;
+}
+
+.peak-value {
+  font-size: calc(var(--heading-font-size-s) * var(--scale-factor));
+}
+
+.peak-text {
+  font-size: calc(var(--body-font-size-xs) * 0.75 * var(--scale-factor));
+}
+
+/* Media queries */
+@media (min-width: 745px){
   .engine-specifications-wrapper {
     margin-right: 0 !important;
   }
@@ -75,6 +218,75 @@ main .section .engine-specifications-wrapper {
   .engine-specifications .item-list li {
     width: 50%;
     padding-right: 5px;
+  }
+
+  .performance .rating-list {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .performance .rating-item {
+    margin: 20px 21px 0;
+  }
+
+  .performance-chart {
+    --scale-factor: 1.4;
+  }
+
+  .performance-chart-list,
+  .performance-chart {
+    height: 60vw;
+  }
+
+  .chart {
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 1200px) {
+  .performance-chart {
+    --scale-factor: 1.2;
+
+    padding: 0 calc(50vw - 600px);
+  }
+
+  .performance-chart-list {
+    width: 100vw;
+  }
+
+  .performance-chart-list,
+  .performance-chart {
+    height: calc(1200px * 0.6);
+  }
+
+  .performance-chart::before,
+  .performance-chart::after {
+    height: calc(1200px * 0.48);
+    content: '';
+    position: absolute;
+    width: 15vw;
+    top: 0%;
+    z-index: 1;
+  }
+
+  .performance-chart::before {
+    background: linear-gradient(90deg, #F7F7F7 54.11%, rgb(247 247 247 / 0%) 100%);
+    left: calc(43vw - 600px);
+  }
+
+  .performance-chart::after {
+    background: linear-gradient(90deg, #F7F7F7 54.11%, rgb(247 247 247 / 0%) 100%);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    right: calc(43vw - 600px);
+  }
+
+  .performance-chart svg {
+    margin: auto;
+    width: 1200px;
+  }
+
+  .chart {
+    transform: scale(1);
   }
 }
 
