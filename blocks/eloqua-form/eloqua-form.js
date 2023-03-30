@@ -1,4 +1,4 @@
-export default async function decorate(block) {
+const addForm = async (block) => {
   const formName = block.innerText.trim();
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   const text = await data.text();
@@ -59,4 +59,14 @@ export default async function decorate(block) {
   block.querySelectorAll('[value^="~~"]').forEach((el) => {
     el.setAttribute('value', '');
   });
+};
+
+export default async function decorate(block) {
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      observer.disconnect();
+      addForm(block);
+    }
+  });
+  observer.observe(block);
 }
