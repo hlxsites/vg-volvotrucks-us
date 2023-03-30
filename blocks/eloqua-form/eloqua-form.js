@@ -54,4 +54,9 @@ export default async function decorate(block) {
   block.querySelectorAll('select').forEach((el) => {
     el.parentElement.classList.add('eloqua-select-wrapper');
   });
+
+  // replacing eloqua default values
+  block.querySelectorAll('[value^="~~"]').forEach((el) => {
+    el.setAttribute('value', '');
+  });
 }
