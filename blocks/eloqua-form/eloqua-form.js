@@ -45,7 +45,7 @@ export default async function decorate(block) {
     const label = el.querySelector('label');
 
     if (input && label) {
-      input.setAttribute('placeholder', label.innerText);
+      input.setAttribute('placeholder', label.innerText.replace(/\s+/g, ' ').trim());
       label.remove();
     }
   });
