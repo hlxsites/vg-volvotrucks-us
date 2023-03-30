@@ -120,13 +120,31 @@ function makeIndexPage(url) {
   return url.endsWith('/') ? newUrl.toString() : url;
 }
 
+function isCentered(element, theWindow) {
+  return theWindow.getComputedStyle(element).textAlign === 'center';
+}
+
+const makeTextBlockCenteredBeforeProductCarousel = (main, document, url) => {
+  const rows = document.querySelectorAll('#Form1 > div.container.main-content > .productCarousel  > .id');
+  console.log(`text blocks(s) before carousel for center found: ${rows.length}`);
+  rows.forEach((carouselId) => {
+    const directChildren = [...carouselId.querySelectorAll(
+      ':scope > p, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > a')];
+
+    const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
+      [directChildren],
+    ], document);
+    carouselId.insertBefore(textBlock, carouselId.firstElementChild);
+  });
+};
+
 const makeTextBlockCentered = (main, document, url) => {
   const theWindow = document.defaultView;
-  const rows = document.querySelectorAll('#Form1 > div.container.main-content > .newsArticle  > .row');
-  const isCentered = (element) => theWindow.getComputedStyle(element).textAlign === 'center';
+  const rows = [...document.querySelectorAll('#Form1 > div.container.main-content > .newsArticle  > .row')];
+  rows.push(...document.querySelectorAll('#Form1 > div.container.main-content > .productCarousel  > .id'));
   rows.forEach((row) => {
     if (row) {
-      if ([...row.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a')].every(isCentered)) {
+      if ([...row.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a')].every((el) => isCentered(el, theWindow))) {
         const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
           [...row.children],
         ], document);
@@ -653,6 +671,7 @@ export default {
     makeSpecificationTable(main, document);
     makeTextBlockCentered(main, document, url);
     mergeMultipleColumnsBlocks(main, document, url);
+    makeTextBlockCenteredBeforeProductCarousel(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
