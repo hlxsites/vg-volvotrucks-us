@@ -150,8 +150,8 @@ export default async function decorate(block) {
     // add all the divs that will be part of the nav
     nav.innerHTML = `
       <div class='brand'>
-        <div class='logo'>
-        </div>
+        <a class='logo' href='/'>
+        </a>
         <div class='vgsection-location'>
           <div class='vgsection'>
           </div>
