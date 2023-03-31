@@ -67,6 +67,8 @@ export default async function decorate(block) {
       observer.disconnect();
       addForm(block);
     }
+  }, {
+    rootMargin: '300px',
   });
   observer.observe(block);
 }
