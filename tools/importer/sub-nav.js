@@ -36,7 +36,7 @@ function createSubNav(main) {
 }
 
 function makeSubNavPath(url, subnav) {
-  const newUrl = new URL(url);
+  const newUrl = new URL('sub-nav', url);
   newUrl.pathname = subnav;
   console.log(newUrl.toString());
   return newUrl;
@@ -99,6 +99,6 @@ export default {
   }) => {
     // eslint-disable-next-line no-param-reassign
     url = makeSubNavPath(url, subNavPath);
-    WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
+    return WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
   },
 };
