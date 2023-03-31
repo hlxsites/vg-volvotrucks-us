@@ -6,6 +6,9 @@ export default function decorate(block) {
   [...block.firstElementChild.children].forEach((elem) => {
     // add teaser class for each entry
     elem.classList.add('teaser');
+    if (elem.querySelector('.cta-list')) {
+      elem.classList.add('with-cta-list');
+    }
     // give p containing the image a specific class
     elem.querySelector('picture').parentElement.classList.add('image');
     // give all the other p a text class
@@ -27,11 +30,13 @@ export default function decorate(block) {
       videos.forEach((link) => link !== selectedLink && link.parentElement.remove());
     }
 
-    // give cta's link(s) a specific class name
+    // give cta's link(s) a specific class name, but only if they are not in a .cta-list
     const ctaLinks = elem.querySelectorAll('.button-container a.button');
     ctaLinks.forEach((cta) => {
-      cta.classList.remove('primary');
-      cta.classList.add('secondary', 'cta');
+      if (!cta.closest('.cta-list')) {
+        cta.classList.remove('primary');
+        cta.classList.add('secondary', 'cta');
+      }
     });
   });
 }
