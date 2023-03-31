@@ -1,7 +1,8 @@
 import { wrapImageWithVideoLink } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  block.parentElement.classList.add(`teaser-cards-${block.firstElementChild.children.length}`);
+  const cols = block.firstElementChild.children.length;
+  block.parentElement.classList.add(`teaser-cards-${cols}`);
   // go through all teasers
   [...block.firstElementChild.children].forEach((elem) => {
     // add teaser class for each entry
@@ -23,13 +24,15 @@ export default function decorate(block) {
       wrapImageWithVideoLink(link, image);
     }
 
-    // give cta's link(s) a specific class name, but only if they are not in a .cta-list
+    // give cta's link(s) a specific class name
     const ctaLinks = elem.querySelectorAll('.button-container a.button');
     ctaLinks.forEach((cta) => {
-      if (!cta.closest('.cta-list')) {
+      // enforce secondary for ctas not in cta-list and only for multi column teaser cards
+      if (!cta.closest('.cta-list') && cols > 1) {
         cta.classList.remove('primary');
-        cta.classList.add('secondary', 'cta');
+        cta.classList.add('secondary');
       }
+      cta.classList.add('cta');
     });
   });
 }
