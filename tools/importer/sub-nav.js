@@ -22,12 +22,13 @@ const createMetadata = (main, document) => {
   return meta;
 };
 
-function createSubNav(main) {
+function createSubNav(main, document) {
   const subNav = main.querySelector('div.sub-navigation > div > ul.sub-links');
   if (subNav) {
     console.log('sub-nav found');
     main.innerHTML = '';
     main.append(subNav);
+    main.append(document.createElement('hr'));
     return true;
   }
   throw new Error('No SubNav on page');
