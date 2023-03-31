@@ -155,6 +155,10 @@ header .sub-nav.block {
   position: absolute;
 }
 
+/* specific page styles */
+main.center { text-align: center; }
+main.center :where(.block) { text-align: initial; }
+
 h1, h2, h3,
 h4, h5, h6 {
   font-family: var(--heading-font-family);
@@ -248,6 +252,12 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+a.button.primary.dark,
+button.primary {
+  color: var(--c-white);
+  background-color: var(--text-color);
+}
+
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
@@ -257,6 +267,8 @@ a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
 }
+
+/* commont elements */
 
 main input {
   font-size: 1.25rem;
@@ -274,15 +286,6 @@ main input {
 
 main input:hover {
   border: 1px solid var(--text-color);
-}
-
-main .section > div {
-  padding: 0 15px;
-  margin: 48px auto;
-}
-
-main .section:first-child > div {
-  margin-top: 0;
 }
 
 main pre {
@@ -328,6 +331,17 @@ main p img {
   margin: auto;
 }
 
+/* sections */
+
+main .section > div {
+  padding: 0 15px;
+  margin: 48px auto;
+}
+
+main .section:first-child > div {
+  margin-top: 0;
+}
+
 main .section-with-background {
   --text-color: white;
 
@@ -359,6 +373,21 @@ main .section[data-section-status='initialized'] {
 
 main .section.highlight {
   background-color: var(--highlight-background-color);
+}
+
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
+ul.cta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul.cta-list li {
+  padding: 0 50px;
 }
 
 main .section.tabbed-container-full-width > div {
@@ -467,6 +496,12 @@ a.button.text-link-with-video::after {
   main .section > div {
     width: 756px;
   }
+
+  ul.cta-list {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 991px) {
@@ -513,4 +548,8 @@ a.button.text-link-with-video::after {
   main .section > div {
     width: 1200px;
   }
+}
+
+.video-link-wrapper {
+  text-align: center;
 }
