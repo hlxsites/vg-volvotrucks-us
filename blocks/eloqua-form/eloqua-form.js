@@ -1,4 +1,8 @@
 const addForm = async (block) => {
+  // hiding till ready to display
+  const displayValue = block.style.display;
+  block.style.display = 'none';
+
   const formName = block.innerText.trim();
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   const text = await data.text();
@@ -59,6 +63,8 @@ const addForm = async (block) => {
   block.querySelectorAll('[value^="~~"]').forEach((el) => {
     el.setAttribute('value', '');
   });
+
+  block.style.display = displayValue;
 };
 
 export default async function decorate(block) {
