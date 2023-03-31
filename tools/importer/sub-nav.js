@@ -12,8 +12,6 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this, no-unused-vars */
 
-let subNavPath;
-
 const createMetadata = (main, document) => {
   const meta = {};
   meta.Robots = 'noindex, nofollow';
@@ -25,23 +23,14 @@ const createMetadata = (main, document) => {
 };
 
 function createSubNav(main) {
-  const subNav = main.querySelector('div.sub-navigation > div > ul.sub-links') ? main.querySelector('div.sub-navigation > div > ul.sub-links') : undefined;
+  const subNav = main.querySelector('div.sub-navigation > div > ul.sub-links');
   if (subNav) {
     console.log('sub-nav found');
-    const path = subNav.querySelector('li > a'); // we only need the first one
-    subNavPath = `${path.href}sub-nav`;
     main.innerHTML = '';
     main.append(subNav);
     return true;
   }
   throw new Error('No SubNav on page');
-}
-
-function makeSubNavPath(url, subnav) {
-  const newUrl = new URL('sub-nav', url);
-  newUrl.pathname = subnav;
-  console.log(newUrl.toString());
-  return newUrl;
 }
 
 const linkToHlxPage = (main, document, url) => {
@@ -91,9 +80,10 @@ export default {
       'div.modal',
     ]);
 
+    createSubNav(main, document, url);
+
     linkToHlxPage(main, document, url);
 
-    createSubNav(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document);
 
@@ -110,11 +100,9 @@ export default {
      * @return {string} The path
      */
   generateDocumentPath: ({
-    // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
-    // eslint-disable-next-line no-param-reassign
-    url = makeSubNavPath(url, subNavPath);
-    return WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
+    const subNavUrl = new URL('sub-nav', url);
+    return WebImporter.FileUtils.sanitizePath(subNavUrl.pathname.replace(/\.html$/, '').replace(/\/$/, ''));
   },
 };
