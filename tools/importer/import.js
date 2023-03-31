@@ -523,9 +523,20 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             p.appendChild(videoLink);
           }
 
-          const link = item.querySelector('.news-item-links'); // display: none
-          if (link) link.remove();
+          const links = item.querySelector('.news-item-links'); // display: none
+          if (!links.classList.contains('hasLinks')) link.remove();
+          else {
+            const ul = document.createElement('ul');
+            links.querySelectorAll('a').forEach((a) => {
+              const li = document.createElement('li');
+              li.appendChild(a);
+              ul.appendChild(li);
+            })
+            links.replaceWith(ul);
+          }
+
           row.push(item);
+          
           if (row.length === columns) {
             cells.push(row);
             row = [];
