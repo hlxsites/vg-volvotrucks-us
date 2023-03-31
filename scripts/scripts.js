@@ -98,10 +98,12 @@ function buildCtaList(main) {
   [...main.querySelectorAll('ul')].forEach((list) => {
     const lis = [...list.querySelectorAll('li')];
     const isCtaList = lis.every((li) => {
-      return li.children.length === 1
-        && li.firstElementChild.tagName === 'A' || (
-          (li.firstElementChild.tagName === 'STRONG' || li.firstElementChild.tagName === 'EM')
-          && li.firstElementChild.children.length === 1 && li.firstElementChild.firstElementChild.tagName === 'A')
+      if (li.children.length !== 1) return false;
+      const firstChild = li.firstElementChild;
+      if (firstChild.tagName === 'A') return true;
+      if (firstChild.children.length !== 1) return false;
+      const firstGrandChild = firstChild.firstElementChild;
+      return (firstChild.tagName === 'STRONG' || firstChild.tagName === 'EM') && firstGrandChild.tagName === 'A';
     });
 
     if (isCtaList) {
@@ -119,7 +121,7 @@ function buildCtaList(main) {
             a.classList.add('dark');
           }
         }
-      })
+      });
     }
   });
 }
