@@ -33,9 +33,8 @@ function createSubNav(main) {
     main.innerHTML = '';
     main.append(subNav);
     return true;
-  } else {
-    throw new Error('No SubNav on page');
   }
+  throw new Error('No SubNav on page');
 }
 
 function makeSubNavPath(url, subnav) {
@@ -80,9 +79,7 @@ export default {
       'div.modal',
     ]);
 
-    if (createSubNav(main, document, url)) {
-      return;
-    }
+    createSubNav(main, document, url);
     // create the metadata block and append it to the main element
     createMetadata(main, document);
 
