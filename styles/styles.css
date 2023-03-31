@@ -157,7 +157,7 @@ header .sub-nav.block {
 
 /* specific page styles */
 main.center { text-align: center; }
-main.center .block { text-align: initial; }
+main.center :where(.block) { text-align: initial; }
 
 h1, h2, h3,
 h4, h5, h6 {
