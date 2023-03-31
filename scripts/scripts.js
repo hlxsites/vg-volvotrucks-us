@@ -14,7 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
-  toClassName
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
