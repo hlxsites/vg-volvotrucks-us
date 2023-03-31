@@ -249,6 +249,12 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+a.button.primary.dark,
+button.primary {
+  color: var(--c-white);
+  background-color: var(--text-color);
+}
+
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;

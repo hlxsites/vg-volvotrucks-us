@@ -96,10 +96,30 @@ function createTabbedSection(tabItems, fullWidth, tabType) {
 
 function buildCtaList(main) {
   [...main.querySelectorAll('ul')].forEach((list) => {
-    const isCtaList = [...list.querySelectorAll('li > *')].every((el) => el.tagName.toLowerCase() === 'a');
+    const lis = [...list.querySelectorAll('li')];
+    const isCtaList = lis.every((li) => {
+      return li.children.length === 1
+        && li.firstElementChild.tagName === 'A' || (
+          (li.firstElementChild.tagName === 'STRONG' || li.firstElementChild.tagName === 'EM')
+          && li.firstElementChild.children.length === 1 && li.firstElementChild.firstElementChild.tagName === 'A')
+    });
 
     if (isCtaList) {
       list.classList.add('cta-list');
+      lis.forEach((li, i) => {
+        li.classList.add('button-container');
+        const a = li.querySelector('a');
+        const up = li.parentElement;
+        a.classList.add('button');
+        if (up.tagName === 'EM') {
+          a.classList.add('secondary');
+        } else {
+          a.classList.add('primary');
+          if (i === 0) {
+            a.classList.add('dark');
+          }
+        }
+      })
     }
   });
 }
@@ -161,7 +181,7 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a')]
-  // link text is an unformatted URL paste, and matches the link href
+    // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
         // ignore domain in comparison
