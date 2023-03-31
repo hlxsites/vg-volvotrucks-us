@@ -232,7 +232,6 @@ a.button:any-link, button {
   text-overflow: ellipsis;
 }
 
-.default-content-wrapper ul a::after,
 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 a.button::after {
   content: ' \f105';

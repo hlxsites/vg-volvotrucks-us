@@ -111,7 +111,7 @@ function buildCtaList(main) {
       lis.forEach((li, i) => {
         li.classList.add('button-container');
         const a = li.querySelector('a');
-        const up = li.parentElement;
+        const up = a.parentElement;
         a.classList.add('button');
         if (up.tagName === 'EM') {
           a.classList.add('secondary');
