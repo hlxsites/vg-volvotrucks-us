@@ -5,7 +5,7 @@ function handleActiveClick(ul, event) {
       ul.style.height = '';
       ul.classList.remove('expand');
     } else {
-      const navHeight = [...ul.children].reduce((sum, el) => sum + el.clientHeight, 0);
+      const navHeight = [...ul.children].reduce((sum, el) => sum + el.offsetHeight, 0);
       ul.style.height = `${navHeight}px`;
       ul.classList.add('expand');
     }
