@@ -353,7 +353,7 @@ async function loadLazy(doc) {
   if (templateName) {
     await loadTemplate(doc, templateName);
   }
-  
+
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
