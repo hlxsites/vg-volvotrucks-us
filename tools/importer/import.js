@@ -28,6 +28,12 @@ function identifyTemplate(main, document) {
   }
 }
 
+function detectSubmenu(main, document, url) {
+  if (main.querySelector('div.sub-navigation > div > ul.sub-links')) {
+    meta['Sub Navigation'] = `${new URL(url).pathname}sub-nav`;
+  }
+}
+
 function setArticleTags(url) {
   const request = new XMLHttpRequest();
   request.open('GET', '/tools/importer/vtna-pa-tags.json', false);
@@ -712,6 +718,9 @@ export default {
   }) => {
     // define the main element: the one that will be transformed to Markdown
     const main = document.body;
+
+    // read header before it is removed below
+    detectSubmenu(main, document, url);
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
