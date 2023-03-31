@@ -14,10 +14,33 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  getMetadata,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
+
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {string[]|string} classes the class or classes to add
+ * @param {object} props any other attributes to add to the element
+ * @returns the element
+ */
+export function createElement(tagName, classes, props) {
+  const elem = document.createElement(tagName);
+  if (classes) {
+    const classesArr = (typeof classes === 'string') ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      elem.setAttribute(propName, props[propName]);
+    });
+  }
+
+  return elem;
+}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -224,6 +247,32 @@ export function decorateMain(main, head) {
   buildTabbedBlock(main);
 }
 
+async function loadTemplate(doc, templateName) {
+  try {
+    const cssLoaded = new Promise((resolve) => {
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
+    });
+    const decorationComplete = new Promise((resolve) => {
+      (async () => {
+        try {
+          const mod = await import(`../templates/${templateName}/${templateName}.js`);
+          if (mod.default) {
+            await mod.default(doc);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${templateName}`, error);
+        }
+        resolve();
+      })();
+    });
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(`failed to load block ${templateName}`, error);
+  }
+}
+
 /**
  * loads everything needed to get to LCP.
  */
@@ -259,6 +308,11 @@ export function addFavIcon(href) {
  * loads everything that doesn't need to be delayed.
  */
 async function loadLazy(doc) {
+  const templateName = getMetadata('template');
+  if (templateName) {
+    await loadTemplate(doc, templateName);
+  }
+  
   const main = doc.querySelector('main');
   await loadBlocks(main);
 

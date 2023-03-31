@@ -149,6 +149,22 @@ body.disable-scroll, body.disable-scroll main {
   content: "\f021"
 }
 
+.fa-user::before {
+  content: "\f007"
+}
+
+.fa-clock-o::before {
+  content: "\f017";
+}
+
+.fa-calendar::before {
+  content: "\f073"
+}
+
+.fa-envelope::before {
+  content: "\f0e0"
+}
+
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
    Just overriding the bare minimum to make it readable: */

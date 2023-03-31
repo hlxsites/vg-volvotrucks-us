@@ -1,0 +1,19 @@
+.section.article-sidebar .share-icons button {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  background-color: #f4f3f2;
+  border: 0;
+  margin: 10px;
+}
+
+.share {
+  border-top: 1px solid #E1DFDD;
+  padding-top: 30px;
+}
+
+.section.article-sidebar p {
+  color: #53565A;
+    font-weight: 700;
+    font-size: 12px;
+}
