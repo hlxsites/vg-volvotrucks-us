@@ -108,6 +108,11 @@ const createMetadata = (main, document, url) => {
     console.log(meta.tags);
   }
 
+  if (new URL(url).pathname.startsWith('/trucks/')) {
+    meta['Style'] = ((meta['Style'] || '') + ' Center').trim();
+  }
+
+
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
   main.append(block);
 
@@ -146,7 +151,7 @@ const makeTextBlockCenteredBeforeProductCarousel = (main, document, url) => {
     )];
 
     const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
-      [directChildren],
+    [directChildren],
     ], document);
     carouselId.insertBefore(textBlock, carouselId.firstElementChild);
   });
@@ -160,7 +165,7 @@ const makeTextBlockCentered = (main, document, url) => {
     if (row) {
       if ([...row.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a')].every((el) => isCentered(el, theWindow))) {
         const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
-          [...row.children],
+        [...row.children],
         ], document);
         row.replaceWith(textBlock);
       }
@@ -409,7 +414,7 @@ function convertArialCapsTitle(main, document) {
 }
 
 function makeImageText(main, document) {
-  const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText');
+  const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText > div:not(.imageText-fullsize-outsideText)');
   if (it) {
     console.log(`image text(s) found: ${it.length}`);
     it.forEach((its) => {
@@ -524,8 +529,8 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
           }
 
           const links = item.querySelector('.news-item-links'); // display: none
-          if (!links.classList.contains('hasLinks')) links.remove();
-          else {
+          if (links && !links.classList.contains('hasLinks')) links.remove();
+          else if (links) {
             const ul = document.createElement('ul');
             links.querySelectorAll('a').forEach((a) => {
               const li = document.createElement('li');
@@ -536,7 +541,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
           }
 
           row.push(item);
-          
+
           if (row.length === columns) {
             cells.push(row);
             row = [];
@@ -636,6 +641,29 @@ function makeSpecificationTable(main, document) {
   }
 }
 
+function makeLinkList(main, document) {
+  const linkLists = main.querySelectorAll('ul.links');
+  if (linkLists.length) {
+    linkLists.forEach((linkList) => {
+      linkList.querySelectorAll('li > a').forEach((a) => {
+        // wrap <a> into <em> to make them secondary links
+        const em = document.createElement('em');
+        a.after(em);
+        em.appendChild(a);
+      })
+    })
+  }
+}
+
+function swapVideoCta(main, document) {
+  // set the href for the video cta
+  const videoCtas = main.querySelectorAll('a.cta-video[data-video-src]');
+  videoCtas.forEach((a) => {
+    const { videoSrc } = a.dataset;
+    a.href = videoSrc;
+  })
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -674,6 +702,7 @@ export default {
 
     identifyTemplate(main, document);
     swapHero(main, document);
+    swapVideoCta(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
@@ -695,6 +724,7 @@ export default {
     mergeMultipleColumnsBlocks(main, document, url);
     makeTextBlockCenteredBeforeProductCarousel(main, document, url);
     styleSubtitleHeaders(main, document, url);
+    makeLinkList(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
