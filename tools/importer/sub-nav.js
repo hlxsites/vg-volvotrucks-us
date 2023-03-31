@@ -25,13 +25,16 @@ const createMetadata = (main, document) => {
 };
 
 function createSubNav(main) {
-  const subNav = main.querySelector('div.sub-navigation > div > ul.sub-links').cloneNode(true);
+  const subNav = main.querySelector('div.sub-navigation > div > ul.sub-links') ? main.querySelector('div.sub-navigation > div > ul.sub-links') : undefined;
   if (subNav) {
     console.log('sub-nav found');
     const path = subNav.querySelector('li > a'); // we only need the first one
     subNavPath = `${path.href}sub-nav`;
     main.innerHTML = '';
     main.append(subNav);
+    return true;
+  } else {
+    throw new Error('No SubNav on page');
   }
 }
 
@@ -77,7 +80,9 @@ export default {
       'div.modal',
     ]);
 
-    createSubNav(main, document, url);
+    if (createSubNav(main, document, url)) {
+      return;
+    }
     // create the metadata block and append it to the main element
     createMetadata(main, document);
 
