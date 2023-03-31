@@ -14,7 +14,6 @@
 /* eslint-disable no-plusplus, no-use-before-define */
 
 const hr = (doc) => doc.createElement('hr');
-const br = (doc) => doc.createElement('br');
 const span = (doc, text) => {
   const el = doc.createElement('span');
   el.textContent = text;
@@ -243,28 +242,6 @@ function createPRDownloadBlock(main, document) {
 function swapHero(main, document) {
   const heroImg = document.querySelector('#Form1 > div.container.main-content > section.hubArticleHero > div > div:nth-child(1)');
   WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document);
-}
-
-function makeTopTenHero(main, document) {
-  const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"] .hero');
-  if (mainHero) {
-    const ul = document.createElement('ul');
-    const li = document.createElement('li');
-    ul.append(li);
-    ul.append(br(document));
-    const heroImg = mainHero.querySelector('figure');
-    li.append(WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document));
-    li.append(br(document));
-    li.append(span(document, mainHero.querySelector('h1').textContent));
-    li.append(br(document));
-    li.append(span(document, mainHero.querySelector('p').textContent));
-
-    const cells = [['Teaser Grid (top ten)'], [
-      ul,
-    ]];
-    const table = WebImporter.DOMUtils.createTable(cells, document);
-    mainHero.replaceWith(table);
-  }
 }
 
 function makeTruckHero(main, document) {
@@ -541,7 +518,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             videoLink.textContent = 'YouTube Video';
 
             // wrap link in paragraph
-            let p = document.createElement("p");
+            const p = document.createElement('p');
             videoLink.parentNode.insertBefore(p, videoLink);
             p.appendChild(videoLink);
           }
@@ -686,7 +663,6 @@ export default {
 
     identifyTemplate(main, document);
     swapHero(main, document);
-    makeTopTenHero(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
