@@ -36,8 +36,7 @@ export default function decorate(block) {
     }
 
     video.playsInline = true;
-    video.classList.add('embed-video-element');
-    video.classList.add('embed-video-loaded');
+    video.classList.add('embed-video-element', 'embed-video-loaded');
     source.setAttribute('src', selectedLink.getAttribute('href'));
     source.setAttribute('type', 'video/mp4');
     videoWrapper.appendChild(video);

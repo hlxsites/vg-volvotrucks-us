@@ -92,11 +92,10 @@ function buildSubNavigation(main, head) {
   }
 }
 
-function createTabbedSection(tabItems, tabType, { fullWidth, fullVideo }) {
+function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
-  if (fullVideo) tabSection.classList.add('tabbed-container-full-video');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
   tabSection.append(wrapper);
@@ -109,7 +108,6 @@ function buildTabbedBlock(main) {
   let tabItems = [];
   let tabType;
   let fullWidth = false;
-  let fullVideo = false;
 
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const sectionMeta = section.dataset.carousel || section.dataset.tabs;
@@ -119,12 +117,11 @@ function buildTabbedBlock(main) {
       tabContent.dataset[tabType] = sectionMeta;
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
-      fullVideo = fullVideo || section.matches('.full-video');
       tabContent.innerHTML = section.innerHTML;
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedSection = createTabbedSection(tabItems, tabType, { fullWidth, fullVideo });
+      const tabbedSection = createTabbedSection(tabItems, tabType, { fullWidth });
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
@@ -132,7 +129,7 @@ function buildTabbedBlock(main) {
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth, fullVideo });
+    const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth });
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
@@ -347,7 +344,7 @@ export function showVideoModal(linkUrl) {
       const changeCookieSettings = getTextLable('Change cookie settings');
 
       beforeBanner = document.createElement('div');
-      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button`;
+      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
       beforeBanner.querySelector('button').addEventListener('click', () => {
         window.OneTrust.ToggleInfoDisplay();
       });

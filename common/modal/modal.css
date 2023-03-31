@@ -5,7 +5,7 @@
   width: 100vw;
   height: 100vh;
   background: white;
-  z-index: 100;
+  z-index: 1051;
   transition: opacity 0.15s linear, visibility 0.15s linear;
   opacity: 1;
 }
