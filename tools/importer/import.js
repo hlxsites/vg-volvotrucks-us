@@ -109,7 +109,11 @@ const createMetadata = (main, document, url) => {
   }
 
   if (new URL(url).pathname.startsWith('/trucks/')) {
-    meta['Style'] = ((meta['Style'] || '') + ' Center').trim();
+    const style = meta['Style'] ? meta['Style'].split(', ') : [];
+    if (style.indexOf('center') < 0) {
+      style.push('center');
+    }
+    meta['Style'] = style.join(', ');
   }
 
 
@@ -447,6 +451,26 @@ function makeTabbedFeatures(main, document) {
   const tm = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedFeatures');
   if (tm) {
     console.log(`tabbed features found: ${tm.length}`);
+    tm.forEach((panel) => {
+      const labels = [...panel.querySelectorAll('.hidden-xs .navigation-container li')].map((li) => li.textContent.trim())
+      const contents = [...panel.querySelectorAll('.hidden-xs .content-container .tab-pane')].map((content) => {
+        makeImageTextGrid(content, document);
+        return content;
+      });
+
+      if (contents.length === labels.length) {
+        const elements = [hr(document)];
+        for (let i = 0; i < contents.length; i++) {
+          elements.push(contents[i]);
+          const metadata = [['Section Metadata'], ['Tabs', labels[i]]];
+          elements.push(WebImporter.DOMUtils.createTable(metadata, document)); 
+          elements.push(hr(document));
+        }
+        panel.replaceWith(...elements);
+      } else {
+        console.log('did not import tabbed features, labels do not match content');
+      }
+    })
   }
 }
 
