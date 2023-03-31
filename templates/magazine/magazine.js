@@ -96,9 +96,9 @@ export default async function decorate(doc) {
   shareSidebar.append(shareHeading);
   const shareList = createElement('div', 'share-icons');
   shareItems.forEach((share) => {
-    const icon = createElement('span', ['icon', 'icon-fa-' + share[0]]);
+    const icon = createElement('span', ['icon', `icon-fa-${share[0]}`]);
     const shareItem = createElement('button', share[0], { title: share[1], type: 'button' });
-    shareItem.addEventListener('click', (e) => {
+    shareItem.addEventListener('click', () => {
       window.open(`${share[2]}${window.location.href}`, '_blank');
     });
     shareItem.append(icon);
