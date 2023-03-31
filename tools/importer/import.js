@@ -522,13 +522,30 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
       else if (panel.firstElementChild.matches('.newsFeatures-column-2, .imageTextGrid-2')) columns = 2;
       else if (panel.firstElementChild.matches('.imageTextGrid-4')) columns = 4;
 
-      const cells = [['Teaser Cards']];
-
       if (columns > 0) {
+        const cells = [['Teaser Cards']];
+        let hasVideos = false;
         let row = [];
         const items = panel.querySelectorAll('div.col-sm-4, div.col-sm-6, div.col-sm-3');
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
+
+          const videoLink = item.querySelector('a[data-video-src]');
+          if (videoLink && videoLink.href === 'about:blank#') {
+            hasVideos = true;
+
+            // Move image up, and add standalone link below.
+            videoLink.parentNode.insertBefore(videoLink.querySelector('img'), videoLink);
+
+            videoLink.href = videoLink.dataset.videoSrc;
+            videoLink.textContent = 'YouTube Video';
+
+            // wrap link in paragraph
+            let p = document.createElement("p");
+            videoLink.parentNode.insertBefore(p, videoLink);
+            p.appendChild(videoLink);
+          }
+
           const link = item.querySelector('.news-item-links'); // display: none
           if (link) link.remove();
           row.push(item);
@@ -536,6 +553,9 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             cells.push(row);
             row = [];
           }
+        }
+        if (hasVideos) {
+          cells[0][0] += ' (With Video)';
         }
         if (cells.length > 1) {
           const cols = WebImporter.DOMUtils.createTable(cells, document);
