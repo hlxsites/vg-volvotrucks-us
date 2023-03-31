@@ -14,6 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  toClassName
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -244,6 +245,12 @@ function addDefaultVideoLinkBehaviour(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
+  const pageStyle = head.querySelector('[name="style"]')?.content;
+  if (pageStyle) {
+    pageStyle.split(',')
+      .map((style) => toClassName(style.trim()))
+      .forEach((style) => main.classList.add(style));
+  }
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
