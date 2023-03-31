@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 /* global WebImporter */
-/* eslint-disable no-console, class-methods-use-this */
+/* eslint-disable no-console, class-methods-use-this, no-unused-vars */
 
 let subNavPath;
 
@@ -43,6 +43,18 @@ function makeSubNavPath(url, subnav) {
   console.log(newUrl.toString());
   return newUrl;
 }
+
+const linkToHlxPage = (main, document, url) => {
+  main.querySelectorAll('a').forEach((link) => {
+    // eslint-disable-next-line prefer-regex-literals
+    if (new RegExp('^(https?:)?//').test(link.href)) {
+      // leave links with domains as is
+    } else if (link.href.startsWith('/')) {
+      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us--hlxsites.hlx.page');
+      link.href = newUrl.href;
+    }
+  });
+};
 
 export default {
   /**
@@ -78,6 +90,8 @@ export default {
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
       'div.modal',
     ]);
+
+    linkToHlxPage(main, document, url);
 
     createSubNav(main, document, url);
     // create the metadata block and append it to the main element
