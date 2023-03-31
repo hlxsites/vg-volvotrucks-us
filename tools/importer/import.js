@@ -664,6 +664,14 @@ function swapVideoCta(main, document) {
   })
 }
 
+function markSecondaryCta(main, document) {
+  main.querySelectorAll('a.cta-link').forEach((a) => {
+    const em = document.createElement('em');
+    a.after(em);
+    em.appendChild(a);
+  })
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -703,6 +711,7 @@ export default {
     identifyTemplate(main, document);
     swapHero(main, document);
     swapVideoCta(main, document);
+    markSecondaryCta(main, document);
     makeTruckHero(main, document);
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
