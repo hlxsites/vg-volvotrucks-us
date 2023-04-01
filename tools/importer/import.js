@@ -371,30 +371,48 @@ function makeGenericGrid(main, document) {
   });
 }
 
+function distributeItemsInColumns(items, columns) {
+  const cells = [];
+  while (cells.length < Math.ceil(items.length / columns)) {
+    cells.push([]);
+  }
+  items.forEach((product, index) => {
+    const rowIndex = Math.floor(index / columns);
+    cells[rowIndex].push(product);
+  });
+
+  // If there are multipe rows, fill last row to avoid colspan.
+  const lastRow = cells[cells.length - 1];
+  while (cells.length > 1 && lastRow.length < columns) {
+    lastRow.push('');
+  }
+
+  return cells;
+}
+
 function makeProductCarousel(main, document) {
   const pc = document.querySelectorAll('#Form1 div.productCarousel');
   if (pc) {
     console.log(`product carousel(s) found: ${pc.length}`);
     const cells = [['Carousel']];
+    const items = [];
 
     pc.forEach((car) => {
       const wrap = car.querySelector('div.carousel-wrapper');
-      const caritems = wrap.querySelectorAll('div.product');
-      const carlist = document.createElement('ul');
-      caritems.forEach((it) => {
-        const item = document.createElement('li');
+      wrap.querySelectorAll('div.product').forEach((it) => {
+        const item = document.createElement('div');
         item.append(
           it.querySelector('img'),
           document.createElement('br'),
           it.querySelector('.product-title'),
         );
-        carlist.appendChild(item);
+        items.push(item);
       });
-      cells.push([carlist]);
+      cells.push(...distributeItemsInColumns(items, 3));
+
       const carousel = WebImporter.DOMUtils.createTable(cells, document);
       wrap.replaceWith(carousel);
     });
-    // pc.replaceWith(carousel);
   }
 }
 
@@ -469,7 +487,7 @@ function makeTabbedFeatures(main, document) {
         for (let i = 0; i < contents.length; i++) {
           elements.push(contents[i]);
           const metadata = [['Section Metadata'], ['Tabs', labels[i]]];
-          elements.push(WebImporter.DOMUtils.createTable(metadata, document)); 
+          elements.push(WebImporter.DOMUtils.createTable(metadata, document));
           elements.push(hr(document));
         }
         panel.replaceWith(...elements);
