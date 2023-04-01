@@ -421,21 +421,26 @@ function makeImageText(main, document) {
   }
 }
 
-function mergeMultipleColumnsBlocks(main, document) {
-  [...main.querySelectorAll('table')]
-    .filter((table) => table.querySelector('th') && table.querySelector('th').textContent === 'Columns')
-    .forEach((table) => {
-      // merge if previous element is also a Columns node
-      const previousTable = table.previousElementSibling;
-      if (previousTable && previousTable.tagName === 'TABLE' && previousTable.querySelector('th').textContent === 'Columns') {
-        console.log('merging Columns block');
-        table.childNodes.forEach((row, index) => {
-          if (index === 0) return;
-          previousTable.appendChild(row);
-        });
-        table.remove();
-      }
-    });
+function mergeEqualConsecutiveBlocks(main, document) {
+  const blocksToAutomerge = ['Teaser Cards', 'Columns'];
+
+  main.querySelectorAll('table').forEach((table) => {
+    const blockTitle = table.querySelector('th')?.textContent;
+    const blockTypeWithoutVariant = blockTitle?.replaceAll(/\(.*$/g, '').trim();
+    if (!blocksToAutomerge.includes(blockTypeWithoutVariant)) return;
+
+    // merge if previous element is of the same kind and exact same variation
+    const previousTable = table.previousElementSibling;
+    if (previousTable && previousTable.tagName === 'TABLE'
+          && previousTable.querySelector('th').textContent === table.querySelector('th').textContent) {
+      console.log('merging Teaser Cards block');
+      table.childNodes.forEach((row, index) => {
+        if (index === 0) return;
+        previousTable.appendChild(row);
+      });
+      table.remove();
+    }
+  });
 }
 
 function makeTabbedFeatures(main, document) {
@@ -747,7 +752,7 @@ export default {
     convertArialCapsTitle(main, document, url);
     makeVideo(main, document, url);
     makeSpecificationTable(main, document);
-    mergeMultipleColumnsBlocks(main, document, url);
+    mergeEqualConsecutiveBlocks(main, document, url);
     styleSubtitleHeaders(main, document, url);
     makeLinkList(main, document);
     // create the metadata block and append it to the main element
