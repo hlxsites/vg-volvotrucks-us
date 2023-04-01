@@ -114,14 +114,13 @@ const createMetadata = (main, document, url) => {
     console.log(meta.tags);
   }
 
-  if (new URL(url).pathname.startsWith('/trucks/')) {
-    const style = meta['Style'] ? meta['Style'].split(', ') : [];
-    if (style.indexOf('center') < 0) {
-      style.push('center');
+  if (new URL(url).pathname.startsWith('/trucks/') || new URL(url).pathname.startsWith('/our-difference/')) {
+    const styles = meta.Style ? meta.Style.split(', ') : [];
+    if (!(styles.includes('center'))) {
+      styles.push('center');
     }
-    meta['Style'] = style.join(', ');
+    meta.Style = styles.join(', ');
   }
-
 
   const block = WebImporter.Blocks.getMetadataBlock(document, meta);
   main.append(block);
@@ -150,38 +149,6 @@ const styleSubtitleHeaders = (main, document, url) => {
       header.textContent = '';
       header.appendChild(em);
     });
-};
-
-const makeTextBlockCenteredBeforeProductCarousel = (main, document, url) => {
-  const rows = document.querySelectorAll('#Form1 > div.container.main-content > .productCarousel  > .id');
-  console.log(`text blocks(s) before carousel for center found: ${rows.length}`);
-  rows.forEach((carouselId) => {
-    const directChildren = [...carouselId.querySelectorAll(
-      ':scope > p, :scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6, :scope > a',
-    )];
-
-    const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
-    [directChildren],
-    ], document);
-    carouselId.insertBefore(textBlock, carouselId.firstElementChild);
-  });
-};
-
-const makeTextBlockCentered = (main, document, url) => {
-  const theWindow = document.defaultView;
-  const rows = [...document.querySelectorAll('#Form1 > div.container.main-content > .newsArticle  > .row')];
-  rows.push(...document.querySelectorAll('#Form1 > div.container.main-content > .productCarousel  > .id'));
-  rows.forEach((row) => {
-    if (row) {
-      if ([...row.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a')].every((el) => isCentered(el, theWindow))) {
-        const textBlock = WebImporter.DOMUtils.createTable([['Text (Center)'],
-        [...row.children],
-        ], document);
-        row.replaceWith(textBlock);
-      }
-    }
-  });
-  console.log(`text blocks(s) for center found: ${rows.length}`);
 };
 
 const createMagazineArticles = (main, document, url) => {
@@ -476,7 +443,7 @@ function makeTabbedFeatures(main, document) {
   if (tm) {
     console.log(`tabbed features found: ${tm.length}`);
     tm.forEach((panel) => {
-      const labels = [...panel.querySelectorAll('.hidden-xs .navigation-container li')].map((li) => li.textContent.trim())
+      const labels = [...panel.querySelectorAll('.hidden-xs .navigation-container li')].map((li) => li.textContent.trim());
       const contents = [...panel.querySelectorAll('.hidden-xs .content-container .tab-pane')].map((content) => {
         makeImageTextGrid(content, document);
         return content;
@@ -494,7 +461,7 @@ function makeTabbedFeatures(main, document) {
       } else {
         console.log('did not import tabbed features, labels do not match content');
       }
-    })
+    });
   }
 }
 
@@ -584,7 +551,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
               const li = document.createElement('li');
               li.appendChild(a);
               ul.appendChild(li);
-            })
+            });
             links.replaceWith(ul);
           }
 
@@ -698,8 +665,8 @@ function makeLinkList(main, document) {
         const em = document.createElement('em');
         a.after(em);
         em.appendChild(a);
-      })
-    })
+      });
+    });
   }
 }
 
@@ -709,7 +676,7 @@ function swapVideoCta(main, document) {
   videoCtas.forEach((a) => {
     const { videoSrc } = a.dataset;
     a.href = videoSrc;
-  })
+  });
 }
 
 function markSecondaryCta(main, document) {
@@ -717,7 +684,7 @@ function markSecondaryCta(main, document) {
     const em = document.createElement('em');
     a.after(em);
     em.appendChild(a);
-  })
+  });
 }
 
 export default {
@@ -780,9 +747,7 @@ export default {
     convertArialCapsTitle(main, document, url);
     makeVideo(main, document, url);
     makeSpecificationTable(main, document);
-    makeTextBlockCentered(main, document, url);
     mergeMultipleColumnsBlocks(main, document, url);
-    makeTextBlockCenteredBeforeProductCarousel(main, document, url);
     styleSubtitleHeaders(main, document, url);
     makeLinkList(main, document);
     // create the metadata block and append it to the main element
