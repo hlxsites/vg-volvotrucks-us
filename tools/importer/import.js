@@ -249,18 +249,19 @@ function makeProductCarousel(main, document) {
 
     pc.forEach((car) => {
       const wrap = car.querySelector('div.carousel-wrapper');
-      const caritems = wrap.querySelectorAll('div.product');
-      const carlist = document.createElement('ul');
-      caritems.forEach((it) => {
-        const item = document.createElement('li');
-        item.innerHTML = it.innerHTML;
-        carlist.appendChild(item);
+      wrap.querySelectorAll('div.product').forEach((it) => {
+        const item = document.createElement('div');
+        item.append(
+          it.querySelector('img'),
+          document.createElement('br'),
+          it.querySelector('.product-title'),
+        );
+        cells.push([item]);
       });
-      cells.push([carlist]);
+
       const carousel = WebImporter.DOMUtils.createTable(cells, document);
       wrap.replaceWith(carousel);
     });
-    // pc.replaceWith(carousel);
   }
 }
 
