@@ -14,11 +14,14 @@
 }
 
 .download-images .image-container {
-  flex: 0 0 auto;
+  flex: 1 1 100%;
   width: 23%;
+  min-width: 230px;
   position: relative;
+  padding-inline: 2%;
 }
 
+.download-images .image-container:focus-within,
 .download-images .image-container:hover {
   transform: scale(1.05);
 }
@@ -29,10 +32,21 @@
   color: #fff;
   position: absolute;
   right: 10px;
-  bottom: -5%;
+  bottom: -3%;
   background: rgb(0 0 0 / 50%);
   transition: .5s ease;
   border-radius: 50%;
   scale: 0.6;
   padding-inline: 5px;
+}
+
+@media (min-width: 576px) {
+  .download-images .image-container {
+    flex: 0 0 auto;
+    padding: 0;
+  }
+
+  .download-images .image-container::after {
+    bottom: -5%;
+  }
 }
