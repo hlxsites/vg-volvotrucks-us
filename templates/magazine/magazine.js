@@ -42,16 +42,18 @@ async function buildArticleHero(container) {
   authorSpan.innerHTML = author;
   details.append(authorSpan);
 
-  const hideMobile = createElement('span', 'hide-mobile');
   const calendarIconClone = calendarIcon.cloneNode();
-  hideMobile.append(calendarIconClone);
+  calendarIconClone.classList.add('hide-mobile');
+  details.append(calendarIconClone);
   const pubDateSpanClone = pubDateSpan.cloneNode(true);
-  hideMobile.append(pubDateSpanClone);
+  pubDateSpanClone.classList.add('hide-mobile');
+  details.append(pubDateSpanClone);
   const timeIconClone = timeIcon.cloneNode();
-  hideMobile.append(timeIconClone);
+  timeIconClone.classList.add('hide-mobile');
+  details.append(timeIconClone);
   const timeSpanClone = timeSpan.cloneNode(true);
-  hideMobile.append(timeSpanClone);
-  details.append(hideMobile);
+  timeSpanClone.classList.add('hide-mobile');
+  details.append(timeSpanClone);
 
   // row
   row.append(headImg);
