@@ -15,6 +15,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -140,8 +141,7 @@ function buildTabbedBlock(main) {
   let tabItems = [];
   let tabType;
   let fullWidth = false;
-
-  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+  main.querySelectorAll(':scope > div').forEach((section) => {
     const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
@@ -157,6 +157,7 @@ function buildTabbedBlock(main) {
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
+      tabType = undefined;
       fullWidth = false;
     }
   });
@@ -255,6 +256,12 @@ function addDefaultVideoLinkBehaviour(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
+  const pageStyle = head.querySelector('[name="style"]')?.content;
+  if (pageStyle) {
+    pageStyle.split(',')
+      .map((style) => toClassName(style.trim()))
+      .forEach((style) => main.classList.add(style));
+  }
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
