@@ -7,7 +7,7 @@ const addForm = async (block) => {
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   if (data.ok) {
     const text = await data.text();
-    block.innerHTML = text; 
+    block.innerHTML = text;
   } else {
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
