@@ -18,15 +18,16 @@ export default function decorate(block) {
   const brTags = block.querySelectorAll('br');
   if (brTags.length > 0) [...brTags].forEach((br) => br.remove());
   // move picture tags inside the links
-  imgContainers.forEach((el) => {
+  imgContainers.forEach(async (el) => {
     el.className = 'image-container';
     const link = el.querySelector('a');
     const picture = el.querySelector('picture');
     const img = picture.querySelector('[type="image/jpeg"]');
+    const isImgLinkBroken = await fetch(link.href, { mode: 'no-cors' });
     link.textContent = '';
     link.appendChild(picture);
     link.download = '';
-    link.href = img.srcset;
+    if (!isImgLinkBroken.ok) link.href = img.srcset;
     addClickToLink(link);
   });
   downloadDir.className = 'download-text';
