@@ -3,7 +3,7 @@
     margin-bottom: 5px;
 }
 
-.document-list.block > div > div > a {
+.document-list.block a {
     padding: 10px 50px 0 20px;
     color: #333;
     text-overflow: ellipsis;
