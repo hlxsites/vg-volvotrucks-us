@@ -14,6 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -94,11 +95,43 @@ function createTabbedSection(tabItems, fullWidth, tabType) {
   return tabSection;
 }
 
+function buildCtaList(main) {
+  [...main.querySelectorAll('ul')].forEach((list) => {
+    const lis = [...list.querySelectorAll('li')];
+    const isCtaList = lis.every((li) => {
+      if (li.children.length !== 1) return false;
+      const firstChild = li.firstElementChild;
+      if (firstChild.tagName === 'A') return true;
+      if (firstChild.children.length !== 1) return false;
+      const firstGrandChild = firstChild.firstElementChild;
+      return (firstChild.tagName === 'STRONG' || firstChild.tagName === 'EM') && firstGrandChild.tagName === 'A';
+    });
+
+    if (isCtaList) {
+      list.classList.add('cta-list');
+      lis.forEach((li, i) => {
+        li.classList.add('button-container');
+        const a = li.querySelector('a');
+        const up = a.parentElement;
+        a.classList.add('button');
+        if (up.tagName === 'EM') {
+          a.classList.add('secondary');
+        } else {
+          a.classList.add('primary');
+          if (i === 0) {
+            a.classList.add('dark');
+          }
+        }
+      });
+    }
+  });
+}
+
 function buildTabbedBlock(main) {
   let tabItems = [];
   let tabType;
   let fullWidth = false;
-  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+  main.querySelectorAll(':scope > div').forEach((section) => {
     const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
@@ -114,6 +147,7 @@ function buildTabbedBlock(main) {
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
+      tabType = undefined;
       fullWidth = false;
     }
   });
@@ -151,7 +185,7 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a')]
-  // link text is an unformatted URL paste, and matches the link href
+    // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
         // ignore domain in comparison
@@ -212,6 +246,12 @@ function addDefaultVideoLinkBehaviour(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
+  const pageStyle = head.querySelector('[name="style"]')?.content;
+  if (pageStyle) {
+    pageStyle.split(',')
+      .map((style) => toClassName(style.trim()))
+      .forEach((style) => main.classList.add(style));
+  }
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
@@ -222,6 +262,7 @@ export function decorateMain(main, head) {
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
+  buildCtaList(main);
 }
 
 /**
