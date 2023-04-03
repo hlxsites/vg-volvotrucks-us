@@ -21,7 +21,6 @@
   padding: 0 15px;
 }
 
-
 .key-facts-wrapper .key-fact p {
   margin: 0;
   text-align: center;
@@ -74,7 +73,7 @@
 }
 
 /* the trailing line */
-.key-facts-wrapper .key-fact > div {
+.key-facts-wrapper .key-facts .key-fact > div {
   width: 100%;;
 }
 

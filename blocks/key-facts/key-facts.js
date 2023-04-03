@@ -19,7 +19,6 @@ export default function decorate(block) {
     const value = col.querySelector('strong');
     if (value) {
       const parts = value.innerText.match('([0-9,.]+)(.*)');
-      console.log(parts);
       // eslint-disable-next-line prefer-destructuring
       value.innerText = parts[1];
       value.classList.add('number');
