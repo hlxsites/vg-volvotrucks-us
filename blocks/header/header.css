@@ -475,6 +475,7 @@ header nav .sections .section .navigation-cta {
     width: 100%;
     padding: 0;
     margin: 0;
+    opacity: 1;
   }
 
   header nav .search div {
@@ -694,7 +695,7 @@ header nav .sections .section .navigation-cta {
     color: var(--link-color);
     font-weight: 700;
   }
-  
+
   header nav .sections .section.expand > ul > li > ul > li {
     width: 126px;
   }
