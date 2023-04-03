@@ -655,23 +655,28 @@ function makeSpecificationTable(main, document) {
       // remove mobile versions mobileSpecsContainer
       if (st.nextElementSibling?.matches('.mobileSpecsContainer')) st.nextElementSibling.remove();
 
-      const headerTable = st.firstElementChild;
-      const images = [...headerTable.querySelectorAll('img')]
-      const [ name, ...titles ] = [...headerTable.querySelectorAll('.header td')];
       const cells = [['Specifications']];
-
-      const headerRow = [ name.textContent.trim() ];
-      titles.forEach((title, i) => {
-        const div = document.createElement('div');
-        if (images[i]) div.append(images[i], document.createElement('br'));
-        div.append(...title.childNodes);
-        headerRow.push(div);
-      });
-      cells.push(headerRow);
+      const headerTable = st.firstElementChild;
+      if (headerTable.tagName === 'table') {
+        const images = [...headerTable.querySelectorAll('img')]
+        const [ name, ...titles ] = [...headerTable.querySelectorAll('.header td')];
+        const headerRow = [ name.textContent.trim() ];
+        titles.forEach((title, i) => {
+          const div = document.createElement('div');
+          if (images[i]) div.append(images[i], document.createElement('br'));
+          div.append(...title.childNodes);
+          headerRow.push(div);
+        });
+        cells.push(headerRow);
+      } else if (['H2', 'H3', 'H4'].indexOf(headerTable.tagName) >= 0) {
+        st.before(headerTable);
+      }
 
       // for each collapsible section
       st.querySelectorAll('button').forEach(({ textContent: label, nextElementSibling: content }) => {
-        cells.push([ label.trim() ]);
+        const button = document.createElement('strong');
+        button.textContent = label.trim();
+        cells.push([ button ]);
         content.querySelectorAll('tr').forEach((tr) => {
           cells.push([...tr.querySelectorAll('td')].map((td) => {
             const div = document.createElement('div');
