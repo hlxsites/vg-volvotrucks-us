@@ -101,7 +101,9 @@ export default async function decorate(block) {
     const row = rows[i];
     const cells = row.children;
 
-    if (cells.length === 1 && (!singleColumn || (cells[0].firstElementChild && cells[0].firstElementChild.tagName === 'STRONG'))) {
+    if (cells.length === 1
+      && (!singleColumn
+        || (cells[0].children.length === 1 && cells[0].firstElementChild && cells[0].firstElementChild.tagName === 'STRONG'))) {
       const button = document.createElement('button');
       button.className = 'rowgroup-header';
       button.type = 'button';
