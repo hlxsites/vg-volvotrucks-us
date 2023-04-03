@@ -65,6 +65,7 @@
   --overlay-background-color: #eee;
   --highlight-background-color: #ccc;
   --volvo-text-gray: #53565A;
+  --volvo-text-black: #000;
   --volvo-text-light-gray: #A7A8A9;
   --text-color: var(--volvo-text-gray);
   --btn-background-hover: #e1dfdd;
@@ -130,6 +131,7 @@ body.appear {
 }
 
 header {
+  position: relative;
   min-height: var(--nav-height);
 }
 
@@ -147,7 +149,15 @@ header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
   z-index: 1020;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
 }
+
+/* specific page styles */
+main.center { text-align: center; }
+main.center :where(.block) { text-align: initial; }
 
 h1, h2, h3,
 h4, h5, h6 {
@@ -242,6 +252,12 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+a.button.primary.dark,
+button.primary {
+  color: var(--c-white);
+  background-color: var(--text-color);
+}
+
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
@@ -251,6 +267,8 @@ a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
 }
+
+/* commont elements */
 
 main input {
   font-size: 1.25rem;
@@ -268,19 +286,6 @@ main input {
 
 main input:hover {
   border: 1px solid var(--text-color);
-}
-
-main .section {
-  margin: 48px 0;
-}
-
-main .section:first-child {
-  margin-top: 0;
-}
-
-main .section > div {
-  padding: 0 15px;
-  margin: 0 auto;
 }
 
 main pre {
@@ -326,6 +331,17 @@ main p img {
   margin: auto;
 }
 
+/* sections */
+
+main .section > div {
+  padding: 0 15px;
+  margin: 48px auto;
+}
+
+main .section:first-child > div {
+  margin-top: 0;
+}
+
 main .section-with-background {
   --text-color: white;
 
@@ -359,25 +375,40 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-.section.tabbed-container-full-width > div {
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
+ul.cta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul.cta-list li {
+  padding: 0 50px;
+}
+
+main .section.tabbed-container-full-width > div {
   padding: 0;
   width: unset;
 }
 
-.section.tabbed-container ul.tab-navigation {
+main .section.tabbed-container ul.tab-navigation {
   padding: 0;
   margin: 25px;
   text-align: center;
 }
 
-.section.tabbed-container ul.tab-navigation li {
+main .section.tabbed-container ul.tab-navigation li {
   margin: 0 auto;
   padding: 0 1% 8px;
   display: block;
   width: 35%;
 }
 
-.section.tabbed-container ul.tab-navigation button {
+main .section.tabbed-container ul.tab-navigation button {
   background: 0 0;
   border: none;
   color: var(--volvo-text-gray);
@@ -385,8 +416,8 @@ main .section.highlight {
   margin: 0;
 }
 
-.section.tabbed-container ul.tab-navigation li.active,
-.section.tabbed-container ul.tab-navigation li:hover {
+main .section.tabbed-container ul.tab-navigation li.active,
+main .section.tabbed-container ul.tab-navigation li:hover {
   border-bottom: 3px solid var(--link-color);
 }
 
@@ -454,7 +485,7 @@ a.button.text-link-with-video::after {
 }
 
 @media screen and (min-width: 480px) {
-  .section.tabbed-container ul.tab-navigation li {
+  main .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
     display: inline-block;
     width: unset;
@@ -464,6 +495,12 @@ a.button.text-link-with-video::after {
 @media (min-width: 768px) {
   main .section > div {
     width: 756px;
+  }
+
+  ul.cta-list {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -478,8 +515,7 @@ a.button.text-link-with-video::after {
   header .sub-nav.block {
     position: fixed;
     top: var(--nav-height);
-    left: 0;
-    right: 0;
+    bottom: unset;
   }
 }
 
@@ -495,12 +531,12 @@ a.button.text-link-with-video::after {
     --sub-nav-height: 48px;
   }
 
-  main {
-    margin: 30px 0;
-  }
-
   main .section > div {
     width: 960px;
+  }
+
+  main .section:first-child > div {
+    margin-top: 30px;
   }
 
   header .sub-nav.block {
@@ -512,4 +548,8 @@ a.button.text-link-with-video::after {
   main .section > div {
     width: 1200px;
   }
+}
+
+.video-link-wrapper {
+  text-align: center;
 }

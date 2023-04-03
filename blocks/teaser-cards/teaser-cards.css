@@ -4,11 +4,6 @@
   --text-color-80: rgb(83 86 90 / 80%);
 }
 
-/* boilerplate: the block element itself that gets passed into js decorate() */
-.block.teaser-cards {
-  margin-block-start: 48px;
-}
-
 .block.teaser-cards.center {
   text-align: center;
 }
@@ -40,9 +35,11 @@
 }
 
 /* teaser title */
-.block.teaser-cards :is(h2, h3) {
-  margin: 0;
-  font-size: var(--heading-font-size-m)
+.block.teaser-cards :is(h2, h3, h4) {
+  margin: 0 0 10px;
+  font-size: var(--heading-font-size-m);
+  letter-spacing: -.1px;
+  line-height: 1.3333em;
 }
 
 .block.teaser-cards h2 {
@@ -56,6 +53,7 @@
 .block.teaser-cards p.text {
   font-size: var(--body-font-size-xs);
   margin: 0 0 8px;
+  letter-spacing: -.1px;
 }
 
 /* cta's (maybe remove button container completely) */
@@ -96,6 +94,15 @@
   color: var(--btn-hover);
 }
 
+.block.teaser-cards .teaser.with-cta-list :is(h2, h3, h4) a::after {
+  display: none;
+}
+
+/* center */
+.block.teaser-cards.center .teaser {
+  text-align: center;
+}
+
 /* link list on mobile */
 .block.teaser-cards.link-list-on-mobile > div {
   flex-flow: column;
@@ -119,6 +126,10 @@
   /* each teaser div in the row */
   .block.teaser-cards .teaser {
     width: 50%;
+  }
+
+  .block.teaser-cards :is(h2, h3) {
+    margin: 24px 0 10px;
   }
 
   /* image */
