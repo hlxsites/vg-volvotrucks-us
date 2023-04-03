@@ -27,6 +27,7 @@
     row-gap: var(--grid-row-gap);
     column-gap: var(--grid-col-gap);
     grid-template-rows: repeat(calc(var(--grid-col-count) * var(--grid-row-count), 1fr));
+    grid-auto-flow: column;
 }
 
 .block.teaser-grid>ul>li {
