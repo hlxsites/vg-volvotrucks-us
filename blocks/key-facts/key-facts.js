@@ -15,8 +15,22 @@ export default function decorate(block) {
     const paragraphs = col.querySelectorAll('p');
     paragraphs.forEach((paragraph) => stripEmptyTags(col, paragraph));
 
-    // add trailing line if needed
-    if (block.classList.contains('wide-columns')) {
+    // find and split number/unit
+    const value = col.querySelector('strong');
+    if (value) {
+      const parts = value.innerText.match('([0-9,.]+)(.*)');
+      console.log(parts);
+      // eslint-disable-next-line prefer-destructuring
+      value.innerText = parts[1];
+      value.classList.add('number');
+      const unit = document.createElement('strong');
+      unit.classList.add('unit');
+      // eslint-disable-next-line prefer-destructuring
+      unit.innerText = parts[2];
+      value.parentNode.append(unit);
+    }
+    // add trailing line div if needed
+    if (block.classList.contains('trailing-line')) {
       col.append(document.createElement(('div')));
     }
   });

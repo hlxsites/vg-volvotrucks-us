@@ -9,24 +9,32 @@
   gap: 0 30px;
 }
 
-.key-facts-wrapper .key-fact {
-  display: flex;
-  flex-flow: column;
-  flex: 0 0 33%;
-  align-items: center;
-  padding: 0 15px;
-}
-
-.key-facts-wrapper .key-facts.wide-columns .key-fact {
-  flex: 0 0 100%;
-}
-
 .key-facts-wrapper .key-facts.wide-columns > div {
   gap: 0;
 }
 
+.key-facts-wrapper .key-fact {
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 100%;
+  align-items: center;
+  padding: 0 15px;
+}
+
+
+.key-facts-wrapper .key-fact p {
+  margin: 0;
+  text-align: center;
+}
+
+/* icon */
+.key-facts-wrapper .key-fact i.fa {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
 /* title */
-.key-facts-wrapper .key-facts.wide-columns h4 {
+.key-facts-wrapper .key-facts h4 {
   margin: 0 0 16px 0;
   font-family: var(--ff-volvo-novum);
   font-size: 2.0rem;
@@ -35,52 +43,34 @@
 }
 
 /* intro */
-.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(1) {
+.key-facts-wrapper .key-facts h4 + p {
   font-size: 1.6rem;
-  margin: 0;
+  margin-bottom: 8px;
 }
 
 /* number */
-.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(2) {
-  margin: 8px 0;
-}
-
-.key-facts-wrapper .key-facts .key-fact p:nth-of-type(1) {
-  margin: 6px 0 0 0;
-}
-
-.key-facts-wrapper .key-facts .key-fact p:nth-of-type(1) strong {
+.key-facts-wrapper .key-facts p strong.number {
+  display: block;
+  margin-bottom: 16px ;
   font-family: var(--ff-volvo-broadprodigital);
   font-size: 6.0rem;
   line-height: 4.8rem;
   font-weight:400;
 }
 
-.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(2) strong {
-  font-family: var(--ff-volvo-broadprodigital);
-  font-size: 6.0rem;
-  line-height: 7.2rem;
-  font-weight:400;
-}
-
 /* unit */
-.key-facts-wrapper .key-facts .key-fact p:nth-of-type(2) {
-  margin: 0;
-}
-
-.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(3) strong, 
-.key-facts-wrapper .key-facts .key-fact p:nth-of-type(2) strong {
-  margin: 0;
+.key-facts-wrapper .key-facts p strong.unit {
+  display:block;
+  margin-bottom: 8px;
   font-family: var(--ff-volvo-novum);
   font-size: 1.6rem;
 }
 
 /* description */
-.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(4)  {
+.key-facts-wrapper .key-facts p:last-of-type {
   margin-bottom: 48px;
   font-family: var(--ff-volvo-novum);
   font-size: 1.6rem;
-  text-align: center;
 }
 
 /* the trailing line */
@@ -97,27 +87,18 @@
   border-top: 3px solid #E1DFDD;
 }
 
-.key-facts-wrapper .key-fact p {
-  margin: 0 0 2.4rem;
-}
-
-.key-facts-wrapper .key-fact i.fa {
-  font-size: 30px;
-}
-
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 576px) {
+  .key-facts-wrapper .key-fact {
+    flex: 0 0 16.6667%;
+  }
+  
   .key-facts-wrapper .key-facts.wide-columns .key-fact {
     flex: 0 0 50%;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .key-facts-wrapper .key-fact {
-    flex: 0 0 16.6667%;
-  }
-
   .key-facts-wrapper .key-facts.wide-columns .key-fact {
     flex: 0 0 33.3333%;
   }
-
 }
