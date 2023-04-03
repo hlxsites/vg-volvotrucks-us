@@ -14,19 +14,19 @@ async function buildArticleHero(container) {
   const headAlt = getMetadata('og:image:alt');
 
   const row = createElement('div', ['row', 'size-img']);
-  const headImg = createOptimizedPicture(headPic, headAlt);
+  const headImg = createOptimizedPicture(headPic, headAlt, false, [{ width: '380', height: '214' }]);
   const content = createElement('div', 'content');
   const topDetails = createElement('div', ['top-details', 'hide-desktop']);
   content.append(topDetails);
-  const calendarIcon = createElement('span', ['icon', 'icon-fa-calendar']);
-  topDetails.append(calendarIcon);
-  const pubDateSpan = createElement('span', 'date');
+  //const calendarIcon = createElement('span', ['icon', 'icon-fa-calendar']);
+  //topDetails.append(calendarIcon);
+  const pubDateSpan = createElement('span', 'fa-calendar');
   pubDateSpan.innerHTML = pubdate;
   topDetails.append(pubDateSpan);
 
-  const timeIcon = createElement('span', ['icon', 'icon-fa-clock-o']);
-  topDetails.append(timeIcon);
-  const timeSpan = createElement('span', 'time');
+  //const timeIcon = createElement('span', ['icon', 'icon-fa-clock-o']);
+  //topDetails.append(timeIcon);
+  const timeSpan = createElement('span', 'fa-clock-o');
   timeSpan.innerHTML = readtime;
   topDetails.append(timeSpan);
 
@@ -43,12 +43,12 @@ async function buildArticleHero(container) {
   details.append(authorSpan);
 
   const hideMobile = createElement('span', 'hide-mobile');
-  const calendarIconClone = calendarIcon.cloneNode();
-  hideMobile.append(calendarIconClone);
+  //const calendarIconClone = calendarIcon.cloneNode();
+  //hideMobile.append(calendarIconClone);
   const pubDateSpanClone = pubDateSpan.cloneNode(true);
   hideMobile.append(pubDateSpanClone);
-  const timeIconClone = timeIcon.cloneNode();
-  hideMobile.append(timeIconClone);
+  //const timeIconClone = timeIcon.cloneNode();
+  //hideMobile.append(timeIconClone);
   const timeSpanClone = timeSpan.cloneNode(true);
   hideMobile.append(timeSpanClone);
   details.append(hideMobile);
@@ -113,6 +113,8 @@ export default async function decorate(doc) {
   while (!sectionFound && sections.length > 0) {
     const section = sections.pop();
     if (!sidebarPreviousSection) {
+      sidebarPreviousSection = section;
+    } else if (section.classList.contains('related-articles-container')) {
       sidebarPreviousSection = section;
     } else {
       sectionFound = true;

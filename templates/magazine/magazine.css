@@ -1,4 +1,4 @@
-body.magazine > main {
+body.magazine>main {
   position: relative;
   padding: 108px 15px 0 15px;
   margin: 0 auto;
@@ -26,45 +26,51 @@ body.magazine > main {
   height: 250px;
 }
 
-.section.template.article-hero > div > div.content {
+.section.template.article-hero>div>div.content {
   order: 1;
   width: 100%;
   height: 175px;
 }
 
-.section.template.article-hero > div > div > div.top-details.hide-desktop {
+.section.template.article-hero>div>div>div.top-details.hide-desktop {
   display: inline;
 }
 
-.section.template.article-hero > div > div > h3.title-sentence {
-  font-size: 24px!important;
-    letter-spacing: -.1px!important;
-    color: var(--volvo-text-gray);
-    margin-bottom: 10px;
-    font-weight: 700;
-    line-height: 32px!important;
+.section.template.article-hero span.fa-calendar::before,
+.section.template.article-hero span.fa-clock-o::before {
+font-family: var(--ff-fontawesome);
+padding: 0 5px;
 }
 
-.section.template.article-hero > div > div > div.details span.hide-mobile {
+.section.template.article-hero>div>div>h3.title-sentence {
+  font-size: 24px !important;
+  letter-spacing: -.1px !important;
+  color: var(--volvo-text-gray);
+  margin-bottom: 10px;
+  font-weight: 700;
+  line-height: 32px !important;
+}
+
+.section.template.article-hero>div>div>div.details span.hide-mobile {
   display: none;
 }
 
-.section.template.article-hero > div > div > div.top-details {
+.section.template.article-hero>div>div>div.top-details {
   font-size: var(--body-font-size-xs);
 
 }
 
-.section.template.article-hero > div > div > div.details {
- color: var(--volvo-text-light-gray);
- font-size: var(--body-font-size-xs);
+.section.template.article-hero>div>div>div.details {
+  color: var(--volvo-text-light-gray);
+  font-size: var(--body-font-size-xs);
 }
 
-.section.template.article-hero > div > div > div.top-details > span,
-.section.template.article-hero > div > div > div.details span {
+.section.template.article-hero>div>div>div.top-details>span,
+.section.template.article-hero>div>div>div.details span {
   margin: 0 15px 0 8px;
 }
 
-.section.template.article-hero > div > div > div.details > i {
+.section.template.article-hero>div>div>div.details>i {
   display: inline-block;
   height: 35px;
   width: 35px;
@@ -76,15 +82,15 @@ body.magazine > main {
   font-size: 15px;
 }
 
-.section.template.article-sidebar > div.topics > ul.topic-list > li {
+.section.template.article-sidebar>div.topics>ul.topic-list>li {
   list-style: none;
-    line-height: 1.2;
-    color: var(--volvo-text-light-gray);
+  line-height: 1.2;
+  color: var(--volvo-text-light-gray);
 }
 
-.section.template.article-sidebar > div.topics > ul.topic-list > li::before {
+.section.template.article-sidebar>div.topics>ul.topic-list>li::before {
   content: '';
-  border: 4px solid var(--volvo-text-gray)!important;
+  border: 4px solid var(--volvo-text-gray) !important;
   margin-top: 5px;
   margin-left: -20px;
   position: absolute;
@@ -106,21 +112,21 @@ body.magazine > main {
 
 .section.article-sidebar p {
   color: #53565A;
-    font-weight: 700;
-    font-size: 12px;
+  font-weight: 700;
+  font-size: 12px;
 }
 
-.section.related-articles-container > div.default-content-wrapper {
+.section.related-articles-container>div.default-content-wrapper {
   text-align: center;
 }
 
 @media screen and (min-width: 992px) {
-  body.magazine > main {
+  body.magazine>main {
     padding-top: 0;
-    width: 75%!important;
+    width: 75% !important;
   }
-  
-  main .section > div {
+
+  main .section>div {
     width: 75%;
   }
 
@@ -131,11 +137,11 @@ body.magazine > main {
     width: 100%;
   }
 
-  .section.template.article-hero > div > div > div.top-details.hide-desktop {
+  .section.template.article-hero>div>div>div.top-details.hide-desktop {
     display: none;
   }
 
-  .section.template.article-hero > div > div > div.details > span.hide-mobile {
+  .section.template.article-hero>div>div>div.details>span.hide-mobile {
     display: inline;
   }
 
@@ -147,10 +153,10 @@ body.magazine > main {
   }
 
   .section.template .row.size-img picture img {
-    height: 410px!important;
+    height: 410px !important;
   }
-  
-  .section.template.article-hero > div > div.content {
+
+  .section.template.article-hero>div>div.content {
     order: 2;
     border-top: 1px solid var(--background-hover-color);
     border-bottom: 1px solid var(--background-hover-color);
@@ -161,7 +167,7 @@ body.magazine > main {
     position: relative;
   }
 
-  .section.template.article-hero > div > div > div.details {
+  .section.template.article-hero>div>div>div.details {
     position: absolute;
     bottom: 10px;
   }
@@ -172,18 +178,18 @@ body.magazine > main {
     width: 75%;
   }
 
-  .section.columns-container > div {
+  .section.columns-container>div {
     width: 100%;
   }
 
   .section.template.article-sidebar {
     float: left;
-    width: 20%!important;
+    width: 20% !important;
     margin: 0 1%;
     padding: 6px 0 0;
   }
 
-  .section.template.article-sidebar > div {
+  .section.template.article-sidebar>div {
     width: 100%;
   }
 }
