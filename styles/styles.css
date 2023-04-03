@@ -138,6 +138,7 @@ header {
 header .header.block {
   background-color: white;
   min-height: var(--nav-height);
+  position: relative;
   z-index: 1050;
 }
 
