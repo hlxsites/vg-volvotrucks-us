@@ -163,6 +163,13 @@
     border-top: 1px solid var(--background-light-gray);
 }
 
+.block.press-releases h2 {
+    font-family: var(--ff-volvo-broadprodigital);
+    font-size: 6rem;
+    line-height: 3rem;
+    text-align: center;
+}
+
 @media screen and (min-width: 768px){
     .block.press-releases .list-filter fieldset {
         display: flex;

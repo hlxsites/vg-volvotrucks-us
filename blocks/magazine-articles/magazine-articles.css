@@ -234,6 +234,14 @@
     user-select: none;
 }
 
+.magazine-articles-container h1,
+.magazine-articles-container h2  {
+    font-family: var(--ff-volvo-broadprodigital);
+    font-size: 6rem;
+    line-height: 3rem;
+    text-align: center;
+}
+
 @media screen and (min-width: 767px) {
     .block .latest-magazine-articles,
     .block .related-magazine-articles {
