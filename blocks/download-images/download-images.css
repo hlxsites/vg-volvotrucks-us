@@ -26,7 +26,7 @@
   transform: scale(1.05);
 }
 
-.download-images .image-container::after {
+.download-images .image-container a::after {
   content: '\f019';
   font-family: var(--ff-fontawesome);
   color: #fff;
@@ -46,7 +46,7 @@
     padding: 0;
   }
 
-  .download-images .image-container::after {
+  .download-images .image-container a::after {
     bottom: -5%;
   }
 }
