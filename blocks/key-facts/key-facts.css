@@ -35,7 +35,7 @@
 
 /* title */
 .key-facts-wrapper .key-facts h4 {
-  margin: 0 0 16px 0;
+  margin-bottom: 16px;
   font-family: var(--ff-volvo-novum);
   font-size: 2.0rem;
   font-weight: 400;
@@ -74,7 +74,7 @@
 }
 
 /* the trailing line */
-.key-fact div {
+.key-facts-wrapper .key-fact > div {
   width: 100%;;
 }
 
