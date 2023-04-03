@@ -11,8 +11,13 @@ export default function decorate(block) {
   facts.forEach((col) => {
     col.classList.add('key-fact');
     const icon = col.querySelector('i');
-    col.prepend(icon);
+    if (icon) col.prepend(icon);
     const paragraphs = col.querySelectorAll('p');
     paragraphs.forEach((paragraph) => stripEmptyTags(col, paragraph));
+
+    // add trailing line if needed
+    if (block.classList.contains('wide-columns')) {
+      col.append(document.createElement(('div')));
+    }
   });
 }

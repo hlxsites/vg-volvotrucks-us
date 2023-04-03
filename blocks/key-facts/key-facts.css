@@ -10,14 +10,91 @@
 }
 
 .key-facts-wrapper .key-fact {
-  flex: 0 0 33.33%;
+  display: flex;
+  flex-flow: column;
+  flex: 0 0 33%;
+  align-items: center;
+  padding: 0 15px;
 }
 
-.key-facts-wrapper .key-fact h3 {
+.key-facts-wrapper .key-facts.wide-columns .key-fact {
+  flex: 0 0 100%;
+}
+
+.key-facts-wrapper .key-facts.wide-columns > div {
+  gap: 0;
+}
+
+/* title */
+.key-facts-wrapper .key-facts.wide-columns h4 {
+  margin: 0 0 16px 0;
+  font-family: var(--ff-volvo-novum);
+  font-size: 2.0rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* intro */
+.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(1) {
+  font-size: 1.6rem;
   margin: 0;
+}
+
+/* number */
+.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(2) {
+  margin: 8px 0;
+}
+
+.key-facts-wrapper .key-facts .key-fact p:nth-of-type(1) {
+  margin: 6px 0 0 0;
+}
+
+.key-facts-wrapper .key-facts .key-fact p:nth-of-type(1) strong {
   font-family: var(--ff-volvo-broadprodigital);
   font-size: 6.0rem;
   line-height: 4.8rem;
+  font-weight:400;
+}
+
+.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(2) strong {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 6.0rem;
+  line-height: 7.2rem;
+  font-weight:400;
+}
+
+/* unit */
+.key-facts-wrapper .key-facts .key-fact p:nth-of-type(2) {
+  margin: 0;
+}
+
+.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(3) strong, 
+.key-facts-wrapper .key-facts .key-fact p:nth-of-type(2) strong {
+  margin: 0;
+  font-family: var(--ff-volvo-novum);
+  font-size: 1.6rem;
+}
+
+/* description */
+.key-facts-wrapper .key-facts.wide-columns .key-fact p:nth-of-type(4)  {
+  margin-bottom: 48px;
+  font-family: var(--ff-volvo-novum);
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+/* the trailing line */
+.key-fact div {
+  width: 100%;;
+}
+
+.key-fact div::before {
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  width: 20%;
+  padding-top: 30px;
+  border-top: 3px solid #E1DFDD;
 }
 
 .key-facts-wrapper .key-fact p {
@@ -28,8 +105,19 @@
   font-size: 30px;
 }
 
+@media screen and (min-width: 480px) {
+  .key-facts-wrapper .key-facts.wide-columns .key-fact {
+    flex: 0 0 50%;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .key-facts-wrapper .key-fact {
     flex: 0 0 16.6667%;
   }
+
+  .key-facts-wrapper .key-facts.wide-columns .key-fact {
+    flex: 0 0 33.3333%;
+  }
+
 }
