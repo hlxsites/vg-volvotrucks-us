@@ -28,7 +28,9 @@ function normalizeCells(cells, rowheaderRole = 'rowheader', cellRole = 'cell') {
     if (!cell.children.length && cell.textContent !== '') {
       cell.innerHTML = `<p>${cell.textContent}</p>`;
     }
-    if (j === 0) cell.role = rowheaderRole;
+    if (cell.firstElementChild && cell.firstElementChild.tagName === 'BR') cell.firstElementChild.remove();
+    if (cell.lastElementChild && cell.lastElementChild.tagName === 'BR') cell.lastElementChild.remove();
+    if (j === 0 && cells.length > 1) cell.role = rowheaderRole;
     else cell.role = cellRole;
     cell.className = 'cell';
   });
@@ -56,8 +58,9 @@ export default async function decorate(block) {
   block.style.setProperty('--grid-col-count', colCount);
   const header = block.firstElementChild;
   const pictures = header.querySelectorAll('picture');
+  let firstRowIndex = 0;
 
-  // table image header
+  // table header with images
   if (pictures.length) {
     const row = document.createElement('div');
     row.className = 'image-header';
@@ -69,29 +72,36 @@ export default async function decorate(block) {
     });
     header.insertAdjacentElement('beforebegin', row);
     normalizeCells(row.children, 'cell');
-  }
 
-  // column header and mobile column header
-  header.className = 'column-header';
-  normalizeCells(header.children, 'rowheader', 'columnheader');
-  const mobileColumnHeader = document.createElement('div');
-  mobileColumnHeader.className = 'column-header-mobile';
-  mobileColumnHeader.innerHTML = `<select>
-    ${[...header.querySelectorAll('[role="columnheader"]')]
+    // column header and mobile column header
+    header.className = 'column-header';
+    normalizeCells(header.children, 'rowheader', 'columnheader');
+    const mobileColumnHeader = document.createElement('div');
+    mobileColumnHeader.className = 'column-header-mobile';
+    mobileColumnHeader.innerHTML = `<select>
+      ${[...header.querySelectorAll('[role="columnheader"]')]
     .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
     .join('')}
-    </select>`;
-  mobileColumnHeader.firstElementChild.addEventListener('change', changeMobileColumn);
-  header.insertAdjacentElement('afterend', mobileColumnHeader);
+      </select>`;
+    mobileColumnHeader.firstElementChild.addEventListener('change', changeMobileColumn);
+    header.insertAdjacentElement('afterend', mobileColumnHeader);
+    firstRowIndex = 3;
+  }
 
   // rowgroups and rows
   const rows = [...block.children];
   let rowCount = 0;
-  for (let i = 3, rowgroup = null; i < rows.length; i += 1) {
+  // special case: if all rows are single column (accordion style) the rowgroup headings must be
+  // bold
+  let singleColumn = true;
+  for (let i = firstRowIndex; i < rows.length && singleColumn; i += 1) {
+    singleColumn = rows[i].children.length === 1;
+  }
+  for (let i = firstRowIndex, rowgroup = null; i < rows.length; i += 1) {
     const row = rows[i];
     const cells = row.children;
 
-    if (cells.length === 1) {
+    if (cells.length === 1 && (!singleColumn || (cells[0].firstElementChild && cells[0].firstElementChild.tagName === 'STRONG'))) {
       const button = document.createElement('button');
       button.className = 'rowgroup-header';
       button.type = 'button';
