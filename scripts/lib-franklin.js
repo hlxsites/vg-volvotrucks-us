@@ -139,7 +139,6 @@ export function decorateIcons(element = document) {
       const i = document.createElement('i');
       i.setAttribute('aria-hidden', 'true');
       i.className = `${iconPrefix} ${icon}`;
-      if (span.classList[2]?i.classList.add(span.classList[2]):'');
       span.replaceWith(i);
       return;
     }

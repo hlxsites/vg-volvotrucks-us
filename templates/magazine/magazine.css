@@ -52,7 +52,7 @@ i.fa {
   line-height: 32px !important;
 }
 
-.section.template.article-hero>div>div>div.details .hide-mobile {
+.section.template.article-hero>div>div>div.details span.hide-mobile {
   display: none;
 }
 
@@ -66,13 +66,18 @@ i.fa {
 }
 
 .section.template.article-hero>div>div>div.top-details>span,
-.section.template.article-hero>div>div>div.details>span {
+.section.template.article-hero>div>div>div.details>span,
+.section.template.article-hero>div>div>div.details>span>span {
   margin: 0 16px 0 8px;
   line-height: 35px;
   vertical-align: middle;
 }
 
-.section.template.article-hero>div>div>div.details>i.fa-user {
+.section.template.article-hero > div > div > div.details > span.hide-mobile > span.date {
+  min-width: 110px;
+}
+
+.section.template.article-hero>div>div>div.details>i {
   display: inline-block;
   height: 35px;
   width: 35px;
@@ -143,7 +148,7 @@ i.fa {
     display: none;
   }
 
-  .section.template.article-hero>div>div>div.details>.hide-mobile {
+  .section.template.article-hero>div>div>div.details>span.hide-mobile {
     display: inline-block;
   }
 
