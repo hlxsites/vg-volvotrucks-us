@@ -11,7 +11,10 @@
  */
 /* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax */
 
-import { toClassName } from './lib-franklin.js';
+import {
+  readBlockConfig,
+  toClassName,
+} from './lib-franklin.js';
 
 async function* request(url, context) {
   const { chunks, sheet, fetch } = context;
@@ -332,17 +335,30 @@ function renderFilters(data, createFilters) {
 
 // eslint-disable-next-line max-len
 export function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
-  const filteredData = filter(pressReleases, getActiveFilters());
+  const cfg = readBlockConfig(mainEl);
+  mainEl.textContent = '';
+  let actFilter = getActiveFilters();
+  let relatedPressReleases = false;
+  if (cfg.tags) {
+    actFilter = {
+      ...actFilter,
+      ...{ tags: toClassName(cfg.tags) },
+    };
+    relatedPressReleases = true;
+  }
+  const filteredData = filter(pressReleases, actFilter);
 
   let page = parseInt(getSelectionFromUrl('page'), 10);
   page = Number.isNaN(page) ? 1 : page;
   const start = (page - 1) * limitPerPage;
-  const filterElements = renderFilters(pressReleases, createFilters);
-  mainEl.appendChild(filterElements);
-
+  let pagination;
+  if (!relatedPressReleases) {
+    const filterElements = renderFilters(pressReleases, createFilters);
+    mainEl.appendChild(filterElements);
+    pagination = createPagination(filteredData, page, limitPerPage);
+    mainEl.appendChild(pagination);
+  }
   const dataToDisplay = filteredData.slice(start, start + limitPerPage);
-  const pagination = createPagination(filteredData, page, limitPerPage);
-  mainEl.appendChild(pagination);
   const articleList = document.createElement('ul');
   articleList.className = 'article-list';
   dataToDisplay.forEach((pressRelease) => {
@@ -352,5 +368,7 @@ export function createList(pressReleases, filter, createFilters, buildPressRelea
     articleList.appendChild(articleItem);
   });
   mainEl.appendChild(articleList);
-  mainEl.appendChild(pagination.cloneNode(true));
+  if (pagination) {
+    mainEl.appendChild(pagination.cloneNode(true));
+  }
 }
