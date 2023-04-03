@@ -32,14 +32,17 @@ body.magazine>main {
   height: 175px;
 }
 
+i.fa {
+  min-width: 16px;
+  display: inline-block;
+}
+
 .section.template.article-hero>div>div>div.top-details.hide-desktop {
   display: inline;
 }
 
-.section.template.article-hero span.fa-calendar::before,
-.section.template.article-hero span.fa-clock-o::before {
-font-family: var(--ff-fontawesome);
-padding: 0 5px;
+.section.template.article-hero>div>div>div.top-details.hide-desktop>span.date {
+  min-width: 100px;
 }
 
 .section.template.article-hero>div>div>h3.title-sentence {
@@ -57,7 +60,6 @@ padding: 0 5px;
 
 .section.template.article-hero>div>div>div.top-details {
   font-size: var(--body-font-size-xs);
-
 }
 
 .section.template.article-hero>div>div>div.details {
@@ -66,8 +68,9 @@ padding: 0 5px;
 }
 
 .section.template.article-hero>div>div>div.top-details>span,
-.section.template.article-hero>div>div>div.details span {
-  margin: 0 15px 0 8px;
+.section.template.article-hero>div>div>div.details>span {
+  margin: 0 15px 8px 8px;
+  line-height: 35px;
 }
 
 .section.template.article-hero>div>div>div.details>i {
