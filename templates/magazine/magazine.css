@@ -68,7 +68,8 @@ i.fa {
 }
 
 .section.template.article-hero>div>div>div.top-details>span,
-.section.template.article-hero>div>div>div.details>span {
+.section.template.article-hero>div>div>div.details>span,
+.section.template.article-hero>div>div>div.details>span>span {
   margin: 0 15px 8px 8px;
   line-height: 35px;
 }
