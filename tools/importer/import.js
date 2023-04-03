@@ -799,6 +799,40 @@ function makeKeyFacts(main, document) {
   })
 }
 
+function makeDocumentList(main, document) {
+  const docLists = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.documentList-container');
+  if (docLists) {
+    console.log(`Document List(s) found: ${docLists.length}`);
+    docLists.forEach((dl) => {
+      const itemDivs = dl.querySelectorAll('div.inner > a');
+      const cells = [['Document List']];
+      itemDivs.forEach((doc) => {
+        const badh3 = doc.firstChild;
+        console.log(badh3);
+        const newDiv = document.createElement('div');
+        newDiv.innerHTML = badh3.innerHTML;
+        badh3.replaceWith(newDiv);
+        if (doc.classList.contains('documentList-document-new')) {
+          const bold = document.createElement('strong');
+          const bDiv = document.createElement('div');
+          bold.append(bDiv);
+          if (doc.childNodes.length > 1) {
+            bDiv.innerHTML = doc.firstChild.innerHTML;
+            doc.firstChild.replaceWith(bold);
+            cells.push([doc]);
+          } else {
+            bold.append(doc.firstChild);
+            cells.push([bold]);
+          }
+        } else {
+          cells.push([doc]);
+        }
+      });
+      dl.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+    })
+  }
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -860,6 +894,7 @@ export default {
     styleSubtitleHeaders(main, document, url);
     makeLinkList(main, document);
     makeKeyFacts(main, document);
+    makeDocumentList(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
