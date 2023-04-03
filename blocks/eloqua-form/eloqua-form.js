@@ -5,9 +5,13 @@ const addForm = async (block) => {
 
   const formName = block.innerText.trim();
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
-  const text = await data.text();
-
-  block.innerHTML = text;
+  if (data.ok) {
+    const text = await data.text();
+    block.innerHTML = text;
+  } else {
+    console.error(`failed to load form: ${formName}`);
+    block.innerHTML = '';
+  }
 
   const styles = block.querySelectorAll('style');
 
