@@ -485,7 +485,7 @@ function makeTabbedCarousel(main, document) {
       if (sections.length) {
         const h2 = c.querySelector('h2');
         if (h2) c.insertAdjacentElement('beforebegin', h2);
-        c.insertAdjacentElement('beforebegin', hr(document));
+        if (c.previousElementSibling?.tagName !== 'HR') c.insertAdjacentElement('beforebegin', hr(document));
         c.replaceWith(...sections);
       }
     });
@@ -651,6 +651,37 @@ function makeSpecificationTable(main, document) {
       ths.forEach((th) => {
         th.removeAttribute('colspan');
       });
+
+      // remove mobile versions mobileSpecsContainer
+      if (st.nextElementSibling?.matches('.mobileSpecsContainer')) st.nextElementSibling.remove();
+
+      const headerTable = st.firstElementChild;
+      const images = [...headerTable.querySelectorAll('img')]
+      const [ name, ...titles ] = [...headerTable.querySelectorAll('.header td')];
+      const cells = [['Specifications']];
+
+      const headerRow = [ name.textContent.trim() ];
+      titles.forEach((title, i) => {
+        const div = document.createElement('div');
+        if (images[i]) div.append(images[i], document.createElement('br'));
+        div.append(...title.childNodes);
+        headerRow.push(div);
+      });
+      cells.push(headerRow);
+
+      // for each collapsible section
+      st.querySelectorAll('button').forEach(({ textContent: label, nextElementSibling: content }) => {
+        cells.push([ label.trim() ]);
+        content.querySelectorAll('tr').forEach((tr) => {
+          cells.push([...tr.querySelectorAll('td')].map((td) => {
+            const div = document.createElement('div');
+            div.innerHTML = td.innerHTML;
+            return div;
+          }));
+        });
+      });
+
+      st.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
     });
   }
 }
