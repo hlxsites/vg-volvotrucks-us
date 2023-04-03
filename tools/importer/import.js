@@ -450,6 +450,8 @@ function makeTabbedFeatures(main, document) {
 
       if (contents.length === labels.length) {
         const elements = [hr(document)];
+        const titleWrapper = panel.querySelector('.title-wrapper');
+        if (titleWrapper) elements.unshift(titleWrapper);
         for (let i = 0; i < contents.length; i++) {
           elements.push(contents[i]);
           const metadata = [['Section Metadata'], ['Tabs', labels[i]]];
@@ -604,6 +606,16 @@ function makeImageTextGrid(main, document) {
         const contentContainer = panel.querySelector('.wrapper');
         if (imageLeft) cells.push([imageContainer, contentContainer]);
         else cells.push([contentContainer, imageContainer]);
+        contentContainer.querySelectorAll('a').forEach((a) => {
+          const text = a.textContent.trim();
+          if (text.endsWith('>')) {
+            // secondary link
+            a.textContent = text.substring(0, text.length - 1).trim();
+            const em = document.createElement('em');
+            a.after(em);
+            em.append(a);
+          }
+        })
         panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
       }
     });
