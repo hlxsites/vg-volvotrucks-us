@@ -498,14 +498,28 @@ function makeHubTextBlock(main, document) {
   if (htb) {
     console.log(`hub text block found: ${htb.length}`);
     htb.forEach((block) => {
+      const elements = [hr(document)];
+      // take the heading and eventually the text after
+      const heading = block.querySelector('h2');
+      if (heading) {
+        elements.push(heading);
+        if (heading.nextElementSibling && heading.nextElementSibling.tagName === 'P') {
+          elements.push(heading.nextElementSibling);
+        }
+      }
       const cells = [['Eloqua Form']];
-      const img = new Image();
+      const img = document.createElement('img');
       img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
-      cells.push(['background', `<img src='${img.src}'>`]);
       const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
-      cells.push(['elqFormName', formName.value]);
+      cells.push([formName.value]);
       const form = WebImporter.DOMUtils.createTable(cells, document);
-      block.replaceWith(form);
+      elements.push(form);
+      elements.push(WebImporter.DOMUtils.createTable([
+        ['Section Metadata'],
+        ['Background', img]
+      ], document));
+      elements.push(hr(document));
+      block.replaceWith(...elements);
     });
   }
 }
@@ -704,7 +718,7 @@ function makeSpecificationTable(main, document) {
 }
 
 function makeLinkList(main, document) {
-  const linkLists = main.querySelectorAll('ul.links');
+  let linkLists = main.querySelectorAll('ul.links');
   if (linkLists.length) {
     linkLists.forEach((linkList) => {
       linkList.querySelectorAll('li > a').forEach((a) => {
@@ -713,6 +727,19 @@ function makeLinkList(main, document) {
         a.after(em);
         em.appendChild(a);
       });
+    });
+  }
+  linkLists = main.querySelectorAll('.vhd-button-group');
+  if (linkLists.length) {
+    linkLists.forEach((linkList) => {
+      const list = document.createElement('ul');
+      linkList.querySelectorAll('a.cta').forEach((a) => {
+        // wrap <a> into <em> to make them secondary links
+        const li = document.createElement('li');
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      linkList.replaceWith(list);
     });
   }
 }
