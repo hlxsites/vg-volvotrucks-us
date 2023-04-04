@@ -251,19 +251,17 @@ function makeGridItem(teaser) {
     }
   }
 
-  const txtH3 = teaser.querySelector('a > div > h3');
-  const txtH4 = teaser.querySelector('a > div > h4');
-  let h3 = '';
-  let h4 = '';
-  if (txtH3 && txtH4) {
-    h3 = txtH3.innerHTML;
-    h4 = txtH4.innerHTML;
-  }
+  const txtH3 = teaser.querySelector('div.text > h3');
+  const txtH4 = teaser.querySelector('div.text > h4');
   const gi = document.createElement('div');
-  gi.innerHTML = `<img src='${img.src}'><br /><a href='${newA}'>${newA}</a><br />${h3}<br />${h4}`;
+  const giInnerItems = [`<img src='${img.src}'>`];
+  if (newA) giInnerItems.push(`<a href='${newA}'>${newA}</a>`);
+  if (txtH3) giInnerItems.push(txtH3.innerHTML);
+  if (txtH4) giInnerItems.push(txtH4.innerHTML);
+  gi.innerHTML = giInnerItems.join('<br/>');
 
   if (newA === '') {
-    gi.querySelector('a').remove();
+    gi.querySelector('a')?.remove();
   }
 
   return gi.outerHTML;
