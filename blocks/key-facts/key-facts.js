@@ -16,21 +16,25 @@ export default function decorate(block) {
     paragraphs.forEach((paragraph) => stripEmptyTags(col, paragraph));
 
     // find and split number/unit
-    const value = col.querySelector('strong');
+    const value = col.querySelector('strong:only-child');
     if (value) {
-      const parts = value.innerText.match('([0-9,.]+)(.*)');
-      // eslint-disable-next-line prefer-destructuring
-      value.innerText = parts[1];
-      value.classList.add('number');
-      const unit = document.createElement('strong');
-      unit.classList.add('unit');
-      // eslint-disable-next-line prefer-destructuring
-      unit.innerText = parts[2];
-      value.parentNode.append(unit);
+      const parts = value.innerHTML.match('([0-9,.]+) (.*)');
+      if (parts) {
+        // eslint-disable-next-line prefer-destructuring
+        value.innerText = parts[1];
+        value.classList.add('number');
+        const unit = document.createElement('strong');
+        unit.classList.add('unit');
+        // eslint-disable-next-line prefer-destructuring
+        unit.innerText = parts[2];
+        value.parentNode.append(unit);
+      }
     }
     // add trailing line div if needed
     if (block.classList.contains('trailing-line')) {
-      col.append(document.createElement(('div')));
+      const div = document.createElement('div');
+      div.classList.add('trailing-line');
+      col.append(div);
     }
   });
 }
