@@ -1,0 +1,19 @@
+.document-list.block > div {
+    background-color: #dbdad8;
+    margin-bottom: 5px;
+}
+
+.document-list.block a {
+    padding: 10px 50px 0 20px;
+    color: #333;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    line-height: 32px;
+}
+
+@media (min-width: 768px) {
+    .document-list.block > div {
+        margin-bottom: 10px;
+        padding: 20px 110px 20px 48px;
+    }
+}
