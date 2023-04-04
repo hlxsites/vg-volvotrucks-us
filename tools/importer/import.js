@@ -656,16 +656,31 @@ function makeImageTextGrid(main, document) {
         const contentContainer = panel.querySelector('.wrapper');
         if (imageLeft) cells.push([imageContainer, contentContainer]);
         else cells.push([contentContainer, imageContainer]);
-        contentContainer.querySelectorAll('a').forEach((a) => {
+        
+        const links = contentContainer.querySelectorAll('a');
+        links.forEach((a) => {
           const text = a.textContent.trim();
           if (text.endsWith('>')) {
             // secondary link
             a.textContent = text.substring(0, text.length - 1).trim();
           }
-          const em = document.createElement('em');
-          a.after(em);
-          em.append(a);
+          if (a.parentElement.tagName != 'EM') {
+            const em = document.createElement('em');
+            a.after(em);
+            em.append(a);
+          }
         });
+
+        if (links.length > 1) {
+          const ul = document.createElement('ul');
+          links[0].parentElement.before(ul);
+          links.forEach((link) => {
+            const li = document.createElement('li');
+            li.append(link.parentElement); // link wrapped in em
+            ul.append(li);
+          });
+        }
+
         panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
       }
     });
