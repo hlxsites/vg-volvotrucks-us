@@ -169,7 +169,7 @@ function buildTabbedBlock(main) {
   let tabItems = [];
   let tabType;
   let fullWidth = false;
-  main.querySelectorAll(':scope > div').forEach((section) => {
+  [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const sectionMeta = section.dataset.carousel || section.dataset.tabs;
     if (sectionMeta) {
       const tabContent = document.createElement('div');
@@ -178,6 +178,11 @@ function buildTabbedBlock(main) {
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
+      tabContent.querySelectorAll('p > picture').forEach((pic) => {
+        if (!pic.nextElementSibling && !pic.previousElementSibling) {
+          pic.parentElement.classList.add('picture');
+        }
+      });
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
