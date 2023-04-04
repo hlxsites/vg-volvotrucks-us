@@ -140,6 +140,11 @@ function buildTabbedBlock(main) {
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
+      tabContent.querySelectorAll('p > picture').forEach((pic) => {
+        if (!pic.nextElementSibling && !pic.previousElementSibling) {
+          pic.parentElement.classList.add('picture');
+        }
+      })
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
@@ -147,6 +152,7 @@ function buildTabbedBlock(main) {
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
+      tabType = undefined;
       fullWidth = false;
     }
   });
