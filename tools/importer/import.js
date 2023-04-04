@@ -530,6 +530,26 @@ function makeHubTextBlock(main, document) {
   }
 }
 
+function makeForm(main, document) {
+  document.querySelectorAll('.contact-form.ajax').forEach((form) => {
+    const formNameField = form.querySelector('input[name=elqFormName]');
+    if (formNameField) {
+      // title maybe is in previous element https://www.volvotrucks.us/trucks/vnr-electric/vnr-electric-contact/
+      if (form.previousElementSibling && form.previousElementSibling.matches('.newsArticle')) {
+        const text = form.previousElementSibling.textContent.trim();
+        if (text) {
+          const h2 = document.createElement('h2');
+          h2.textContent = text;
+          form.previousElementSibling.replaceWith(h2);
+        }
+      }
+      const { value: formName } = formNameField;
+      const cells = [['Eloqua Form'], [formName]];
+      form.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+    }
+  });
+}
+
 function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
   const nfp = document.querySelectorAll('.newsFeatures, .imageTextGrid');
   if (nfp) {
@@ -925,6 +945,7 @@ export default {
     makeKeyFacts(main, document);
     makeDocumentList(main, document);
     makeModelIntroduction(main, document);
+    makeForm(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
