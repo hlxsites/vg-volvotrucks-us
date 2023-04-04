@@ -401,7 +401,7 @@ function convertArialCapsTitle(main, document) {
 }
 
 function makeImageText(main, document) {
-  const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText > div:not(.imageText-fullsize-outsideText)');
+  const it = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText > div:not(.imageText-fullsize-outsideText,.imageText-only-text)');
   if (it) {
     console.log(`image text(s) found: ${it.length}`);
     it.forEach((its) => {
@@ -411,6 +411,14 @@ function makeImageText(main, document) {
       its.replaceWith(teaserCards);
     });
   }
+  
+  // small texts in text only
+  document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText > div.imageText-only-text small').forEach((t) => {
+    const cells = [['Text (xs)']];
+      cells.push([t.innerHTML]);
+      const teaserCards = WebImporter.DOMUtils.createTable(cells, document);
+      t.replaceWith(teaserCards);
+  })
 }
 
 function mergeEqualConsecutiveBlocks(main, document) {
@@ -528,7 +536,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
     console.log(`news features panel found: ${nfp.length}`);
     nfp.forEach((panel) => {
       let columns = -1;
-      if (panel.firstElementChild.matches('.newsFeatures-column-3')) columns = 3;
+      if (panel.firstElementChild.matches('.newsFeatures-column-3, .imageTextGrid-3')) columns = 3;
       else if (panel.firstElementChild.matches('.newsFeatures-column-2, .imageTextGrid-2')) columns = 2;
       else if (panel.firstElementChild.matches('.imageTextGrid-4')) columns = 4;
 
@@ -568,6 +576,18 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             links.replaceWith(ul);
           }
 
+          item.querySelectorAll('h3,h4').forEach((heading) => {
+            // remove empty headings
+            if (heading.textContent.trim() === '') heading.remove();
+          })
+
+          item.querySelectorAll('a > img').forEach((img) => {
+            // unwrap images in links
+            const a = img.parentElement;
+            a.after(img);
+            a.remove();
+          })
+
           row.push(item);
 
           if (row.length === columns) {
@@ -575,9 +595,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             row = [];
           }
         }
-        if (hasVideos) {
-          cells[0][0] += ' (With Video)';
-        }
+        
         if (cells.length > 1) {
           const cols = WebImporter.DOMUtils.createTable(cells, document);
           const headings = panel.querySelectorAll('h3,h2');
