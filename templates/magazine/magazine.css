@@ -106,14 +106,43 @@ i.fa {
   border: 0;
   margin: 10px;
 }
+.section.article-sidebar .share-icons button i {
+  font-size: 16px;
+}
 
 .share {
   border-top: 1px solid var(--btn-background-hover);
   padding-top: 30px;
 }
 
+.section.template.article-sidebar > div.subscribe {
+  border-top: 1px solid var(--background-hover-color);
+  padding-top: 30px;
+  margin-top: 30px;
+}
+
+.section.template.article-sidebar > div.subscribe > a {
+  border: 2px solid var(--volvo-text-gray);
+  user-select: none;
+  color: var(--c-white);
+  background-color: var(--volvo-text-gray);
+  padding: 15px 40%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.section.template.article-sidebar > div.subscribe > a > i {
+  font-size: 16px;
+  padding-bottom: 4px;
+}
+
 .section.article-sidebar p {
-  color: #53565A;
+  color: var(--volvo-text-gray);
   font-weight: 700;
   font-size: 12px;
 }
@@ -195,5 +224,9 @@ i.fa {
 
   .section.template.article-sidebar>div {
     width: 100%;
+  }
+
+  .section.template.article-sidebar > div.subscribe > .cta {
+    padding: 15px 32px;
   }
 }

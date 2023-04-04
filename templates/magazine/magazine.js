@@ -92,7 +92,6 @@ export default async function decorate(doc) {
     ['facebook', 'Share on Facebook', 'https://www.facebook.com/sharer/sharer.php?u='],
   ];
   const shareSidebar = createElement('div', 'share');
-  sidebarSection.append(shareSidebar);
   const shareHeading = createElement('p');
   shareHeading.innerHTML = 'Share this article';
   shareSidebar.append(shareHeading);
@@ -108,6 +107,17 @@ export default async function decorate(doc) {
   });
   shareSidebar.append(shareList);
   sidebarSection.append(shareSidebar);
+
+  // subscribe
+  const subscribeSidebar = createElement('div', 'subscribe');
+  const button = createElement('a', 'cta');
+  button.href = '#subscribe';
+  button.innerText = 'Subscribe';
+  const arrowIcon = createElement('span', ['icon', 'icon-fa-angle-right']);
+  button.append(arrowIcon);
+  subscribeSidebar.append(button);
+  sidebarSection.append(subscribeSidebar);
+
 
   let sidebarPreviousSection;
   let sectionFound = false;

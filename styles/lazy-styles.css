@@ -163,7 +163,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .fa-envelope::before {
   content: "\f0e0"
-
+}
 
 .fa-caret-left::before {
   content: "\f0d9"
