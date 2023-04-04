@@ -102,6 +102,9 @@
   /* nav height */
   --nav-height: 95px;
   --sub-nav-height: 44px;
+
+  /* sectio style */
+  --wrapper-width: 100%;
 }
 
 *,
@@ -335,6 +338,7 @@ main p img {
 /* sections */
 
 main .section > div {
+  width: var(--wrapper-width);
   padding: 0 15px;
   margin: 48px auto;
 }
@@ -351,17 +355,29 @@ main .section-with-background {
   min-height: 405px;
   color: var(--text-color);
   text-align: center;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  padding: 48px 0;
+}
+
+main .section-with-background>div:first-of-type,
+main .section-with-background>div:first-of-type>:first-child {
+  margin-top: 0;
+}
+
+main .section-with-background>div:last-of-type,
+main .section-with-background>div:last-of-type>:last-child {
+  margin-bottom: 0;
 }
 
 main .section-with-background>picture:last-of-type img {
-  width: 100%;
+  width: var(--wrapper-width);
   height: 100%;
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: -1;
   object-fit: cover;
 }
@@ -494,8 +510,8 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 768px) {
-  main .section > div {
-    width: 756px;
+  :root {
+    --wrapper-width: 756px;
   }
 
   ul.cta-list {
@@ -530,10 +546,7 @@ a.button.text-link-with-video::after {
     --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
-  }
-
-  main .section > div {
-    width: 960px;
+    --wrapper-width: 960px;
   }
 
   main .section:first-child > div {
@@ -546,8 +559,8 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 1300px) {
-  main .section > div {
-    width: 1200px;
+  :root {
+    --wrapper-width: 1200px;
   }
 }
 
