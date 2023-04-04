@@ -93,3 +93,28 @@ indices:
       content:
         select: main
         value: textContent(el)
+  body-builder:
+    include:
+      - '/parts-and-services/services/body-builder-support/news-and-events/**'
+    exclude:
+      - '/parts-and-services/services/body-builder-support/news-and-events/'
+    target: /body-builder.json
+    properties:
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      title:
+        select: h1
+        value: textContent(el)
+      date:
+        select: main > div.section > div:nth-child(1) > p:nth-child(2)
+        value: textContent(el)
+      description:
+        select: head > meta[property="og:description"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
