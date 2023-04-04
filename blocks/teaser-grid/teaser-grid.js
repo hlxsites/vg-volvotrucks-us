@@ -1,8 +1,49 @@
 import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
+// eslint-disable  no-plusplus, no-use-before-define
 
 export default function decorate(block) {
-  const grid = document.createElement('ul');
+  // Formats a table and applies background images. Generally, each item should be in a table cell.
+  // When a cell is empty, the cells are merged vertically.
   const columns = [...block.firstElementChild.children];
+
+  // convert new format to old format: rows in each column are moved into the first row as <li>
+  block.querySelectorAll(':scope > div').forEach((row, rowIndex) => {
+    row.querySelectorAll(':scope > div').forEach((cell, columnIndex) => {
+      if (rowIndex === 0) {
+        // make sure there is an <ul>, move any content into an <li>
+        let ul = cell.querySelector('ul');
+        if (!ul) {
+          ul = document.createElement('ul');
+          if (cell.childElementCount) {
+            const li = document.createElement('li');
+            li.append(...cell.childNodes);
+            ul.append(li);
+          }
+          cell.append(ul);
+        }
+        return;
+      }
+
+      cell.querySelectorAll('li').forEach((li) => {
+        if (li.childElementCount) {
+          columns[columnIndex].querySelector('ul').append(li);
+        }
+      });
+
+      // remove any remaining <ul>
+      cell.querySelectorAll('ul').forEach((el) => el.remove());
+
+      // If cell still contains anything, add content to list
+      if (cell.childElementCount) {
+        const li = document.createElement('li');
+        li.append(...cell.childNodes);
+        columns[columnIndex].querySelector('ul').append(li);
+      }
+    });
+  });
+
+  const grid = document.createElement('ul');
+
   const colCount = columns.length;
   // get the max of list items per column, remove empty ones
   const rowCount = columns.map((col) => [...col.querySelectorAll('li')].filter((li) => {
