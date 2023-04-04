@@ -522,6 +522,7 @@ a.button.text-link-with-video::after {
     display: inline-flex;
     width: 100%;
     justify-content: center;
+    flex-flow: row wrap;
   }
 }
 
