@@ -163,6 +163,26 @@ body.disable-scroll, body.disable-scroll main {
 
 .fa-envelope::before {
   content: "\f0e0"
+
+
+.fa-caret-left::before {
+  content: "\f0d9"
+}
+
+.fa-caret-right::before {
+  content: "\f0da"
+}
+
+.fa-truck::before {
+  content: "\f0d1"
+}
+
+.fa-dashboard::before {
+  content: "\f0e4"
+}
+
+.fa-cog::before {
+  content: "\f013"
 }
 
 /* The injected widget should be customized in the SDK UI by an administrator.
