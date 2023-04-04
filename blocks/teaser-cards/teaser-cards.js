@@ -4,7 +4,7 @@ export default function decorate(block) {
   const cols = block.firstElementChild.children.length;
   block.parentElement.classList.add(`teaser-cards-${cols}`);
   // go through all teasers
-  [...block.firstElementChild.children].forEach((elem) => {
+  [...block.children].forEach((row) => [...row.children].forEach((elem) => {
     // add teaser class for each entry
     elem.classList.add('teaser');
     if (elem.querySelector('.cta-list')) {
@@ -41,5 +41,5 @@ export default function decorate(block) {
       }
       cta.classList.add('cta');
     });
-  });
+  }));
 }
