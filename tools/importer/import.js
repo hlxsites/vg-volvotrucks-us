@@ -412,14 +412,14 @@ function makeImageText(main, document) {
       its.replaceWith(teaserCards);
     });
   }
-  
+
   // small texts in text only
   document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.imageText > div.imageText-only-text small').forEach((t) => {
     const cells = [['Text (xs)']];
-      cells.push([t.innerHTML]);
-      const teaserCards = WebImporter.DOMUtils.createTable(cells, document);
-      t.replaceWith(teaserCards);
-  })
+    cells.push([t.innerHTML]);
+    const teaserCards = WebImporter.DOMUtils.createTable(cells, document);
+    t.replaceWith(teaserCards);
+  });
 }
 
 function mergeEqualConsecutiveBlocks(main, document) {
@@ -600,14 +600,14 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
           item.querySelectorAll('h3,h4').forEach((heading) => {
             // remove empty headings
             if (heading.textContent.trim() === '') heading.remove();
-          })
+          });
 
           item.querySelectorAll('a > img').forEach((img) => {
             // unwrap images in links
             const a = img.parentElement;
             a.after(img);
             a.remove();
-          })
+          });
 
           row.push(item);
 
@@ -616,7 +616,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
             row = [];
           }
         }
-        
+
         if (cells.length > 1) {
           const cols = WebImporter.DOMUtils.createTable(cells, document);
           const headings = panel.querySelectorAll('h3,h2');
@@ -657,7 +657,7 @@ function makeImageTextGrid(main, document) {
         const contentContainer = panel.querySelector('.wrapper');
         if (imageLeft) cells.push([imageContainer, contentContainer]);
         else cells.push([contentContainer, imageContainer]);
-        
+
         const links = contentContainer.querySelectorAll('a');
         links.forEach((a) => {
           const text = a.textContent.trim();
@@ -665,7 +665,7 @@ function makeImageTextGrid(main, document) {
             // secondary link
             a.textContent = text.substring(0, text.length - 1).trim();
           }
-          if (a.parentElement.tagName != 'EM') {
+          if (a.parentElement.tagName !== 'EM') {
             const em = document.createElement('em');
             a.after(em);
             em.append(a);
@@ -895,7 +895,7 @@ function makeModelIntroduction(main, document) {
     }));
     elements.push(WebImporter.DOMUtils.createTable(cells, document));
     mi.replaceWith(...elements);
-  })
+  });
 }
 
 export default {
@@ -906,6 +906,11 @@ export default {
     // define the main element: the one that will be transformed to Markdown
     const main = document.body;
     const results = [];
+
+    results.push({
+      element: main,
+      path: new URL(makeIndexPage(url)).pathname,
+    });
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -960,7 +965,7 @@ export default {
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
       if (href && new URL(href).pathname.endsWith('.pdf')) {
-        const u = new URL(`https://www.volvotrucks.us${new URL(href).pathname}`);
+        const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
         // importer will download the "from" resource as "path"
@@ -976,10 +981,6 @@ export default {
       }
     });
 
-    results.push({
-      element: main,
-      path: new URL(makeIndexPage(url)).pathname
-    });
     return results;
   },
 };
