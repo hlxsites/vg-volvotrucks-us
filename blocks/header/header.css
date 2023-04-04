@@ -76,8 +76,7 @@ header nav .hamburger-toggle .hamburger-icon {
 /* the search input  */
 header nav .search {
   height: 0;
-  opacity: 0;
-  transition: all 400ms ease-out;
+  transition: height 400ms ease-out;
   overflow: hidden;
   background-color: white;
   display: flex;
@@ -95,7 +94,6 @@ header nav .search div {
 header nav .search-toggle[aria-expanded=true]~.search {
   height: 59px;
   margin-block-end: 15px;
-  opacity: 1;
 }
 
 header nav .search input {
@@ -475,7 +473,6 @@ header nav .sections .section .navigation-cta {
     width: 100%;
     padding: 0;
     margin: 0;
-    opacity: 1;
   }
 
   header nav .search div {
