@@ -1,22 +1,10 @@
 import { loadCSS } from '../../scripts/lib-franklin.js';
+// eslint-disable-next-line import/no-cycle
+import { createIframe } from '../../scripts/scripts.js';
 
 loadCSS('/common/modal/modal.css');
 
 const HIDE_MODAL_CLASS = 'modal-hidden';
-
-const createVideoIframe = (parent, url) => {
-  // iframe must be recreated every time otherwise the new history record would be created
-  const iframe = document.createElement('iframe');
-
-  iframe.classList.add('modal-video');
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-  iframe.setAttribute('src', url);
-
-  parent.appendChild(iframe);
-
-  return iframe;
-};
 
 const createModal = () => {
   const modalBackground = document.createElement('div');
@@ -46,7 +34,7 @@ const createModal = () => {
     window.addEventListener('keydown', keyDownAction);
 
     if (newUrl) {
-      const iframe = createVideoIframe(modalContent, newUrl);
+      const iframe = createIframe(newUrl, { parentEl: modalContent, classes: 'modal-video' });
 
       if (beforeBanner) {
         const bannerWrapper = document.createElement('div');

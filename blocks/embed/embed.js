@@ -1,4 +1,6 @@
-import { selectVideoLink, addPlayIcon, showVideoModal } from '../../scripts/scripts.js';
+import {
+  selectVideoLink, addPlayIcon, showVideoModal, isLowResolutionVideoUrl, createIframe,
+} from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const isAutoplay = block.classList.contains('autoplay');
@@ -13,6 +15,8 @@ export default function decorate(block) {
   const selectedLink = selectVideoLink(links, isFullWidth ? 'local' : 'auto');
   const video = document.createElement('video');
   const source = document.createElement('source');
+  const isLowResolutionVideo = isLowResolutionVideoUrl(selectedLink.getAttribute('href'));
+  const showControls = isLowResolutionVideo && !isFullWidth;
 
   video.appendChild(source);
   block.innerHTML = '';
@@ -36,6 +40,7 @@ export default function decorate(block) {
     }
 
     video.playsInline = true;
+    video.controls = showControls;
     video.classList.add('embed-video-element', 'embed-video-loaded');
     source.setAttribute('src', selectedLink.getAttribute('href'));
     source.setAttribute('type', 'video/mp4');
@@ -56,7 +61,11 @@ export default function decorate(block) {
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
-      loadEmbed();
+      if (isLowResolutionVideo) {
+        loadEmbed();
+      } else {
+        createIframe(selectedLink.getAttribute('href'), { parentEl: videoWrapper, classes: 'embed-video-element' });
+      }
     }
   });
   observer.observe(block);
