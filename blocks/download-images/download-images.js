@@ -23,11 +23,15 @@ export default function decorate(block) {
     const link = el.querySelector('a');
     const picture = el.querySelector('picture');
     const img = picture.querySelector('[type="image/jpeg"]');
-    const isImgLinkBroken = await fetch(link.href, { mode: 'no-cors' });
+    try {
+      const isImgLinkBroken = await fetch(link.href, { mode: 'no-cors' });
+      if (!isImgLinkBroken.ok) link.href = img.srcset;
+    } catch (error) {
+      link.href = img.srcset;
+    }
     link.textContent = '';
     link.appendChild(picture);
     link.download = '';
-    if (!isImgLinkBroken.ok) link.href = img.srcset;
     addClickToLink(link);
   });
   downloadDir.className = 'download-text';
