@@ -123,8 +123,9 @@ const createMetadata = (main, document, url) => {
 };
 
 function makeIndexPage(url) {
+  const importerURL = new URL(url);
   const newUrl = new URL('index', url);
-  return url.endsWith('/') ? newUrl.toString() : url;
+  return importerURL.pathname.endsWith('/') ? newUrl.toString() : importerURL.pathname;
 }
 
 function isCentered(element, theWindow) {
@@ -898,21 +899,13 @@ function makeModelIntroduction(main, document) {
 }
 
 export default {
-  /**
-     * Apply DOM operations to the provided document and return
-     * the root element to be then transformed to Markdown.
-     * @param {HTMLDocument} document The document
-     * @param {string} url The url of the page imported
-     * @param {string} html The raw html (the document is cleaned up during preprocessing)
-     * @param {object} params Object containing some parameters given by the import process.
-     * @returns {HTMLElement} The root element to be transformed
-     */
-  transformDOM: ({
+  transform: ({
     // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
     // define the main element: the one that will be transformed to Markdown
     const main = document.body;
+    const results = [];
 
     // use helper method to remove header, footer, etc.
     WebImporter.DOMUtils.remove(main, [
@@ -964,24 +957,29 @@ export default {
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
-    return main;
-  },
+    main.querySelectorAll('a').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (href && new URL(href).pathname.endsWith('.pdf')) {
+        const u = new URL(`https://www.volvotrucks.us${new URL(href).pathname}`);
+        const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
+        // no "element", the "from" property is provided instead
+        // importer will download the "from" resource as "path"
+        results.push({
+          path: newPath,
+          from: u.toString(),
+        });
 
-  /**
-     * Return a path that describes the document being transformed (file name, nesting...).
-     * The path is then used to create the corresponding Word document.
-     * @param {HTMLDocument} document The document
-     * @param {string} url The url of the page imported
-     * @param {string} html The raw html (the document is cleaned up during preprocessing)
-     * @param {object} params Object containing some parameters given by the import process.
-     * @return {string} The path
-     */
-  generateDocumentPath: ({
-    // eslint-disable-next-line no-unused-vars
-    document, url, html, params,
-  }) => {
-    // eslint-disable-next-line no-param-reassign
-    url = makeIndexPage(url);
-    WebImporter.FileUtils.sanitizePath(new URL(url).pathname.replace(/\.html$/, '').replace(/\/$/, ''));
+        // update the link to new path on the target host
+        // this is required to be able to follow the links in Word
+        const newHref = new URL(`https://main--vg-volvotrucks-us--hlxsites.hlx.page${newPath}`).toString();
+        a.setAttribute('href', newHref);
+      }
+    });
+
+    results.push({
+      element: main,
+      path: new URL(makeIndexPage(url)).pathname
+    });
+    return results;
   },
 };
