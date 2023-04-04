@@ -40,7 +40,8 @@ i.fa {
 }
 
 .section.template.article-hero>div>div>div.top-details.hide-desktop {
-  display: inline;
+  display: inline-grid;
+  grid: 24px / 25px 90px 25px 55px;
 }
 
 .section.template.article-hero>div>div>h3.title-sentence {
@@ -52,7 +53,13 @@ i.fa {
   line-height: 32px !important;
 }
 
-.section.template.article-hero>div>div>div.details span.hide-mobile {
+.section.template.article-hero>div>div>div.details>span.author {
+  white-space: nowrap;
+  margin-top: 6px;
+  padding: 0 10px 0 0;
+}
+
+.section.template.article-hero>div>div>div.details .hide-mobile {
   display: none;
 }
 
@@ -63,30 +70,18 @@ i.fa {
 .section.template.article-hero>div>div>div.details {
   color: var(--volvo-text-light-gray);
   font-size: var(--body-font-size-xs);
+  display: inline-grid;
+  grid: 33px / 45px auto 25px 100px 25px auto;
 }
 
-.section.template.article-hero>div>div>div.top-details>span,
-.section.template.article-hero>div>div>div.details>span,
-.section.template.article-hero>div>div>div.details>span>span {
-  margin: 0 16px 0 8px;
-  line-height: 35px;
-  vertical-align: middle;
-}
-
-.section.template.article-hero > div > div > div.details > span.hide-mobile > span.date {
-  min-width: 110px;
-}
-
-.section.template.article-hero>div>div>div.details>i {
-  display: inline-block;
-  height: 35px;
-  width: 35px;
+.section.template.article-hero>div>div>div.details>i.fa-user {
   line-height: 35px;
   border-radius: 35px;
   background-color: var(--volvo-text-light-gray);
   color: var(--c-white);
   text-align: center;
   font-size: 15px;
+  width: 35px;
 }
 
 .section.template.article-sidebar>div.topics>ul.topic-list>li {
@@ -148,8 +143,10 @@ i.fa {
     display: none;
   }
 
-  .section.template.article-hero>div>div>div.details>span.hide-mobile {
-    display: inline-block;
+  .section.template.article-hero>div>div>div.details>.hide-mobile {
+    display: inline;
+    margin-top: 6px;
+    padding-left: 8px;
   }
 
   .section.template .row.size-img picture {
