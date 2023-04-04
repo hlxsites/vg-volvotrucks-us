@@ -625,10 +625,10 @@ function makeImageTextGrid(main, document) {
           if (text.endsWith('>')) {
             // secondary link
             a.textContent = text.substring(0, text.length - 1).trim();
-            const em = document.createElement('em');
-            a.after(em);
-            em.append(a);
           }
+          const em = document.createElement('em');
+          a.after(em);
+          em.append(a);
         });
         panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
       }
@@ -825,6 +825,27 @@ function makeDocumentList(main, document) {
   }
 }
 
+function makeModelIntroduction(main, document) {
+  document.querySelectorAll('.modelIntroduction').forEach((mi) => {
+    const elements = [];
+    const heading = mi.querySelector('h2');
+    if (heading) elements.push(heading);
+    const description = mi.querySelector('h2 ~ p.description');
+    if (description) elements.push(description);
+    const cells = [['Columns (center)']];
+    cells.push([...mi.querySelectorAll('.model-spec')].map((ms) => {
+      const icon = ms.querySelector('.fa');
+      if (icon) {
+        const [, iconName] = [...icon.classList];
+        icon.innerHTML = `:${iconName}:`;
+      }
+      return ms;
+    }));
+    elements.push(WebImporter.DOMUtils.createTable(cells, document));
+    mi.replaceWith(...elements);
+  })
+}
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -887,6 +908,7 @@ export default {
     makeLinkList(main, document);
     makeKeyFacts(main, document);
     makeDocumentList(main, document);
+    makeModelIntroduction(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
