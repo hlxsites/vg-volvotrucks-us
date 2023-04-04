@@ -10,8 +10,7 @@ function stripEmptyTags(main, child) {
 
 function setActive(tabNavigation, tabContainer, index) {
   if (!tabNavigation.children[index].classList.contains('active')) {
-    [tabNavigation, tabContainer].forEach((c) => 
-      c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
+    [tabNavigation, tabContainer].forEach((c) => c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
     tabNavigation.children[index].classList.add('active');
     tabContainer.children[index].classList.add('active');
   }
@@ -60,7 +59,9 @@ export default function decorate(block) {
   tabContainer.addEventListener('scroll', () => {
     if (scrollTimeout) clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
-      const activeIndex = Math.floor(tabContainer.scrollLeft / tabContainer.firstElementChild.clientWidth);
+      const { scrollLeft } = tabContainer;
+      const { clientWidth } = tabContainer.firstElementChild;
+      const activeIndex = Math.floor(scrollLeft / clientWidth);
       setActive(tabNavigation, tabContainer, activeIndex);
     }, debounceDelay);
   });

@@ -144,7 +144,7 @@ function buildTabbedBlock(main) {
         if (!pic.nextElementSibling && !pic.previousElementSibling) {
           pic.parentElement.classList.add('picture');
         }
-      })
+      });
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
