@@ -516,7 +516,7 @@ function makeHubTextBlock(main, document) {
       elements.push(form);
       elements.push(WebImporter.DOMUtils.createTable([
         ['Section Metadata'],
-        ['Background', img]
+        ['Background', img],
       ], document));
       elements.push(hr(document));
       block.replaceWith(...elements);
@@ -629,7 +629,7 @@ function makeImageTextGrid(main, document) {
             a.after(em);
             em.append(a);
           }
-        })
+        });
         panel.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
       }
     });
@@ -684,9 +684,9 @@ function makeSpecificationTable(main, document) {
       const cells = [['Specifications']];
       const headerTable = st.firstElementChild;
       if (headerTable.tagName === 'TABLE') {
-        const images = [...headerTable.querySelectorAll('img')]
-        const [ name, ...titles ] = [...headerTable.querySelectorAll('.header td')];
-        const headerRow = [ name.textContent.trim() ];
+        const images = [...headerTable.querySelectorAll('img')];
+        const [name, ...titles] = [...headerTable.querySelectorAll('.header td')];
+        const headerRow = [name.textContent.trim()];
         titles.forEach((title, i) => {
           const div = document.createElement('div');
           if (images[i]) div.append(images[i], document.createElement('br'));
@@ -702,7 +702,7 @@ function makeSpecificationTable(main, document) {
       st.querySelectorAll('button').forEach(({ textContent: label, nextElementSibling: content }) => {
         const button = document.createElement('strong');
         button.textContent = label.trim();
-        cells.push([ button ]);
+        cells.push([button]);
         content.querySelectorAll('tr').forEach((tr) => {
           cells.push([...tr.querySelectorAll('td')].map((td) => {
             const div = document.createElement('div');
@@ -764,11 +764,11 @@ function markSecondaryCta(main, document) {
 function makeKeyFacts(main, document) {
   main.querySelectorAll('#Form1 > div.container > .threeColumnSpecs').forEach((source) => {
     const row = source.querySelector('.row');
-    const [ first, second, thrid ] = row.children;
+    const [first, second, thrid] = row.children;
     function convertColumnContent(col) {
       const div = document.createElement('div');
       const childen = [...col.firstElementChild.children];
-      for (let i = 0; i < childen.length; i+= 1) {
+      for (let i = 0; i < childen.length; i += 1) {
         let child = childen[i];
         if (child.matches('.caps-subtitle')) {
           const h4 = document.createElement('h4');
@@ -778,7 +778,7 @@ function makeKeyFacts(main, document) {
         if (child.matches('.block-title')) {
           let text = child.textContent.trim();
           if (child.nextElementSibling && child.nextElementSibling.matches('.bold-subtitle')) {
-            text += ' ' + child.nextElementSibling.textContent.trim();
+            text += ` ${child.nextElementSibling.textContent.trim()}`;
             i += 1;
           }
           child.innerHTML = `<strong>${text}</strong>`;
@@ -792,11 +792,11 @@ function makeKeyFacts(main, document) {
       [
         convertColumnContent(first),
         convertColumnContent(second),
-        convertColumnContent(thrid)
-      ]
+        convertColumnContent(thrid),
+      ],
     ];
     source.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
-  })
+  });
 }
 
 function makeDocumentList(main, document) {
@@ -807,29 +807,21 @@ function makeDocumentList(main, document) {
       const itemDivs = dl.querySelectorAll('div.inner > a');
       const cells = [['Document List']];
       itemDivs.forEach((doc) => {
-        const badh3 = doc.firstChild;
-        console.log(badh3);
-        const newDiv = document.createElement('div');
-        newDiv.innerHTML = badh3.innerHTML;
-        badh3.replaceWith(newDiv);
-        if (doc.classList.contains('documentList-document-new')) {
-          const bold = document.createElement('strong');
-          const bDiv = document.createElement('div');
-          bold.append(bDiv);
-          if (doc.childNodes.length > 1) {
-            bDiv.innerHTML = doc.firstChild.innerHTML;
-            doc.firstChild.replaceWith(bold);
-            cells.push([doc]);
-          } else {
-            bold.append(doc.firstChild);
-            cells.push([bold]);
-          }
-        } else {
-          cells.push([doc]);
-        }
+        const documentURL = doc.href;
+        const ul = document.createElement('ul');
+        doc.querySelectorAll('h3, small').forEach((item) => {
+          const anchor = document.createElement('a');
+          const li = document.createElement('li');
+          anchor.href = documentURL;
+          anchor.innerHTML = item.innerHTML;
+          li.append(anchor);
+          ul.appendChild(li);
+        });
+        doc.replaceWith(ul);
+        cells.push([ul]);
       });
       dl.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
-    })
+    });
   }
 }
 
