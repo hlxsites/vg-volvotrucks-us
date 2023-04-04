@@ -1,3 +1,5 @@
+const debounceDelay = 30;
+
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
     const parent = child.parentNode;
@@ -6,13 +8,20 @@ function stripEmptyTags(main, child) {
   }
 }
 
+function setActive(tabNavigation, tabContainer, index) {
+  if (!tabNavigation.children[index].classList.contains('active')) {
+    [tabNavigation, tabContainer].forEach((c) => c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
+    tabNavigation.children[index].classList.add('active');
+    tabContainer.children[index].classList.add('active');
+  }
+}
+
 function buildTabNavigation(tabItems, clickHandler) {
   const tabNavigation = document.createElement('ul');
   [...tabItems].forEach((tabItem, i) => {
     const listItem = document.createElement('li');
-    if (!i) listItem.classList.add('active');
     const button = document.createElement('button');
-    button.addEventListener('click', () => clickHandler.call(this, tabNavigation, tabItem, listItem));
+    button.addEventListener('click', () => clickHandler.call(this, tabNavigation, tabItem, i));
     const tabContent = tabItem.querySelector(':scope > div');
     button.innerHTML = tabContent.dataset.carousel;
     listItem.append(button);
@@ -26,14 +35,13 @@ export default function decorate(block) {
   const tabContainer = block.querySelector(':scope > div');
   tabContainer.classList.add('tab-container');
   const tabItems = block.querySelectorAll(':scope > div > div');
-  const tabNavigation = buildTabNavigation(tabItems, (nav, tabItem, listItem) => {
+  const tabNavigation = buildTabNavigation(tabItems, (nav, tabItem, index) => {
     tabContainer.scrollTo({
       top: 0,
       left: tabItem.offsetLeft - tabItem.parentNode.offsetLeft,
       behavior: 'smooth',
     });
-    [...nav.children].forEach((r) => r.classList.remove('active'));
-    listItem.classList.add('active');
+    setActive(tabNavigation, tabContainer, index);
   });
   tabItems.forEach((tabItem) => {
     tabItem.classList.add('tab-item');
@@ -47,13 +55,16 @@ export default function decorate(block) {
   block.parentElement.prepend(tabNavigation);
 
   // update the button indicator on scroll
+  let scrollTimeout;
   tabContainer.addEventListener('scroll', () => {
-    const activeIndex = Math.floor(tabContainer.scrollLeft / tabContainer.clientWidth);
-    const actiiveButton = tabNavigation.children[activeIndex];
-    if (!actiiveButton.classList.contains('active')) {
-      // make active
-      tabNavigation.querySelector('li.active').classList.remove('active');
-      actiiveButton.classList.add('active');
-    }
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const { scrollLeft } = tabContainer;
+      const { clientWidth } = tabContainer.firstElementChild;
+      const activeIndex = Math.floor(scrollLeft / clientWidth);
+      setActive(tabNavigation, tabContainer, activeIndex);
+    }, debounceDelay);
   });
+
+  setActive(tabNavigation, tabContainer, 0);
 }
