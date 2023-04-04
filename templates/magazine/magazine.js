@@ -118,7 +118,6 @@ export default async function decorate(doc) {
   subscribeSidebar.append(button);
   sidebarSection.append(subscribeSidebar);
 
-
   let sidebarPreviousSection;
   let sectionFound = false;
   const sections = [...doc.querySelectorAll('.section')];

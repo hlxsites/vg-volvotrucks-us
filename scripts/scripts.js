@@ -331,6 +331,10 @@ async function loadEager(doc) {
     decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
+  const templateName = getMetadata('template');
+  if (templateName) {
+    await loadTemplate(doc, templateName);
+  }
 }
 
 /**
@@ -354,11 +358,6 @@ export function addFavIcon(href) {
  * loads everything that doesn't need to be delayed.
  */
 async function loadLazy(doc) {
-  const templateName = getMetadata('template');
-  if (templateName) {
-    await loadTemplate(doc, templateName);
-  }
-
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
