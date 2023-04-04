@@ -157,6 +157,18 @@ body.disable-scroll, body.disable-scroll main {
   content: "\f0da"
 }
 
+.fa-truck::before {
+  content: "\f0d1"
+}
+
+.fa-dashboard::before {
+  content: "\f0e4"
+}
+
+.fa-cog::before {
+  content: "\f013"
+}
+
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
    Just overriding the bare minimum to make it readable: */
