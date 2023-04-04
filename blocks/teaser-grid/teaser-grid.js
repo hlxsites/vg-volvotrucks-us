@@ -1,5 +1,5 @@
 import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
-// eslint-disable  no-use-before-define
+/* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
   // Formats a table and applies background images. Generally, each item should be in a table cell.
