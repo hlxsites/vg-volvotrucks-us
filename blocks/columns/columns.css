@@ -1,6 +1,7 @@
 .columns > div {
     display: flex;
     flex-direction: column;
+    margin: 48px 0;
 }
 
 .columns img {
@@ -24,5 +25,16 @@
 
     .columns > div > div:first-of-type {
         margin-left: unset;
+    }
+
+    .columns ul.cta-list {
+        justify-content: unset;
+    }
+
+    .columns ul.cta-list li {
+        flex: 1;
+        min-width: 242px;
+        padding-left: 0;
+        text-align: left;
     }
 }
