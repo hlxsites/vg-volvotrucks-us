@@ -18,16 +18,18 @@ export default function decorate(block) {
     // find and split number/unit
     const value = col.querySelector('strong:only-child');
     if (value) {
-      const parts = value.innerHTML.match('([0-9,.]+) (.*)');
+      const parts = value.innerHTML.match('([\\+,\\-]*[0-9,\\.,]+[\\%]*) *(.*)');
       if (parts) {
         // eslint-disable-next-line prefer-destructuring
         value.innerText = parts[1];
         value.classList.add('number');
-        const unit = document.createElement('strong');
-        unit.classList.add('unit');
-        // eslint-disable-next-line prefer-destructuring
-        unit.innerText = parts[2];
-        value.parentNode.append(unit);
+        if (parts[2]) {
+          const unit = document.createElement('strong');
+          unit.classList.add('unit');
+          // eslint-disable-next-line prefer-destructuring
+          unit.innerText = parts[2];
+          value.parentNode.append(unit);
+        }
       }
     }
     // add trailing line div if needed
