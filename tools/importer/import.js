@@ -225,7 +225,6 @@ function convertTopTenListItem(main, document) {
   const elements = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"] li.top-ten-item');
   if (elements) {
     elements.forEach((li) => {
-
       const cells = [['Teaser Grid']];
 
       const div = document.createElement('div');
