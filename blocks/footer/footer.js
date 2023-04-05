@@ -36,7 +36,9 @@ export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
   const currentYear = new Date().getFullYear();
-  const footerPath = cfg.footer || '/footer';
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
   const footer = document.createElement('div');

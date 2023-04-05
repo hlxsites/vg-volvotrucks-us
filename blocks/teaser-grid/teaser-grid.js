@@ -1,4 +1,6 @@
-import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
+import {
+  addVideoShowHandler, isVideoLink, selectVideoLink, wrapImageWithVideoLink,
+} from '../../scripts/scripts.js';
 /* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
@@ -50,17 +52,25 @@ export default function decorate(block) {
       contentContainer.innerHTML = li.innerHTML;
       li.innerHTML = '';
 
-      const link = contentContainer.querySelector('a');
+      const links = contentContainer.querySelectorAll('a');
       const image = contentContainer.querySelector('picture');
+      let selectedLink = links[0];
 
-      if (image && link) {
-        // wrap the image with the link, remove the link from the content container
-        link.innerText = '';
-        link.appendChild(image);
-        link.remove();
+      if (links.length && isVideoLink(links[0])) {
+        selectedLink = selectVideoLink(links);
+
+        // remove other video links
+        links.forEach((link) => link !== selectedLink && link.remove());
       }
 
-      li.appendChild(link ?? image);
+      if (image && selectedLink) {
+        // wrap the image with the link, remove the link from the content container
+        selectedLink.innerText = '';
+        selectedLink.appendChild(image);
+        selectedLink.remove();
+      }
+
+      li.appendChild(selectedLink ?? image);
 
       const textItems = contentContainer.innerHTML.split('<br>').filter((text) => text.trim() !== '');
       if (textItems.length) {

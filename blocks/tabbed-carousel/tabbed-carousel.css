@@ -34,6 +34,11 @@
     margin: 30px auto 0;
 }
 
+.tabbed-container-full-width .tabbed-carousel-wrapper .tab-content > .embed-wrapper {
+    width: 100%;
+    margin: 0;
+}
+
 .tabbed-container-full-width .tabbed-carousel-wrapper .tab-item p {
     padding: 0 15px;
     opacity: 0;
@@ -51,11 +56,17 @@
 
 @media screen and (min-width: 768px) {
     .tabbed-container-full-width .tabbed-carousel-wrapper .tab-container {
-        scroll-padding-left: var(--horizontal-padding);
-        padding: 0 var(--horizontal-padding);
+        scroll-padding-left: 0;
+        padding: 0
     }
 
     .tabbed-container-full-width .tabbed-carousel-wrapper .tab-item {
-        width: var(--wrapper-width);
+        width: 100%;
+    }
+
+    .tabbed-container-full-width .tabbed-carousel-wrapper .tab-item .tab-content p {
+        max-width: var(--wrapper-width);
+        margin-left: auto;
+        margin-right: auto;
     }
 }

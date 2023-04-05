@@ -11,6 +11,8 @@ function stripEmptyTags(main, child) {
 function setActive(tabNavigation, tabContainer, index) {
   if (!tabNavigation.children[index].classList.contains('active')) {
     [tabNavigation, tabContainer].forEach((c) => c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
+    // eslint-disable-next-line no-use-before-define
+    handlingVideo(tabContainer, index);
     tabNavigation.children[index].classList.add('active');
     tabContainer.children[index].classList.add('active');
   }
@@ -31,6 +33,20 @@ function buildTabNavigation(tabItems, clickHandler) {
   return tabNavigation;
 }
 
+function handlingVideo(carouselContainer, activeIndex) {
+  carouselContainer.querySelectorAll('.tab-item').forEach((tab, index) => {
+    const video = tab.querySelector('video');
+
+    if (video) {
+      if (index === activeIndex) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    }
+  });
+}
+
 export default function decorate(block) {
   const tabContainer = block.querySelector(':scope > div');
   tabContainer.classList.add('tab-container');
@@ -41,13 +57,18 @@ export default function decorate(block) {
       left: tabItem.offsetLeft - tabItem.parentNode.offsetLeft,
       behavior: 'smooth',
     });
+
     setActive(tabNavigation, tabContainer, index);
   });
   tabItems.forEach((tabItem) => {
     tabItem.classList.add('tab-item');
     const tabContent = tabItem.querySelector(':scope > div');
     const picture = tabItem.querySelector('picture');
-    tabContent.prepend(picture);
+
+    if (picture) {
+      tabContent.prepend(picture);
+    }
+
     tabContent.querySelectorAll('p, div').forEach((item) => {
       stripEmptyTags(tabContent, item);
     });

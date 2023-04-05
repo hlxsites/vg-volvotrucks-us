@@ -1,4 +1,4 @@
-import { isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
+import { wrapImageWithVideoLink, selectVideoLink, isVideoLink } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const cols = block.firstElementChild.children.length;
@@ -11,16 +11,25 @@ export default function decorate(block) {
       elem.classList.add('with-cta-list');
     }
     // give p containing the image a specific class
-    elem.querySelector('picture').parentElement.classList.add('image');
+    const picture = elem.querySelector('picture');
+    if (picture) picture.parentElement.classList.add('image');
     // give all the other p a text class
     elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 
-    const link = elem.querySelector('.button-container a');
+    const links = elem.querySelectorAll('a');
+    const videos = [...links].filter((link) => isVideoLink(link));
 
-    if (link && isVideoLink(link)) {
+    if (videos.length) {
       // display image as link with play icon
       const image = elem.querySelector('.image');
-      wrapImageWithVideoLink(link, image);
+      const selectedLink = selectVideoLink(videos);
+
+      if (selectedLink) {
+        wrapImageWithVideoLink(selectedLink, image);
+      }
+
+      // removing all of the videos links excluding the selected one
+      videos.forEach((link) => link !== selectedLink && link.parentElement.remove());
     }
 
     // give cta's link(s) a specific class name
