@@ -518,7 +518,7 @@ function makeTabbedFeatures(main, document) {
 }
 
 function makeTabbedCarousel(main, document) {
-  const tc = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.tabbedCarousel');
+  const tc = document.querySelectorAll('#Form1 > div.container.main-content > div.tabbedCarousel');
   if (tc) {
     console.log(`tabbed carousel found: ${tc.length}`);
     tc.forEach((c) => {
