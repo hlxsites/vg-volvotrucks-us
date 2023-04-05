@@ -412,6 +412,10 @@ main .section.tabbed-container-full-width > div {
   width: unset;
 }
 
+main .section.tabbed-container-full-width {
+  --horizontal-padding: calc((100% - var(--wrapper-width)) / 2);
+}
+
 main .section.tabbed-container ul.tab-navigation {
   padding: 0;
   margin: 25px;
@@ -518,6 +522,7 @@ a.button.text-link-with-video::after {
     display: inline-flex;
     width: 100%;
     justify-content: center;
+    flex-flow: row wrap;
   }
 }
 
