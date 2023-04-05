@@ -122,6 +122,10 @@ export default function decorate(block) {
     if (cell.childElementCount) {
       const li = document.createElement('li');
       li.append(...cell.childNodes);
+      // remove link decoration
+      li.querySelectorAll('.button-container,.button').forEach((el) => {
+        el.classList.remove('button-container', 'button', 'primary');
+      })
       ul.append(li);
     }
     cell.remove();
