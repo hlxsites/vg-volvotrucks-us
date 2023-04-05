@@ -108,7 +108,11 @@ const createMetadata = (main, document, url) => {
     console.log(meta.tags);
   }
 
-  if (new URL(url).pathname.startsWith('/trucks/') || new URL(url).pathname.startsWith('/our-difference/')) {
+  const { pathname } = new URL(url);
+  const languages = ['fr-ca', 'en-ca'];
+  if (['/trucks/', '/our-difference/']
+    .flatMap((path) => [path, ...languages.map((lang) => `/${lang}${path}`)])
+    .find((path) => pathname.startsWith(path))) {
     const styles = meta.Style ? meta.Style.split(', ') : [];
     if (!(styles.includes('center'))) {
       styles.push('center');
