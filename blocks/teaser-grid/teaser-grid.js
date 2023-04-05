@@ -10,6 +10,10 @@ export default function decorate(block) {
   block.querySelectorAll(':scope > div').forEach((row, rowIndex) => {
     row.querySelectorAll(':scope > div').forEach((cell, columnIndex) => {
       wrapContentInList(cell);
+
+      // make sure it's not rendered as a button
+      cell.querySelector('a')?.classList.remove('button');
+
       if (rowIndex > 0) {
         // move to first row
         cell.querySelectorAll('li').forEach((li) => {
