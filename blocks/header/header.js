@@ -137,7 +137,7 @@ export default async function decorate(block) {
 
   // fetch nav content
   const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2}/)?).*');
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
   const navPath = config.nav || `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
   const resp = await fetch(`${navPath}.plain.html`);
 
