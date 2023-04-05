@@ -758,6 +758,10 @@ function make360Image(main, document) {
     image360.forEach((img360) => {
       const cells = [['Image 360']];
       const imgs = img360.querySelectorAll('img.slide');
+      if (imgs.length === 0) {
+        img360.remove();
+        return;
+      }
       imgs.forEach((img) => {
         cells.push([img]);
       });
@@ -984,8 +988,13 @@ function makeModelIntroduction(main, document) {
     if (heading) elements.push(heading);
     const description = mi.querySelector('h2 ~ p.description');
     if (description) elements.push(description);
+    const specs = mi.querySelectorAll('.model-spec');
+    if (specs.length === 0) {
+      mi.remove();
+      return;
+    }
     const cells = [['Columns (center)']];
-    cells.push([...mi.querySelectorAll('.model-spec')].map((ms) => {
+    cells.push([...mi].map((ms) => {
       const icon = ms.querySelector('.fa');
       if (icon) {
         const [, iconName] = [...icon.classList];
