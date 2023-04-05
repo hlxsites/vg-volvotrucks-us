@@ -38,9 +38,11 @@ function getCTAContainer(ctaLink) {
 function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
-  const previousSibiling = btnContainer.previousElementSibling;
+  const nextSibling = btnContainer?.nextElementSibling;
+  const previousSibiling = btnContainer?.previousElementSibling;
   const twoPreviousSibiling = previousSibiling?.previousElementSibling;
-  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
+  const sibilings = [previousSibiling, nextSibling, twoPreviousSibiling];
+  return sibilings.some((elem) => elem?.localName === 'h1');
 }
 
 function buildHeroBlock(main) {
