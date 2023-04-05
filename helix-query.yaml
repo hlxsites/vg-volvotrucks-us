@@ -107,9 +107,12 @@ indices:
       title:
         select: h1
         value: textContent(el)
-      date:
-        select: main > div.section > div:nth-child(1) > p:nth-child(2)
-        value: textContent(el)
+      index_title:
+        select: head > meta[name="index_title"]
+        value: attribute(el, "content")
+      index_date:
+        select: head > meta[name="index_date"]
+        value: attribute(el, "content")
       description:
         select: head > meta[property="og:description"]
         value: attribute(el, "content")
