@@ -51,7 +51,7 @@
 * Volvo Novum (... Regular)
 */
 h1 {
-  font-family: VolvoNovum, Arial, sans-serif;
+  font-family: VolvoNovum-Medium, VolvoNovum, Arial, sans-serif;
   font-size: 72px;
   font-weight: 500;
   line-height: 100%;
@@ -75,7 +75,7 @@ h2 {
 * Volvo Novum (... Regular)
 */
 h3 {
-  font-family: VolvoNovum, Arial, sans-serif;
+  font-family: VolvoNovum-Medium, VolvoNovum, Arial, sans-serif;
   font-size: 48px;
   font-weight: 500;
   line-height: 110%;
@@ -87,7 +87,7 @@ h3 {
 * Volvo Novum (... Regular)
 */
 h4 {
-  font-family: VolvoNovum, Arial, sans-serif;
+  font-family: VolvoNovum-Medium, VolvoNovum, Arial, sans-serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 125%;
