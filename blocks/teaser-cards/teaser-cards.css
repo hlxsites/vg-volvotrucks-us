@@ -11,6 +11,12 @@
 /* mobile */
 
 /* first row div */
+.block.teaser-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .block.teaser-cards > div {
   display: flex;
   gap: 30px;
@@ -35,7 +41,7 @@
 }
 
 /* teaser title */
-.block.teaser-cards :is(h2, h3) {
+.block.teaser-cards :is(h2, h3, h4) {
   margin: 0 0 10px;
   font-size: var(--heading-font-size-m);
   letter-spacing: -.1px;
@@ -92,6 +98,15 @@
 .block.teaser-cards a:hover {
   border-color: var(--btn-hover);
   color: var(--btn-hover);
+}
+
+.block.teaser-cards .teaser.with-cta-list :is(h2, h3, h4) a::after {
+  display: none;
+}
+
+/* center */
+.block.teaser-cards.center .teaser {
+  text-align: center;
 }
 
 /* link list on mobile */

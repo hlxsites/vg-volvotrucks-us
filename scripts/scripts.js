@@ -14,10 +14,20 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
+let placeholders = null;
+
+async function getPlaceholders() {
+  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
+}
+
+export function getTextLable(key) {
+  return placeholders.data.find((el) => el.Key === key).Text;
+}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -29,8 +39,8 @@ function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
   const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling.previousElementSibling;
-  return previousSibiling.localName === 'h1' || twoPreviousSibiling.localName === 'h1';
+  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
+  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
 }
 
 function buildHeroBlock(main) {
@@ -82,7 +92,7 @@ function buildSubNavigation(main, head) {
   }
 }
 
-function createTabbedSection(tabItems, fullWidth, tabType) {
+function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
@@ -92,6 +102,38 @@ function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabBlock = buildBlock(`tabbed-${tabType}`, [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
+}
+
+function buildCtaList(main) {
+  [...main.querySelectorAll('ul')].forEach((list) => {
+    const lis = [...list.querySelectorAll('li')];
+    const isCtaList = lis.every((li) => {
+      if (li.children.length !== 1) return false;
+      const firstChild = li.firstElementChild;
+      if (firstChild.tagName === 'A') return true;
+      if (firstChild.children.length !== 1) return false;
+      const firstGrandChild = firstChild.firstElementChild;
+      return (firstChild.tagName === 'STRONG' || firstChild.tagName === 'EM') && firstGrandChild.tagName === 'A';
+    });
+
+    if (isCtaList) {
+      list.classList.add('cta-list');
+      lis.forEach((li, i) => {
+        li.classList.add('button-container');
+        const a = li.querySelector('a');
+        const up = a.parentElement;
+        a.classList.add('button');
+        if (up.tagName === 'EM') {
+          a.classList.add('secondary');
+        } else {
+          a.classList.add('primary');
+          if (i === 0) {
+            a.classList.add('dark');
+          }
+        }
+      });
+    }
+  });
 }
 
 function buildTabbedBlock(main) {
@@ -107,18 +149,24 @@ function buildTabbedBlock(main) {
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
+      tabContent.querySelectorAll('p > picture').forEach((pic) => {
+        if (!pic.nextElementSibling && !pic.previousElementSibling) {
+          pic.parentElement.classList.add('picture');
+        }
+      });
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedSection = createTabbedSection(tabItems, fullWidth, tabType);
+      const tabbedSection = createTabbedSection(tabItems, tabType, { fullWidth });
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
+      tabType = undefined;
       fullWidth = false;
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedSection(tabItems, fullWidth, tabType);
+    const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth });
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
@@ -151,7 +199,7 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a')]
-  // link text is an unformatted URL paste, and matches the link href
+    // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
         // ignore domain in comparison
@@ -212,6 +260,12 @@ function addDefaultVideoLinkBehaviour(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
+  const pageStyle = head.querySelector('[name="style"]')?.content;
+  if (pageStyle) {
+    pageStyle.split(',')
+      .map((style) => toClassName(style.trim()))
+      .forEach((style) => main.classList.add(style));
+  }
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
@@ -222,6 +276,7 @@ export function decorateMain(main, head) {
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
+  buildCtaList(main);
 }
 
 /**
@@ -236,6 +291,8 @@ async function loadEager(doc) {
     decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
+
+  await getPlaceholders();
 }
 
 /**
@@ -301,23 +358,48 @@ async function loadPage() {
 loadPage();
 
 /* video helpers */
+export function isLowResolutionVideoUrl(url) {
+  return url.split('?')[0].endsWith('.mp4');
+}
+
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
   return (linkString.includes('youtube.com/embed/')
-    || (linkString.split('?')[0].endsWith('.mp4')))
+    || isLowResolutionVideoUrl(linkString))
     && link.closest('.block.embed') === null;
 }
 
-export function selectVideoLink(links) {
-  // logic for selecting the video based on the cookies
-  // will be implemented in #41
-  return links[0];
+export function selectVideoLink(links, preferredType) {
+  const linksList = [...links];
+  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
+  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
+
+  return videoLink;
+}
+
+export function showVideoModal(linkUrl) {
+  // eslint-disable-next-line import/no-cycle
+  import('../common/modal/modal.js').then((modal) => {
+    let beforeBanner = null;
+
+    if (isLowResolutionVideoUrl(linkUrl)) {
+      const lowResolutionMessage = getTextLable('Low resolution video message');
+      const changeCookieSettings = getTextLable('Change cookie settings');
+
+      beforeBanner = document.createElement('div');
+      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
+      beforeBanner.querySelector('button').addEventListener('click', () => {
+        window.OneTrust.ToggleInfoDisplay();
+      });
+    }
+
+    modal.showModal(linkUrl, beforeBanner);
+  });
 }
 
 export function addVideoShowHandler(link) {
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play-circle-o');
-  link.prepend(icon);
   link.classList.add('text-link-with-video');
 
   link.addEventListener('click', (event) => {
@@ -329,17 +411,37 @@ export function addVideoShowHandler(link) {
   });
 }
 
+export function addPlayIcon(parent) {
+  const iconWrapper = document.createElement('div');
+  iconWrapper.classList.add('video-icon-wrapper');
+  const icon = document.createElement('i');
+  icon.classList.add('fa', 'fa-play', 'video-icon');
+  iconWrapper.appendChild(icon);
+  parent.appendChild(iconWrapper);
+}
+
 export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.innerText = '';
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
   videoLink.classList.remove('button', 'primary');
 
-  // play icon
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('video-icon-wrapper');
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play', 'video-icon');
-  iconWrapper.appendChild(icon);
-  videoLink.appendChild(iconWrapper);
+  addPlayIcon(videoLink);
+}
+
+export function createIframe(url, { parentEl, classes = [] }) {
+  // iframe must be recreated every time otherwise the new history record would be created
+  const iframe = document.createElement('iframe');
+  const iframeClasses = Array.isArray(classes) ? classes : [classes];
+
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+  iframe.setAttribute('src', url);
+  iframe.classList.add(...iframeClasses);
+
+  if (parentEl) {
+    parentEl.appendChild(iframe);
+  }
+
+  return iframe;
 }

@@ -102,6 +102,9 @@
   /* nav height */
   --nav-height: 95px;
   --sub-nav-height: 44px;
+
+  /* sectio style */
+  --wrapper-width: 100%;
 }
 
 *,
@@ -138,6 +141,7 @@ header {
 header .header.block {
   background-color: white;
   min-height: var(--nav-height);
+  position: relative;
   z-index: 1050;
 }
 
@@ -154,6 +158,10 @@ header .sub-nav.block {
   right: 0;
   position: absolute;
 }
+
+/* specific page styles */
+main.center { text-align: center; }
+main.center :where(.block) { text-align: initial; }
 
 h1, h2, h3,
 h4, h5, h6 {
@@ -248,6 +256,12 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+a.button.primary.dark,
+button.primary {
+  color: var(--c-white);
+  background-color: var(--text-color);
+}
+
 button:disabled, button:disabled:hover {
   background-color: var(--overlay-background-color);
   cursor: unset;
@@ -257,6 +271,8 @@ a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
 }
+
+/* commont elements */
 
 main input {
   font-size: 1.25rem;
@@ -274,15 +290,6 @@ main input {
 
 main input:hover {
   border: 1px solid var(--text-color);
-}
-
-main .section > div {
-  padding: 0 15px;
-  margin: 48px auto;
-}
-
-main .section:first-child > div {
-  margin-top: 0;
 }
 
 main pre {
@@ -328,6 +335,18 @@ main p img {
   margin: auto;
 }
 
+/* sections */
+
+main .section > div {
+  width: var(--wrapper-width);
+  padding: 0 15px;
+  margin: 48px auto;
+}
+
+main .section:first-child > div {
+  margin-top: 0;
+}
+
 main .section-with-background {
   --text-color: white;
 
@@ -336,17 +355,29 @@ main .section-with-background {
   min-height: 405px;
   color: var(--text-color);
   text-align: center;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  padding: 48px 0;
+}
+
+main .section-with-background>div:first-of-type,
+main .section-with-background>div:first-of-type>:first-child {
+  margin-top: 0;
+}
+
+main .section-with-background>div:last-of-type,
+main .section-with-background>div:last-of-type>:last-child {
+  margin-bottom: 0;
 }
 
 main .section-with-background>picture:last-of-type img {
-  width: 100%;
+  width: var(--wrapper-width);
   height: 100%;
   display: block;
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: -1;
   object-fit: cover;
 }
@@ -361,9 +392,28 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
+body.disable-scroll, body.disable-scroll main {
+  overflow: hidden;
+}
+
+ul.cta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul.cta-list li {
+  padding: 0 50px;
+}
+
 main .section.tabbed-container-full-width > div {
   padding: 0;
   width: unset;
+}
+
+main .section.tabbed-container-full-width {
+  --horizontal-padding: calc((100% - var(--wrapper-width)) / 2);
 }
 
 main .section.tabbed-container ul.tab-navigation {
@@ -398,7 +448,7 @@ main .section.tabbed-container ul.tab-navigation li:hover {
   display: block;
 }
 
-.link-with-video .video-icon-wrapper {
+.video-icon-wrapper {
   background: rgb(255 255 255 / 90%);
   color: var(--volvo-text-gray);
   width: 50px;
@@ -421,14 +471,14 @@ main .section.tabbed-container ul.tab-navigation li:hover {
   line-height: 50px;
 }
 
-.link-with-video .video-icon-wrapper:hover {
+.video-icon-wrapper:hover {
   background: rgb(230 230 230 / 90%);
   color: var(--volvo-text-gray);
   font-size: 30px;
   opacity: .8;
 }
 
-.link-with-video .video-icon::before {
+.video-icon-wrapper .video-icon::before {
   padding-left: 5px;
 }
 
@@ -464,8 +514,15 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 768px) {
-  main .section > div {
-    width: 756px;
+  :root {
+    --wrapper-width: 756px;
+  }
+
+  ul.cta-list {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    flex-flow: row wrap;
   }
 }
 
@@ -494,10 +551,7 @@ a.button.text-link-with-video::after {
     --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
-  }
-
-  main .section > div {
-    width: 960px;
+    --wrapper-width: 960px;
   }
 
   main .section:first-child > div {
@@ -510,7 +564,11 @@ a.button.text-link-with-video::after {
 }
 
 @media (min-width: 1300px) {
-  main .section > div {
-    width: 1200px;
+  :root {
+    --wrapper-width: 1200px;
   }
+}
+
+.video-link-wrapper {
+  text-align: center;
 }

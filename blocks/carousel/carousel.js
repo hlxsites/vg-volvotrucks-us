@@ -102,8 +102,39 @@ function createMobileControls(ul) {
 }
 
 export default function decorate(block) {
-  const ul = block.querySelector('ul');
+  const ul = document.createElement('ul');
   ul.classList.add('items');
+
+  // We support two formats:
+  // 1. Each slide in a cell in either columns column and/or rows.
+  // 2. all values in the first cell as a list.
+  [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
+    // collect any <li>
+    cell.querySelectorAll('li').forEach((li) => {
+      if (li.childElementCount) {
+        ul.append(li);
+      }
+    });
+    // remove any remaining <ul>
+    cell.querySelectorAll('ul').forEach((el) => el.remove());
+
+    // If cell still contains anything, add content to list
+    if (cell.childElementCount) {
+      const li = document.createElement('li');
+      li.append(...cell.childNodes);
+      // remove link decoration
+      li.querySelectorAll('.button-container,.button').forEach((el) => {
+        el.classList.remove('button-container', 'button', 'primary');
+      });
+      ul.append(li);
+    }
+    cell.remove();
+  });
+
+  // now that all cells are removed, only rows are remining.
+  const firstCell = document.createElement('div');
+  block.firstElementChild.append(firstCell);
+  firstCell.append(ul);
 
   [...ul.children].forEach((li) => {
     // Add wrapper around the content
