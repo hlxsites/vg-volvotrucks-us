@@ -11,7 +11,8 @@ export default function decorate(block) {
       elem.classList.add('with-cta-list');
     }
     // give p containing the image a specific class
-    elem.querySelector('picture').parentElement.classList.add('image');
+    const picture = elem.querySelector('picture');
+    if (picture) picture.parentElement.classList.add('image');
     // give all the other p a text class
     elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 
