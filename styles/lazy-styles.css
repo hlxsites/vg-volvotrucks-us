@@ -38,7 +38,7 @@
 * Broad Heading 1
 * Volvo Broad (Volvo Broad Pro Digital)
  */
- h1.broad {
+ .broad {
   font-family: VolvoBroadProDigital, Arial, sans-serif;
   font-size: 70px;
   font-weight: 500;
