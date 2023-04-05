@@ -222,25 +222,46 @@ function swapHero(main, document) {
 }
 
 function convertTopTenListItem(main, document) {
-  const elements = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"] li.top-ten-item');
-  if (elements) {
-    elements.forEach((li) => {
-      const cells = [['Teaser Grid']];
+  [...document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"]')]
+    .forEach((topTen) => {
+      const elements = topTen.querySelectorAll('li.top-ten-item');
+      if (elements) {
+        let currentRow = [];
+        let startNewTable = false;
 
-      const div = document.createElement('div');
-      const heroImg = li.querySelector('figure');
-      div.append(WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document));
+        elements.forEach((li) => {
+          const fullRow = li.classList.contains('full');
+          if (fullRow) startNewTable = true;
 
-      const fullRow = li.classList.contains('full');
+          if (startNewTable && currentRow.length) {
+            // flush the current row, start a new table
+            const cells = [['Teaser Grid']];
+            cells.push([...currentRow]);
+            const table = WebImporter.DOMUtils.createTable(cells, document);
+            topTen.append(table);
 
-      div.append(...li.childNodes);
-      cells.push([div]);
+            currentRow = [];
+          }
 
-      const table = WebImporter.DOMUtils.createTable(cells, document);
-      li.closest('div[data-layout="top-ten"]').append(table);
-      li.remove();
+          const div = document.createElement('div');
+          const heroImg = li.querySelector('figure');
+          div.append(WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document));
+
+          div.append(...li.childNodes);
+          currentRow.push(div);
+
+          li.remove();
+          startNewTable = !!fullRow;
+        });
+
+        if (currentRow.length) {
+          const cells = [['Teaser Grid']];
+          cells.push([...currentRow]);
+          const table = WebImporter.DOMUtils.createTable(cells, document);
+          topTen.append(table);
+        }
+      }
     });
-  }
 }
 
 function makeTruckHero(main, document) {
@@ -412,6 +433,7 @@ function makeVideo(main, document) {
       video.replaceWith(embed);
     });
 }
+
 function convertArialCapsTitle(main, document) {
   const titles = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.newsArticle > .row p span.arialCapsTitle');
   titles.forEach((title) => {
@@ -455,7 +477,7 @@ function mergeEqualConsecutiveBlocks(main, document) {
     // merge if previous element is of the same kind and exact same variation
     const previousTable = table.previousElementSibling;
     if (previousTable && previousTable.tagName === 'TABLE'
-          && previousTable.querySelector('th').textContent === table.querySelector('th').textContent) {
+            && previousTable.querySelector('th').textContent === table.querySelector('th').textContent) {
       console.log('merging Teaser Cards block');
       table.childNodes.forEach((row, index) => {
         if (index === 0) return;
@@ -522,6 +544,7 @@ function makeTabbedCarousel(main, document) {
     });
   }
 }
+
 function makeHubTextBlock(main, document) {
   const htb = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > section.hubTextBlock');
   if (htb) {
@@ -839,6 +862,7 @@ function makeKeyFacts(main, document) {
   main.querySelectorAll('#Form1 > div.container > .threeColumnSpecs').forEach((source) => {
     const row = source.querySelector('.row');
     const [first, second, thrid] = row.children;
+
     function convertColumnContent(col) {
       const div = document.createElement('div');
       const childen = [...col.firstElementChild.children];
@@ -861,6 +885,7 @@ function makeKeyFacts(main, document) {
       }
       return div;
     }
+
     const cells = [
       ['Key Facts (wide columns, trailing line)'],
       [
