@@ -48,7 +48,15 @@
   opacity: 0;
 }
 
+.tabbed-container-full-width .tabbed-accordion p {
+  padding: 0 calc(var(--horizontal-padding) + 15px);
+}
+
 @media screen and (min-width: 768px) {
+  .tabbed-container-full-width .tabbed-accordion p.picture {
+    padding: 0;
+  }
+
   .tabbed-accordion-wrapper .tab-navigation {
     display: block;
   }
