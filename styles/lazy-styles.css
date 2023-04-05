@@ -109,6 +109,12 @@ body.disable-scroll, body.disable-scroll main {
   color: #A7A8A9;
 }
 
+.block h4 > em {
+  color: #fff;
+  text-transform: uppercase;
+  font-style: initial;
+}
+
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)

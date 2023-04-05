@@ -61,12 +61,14 @@ function buildHeroBlock(main) {
     const headings = document.createElement('div');
     headings.className = 'hero-headings';
     const elems = [picture, headings];
-    if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
+    const isPrevSubtitle = h1.previousElementSibling.matches('h2,h3,h4');
+    const subtitle = isPrevSubtitle ? h1.previousElementSibling : h1.nextElementSibling;
+    if (subtitle && (subtitle.matches('h2,h3,h4')
       // also consider a <p> without any children as sub heading
-      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
+      || (subtitle.matches('p') && !subtitle.children.length))) {
       const h4 = document.createElement('h4');
-      h4.innerHTML = h1.nextElementSibling.innerHTML;
-      h1.nextElementSibling.remove();
+      h4.innerHTML = subtitle.innerHTML;
+      subtitle.remove();
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
