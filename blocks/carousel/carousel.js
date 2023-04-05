@@ -166,6 +166,11 @@ export default function decorate(block) {
     container.innerHTML = `
       <p>${textItems.join('</p><p>')}</p>
     `;
+
+    const carouselLink = container.querySelector('a');
+    if (carouselLink) {
+      carouselLink.classList.add('carousel-link');
+    }
   });
 
   const desktopControls = createDesktopControls(ul);

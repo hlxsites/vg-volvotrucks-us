@@ -93,6 +93,18 @@
      display: none;
  }
 
+ .block.carousel .carousel-link {
+    font-weight: 700;
+ }
+
+ .block.carousel .carousel-link::after {
+    content: '\f105';
+    margin-left: 8px;
+    color: var(--link-color);
+    font-family: var(--ff-fontawesome);
+    vertical-align: middle;
+ }
+
  @media screen and (min-width: 481px) {
     .block.carousel .mobile-controls button::after {
         font-size: 1.6rem;
