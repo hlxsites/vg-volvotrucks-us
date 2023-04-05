@@ -8,6 +8,7 @@ indices:
       - 'images/**'
       - '/**/footer'
       - '/**/nav'
+      - '/fragments/**'
     target: /query-index.json
     properties:
       lastModified:
@@ -93,3 +94,31 @@ indices:
       content:
         select: main
         value: textContent(el)
+  body-builder:
+    include:
+      - '/parts-and-services/services/body-builder-support/news-and-events/**'
+    exclude:
+      - '/parts-and-services/services/body-builder-support/news-and-events/'
+    target: /body-builder.json
+    properties:
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      title:
+        select: h1
+        value: textContent(el)
+      index_title:
+        select: head > meta[name="index_title"]
+        value: attribute(el, "content")
+      index_date:
+        select: head > meta[name="index_date"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[property="og:description"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
