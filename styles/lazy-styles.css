@@ -109,6 +109,7 @@ body.disable-scroll, body.disable-scroll main {
   color: #A7A8A9;
 }
 
+.block h4,
 .block h4 > em {
   color: #fff;
   text-transform: uppercase;
