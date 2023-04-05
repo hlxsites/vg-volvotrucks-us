@@ -221,6 +221,29 @@ function swapHero(main, document) {
   WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document);
 }
 
+function convertTopTenListItem(main, document) {
+  const elements = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div[data-layout="top-ten"] li.top-ten-item');
+  if (elements) {
+    elements.forEach((li) => {
+
+      const cells = [['Teaser Grid']];
+
+      const div = document.createElement('div');
+      const heroImg = li.querySelector('figure');
+      div.append(WebImporter.DOMUtils.replaceBackgroundByImg(heroImg, document));
+
+      const fullRow = li.classList.contains('full');
+
+      div.append(...li.childNodes);
+      cells.push([div]);
+
+      const table = WebImporter.DOMUtils.createTable(cells, document);
+      li.closest('div[data-layout="top-ten"]').append(table);
+      li.remove();
+    });
+  }
+}
+
 function makeTruckHero(main, document) {
   const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div.heroImage.full-width');
   if (mainHero) {
@@ -936,6 +959,7 @@ export default {
     swapVideoCta(main, document);
     markSecondaryCta(main, document);
     makeTruckHero(main, document);
+    convertTopTenListItem(main, document);
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
     makeGenericGrid(main, document);
