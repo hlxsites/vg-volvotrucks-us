@@ -63,7 +63,6 @@
 
 /* description */
 .key-facts-wrapper .key-facts p:last-of-type {
-  margin-bottom: 48px;
   font-family: var(--ff-volvo-novum);
   font-size: 1.6rem;
 }
