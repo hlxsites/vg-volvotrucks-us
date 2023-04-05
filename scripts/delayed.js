@@ -18,5 +18,13 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   });
 
   window.OptanonWrapper = () => {
+    const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
+
+    window.OneTrust.OnConsentChanged(() => {
+      // reloading the page only when the active group has chaned
+      if (currentOnetrustActiveGroups !== window.OnetrustActiveGroups) {
+        window.location.reload();
+      }
+    });
   };
 }
