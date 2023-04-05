@@ -397,10 +397,9 @@ function makeProductCarousel(main, document) {
   const pc = document.querySelectorAll('#Form1 div.productCarousel');
   if (pc) {
     console.log(`product carousel(s) found: ${pc.length}`);
-    const cells = [['Carousel']];
-    const items = [];
-
     pc.forEach((car) => {
+      const cells = [['Carousel']];
+      const items = [];
       const wrap = car.querySelector('div.carousel-wrapper');
       wrap.querySelectorAll('div.product').forEach((it) => {
         const item = document.createElement('div');
@@ -415,6 +414,32 @@ function makeProductCarousel(main, document) {
 
       const carousel = WebImporter.DOMUtils.createTable(cells, document);
       wrap.replaceWith(carousel);
+    });
+  }
+}
+
+function makeProductGrid(main, document) {
+  const pc = document.querySelectorAll('#Form1 div.productGrid');
+  if (pc) {
+    console.log(`product carousel(s) found: ${pc.length}`);
+    pc.forEach((car) => {
+      const cells = [['Carousel (grid on desktop)']];
+      const items = [];
+      const wrap = car.querySelector('div.carousel-wrapper');
+      car.querySelectorAll('.hidden-xs div.product').forEach((it) => {
+        const item = document.createElement('div');
+        item.append(
+          it.querySelector('img'),
+          document.createElement('br'),
+          it.querySelector('.wrapper'),
+        );
+        items.push(item);
+      });
+      cells.push(...distributeItemsInColumns(items, 3));
+
+      car.querySelectorAll('.visible-xs,.row.hidden-xs').forEach(el => el.remove());
+      const carousel = WebImporter.DOMUtils.createTable(cells, document);
+      car.insertAdjacentElement('beforeend', carousel);
     });
   }
 }
@@ -1059,6 +1084,7 @@ export default {
     fixAlternatingLeftRightColumns(main, document);
     makeGenericGrid(main, document);
     makeProductCarousel(main, document);
+    makeProductGrid(main, document);
     makeImageText(main, document);
     makeNewsFeaturesPanelAndImageTextGrid(main, document);
     makeImageTextGrid(main, document);
