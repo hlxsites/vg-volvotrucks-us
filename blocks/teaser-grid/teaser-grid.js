@@ -1,12 +1,37 @@
 import { addVideoShowHandler, isVideoLink, wrapImageWithVideoLink } from '../../scripts/scripts.js';
+/* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
-  const grid = document.createElement('ul');
+  // Formats a table and applies background images. Generally, each item should be in a table cell.
+  // When a cell is empty, the cells are merged vertically.
   const columns = [...block.firstElementChild.children];
+
+  // convert new format to old format: cells in each column are moved into the first row as <li>
+  block.querySelectorAll(':scope > div').forEach((row, rowIndex) => {
+    row.querySelectorAll(':scope > div').forEach((cell, columnIndex) => {
+      wrapContentInList(cell);
+      if (rowIndex > 0) {
+        // move to first row
+        cell.querySelectorAll('li').forEach((li) => {
+          if (li.childElementCount) {
+            columns[columnIndex].querySelector('ul').append(li);
+          }
+        });
+        cell.remove();
+      }
+    });
+    if (rowIndex > 0) {
+      row.remove();
+    }
+  });
+  removeEmptyLi(block);
+
+  const grid = document.createElement('ul');
+
   const colCount = columns.length;
   // get the max of list items per column, remove empty ones
   const rowCount = columns.map((col) => [...col.querySelectorAll('li')].filter((li) => {
-    if (li.innerHTML === '') li.remove();
+    if (li.innerHTML.trim() === '') li.remove();
     return !!li.parentElement;
   }).length).reduce((l, r) => Math.max(l, r), 0);
 
@@ -58,5 +83,30 @@ export default function decorate(block) {
   links.filter((link) => isVideoLink(link)).forEach((link) => {
     addVideoShowHandler(link);
     wrapImageWithVideoLink(link, link.querySelector('picture'));
+  });
+}
+
+/**
+ * make sure there is an <ul>, move any content into an <li>
+ */
+function wrapContentInList(cell) {
+  const nonListContent = [...cell.childNodes].filter((el) => el.nodeName !== 'UL');
+
+  let ul = cell.querySelector(':scope > ul');
+  if (!ul) {
+    ul = document.createElement('ul');
+    cell.append(ul);
+  }
+
+  if (nonListContent.length) {
+    const li = document.createElement('li');
+    li.append(...nonListContent);
+    ul.append(li);
+  }
+}
+
+function removeEmptyLi(cell) {
+  cell.querySelectorAll('li').forEach((li) => {
+    if (li.innerHTML.trim() === '') li.remove();
   });
 }
