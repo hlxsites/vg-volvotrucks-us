@@ -125,7 +125,7 @@ export default function decorate(block) {
       // remove link decoration
       li.querySelectorAll('.button-container,.button').forEach((el) => {
         el.classList.remove('button-container', 'button', 'primary');
-      })
+      });
       ul.append(li);
     }
     cell.remove();
