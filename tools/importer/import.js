@@ -528,6 +528,24 @@ function makeTabbedCarousel(main, document) {
       const sections = [...slides].map((slide) => {
         const section = document.createElement('div');
         section.innerHTML = slide.innerHTML;
+
+        // handle videos
+        section.querySelectorAll('a[data-video-src]').forEach((a) => {
+          const { videoSrc } = a.dataset;
+          const ytLink = document.createElement('a');
+          ytLink.textContent = videoSrc;
+          ytLink.href = videoSrc;
+          const fallbackLink = document.createElement('a');
+          fallbackLink.textContent = 'Fallback Vide Link Missing';
+          fallbackLink.href = 'https://main--vg-volvotrucks-us--hlxsites.hlx.page/media_188a071943b60070cb995240235c66862e9ca5e95.mp4';
+          const cells = [
+            ['Embed (autoplay, loop, full width)'],
+            [fallbackLink],
+            [ ytLink ]
+          ]
+          a.replaceWith(WebImporter.DOMUtils.createTable(cells, document))
+        });
+
         const metadata = [['Section Metadata']];
         if (fullWidth) metadata.push(['Style', 'Full Width']);
         metadata.push(['Carousel', slide.getAttribute('tab-title')]);
@@ -898,6 +916,41 @@ function makeKeyFacts(main, document) {
   });
 }
 
+function makeKeyFactsFromStats(main, document) {
+  document.querySelectorAll('#stats').forEach((row) => {
+    const [first, second, thrid] = row.children;
+
+    function convertColumnContent(col) {
+      const div = document.createElement('div');
+      const childen = [...col.children];
+      for (let i = 0; i < childen.length; i += 1) {
+        let child = childen[i];
+        if (child.matches('h2')) {
+          let text = child.textContent.trim();
+          if (child.nextElementSibling) {
+            text += ` ${child.nextElementSibling.textContent.trim()}`;
+            i += 1;
+          }
+          child = document.createElement('p');
+          child.innerHTML = `<strong>${text}</strong>`;
+        }
+        div.appendChild(child);
+      }
+      return div;
+    }
+
+    const cells = [
+      ['Key Facts (wide columns)'],
+      [
+        convertColumnContent(first),
+        convertColumnContent(second),
+        convertColumnContent(thrid),
+      ],
+    ];
+    row.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+  })
+}
+
 function makeDocumentList(main, document) {
   const docLists = document.querySelectorAll('#Form1 > div.container.main-content.allow-full-width > div.documentList-container');
   if (docLists) {
@@ -943,6 +996,15 @@ function makeModelIntroduction(main, document) {
     elements.push(WebImporter.DOMUtils.createTable(cells, document));
     mi.replaceWith(...elements);
   });
+}
+
+function fixCtaInBlockQuote(main, document) {
+  document.querySelectorAll('blockquote').forEach((bq) => {
+    const lastEl = bq.lastElementChild;
+    if (lastEl && lastEl.tagName === 'A') {
+      bq.after(lastEl);
+    }
+  })
 }
 
 export default {
@@ -1004,15 +1066,17 @@ export default {
     styleSubtitleHeaders(main, document, url);
     makeLinkList(main, document);
     makeKeyFacts(main, document);
+    makeKeyFactsFromStats(main, document);
     makeDocumentList(main, document);
     makeModelIntroduction(main, document);
     makeForm(main, document);
+    fixCtaInBlockQuote(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
-      if (href && new URL(href).pathname.endsWith('.pdf')) {
+      if (href && href != '#' && new URL(href).pathname.endsWith('.pdf')) {
         const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
