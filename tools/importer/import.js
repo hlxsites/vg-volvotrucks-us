@@ -1045,6 +1045,21 @@ function fixCtaInBlockQuote(main, document) {
   })
 }
 
+function fixListWithListStyleNone(main, document) {
+  document.querySelectorAll('ul').forEach((ul) => {
+    if (ul.style.listStyleType === 'none') {
+      const elements = [];
+      ul.querySelectorAll('li').forEach((li) => {
+        const p = document.createElement('p');
+        p.append(...li.childNodes);
+        elements.push(p);
+      });
+      ul.after(...elements);
+      ul.remove();
+    }
+  })
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1110,12 +1125,13 @@ export default {
     makeModelIntroduction(main, document);
     makeForm(main, document);
     fixCtaInBlockQuote(main, document);
+    fixListWithListStyleNone(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
-      if (href && href != '#' && new URL(href).pathname.endsWith('.pdf')) {
+      if (href && !href.startsWith('#') && new URL(href).pathname.endsWith('.pdf')) {
         const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
