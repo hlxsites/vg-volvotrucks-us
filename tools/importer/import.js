@@ -22,6 +22,7 @@ const span = (doc, text) => {
 const meta = {};
 
 function identifyTemplate(main, document) {
+  delete meta.template;
   const pressRelease = document.querySelector('#Form1 > div.container.main-content > div.wb');
   if (pressRelease) {
     meta.template = 'article';
@@ -441,7 +442,7 @@ function makeProductGrid(main, document) {
       });
       cells.push(...distributeItemsInColumns(items, 3));
 
-      car.querySelectorAll('.visible-xs,.row.hidden-xs').forEach(el => el.remove());
+      car.querySelectorAll('.visible-xs,.row.hidden-xs').forEach((el) => el.remove());
       const carousel = WebImporter.DOMUtils.createTable(cells, document);
       car.insertAdjacentElement('beforeend', carousel);
     });
@@ -570,9 +571,9 @@ function makeTabbedCarousel(main, document) {
           const cells = [
             ['Embed (autoplay, loop, full width)'],
             [fallbackLink],
-            [ ytLink ]
-          ]
-          a.replaceWith(WebImporter.DOMUtils.createTable(cells, document))
+            [ytLink],
+          ];
+          a.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
         });
 
         const metadata = [['Section Metadata']];
@@ -610,7 +611,11 @@ function makeHubTextBlock(main, document) {
       const img = document.createElement('img');
       img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
       const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
-      cells.push([formName.value]);
+      if (formName) {
+        cells.push([formName.value]);
+      } else {
+        cells.push(['form name not found']);
+      }
       const form = WebImporter.DOMUtils.createTable(cells, document);
       elements.push(form);
       elements.push(WebImporter.DOMUtils.createTable([
@@ -981,7 +986,7 @@ function makeKeyFactsFromStats(main, document) {
       ],
     ];
     row.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
-  })
+  });
 }
 
 function makeDocumentList(main, document) {
@@ -1036,13 +1041,28 @@ function makeModelIntroduction(main, document) {
   });
 }
 
+function importBodyBuilderArticle(main, document) {
+  const bba = main.querySelector('div.newsIntro');
+  if (bba) {
+    console.log('body builder article detected');
+    if (!meta.template) {
+      meta.template = 'body-builder-article';
+      meta.index_title = main.querySelector('div.news-article-headline h1').textContent.trim();
+      console.log(main.querySelector('div.news-article-headline span.news-article-date').textContent);
+      meta.index_date = main.querySelector('div.news-article-headline span.news-article-date').textContent;
+    } else {
+      console.log('warn: template already set');
+    }
+  }
+}
+
 function fixCtaInBlockQuote(main, document) {
   document.querySelectorAll('blockquote').forEach((bq) => {
     const lastEl = bq.lastElementChild;
     if (lastEl && lastEl.tagName === 'A') {
       bq.after(lastEl);
     }
-  })
+  });
 }
 
 function fixListWithListStyleNone(main, document) {
@@ -1057,7 +1077,7 @@ function fixListWithListStyleNone(main, document) {
       ul.after(...elements);
       ul.remove();
     }
-  })
+  });
 }
 
 export default {
@@ -1090,6 +1110,10 @@ export default {
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
       'div.modal',
     ]);
+    delete meta.image;
+    delete meta.template;
+    delete meta.index_date;
+    delete meta.index_title;
 
     linkToHlxPage(main, document, url);
 
@@ -1124,6 +1148,7 @@ export default {
     makeDocumentList(main, document);
     makeModelIntroduction(main, document);
     makeForm(main, document);
+    importBodyBuilderArticle(main, document);
     fixCtaInBlockQuote(main, document);
     fixListWithListStyleNone(main, document);
     // create the metadata block and append it to the main element
