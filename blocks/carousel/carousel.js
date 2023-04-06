@@ -139,7 +139,7 @@ export default function decorate(block) {
   [...ul.children].forEach((li) => {
     // Add wrapper around the content
     const container = document.createElement('div');
-    container.className = 'wrapper';
+    container.className = 'carousel-content-wrapper';
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
     li.append(container);
@@ -169,7 +169,7 @@ export default function decorate(block) {
 
     const carouselLink = container.querySelector('a');
     if (carouselLink) {
-      carouselLink.classList.add('carousel-link');
+      carouselLink.classList.add('button', 'carousel-link');
     }
   });
 

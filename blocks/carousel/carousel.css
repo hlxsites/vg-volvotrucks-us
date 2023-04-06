@@ -94,15 +94,9 @@
  }
 
  .block.carousel .carousel-link {
+    white-space: inherit;
+    font-family: inherit;
     font-weight: 700;
- }
-
- .block.carousel .carousel-link::after {
-    content: '\f105';
-    margin-left: 8px;
-    color: var(--link-color);
-    font-family: var(--ff-fontawesome);
-    vertical-align: middle;
  }
 
  @media screen and (min-width: 481px) {
@@ -213,4 +207,8 @@
         top: 15px;
     }
 
+    .block.carousel .carousel-content-wrapper {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
  }
