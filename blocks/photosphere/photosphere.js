@@ -1,3 +1,5 @@
+import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
+
 export default async function decorate(block) {
   const imageLink = block.querySelector('img')?.getAttribute('src');
   const [address, params] = imageLink.split('?');
@@ -29,28 +31,14 @@ export default async function decorate(block) {
 
   // adding photosphere styles
   styles.forEach((styleSheet) => {
-    const styleElement = document.createElement('link');
-
-    styleElement.setAttribute('href', styleSheet);
-    styleElement.setAttribute('rel', 'stylesheet');
-    document.head.append(styleElement);
+    loadCSS(styleSheet);
   });
 
   // adding photosphere scripts
   // eslint-disable-next-line no-restricted-syntax
   for (const script of scripts) {
-    let waitForLoad = Promise.resolve();
-    const scriptElement = document.createElement('script');
-
-    waitForLoad = new Promise((resolve) => {
-      scriptElement.addEventListener('load', resolve);
-    });
-
-    scriptElement.setAttribute('src', script);
-    document.body.append(scriptElement);
-
     // eslint-disable-next-line no-await-in-loop
-    await waitForLoad;
+    await loadScript(script, { type: 'text/javascript', charset: 'UTF-8' });
   }
 
   initPhotosphere();
