@@ -133,10 +133,6 @@ function makeIndexPage(url) {
   return importerURL.pathname.endsWith('/') ? newUrl.toString() : importerURL.pathname;
 }
 
-function isCentered(element, theWindow) {
-  return theWindow.getComputedStyle(element).textAlign === 'center';
-}
-
 /**
  * Subtitles are marked with italics and then rendered in gray.
  */
