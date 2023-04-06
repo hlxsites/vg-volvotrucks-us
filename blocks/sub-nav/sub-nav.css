@@ -115,6 +115,8 @@
     .block.sub-nav li:first-child a {
         background-color: black;
         padding: 0 12px;
+        width: 110px;
+        text-align: center;
     }
 
     .block.sub-nav li:first-child a:hover {
