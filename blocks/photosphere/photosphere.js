@@ -1,7 +1,7 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
 import { isWebpSupported } from '../../scripts/scripts.js';
 
-export default async function decorate(block) {
+async function renderBlock(block) {
   const styles = ['https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.1.4/index.min.css'];
   const scripts = [
     'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js',
@@ -52,4 +52,16 @@ export default async function decorate(block) {
   }
 
   initPhotosphere();
+}
+
+export default async function decorate(block) {
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting)) {
+      observer.disconnect();
+      renderBlock(block);
+    }
+  }, {
+    rootMargin: '300px',
+  });
+  observer.observe(block);
 }
