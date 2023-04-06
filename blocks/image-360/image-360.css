@@ -8,6 +8,9 @@
     grid-row: 1;
     opacity: 0;
     transition: opacity 500ms ease 0s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .block.image-360 picture.active {
