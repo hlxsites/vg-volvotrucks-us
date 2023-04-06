@@ -389,3 +389,33 @@ export function wrapImageWithVideoLink(videoLink, image) {
   iconWrapper.appendChild(icon);
   videoLink.appendChild(iconWrapper);
 }
+
+// based on: https://developers.google.com/speed/webp/faq
+export async function isWebpSupported() {
+  const testImages = [
+    // lossy
+    'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    // lossless
+    'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+  ];
+  const lossyImg = new Image();
+  const lossLessImg = new Image();
+  const promises = [];
+
+  [lossyImg, lossLessImg].forEach((img, index) => {
+    const promise = new Promise((resolve) => {
+      img.onload = () => {
+        const result = (img.width > 0) && (img.height > 0);
+        resolve(result);
+      };
+      img.onerror = () => {
+        resolve(false);
+      };
+      img.src = `data:image/webp;base64,${testImages[index]}`;
+    });
+
+    promises.push(promise);
+  });
+
+  return Promise.all(promises).then((values) => values.every((val) => val));
+}
