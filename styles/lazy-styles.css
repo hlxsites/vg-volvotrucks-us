@@ -111,7 +111,7 @@ body.disable-scroll, body.disable-scroll main {
 
 .block h4,
 .block h4 > em {
-  color: #fff;
+  color: inherit;
   text-transform: uppercase;
   font-style: initial;
 }
