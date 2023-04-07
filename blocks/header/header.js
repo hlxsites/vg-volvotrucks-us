@@ -136,8 +136,9 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
-  // temporary points to drafts until PR is approved, to not mess up layout
-  const navPath = config.nav || '/nav';
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  const navPath = config.nav || `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
   const resp = await fetch(`${navPath}.plain.html`);
 
   if (resp.ok) {

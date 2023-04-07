@@ -409,6 +409,7 @@ export function selectVideoLink(links, preferredType) {
 }
 
 export function showVideoModal(linkUrl) {
+  // eslint-disable-next-line import/no-cycle
   import('../common/modal/modal.js').then((modal) => {
     let beforeBanner = null;
 
@@ -453,4 +454,21 @@ export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.classList.remove('button', 'primary');
 
   addPlayIcon(videoLink);
+}
+
+export function createIframe(url, { parentEl, classes = [] }) {
+  // iframe must be recreated every time otherwise the new history record would be created
+  const iframe = document.createElement('iframe');
+  const iframeClasses = Array.isArray(classes) ? classes : [classes];
+
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+  iframe.setAttribute('src', url);
+  iframe.classList.add(...iframeClasses);
+
+  if (parentEl) {
+    parentEl.appendChild(iframe);
+  }
+
+  return iframe;
 }

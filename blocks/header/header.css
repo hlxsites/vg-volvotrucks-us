@@ -76,8 +76,8 @@ header nav .hamburger-toggle .hamburger-icon {
 /* the search input  */
 header nav .search {
   height: 0;
-  overflow: hidden;
   transition: height 400ms ease-out;
+  overflow: hidden;
   background-color: white;
   display: flex;
   top: var(--nav-height);
@@ -93,12 +93,13 @@ header nav .search div {
 
 header nav .search-toggle[aria-expanded=true]~.search {
   height: 59px;
+  margin-block-end: 15px;
 }
 
 header nav .search input {
   display: block;
   width: 100%;
-  height: 44px;
+  height: 59px;
   padding: 10px 40px 10px 15px;
   border: none;
   border-radius: 0;
@@ -109,7 +110,7 @@ header nav .search input {
 }
 
 header nav .search .search-button {
-  height: 44px;
+  height: 59px;
   padding: 0 10px;
   color: #A7A8A9;
   border: none;
@@ -693,7 +694,7 @@ header nav .sections .section .navigation-cta {
     color: var(--link-color);
     font-weight: 700;
   }
-  
+
   header nav .sections .section.expand > ul > li > ul > li {
     width: 126px;
   }
