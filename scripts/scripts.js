@@ -1,4 +1,3 @@
-import { showModal } from '../common/modal/modal.js';
 import {
   sampleRUM,
   buildBlock,
@@ -434,7 +433,10 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    showModal(link.getAttribute('href'));
+    // eslint-disable-next-line import/no-cycle
+    import('../common/modal/modal.js').then((modal) => {
+      modal.showModal(link.getAttribute('href'));
+    });
   });
 }
 
