@@ -9,6 +9,7 @@ indices:
       - '/**/footer'
       - '/**/nav'
       - '/fragments/**'
+      - '/**/sub-nav'
     target: /query-index.json
     properties:
       lastModified:
@@ -110,7 +111,7 @@ indices:
       index_title:
         select: head > meta[name="index_title"]
         value: attribute(el, "content")
-      index_date:
+      date:
         select: head > meta[name="index_date"]
         value: attribute(el, "content")
       description:
