@@ -394,6 +394,16 @@ function distributeItemsInColumns(items, columns) {
   return cells;
 }
 
+function makePhotoCarousel(main, document) {
+  document.querySelectorAll('#Form1 div.carousel').forEach((car) => {
+    const images = car.querySelectorAll('.heroImage:not(.slick-cloned) img');
+    const cells = [['Carousel']];
+    cells.push(...distributeItemsInColumns(images, 2));
+    const carousel = WebImporter.DOMUtils.createTable(cells, document);
+    car.replaceWith(carousel);
+  });
+}
+
 function makeProductCarousel(main, document) {
   const pc = document.querySelectorAll('#Form1 div.productCarousel');
   if (pc) {
@@ -439,7 +449,7 @@ function makeProductGrid(main, document) {
       cells.push(...distributeItemsInColumns(items, 3));
 
       car.querySelectorAll('.visible-xs,.row.hidden-xs').forEach((el) => el.remove());
-      if(cells.length > 1) {
+      if (cells.length > 1) {
         const carousel = WebImporter.DOMUtils.createTable(cells, document);
         car.insertAdjacentElement('beforeend', carousel);
       }
@@ -1157,6 +1167,7 @@ export default {
     makeTabbedCarousel(main, document);
     fixAlternatingLeftRightColumns(main, document);
     makeGenericGrid(main, document);
+    makePhotoCarousel(main, document);
     makeProductCarousel(main, document);
     makeProductGrid(main, document);
     makeImageText(main, document);
