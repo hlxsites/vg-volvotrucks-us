@@ -266,7 +266,7 @@ function convertTopTenListItem(main, document) {
 }
 
 function makeTruckHero(main, document) {
-  const mainHero = document.querySelector('#Form1 > div.container.main-content.allow-full-width > div.heroImage.full-width');
+  const mainHero = document.querySelector('#Form1 > div.container.main-content > div.heroImage');
   if (mainHero) {
     const subhead = mainHero.querySelector('div > div.wrapper > div > div > h4');
     const herohead = mainHero.querySelector('div > div.wrapper > div > div > h1');
