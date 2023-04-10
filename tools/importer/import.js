@@ -439,8 +439,10 @@ function makeProductGrid(main, document) {
       cells.push(...distributeItemsInColumns(items, 3));
 
       car.querySelectorAll('.visible-xs,.row.hidden-xs').forEach((el) => el.remove());
-      const carousel = WebImporter.DOMUtils.createTable(cells, document);
-      car.insertAdjacentElement('beforeend', carousel);
+      if(cells.length > 1) {
+        const carousel = WebImporter.DOMUtils.createTable(cells, document);
+        car.insertAdjacentElement('beforeend', carousel);
+      }
     });
   }
 }
