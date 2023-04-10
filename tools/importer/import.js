@@ -729,6 +729,23 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
   }
 }
 
+function makeColumnsFullWidthBackground(main, document) {
+  document.querySelectorAll('.heroImage.vtna-fwf').forEach((block) => {
+    const cells = [['Columns (Full width background, Center Vertically, White text)']];
+    const image = block.querySelector('img');
+    const text = block.querySelector('.padding-container');
+    const isTextRight = block.querySelector('.pull-right');
+
+    if (isTextRight) {
+      cells.push([image, text]);
+    } else {
+      cells.push([text, image]);
+    }
+
+    block.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+  });
+}
+
 function makeImageTextGrid(main, document) {
   const nfp = document.querySelectorAll('.imageTextGrid');
   if (nfp) {
@@ -1118,6 +1135,7 @@ export default {
       'body > img[src="/tcpauth.ashx?logout=1"]',
       'body > img[src="https://www.macktrucks.com/tcpauth.ashx?"]',
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
+      '.vtna-fwf-mobile',
       'div.modal',
     ]);
     delete meta.image;
@@ -1140,6 +1158,7 @@ export default {
     makeProductGrid(main, document);
     makeImageText(main, document);
     makeNewsFeaturesPanelAndImageTextGrid(main, document);
+    makeColumnsFullWidthBackground(main, document);
     makeImageTextGrid(main, document);
     makeTabbedFeatures(main, document);
     make360Image(main, document);
