@@ -729,9 +729,10 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
   }
 }
 
+// handles only hero-like section within the content.
 function makeColumnsFullWidthBackground(main, document) {
   document.querySelectorAll('.heroImage.vtna-fwf').forEach((block) => {
-    const cells = [['Columns (Full width background, Center Vertically, White text)']];
+    const cells = [['Content Hero (white text)']];
     const image = block.querySelector('img');
     const text = block.querySelector('.padding-container');
     const isTextRight = block.querySelector('.pull-right');
