@@ -504,7 +504,7 @@ function mergeEqualConsecutiveBlocks(main, document) {
     const previousTable = table.previousElementSibling;
     if (previousTable && previousTable.tagName === 'TABLE'
             && previousTable.querySelector('th').textContent === table.querySelector('th').textContent) {
-      console.log('merging Teaser Cards block');
+      console.log(`merging ${blockTypeWithoutVariant} block`);
       table.childNodes.forEach((row, index) => {
         if (index === 0) return;
         previousTable.appendChild(row);
@@ -656,8 +656,14 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
 
       if (columns > 0) {
         const cells = [['Teaser Cards']];
+        const isLinkListOnMobile = panel.querySelector('.imageTextGrid .imageTextGrid-4 .imageText-grid .image-container');
+        if (isLinkListOnMobile) {
+          cells[0][0] += ' (Link List on mobile)';
+        }
+
         let hasVideos = false;
         let row = [];
+
         const items = panel.querySelectorAll('div.col-sm-4, div.col-sm-6, div.col-sm-3');
         for (let i = 0; i < items.length; i++) {
           const item = items[i];
