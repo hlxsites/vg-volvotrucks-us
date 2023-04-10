@@ -493,7 +493,7 @@ function makeImageText(main, document) {
 }
 
 function mergeEqualConsecutiveBlocks(main, document) {
-  const blocksToAutomerge = ['Teaser Cards', 'Columns'];
+  const blocksToAutomerge = ['Teaser Cards', 'Columns', 'Content Hero'];
 
   main.querySelectorAll('table').forEach((table) => {
     const blockTitle = table.querySelector('th')?.textContent;
