@@ -1082,6 +1082,14 @@ function fixListWithListStyleNone(main, document) {
   });
 }
 
+function isLinkToPdf(href) {
+  try {
+    return href && !href.startsWith('#') && new URL(href).pathname.endsWith('.pdf');
+  } catch (e) {
+    return false;
+  }
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1158,7 +1166,7 @@ export default {
 
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
-      if (href && !href.startsWith('#') && new URL(href).pathname.endsWith('.pdf')) {
+      if (isLinkToPdf(href)) {
         const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
