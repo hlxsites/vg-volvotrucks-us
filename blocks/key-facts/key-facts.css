@@ -69,7 +69,11 @@
 
 /* the trailing line */
 .key-facts-wrapper .key-facts .key-fact > div {
-  width: 100%;;
+  width: 100%;
+}
+
+.key-fact div.trailing-line {
+  margin-top: 48px; 
 }
 
 .key-fact div.trailing-line::before {

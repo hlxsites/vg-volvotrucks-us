@@ -502,7 +502,7 @@ function makeImageText(main, document) {
 }
 
 function mergeEqualConsecutiveBlocks(main, document) {
-  const blocksToAutomerge = ['Teaser Cards', 'Columns'];
+  const blocksToAutomerge = ['Teaser Cards', 'Columns', 'Content Hero'];
 
   main.querySelectorAll('table').forEach((table) => {
     const blockTitle = table.querySelector('th')?.textContent;
@@ -738,6 +738,24 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
   }
 }
 
+// handles only hero-like section within the content.
+function makeColumnsFullWidthBackground(main, document) {
+  document.querySelectorAll('.heroImage.vtna-fwf').forEach((block) => {
+    const cells = [['Content Hero (white text)']];
+    const image = block.querySelector('img');
+    const text = block.querySelector('.padding-container');
+    const isTextRight = block.querySelector('.pull-right');
+
+    if (isTextRight) {
+      cells.push([image, text]);
+    } else {
+      cells.push([text, image]);
+    }
+
+    block.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
+  });
+}
+
 function makeImageTextGrid(main, document) {
   const nfp = document.querySelectorAll('.imageTextGrid');
   if (nfp) {
@@ -846,7 +864,12 @@ function makeSpecificationTable(main, document) {
       if (st.nextElementSibling?.matches('.mobileSpecsContainer')) st.nextElementSibling.remove();
 
       const cells = [['Specifications']];
-      const headerTable = st.firstElementChild;
+      let headerTable = st.firstElementChild;
+      if (['H2', 'H3', 'H4'].indexOf(headerTable.tagName) >= 0) {
+        const heading = headerTable;
+        headerTable = headerTable.nextElementSibling;
+        st.before(heading);
+      }
       if (headerTable.tagName === 'TABLE') {
         const images = [...headerTable.querySelectorAll('img')];
         const [name, ...titles] = [...headerTable.querySelectorAll('.header td')];
@@ -858,23 +881,32 @@ function makeSpecificationTable(main, document) {
           headerRow.push(div);
         });
         cells.push(headerRow);
-      } else if (['H2', 'H3', 'H4'].indexOf(headerTable.tagName) >= 0) {
-        st.before(headerTable);
       }
 
-      // for each collapsible section
-      st.querySelectorAll('button').forEach(({ textContent: label, nextElementSibling: content }) => {
-        const button = document.createElement('strong');
-        button.textContent = label.trim();
-        cells.push([button]);
-        content.querySelectorAll('tr').forEach((tr) => {
+      function mapRows(content) {
+        content.querySelectorAll('tr').forEach((tr, row) => {
           cells.push([...tr.querySelectorAll('td')].map((td) => {
             const div = document.createElement('div');
             div.innerHTML = td.innerHTML;
             return div;
           }));
         });
+      }
+
+      // for each collapsible section
+      const collapsibleContent = st.querySelectorAll('button');
+      collapsibleContent.forEach(({ textContent: label, nextElementSibling: content }) => {
+        const button = document.createElement('strong');
+        button.textContent = label.trim();
+        cells.push([button]);
+        mapRows(content);
       });
+
+      if (collapsibleContent.length === 0) {
+        // uncollapsible content
+        const content = st.querySelector('.content.uncollapsible');
+        mapRows(content);
+      }
 
       st.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
     });
@@ -1091,6 +1123,14 @@ function fixListWithListStyleNone(main, document) {
   });
 }
 
+function isLinkToPdf(href) {
+  try {
+    return href && !href.startsWith('#') && new URL(href).pathname.endsWith('.pdf');
+  } catch (e) {
+    return false;
+  }
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1119,6 +1159,7 @@ export default {
       'body > img[src="/tcpauth.ashx?logout=1"]',
       'body > img[src="https://www.macktrucks.com/tcpauth.ashx?"]',
       'body > img[src="https://www.volvotrucks.us/tcpauth.ashx?"]',
+      '.vtna-fwf-mobile',
       'div.modal',
     ]);
     delete meta.image;
@@ -1141,6 +1182,7 @@ export default {
     makeProductGrid(main, document);
     makeImageText(main, document);
     makeNewsFeaturesPanelAndImageTextGrid(main, document);
+    makeColumnsFullWidthBackground(main, document);
     makeImageTextGrid(main, document);
     makeTabbedFeatures(main, document);
     make360Image(main, document);
@@ -1167,7 +1209,7 @@ export default {
 
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
-      if (href && !href.startsWith('#') && new URL(href).pathname.endsWith('.pdf')) {
+      if (isLinkToPdf(href)) {
         const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
