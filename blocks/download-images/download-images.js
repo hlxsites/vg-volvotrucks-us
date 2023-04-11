@@ -1,5 +1,5 @@
 function restyleBtnToLink(block) {
-  const downloadHereBtn = block.querySelector('a[title="Here"]');
+  const downloadHereBtn = block.querySelector('.download-text a');
   // it has to be restyled if in content document the text is splitted in 2 lines
   if (!downloadHereBtn || !downloadHereBtn.classList.contains('button')) return;
   const btnContainer = downloadHereBtn.parentElement;
