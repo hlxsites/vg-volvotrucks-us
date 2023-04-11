@@ -100,10 +100,11 @@ export default async function decorate(block) {
   for (let i = firstRowIndex, rowgroup = null; i < rows.length; i += 1) {
     const row = rows[i];
     const cells = row.children;
+    const firstChild = cells[0].firstElementChild;
 
     if (cells.length === 1
       && (!singleColumn
-        || (cells[0].children.length === 1 && cells[0].firstElementChild && cells[0].firstElementChild.tagName === 'STRONG'))) {
+        || (cells[0].children.length === 1 && firstChild && firstChild.tagName === 'STRONG'))) {
       const button = document.createElement('button');
       button.className = 'rowgroup-header';
       button.type = 'button';
