@@ -87,8 +87,8 @@ export default async function decorate(block) {
     mobileColumnHeader.className = 'column-header-mobile';
     mobileColumnHeader.innerHTML = `<select>
       ${[...header.querySelectorAll('[role="columnheader"]')]
-        .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
-        .join('')}
+    .map((columnHeader, i) => `<option value="${i + 1}">${columnHeader.textContent}</option>`)
+    .join('')}
       </select>`;
     mobileColumnHeader.firstElementChild.addEventListener('change', changeMobileColumn);
     header.insertAdjacentElement('afterend', mobileColumnHeader);
