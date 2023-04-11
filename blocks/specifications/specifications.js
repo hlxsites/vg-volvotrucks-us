@@ -28,8 +28,8 @@ function normalizeCells(cells, rowheaderRole = 'rowheader', cellRole = 'cell') {
     if (!cell.children.length && cell.textContent !== '') {
       cell.innerHTML = `<p>${cell.textContent}</p>`;
     }
-    if (cell.firstElementChild && cell.firstElementChild.tagName === 'BR') cell.firstElementChild.remove();
-    if (cell.lastElementChild && cell.lastElementChild.tagName === 'BR') cell.lastElementChild.remove();
+    if (cell.firstChild && cell.firstChild.tagName === 'BR') cell.firstChild.remove();
+    if (cell.lastChild && cell.lastChild.tagName === 'BR') cell.lastChild.remove();
     if (j === 0 && cells.length > 1) cell.role = rowheaderRole;
     else cell.role = cellRole;
     cell.className = 'cell';
