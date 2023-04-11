@@ -185,10 +185,19 @@ const createMagazineArticles = (main, document, url) => {
       }
     });
 
+    const relatedSection = document.querySelector('section.hubTeaser.related');
+    const relatedCells = [['Related Articles'], [[''], ['']]];
+    const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
+    relatedSection.replaceWith(relatedArticleBlock);
+
+    const subscribeSection = document.querySelector('section.hubTextBlock');
+    const subscribeCells = [['Eloqua Form'], [['ExceedingExpectationsSignup']]];
+    const subscribeBlock = WebImporter.DOMUtils.createTable(subscribeCells, document);
+    subscribeSection.replaceWith(subscribeBlock);
+
     document.querySelector('aside.sidebar')?.remove();
     document.querySelector('section.hubArticleHero')?.remove();
-    document.querySelector('section.hubTeaser.related')?.remove();
-    document.querySelector('section.hubTextBlock')?.remove();
+    document.querySelector('a.yt_play img')?.remove();
 
     console.log(url);
     if (url.includes('/volvo-trucks-magazine/')) {
@@ -867,7 +876,12 @@ function makeSpecificationTable(main, document) {
       if (st.nextElementSibling?.matches('.mobileSpecsContainer')) st.nextElementSibling.remove();
 
       const cells = [['Specifications']];
-      const headerTable = st.firstElementChild;
+      let headerTable = st.firstElementChild;
+      if (['H2', 'H3', 'H4'].indexOf(headerTable.tagName) >= 0) {
+        const heading = headerTable;
+        headerTable = headerTable.nextElementSibling;
+        st.before(heading);
+      }
       if (headerTable.tagName === 'TABLE') {
         const images = [...headerTable.querySelectorAll('img')];
         const [name, ...titles] = [...headerTable.querySelectorAll('.header td')];
@@ -879,23 +893,32 @@ function makeSpecificationTable(main, document) {
           headerRow.push(div);
         });
         cells.push(headerRow);
-      } else if (['H2', 'H3', 'H4'].indexOf(headerTable.tagName) >= 0) {
-        st.before(headerTable);
       }
 
-      // for each collapsible section
-      st.querySelectorAll('button').forEach(({ textContent: label, nextElementSibling: content }) => {
-        const button = document.createElement('strong');
-        button.textContent = label.trim();
-        cells.push([button]);
-        content.querySelectorAll('tr').forEach((tr) => {
+      function mapRows(content) {
+        content.querySelectorAll('tr').forEach((tr, row) => {
           cells.push([...tr.querySelectorAll('td')].map((td) => {
             const div = document.createElement('div');
             div.innerHTML = td.innerHTML;
             return div;
           }));
         });
+      }
+
+      // for each collapsible section
+      const collapsibleContent = st.querySelectorAll('button');
+      collapsibleContent.forEach(({ textContent: label, nextElementSibling: content }) => {
+        const button = document.createElement('strong');
+        button.textContent = label.trim();
+        cells.push([button]);
+        mapRows(content);
       });
+
+      if (collapsibleContent.length === 0) {
+        // uncollapsible content
+        const content = st.querySelector('.content.uncollapsible');
+        mapRows(content);
+      }
 
       st.replaceWith(WebImporter.DOMUtils.createTable(cells, document));
     });
