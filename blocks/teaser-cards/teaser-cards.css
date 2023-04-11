@@ -40,6 +40,10 @@
   object-fit: cover;
 }
 
+.block.teaser-cards.icons img {
+  width: unset;
+}
+
 /* teaser title */
 .block.teaser-cards :is(h2, h3, h4) {
   margin: 0 0 10px;
