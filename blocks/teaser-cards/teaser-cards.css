@@ -67,10 +67,6 @@
   margin: 0;
 }
 
-.block.teaser-cards a.cta {
-  font-family: var(--ff-volvo-novum);
-}
-
 /* single teaser */
 .teaser-cards-wrapper.teaser-cards-1 {
   padding: 0;
