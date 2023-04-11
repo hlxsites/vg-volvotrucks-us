@@ -627,7 +627,7 @@ function makeHubTextBlock(main, document) {
       const cells = [['Eloqua Form']];
       const img = document.createElement('img');
       img.src = block.querySelector('div.container ').style.backgroundImage.replace(/url\(/gm, '').replace(/'/gm, '').replace(/\)/gm, '');
-      const formName = block.querySelector('#eloquaForm > fieldset > input[name=elqFormName]');
+      const formName = block.querySelector('fieldset > input[name=elqFormName]');
       if (formName) {
         cells.push([formName.value]);
       } else {
@@ -666,7 +666,7 @@ function makeForm(main, document) {
 }
 
 function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
-  const nfp = document.querySelectorAll('.newsFeatures, .imageTextGrid');
+  const nfp = document.querySelectorAll('.newsArticle, .newsFeatures, .imageTextGrid');
   if (nfp) {
     console.log(`news features panel found: ${nfp.length}`);
     nfp.forEach((panel) => {
@@ -674,6 +674,7 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
       if (panel.firstElementChild.matches('.newsFeatures-column-3, .imageTextGrid-3')) columns = 3;
       else if (panel.firstElementChild.matches('.newsFeatures-column-2, .imageTextGrid-2')) columns = 2;
       else if (panel.firstElementChild.matches('.imageTextGrid-4')) columns = 4;
+      else if (panel.querySelector('.row .col-sm-6')) columns = 2;
 
       if (columns > 0) {
         const cells = [['Teaser Cards']];
