@@ -52,8 +52,6 @@ function buildHeroBlock(main) {
   if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
     return;
   }
-  const metaHero = document.querySelector('meta[name="hero"');
-  const isHeroLeft = metaHero && metaHero.content === 'left';
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   const ctaLink = firstSection.querySelector('a');
@@ -79,7 +77,6 @@ function buildHeroBlock(main) {
     if (isCTALink) headings.appendChild(getCTAContainer(ctaLink));
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems }));
-    if (isHeroLeft) section.querySelector('.hero').classList.add('left');
     // remove the empty pre-section to avoid decorate it as empty section
     const containerChildren = firstSection.children;
     const wrapperChildren = containerChildren[0].children;

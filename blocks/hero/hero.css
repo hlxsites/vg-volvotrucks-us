@@ -13,11 +13,6 @@ main .hero-headings {
     text-align: center;
 }
 
-.left .hero-headings {
-    left: 0;
-    transform: translateX(0%);
-}
-
 main .hero-headings h1,
 main .hero-headings h4 {
     max-width: 1200px;
