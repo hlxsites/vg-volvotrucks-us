@@ -1120,6 +1120,25 @@ function isLinkToPdf(href) {
   }
 }
 
+function makeEmbedVideoFromYoutubeLink(main, document) {
+  // used for broken yt link on https://www.volvotrucks.us/our-difference/safety/active-driver-assist/
+  main.querySelectorAll('youtube').forEach((yt) => {
+    if (yt.nextElementSibling.matches('iframe')) {
+      const link = document.createElement('a');
+      link.href = yt.nextElementSibling.src;
+      link.textContent = yt.nextElementSibling.src;
+      const embed = WebImporter.DOMUtils.createTable([['Embed'], [
+        link,
+      ], [
+        span(document, 'PLEASE FIX LINK TO FALLBACK VIDEO'),
+      ]], document);
+      yt.closest('div').querySelector('.yt_thumbnail')?.remove();
+      yt.closest('div').querySelector('a.yt_play')?.remove();
+      yt.closest('p').replaceWith(embed);
+    }
+  });
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1162,6 +1181,7 @@ export default {
     swapHero(main, document);
     swapVideoCta(main, document);
     markSecondaryCta(main, document);
+    makeEmbedVideoFromYoutubeLink(main, document);
     makeTruckHero(main, document);
     convertTopTenListItem(main, document);
     makeTabbedCarousel(main, document);
