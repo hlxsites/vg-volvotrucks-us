@@ -1,20 +1,38 @@
+.embed.embed-full-width {
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
 .embed-video {
   margin: auto;
 }
 
-.embed-video-iframe {
+.embed-video-element {
   aspect-ratio: 16/9;
   width: 100%;
+}
+
+.embed .video-icon-wrapper {
+  pointer-events: none;
 }
 
 @media screen and (min-width: 768px) {
   .embed-video {
     width: 726px;
   }
+
+  .embed.embed-full-width .embed-video {
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 1300px) {
   .embed-video {
     width: 1170px;
+  }
+
+  .embed.embed-full-width .embed-video {
+    width: 100%;
   }
 }

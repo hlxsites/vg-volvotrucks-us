@@ -11,6 +11,12 @@
 /* mobile */
 
 /* first row div */
+.block.teaser-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .block.teaser-cards > div {
   display: flex;
   gap: 30px;
