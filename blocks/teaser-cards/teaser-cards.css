@@ -40,6 +40,10 @@
   object-fit: cover;
 }
 
+.block.teaser-cards.icons img {
+  width: unset;
+}
+
 /* teaser title */
 .block.teaser-cards :is(h2, h3, h4) {
   margin: 0 0 10px;
@@ -65,10 +69,6 @@
 /* cta's (maybe remove button container completely) */
 .block.teaser-cards .button-container {
   margin: 0;
-}
-
-.block.teaser-cards a.cta {
-  font-family: var(--ff-volvo-novum);
 }
 
 /* single teaser */
