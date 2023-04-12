@@ -57,9 +57,9 @@ export default async function decorate(block) {
     let limit = 25; // artificial limit set
     if (config.quantity !== 'max') {
       limit = 3;
-      newsElement.classList.add('bb-news-list-small');
+      newsElement.classList.add('body-builder-news-list-small');
     } else {
-      newsElement.classList.add('bb-news-list');
+      newsElement.classList.add('body-builder-news-list');
     }
     const articles = await getArticles(config.source, limit);
     buildNews(newsElement, articles, config.quantity);
