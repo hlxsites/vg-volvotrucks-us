@@ -9,7 +9,8 @@ import path from "path";
 const DOMAIN = "https://main--vg-volvotrucks-us--hlxsites.hlx.page";
 
 async function createFolder(url) {
-    const folderPath = `./mirror${new URL(url).pathname.replace('/.*$', '')}`;
+    const folderPath = `./mirror${new URL(url).pathname.replace('/.*$', '')
+        .replace('/index.md', '')}`;
     try {
         await fs.promises.mkdir(folderPath, {recursive: true});
     } catch (ignore) {
@@ -23,6 +24,14 @@ function mdUrl(url) {
     } else {
         return `${url}.md`;
     }
+}
+
+
+async function getStatusUrls() {
+    const response = await fetch("https://main--vg-volvotrucks-us--hlxsites.hlx.page/drafts/import-status.json");
+    const json = await response.json();
+    return json.data.filter(row => !row.Status.includes("removed"))
+        .map(row => row.Preview);
 }
 
 
@@ -51,7 +60,7 @@ async function loadUrl(url) {
 }
 
 async function main() {
-    const urls = await getUrls()
+    const urls = [...await getUrls(), ...await getStatusUrls()];
     await Promise.all(urls.map(async (url) => {
         const adjustedUrl = mdUrl(url);
         await loadUrl(adjustedUrl);
