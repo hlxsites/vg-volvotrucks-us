@@ -214,11 +214,11 @@ function createPRDownloadBlock(main, document) {
     if (heads.textContent.includes('Download Press Release Images')) {
       const cells = [['Download Images']];
       cells.push([heads.innerHTML]);
-      const dimg = heads.parentNode.querySelectorAll('#img-grid > div');
-      dimg.forEach((imgs) => {
-        if (imgs.innerHTML.length > 0) {
-          cells.push([imgs.innerHTML.replaceAll('http://localhost:3001', '')]);
-        }
+      heads.parentNode.querySelectorAll('#img-grid > div a img').forEach((img) => {
+        // don't use the image src, it's a thumbnail. Instead, use the href of the parent a tag.
+        const newImg = document.createElement('img');
+        newImg.src = img.closest('a').href;
+        cells.push([newImg]);
       });
       const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
       heads.parentNode.replaceWith(downloadBlock);
