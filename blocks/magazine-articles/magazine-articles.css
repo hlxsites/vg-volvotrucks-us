@@ -138,7 +138,6 @@
 /* Magazine articles */
 
 .block.magazine-articles .article-list article {
-    border-bottom: 1px solid var(--background-light-gray);
     display: block;
     padding: 1.5em 0;
     border-top: 1px solid var(--background-light-gray);
@@ -278,7 +277,8 @@
     }
 
     .block.magazine-articles .article-list article {
-        display: inline-flex!important;
+        display: inline-flex;
+        width: 100%;
     }
 
     .block.magazine-articles .article-list article .content {
