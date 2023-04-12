@@ -12,7 +12,7 @@ export default function decorate(block) {
     }
     // give p containing the image a specific class
     const picture = elem.querySelector('picture');
-    if (picture) picture.parentElement.classList.add('image');
+    if (picture) picture.closest('p').classList.add('image');
     // give all the other p a text class
     elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 

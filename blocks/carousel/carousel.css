@@ -93,6 +93,12 @@
      display: none;
  }
 
+ .block.carousel .carousel-link {
+    white-space: inherit;
+    font-family: inherit;
+    font-weight: 700;
+ }
+
  @media screen and (min-width: 481px) {
     .block.carousel .mobile-controls button::after {
         font-size: 1.6rem;
@@ -201,4 +207,8 @@
         top: 15px;
     }
 
+    .block.carousel .carousel-content-wrapper {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
  }
