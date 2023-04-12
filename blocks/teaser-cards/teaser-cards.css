@@ -36,13 +36,10 @@
 }
 
 .block.teaser-cards img {
-  width: 100%;
+  max-width: 100%;
   object-fit: cover;
 }
 
-.block.teaser-cards.icons img {
-  width: unset;
-}
 
 /* teaser title */
 .block.teaser-cards :is(h2, h3, h4) {
