@@ -190,11 +190,6 @@ const createMagazineArticles = (main, document, url) => {
     const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
     relatedSection.replaceWith(relatedArticleBlock);
 
-    const subscribeSection = document.querySelector('section.hubTextBlock');
-    const subscribeCells = [['Eloqua Form'], [['ExceedingExpectationsSignup']]];
-    const subscribeBlock = WebImporter.DOMUtils.createTable(subscribeCells, document);
-    subscribeSection.replaceWith(subscribeBlock);
-
     document.querySelector('aside.sidebar')?.remove();
     document.querySelector('section.hubArticleHero')?.remove();
     document.querySelector('a.yt_play img')?.remove();
