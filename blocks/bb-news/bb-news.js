@@ -9,6 +9,15 @@ async function getArticles(path, limit) {
 
 function buildNews(elm, releases, quantity) {
   let newsDivs = '';
+  releases.sort((a, b) => {
+    if (a.date > b.date) {
+      return -1;
+    }
+    if (a.date < b.date) {
+      return 1;
+    }
+    return 0;
+  });
   releases.forEach((release) => {
     const excelDate = new Date(release.date * 1000);
     let readmore = '';
