@@ -17,7 +17,6 @@ function buildNews(elm, releases, quantity) {
     return 0;
   });
   const newsDivs = releases.map((release) => {
-    const excelDate = new Date(release.date * 1000);
 
     const div = document.createElement('div');
     div.innerHTML = `<div class="news-list">
@@ -45,6 +44,7 @@ function buildNews(elm, releases, quantity) {
     div.querySelector('.image-container a').href = release.path;
     div.querySelector('.image-container img').src = release.image;
     div.querySelector('.image-container img').alt = release.title;
+    const excelDate = new Date(release.date * 1000);
     div.querySelector('.news-item-date').textContent = excelDate.toLocaleDateString('en-US');
     div.querySelector('.news-item-content h3 a').innerText = release.title;
     div.querySelector('.news-item-content h3 a').href = release.path;
