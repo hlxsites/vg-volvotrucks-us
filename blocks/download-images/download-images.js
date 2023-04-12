@@ -11,7 +11,7 @@ export default function decorate(block) {
     const img = picture.querySelector('img');
 
     const link = document.createElement('a');
-    link.href = getOriginalImage(img.srcset);
+    link.href = getOriginalImage(img.src);
     link.appendChild(picture);
     link.download = '';
 
