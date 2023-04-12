@@ -73,24 +73,23 @@ function buildPressReleaseArticle(entry) {
   return card;
 }
 
-function createFeaturedPressReleaseList(block, pressReleases) {
-  pressReleases.forEach((n) => {
-    n.filterTag = splitTags(n.tags);
-  });
-  // eslint-disable-next-line max-len
-  createList(pressReleases, undefined, undefined, buildPressReleaseArticle, undefined, block);
+function createPressReleaseList(block, pressReleases, {
+  filter = filterPressReleases,
+  filterFactory = createFilter,
+  articleFactory = buildPressReleaseArticle,
+  limit,
+}) {
+  // eslint-disable-next-line no-param-reassign
+  pressReleases = pressReleases.map((pr) => ({ ...pr, filterTag: splitTags(pr.tags) }));
+  createList(pressReleases, filter, filterFactory, articleFactory, limit, block);
 }
 
-function createPressReleaseList(block, pressReleases, limit) {
-  pressReleases.forEach((n) => {
-    n.filterTag = splitTags(n.tags);
-  });
-  // eslint-disable-next-line max-len
-  createList(pressReleases, filterPressReleases, createFilter, buildPressReleaseArticle, limit, block);
+function createFeaturedPressReleaseList(block, pressReleases) {
+  createPressReleaseList(block, pressReleases, { filter: null, filterFactory: null });
 }
 
 function createLatestPressReleases(block, pressReleases) {
-  createList(pressReleases, filterPressReleases, undefined, buildPressReleaseArticle, undefined, block);
+  createPressReleaseList(block, pressReleases, { filterFactory: null });
 }
 
 export default async function decorate(block) {
