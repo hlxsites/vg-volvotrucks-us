@@ -301,7 +301,7 @@ function makeGridItem(teaser) {
     if (anchor.getAttribute('data-video-src')) {
       newA = anchor.getAttribute('data-video-src');
     } else {
-      newA = `https://main--vg-volvotrucks-us--hlxsites.hlx.page${anchor.href}`;
+      newA = anchor.href;
     }
   }
 
@@ -369,7 +369,9 @@ function makeGenericGrid(main, document) {
           }
         }
 
-        dataCells[rowIndex][columnIndex] = makeGridItem(colContent);
+        const div = document.createElement('div');
+        div.innerHTML = makeGridItem(colContent);
+        dataCells[rowIndex][columnIndex] = div;
       });
     });
 
