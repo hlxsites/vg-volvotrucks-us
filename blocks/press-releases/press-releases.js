@@ -8,28 +8,6 @@ import {
   createOptimizedPicture,
 } from '../../scripts/lib-franklin.js';
 
-function buildHeader(mainEl) {
-  const defaultWrapperEl = mainEl.parentNode.previousElementSibling;
-  if (defaultWrapperEl) {
-    const headerEl = defaultWrapperEl.querySelector('h1, h2');
-    const headline = document.createElement('h2');
-    headline.innerText = headerEl.innerText;
-    mainEl.prepend(headline);
-    defaultWrapperEl.remove();
-  }
-}
-
-function buildButtonContainer(mainEl) {
-  const defaultWrapperEl = mainEl.parentNode.nextElementSibling;
-  if (defaultWrapperEl) {
-    const buttonEl = defaultWrapperEl.querySelector('p.button-container');
-    if (buttonEl) {
-      mainEl.appendChild(buttonEl);
-      defaultWrapperEl.remove();
-    }
-  }
-}
-
 function filterPressReleases(pressReleases, activeFilters) {
   let filteredPressReleases = pressReleases;
 
@@ -64,15 +42,12 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
   ];
 }
 
-async function getPressReleases(limit) {
+async function getPressReleases(limit, filter) {
   const indexUrl = new URL('/press-releases.json', window.location.origin);
-  let pressReleases;
-  if (limit) {
-    pressReleases = ffetch(indexUrl).limit(limit).all();
-  } else {
-    pressReleases = ffetch(indexUrl).chunks(500).all();
-  }
-  return pressReleases;
+  let pressReleases = ffetch(indexUrl).chunks(500);
+  if (filter) pressReleases = pressReleases.filter(filter);
+  if (limit) pressReleases = pressReleases.limit(limit);
+  return pressReleases.all();
 }
 
 function buildPressReleaseArticle(entry) {
@@ -108,7 +83,6 @@ function createPressReleaseList(pressReleases, limit, block) {
 
 function createLatestPressReleases(mainEl, pressReleases) {
   mainEl.innerText = '';
-  buildHeader(mainEl);
   const articleCards = document.createElement('div');
   articleCards.classList.add('press-releases-cards');
   mainEl.appendChild(articleCards);
@@ -116,17 +90,23 @@ function createLatestPressReleases(mainEl, pressReleases) {
     const pressReleaseCard = buildPressReleaseArticle(pressRelease);
     articleCards.appendChild(pressReleaseCard);
   });
-  buildButtonContainer(mainEl);
 }
 
 export default async function decorate(block) {
-  const latest = block.classList.contains('latest');
-  const limit = latest ? 3 : undefined;
-  const limitPerPage = 10;
-  const pressReleases = await getPressReleases(limit);
-  if (latest) {
+  const isFeatured = block.classList.contains('featured');
+  const isLatest = !isFeatured && block.classList.contains('latest');
+
+  if (isFeatured) {
+    const links = [...block.firstElementChild.querySelectorAll('a')]
+      .map(({ href }) => href ? new URL(href).pathname : null)
+      .filter((pathname) => !!pathname);
+    const pressReleases = await getPressReleases(links.length, ({ path }) => links.indexOf(path) >= 0);
+    createLatestPressReleases(block, pressReleases);
+  } else if (isLatest) {
+    const pressReleases = await getPressReleases(3);
     createLatestPressReleases(block, pressReleases);
   } else {
-    createPressReleaseList(pressReleases, limitPerPage, block);
+    const pressReleases = await getPressReleases();
+    createPressReleaseList(pressReleases, 10, block);
   }
 }
