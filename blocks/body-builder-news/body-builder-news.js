@@ -8,7 +8,6 @@ async function getArticles(path, limit) {
 }
 
 function buildNews(elm, releases, quantity) {
-  let newsDivs = '';
   releases.sort((a, b) => {
     if (a.date > b.date) {
       return -1;
@@ -18,33 +17,49 @@ function buildNews(elm, releases, quantity) {
     }
     return 0;
   });
-  releases.forEach((release) => {
+  const newsDivs = releases.map((release) => {
     const excelDate = new Date(release.date * 1000);
-    let readmore = '';
-    if (quantity !== 'max') {
-      readmore = `<p><a class='rm' href='${JSON.stringify(release.path).textContent}'>Read more</a></p>`;
+
+    const div = document.createElement('div');
+    div.innerHTML = `<div class="news-list">
+      <div class="list-teaser">
+          <div class="image-container">
+              <a href="">
+                  <picture>
+                      <img src="" alt="">
+                  </picture>
+              </a>
+          </div>
+          <div class="news-item-metadata">
+              <span class="news-item-date"></span>
+          </div>
+          <div class="news-item-content">
+              <h3><a href=""></a></h3>
+              <p></p>
+          </div>
+          <p class="readmore">
+              <a class='rm' href=''>Read more</a>
+          </p>
+      </div>
+    </div>`;
+
+    div.querySelector('.image-container a').href = release.path;
+    div.querySelector('.image-container img').src = release.image;
+    div.querySelector('.image-container img').alt = release.title;
+    div.querySelector('.news-item-date').textContent = excelDate.toLocaleDateString('en-US');
+    div.querySelector('.news-item-content h3 a').innerText = release.title;
+    div.querySelector('.news-item-content h3 a').href = release.path;
+    div.querySelector('.news-item-content p').textContent = release.description;
+    div.querySelector('.readmore a').href = release.path;
+
+    if (quantity === 'max') {
+      div.querySelector('.readmore').remove();
     }
-    newsDivs += `<div class="news-list">
-    <div class="list-teaser">
-        <div class="image-container">
-            <a href="${JSON.stringify(release.path).textContent}">
-                <picture>
-                    <img src="${release.image}" alt="${release.title}">
-                </picture>
-            </a>
-        </div>
-        <div class="news-item-metadata">
-            <span class="news-item-date">${excelDate.toLocaleDateString('en-US')}</span>
-        </div>
-        <div class="news-item-content">
-            <h3><a href="${release.path}">${release.title}</a></h3>
-            <p>${release.description}</p>
-        </div>
-        ${readmore}
-    </div>
-</div>`;
+    return div;
   });
-  elm.innerHTML = newsDivs;
+  elm.innerText = '';
+  elm.append(...newsDivs);
+
   elm.querySelectorAll('img').forEach((img) => {
     img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '370px' }]));
   });
