@@ -855,12 +855,16 @@ function makeNewsArticle(main, document) {
   const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
   if (newsArticle && meta.template === 'article') {
     console.log(`newsArticle(s) found: ${newsArticle.length}`);
+
     newsArticle.forEach((article) => {
+      // ignore empty divs to prevent duplicate fragments
+      if (!article.textContent.trim()) return;
+
       const cells = [['Fragment']];
       cells.push(['https://main--vg-volvotrucks-us--hlxsites.hlx.page/fragments/press-release-boilerplate']);
-      const na = WebImporter.DOMUtils.createTable(cells, document);
-      article.replaceWith(na);
-      na.insertAdjacentElement('afterend', hr(document));
+      const table = WebImporter.DOMUtils.createTable(cells, document);
+      article.replaceWith(table);
+      table.insertAdjacentElement('afterend', hr(document));
     });
   }
 }
@@ -1166,6 +1170,15 @@ function makeEmbedVideoFromYoutubeLink(main, document) {
   });
 }
 
+// e.g.https://www.volvotrucks.us/news-and-stories/press-releases/2015/december/advantage-truck-center-opens-in-greensboro-expanding-volvo-trucks-sales-and-service/
+function removeOldNewsCarousel(main, document) {
+  main.querySelectorAll('.newsArticle ').forEach((article) => {
+    if (article.previousElementSibling?.querySelector("[onclick='getNextArticle()']")) {
+      article.previousElementSibling.remove();
+    }
+  });
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1225,6 +1238,7 @@ export default {
     make360Image(main, document);
     makeHubTextBlock(main, document);
     createPRDownloadBlock(main, document);
+    removeOldNewsCarousel(main, document);
     makeNewsArticle(main, document);
     createMagazineArticles(main, document, url);
     convertArialCapsTitle(main, document, url);
