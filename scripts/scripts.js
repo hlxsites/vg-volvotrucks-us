@@ -54,7 +54,30 @@ function buildHeroBlock(main) {
   }
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
-  const ctaLink = firstSection.querySelector('a');
+  let ctaLink = firstSection.querySelector('a');
+  let video = null;
+
+  // eslint-disable-next-line no-use-before-define
+  if (ctaLink && isLowResolutionVideoUrl(ctaLink.getAttribute('href'))) {
+    const videoTemp = `
+      <video muted loop class="hero-video">
+        <source src="${ctaLink.getAttribute('href')}" type="video/mp4"></source>
+      </video>
+    `;
+
+    const videoWrapper = document.createElement('div');
+    videoWrapper.innerHTML = videoTemp;
+    video = videoWrapper.querySelector('video');
+    ctaLink.parentElement.remove();
+    ctaLink = firstSection.querySelector('a');
+
+    // adding video with delay to not affect page loading time
+    setTimeout(() => {
+      picture.replaceWith(video);
+      video.play();
+    }, 3000);
+  }
+
   // check if the previous element or the previous of that is an h1
   const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
@@ -82,6 +105,11 @@ function buildHeroBlock(main) {
     const wrapperChildren = containerChildren[0].children;
     if (containerChildren.length <= 1 && wrapperChildren.length === 0) firstSection.remove();
     else if (wrapperChildren.length === 0) containerChildren[0].remove();
+
+    if (video) {
+      section.querySelector('.hero')?.classList.add('hero-with-video');
+    }
+
     // after all are settled, the new section can be added
     main.prepend(section);
   }
@@ -409,6 +437,7 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
+    // eslint-disable-next-line import/no-cycle
     import('../common/modal/modal.js').then((modal) => {
       modal.showModal(link.getAttribute('href'));
     });
