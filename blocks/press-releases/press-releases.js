@@ -73,7 +73,15 @@ function buildPressReleaseArticle(entry) {
   return card;
 }
 
-function createPressReleaseList(pressReleases, limit, block) {
+function createFeaturedPressReleaseList(block, pressReleases) {
+  pressReleases.forEach((n) => {
+    n.filterTag = splitTags(n.tags);
+  });
+  // eslint-disable-next-line max-len
+  createList(pressReleases, undefined, undefined, buildPressReleaseArticle, undefined, block);
+}
+
+function createPressReleaseList(block, pressReleases, limit) {
   pressReleases.forEach((n) => {
     n.filterTag = splitTags(n.tags);
   });
@@ -101,12 +109,12 @@ export default async function decorate(block) {
       .map(({ href }) => href ? new URL(href).pathname : null)
       .filter((pathname) => !!pathname);
     const pressReleases = await getPressReleases(links.length, ({ path }) => links.indexOf(path) >= 0);
-    createLatestPressReleases(block, pressReleases);
+    createFeaturedPressReleaseList(block, pressReleases);
   } else if (isLatest) {
     const pressReleases = await getPressReleases(3);
     createLatestPressReleases(block, pressReleases);
   } else {
     const pressReleases = await getPressReleases();
-    createPressReleaseList(pressReleases, 10, block);
+    createPressReleaseList(block, pressReleases, 10);
   }
 }
