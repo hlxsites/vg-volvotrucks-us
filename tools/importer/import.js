@@ -350,35 +350,41 @@ function fixAlternatingLeftRightColumns(main, document) {
 }
 
 function makeGenericGrid(main, document) {
-  const gg = document.querySelectorAll('#Form1 div.generic-grid.full-width');
-  console.log(`generic grid(s) found: ${gg.length}`);
-  gg.forEach((grid) => {
-    const columnLayout = [];
-    const cells = [['Teaser Grid']];
-    const gridCol = grid.querySelectorAll('div.generic-grid-col');
-    const columns = [];
-    const rows = [];
-    gridCol.forEach((gc, idxCol) => {
-      const columnWidth = getColumnWidth(gc);
-      if (columnWidth) {
-        columnLayout.push(columnWidth);
-      }
+  const genericGrids = document.querySelectorAll('#Form1 div.generic-grid.full-width');
+  console.log(`generic grid(s) found: ${genericGrids.length}`);
 
-      columns[idxCol] = document.createElement('ul');
-      // each one of these is a column
-      Array.from(gc.children).forEach((colContent, idxRow) => {
-        // each one of these is col content (row)
-        rows[idxRow] = document.createElement('li');
-        rows[idxRow].innerHTML = makeGridItem(colContent);
-        columns[idxCol].append(rows[idxRow]);
+  genericGrids.forEach((grid) => {
+    let variation = '';
+
+    const gridColumns = grid.querySelectorAll('div.generic-grid-col');
+    const dataCells = [];
+
+    gridColumns.forEach((gridColumn, columnIndex) => {
+      Array.from(gridColumn.children).forEach((colContent, rowIndex) => {
+        // create new empty rows when needed
+        if (!dataCells[rowIndex]) {
+          dataCells[rowIndex] = [];
+          for (let i = 0; i < gridColumns.length; i++) {
+            dataCells[rowIndex][i] = '';
+          }
+        }
+
+        dataCells[rowIndex][columnIndex] = makeGridItem(colContent);
       });
     });
 
+    // find column width hints
+    const columnLayout = [];
+    gridColumns.forEach((gridColumn, columnIndex) => {
+      const columnWidth = getColumnWidth(gridColumn);
+      if (columnWidth) columnLayout.push(columnWidth);
+    });
     if (columnLayout.length >= 2) {
-      cells[0][0] += ` (layout ${columnLayout.join('-')})`;
+      variation = ` (layout ${columnLayout.join('-')})`;
     }
 
-    cells.push(columns);
+    const cells = [[`Teaser Grid${variation}`],
+      ...dataCells];
     const teaserGrid = WebImporter.DOMUtils.createTable(cells, document);
     grid.replaceWith(teaserGrid);
   });
