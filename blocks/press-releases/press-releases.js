@@ -106,9 +106,12 @@ export default async function decorate(block) {
 
   if (isFeatured) {
     const links = [...block.firstElementChild.querySelectorAll('a')]
-      .map(({ href }) => href ? new URL(href).pathname : null)
+      .map(({ href }) => (href ? new URL(href).pathname : null))
       .filter((pathname) => !!pathname);
-    const pressReleases = await getPressReleases(links.length, ({ path }) => links.indexOf(path) >= 0);
+    const pressReleases = await getPressReleases(
+      links.length,
+      ({ path }) => links.indexOf(path) >= 0,
+    );
     createFeaturedPressReleaseList(block, pressReleases);
   } else if (isLatest) {
     const pressReleases = await getPressReleases(3);
