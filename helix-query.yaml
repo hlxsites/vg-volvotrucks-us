@@ -29,6 +29,7 @@ indices:
       - '/news-and-stories/press-releases/**'
     exclude:
       - '/news-and-stories/press-releases/'
+      - '/news-and-stories/press-releases/sub-nav'
     target: /press-releases.json
     properties:
       title:
