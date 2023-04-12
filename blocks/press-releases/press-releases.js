@@ -89,15 +89,8 @@ function createPressReleaseList(block, pressReleases, limit) {
   createList(pressReleases, filterPressReleases, createFilter, buildPressReleaseArticle, limit, block);
 }
 
-function createLatestPressReleases(mainEl, pressReleases) {
-  mainEl.innerText = '';
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('press-releases-cards');
-  mainEl.appendChild(articleCards);
-  pressReleases.forEach((pressRelease) => {
-    const pressReleaseCard = buildPressReleaseArticle(pressRelease);
-    articleCards.appendChild(pressReleaseCard);
-  });
+function createLatestPressReleases(block, pressReleases) {
+  createList(pressReleases, filterPressReleases, undefined, buildPressReleaseArticle, undefined, block);
 }
 
 export default async function decorate(block) {
