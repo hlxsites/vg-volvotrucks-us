@@ -469,6 +469,9 @@ main .section.tabbed-container ul.tab-navigation li:hover {
   transform: translateX(-50%) translateY(-50%);
   z-index: 1;
   line-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-icon-wrapper:hover {
