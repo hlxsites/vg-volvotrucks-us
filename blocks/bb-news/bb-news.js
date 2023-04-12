@@ -3,7 +3,7 @@ import { ffetch } from '../../scripts/lib-ffetch.js';
 
 async function getArticles(path, limit) {
   const indexUrl = new URL(path, window.location.origin);
-  const articles = ffetch(indexUrl).limit(limit).all();
+  const articles = ffetch(indexUrl).sheet('sorted').limit(limit).all();
   return articles;
 }
 
