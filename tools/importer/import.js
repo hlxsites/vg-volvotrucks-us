@@ -1179,6 +1179,13 @@ function removeOldNewsCarousel(main, document) {
   });
 }
 
+// the otherwise show up as backslashes in the resulting document
+function removeStandaloneLinebreaks(main, document) {
+  main.querySelectorAll('p + br').forEach((br) => {
+    br.remove();
+  });
+}
+
 export default {
   transform: ({
     // eslint-disable-next-line no-unused-vars
@@ -1255,6 +1262,7 @@ export default {
     importBodyBuilderArticle(main, document);
     fixCtaInBlockQuote(main, document);
     fixListWithListStyleNone(main, document);
+    removeStandaloneLinebreaks(main, document);
     // create the metadata block and append it to the main element
     createMetadata(main, document, url);
 
