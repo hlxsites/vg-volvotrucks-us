@@ -37,7 +37,8 @@ body.disable-scroll, body.disable-scroll main {
 }
 
 :is(h1, h2, h3, h4, h5, h6) > em {
-  color: #A7A8A9;
+  color: var(--volvo-text-light-gray);
+  font-style: normal;
 }
 
 /*!
@@ -167,6 +168,10 @@ body.disable-scroll, body.disable-scroll main {
 
 .fa-cog::before {
   content: "\f013"
+}
+
+.fa-check::before {
+  content: "\f00c"
 }
 
 /* The injected widget should be customized in the SDK UI by an administrator.
