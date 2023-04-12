@@ -32,8 +32,8 @@ function normalizeCells(cells, rowheaderRole = 'rowheader', cellRole = 'cell') {
     if (cell.firstChild && cell.firstChild.tagName === 'BR') cell.firstChild.remove();
     if (cell.lastChild && cell.lastChild.tagName === 'BR') cell.lastChild.remove();
     // wrap text-only cells with a <p>
-    if (!cell.children.length && cell.textContent !== '') {
-      cell.innerHTML = `<p>${cell.textContent}</p>`;
+    if (!cell.querySelector('p') && cell.textContent !== '') {
+      cell.innerHTML = `<p>${cell.innerHTML}</p>`;
     }
     if (j === 0 && cells.length > 1) cell.role = rowheaderRole;
     else cell.role = cellRole;
