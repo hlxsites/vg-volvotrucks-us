@@ -144,6 +144,11 @@
     display: block;
 }
 
+.block.magazine-articles .article-list article {
+    padding: 2em 0;
+    border-top: 1px solid var(--background-light-gray);
+}
+
 .section.magazine-articles-container > div > div > div.articles > article:nth-child(1) {
     border-top: 1px solid var(--background-light-gray);
 }
@@ -211,11 +216,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.block.magazine-articles .article-list article {
-    padding: 2em 0;
-    border-top: 1px solid var(--background-light-gray);
 }
 
 .cta {
