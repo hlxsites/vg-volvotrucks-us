@@ -53,6 +53,10 @@
 }
 
 @media (min-width: 768px) {
+    .document-list.block > ul {
+        gap: 10px;
+    }
+
     .document-list.block a {
         padding: 20px 110px 20px 48px;
     }
