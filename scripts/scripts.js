@@ -457,7 +457,7 @@ export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.innerText = '';
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary');
+  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
 
   addPlayIcon(videoLink);
 }

@@ -13,24 +13,25 @@ export default function decorate(block) {
     // give p containing the image a specific class
     const picture = elem.querySelector('picture');
     if (picture) picture.closest('p').classList.add('image');
-    // give all the other p a text class
-    elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 
     const links = elem.querySelectorAll('a');
     const videos = [...links].filter((link) => isVideoLink(link));
 
     if (videos.length) {
       // display image as link with play icon
-      const image = elem.querySelector('.image');
       const selectedLink = selectVideoLink(videos);
 
       if (selectedLink) {
-        wrapImageWithVideoLink(selectedLink, image);
+        picture.after(selectedLink);
+        wrapImageWithVideoLink(selectedLink, picture);
       }
 
       // removing all of the videos links excluding the selected one
       videos.forEach((link) => link !== selectedLink && link.parentElement.remove());
     }
+
+    // give all the remainig p a text class
+    elem.querySelector('p:not(.image, .button-container)')?.classList.add('text');
 
     // give cta's link(s) a specific class name
     const ctaLinks = elem.querySelectorAll('.button-container a.button');

@@ -343,10 +343,6 @@ main .section > div {
   margin: 48px auto;
 }
 
-main .section:first-child > div {
-  margin-top: 0;
-}
-
 main .section-with-background {
   --text-color: white;
 
@@ -380,6 +376,10 @@ main .section-with-background>picture:last-of-type img {
   transform: translateX(-50%);
   z-index: -1;
   object-fit: cover;
+}
+
+main .section:first-child > :first-child {
+  margin-top: 0;
 }
 
 /* progressive section appearance */
@@ -469,6 +469,9 @@ main .section.tabbed-container ul.tab-navigation li:hover {
   transform: translateX(-50%) translateY(-50%);
   z-index: 1;
   line-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-icon-wrapper:hover {
@@ -554,7 +557,7 @@ a.button.text-link-with-video::after {
     --wrapper-width: 960px;
   }
 
-  main .section:first-child > div {
+  main .section:first-child > :first-child {
     margin-top: 30px;
   }
 

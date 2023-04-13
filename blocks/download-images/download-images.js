@@ -1,58 +1,27 @@
-function restyleBtnToLink(block) {
-  const downloadHereBtn = block.querySelector('.download-text a');
-  // it has to be restyled if in content document the text is splitted in 2 lines
-  if (!downloadHereBtn || !downloadHereBtn.classList.contains('button')) return;
-  const btnContainer = downloadHereBtn.parentElement;
-  const textWrapper = block.querySelector('.download-text > div');
-  const textElement = textWrapper.querySelector('p');
-  const strong = document.createElement('strong');
-  const link = document.createElement('a');
-  strong.textContent = `${textElement.textContent} `;
-  link.href = downloadHereBtn.href;
-  link.title = downloadHereBtn.title;
-  link.textContent = downloadHereBtn.textContent;
-  strong.appendChild(link);
-  textElement.remove();
-  btnContainer.remove();
-  textWrapper.appendChild(strong);
-}
-
-function addClickToLink(link) {
-  link.onclick = (e) => {
-    e.preventDefault();
-    // force to download
-    const a = document.createElement('a');
-    a.href = link.href;
-    a.download = link.download;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-}
-
+/* eslint-disable no-use-before-define */
 export default function decorate(block) {
-  const downloadDir = block.children[0];
-  const imgContainers = [...block.children].slice(1);
-  // remove all br tags
-  const brTags = block.querySelectorAll('br');
+  const [downloadDir, ...imgContainers] = block.children;
+
   downloadDir.className = 'download-text';
-  restyleBtnToLink(block);
-  if (brTags.length > 0) [...brTags].forEach((br) => br.remove());
-  // move picture tags inside the links
-  imgContainers.forEach(async (el) => {
-    el.className = 'image-container';
-    const link = el.querySelector('a');
-    const picture = el.querySelector('picture');
-    const img = picture.querySelector('[type="image/jpeg"]');
-    try {
-      const isImgLinkBroken = await fetch(link.href, { mode: 'no-cors' });
-      if (!isImgLinkBroken.ok) link.href = img.srcset;
-    } catch (error) {
-      link.href = img.srcset;
-    }
-    link.textContent = '';
+
+  // wrap pictures in links
+  imgContainers.forEach(async (imageContainer) => {
+    imageContainer.className = 'image-container';
+    const picture = imageContainer.querySelector('picture');
+    const img = picture.querySelector('img');
+
+    const link = document.createElement('a');
+    link.href = getOriginalImage(img.src);
     link.appendChild(picture);
     link.download = '';
-    addClickToLink(link);
+
+    // remove any existing links and <br>
+    imageContainer.innerHTML = '';
+    imageContainer.append(link);
   });
+}
+
+function getOriginalImage(url) {
+  // remove any parameters, e.g. ?width=2000&format=webply&optimize=medium
+  return url.replace(/\?.*$/, '');
 }
