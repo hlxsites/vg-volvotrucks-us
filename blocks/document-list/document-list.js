@@ -1,17 +1,21 @@
 export default async function decorate(block) {
-  const buttons = block.querySelectorAll('a');
-  buttons.forEach((button) => {
-    button.classList.remove(['button']);
+  const lis = [...block.children].map((row) => {
+    const li = document.createElement('li');
+    const link = row.querySelector('a');
+    if (link) {
+      const clone = link.cloneNode(false);
+      clone.append(...row.firstElementChild.childNodes);
+      li.appendChild(clone);
+      clone.querySelectorAll('a').forEach((a) => {
+        a.after(...a.childNodes);
+        a.remove();
+      });
+    } else {
+      li.append(...row.firstElementChild.childNodes);
+    }
+    return li;
   });
-  const lists = block.querySelectorAll('div > div > ul');
-  lists.forEach((list) => {
-    const contDiv = document.createElement('div');
-    contDiv.classList.add('multiline');
-    list.querySelectorAll('li').forEach((item) => {
-      const itm = document.createElement('div');
-      itm.innerHTML = item.innerHTML;
-      contDiv.append(itm);
-    });
-    list.replaceWith(contDiv);
-  });
+  const ul = document.createElement('ul');
+  ul.append(...lis);
+  block.innerHTML = ul.outerHTML;
 }
