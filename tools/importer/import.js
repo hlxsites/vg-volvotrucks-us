@@ -696,7 +696,14 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
       else if (panel.firstElementChild.matches('.imageTextGrid-4')) columns = 4;
       else if (panel.querySelector('.row .col-sm-6')) columns = 2;
 
-      if (columns > 0) {
+      // this should handle the body builder news block - which isn't a Teaser Card
+      if (panel.previousElementSibling && panel.previousElementSibling.querySelector('.volvo-bodybuilder-header')) {
+        const cells = [['Body Builder News']];
+        cells.push(['source', '/body-builder.json']);
+        cells.push(['quantity', 'small']);
+        const cols = WebImporter.DOMUtils.createTable(cells, document);
+        panel.replaceWith(cols);
+      } else if (columns > 0) {
         const cells = [['Teaser Cards']];
         const isLinkListOnMobile = panel.querySelector('.imageTextGrid .imageTextGrid-4 .imageText-grid .image-container');
         if (isLinkListOnMobile) {
