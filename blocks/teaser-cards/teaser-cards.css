@@ -36,9 +36,10 @@
 }
 
 .block.teaser-cards img {
-  width: 100%;
+  max-width: 100%;
   object-fit: cover;
 }
+
 
 /* teaser title */
 .block.teaser-cards :is(h2, h3, h4) {
@@ -65,10 +66,6 @@
 /* cta's (maybe remove button container completely) */
 .block.teaser-cards .button-container {
   margin: 0;
-}
-
-.block.teaser-cards a.cta {
-  font-family: var(--ff-volvo-novum);
 }
 
 /* single teaser */
