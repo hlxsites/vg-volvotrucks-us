@@ -4,7 +4,7 @@ body.magazine>main {
   margin: 0 auto;
 }
 
-.section.template .row.size-img {
+body.magazine>main .section.template .row.size-img {
   display: flex;
   flex-direction: column;
   height: 410px;
@@ -13,38 +13,38 @@ body.magazine>main {
   overflow: hidden;
 }
 
-.section.template .row.size-img picture {
+body.magazine>main .section.template .row.size-img picture {
   width: 100%;
   order: 2;
   height: 140px;
 
 }
 
-.section.template .row.size-img picture img {
+body.magazine>main .section.template .row.size-img picture img {
   object-fit: cover;
   width: 100%;
   height: 250px;
 }
 
-.section.template.article-hero>div>div.content {
+body.magazine>main .section.template.article-hero>div>div.content {
   order: 1;
   width: 100%;
   height: 175px;
 }
 
-i.fa {
+body.magazine>main i.fa {
   font-size: 20px;
   min-width: 20px;
   display: inline-block;
   vertical-align: middle;
 }
 
-.section.template.article-hero>div>div>div.top-details.hide-desktop {
+body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-desktop {
   display: inline-grid;
   grid: 24px / 25px 90px 25px 55px;
 }
 
-.section.template.article-hero>div>div>h3.title-sentence {
+body.magazine>main .section.template.article-hero>div>div>h3.title-sentence {
   font-size: 24px !important;
   letter-spacing: -.1px !important;
   color: var(--volvo-text-gray);
@@ -53,28 +53,28 @@ i.fa {
   line-height: 32px !important;
 }
 
-.section.template.article-hero>div>div>div.details>span.author {
+body.magazine>main .section.template.article-hero>div>div>div.details>span.author {
   white-space: nowrap;
   margin-top: 6px;
   padding: 0 10px 0 0;
 }
 
-.section.template.article-hero>div>div>div.details .hide-mobile {
+body.magazine>main .section.template.article-hero>div>div>div.details .hide-mobile {
   display: none;
 }
 
-.section.template.article-hero>div>div>div.top-details {
+body.magazine>main .section.template.article-hero>div>div>div.top-details {
   font-size: var(--body-font-size-xs);
 }
 
-.section.template.article-hero>div>div>div.details {
+body.magazine>main .section.template.article-hero>div>div>div.details {
   color: var(--volvo-text-light-gray);
   font-size: var(--body-font-size-xs);
   display: inline-grid;
   grid: 33px / 45px auto 25px 100px 25px auto;
 }
 
-.section.template.article-hero>div>div>div.details>i.fa-user {
+body.magazine>main .section.template.article-hero>div>div>div.details>i.fa-user {
   line-height: 35px;
   border-radius: 35px;
   background-color: var(--volvo-text-light-gray);
@@ -84,13 +84,13 @@ i.fa {
   width: 35px;
 }
 
-.section.template.article-sidebar>div.topics>ul.topic-list>li {
+body.magazine>main .section.template.article-sidebar>div.topics>ul.topic-list>li {
   list-style: none;
   line-height: 1.2;
   color: var(--volvo-text-light-gray);
 }
 
-.section.template.article-sidebar>div.topics>ul.topic-list>li::before {
+body.magazine>main .section.template.article-sidebar>div.topics>ul.topic-list>li::before {
   content: '';
   border: 4px solid var(--volvo-text-gray) !important;
   margin-top: 5px;
@@ -98,7 +98,7 @@ i.fa {
   position: absolute;
 }
 
-.section.article-sidebar .share-icons button {
+body.magazine>main .section.article-sidebar .share-icons button {
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -106,22 +106,22 @@ i.fa {
   border: 0;
   margin: 10px;
 }
-.section.article-sidebar .share-icons button i {
+body.magazine>main .section.article-sidebar .share-icons button i {
   font-size: 16px;
 }
 
-.share {
+body.magazine>main .share {
   border-top: 1px solid var(--btn-background-hover);
   padding-top: 30px;
 }
 
-.section.template.article-sidebar > div.subscribe {
+body.magazine>main .section.template.article-sidebar > div.subscribe {
   border-top: 1px solid var(--background-hover-color);
   padding-top: 30px;
   margin-top: 30px;
 }
 
-.section.template.article-sidebar > div.subscribe > a {
+body.magazine>main .section.template.article-sidebar > div.subscribe > a {
   border: 2px solid var(--volvo-text-gray);
   user-select: none;
   color: var(--c-white);
@@ -136,19 +136,43 @@ i.fa {
   white-space: nowrap;
 }
 
-.section.template.article-sidebar > div.subscribe > a > i {
+body.magazine>main .section.template.article-sidebar > div.subscribe > a > i {
   font-size: 16px;
   padding-bottom: 4px;
 }
 
-.section.article-sidebar p {
+body.magazine>main .section.article-sidebar p {
   color: var(--volvo-text-gray);
   font-weight: 700;
   font-size: 12px;
 }
 
-.section.related-articles-container>div.default-content-wrapper {
+div#sidebar.section.template.article-sidebar.loading {
+  visibility: hidden;
+}
+
+body.magazine>main .section.related-articles-container>div.default-content-wrapper {
   text-align: center;
+}
+
+body.magazine>main div.default-content-wrapper > blockquote > p::before,
+body.magazine>main div.default-content-wrapper > blockquote > p::after {
+  content: none;
+}
+
+body.magazine>main div.default-content-wrapper > blockquote > p > picture {
+  float: left;
+  padding-right: 20px;
+}
+
+body.magazine>main div.default-content-wrapper > blockquote > p {
+  quotes: none;
+  text-align: center;
+  display: table;
+}
+
+body.magazine > main > div.section.related-articles-container > div.related-articles-wrapper {
+  border-top: 1px solid var(--background-hover-color);
 }
 
 @media screen and (min-width: 992px) {
@@ -157,39 +181,39 @@ i.fa {
     width: 75% !important;
   }
 
-  main .section>div {
+  body.magazine>main .section>div {
     width: 75%;
   }
 
-  .section.template .row.size-img {
+  body.magazine>main .section.template .row.size-img {
     flex-direction: unset;
     margin-left: 0;
     margin-right: 0;
     width: 100%;
   }
 
-  .section.template.article-hero>div>div>div.top-details.hide-desktop {
+  body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-desktop {
     display: none;
   }
 
-  .section.template.article-hero>div>div>div.details>.hide-mobile {
+  body.magazine>main .section.template.article-hero>div>div>div.details>.hide-mobile {
     display: inline;
     margin-top: 6px;
     padding-left: 8px;
   }
 
-  .section.template .row.size-img picture {
+  body.magazine>main .section.template .row.size-img picture {
     order: 1;
     flex: 0 0 50%;
     max-width: 50%;
     height: unset;
   }
 
-  .section.template .row.size-img picture img {
+  body.magazine>main .section.template .row.size-img picture img {
     height: 410px !important;
   }
 
-  .section.template.article-hero>div>div.content {
+  body.magazine>main .section.template.article-hero>div>div.content {
     order: 2;
     border-top: 1px solid var(--background-hover-color);
     border-bottom: 1px solid var(--background-hover-color);
@@ -205,28 +229,32 @@ i.fa {
     bottom: 10px;
   }
 
-  .section.columns-container {
+  body.magazine>main .section .default-content-wrapper,
+  body.magazine>main .section .teaser-cards-wrapper,
+  body.magazine>main .section .teaser-grid-wrapper,
+  body.magazine>main .section .columns-wrapper,
+  body.magazine>main .section .related-articles-wrapper {
     float: right;
     margin: 0 1%;
     width: 75%;
+    height: 100%;
   }
 
-  .section.columns-container>div {
+  body.magazine>main .section.default-content-wrapper>div {
     width: 100%;
   }
 
-  .section.template.article-sidebar {
-    float: left;
+  body.magazine>main .section.template.article-sidebar {
     width: 20% !important;
     margin: 0 1%;
     padding: 6px 0 0;
   }
 
-  .section.template.article-sidebar>div {
+  body.magazine>main .section.template.article-sidebar>div {
     width: 100%;
   }
 
-  .section.template.article-sidebar > div.subscribe > .cta {
+  body.magazine>main .section.template.article-sidebar > div.subscribe > .cta {
     padding: 15px 32px;
   }
 }

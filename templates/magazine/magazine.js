@@ -67,8 +67,8 @@ export default async function decorate(doc) {
   const container = doc.querySelector('main');
   buildArticleHero(container);
 
-  const classes = ['section', 'template', 'article-sidebar'];
-  const sidebarSection = createElement('div', classes);
+  const classes = ['section', 'template', 'article-sidebar', 'loading'];
+  const sidebarSection = createElement('div', classes, {'id':'sidebar'});
   // topics
   const topicsSidebar = createElement('div', 'topics');
   sidebarSection.append(topicsSidebar);
@@ -133,4 +133,6 @@ export default async function decorate(doc) {
   }
   sidebarPreviousSection.insertAdjacentElement('beforebegin', sidebarSection);
   decorateIcons(doc);
+  // show hidden sidebar once loaded to improve CLS
+  window.onload = doc.querySelector('#sidebar').classList.remove('loading');
 }
