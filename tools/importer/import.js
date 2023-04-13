@@ -746,8 +746,8 @@ function makeNewsFeaturesPanelAndImageTextGrid(main, document) {
           item.querySelectorAll('a > img').forEach((img) => {
             // unwrap images in links
             const a = img.parentElement;
-            a.after(img);
-            a.remove();
+            a.before(img);
+            a.textContent = a.href;
           });
 
           row.push(item);
