@@ -1,38 +1,27 @@
-function addClickToLink(link) {
-  link.onclick = (e) => {
-    e.preventDefault();
-    // force to download
-    const a = document.createElement('a');
-    a.href = link.href;
-    a.download = link.download;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-}
-
+/* eslint-disable no-use-before-define */
 export default function decorate(block) {
-  const downloadDir = block.children[0];
-  const imgContainers = [...block.children].slice(1);
-  // remove all br tags
-  const brTags = block.querySelectorAll('br');
-  if (brTags.length > 0) [...brTags].forEach((br) => br.remove());
-  // move picture tags inside the links
-  imgContainers.forEach(async (el) => {
-    el.className = 'image-container';
-    const link = el.querySelector('a');
-    const picture = el.querySelector('picture');
-    const img = picture.querySelector('[type="image/jpeg"]');
-    try {
-      const isImgLinkBroken = await fetch(link.href, { mode: 'no-cors' });
-      if (!isImgLinkBroken.ok) link.href = img.srcset;
-    } catch (error) {
-      link.href = img.srcset;
-    }
-    link.textContent = '';
+  const [downloadDir, ...imgContainers] = block.children;
+
+  downloadDir.className = 'download-text';
+
+  // wrap pictures in links
+  imgContainers.forEach(async (imageContainer) => {
+    imageContainer.className = 'image-container';
+    const picture = imageContainer.querySelector('picture');
+    const img = picture.querySelector('img');
+
+    const link = document.createElement('a');
+    link.href = getOriginalImage(img.src);
     link.appendChild(picture);
     link.download = '';
-    addClickToLink(link);
+
+    // remove any existing links and <br>
+    imageContainer.innerHTML = '';
+    imageContainer.append(link);
   });
-  downloadDir.className = 'download-text';
+}
+
+function getOriginalImage(url) {
+  // remove any parameters, e.g. ?width=2000&format=webply&optimize=medium
+  return url.replace(/\?.*$/, '');
 }
