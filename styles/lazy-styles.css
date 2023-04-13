@@ -186,6 +186,10 @@ body.disable-scroll, body.disable-scroll main {
   content: "\f013"
 }
 
+.fa-check::before {
+  content: "\f00c"
+}
+
 /* The injected widget should be customized in the SDK UI by an administrator.
    see https://my.onetrust.com/articles/en_US/Knowledge/UUID-8a1fff4c-95c6-be5f-4369-228aa86283c6
    Just overriding the bare minimum to make it readable: */
