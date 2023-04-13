@@ -47,9 +47,6 @@ export default function decorate(block) {
       video.loop = true;
     }
 
-    const banner = createLowResolutionBanner();
-    videoWrapper.appendChild(banner);
-
     video.playsInline = true;
     video.controls = showControls;
     video.classList.add('embed-video-element', 'embed-video-loaded');
@@ -66,6 +63,11 @@ export default function decorate(block) {
       video.addEventListener('click', () => {
         showVideoModal(selectVideoLink(links).getAttribute('href'));
       });
+    }
+
+    if (!isFullWidth) {
+      const banner = createLowResolutionBanner();
+      videoWrapper.prepend(banner);
     }
   };
 
