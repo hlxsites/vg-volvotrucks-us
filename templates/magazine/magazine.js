@@ -68,7 +68,7 @@ export default async function decorate(doc) {
   buildArticleHero(container);
 
   const classes = ['section', 'template', 'article-sidebar', 'loading'];
-  const sidebarSection = createElement('div', classes, {'id':'sidebar'});
+  const sidebarSection = createElement('div', classes, { id: 'sidebar' });
   // topics
   const topicsSidebar = createElement('div', 'topics');
   sidebarSection.append(topicsSidebar);
