@@ -6,9 +6,9 @@ export default async function decorate(block) {
       const clone = link.cloneNode(false);
       clone.append(...row.firstElementChild.childNodes);
       li.appendChild(clone);
-      clone.querySelectorAll('a').forEach((link) => {
-        link.after(...link.childNodes);
-        link.remove();
+      clone.querySelectorAll('a').forEach((a) => {
+        a.after(...a.childNodes);
+        a.remove();
       });
     } else {
       li.append(...row.firstElementChild.childNodes);

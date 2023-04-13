@@ -17,7 +17,6 @@ function buildNews(elm, releases, quantity) {
     return 0;
   });
   const newsDivs = releases.map((release) => {
-
     const div = document.createElement('div');
     div.innerHTML = `<div class="news-list">
       <div class="list-teaser">
