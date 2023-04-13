@@ -44,18 +44,22 @@ async function getUrls() {
 }
 
 async function loadUrl(url) {
-  const response = await fetch(url, {redirect: 'error'});
-  if (response.ok) {
-    const folderPath = await createFolder(url);
-    await response.body.pipe(fs.createWriteStream(`${folderPath}/${path.basename(url)}`));
-    console.log('ok: ', url);
-  } else {
-    if (url.includes("/index.md") && response.status === 404) {
-      // retry without "/index"
-      return loadUrl(url.replace("/index.md", ".md"));
+  try {
+    const response = await fetch(url, {redirect: 'error'});
+    if (response.ok) {
+      const folderPath = await createFolder(url);
+      await response.body.pipe(fs.createWriteStream(`${folderPath}/${path.basename(url)}`));
+      console.log('ok: ', url);
     } else {
-      console.log('failed: ', url);
+      if (url.includes("/index.md") && response.status === 404) {
+        // retry without "/index"
+        return loadUrl(url.replace("/index.md", ".md"));
+      } else {
+        console.log('failed: ', url);
+      }
     }
+  }catch (e) {
+    console.log('failed (maybe redirect): ', url);
   }
 }
 
