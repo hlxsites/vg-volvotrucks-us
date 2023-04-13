@@ -203,16 +203,33 @@ const createMagazineArticles = (main, document, url) => {
   }
 };
 
+// return true if the link returns 200, false otherwise
+function isLinkValidWithStatus200(url) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    return this.readyState === 4 && this.status === 200;
+  };
+
+  xhttp.open('POST', url, false);
+  xhttp.send();
+}
+
 function createPRDownloadBlock(main, document) {
   const h3s = document.querySelectorAll('h3');
   h3s.forEach((heads) => {
     if (heads.textContent.includes('Download Press Release Images')) {
       const cells = [['Download Images']];
       cells.push([heads.innerHTML]);
-      heads.parentNode.querySelectorAll('#img-grid > div a img').forEach((img) => {
+      heads.parentNode.querySelectorAll('#img-grid > div a img').forEach(async (img) => {
         // don't use the image src, it's a thumbnail. Instead, use the href of the parent a tag.
+        let fullImageUrl = img.closest('a').href;
+
+        if (!isLinkValidWithStatus200(fullImageUrl)) {
+          console.log(`download images found invalid a.href, using image.src instead. link: ${fullImageUrl}, image: ${img.src}`);
+          fullImageUrl = img.src;
+        }
         const newImg = document.createElement('img');
-        newImg.src = img.closest('a').href;
+        newImg.src = fullImageUrl;
         cells.push([newImg]);
       });
       const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
@@ -1179,9 +1196,15 @@ function removeOldNewsCarousel(main, document) {
   });
 }
 
-// the otherwise show up as backslashes in the resulting document
+// this otherwise show up as backslashes in the resulting document
 function removeStandaloneLinebreaks(main, document) {
   main.querySelectorAll('p + br').forEach((br) => {
+    br.remove();
+  });
+  main.querySelectorAll('br + br').forEach((br) => {
+    br.remove();
+  });
+  main.querySelectorAll('img + br').forEach((br) => {
     br.remove();
   });
 }
