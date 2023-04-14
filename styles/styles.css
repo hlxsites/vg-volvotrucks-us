@@ -98,6 +98,10 @@
   --heading-font-size-m: 2.4rem;
   --heading-font-size-s: 2.0rem;
   --heading-font-size-xs: 1.8rem;
+  --heading-default-xxl: 7.2rem;
+  --heading-default-xl: 5.6rem;
+  --heading-default-l: 4.8rem;
+  --heading-default-m: 3.2rem;
 
   /* nav height */
   --nav-height: 95px;
@@ -171,12 +175,33 @@ h4, h5, h6 {
   margin-top: 1em;
   margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
+  font-style: normal;
 }
 
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
+h1 {
+  font-size: var(--heading-default-xxl);
+  letter-spacing: -1.15px;
+}
+
+h2 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--heading-default-xl);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-size: var(--heading-default-l);
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+h4 {
+  font-size: var(--heading-default-m);
+  line-height: 1.25;
+  letter-spacing: 0.25px;
+}
+
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
 
