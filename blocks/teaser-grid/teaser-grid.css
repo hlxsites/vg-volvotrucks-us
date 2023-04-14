@@ -11,22 +11,31 @@
     --grid-row-gap: 15px;
 
     position: relative;
+    display: grid;
+}
+
+.block.teaser-grid::before {
+    /* gives the grid a min-height relative to the width using padding-bottom hack */
+    content: "";
+    grid-column: 1;
+    grid-row: 1;
     padding-bottom: calc(100% * var(--grid-col-count) + var(--grid-row-gap) * (var(--grid-col-count) - 1));
 }
 
 .block.teaser-grid>ul {
-    position: absolute;
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
     top: 0;
-    right: 0;
     left: 0;
-    bottom: 0;
+    height: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     row-gap: var(--grid-row-gap);
     column-gap: var(--grid-col-gap);
-    grid-template-rows: repeat(calc(var(--grid-col-count) * var(--grid-row-count), 1fr));
+    grid-template: repeat(calc(var(--grid-col-count) * var(--grid-row-count)), 1fr) / 100%;
 }
 
 .block.teaser-grid>ul>li {
@@ -90,7 +99,9 @@
 @media screen and (min-width: 992px) {
     .block.teaser-grid {
         --grid-row-gap: 10px;
+    }
 
+    .block.teaser-grid::before {
         padding-bottom: 50%;
     }
 
