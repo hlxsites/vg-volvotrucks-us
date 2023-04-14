@@ -109,6 +109,6 @@ export default async function decorate(block) {
     createLatestPressReleases(block, pressReleases);
   } else {
     const pressReleases = await getPressReleases();
-    createPressReleaseList(block, pressReleases, 10);
+    createPressReleaseList(block, pressReleases, { limit: 10 });
   }
 }
