@@ -270,7 +270,9 @@ button:disabled, button:disabled:hover {
 a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
+  color: var(--text-color);
 }
+
 
 /* commont elements */
 

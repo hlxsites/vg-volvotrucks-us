@@ -310,6 +310,38 @@ function addDefaultVideoLinkBehaviour(main) {
     .forEach(addVideoShowHandler);
 }
 
+function decorateOfferLinks(main) {
+  async function openOffer(event) {
+    event.preventDefault();
+    const module = await import(`${window.hlx.codeBasePath}/blocks/get-an-offer/get-an-offer.js`);
+    if (module.showOffer) {
+      await module.showOffer(event.target);
+    }
+  }
+  main.querySelectorAll('a[href*="offer"]').forEach((a) => {
+    if (a.href.endsWith('-offer')) {
+      let list = a.closest('ul');
+      if (!list) {
+        list = document.createElement('ul');
+        const parent = a.parentElement;
+        const li = document.createElement('li');
+        list.append(li);
+        li.append(a);
+        parent.after(list);
+        if (parent.textContent === '' && parent.children.length === 0) parent.remove();
+      }
+      list.classList.add('inline');
+      const li = document.createElement('li');
+      const clone = a.cloneNode(true);
+      clone.innerText = clone.title = 'Details';
+      li.append(clone);
+      list.append(li);
+      a.addEventListener('click', openOffer);
+      clone.addEventListener('click', openOffer);
+    }
+  })
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -333,6 +365,7 @@ export function decorateMain(main, head) {
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
+  decorateOfferLinks(main);
   buildCtaList(main);
 }
 
