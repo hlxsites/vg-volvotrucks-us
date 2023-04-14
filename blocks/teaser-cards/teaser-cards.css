@@ -81,6 +81,7 @@
 
 .teaser-cards-1 .block.teaser-cards :is(h2, h3) {
   margin: 30px 0 16px;
+  font-size: 48px;
 }
 
 .teaser-cards-1 .block.teaser-cards p.text {
