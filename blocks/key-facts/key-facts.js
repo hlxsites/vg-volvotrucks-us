@@ -11,8 +11,32 @@ export default function decorate(block) {
   facts.forEach((col) => {
     col.classList.add('key-fact');
     const icon = col.querySelector('i');
-    col.prepend(icon);
+    if (icon) col.prepend(icon);
     const paragraphs = col.querySelectorAll('p');
     paragraphs.forEach((paragraph) => stripEmptyTags(col, paragraph));
+
+    // find and split number/unit
+    const value = col.querySelector('strong:only-child');
+    if (value) {
+      const parts = value.innerHTML.match('([\\+,\\-]*[0-9,\\.,]+[\\%]*) *(.*)');
+      if (parts) {
+        // eslint-disable-next-line prefer-destructuring
+        value.innerText = parts[1];
+        value.classList.add('number');
+        if (parts[2]) {
+          const unit = document.createElement('strong');
+          unit.classList.add('unit');
+          // eslint-disable-next-line prefer-destructuring
+          unit.innerText = parts[2];
+          value.parentNode.append(unit);
+        }
+      }
+    }
+    // add trailing line div if needed
+    if (block.classList.contains('trailing-line')) {
+      const div = document.createElement('div');
+      div.classList.add('trailing-line');
+      col.append(div);
+    }
   });
 }

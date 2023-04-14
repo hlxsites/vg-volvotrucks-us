@@ -139,6 +139,7 @@ export function decorateIcons(element = document) {
       const i = document.createElement('i');
       i.setAttribute('aria-hidden', 'true');
       i.className = `${iconPrefix} ${icon}`;
+      if (span.classList[2] && i.classList.add(span.classList[2]));
       span.replaceWith(i);
       return;
     }
@@ -498,7 +499,12 @@ export function decorateButtons(element) {
       const twoup = a.parentElement.parentElement;
       if (!a.querySelector('img')) {
         if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-          a.className = 'button primary'; // default
+          a.className = 'button'; // default
+          if (a.children.length === 1 && a.firstElementChild.tagName === 'EM') {
+            a.append(...a.firstElementChild.childNodes);
+            a.firstElementChild.remove();
+            a.classList.add('secondary');
+          } else a.classList.add('primary');
           up.classList.add('button-container');
         }
         if (up.childNodes.length === 1 && up.tagName === 'STRONG'

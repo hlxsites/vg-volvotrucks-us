@@ -14,10 +14,43 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  getMetadata,
+  toClassName,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
+let placeholders = null;
+
+async function getPlaceholders() {
+  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
+}
+
+export function getTextLable(key) {
+  return placeholders.data.find((el) => el.Key === key).Text;
+}
+
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {string[]|string} classes the class or classes to add
+ * @param {object} props any other attributes to add to the element
+ * @returns the element
+ */
+export function createElement(tagName, classes, props) {
+  const elem = document.createElement(tagName);
+  if (classes) {
+    const classesArr = (typeof classes === 'string') ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      elem.setAttribute(propName, props[propName]);
+    });
+  }
+
+  return elem;
+}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -29,8 +62,14 @@ function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
   const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling.previousElementSibling;
-  return previousSibiling.localName === 'h1' || twoPreviousSibiling.localName === 'h1';
+  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
+  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
+}
+
+function findValidSibling(el, selectors) {
+  return [el.previousElementSibling, el.nextElementSibling].find(
+    (sibling) => sibling?.matches(selectors) && sibling.textContent.trim().length > 0,
+  );
 }
 
 function buildHeroBlock(main) {
@@ -42,7 +81,30 @@ function buildHeroBlock(main) {
   }
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
-  const ctaLink = firstSection.querySelector('a');
+  let ctaLink = firstSection.querySelector('a');
+  let video = null;
+
+  // eslint-disable-next-line no-use-before-define
+  if (ctaLink && isLowResolutionVideoUrl(ctaLink.getAttribute('href'))) {
+    const videoTemp = `
+      <video muted loop class="hero-video">
+        <source src="${ctaLink.getAttribute('href')}" type="video/mp4"></source>
+      </video>
+    `;
+
+    const videoWrapper = document.createElement('div');
+    videoWrapper.innerHTML = videoTemp;
+    video = videoWrapper.querySelector('video');
+    ctaLink.parentElement.remove();
+    ctaLink = firstSection.querySelector('a');
+
+    // adding video with delay to not affect page loading time
+    setTimeout(() => {
+      picture.replaceWith(video);
+      video.play();
+    }, 3000);
+  }
+
   // check if the previous element or the previous of that is an h1
   const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
@@ -51,12 +113,12 @@ function buildHeroBlock(main) {
     const headings = document.createElement('div');
     headings.className = 'hero-headings';
     const elems = [picture, headings];
-    if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
-      // also consider a <p> without any children as sub heading
-      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
+
+    const sibling = findValidSibling(h1, 'h2,h3,h4') || findValidSibling(h1, 'p');
+    if (sibling) {
       const h4 = document.createElement('h4');
-      h4.innerHTML = h1.nextElementSibling.innerHTML;
-      h1.nextElementSibling.remove();
+      h4.innerHTML = sibling.innerHTML;
+      sibling.remove();
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
@@ -68,6 +130,11 @@ function buildHeroBlock(main) {
     const wrapperChildren = containerChildren[0].children;
     if (containerChildren.length <= 1 && wrapperChildren.length === 0) firstSection.remove();
     else if (wrapperChildren.length === 0) containerChildren[0].remove();
+
+    if (video) {
+      section.querySelector('.hero')?.classList.add('hero-with-video');
+    }
+
     // after all are settled, the new section can be added
     main.prepend(section);
   }
@@ -75,14 +142,14 @@ function buildHeroBlock(main) {
 
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
-  if (subnav) {
+  if (subnav && subnav.content.startsWith('/')) {
     const block = buildBlock('sub-nav', []);
     main.previousElementSibling.prepend(block);
     decorateBlock(block);
   }
 }
 
-function createTabbedSection(tabItems, fullWidth, tabType) {
+function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
@@ -92,6 +159,38 @@ function createTabbedSection(tabItems, fullWidth, tabType) {
   const tabBlock = buildBlock(`tabbed-${tabType}`, [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
+}
+
+function buildCtaList(main) {
+  [...main.querySelectorAll('ul')].forEach((list) => {
+    const lis = [...list.querySelectorAll('li')];
+    const isCtaList = lis.every((li) => {
+      if (li.children.length !== 1) return false;
+      const firstChild = li.firstElementChild;
+      if (firstChild.tagName === 'A') return true;
+      if (firstChild.children.length !== 1) return false;
+      const firstGrandChild = firstChild.firstElementChild;
+      return (firstChild.tagName === 'STRONG' || firstChild.tagName === 'EM') && firstGrandChild.tagName === 'A';
+    });
+
+    if (isCtaList) {
+      list.classList.add('cta-list');
+      lis.forEach((li, i) => {
+        li.classList.add('button-container');
+        const a = li.querySelector('a');
+        const up = a.parentElement;
+        a.classList.add('button');
+        if (up.tagName === 'EM') {
+          a.classList.add('secondary');
+        } else {
+          a.classList.add('primary');
+          if (i === 0) {
+            a.classList.add('dark');
+          }
+        }
+      });
+    }
+  });
 }
 
 function buildTabbedBlock(main) {
@@ -107,18 +206,24 @@ function buildTabbedBlock(main) {
       tabContent.className = 'tab-content';
       fullWidth = fullWidth || section.matches('.full-width');
       tabContent.innerHTML = section.innerHTML;
+      tabContent.querySelectorAll('p > picture').forEach((pic) => {
+        if (!pic.nextElementSibling && !pic.previousElementSibling) {
+          pic.parentElement.classList.add('picture');
+        }
+      });
       tabItems.push(tabContent);
       section.remove();
     } else if (tabItems.length > 0) {
-      const tabbedSection = createTabbedSection(tabItems, fullWidth, tabType);
+      const tabbedSection = createTabbedSection(tabItems, tabType, { fullWidth });
       section.parentNode.insertBefore(tabbedSection, section);
       decorateBlock(tabbedSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
       tabItems = [];
+      tabType = undefined;
       fullWidth = false;
     }
   });
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedSection(tabItems, fullWidth, tabType);
+    const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth });
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
@@ -151,7 +256,7 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a')]
-  // link text is an unformatted URL paste, and matches the link href
+    // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
         // ignore domain in comparison
@@ -212,6 +317,12 @@ function addDefaultVideoLinkBehaviour(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main, head) {
+  const pageStyle = head.querySelector('[name="style"]')?.content;
+  if (pageStyle) {
+    pageStyle.split(',')
+      .map((style) => toClassName(style.trim()))
+      .forEach((style) => main.classList.add(style));
+  }
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
@@ -222,6 +333,33 @@ export function decorateMain(main, head) {
   decorateSectionBackgrounds(main);
   addDefaultVideoLinkBehaviour(main);
   buildTabbedBlock(main);
+  buildCtaList(main);
+}
+
+async function loadTemplate(doc, templateName) {
+  try {
+    const cssLoaded = new Promise((resolve) => {
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
+    });
+    const decorationComplete = new Promise((resolve) => {
+      (async () => {
+        try {
+          const mod = await import(`../templates/${templateName}/${templateName}.js`);
+          if (mod.default) {
+            await mod.default(doc);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${templateName}`, error);
+        }
+        resolve();
+      })();
+    });
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(`failed to load block ${templateName}`, error);
+  }
 }
 
 /**
@@ -230,12 +368,18 @@ export function decorateMain(main, head) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  const templateName = getMetadata('template');
+  const templatePromise = templateName ? loadTemplate(doc, templateName) : Promise.resolve();
+
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
+  await templatePromise;
+  await getPlaceholders();
 }
 
 /**
@@ -301,45 +445,91 @@ async function loadPage() {
 loadPage();
 
 /* video helpers */
+export function isLowResolutionVideoUrl(url) {
+  return url.split('?')[0].endsWith('.mp4');
+}
+
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
   return (linkString.includes('youtube.com/embed/')
-    || (linkString.split('?')[0].endsWith('.mp4')))
+    || isLowResolutionVideoUrl(linkString))
     && link.closest('.block.embed') === null;
 }
 
-export function selectVideoLink(links) {
-  // logic for selecting the video based on the cookies
-  // will be implemented in #41
-  return links[0];
+export function selectVideoLink(links, preferredType) {
+  const linksList = [...links];
+  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
+  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
+
+  return videoLink;
+}
+
+export function showVideoModal(linkUrl) {
+  // eslint-disable-next-line import/no-cycle
+  import('../common/modal/modal.js').then((modal) => {
+    let beforeBanner = null;
+
+    if (isLowResolutionVideoUrl(linkUrl)) {
+      const lowResolutionMessage = getTextLable('Low resolution video message');
+      const changeCookieSettings = getTextLable('Change cookie settings');
+
+      beforeBanner = document.createElement('div');
+      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
+      beforeBanner.querySelector('button').addEventListener('click', () => {
+        window.OneTrust.ToggleInfoDisplay();
+      });
+    }
+
+    modal.showModal(linkUrl, beforeBanner);
+  });
 }
 
 export function addVideoShowHandler(link) {
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play-circle-o');
-  link.prepend(icon);
   link.classList.add('text-link-with-video');
 
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
+    // eslint-disable-next-line import/no-cycle
     import('../common/modal/modal.js').then((modal) => {
       modal.showModal(link.getAttribute('href'));
     });
   });
 }
 
-export function wrapImageWithVideoLink(videoLink, image) {
-  videoLink.innerText = '';
-  videoLink.appendChild(image);
-  videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary');
-
-  // play icon
+export function addPlayIcon(parent) {
   const iconWrapper = document.createElement('div');
   iconWrapper.classList.add('video-icon-wrapper');
   const icon = document.createElement('i');
   icon.classList.add('fa', 'fa-play', 'video-icon');
   iconWrapper.appendChild(icon);
-  videoLink.appendChild(iconWrapper);
+  parent.appendChild(iconWrapper);
+}
+
+export function wrapImageWithVideoLink(videoLink, image) {
+  videoLink.innerText = '';
+  videoLink.appendChild(image);
+  videoLink.classList.add('link-with-video');
+  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
+
+  addPlayIcon(videoLink);
+}
+
+export function createIframe(url, { parentEl, classes = [] }) {
+  // iframe must be recreated every time otherwise the new history record would be created
+  const iframe = document.createElement('iframe');
+  const iframeClasses = Array.isArray(classes) ? classes : [classes];
+
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+  iframe.setAttribute('src', url);
+  iframe.classList.add(...iframeClasses);
+
+  if (parentEl) {
+    parentEl.appendChild(iframe);
+  }
+
+  return iframe;
 }

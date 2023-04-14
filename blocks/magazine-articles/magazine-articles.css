@@ -50,6 +50,13 @@
     border: 0;
 }
 
+.block.magazine-articles .pager {
+    font-size: 1.4rem;
+    display: grid;
+    margin: 1em 0;
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .block.magazine-articles .category-field,
 .block.magazine-articles .topic-field,
 .block.magazine-articles .truck-field   {
@@ -74,16 +81,6 @@
     line-height: 2.0rem;
     font-size: 2.4rem;
     pointer-events: none;
-}
-
-.block.magazine-articless .category-field select,
-.block.magazine-articless .topic-field select,
-.block.magazine-articless .truck-field select {
-    width: 100%;
-    appearance: none;
-    background-color: var(--c-white);
-    color: var(--c-white);
-    padding: 15px 40px 15px 15px;
 }
 
 /* Latest magazine articles */
@@ -143,13 +140,20 @@
     border-top: 1px solid var(--background-light-gray);
 }
 
+.block.magazine-articles .article-list article {
+    padding: 2em 0;
+    border-top: 1px solid var(--background-light-gray);
+}
+
+.section.magazine-articles-container > div > div > div.articles > article:nth-child(1) {
+    border-top: 1px solid var(--background-light-gray);
+}
+
 .block.magazine-articles article a.imgcover {
     float: unset;
-    margin-bottom: 16px;
     padding-right: 15px;
     position: relative;
     z-index: 50;
-    width: 100%;
     height: 250px;
     display: block;
 }
@@ -258,22 +262,24 @@
     }
 }
 
-@media screen and (min-width: 991px) {
-    .block .latest-magazine-articles article {
+@media screen and (min-width: 992px) {
+    .block .latest-magazine-articles article,
+    .block .related-magazine-articles article {
         display: unset;
     }
 
+    .block.magazine-articles .articles article {
+        display: inline-flex;
+    }
+
     .block.magazine-articles article a.imgcover {
-        float: unset;
-        margin-bottom: auto;
-        width: auto;
         height: auto;
     }
-    
-    .block.magazine-articles .article-list article a.imgcover img {
-        float: left!important;
-        height: 214px!important;
-        width: 380px!important;    
+
+    .section.magazine-articles-container > div > div > div.articles > article > a > picture {
+        float: left;
+        height: 214px;
+        width: 380px;    
     }
 
     .block.magazine-articles .article-list article {

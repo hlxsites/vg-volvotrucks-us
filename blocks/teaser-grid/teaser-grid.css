@@ -97,6 +97,7 @@
     .block.teaser-grid>ul {
         grid-template-rows: repeat(var(--grid-row-count), 1fr);
         grid-template-columns: repeat(var(--grid-col-count), 1fr);
+        grid-auto-flow: column;
     }
 
     .block.teaser-grid.layout-8-4>ul {

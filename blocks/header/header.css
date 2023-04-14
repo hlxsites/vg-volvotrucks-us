@@ -76,8 +76,8 @@ header nav .hamburger-toggle .hamburger-icon {
 /* the search input  */
 header nav .search {
   height: 0;
-  overflow: hidden;
   transition: height 400ms ease-out;
+  overflow: hidden;
   background-color: white;
   display: flex;
   top: var(--nav-height);
@@ -93,12 +93,13 @@ header nav .search div {
 
 header nav .search-toggle[aria-expanded=true]~.search {
   height: 59px;
+  margin-block-end: 15px;
 }
 
 header nav .search input {
   display: block;
   width: 100%;
-  height: 44px;
+  height: 59px;
   padding: 10px 40px 10px 15px;
   border: none;
   border-radius: 0;
@@ -109,7 +110,7 @@ header nav .search input {
 }
 
 header nav .search .search-button {
-  height: 44px;
+  height: 59px;
   padding: 0 10px;
   color: #A7A8A9;
   border: none;
@@ -169,7 +170,9 @@ header nav .hamburger-toggle[aria-expanded=true]~.tools {
 header nav .tools ul {
   display: flex;
   list-style-type: none;
-  gap: 22px;
+  margin: 0;
+  padding: 0 0 0 15px;
+  flex: 1;
 }
 
 /* tools entries */
@@ -178,6 +181,11 @@ header nav .tools ul li {
   flex-flow: column;
   align-items: center;
   justify-content: space-between;
+  margin-left: 4%;
+}
+
+header nav .tools ul li:first-child {
+  margin-left: 0;
 }
 
 header nav .tools ul li a {
@@ -372,11 +380,6 @@ header nav .sections .section .navigation-cta {
     width: 50vw;
     right: 0;
   }
-
-  /* list of tools */
-  header nav .tools ul {
-    gap: 10px;
-  }
 }
 
 /* ------ Desktop -------------------------------------------------------- */
@@ -436,7 +439,9 @@ header nav .sections .section .navigation-cta {
   /* list of tools */
   header nav .tools ul {
     margin: 0;
+    padding: 0;
     gap: 20px;
+    flex: unset;
   }
 
   /* tools entries */
@@ -446,6 +451,7 @@ header nav .sections .section .navigation-cta {
     align-items: center;
     justify-content: space-between;
     gap: 8px;
+    margin: 0;
   }
 
   header nav .tools ul li a {
@@ -688,7 +694,7 @@ header nav .sections .section .navigation-cta {
     color: var(--link-color);
     font-weight: 700;
   }
-  
+
   header nav .sections .section.expand > ul > li > ul > li {
     width: 126px;
   }

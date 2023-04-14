@@ -34,7 +34,14 @@ function adjustWidthAndControls(block, carousel, ...controls) {
     resizeTimeout = setTimeout(toggle, debounceDelay);
   });
 
-  window.setTimeout(toggle);
+  // wait for the section to be loaded before we initially resize the carousel
+  const section = block.closest('.section');
+  new MutationObserver((_, observer) => {
+    if (section.dataset.sectionStatus === 'loaded') {
+      observer.disconnect();
+      setTimeout(toggle);
+    }
+  }).observe(section, { attributes: true });
 }
 
 function createDesktopControls(ul) {
@@ -95,13 +102,44 @@ function createMobileControls(ul) {
 }
 
 export default function decorate(block) {
-  const ul = block.querySelector('ul');
+  const ul = document.createElement('ul');
   ul.classList.add('items');
+
+  // We support two formats:
+  // 1. Each slide in a cell in either columns column and/or rows.
+  // 2. all values in the first cell as a list.
+  [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
+    // collect any <li>
+    cell.querySelectorAll('li').forEach((li) => {
+      if (li.childElementCount) {
+        ul.append(li);
+      }
+    });
+    // remove any remaining <ul>
+    cell.querySelectorAll('ul').forEach((el) => el.remove());
+
+    // If cell still contains anything, add content to list
+    if (cell.childElementCount) {
+      const li = document.createElement('li');
+      li.append(...cell.childNodes);
+      // remove link decoration
+      li.querySelectorAll('.button-container,.button').forEach((el) => {
+        el.classList.remove('button-container', 'button', 'primary');
+      });
+      ul.append(li);
+    }
+    cell.remove();
+  });
+
+  // now that all cells are removed, only rows are remining.
+  const firstCell = document.createElement('div');
+  block.firstElementChild.append(firstCell);
+  firstCell.append(ul);
 
   [...ul.children].forEach((li) => {
     // Add wrapper around the content
     const container = document.createElement('div');
-    container.className = 'wrapper';
+    container.className = 'carousel-content-wrapper';
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
     li.append(container);
@@ -128,6 +166,11 @@ export default function decorate(block) {
     container.innerHTML = `
       <p>${textItems.join('</p><p>')}</p>
     `;
+
+    const carouselLink = container.querySelector('a');
+    if (carouselLink) {
+      carouselLink.classList.add('button', 'carousel-link');
+    }
   });
 
   const desktopControls = createDesktopControls(ul);
