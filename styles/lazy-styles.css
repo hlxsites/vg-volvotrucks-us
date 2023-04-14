@@ -150,6 +150,22 @@ body.disable-scroll, body.disable-scroll main {
   content: "\f021"
 }
 
+.fa-user::before {
+  content: "\f007"
+}
+
+.fa-clock-o::before {
+  content: "\f017";
+}
+
+.fa-calendar::before {
+  content: "\f073"
+}
+
+.fa-envelope::before {
+  content: "\f0e0"
+}
+
 .fa-caret-left::before {
   content: "\f0d9"
 }
