@@ -207,6 +207,18 @@ h4 {
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
 
+:is(h1, h2, h3, h4, h5, h6) > em {
+  color: var(--volvo-text-light-gray);
+  font-style: normal;
+}
+
+.block h4,
+.block h4 > em {
+  color: inherit;
+  text-transform: uppercase;
+  font-style: initial;
+}
+
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
   margin-bottom: 1.5em;
