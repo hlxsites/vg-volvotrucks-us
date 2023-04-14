@@ -148,7 +148,6 @@
 
     .block.teaser-grid>ul[style*="--grid-col-count:1"]>li>div {
         max-width: 380px;
-        margin-left: 70px;
-        margin-right: 70px;
+        margin: 0 calc(5% + 32px);
     }
 }
