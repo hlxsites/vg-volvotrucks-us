@@ -39,7 +39,7 @@
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    color: inherit;
+    color: black;
     font: inherit;
     margin: 0
   }
@@ -1298,8 +1298,7 @@
           <div id="formElement0" class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label class="elq-label " for="fe774">Email Address
-                <span class="elq-required">*
-                </span>
+                <span class="elq-required">*</span>
               </label>
             </div>
             <div class="col-sm-12 col-xs-12">
@@ -1307,8 +1306,7 @@
                 <div class="col-xs-12">
                   <div class="field-control-wrapper">
                     <input type="text" class="elq-item-input" name="emailAddress" id="fe774"
-                      value="~~eloqua..type--emailfield..syntax--EmailAddress~~"
-                      style="width:100%;">
+                      value="" style="width:100%;">
                   </div>
                 </div>
               </div>
@@ -1357,17 +1355,14 @@
       </div>
     </div>
     <input type="hidden" name="hiddenField" id="fe779" value="VHD2020">
+    <div style="display:none;" class="thankyou">Thank you for your submission. We will be in touch
+      soon.</div>
   </div>
 </form>
 <script type="text/javascript"
   src="https://img03.en25.com/i/livevalidation_standalone.compressed.js">
   </script>
 <script>
-  $(".ajaxSitecoreEloquaSubmit").click(function () {
-    if ($(".eloqua-error-message").length == 0) {
-      dataLayer.push({ 'event': 'successfulSubmit' });
-    }
-  });
   function handleFormSubmit(ele) {
     var submitButton = ele.querySelector('input[type=submit]');
     var spinner = document.createElement('span');
