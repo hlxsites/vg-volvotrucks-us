@@ -106,6 +106,7 @@ body.magazine>main .section.article-sidebar .share-icons button {
   border: 0;
   margin: 10px;
 }
+
 body.magazine>main .section.article-sidebar .share-icons button i {
   font-size: 16px;
 }
@@ -115,13 +116,13 @@ body.magazine>main .share {
   padding-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe {
+body.magazine>main .section.template.article-sidebar>div.subscribe {
   border-top: 1px solid var(--background-hover-color);
   padding-top: 30px;
   margin-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe > a {
+body.magazine>main .section.template.article-sidebar>div.subscribe>a {
   border: 2px solid var(--volvo-text-gray);
   user-select: none;
   color: var(--c-white);
@@ -136,7 +137,7 @@ body.magazine>main .section.template.article-sidebar > div.subscribe > a {
   white-space: nowrap;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe > a > i {
+body.magazine>main .section.template.article-sidebar>div.subscribe>a>i {
   font-size: 16px;
   padding-bottom: 4px;
 }
@@ -155,24 +156,32 @@ body.magazine>main .section.related-articles-container>div.default-content-wrapp
   text-align: center;
 }
 
-body.magazine>main div.default-content-wrapper > blockquote > p::before,
-body.magazine>main div.default-content-wrapper > blockquote > p::after {
+body.magazine>main div.default-content-wrapper>blockquote>p::before,
+body.magazine>main div.default-content-wrapper>blockquote>p::after {
   content: none;
 }
 
-body.magazine>main div.default-content-wrapper > blockquote > p > picture {
+body.magazine>main div.default-content-wrapper>blockquote>p>picture {
   float: left;
   padding-right: 20px;
 }
 
-body.magazine>main div.default-content-wrapper > blockquote > p {
+body.magazine>main div.default-content-wrapper>blockquote>p {
   quotes: none;
   text-align: center;
   display: table;
 }
 
-body.magazine > main > div.section.related-articles-container > div.related-articles-wrapper {
+body.magazine>main>div.section.related-articles-container>div.related-articles-wrapper {
   border-top: 1px solid var(--background-hover-color);
+}
+.magazine .eloqua-form-container>div.eloqua-form-wrapper {
+  float: right;
+}
+.magazine .eloqua-form-container>div.eloqua-form-wrapper>div>div {
+  background-color: #D8D8D8;
+  padding: 50px;
+  position: relative;
 }
 
 @media screen and (min-width: 992px) {
@@ -254,7 +263,7 @@ body.magazine > main > div.section.related-articles-container > div.related-arti
     width: 100%;
   }
 
-  body.magazine>main .section.template.article-sidebar > div.subscribe > .cta {
+  body.magazine>main .section.template.article-sidebar>div.subscribe>.cta {
     padding: 15px 32px;
   }
 }
