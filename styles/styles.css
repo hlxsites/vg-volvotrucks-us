@@ -91,17 +91,13 @@
   --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
-  --heading-font-size-xxxl: 4.8rem;
-  --heading-font-size-xxl: 3.6rem;
-  --heading-font-size-xl: 3.4rem;
-  --heading-font-size-l: 3.2rem;
+  --heading-font-size-xxl: 7.2rem;
+  --heading-font-size-xl: 5.6rem;
+  --heading-font-size-l: 4.8rem;
+  --heading-font-size-ml: 3.2rem;
   --heading-font-size-m: 2.4rem;
   --heading-font-size-s: 2.0rem;
   --heading-font-size-xs: 1.8rem;
-  --heading-default-xxl: 7.2rem;
-  --heading-default-xl: 5.6rem;
-  --heading-default-l: 4.8rem;
-  --heading-default-m: 3.2rem;
 
   /* nav height */
   --nav-height: 95px;
@@ -179,25 +175,25 @@ h4, h5, h6 {
 }
 
 h1 {
-  font-size: var(--heading-default-xxl);
+  font-size: var(--heading-font-size-xxl);
   letter-spacing: -1.15px;
 }
 
 h2 {
   font-family: var(--ff-volvo-novum);
-  font-size: var(--heading-default-xl);
+  font-size: var(--heading-font-size-xl);
   line-height: 1.1;
   letter-spacing: -0.5px;
 }
 
 h3 {
-  font-size: var(--heading-default-l);
+  font-size: var(--heading-font-size-l);
   line-height: 1.1;
   letter-spacing: 0;
 }
 
 h4 {
-  font-size: var(--heading-default-m);
+  font-size: var(--heading-font-size-ml);
   line-height: 1.25;
   letter-spacing: 0.25px;
 }
@@ -571,12 +567,6 @@ a.button.text-link-with-video::after {
 
 @media (min-width: 992px) {
   :root {
-    --heading-font-size-xxl: 4.8rem;
-    --heading-font-size-xl: 4.6rem;
-    --heading-font-size-l: 3.6rem;
-    --heading-font-size-m: 3.0rem;
-    --heading-font-size-s: 2.4rem;
-    --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
     --wrapper-width: 960px;
