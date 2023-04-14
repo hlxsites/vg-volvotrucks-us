@@ -203,10 +203,6 @@
     margin-bottom: 16px;
   }
 
-  .block.teaser-cards h3 {
-    font-size: var(--heading-font-size-s)
-  }
-
   /* single teaser */
   .teaser-cards-1 .block.teaser-cards .teaser {
     min-height: 402px;
