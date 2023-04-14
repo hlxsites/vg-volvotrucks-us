@@ -93,7 +93,7 @@
 
   /* heading sizes */
   /* the scale allows us to adjust all heading sizes but preserve the ratio */
-  --heading-font-size-scale: 1;
+  --heading-font-size-scale: 0.5;
   --heading-font-size-xxl: calc(7.2rem * var(--heading-font-size-scale));
   --heading-font-size-xl: calc(5.6rem * var(--heading-font-size-scale));
   --heading-font-size-l: calc(4.8rem * var(--heading-font-size-scale));
