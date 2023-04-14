@@ -44,7 +44,6 @@
 /* teaser title */
 .block.teaser-cards :is(h2, h3, h4) {
   margin: 0 0 10px;
-  font-size: var(--heading-font-size-m);
   letter-spacing: -.1px;
   line-height: 1.3333em;
 }
