@@ -119,7 +119,7 @@ function buildHeroBlock(main) {
 
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
-  if (subnav) {
+  if (subnav && subnav.content.startsWith('/')) {
     const block = buildBlock('sub-nav', []);
     main.previousElementSibling.prepend(block);
     decorateBlock(block);
