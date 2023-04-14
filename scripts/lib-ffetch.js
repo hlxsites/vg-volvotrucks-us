@@ -347,22 +347,26 @@ export async function createList(pressReleases, filter, createFilters, buildPres
     };
     relatedPressReleases = true;
   }
-  const filteredData = filter(pressReleases, actFilter);
+  let filteredData = filter ? filter(pressReleases, actFilter) : pressReleases;
 
   let page = parseInt(getSelectionFromUrl('page'), 10);
   page = Number.isNaN(page) ? 1 : page;
-  const start = (page - 1) * limitPerPage;
   let pagination;
-  if (!relatedPressReleases) {
-    const filterElements = await renderFilters(pressReleases, createFilters);
+  if (!relatedPressReleases && createFilters) {
+    const filterElements = renderFilters(pressReleases, createFilters);
     mainEl.appendChild(filterElements);
-    pagination = createPagination(filteredData, page, limitPerPage);
-    mainEl.appendChild(pagination);
+    if (limitPerPage > 0) {
+      pagination = createPagination(filteredData, page, limitPerPage);
+      mainEl.appendChild(pagination);
+    }
   }
-  const dataToDisplay = filteredData.slice(start, start + limitPerPage);
+  if (limitPerPage > 0) {
+    const start = (page - 1) * limitPerPage;
+    filteredData = filteredData.slice(start, start + limitPerPage);
+  }
   const articleList = document.createElement('ul');
   articleList.className = 'article-list';
-  dataToDisplay.forEach((pressRelease) => {
+  filteredData.forEach((pressRelease) => {
     const articleItem = document.createElement('li');
     const pressReleaseArticle = buildPressReleaseArticle(pressRelease);
     articleItem.appendChild(pressReleaseArticle);
