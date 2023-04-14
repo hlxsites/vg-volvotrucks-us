@@ -571,7 +571,3 @@ a.button.text-link-with-video::after {
     --wrapper-width: 1200px;
   }
 }
-
-.video-link-wrapper {
-  text-align: center;
-}
