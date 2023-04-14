@@ -353,7 +353,7 @@ export async function createList(pressReleases, filter, createFilters, buildPres
   page = Number.isNaN(page) ? 1 : page;
   let pagination;
   if (!relatedPressReleases && createFilters) {
-    const filterElements = renderFilters(pressReleases, createFilters);
+    const filterElements = await renderFilters(pressReleases, createFilters);
     mainEl.appendChild(filterElements);
     if (limitPerPage > 0) {
       pagination = createPagination(filteredData, page, limitPerPage);
