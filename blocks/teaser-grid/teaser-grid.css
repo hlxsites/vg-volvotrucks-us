@@ -34,6 +34,8 @@
 
     grid-row: span var(--grid-row-span);
     position: relative;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .block.teaser-grid>ul>li>* {
@@ -51,13 +53,11 @@
     object-fit: cover;
 }
 
-.block.teaser-grid>ul>li div {
+.block.teaser-grid>ul>li>div {
+    position: relative;
     pointer-events: none;
     cursor: pointer;
-    top: unset;
-    right: unset;
-    bottom: 30px;
-    left: 30px;
+    padding: 0 25px 30px;
     color: white;
 }
 
