@@ -172,16 +172,31 @@ body.magazine>main div.default-content-wrapper>blockquote>p {
   display: table;
 }
 
-body.magazine>main>div.section.related-articles-container>div.related-articles-wrapper {
+div.section.related-articles-container>div.related-articles-wrapper {
   border-top: 1px solid var(--background-hover-color);
 }
-.magazine .eloqua-form-container>div.eloqua-form-wrapper {
+
+#driving-progress {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: 3.6px;
+}
+
+div.section.eloqua-form-container {
+  background-color: #D8D8D8;
+  margin: 35px 0;
+  padding: 35px;
+  position: relative;
   float: right;
 }
-.magazine .eloqua-form-container>div.eloqua-form-wrapper>div>div {
-  background-color: #D8D8D8;
-  padding: 50px;
-  position: relative;
+
+div.section.eloqua-form-container > div.default-content-wrapper {
+  text-align: center;
+}
+
+div.section.eloqua-form-container > div.eloqua-form-wrapper {
+  margin: 10px auto;
 }
 
 @media screen and (min-width: 992px) {
