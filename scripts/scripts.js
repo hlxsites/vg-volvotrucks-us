@@ -26,7 +26,7 @@ async function getPlaceholders() {
 }
 
 export function getTextLable(key) {
-  return placeholders.data.find((el) => el.Key === key).Text;
+  return placeholders.data.find((el) => el.Key === key)?.Text || key;
 }
 
 function getCTAContainer(ctaLink) {
