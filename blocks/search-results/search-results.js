@@ -78,7 +78,7 @@ export default async function decorate(block) {
 
   const styles = [
     'https://static.searchstax.com/studio-js/v3.8/css/studio-app.css',
-    'https://www.volvotrucks.us/css/vtna/search-stax-main.min.css?v=133250465560000000',
+    // 'https://www.volvotrucks.us/css/vtna/search-stax-main.min.css?v=133250465560000000',
   ];
   const scripts = [
     {
