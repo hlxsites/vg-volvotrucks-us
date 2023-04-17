@@ -3,7 +3,9 @@ export default async function decorate(block) {
   const link = block.querySelector('a')?.getAttribute('href');
   const fixedHeightClass = Array.from(block.classList).find((el) => /[0-9]+px/.test(el));
 
-  iframe.height = fixedHeightClass;
+  if (fixedHeightClass) {
+    iframe.height = fixedHeightClass;
+  }
   iframe.src = link;
   iframe.setAttribute('frameborder', 0);
   block.innerHTML = '';
