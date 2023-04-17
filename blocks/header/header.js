@@ -165,7 +165,7 @@ export default async function decorate(block) {
         <img class="search-icon" src="/icons/search-icon.png" >
       </a>
 
-      <a class="hamburger-toggle" aria-expanded="false" >
+      <a class="hamburger-toggle semitrans-trigger" aria-expanded="false" >
         <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
       </a>
 
