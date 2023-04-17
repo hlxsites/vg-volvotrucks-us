@@ -38,6 +38,8 @@ export async function showSidebar(content, decorateContent) {
   setTimeout(() => {
     document.body.classList.add('disable-scroll');
     sidebar.ariaExpanded = true;
+    const button = sidebar.querySelector('button.close');
+    button.focus();
   });
 }
 
