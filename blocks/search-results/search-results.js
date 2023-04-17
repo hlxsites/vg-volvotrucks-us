@@ -25,6 +25,7 @@ export default async function decorate(block) {
   </div>
   `;
 
+  // JS copied from original page
   function getCookie(name) {
     // eslint-disable-next-line no-useless-escape
     const matches = document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`));
@@ -73,85 +74,84 @@ export default async function decorate(block) {
     }
     return cookieID;
   }
+  // end of JS copied from original page
 
   window.getOrSetCookie = getOrSetCookie;
 
   const styles = [
     'https://static.searchstax.com/studio-js/v3.8/css/studio-app.css',
-    // 'https://www.volvotrucks.us/css/vtna/search-stax-main.min.css?v=133250465560000000',
   ];
   const scripts = [
     {
       inline: `
-    var _msq = _msq || []; //declare object
-    var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
-    (function () {
-      var ms = document.createElement('script');
-      ms.type = 'text/javascript';
-      ms.src = 'https://static.searchstax.com/studio-js/v3/js/studio-analytics.js';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(ms, s);
-    })();
-  `,
+        var _msq = _msq || []; //declare object
+        var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
+        (function () {
+          var ms = document.createElement('script');
+          ms.type = 'text/javascript';
+          ms.src = 'https://static.searchstax.com/studio-js/v3/js/studio-analytics.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ms, s);
+        })();
+      `,
     },
 
     {
       inline: `
-      const session = getOrSetCookie('searchcookie');
-      function format_date(value) {
-        if (value != null) {
-          if (typeof value == 'undefined') {
-            return '';
+        const session = getOrSetCookie('searchcookie');
+        function format_date(value) {
+          if (value != null) {
+            if (typeof value == 'undefined') {
+              return '';
+            }
+            date_value = Date.parse(value);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(value).toLocaleDateString(undefined, options);
           }
-          date_value = Date.parse(value);
-          const options = { year: 'numeric', month: 'long', day: 'numeric' };
-          return new Date(value).toLocaleDateString(undefined, options);
+          return value;
         }
-        return value;
-      }
-      const studioConfig = {
-        connector: {
-          url: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157/emselect',
-          authentication: 'YXBwMTE1Ny1hcGk6Vm9sdm90cnVja3NAMjAyMw==',
-          apikey: '3Ixo3pslPZXcRt0PCJXaYSN1evQyD3tERt1RaAUaRNU',
-          select_auth_token: 'None',
-          suggester_auth_token: 'None',
-          search_auth_type: 'basic',
-          session,
-          fields: { description: 'meta_description_t', title: '_name', url: 'result_url_creation_s' },
-          suggester: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
-          searchAPIKey: '25c0942a02ba3b11f3b1182ed398c4442d85d115',
-          language: 'en',
-          fieldFormatters: { date: format_date },
-          searchAdditionalArgs: 'hl.fragsize=200',
-          hideUniqueKey: true,
-        },
-        searchResults: '#searchResultsSection',
-        searchInput: '#searchInput',
-        searchResultSummarySection: '#searchResultSummarySection',
-        facetSection: '#searchFacetSection',
-        searchOptionsSection: '#searchOptionsSection',
-        relatedSearchesSection: '#relatedSearchesSection',
-        paginationSection: '#paginationSection',
-        customSearchTemplate: '#search-template',
-        customSearchFeedbackTemplate: '#searchFeedback-template',
-        customPagingTemplate: '#paging-template',
-        customPaginationTemplate: '#paging-template',
-        customSearchOptionSectionTemplate: '#searchOptionSection-template',
-        customNoResultTemplate: '#noresult-template',
-        customFacetTemplate: '#facet-template',
-        hideBranding: false,
-        isGridLayout: true,
-        display: 'multi',
-        facet_pagination: 3,
-        customResultTemplate: '#result-template',
-        customRelatedSearchesTemplate: '#customRelatedSearches-template',
-        externalSearchResults: '#external-search-result-container',
-        customExternalPromotionsTemplate: '#external-search-result-template',
-        suggestAfterMinChars: 2,
-      };
-
-  `,
+        const studioConfig = {
+          connector: {
+            url: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157/emselect',
+            authentication: 'YXBwMTE1Ny1hcGk6Vm9sdm90cnVja3NAMjAyMw==',
+            apikey: '3Ixo3pslPZXcRt0PCJXaYSN1evQyD3tERt1RaAUaRNU',
+            select_auth_token: 'None',
+            suggester_auth_token: 'None',
+            search_auth_type: 'basic',
+            session,
+            fields: { description: 'meta_description_t', title: '_name', url: 'result_url_creation_s' },
+            suggester: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+            searchAPIKey: '25c0942a02ba3b11f3b1182ed398c4442d85d115',
+            language: 'en',
+            fieldFormatters: { date: format_date },
+            searchAdditionalArgs: 'hl.fragsize=200',
+            hideUniqueKey: true,
+          },
+          searchResults: '#searchResultsSection',
+          searchInput: '#searchInput',
+          searchResultSummarySection: '#searchResultSummarySection',
+          facetSection: '#searchFacetSection',
+          searchOptionsSection: '#searchOptionsSection',
+          relatedSearchesSection: '#relatedSearchesSection',
+          paginationSection: '#paginationSection',
+          customSearchTemplate: '#search-template',
+          customSearchFeedbackTemplate: '#searchFeedback-template',
+          customPagingTemplate: '#paging-template',
+          customPaginationTemplate: '#paging-template',
+          customSearchOptionSectionTemplate: '#searchOptionSection-template',
+          customNoResultTemplate: '#noresult-template',
+          customFacetTemplate: '#facet-template',
+          hideBranding: false,
+          isGridLayout: true,
+          display: 'multi',
+          facet_pagination: 3,
+          customResultTemplate: '#result-template',
+          customRelatedSearchesTemplate: '#customRelatedSearches-template',
+          externalSearchResults: '#external-search-result-container',
+          customExternalPromotionsTemplate: '#external-search-result-template',
+          suggestAfterMinChars: 2,
+        };
+      `,
     },
     { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-app.js' },
     { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-vendors.js' },
@@ -159,6 +159,7 @@ export default async function decorate(block) {
     { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-feedback.js' },
   ];
 
+  // adding stylesheets
   styles.forEach((styleSheetLink) => {
     const styleSheetEl = document.createElement('style');
     styleSheetEl.innerHTML = `@import url(${styleSheetLink});`;
@@ -166,7 +167,7 @@ export default async function decorate(block) {
     document.head.appendChild(styleSheetEl);
   });
 
-  // templates
+  // adding templates
   const temps = document.createElement('div');
   temps.innerHTML = templates.join('');
   document.body.appendChild(temps);
