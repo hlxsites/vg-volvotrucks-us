@@ -1,5 +1,34 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
-import { isWebpSupported } from '../../scripts/scripts.js';
+
+// based on: https://developers.google.com/speed/webp/faq
+async function isWebpSupported() {
+  const testImages = [
+    // lossy
+    'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    // lossless
+    'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+  ];
+  const lossyImg = new Image();
+  const lossLessImg = new Image();
+  const promises = [];
+
+  [lossyImg, lossLessImg].forEach((img, index) => {
+    const promise = new Promise((resolve) => {
+      img.onload = () => {
+        const result = (img.width > 0) && (img.height > 0);
+        resolve(result);
+      };
+      img.onerror = () => {
+        resolve(false);
+      };
+      img.src = `data:image/webp;base64,${testImages[index]}`;
+    });
+
+    promises.push(promise);
+  });
+
+  return Promise.all(promises).then((values) => values.every((val) => val));
+}
 
 async function renderBlock(block) {
   const styles = ['https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5.1.4/index.min.css'];
