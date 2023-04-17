@@ -1,17 +1,35 @@
+// eslint-disable no-console
 const addForm = async (block) => {
   // hiding till ready to display
   const displayValue = block.style.display;
   block.style.display = 'none';
 
-  const formName = block.innerText.trim();
+  const formName = block.firstElementChild.innerText.trim();
+  const thankYou = block.firstElementChild.nextElementSibling;
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
-  if (data.ok) {
-    const text = await data.text();
-    block.innerHTML = text;
-  } else {
-    // eslint-disable-next-line no-console
+  if (!data.ok) {
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
+    return;
+  }
+
+  const text = await data.text();
+  block.innerHTML = text;
+
+  if (thankYou) {
+    const form = block.querySelector('form');
+    const oldSubmit = form.onsubmit;
+    form.onsubmit = function handleSubmit() {
+      if (oldSubmit.call(this)) {
+        const body = new FormData(this);
+        const { action, method } = this;
+        fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
+          if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
+          block.replaceChildren(thankYou);
+        });
+      }
+      return false;
+    };
   }
 
   const styles = block.querySelectorAll('style');
