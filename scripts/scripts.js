@@ -298,12 +298,22 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function addDefaultVideoLinkBehaviour(main) {
+function decorateLinks(main) {
   [...main.querySelectorAll('a')]
-    // eslint-disable-next-line no-use-before-define
-    .filter((link) => isVideoLink(link))
-    // eslint-disable-next-line no-use-before-define
-    .forEach(addVideoShowHandler);
+    .filter(({ href }) => !!href)
+    .forEach((link) => {
+      /* eslint-disable no-use-before-define */
+      if (isVideoLink(link)) {
+        addVideoShowHandler(link);
+        return;
+      }
+
+      const url = new URL(link.href);
+      const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
+      if (url.pathname.endsWith('.pdf') || external) {
+        link.target = '_blank';
+      }
+    });
 }
 
 function decorateOfferLinks(main) {
@@ -360,7 +370,7 @@ export function decorateMain(main, head) {
   decorateBlocks(main);
   decorateHyperlinkImages(main);
   decorateSectionBackgrounds(main);
-  addDefaultVideoLinkBehaviour(main);
+  decorateLinks(main);
   buildTabbedBlock(main);
   decorateOfferLinks(main);
   buildCtaList(main);
