@@ -1,21 +1,21 @@
 import {
-  sampleRUM,
   buildBlock,
-  loadHeader,
-  loadFooter,
+  createOptimizedPicture,
+  decorateBlock,
+  decorateBlocks,
   decorateButtons,
   decorateIcons,
   decorateSections,
-  decorateBlocks,
-  decorateBlock,
   decorateTemplateAndTheme,
-  waitForLCP,
+  getMetadata,
   loadBlock,
   loadBlocks,
   loadCSS,
-  createOptimizedPicture,
-  getMetadata,
+  loadFooter,
+  loadHeader,
+  sampleRUM,
   toClassName,
+  waitForLCP,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -307,6 +307,9 @@ function decorateLinks(main) {
         addVideoShowHandler(link);
         return;
       }
+      if (isSoundcloudLink(link)) {
+        addSoundcloudShowHandler(link);
+      }
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
@@ -347,14 +350,6 @@ function decorateOfferLinks(main) {
       clone.addEventListener('click', openOffer);
     }
   });
-}
-
-function addDefaultSoundcloudLinkBehaviour(main) {
-  [...main.querySelectorAll('a')]
-    // eslint-disable-next-line no-use-before-define
-    .filter((link) => link.href.includes('soundcloud.com/player'))
-    // eslint-disable-next-line no-use-before-define
-    .forEach((link) => addSoundcloudShowHandler(link));
 }
 
 /**
@@ -495,6 +490,11 @@ loadPage();
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
   return url.split('?')[0].endsWith('.mp4');
+}
+
+export function isSoundcloudLink(link) {
+  return link.getAttribute('href').includes('soundcloud.com/player')
+    && link.closest('.block.embed') === null;
 }
 
 export function isVideoLink(link) {

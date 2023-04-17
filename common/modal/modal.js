@@ -36,7 +36,7 @@ const createModal = () => {
     event.stopPropagation();
   });
 
-  async function showModal(newUrl, beforeBanner) {
+  async function showModal(newUrl, beforeBanner, beforeIframe) {
     await styles$;
     modalBackground.style = '';
     window.addEventListener('keydown', keyDownAction);
