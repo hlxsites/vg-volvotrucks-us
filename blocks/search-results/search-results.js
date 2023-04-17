@@ -3,7 +3,6 @@ import templates from './templates.js';
 export default async function decorate(block) {
   block.innerHTML = `
   <div class="search-input-wrapper">
-    <div class="feedback-wrapper"><div id="sf-feedback"></div></div>
     <div id="searchInput"></div>
   </div>
 
@@ -84,20 +83,6 @@ export default async function decorate(block) {
   const scripts = [
     {
       inline: `
-        var _msq = _msq || []; //declare object
-        var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
-        (function () {
-          var ms = document.createElement('script');
-          ms.type = 'text/javascript';
-          ms.src = 'https://static.searchstax.com/studio-js/v3/js/studio-analytics.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(ms, s);
-        })();
-      `,
-    },
-
-    {
-      inline: `
         const session = getOrSetCookie('searchcookie');
         function format_date(value) {
           if (value != null) {
@@ -155,8 +140,37 @@ export default async function decorate(block) {
     },
     { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-app.js' },
     { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-vendors.js' },
-    { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-analytics.js' },
-    { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-feedback.js' },
+    {
+      inline: `
+        var _msq = _msq || []; //declare object
+        var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
+        (function () {
+          var ms = document.createElement('script');
+          ms.type = 'text/javascript';
+          ms.src = 'https://static.searchstax.com/studio-js/v3.8/js/studio-analytics.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ms, s);
+        })();
+      `,
+    },
+    {
+      inline: `
+        (function (w, d, s, o, f) {
+          w['sf-widget'] = o;
+          w[o] =
+            w[o] ||
+            function () {
+              (w[o].q = w[o].q || []).push(arguments);
+            };
+          js = d.createElement(s);
+          fjs = d.getElementsByTagName(s)[0];
+          js.src = f;
+          js.async = 1;
+          fjs.parentNode.insertBefore(js, fjs);
+        })(window, document, 'script', '_sf', 'https://static.searchstax.com/studio-js/v3.8/js/studio-feedback.js');
+        _sf('4kKviXTq4zCnoB4SuKAFhZHVRZTAokybcN6uMcS1HQ4');
+      `,
+    },
   ];
 
   // adding stylesheets
