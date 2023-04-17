@@ -25,7 +25,14 @@ const addForm = async (block) => {
         const { action, method } = this;
         fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
           if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
-          block.replaceChildren(thankYou);
+          const firstContent = thankYou.firstElementChild.firstElementChild;
+          if (firstContent.tagName === 'A') {
+            // redirect to thank you page
+            window.location.href = firstContent.href;
+          } else {
+            // show thank you content
+            block.replaceChildren(thankYou);
+          }
         });
       }
       return false;
