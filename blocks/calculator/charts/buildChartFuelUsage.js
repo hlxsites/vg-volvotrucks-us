@@ -12,21 +12,21 @@ const buildReferences = (keys) => {
 
     const ref = `
       <g data-z-index="1">
-        <text 
+        <text
           x="${xPosition}"
           y="${10}"
-          text-anchor="middle" 
+          text-anchor="middle"
           data-z-index="2"
           class="chart-reference"
         >
           ${e}
         </text>
 
-        <rect 
+        <rect
           x="${xPosition}"
           y="${20}"
-          width="12" 
-          height="12" 
+          width="12"
+          height="12"
           fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
           data-z-index="3"
           >
@@ -41,15 +41,10 @@ const buildChartFuelUsage = (data) => {
   const chartName = Object.keys(data);
   const valuesSets = Object.values(data);
 
-  const chartKeys = [];
-  const chartValues = [];
+  const chartKeys = Object.keys(valuesSets[0]);
+  const chartValues = Object.values(valuesSets[0]);
 
   const conversionFactor = 0.026;
-
-  for (const [key, value] of Object.entries(valuesSets[0])) {
-    chartKeys.push(key);
-    chartValues.push(value);
-  }
 
   const yAxisStart = 300;
 
@@ -78,28 +73,28 @@ const buildChartFuelUsage = (data) => {
   }
 
   const svg = `
-    <svg 
+    <svg
       style="transform: translate(10px, 0px)"
-      version="1.1" 
-      xmlns="http://www.w3.org/2000/svg" 
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
       width="${totalWidthChart}"
       height="${totalHeightChart}"
-      viewBox="0 155 ${totalWidthChart} 10" 
-      aria-hidden="false" 
+      viewBox="0 155 ${totalWidthChart} 10"
+      aria-hidden="false"
       aria-label="Interactive chart"
       class="calculator-results-chart"
     >
 
     <!-- TITLE -->
-    <text 
-      x="${totalWidthChart * 0.5}" 
-      y="${-50}" 
-      text-anchor="middle" 
+    <text
+      x="${totalWidthChart * 0.5}"
+      y="${-50}"
+      text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
       class="chart-title"
     >
-      ${chartName}  
+      ${chartName}
     </text>
 
     <!-- REFERENCES -->
@@ -109,25 +104,25 @@ const buildChartFuelUsage = (data) => {
 
     <!-- COLOR BARS AND VALUES-->
     <g data-z-index="1" aria-hidden="false" role="region" class="chart-bars">
-      <rect 
-        x="${(totalWidthChart * 0.3) - (barWidth / 2)}" 
-        y="${yAxisStart - barHeight1}" 
-        width="${barWidth}" 
-        height="${barHeight1}" 
+      <rect
+        x="${(totalWidthChart * 0.3) - (barWidth / 2)}"
+        y="${yAxisStart - barHeight1}"
+        width="${barWidth}"
+        height="${barHeight1}"
         fill="${colorArray[0]}"
         class="bars" >
       </rect>
-      <rect 
-        x="${(totalWidthChart * 0.7) - (barWidth / 2)}" 
-        y="${yAxisStart - barHeight2}" 
-        width="${barWidth}" 
-        height="${barHeight2}" 
-        fill="${colorArray[1]}" 
+      <rect
+        x="${(totalWidthChart * 0.7) - (barWidth / 2)}"
+        y="${yAxisStart - barHeight2}"
+        width="${barWidth}"
+        height="${barHeight2}"
+        fill="${colorArray[1]}"
         class="bars" >
       </rect>
 
-      <text 
-        x="${totalWidthChart * 0.3}" 
+      <text
+        x="${totalWidthChart * 0.3}"
         text-anchor="middle"
         y="${(yAxisStart - (barHeight1 * 0.5) + 5)}"
         opacity="1"
@@ -135,8 +130,8 @@ const buildChartFuelUsage = (data) => {
       >
         ${chartValues[0]}
       </text>
-      <text 
-        x="${totalWidthChart * 0.7}" 
+      <text
+        x="${totalWidthChart * 0.7}"
         text-anchor="middle"
         y="${(yAxisStart - (barHeight2 * 0.5) + 5)}"
         opacity="1"
@@ -155,19 +150,19 @@ const buildChartFuelUsage = (data) => {
     const yPosition = 300 - (roundedNumber * conversionFactor);
 
     const lineAndValue = `
-      <text 
-        x="${80}" 
+      <text
+        x="${80}"
         text-anchor="end"
         y="${yPosition + 5}"
         class="text"
       >
         ${yValue}
       </text>
-      <path 
-        fill="none" 
-        stroke="${colorArray[0]}" 
-        stroke-width="1" 
-        stroke-dasharray="none" 
+      <path
+        fill="none"
+        stroke="${colorArray[0]}"
+        stroke-width="1"
+        stroke-dasharray="none"
         data-z-index="-1"
         d="M ${85} ${yPosition} L ${totalWidthChart - 50} ${yPosition}"
         class="line">
@@ -177,15 +172,15 @@ const buildChartFuelUsage = (data) => {
     </g>
 
     <!-- SUBTITLE -->
-    <text 
-      x="${totalWidthChart * 0.5}" 
-      y="${350}" 
-      text-anchor="middle" 
+    <text
+      x="${totalWidthChart * 0.5}"
+      y="${350}"
+      text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
       class="chart-subtitle"
     >
-      Gallons of Fuel  
+      Gallons of Fuel
     </text>
   </svg>`;
 

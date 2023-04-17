@@ -1,15 +1,51 @@
 import charts from './charts.js';
-// TODO delete this and replace with real values from the form
-import mockChartValues from './mockChartValues.js';
+
+const indexData = {
+  id1: '1_baseline_powertrain',
+  id2: '2_price_of_fuel',
+  id3: '3_current_MPG',
+  id4: '4_miles/Truck/Year',
+  id5: '5_annual_fuel_price_increase',
+  id6: '6_price_of_DEF',
+  id7: '7_DEF%_usage',
+  id8: '8_next-gen_D13TC_powertrain',
+  id9: '9_number_of_new_trucks',
+};
+
+export const resetData = [];
+let percentages;
+// this variable was created in order to check that whenever it changes,
+// a new table+chart is created
+export const updatedData = []; // [charts, results, dataContainer]
 
 const nth = (num) => {
   // a function just to add the correct suffix
-  switch (num) {
-    case 1: return 'st';
-    case 2: return 'nd';
-    case 3: return 'rd';
-    default: return 'th';
-  }
+  const suffix = { 1: 'st', 2: 'nd', 3: 'rd' };
+  return num <= 3 ? suffix[num] : 'th';
+};
+
+export const addAnimations = (component) => {
+  // add the functionality to the charts / selectors
+  const wrapper = component.querySelector('.calculator-charts-wrapper');
+  const selectors = wrapper.querySelectorAll('.selector');
+
+  selectors.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      const parent = button.closest('.calculator-charts-wrapper');
+      const inactiveButton = parent.querySelector('[data-active]');
+      delete inactiveButton.dataset.active;
+
+      const selectedId = e.target.id;
+      button.dataset.active = true;
+
+      const chartParent = parent.querySelector('ul');
+      const inactiveChart = chartParent.querySelector('[data-active]');
+      delete inactiveChart.dataset.active;
+
+      const selectedChart = chartParent.querySelectorAll('.chart');
+      selectedChart[selectedId].dataset.active = true;
+    });
+  });
 };
 
 const getPercentageAndTable = (data) => {
@@ -22,8 +58,8 @@ const getPercentageAndTable = (data) => {
   title.classList.add('calculator-results-title');
 
   const percentageResult = document.createElement('div');
-  percentageResult.innerHTML = `    
-    <p class='percentage-label'>Fuel enconomy efficiency improvement</p>
+  percentageResult.innerHTML = `
+    <p class='percentage-label'>Fuel economy efficiency improvement</p>
     <p class='percentage-result'>${data.percentage}%</p>`;
   percentageResult.classList.add('percentage-wrapper');
 
@@ -52,69 +88,159 @@ const getPercentageAndTable = (data) => {
   return resultsSection;
 };
 
-// this variable was created in order to check that whenever it changes,
-// a new table+chart is created
-let updatedData = [];
-
 const calculateChartData = (data) => {
-  // TODO use the data parameter to calculate and return the result with the mock format
+  const {
+    currentMPG,
+    milesTruckYear,
+    percentage,
+    savings,
+  } = data;
+  const mpgNew = +currentMPG + +currentMPG * (percentage / 100);
+  const fuelUsageCurrent = Math.round(+milesTruckYear / currentMPG);
+  const fuelUsageNew = Math.round(+milesTruckYear / mpgNew);
+  const perTruckTable = savings.map((row) => row[0]);
+  const totalSavings = savings.map((row) => row[1]);
 
-  console.log('Charts Data');
-  console.log(data);
+  return [
+    {
+      'MPG Improvement': {
+        'Cumulative MPG': +currentMPG,
+        '2021 D13TC I-Torque': mpgNew.toFixed(2),
+      },
+    }, {
+      'Savings Each Year': {
+        'Per 2021 D13TC I-Torque Truck': perTruckTable,
+        'Cumulative 2021 D13TC I-Torque': totalSavings,
+      },
+    }, {
+      'Fuel Usage': {
+        'Current Truck': fuelUsageCurrent,
+        '2021 D13TC I-Torque': fuelUsageNew,
+      },
+    }, {
+      'Cumulative Savings': {
+        'Cumulative 2021 D13TC I-Torque': totalSavings,
+      },
+    },
+  ];
+};
 
-  const result = mockChartValues;
-  return result;
+const calculateSavings = (data) => {
+  // formula:
+  // (((4/3)*(2*("1"+5)^n))+(4/3)*7*6) - (4/((3*%/100)+3)*(2*("1"+5)^n) + 4/((3*%/100)+3)*7*6)
+  const results = [];
+  const years = 5;
+  let power = 0;
+  let acc = 0;
+  const {
+    fuelPrice: f, // 2
+    currentMPG: c, // 3
+    milesTruckYear: m, // 4
+    priceIncrease: pi, // 5 => n%
+    defPrice: dp, // 6
+    defUsage: du, // 7 => n%
+    trucksNum, // 9
+    percentage: p, // % => 1+8
+  } = data;
+  for (; power < years; power += 1) {
+    const percentageIncrease = (1 + pi / 100) ** power; // ("1"+5)^n
+    const roundedIncrease = parseFloat(percentageIncrease.toFixed(2));
+    const yearIncrease = f * roundedIncrease; // (2*("1"+5)^n)
+    const yearPercentage = ((c * p) / 100) + c; // ((3*%/100)+3)
+    const formulaPart1 = ((m / c) * yearIncrease) + (m / c) * dp * (du / 100);
+    const formulaPart2 = (m / yearPercentage) * yearIncrease;
+    const formulaPart3 = (m / yearPercentage) * dp * (du / 100);
+    const result = formulaPart1 - (formulaPart2 + formulaPart3);
+    acc += result * trucksNum;
+    results.push([result.toFixed(0), acc.toFixed(0)]);
+  }
+
+  return results;
 };
 
 const calculateTableData = (data) => {
-  // TODO use the data parameter to calculate and return the result with the mock format
+  const currentData = {};
+  const baseline = data[indexData.id1];
+  const nextGen = data[indexData.id8];
+  const sumProduct = `${baseline + 1}${nextGen + 1}`;
+  currentData.percentage = +percentages[sumProduct];
+  currentData.fuelPrice = +data[indexData.id2];
+  currentData.currentMPG = +data[indexData.id3];
+  currentData.milesTruckYear = +data[indexData.id4];
+  currentData.priceIncrease = +data[indexData.id5];
+  currentData.defPrice = +data[indexData.id6];
+  currentData.defUsage = +data[indexData.id7];
+  currentData.trucksNum = +data[indexData.id9];
+  const { percentage } = currentData;
+  const savings = calculateSavings(currentData);
 
-  console.log('Table Data');
-  console.log(data);
+  return { percentage, savings };
+};
 
-  const mockResult = {
-    percentage: 8,
-    savings: [
-      [6797, 6797],
-      [6863, 13659],
-      [6930, 20589],
-      [6997, 27586],
-      [7065, 34651],
-    ],
+const getDataForCharts = (data, table) => ({
+  percentage: table.percentage,
+  savings: table.savings,
+  currentMPG: data['3_current_MPG'],
+  milesTruckYear: data['4_miles/Truck/Year'],
+});
+
+const formatDataObject = (data) => {
+  const [
+    baseline,
+    fuelPrice,
+    currentMPG,
+    milesTruckYear,
+    priceIncrease,
+    defPrice,
+    defUsage,
+    nextGen,
+    trucksNum,
+  ] = data;
+  return {
+    '1_baseline_powertrain': (baseline.selectedIndex),
+    '2_price_of_fuel': (fuelPrice.value),
+    '3_current_MPG': (currentMPG.value),
+    '4_miles/Truck/Year': (milesTruckYear.value),
+    '5_annual_fuel_price_increase': (priceIncrease.value),
+    '6_price_of_DEF': (defPrice.value),
+    '7_DEF%_usage': (defUsage.value),
+    '8_next-gen_D13TC_powertrain': (nextGen.selectedIndex),
+    '9_number_of_new_trucks': (trucksNum.value),
   };
-  const result = mockResult;
-  return result;
 };
 
 const resetForm = (e) => {
+  const isButton = e.target.id === 'calculator-reset-button';
   e.preventDefault();
-  // this creates an object with the same format as the spreadsheet
-  const data = {
-    '1_baseline_powertrain': (e.srcElement.form[0].value),
-    '2_price_of_fuel': (e.srcElement.form[1].value),
-    '3_current_MPG': (e.srcElement.form[2].value),
-    '4_miles/Truck/Year': (e.srcElement.form[3].value),
-    '5_annual_fuel_price_increase': (e.srcElement.form[4].value),
-    '6_price_of_DEF': (e.srcElement.form[5].value),
-    '7_DEF%_usage': (e.srcElement.form[6].value),
-    '8_next-gen_D13TC_powertrain': (e.srcElement.form[7].value),
-    '9_number_of_new_trucks': (e.srcElement.form[8].value),
-  };
-
-  const chartData = calculateChartData(data);
+  if (!e.srcElement.form) return;
+  const data = isButton ? resetData[0] : formatDataObject(e.srcElement.form);
+  const [,, dataContainer] = updatedData; // [charts, results, dataContainer]
+  // if isButton then reset inputs of the form
+  if (isButton) {
+    const { form } = e.srcElement;
+    Object.values(data).forEach((value, i) => {
+      if ([0, 7].includes(i)) form[i].selectedIndex = value;
+      else form[i].value = value;
+    });
+  }
   const tableData = calculateTableData(data);
+  const chartData = calculateChartData(getDataForCharts(data, tableData));
 
   const builtCharts = charts(chartData);
   const builtTable = getPercentageAndTable(tableData);
 
-  updatedData = [];
-  updatedData = [builtCharts, builtTable];
+  dataContainer.textContent = '';
+  dataContainer.append(builtTable, builtCharts);
+  updatedData.splice(0, 2);
+  updatedData.unshift(builtCharts, builtTable);
+  addAnimations(dataContainer);
 };
 
-const results = (data) => {
+const results = (data, table) => {
+  percentages = table;
   // these 2 should make the data into the correct format
-  const chartData = calculateChartData(data);
   const tableData = calculateTableData(data);
+  const chartData = calculateChartData(getDataForCharts(data, tableData));
 
   const result = document.createElement('div');
 
@@ -122,12 +248,7 @@ const results = (data) => {
   const builtCharts = charts(chartData);
   const builtTable = getPercentageAndTable(tableData);
 
-  // TODO this was a solution to change the component when the data changes
-  // TODO It should delete the content of the result component before adding the new.
-  updatedData.onchange = () => {
-    result.append(updatedData[0]);
-    result.append(updatedData[1]);
-  };
+  updatedData.push(builtCharts, builtTable);
 
   // this builds the components for the first time
   result.append(builtTable);

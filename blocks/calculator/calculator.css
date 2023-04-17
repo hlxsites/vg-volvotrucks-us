@@ -1,4 +1,4 @@
-main .section .calculator-wrapper { 
+main .section .calculator-wrapper {
   padding: 10px 0 0;
 }
 
@@ -9,6 +9,11 @@ main .section .calculator-wrapper {
   flex-direction: column;
   align-items: center;
   width: 100%;
+}
+
+.calculator.block > div {
+  display: flex;
+  flex-direction: column;
 }
 
 .calculator-inputs-form {
@@ -49,6 +54,12 @@ main .section .calculator-wrapper {
   padding: 0;
   width: 100%;
   list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calculator-input-list .calculator-item {
+  flex: 1 1 auto;
 }
 
 .calculator-item input,
@@ -95,6 +106,11 @@ main .section .calculator-wrapper {
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+}
+
+.calculator-result-wrapper,
+.calculator-charts-wrapper {
+  flex: 1 1 auto;
 }
 
 .calculator-results-title {
@@ -183,6 +199,7 @@ main .section .calculator-wrapper {
   position: relative;
   width: 100%;
   min-height: fit-content;
+  max-height: 500px;
   overflow: hidden;
   height: 60vw;
   padding: 0 10px;
@@ -197,7 +214,7 @@ main .section .calculator-wrapper {
   transition-delay: 200ms;
   top: 0%;
 }
-  
+
 .charts-wrapper .chart[data-active="true"] {
   opacity: 1;
   transition-delay: 200ms;
@@ -247,4 +264,37 @@ main .section .calculator-wrapper {
 .charts-wrapper .side-labels .line {
   stroke: var(--volvo-text-black);
   opacity: 0.1;
+}
+
+@media (min-width: 530px) {
+  .calculator-input-list {
+    gap: 2rem;
+  }
+
+  .calculator-reset-button {
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .calculator.block > div {
+    flex-direction: initial;
+  }
+
+  .calculator-charts-wrapper {
+    padding-top: 30px;
+  }
+
+  .calculator-result-wrapper,
+  .calculator-charts-wrapper {
+    width: 50%;
+  }
+
+  .calculator-reset-button {
+    width: initial;
+  }
+
+  .calculator-result-wrapper .percentage-wrapper {
+    width: 90%;
+  }
 }

@@ -12,21 +12,21 @@ const buildReferences = (keys) => {
 
     const ref = `
       <g data-z-index="1">
-        <text 
+        <text
           x="${xPosition}"
           y="${10}"
-          text-anchor="middle" 
+          text-anchor="middle"
           data-z-index="2"
           class="chart-reference"
         >
           ${e}
         </text>
-  
-        <rect 
+
+        <rect
           x="${xPosition}"
           y="${20}"
-          width="12" 
-          height="12" 
+          width="12"
+          height="12"
           fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
           data-z-index="3">
         </rect>
@@ -40,23 +40,13 @@ const buildChartMPG = (data) => {
   const chartName = Object.keys(data);
   const valuesSets = Object.values(data);
 
-  const chartKeys = [];
-  const chartArrays = [];
+  const chartKeys = Object.keys(valuesSets[0]);
+  const chartArrays = Object.values(valuesSets[0]);
 
   const conversionFactor = 0.006;
 
-  for (const [key, value] of Object.entries(valuesSets[0])) {
-    chartKeys.push(key);
-    chartArrays.push(value);
-  }
-
-  const chartValues = [];
-
-  for (let i = 0; i < 5; i += 1) {
-    const value1 = chartArrays[0];
-    const value2 = chartArrays[1];
-    chartValues.push(value1[i], value2[i]);
-  }
+  const [perTrucks, totalSavings] = chartArrays;
+  const chartValues = [].concat(...perTrucks.map((v, i) => [v, totalSavings[i]]));
 
   const yAxisStart = 300;
 
@@ -79,28 +69,28 @@ const buildChartMPG = (data) => {
   }
 
   const svg = `
-    <svg 
+    <svg
       style="transform: translate(10px, 0px)"
-      version="1.1" 
-      xmlns="http://www.w3.org/2000/svg" 
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
       width="${totalWidthChart}"
       height="${totalHeightChart}"
-      viewBox="0 155 ${totalWidthChart} 10" 
-      aria-hidden="false" 
+      viewBox="0 155 ${totalWidthChart} 10"
+      aria-hidden="false"
       aria-label="Interactive chart"
       class="calculator-results-chart"
     >
 
     <!-- TITLE -->
-    <text 
-      x="${totalWidthChart * 0.5}" 
-      y="${-50}" 
-      text-anchor="middle" 
+    <text
+      x="${totalWidthChart * 0.5}"
+      y="${-50}"
+      text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
       class="chart-title"
     >
-      ${chartName}  
+      ${chartName}
     </text>
 
     <!-- REFERENCES -->
@@ -116,24 +106,24 @@ const buildChartMPG = (data) => {
     const section = (totalWidthChart - 100) / 10;
 
     return `
-    <rect 
-      x="${idx % 2 ? (75 + (section * idx)) : (95 + (section * idx))}" 
-      y="${yAxisStart - barHeight}" 
-      width="${barWidth}" 
-      height="${barHeight}" 
-      fill="${idx % 2 ? colorArray[1] : colorArray[0]}" 
+    <rect
+      x="${idx % 2 ? (75 + (section * idx)) : (95 + (section * idx))}"
+      y="${yAxisStart - barHeight}"
+      width="${barWidth}"
+      height="${barHeight}"
+      fill="${idx % 2 ? colorArray[1] : colorArray[0]}"
       data-z-index="4">
     </rect>
     ${idx % 2 ? `
-      <text 
-        x="${60 + (section * idx)}" 
-        y="${330}" 
-        text-anchor="middle" 
+      <text
+        x="${60 + (section * idx)}"
+        y="${330}"
+        text-anchor="middle"
         data-z-index="4"
         aria-hidden="true"
         class="year-label"
       >
-        Year ${0.5 + (idx / 2)}  
+        Year ${0.5 + (idx / 2)}
       </text>` : ''}
     `;
   })}
@@ -147,21 +137,21 @@ const buildChartMPG = (data) => {
     const yPosition = 300 - (roundedNumber * conversionFactor);
 
     const lineAndValue = `
-      <text 
-        x="${80}" 
+      <text
+        x="${80}"
         text-anchor="end"
         y="${yPosition + 5}"
         class="text"
       >
         $${yValue}
       </text>
-      <path 
-        fill="none" 
-        stroke="${colorArray[0]}" 
-        stroke-width="1" 
-        stroke-dasharray="none" 
+      <path
+        fill="none"
+        stroke="${colorArray[0]}"
+        stroke-width="1"
+        stroke-dasharray="none"
         data-z-index="-1"
-        d="M ${85} ${yPosition} L ${totalWidthChart - 50} ${yPosition}" 
+        d="M ${85} ${yPosition} L ${totalWidthChart - 50} ${yPosition}"
         data-z-index="1"
         class="line">
       </path>`;

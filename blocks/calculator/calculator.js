@@ -1,64 +1,63 @@
-import { results, resetForm } from './results.js';
+import {
+  results,
+  resetForm,
+  updatedData,
+  addAnimations,
+  resetData,
+} from './results.js';
 
-const getinitialData = async () => {
+const calculatorPath = './calculator.json';
+const percentagesPath = './percentages.json';
+
+const getInitialData = async (path = calculatorPath) => {
   // get data from spreadsheet in json format
-  const response = await fetch('./calculator.json');
+  const response = await fetch(path);
   const json = await response.json();
   return json.data;
-};
-
-const addAnimations = (component) => {
-  // add the functionality to the charts / selectors
-  const wrapper = component.querySelector('.calculator-charts-wrapper');
-  const selectors = wrapper.querySelectorAll('.selector');
-
-  selectors.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const parent = button.closest('.calculator-charts-wrapper');
-      const inactiveButton = parent.querySelector('[data-active]');
-      delete inactiveButton.dataset.active;
-
-      const selectedId = e.target.id;
-      button.dataset.active = true;
-
-      const chartParent = parent.querySelector('ul');
-      const inactiveChart = chartParent.querySelector('[data-active]');
-      delete inactiveChart.dataset.active;
-
-      const selectedChart = chartParent.querySelectorAll('.chart');
-      selectedChart[selectedId].dataset.active = true;
-    });
-  });
 };
 
 const formatData = (data) => {
   // get the values from the json
   const values = data.pop();
-  const dataEntries = [];
-
-  let counter = 1;
-  for (const [key, value] of Object.entries(values)) {
-    dataEntries.push({
-      idx: counter,
-      label: key,
-      value,
-      type: 'number',
-    });
-    counter += 1;
-  }
+  const dataEntries = Object.entries(values).map(([key, value], i) => ({
+    idx: i + 1,
+    label: key,
+    value,
+    type: 'number',
+  }));
 
   // get the last element of the excel as the disclaimer that goes on the middle
   const disclaimer = dataEntries.length === 10 ? dataEntries.pop().value : '';
   const divider = 7;
 
+  const [
+    ,
+    priceFuel,
+    currentMPG,
+    milesTruckYear,
+    priceIncrease,
+    defPrice,
+    defUsage,,
+    trucksNum,
+  ] = dataEntries;
+  const formData = {
+    '1_baseline_powertrain': (0),
+    '2_price_of_fuel': (priceFuel.value),
+    '3_current_MPG': (currentMPG.value),
+    '4_miles/Truck/Year': (milesTruckYear.value),
+    '5_annual_fuel_price_increase': (priceIncrease.value),
+    '6_price_of_DEF': (defPrice.value),
+    '7_DEF%_usage': (defUsage.value),
+    '8_next-gen_D13TC_powertrain': (0),
+    '9_number_of_new_trucks': (trucksNum.value),
+  };
+
   // divides into 2 sections, 'current' and 'new'
-  const firstSection = dataEntries.slice(0, divider - 1);
+  const firstSection = dataEntries.slice(0, divider);
   const lastSection = dataEntries.slice(divider, dataEntries.length);
 
-  const splitValues = (completeString) => {
-    // turn the string into an array
-    return completeString[0].value.split(',');
-  };
+  // turn the string into an array
+  const splitValues = (completeString) => completeString[0].value.split(',');
 
   firstSection[0].value = splitValues(firstSection);
   lastSection[0].value = splitValues(lastSection);
@@ -66,7 +65,15 @@ const formatData = (data) => {
   firstSection[0].type = 'select';
   lastSection[0].type = 'select';
 
-  return [firstSection, lastSection, disclaimer];
+  return [firstSection, lastSection, formData, disclaimer];
+};
+
+const buildPercentages = (rawPercentages) => {
+  const tempData = {};
+  rawPercentages.forEach((row) => {
+    tempData[row.sumproduct] = row.result;
+  });
+  return tempData;
 };
 
 const createButton = (type) => {
@@ -83,16 +90,20 @@ const createButton = (type) => {
 const getInputType = (e) => {
   // identify and return if the input is a number input or a select
   const inputLabel = e.label.slice(2).replaceAll('_', ' ');
+  let step = '';
+  if ([2, 3, 5, 6].some((num) => num === e.idx)) {
+    step = 'step="0.01"';
+  }
   if (e.type === 'select') {
     return `
       <label for="input-${e.idx}" class="label-input-${e.idx}">${inputLabel}</label>
-      <select name="input-${e.idx}" class="input-${e.idx}">
-        ${e.value.map((value, idx) => `<option class="option-${idx}" value="${value}">${value}</option>`)}
+      <select name="input-${e.idx}" id="input-${e.idx}">
+        ${e.value.map((value, idx) => `<option data-value="${idx + 1}" value="${value}">${value}</option>`)}
       </select>`;
   }
   return `
-    <label class="label-input-${e.idx}">${inputLabel}</label>
-    <input type="${e.type}" class="input-${e.idx}" value="${e.value}"/>`;
+    <label class="label-input-${e.idx}" for="input-${e.idx}">${inputLabel}</label>
+    <input type="${e.type}" id="input-${e.idx}" value="${e.value}" ${step}/>`;
 };
 
 const createInputs = (data, type) => {
@@ -125,24 +136,28 @@ export default async function decorate(block) {
   const finalDisclaimer = (block.innerText);
 
   // this data acts a placeholder and is also the one used to make the first calculations
-  const rawData = await getinitialData();
+  const rawData = await getInitialData();
   const initialData = formatData(rawData);
+  const [,, formData, dataText] = initialData;
+  const rawPercentages = await getInitialData(percentagesPath);
+  const percentages = buildPercentages(rawPercentages);
+  resetData.push(formData);
 
   const middleDisclaimerText = document.createElement('p');
   middleDisclaimerText.classList.add('disclaimer');
   middleDisclaimerText.classList.add('calculator-inputs-disclaimer');
-  middleDisclaimerText.innerText = initialData[2];
+  middleDisclaimerText.innerText = dataText;
 
   const currentInputsSection = createInputs(initialData[0], 'current');
   const newInputsSection = createInputs(initialData[1], 'new');
 
   const resetButton = createButton('reset');
+  resetButton.onclick = (e) => resetForm(e);
 
   const allInputs = document.createElement('form');
   allInputs.classList.add('calculator-inputs-form');
   allInputs.id = 'calculator';
-  // TODO this calls the function that should make the math calculation
-  allInputs.onclick = (e) => resetForm(e);
+  allInputs.oninput = (e) => resetForm(e);
 
   const finalDisclaimerText = document.createElement('p');
   finalDisclaimerText.classList.add('disclaimer');
@@ -152,7 +167,7 @@ export default async function decorate(block) {
   // empties the block
   block.innerText = '';
 
-  const selectorsAndCharts = results(initialData);
+  const selectorsAndCharts = results(formData, percentages);
   addAnimations(selectorsAndCharts);
 
   allInputs.append(currentInputsSection);
@@ -164,4 +179,5 @@ export default async function decorate(block) {
   block.append(selectorsAndCharts);
 
   block.append(finalDisclaimerText);
+  updatedData.push(selectorsAndCharts);
 }

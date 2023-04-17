@@ -4,11 +4,7 @@ import buildChartFuelUsage from './charts/buildChartFuelUsage.js';
 import buildChartCumulativeSavings from './charts/buildChartCumulativeSavings.js';
 
 const charts = (data) => {
-  // TODO data is what the chart is using to build the SVGs.
-  // TODO Now its hardcoded but it should come from the calculation done in results
-  console.warn('building chart');
-  console.warn(data);
-
+  // data is what the chart is using to build the SVGs.
   // this gives the data a usable format
   const categories = Object.values(data);
 
@@ -24,7 +20,7 @@ const charts = (data) => {
     anchor.classList.add('selector');
     anchor.id = idx;
     anchor.innerText = Object.keys(e);
-    idx === 0 && (anchor.dataset.active = true);
+    if (idx === 0) anchor.dataset.active = true;
 
     chartSelectors.append(anchor);
   });
@@ -32,22 +28,19 @@ const charts = (data) => {
   const chartsList = document.createElement('ul');
   chartsList.classList.add('charts-wrapper');
 
-  // Build all the charts separately and give the first one the data-active atribute
+  // Build all the charts separately and give the first one the data-active attribute
   data.forEach((e, idx) => {
     const chart = document.createElement('li');
+    const buildChartFn = {
+      0: buildChartMPG,
+      1: buildChartYearSavings,
+      2: buildChartFuelUsage,
+      3: buildChartCumulativeSavings,
+    };
     chart.id = idx;
     chart.classList.add('chart');
-    idx === 0 && (chart.dataset.active = true);
-
-    if (idx === 0) {
-      chart.innerHTML = buildChartMPG(e);
-    } else if (idx === 1) {
-      chart.innerHTML = buildChartYearSavings(e);
-    } else if (idx === 2) {
-      chart.innerHTML = buildChartFuelUsage(e);
-    } else if (idx === 3) {
-      chart.innerHTML = buildChartCumulativeSavings(e);
-    }
+    if (idx === 0) chart.dataset.active = true;
+    chart.innerHTML = buildChartFn[idx](e);
     chartsList.append(chart);
   });
   chartsSection.append(chartSelectors);
