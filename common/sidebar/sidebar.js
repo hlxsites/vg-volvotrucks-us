@@ -25,10 +25,7 @@ export async function showSidebar(content, decorateContent) {
     document.body.append(...fragment.children);
 
     const button = sidebar.querySelector('button.close');
-    button.addEventListener('click', () => {
-      document.body.classList.remove('disable-scroll');
-      sidebar.ariaExpanded = false;
-    });
+    button.addEventListener('click', () => hideSidebar());
   }
   const container = sidebar.querySelector('div');
   container.replaceChildren(...content);
