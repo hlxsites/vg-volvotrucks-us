@@ -2,7 +2,9 @@ import { loadCSS } from '../../scripts/lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createIframe } from '../../scripts/scripts.js';
 
-loadCSS('/common/modal/modal.css');
+const styles$ = new Promise((r) => {
+  loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);
+});
 
 const HIDE_MODAL_CLASS = 'modal-hidden';
 
@@ -34,7 +36,8 @@ const createModal = () => {
     event.stopPropagation();
   });
 
-  function showModal(newUrl, beforeBanner, beforeIframe) {
+  async function showModal(newUrl, beforeBanner) {
+    await styles$;
     modalBackground.style = '';
     window.addEventListener('keydown', keyDownAction);
 
