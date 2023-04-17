@@ -329,13 +329,14 @@ function decorateOfferLinks(main) {
       list.classList.add('inline');
       const li = document.createElement('li');
       const clone = a.cloneNode(true);
-      clone.innerText = clone.title = 'Details';
+      clone.textContent = 'Details';
+      clone.title = clone.textContent;
       li.append(clone);
       list.append(li);
       a.addEventListener('click', openOffer);
       clone.addEventListener('click', openOffer);
     }
-  })
+  });
 }
 
 /**

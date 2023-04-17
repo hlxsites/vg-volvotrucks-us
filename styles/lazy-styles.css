@@ -36,11 +36,29 @@ body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
 }
 
+.semitrans {
+  visibility: hidden;
+  z-index: 1051;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  opacity: 0;
+  background-color: #7F7F7F;
+  transition: visibility .2s, opacity .2s cubic-bezier(.4, 0, .2, 1);
+}
+
+.semitrans-trigger[aria-expanded=true]~.semitrans {
+  visibility: visible;
+  opacity: 0.7;
+}
+
 /*!
  *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
- .fa {
+.fa {
   font: normal normal normal 14px/1 var(--ff-fontawesome);
   font-size: inherit;
   text-rendering: auto;
