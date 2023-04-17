@@ -298,12 +298,55 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function addDefaultVideoLinkBehaviour(main) {
+function decorateLinks(main) {
   [...main.querySelectorAll('a')]
-    // eslint-disable-next-line no-use-before-define
-    .filter((link) => isVideoLink(link))
-    // eslint-disable-next-line no-use-before-define
-    .forEach(addVideoShowHandler);
+    .filter(({ href }) => !!href)
+    .forEach((link) => {
+      /* eslint-disable no-use-before-define */
+      if (isVideoLink(link)) {
+        addVideoShowHandler(link);
+        return;
+      }
+
+      const url = new URL(link.href);
+      const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
+      if (url.pathname.endsWith('.pdf') || external) {
+        link.target = '_blank';
+      }
+    });
+}
+
+function decorateOfferLinks(main) {
+  async function openOffer(event) {
+    event.preventDefault();
+    const module = await import(`${window.hlx.codeBasePath}/blocks/get-an-offer/get-an-offer.js`);
+    if (module.showOffer) {
+      await module.showOffer(event.target);
+    }
+  }
+  main.querySelectorAll('a[href*="offer"]').forEach((a) => {
+    if (a.href.endsWith('-offer')) {
+      let list = a.closest('ul');
+      if (!list) {
+        list = document.createElement('ul');
+        const parent = a.parentElement;
+        const li = document.createElement('li');
+        list.append(li);
+        li.append(a);
+        parent.after(list);
+        if (parent.textContent === '' && parent.children.length === 0) parent.remove();
+      }
+      list.classList.add('inline');
+      const li = document.createElement('li');
+      const clone = a.cloneNode(true);
+      clone.textContent = 'Details';
+      clone.title = clone.textContent;
+      li.append(clone);
+      list.append(li);
+      a.addEventListener('click', openOffer);
+      clone.addEventListener('click', openOffer);
+    }
+  });
 }
 
 /**
@@ -327,8 +370,9 @@ export function decorateMain(main, head) {
   decorateBlocks(main);
   decorateHyperlinkImages(main);
   decorateSectionBackgrounds(main);
-  addDefaultVideoLinkBehaviour(main);
+  decorateLinks(main);
   buildTabbedBlock(main);
+  decorateOfferLinks(main);
   buildCtaList(main);
 }
 
