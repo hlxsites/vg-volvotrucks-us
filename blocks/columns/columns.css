@@ -37,4 +37,10 @@
         padding-left: 0;
         text-align: left;
     }
+
+    .columns ul.cta-list.inline li {
+        min-width: unset;
+        flex: 0;
+        padding-right: 10px;
+    }
 }
