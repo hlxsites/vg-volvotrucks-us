@@ -2030,6 +2030,10 @@
   max-width: 100%;
 }
 
+.search-results .autosuggest__results-item--highlighted {
+  background: #f2f2f2;
+}
+
 .search-results .card-searchstudio-js-title em {
   font-style: normal;
 }
