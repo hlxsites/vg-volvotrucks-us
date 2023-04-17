@@ -14,6 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  getMetadata,
   toClassName,
 } from './lib-franklin.js';
 
@@ -29,6 +30,28 @@ export function getTextLable(key) {
   return placeholders.data.find((el) => el.Key === key).Text;
 }
 
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {string[]|string} classes the class or classes to add
+ * @param {object} props any other attributes to add to the element
+ * @returns the element
+ */
+export function createElement(tagName, classes, props) {
+  const elem = document.createElement(tagName);
+  if (classes) {
+    const classesArr = (typeof classes === 'string') ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      elem.setAttribute(propName, props[propName]);
+    });
+  }
+
+  return elem;
+}
+
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
     ? ctaLink.parentElement.parentElement
@@ -38,9 +61,11 @@ function getCTAContainer(ctaLink) {
 function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
-  const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
-  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
+  const nextSibling = btnContainer?.nextElementSibling;
+  const previousSibling = btnContainer?.previousElementSibling;
+  const twoPreviousSibling = previousSibling?.previousElementSibling;
+  const siblings = [previousSibling, nextSibling, twoPreviousSibling];
+  return siblings.some((elem) => elem?.localName === 'h1');
 }
 
 function findValidSibling(el, selectors) {
@@ -119,7 +144,7 @@ function buildHeroBlock(main) {
 
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
-  if (subnav) {
+  if (subnav && subnav.content.startsWith('/')) {
     const block = buildBlock('sub-nav', []);
     main.previousElementSibling.prepend(block);
     decorateBlock(block);
@@ -313,19 +338,49 @@ export function decorateMain(main, head) {
   buildCtaList(main);
 }
 
+async function loadTemplate(doc, templateName) {
+  try {
+    const cssLoaded = new Promise((resolve) => {
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
+    });
+    const decorationComplete = new Promise((resolve) => {
+      (async () => {
+        try {
+          const mod = await import(`../templates/${templateName}/${templateName}.js`);
+          if (mod.default) {
+            await mod.default(doc);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${templateName}`, error);
+        }
+        resolve();
+      })();
+    });
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(`failed to load block ${templateName}`, error);
+  }
+}
+
 /**
  * loads everything needed to get to LCP.
  */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  const templateName = getMetadata('template');
+  const templatePromise = templateName ? loadTemplate(doc, templateName) : Promise.resolve();
+
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
     await waitForLCP(LCP_BLOCKS);
   }
-
+  await templatePromise;
   await getPlaceholders();
 }
 
@@ -459,7 +514,7 @@ export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.innerText = '';
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary');
+  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
 
   addPlayIcon(videoLink);
 }

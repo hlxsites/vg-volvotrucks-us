@@ -9,6 +9,7 @@ const addForm = async (block) => {
     const text = await data.text();
     block.innerHTML = text;
   } else {
+    // eslint-disable-next-line no-console
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
   }

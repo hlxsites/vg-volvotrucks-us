@@ -29,6 +29,7 @@ indices:
       - '/news-and-stories/press-releases/**'
     exclude:
       - '/news-and-stories/press-releases/'
+      - '/news-and-stories/press-releases/sub-nav'
     target: /press-releases.json
     properties:
       title:
@@ -113,7 +114,7 @@ indices:
         value: attribute(el, "content")
       date:
         select: head > meta[name="index_date"]
-        value: attribute(el, "content")
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
       description:
         select: head > meta[property="og:description"]
         value: attribute(el, "content")
