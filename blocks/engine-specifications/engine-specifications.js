@@ -14,7 +14,7 @@ const addAnimations = (hpSelector, chartContainer) => {
   allButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
       const buttonParent = button.closest('ul');
-      const selectedNumber = e.target.innerText.slice(0, 3);
+      const selectedNumber = e.target.innerText.split(' ')[0];
 
       const clickedButton = buttonParent.querySelector(`.title-${selectedNumber}`).closest('.rating-item');
       const activeButton = buttonParent.querySelector('[data-active]');
@@ -22,7 +22,7 @@ const addAnimations = (hpSelector, chartContainer) => {
       const clickedChart = chartParent.querySelector(`.chart-${selectedNumber}`);
       const activeChart = chartParent.querySelector('[data-active]');
 
-      if (activeButton.innerText.slice(0, 3) !== selectedNumber) {
+      if (activeButton.innerText.split(' ')[0] !== selectedNumber) {
         clickedChart.dataset.active = true;
         delete activeChart.dataset.active;
 
