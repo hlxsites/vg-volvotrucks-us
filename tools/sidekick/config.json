@@ -6,6 +6,12 @@
       "title": "Tagger",
       "environments": [ "edit" ],
       "url": "/tools/tagger/index.html"
+    },
+    {
+      "id": "open original",
+      "title": "Open Original",
+      "environments": [ "dev", "preview", "live" ],
+      "event": "open-original"
     }
   ]
 }
