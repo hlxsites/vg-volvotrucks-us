@@ -2020,6 +2020,16 @@
 }
 
 /* additional css */
+.search-results .search-input-wrapper {
+  width: 100%;
+}
+
+.search-results #searchTerm {
+  border: none;
+  background: #ebebea;
+  max-width: 100%;
+}
+
 .search-results .card-searchstudio-js-title em {
   font-style: normal;
 }
