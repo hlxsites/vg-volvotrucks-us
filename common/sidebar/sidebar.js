@@ -5,6 +5,7 @@ const styles$ = new Promise((r) => {
 });
 
 let sidebar;
+let focusElement;
 
 export async function showSidebar(content, decorateContent) {
   await styles$;
@@ -41,10 +42,13 @@ export async function showSidebar(content, decorateContent) {
     const button = sidebar.querySelector('button.close');
     button.focus();
   });
+
+  focusElement = document.activeElement;
 }
 
 export function hideSidebar() {
   if (!sidebar) return;
   sidebar.ariaExpanded = false;
   document.body.classList.remove('disable-scroll');
+  if (focusElement) focusElement.focus();
 }
