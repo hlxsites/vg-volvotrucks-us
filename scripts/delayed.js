@@ -5,6 +5,15 @@ import { loadScript, sampleRUM } from './lib-franklin.js';
 sampleRUM('cwv');
 
 // add more delayed functionality here
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.semitrans')) {
+    const trigger = e.target.parentElement.querySelector('.semitrans-trigger');
+    if (trigger.ariaExpanded === 'true') {
+      trigger.ariaExpanded = false;
+      document.body.classList.remove('disable-scroll');
+    }
+  }
+});
 
 // OneTrust Cookies Consent Notice
 if (!window.location.host.includes('hlx.page') && !window.location.host.includes('localhost')) {

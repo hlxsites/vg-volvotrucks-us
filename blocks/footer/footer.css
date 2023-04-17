@@ -2,6 +2,8 @@
   padding-left: 15px;
   padding-right: 15px;
   margin: 48px auto 0;
+  display: inline-block;
+  width: 100%;
 }
 
 .block.footer p, .block.footer ul {
