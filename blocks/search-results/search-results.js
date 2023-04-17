@@ -99,15 +99,8 @@ export default async function decorate(block) {
       inline: `
       const session = getOrSetCookie('searchcookie');
       function format_date(value) {
-        if (value != null) {
-          if (typeof value == 'undefined') {
-            return '';
-          }
-          date_value = Date.parse(value);
-          const options = { year: 'numeric', month: 'long', day: 'numeric' };
-          return new Date(value).toLocaleDateString(undefined, options);
-        }
-        return value;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(value).toLocaleDateString(undefined, options);
       }
       const studioConfig = {
         connector: {
@@ -174,23 +167,17 @@ export default async function decorate(block) {
   // loading scripts one by one to prevent inappropriate script execution order.
   // eslint-disable-next-line no-restricted-syntax
   for (const script of scripts) {
-    let waitForLoad = Promise.resolve();
     const newScript = document.createElement('script');
 
     newScript.setAttribute('type', 'text/javascript');
-    waitForLoad = new Promise((resolve) => {
-      newScript.addEventListener('load', resolve);
-    });
 
     if (script.inline) {
       newScript.innerHTML = script.inline;
-      document.body.append(newScript);
+      script.async = false;
     } else {
+      script.async = true;
       newScript.src = script.link;
-      document.body.append(newScript);
-
-      // eslint-disable-next-line no-await-in-loop
-      await waitForLoad;
     }
+    document.body.append(newScript);
   }
 }
