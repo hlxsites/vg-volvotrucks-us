@@ -1,21 +1,21 @@
 import {
+  sampleRUM,
   buildBlock,
-  createOptimizedPicture,
-  decorateBlock,
-  decorateBlocks,
+  loadHeader,
+  loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
+  decorateBlocks,
+  decorateBlock,
   decorateTemplateAndTheme,
-  getMetadata,
+  waitForLCP,
   loadBlock,
   loadBlocks,
   loadCSS,
-  loadFooter,
-  loadHeader,
-  sampleRUM,
+  createOptimizedPicture,
+  getMetadata,
   toClassName,
-  waitForLCP,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -492,11 +492,6 @@ export function isLowResolutionVideoUrl(url) {
   return url.split('?')[0].endsWith('.mp4');
 }
 
-export function isSoundcloudLink(link) {
-  return link.getAttribute('href').includes('soundcloud.com/player')
-    && link.closest('.block.embed') === null;
-}
-
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
   return (linkString.includes('youtube.com/embed/')
@@ -545,6 +540,11 @@ export function addVideoShowHandler(link) {
       modal.showModal(link.getAttribute('href'));
     });
   });
+}
+
+export function isSoundcloudLink(link) {
+  return link.getAttribute('href').includes('soundcloud.com/player')
+      && link.closest('.block.embed') === null;
 }
 
 export function addSoundcloudShowHandler(link) {
