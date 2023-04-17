@@ -7,6 +7,13 @@ const styles$ = new Promise((r) => {
 let sidebar;
 let focusElement;
 
+export function hideSidebar() {
+  if (!sidebar) return;
+  sidebar.ariaExpanded = false;
+  document.body.classList.remove('disable-scroll');
+  if (focusElement) focusElement.focus();
+}
+
 export async function showSidebar(content, decorateContent) {
   await styles$;
   if (!sidebar) {
@@ -41,11 +48,4 @@ export async function showSidebar(content, decorateContent) {
   });
 
   focusElement = document.activeElement;
-}
-
-export function hideSidebar() {
-  if (!sidebar) return;
-  sidebar.ariaExpanded = false;
-  document.body.classList.remove('disable-scroll');
-  if (focusElement) focusElement.focus();
 }
