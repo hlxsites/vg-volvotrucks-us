@@ -4,6 +4,9 @@ import {
 /* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
+  // apply modifiers to the wrapper as well
+  const gapCls = [...block.classList].filter((cls) => cls.indexOf('gap') >= 0);
+  if (gapCls.length) block.parentElement.classList.add(gapCls);
   // Formats a table and applies background images. Generally, each item should be in a table cell.
   // When a cell is empty, the cells are merged vertically.
   const columns = [...block.firstElementChild.children];
@@ -114,6 +117,7 @@ function wrapContentInList(cell) {
 
   if (nonListContent.length) {
     const li = document.createElement('li');
+    if (cell.dataset.align) li.dataset.align = cell.dataset.align;
     li.append(...nonListContent);
     ul.append(li);
   }
