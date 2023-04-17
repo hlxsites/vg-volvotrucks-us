@@ -68,12 +68,6 @@ function isCTALinkCheck(ctaLink) {
   return siblings.some((elem) => elem?.localName === 'h1');
 }
 
-function findValidSibling(el, selectors) {
-  return [el.previousElementSibling, el.nextElementSibling].find(
-    (sibling) => sibling?.matches(selectors) && sibling.textContent.trim().length > 0,
-  );
-}
-
 function buildHeroBlock(main) {
   // don't create a hero if the first item is a block.
   const firstSection = main.querySelector('div');
@@ -115,12 +109,12 @@ function buildHeroBlock(main) {
     const headings = document.createElement('div');
     headings.className = 'hero-headings';
     const elems = [picture, headings];
-
-    const sibling = findValidSibling(h1, 'h2,h3,h4') || findValidSibling(h1, 'p');
-    if (sibling) {
+    if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
+      // also consider a <p> without any children as sub heading
+      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
       const h4 = document.createElement('h4');
-      h4.innerHTML = sibling.innerHTML;
-      sibling.remove();
+      h4.innerHTML = h1.nextElementSibling.innerHTML;
+      h1.nextElementSibling.remove();
       headings.appendChild(h4);
     }
     headings.appendChild(h1);
