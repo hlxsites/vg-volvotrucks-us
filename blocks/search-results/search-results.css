@@ -2020,6 +2020,10 @@
 }
 
 /* additional css */
+.search-results {
+  width: 100%;
+}
+
 .search-results .search-input-wrapper {
   width: 100%;
 }
@@ -2030,7 +2034,7 @@
   max-width: 100%;
 }
 
-.search-results .autosuggest__results-item--highlighted {
+.search-results .autosuggest__results-container .autosuggest__results ul li.autosuggest__results-item--highlighted {
   background: #f2f2f2;
 }
 

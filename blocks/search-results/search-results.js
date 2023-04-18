@@ -78,7 +78,7 @@ export default async function decorate(block) {
   window.getOrSetCookie = getOrSetCookie;
 
   const styles = [
-    'https://static.searchstax.com/studio-js/v3.8/css/studio-app.css',
+    'https://static.searchstax.com/studio-js/v3.20/css/studio-app.css',
   ];
   const scripts = [
     {
@@ -138,8 +138,8 @@ export default async function decorate(block) {
         };
       `,
     },
-    { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-app.js' },
-    { link: 'https://static.searchstax.com/studio-js/v3.8/js/studio-vendors.js' },
+    { link: 'https://static.searchstax.com/studio-js/v3.20/js/studio-app.js' },
+    { link: 'https://static.searchstax.com/studio-js/v3.20/js/studio-vendors.js' },
     {
       inline: `
         var _msq = _msq || []; //declare object
@@ -147,7 +147,7 @@ export default async function decorate(block) {
         (function () {
           var ms = document.createElement('script');
           ms.type = 'text/javascript';
-          ms.src = 'https://static.searchstax.com/studio-js/v3.8/js/studio-analytics.js';
+          ms.src = 'https://static.searchstax.com/studio-js/v3.20/js/studio-analytics.js';
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(ms, s);
         })();
@@ -167,7 +167,7 @@ export default async function decorate(block) {
           js.src = f;
           js.async = 1;
           fjs.parentNode.insertBefore(js, fjs);
-        })(window, document, 'script', '_sf', 'https://static.searchstax.com/studio-js/v3.8/js/studio-feedback.js');
+        })(window, document, 'script', '_sf', 'https://static.searchstax.com/studio-js/v3.20/js/studio-feedback.js');
         _sf('4kKviXTq4zCnoB4SuKAFhZHVRZTAokybcN6uMcS1HQ4');
       `,
     },
