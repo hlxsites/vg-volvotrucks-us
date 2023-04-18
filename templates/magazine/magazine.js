@@ -133,6 +133,15 @@ export default async function decorate(doc) {
   }
   sidebarPreviousSection.insertAdjacentElement('beforebegin', sidebarSection);
   decorateIcons(doc);
-  // show hidden sidebar once loaded to improve CLS
-  window.onload = doc.querySelector('#sidebar').classList.remove('loading');
+  // show hidden sidebar until all sections are loaded to improve CLS
+  const sectionObserver = new MutationObserver(() => {
+    const pendingSection = doc.querySelector('main > .section[data-section-status="initialized"],main > .section[data-section-status="loading"]');
+    if (!pendingSection) {
+      sidebarSection.classList.remove('loading');
+      sectionObserver.disconnect();
+    }
+  })
+  doc.querySelectorAll('main > .section[data-section-status]').forEach((section) => {
+    sectionObserver.observe(section, { attributeFilter: ['data-section-status'] });
+  });
 }
