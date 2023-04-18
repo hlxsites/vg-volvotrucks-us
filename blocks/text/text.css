@@ -16,6 +16,10 @@
     font-weight: bold;
 }
 
+div.text.l {
+    font-size:   var(--body-font-size-l);
+}
+
 div.text.m {
     font-size:   var(--body-font-size-m);
 }
@@ -36,3 +40,23 @@ div.text.black {
     color: var(--volvo-text-black);
 }
 
+div.text.alert.block {
+    background-color: #efefef;
+    display: flex;
+}
+
+div.text.alert.block img {
+    height: auto;
+    max-width: 40px;
+}
+
+div.text.alert.block > div:first-of-type {
+    padding-left: 70px;
+    padding-right: 40px;
+    padding-top: 20px;
+    margin-right: 15px;
+}
+
+div.text.alert.block > div:last-of-type {
+    margin-right: 15px;
+}

@@ -1,5 +1,7 @@
 import {
   ffetch,
+  createList,
+  splitTags,
 } from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
@@ -61,105 +63,76 @@ function buildLatestMagazineArticle(entry) {
   return card;
 }
 
-function buildRelatedMagazineArticle(entry) {
-  const {
-    path,
-    image,
-    title,
-    author,
-    readingTime,
-    publishDate,
-  } = entry;
-  const card = document.createElement('article');
-  const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
-  const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
-  card.innerHTML = `<a href="${path}" class="imgcover">
-    ${pictureTag}
-    </a>
-    <div class="content">
-    <ul><li>${date.toLocaleDateString()}</li></ul>
-    <h3><a href="${path}">${title}</a></h3>
-    <ul>
-    <li>${author}</li>
-    <li>${readingTime}</li>
-    </ul>
-    </div>`;
-  return card;
+async function getFilterOptions(sheet) {
+  const indexUrl = new URL('/news-and-stories/tags.json', window.location.origin);
+  const result = await ffetch(indexUrl).sheet(sheet).map((data) => data[sheet]).all();
+  return result;
 }
 
-function getSelectionFromUrl(field) {
-  return (
-    toClassName(new URLSearchParams(window.location.search).get(field)) || ''
-  );
-}
+function filterArticles(articles, activeFilters) {
+  let filteredArticles = articles;
 
-function createPaginationLink(page, label) {
-  const newUrl = new URL(window.location);
-  const listElement = document.createElement('li');
-  const link = document.createElement('a');
-  newUrl.searchParams.set('page', page);
-  link.href = newUrl.toString();
-  link.className = label;
-  listElement.append(link);
-  return listElement;
-}
-
-function createPagination(entries, page, limit) {
-  const listPagination = document.createElement('div');
-  listPagination.className = 'pager';
-
-  const totalResults = document.createElement('div');
-  totalResults.className = 'total';
-  totalResults.textContent = `${entries.length} results`;
-  listPagination.appendChild(totalResults);
-  const pagination = document.createElement('div');
-  pagination.className = 'pagination';
-
-  if (entries.length > limit) {
-    const maxPages = Math.ceil(entries.length / limit);
-
-    const listSize = document.createElement('span');
-    listSize.classList.add('size');
-    if (entries.length > limit) {
-      listSize.innerHTML = `<strong>Page ${page}</strong> of ${maxPages}`;
-    }
-    const list = document.createElement('ol');
-    list.className = 'scroll';
-    if (page === 1) {
-      list.append(createPaginationLink(page + 1, 'next'));
-      list.append(createPaginationLink(maxPages, 'last'));
-    } else if (page > 1 && page < maxPages) {
-      list.append(createPaginationLink(1, 'first'));
-      list.append(createPaginationLink(page - 1, 'prev'));
-      list.append(createPaginationLink(page + 1, 'next'));
-      list.append(createPaginationLink(maxPages, 'last'));
-    } else if (page === maxPages) {
-      list.append(createPaginationLink(1, 'first'));
-      list.append(createPaginationLink(page - 1, 'prev'));
-    }
-
-    pagination.append(listSize, list);
-    listPagination.appendChild(pagination);
+  if (activeFilters.category) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.category));
   }
-  return listPagination;
+  if (activeFilters.topic) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.topic));
+  }
+  if (activeFilters.truck) {
+    filteredArticles = filteredArticles
+      .filter((n) => toClassName(n.tags).includes(activeFilters.truck));
+  }
+
+  if (activeFilters.search) {
+    const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
+    const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+    filteredArticles = filteredArticles
+      .filter((n) => {
+        const text = n.content.toLowerCase();
+        return terms.every((term) => !stopWords.includes(term) && text.includes(term));
+      });
+  }
+  return filteredArticles;
 }
 
-async function createMagazineArticles(mainEl, magazineArticles, limitPerPage) {
-  let page = parseInt(getSelectionFromUrl('page'), 10);
-  page = Number.isNaN(page) ? 1 : page;
-  const start = (page - 1) * limitPerPage;
-  const dataToDisplay = magazineArticles.slice(start, start + limitPerPage);
-  const pagination = createPagination(magazineArticles, page, limitPerPage);
-  mainEl.appendChild(pagination);
-  const articleCards = document.createElement('div');
-  articleCards.className = 'articles';
-  dataToDisplay.forEach((article) => {
-    const magazineArticle = buildMagazineArticle(article);
-    articleCards.appendChild(magazineArticle);
+async function createFilter(articles, activeFilters, createDropdown, createFullText) {
+  const fullText = createFullText('search', activeFilters.search, 'Search');
+  const [categoryOptions, topicOptions, truckOptions] = await Promise.all([
+    getFilterOptions('category'),
+    getFilterOptions('topic'),
+    getFilterOptions('truckseries'),
+  ]);
+  const categoryFilter = createDropdown(categoryOptions, activeFilters.category, 'category', 'All Categories');
+  const categorySelection = categoryFilter.querySelector('select');
+  categorySelection.addEventListener('change', (e) => {
+    e.target.form.submit();
   });
-  mainEl.appendChild(articleCards);
-  mainEl.appendChild(pagination.cloneNode(true));
+  const topicFilter = createDropdown(topicOptions, activeFilters.topic, 'topic', 'All Topics');
+  const topicSelection = topicFilter.querySelector('select');
+  topicSelection.addEventListener('change', (e) => {
+    e.target.form.submit();
+  });
+  const truckFilter = createDropdown(truckOptions, activeFilters.truck, 'truck', 'All Truck Series');
+  const truckSelection = truckFilter.querySelector('select');
+  truckSelection.addEventListener('change', (e) => {
+    e.target.form.submit();
+  });
+  return [
+    fullText,
+    categoryFilter,
+    topicFilter,
+    truckFilter,
+  ];
+}
+
+function createArticleList(block, articles, limit) {
+  articles.forEach((n) => {
+    n.filterTag = splitTags(n.tags);
+  });
+  // eslint-disable-next-line max-len
+  createList(articles, filterArticles, createFilter, buildMagazineArticle, limit, block);
 }
 
 async function createLatestMagazineArticles(mainEl, magazineArticles) {
@@ -173,39 +146,25 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
   });
 }
 
-async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-  mainEl.innerHTML = '';
-  const articleCards = document.createElement('div');
-  articleCards.classList.add('related-magazine-articles');
-  mainEl.appendChild(articleCards);
-  magazineArticles.forEach((entry) => {
-    const articleCard = buildRelatedMagazineArticle(entry);
-    articleCards.appendChild(articleCard);
-  });
-}
-
 async function getMagazineArticles(limit) {
   const indexUrl = new URL('/magazine-articles.json', window.location.origin);
   let articles;
   if (limit) {
-    articles = ffetch(indexUrl).slice(0, 3).all();
+    articles = ffetch(indexUrl).limit(limit).all();
   } else {
-    articles = ffetch(indexUrl).all();
+    articles = ffetch(indexUrl).chunks(500).all();
   }
   return articles;
 }
 
 export default async function decorate(block) {
   const latest = block.classList.contains('latest');
-  const related = block.classList.contains('related');
-  const limit = (latest || related) ? 3 : undefined;
+  const limit = latest ? 3 : undefined;
   const limitPerPage = 8;
   const magazineArticles = await getMagazineArticles(limit);
   if (latest) {
     createLatestMagazineArticles(block, magazineArticles);
-  } else if (related) {
-    createRelatedtMagazineArticles(block, magazineArticles);
   } else {
-    createMagazineArticles(block, magazineArticles, limitPerPage);
+    createArticleList(block, magazineArticles, limitPerPage);
   }
 }
