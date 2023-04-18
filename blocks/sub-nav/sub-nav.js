@@ -34,8 +34,14 @@ async function createSubNav(block, ref) {
     });
 
     // move the active link to the top
-    const activeLink = [...ul.querySelectorAll('li > a')].find((a) => new URL(a.href).pathname === pathname);
+    let activeLink = [...ul.querySelectorAll('li > a')].find((a) => new URL(a.href).pathname === pathname);
     if (activeLink) activeLink.parentElement.classList.add('active');
+    else {
+      // if there is no active link, create one for the current page for mobile
+      const [title] = document.title.split('|');
+      ul.firstElementChild.insertAdjacentHTML('afterend', `<li class="active synthetic"><a href="#">${title}</a></li>`);
+      activeLink = ul.querySelector('.active');
+    }
 
     // create an overview link for mobile
     const lastSlash = (pathname.endsWith('/') ? pathname.substring(0, pathname.length - 1) : pathname).lastIndexOf('/');

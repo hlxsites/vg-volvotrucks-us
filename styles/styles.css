@@ -1,3 +1,4 @@
+/* stylelint-disable comment-empty-line-before */
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -85,19 +86,22 @@
   --btn-padding: 12px 32px;
 
   /* body sizes */
+  --body-font-size-l: 2.4rem;
   --body-font-size-m: 2.2rem;
   --body-font-size-s: 1.8rem;
   --body-font-size-xs: 1.6rem;
   --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
-  --heading-font-size-xxxl: 4.8rem;
-  --heading-font-size-xxl: 3.6rem;
-  --heading-font-size-xl: 3.4rem;
-  --heading-font-size-l: 3.2rem;
-  --heading-font-size-m: 2.4rem;
-  --heading-font-size-s: 2.0rem;
-  --heading-font-size-xs: 1.8rem;
+  /* the scale allows us to adjust all heading sizes but preserve the ratio */
+  --heading-font-size-scale: 0.5;
+  --heading-font-size-xxl: calc(7.2rem * var(--heading-font-size-scale));
+  --heading-font-size-xl: calc(5.6rem * var(--heading-font-size-scale));
+  --heading-font-size-l: calc(4.8rem * var(--heading-font-size-scale));
+  --heading-font-size-ml: calc(3.2rem * var(--heading-font-size-scale));
+  --heading-font-size-m: calc(2.4rem * var(--heading-font-size-scale));
+  --heading-font-size-s: calc(2.0rem * var(--heading-font-size-scale));
+  --heading-font-size-xs: calc(1.8rem * var(--heading-font-size-scale));
 
   /* nav height */
   --nav-height: 95px;
@@ -168,17 +172,53 @@ h4, h5, h6 {
   font-family: var(--heading-font-family);
   font-weight: normal;
   line-height: 1;
-  margin-top: 1em;
-  margin-bottom: .5em;
+  margin: 0;
   scroll-margin: calc(var(--nav-height) + 1em);
+  font-style: normal;
 }
 
-h1 { font-size: var(--heading-font-size-xxl) }
-h2 { font-size: var(--heading-font-size-xl) }
-h3 { font-size: var(--heading-font-size-l) }
-h4 { font-size: var(--heading-font-size-m) }
+h1 {
+  font-size: var(--heading-font-size-xxl);
+  letter-spacing: -1.15px;
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: var(--heading-font-size-l);
+  line-height: 1.1;
+  letter-spacing: 0;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: var(--heading-font-size-ml);
+  line-height: 1.25;
+  letter-spacing: 0.25px;
+  margin-bottom: 8px;
+}
+
 h5 { font-size: var(--heading-font-size-s) }
 h6 { font-size: var(--heading-font-size-xs) }
+
+:is(h1, h2, h3, h4, h5, h6) > em {
+  color: var(--volvo-text-light-gray);
+  font-style: normal;
+}
+
+.block h4,
+.block h4 > em {
+  color: inherit;
+  text-transform: uppercase;
+  font-style: initial;
+}
 
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
@@ -256,10 +296,10 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
-a.button.primary.dark,
-button.primary {
-  color: var(--c-white);
-  background-color: var(--text-color);
+button, input, select, textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
 button:disabled, button:disabled:hover {
@@ -270,6 +310,16 @@ button:disabled, button:disabled:hover {
 a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
+  color: var(--text-color);
+}
+
+input[type=text],select,textarea {
+  display: block;
+  padding: 10px 40px 10px 15px;
+  border: none;
+  border-radius: 0;
+  background-color: var(--background-light-gray);
+  appearance: none;
 }
 
 /* commont elements */
@@ -343,10 +393,6 @@ main .section > div {
   margin: 48px auto;
 }
 
-main .section:first-child > div {
-  margin-top: 0;
-}
-
 main .section-with-background {
   --text-color: white;
 
@@ -382,6 +428,10 @@ main .section-with-background>picture:last-of-type img {
   object-fit: cover;
 }
 
+main .section:first-child > :first-child {
+  margin-top: 0;
+}
+
 /* progressive section appearance */
 main .section[data-section-status='loading'],
 main .section[data-section-status='initialized'] {
@@ -405,6 +455,12 @@ ul.cta-list {
 
 ul.cta-list li {
   padding: 0 50px;
+}
+
+.pager .pagination ol li:not(:first-child) {
+  float: right;
+  padding: 10px;
+  margin-top: -10px;
 }
 
 main .section.tabbed-container-full-width > div {
@@ -437,8 +493,8 @@ main .section.tabbed-container ul.tab-navigation button {
   margin: 0;
 }
 
-main .section.tabbed-container ul.tab-navigation li.active,
-main .section.tabbed-container ul.tab-navigation li:hover {
+.section.tabbed-container ul.tab-navigation li.active,
+.section.tabbed-container ul.tab-navigation li:hover {
   border-bottom: 3px solid var(--link-color);
 }
 
@@ -508,6 +564,86 @@ a.button.text-link-with-video::after {
   content: unset;
 }
 
+/* video low resolution banner */
+.low-resolution-banner {
+  font-size: 16px;
+  background: var(--background-color);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.low-resolution-banner-cookie-settings {
+  border: none;
+  background: transparent;
+  color: #0d3c87;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--ff-volvo-novum);
+}
+
+.low-resolution-banner button.modal-close-button {
+  padding-left: 20px;
+  color: var( --volvo-text-light-gray);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* pagination */
+.pager .pagination ol li .last::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f051";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .first::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f048";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .next::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f054";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .prev::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f053";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+div.block div.pager {
+  font-size: 1.4rem;
+  display: grid;
+  margin-bottom: 1em;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+div.block div.pager .pagination {
+  justify-self: end;
+}
+
+div.block div.pager .pagination .scroll {
+  padding: 0;
+  margin: 0 0 0 15px;
+  display: inline-flex;
+  gap: 5px;
+  list-style: none;
+}
+
+div.block div.pager .pagination .scroll li a {
+  color: var(--volvo-text-gray);
+  font-family: var(--ff-volvo-novum-medium);
+}
+
 @media screen and (min-width: 480px) {
   main .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
@@ -546,18 +682,12 @@ a.button.text-link-with-video::after {
 
 @media (min-width: 992px) {
   :root {
-    --heading-font-size-xxl: 4.8rem;
-    --heading-font-size-xl: 4.6rem;
-    --heading-font-size-l: 3.6rem;
-    --heading-font-size-m: 3.0rem;
-    --heading-font-size-s: 2.4rem;
-    --heading-font-size-xs: 2.2rem;
     --nav-height: 176px;
     --sub-nav-height: 48px;
     --wrapper-width: 960px;
   }
 
-  main .section:first-child > div {
+  main .section:first-child > :first-child {
     margin-top: 30px;
   }
 
@@ -570,8 +700,4 @@ a.button.text-link-with-video::after {
   :root {
     --wrapper-width: 1200px;
   }
-}
-
-.video-link-wrapper {
-  text-align: center;
 }
