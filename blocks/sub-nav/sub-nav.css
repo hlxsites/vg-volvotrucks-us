@@ -101,8 +101,9 @@
         font-size: 12px;
     }
 
-    .block.sub-nav li.overview {
-        display: none;
+    .block.sub-nav li.overview,
+    .block.sub-nav li.synthetic {
+        display: none !important;
     }
 
     /* first child */

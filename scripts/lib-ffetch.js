@@ -212,12 +212,15 @@ function createFullText(name, searchTerm, placeholder) {
 function createDropdown(options, selected, name, placeholder, label) {
   const container = document.createElement('div');
   container.className = toClassName(`${name}-field`);
-  const labelEl = document.createElement('label');
-  labelEl.innerText = label;
-  labelEl.setAttribute('for', name);
-  container.append(labelEl);
+  if (label) {
+    const labelEl = document.createElement('label');
+    labelEl.innerText = label;
+    labelEl.setAttribute('for', name);
+    container.append(labelEl);
+  }
   const input = document.createElement('select');
   input.name = name;
+  input.id = name;
   if (placeholder) {
     const optionTag = document.createElement('option');
     optionTag.innerText = placeholder;
@@ -247,7 +250,7 @@ function createPaginationLink(page, label) {
   const link = document.createElement('a');
   newUrl.searchParams.set('page', page);
   link.href = newUrl.toString();
-  link.innerText = label;
+  link.className = label;
   listElement.append(link);
   return listElement;
 }
@@ -273,19 +276,17 @@ function createPagination(entries, page, limit) {
     }
     const list = document.createElement('ol');
     list.className = 'scroll';
-    if (page > 1) {
-      list.append(createPaginationLink(page - 1, '‹'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '‹';
-      list.append(listElement);
-    }
-    if (page < maxPages) {
-      list.append(createPaginationLink(page + 1, '›'));
-    } else {
-      const listElement = document.createElement('li');
-      listElement.innerText = '›';
-      list.append(listElement);
+    if (page === 1) {
+      list.append(createPaginationLink(page + 1, 'next'));
+      list.append(createPaginationLink(maxPages, 'last'));
+    } else if (page > 1 && page < maxPages) {
+      list.append(createPaginationLink(1, 'first'));
+      list.append(createPaginationLink(page - 1, 'prev'));
+      list.append(createPaginationLink(page + 1, 'next'));
+      list.append(createPaginationLink(maxPages, 'last'));
+    } else if (page === maxPages) {
+      list.append(createPaginationLink(1, 'first'));
+      list.append(createPaginationLink(page - 1, 'prev'));
     }
 
     pagination.append(listSize, list);
@@ -312,7 +313,7 @@ function getActiveFilters() {
   return result;
 }
 
-function renderFilters(data, createFilters) {
+async function renderFilters(data, createFilters) {
   // render filters
   const filter = document.createElement('div');
   filter.className = 'list-filter';
@@ -321,7 +322,7 @@ function renderFilters(data, createFilters) {
   form.name = 'list-filter';
   const formFieldSet = document.createElement('fieldset');
 
-  const filters = createFilters(data, getActiveFilters(), createDropdown, createFullText);
+  const filters = await createFilters(data, getActiveFilters(), createDropdown, createFullText);
   formFieldSet.append(
     ...filters,
   );
@@ -334,7 +335,7 @@ function renderFilters(data, createFilters) {
 }
 
 // eslint-disable-next-line max-len
-export function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
+export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
   const cfg = readBlockConfig(mainEl);
   mainEl.textContent = '';
   let actFilter = getActiveFilters();
@@ -352,7 +353,7 @@ export function createList(pressReleases, filter, createFilters, buildPressRelea
   page = Number.isNaN(page) ? 1 : page;
   let pagination;
   if (!relatedPressReleases && createFilters) {
-    const filterElements = renderFilters(pressReleases, createFilters);
+    const filterElements = await renderFilters(pressReleases, createFilters);
     mainEl.appendChild(filterElements);
     if (limitPerPage > 0) {
       pagination = createPagination(filteredData, page, limitPerPage);
