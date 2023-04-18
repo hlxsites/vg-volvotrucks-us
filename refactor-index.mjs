@@ -2,26 +2,22 @@ import path from "path";
 import {existsSync, promises as fs} from "fs";
 
 async function moveIndexDocxFiles(dir, moves, isRoot = false) {
-    try {
-        const files = await fs.readdir(dir, {withFileTypes: true});
-        files.sort((a, b) => a.name.localeCompare(b.name));
+    const files = await fs.readdir(dir, {withFileTypes: true});
+    files.sort((a, b) => a.name.localeCompare(b.name));
 
-        for (const file of files) {
-            if (file.isDirectory()) {
-                const subdir = path.join(dir, file.name);
-                await moveIndexDocxFiles(subdir, moves);
-            } else if (file.name === 'index.docx' && !isRoot) {
-                const indexDocxPath = path.join(dir, file.name);
-                const parentDir = path.dirname(dir);
-                const destinationPath = path.join(parentDir, `${path.basename(dir)}.docx`);
-                if(existsSync(destinationPath)) {
-                    throw new error(`Destination path ${destinationPath} already exists.`);
-                }
-                moves.push({source: indexDocxPath, destination: destinationPath});
+    for (const file of files) {
+        if (file.isDirectory()) {
+            const subdir = path.join(dir, file.name);
+            await moveIndexDocxFiles(subdir, moves);
+        } else if (file.name === 'index.docx' && !isRoot) {
+            const indexDocxPath = path.join(dir, file.name);
+            const parentDir = path.dirname(dir);
+            const destinationPath = path.join(parentDir, `${path.basename(dir)}.docx`);
+            if (existsSync(destinationPath)) {
+                throw new Error(`Destination path ${destinationPath} already exists.`);
             }
+            moves.push({source: indexDocxPath, destination: destinationPath});
         }
-    } catch (error) {
-        console.error(`Error reading directory ${dir}:`, error);
     }
 }
 
@@ -49,11 +45,22 @@ if (!directoryPath) {
     console.log('List of moves:');
     for (const move of moves) {
         console.log(`
-        Move ${move.source} 
-        to   ${move.destination}`);
+Move ${move.source} 
+to   ${move.destination}`);
+    }
+
+    console.log('\nredirects:');
+    for (const move of moves) {
+        const from = move.source.replace('index.docx', '')
+            .replace(directoryPath, '');
+        const to = move.destination.replace('.docx', '')
+            .replace(directoryPath, '');
+        console.log(from + "|" + to);
     }
 
     // console.log('\nPerforming moves...');
     // await performMoves(moves);
     // console.log('Moves completed.');
+
+
 })();
