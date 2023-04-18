@@ -296,6 +296,17 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
+a.button.primary.dark {
+  background-color: var(--text-color);
+  color: var(--c-white);
+}
+
+a.button.primary.dark:hover {
+  background-color: var(--text-color);
+  border-color: var(--text-color);
+  color: var(--c-white);
+}
+
 button, input, select, textarea {
   color: inherit;
   font: inherit;
