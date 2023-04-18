@@ -68,16 +68,16 @@
     margin-top: 2rem;
   }
 
-  .block.footer .footer-gray > div  {
+  .block.footer .footer-gray .link-column-wrapper {
     width: calc(var(--wrapper-width) - 100px);
     margin: 0 auto;
   }
 
-  .block.footer .footer-gray > div  > div {
+  .block.footer .footer-gray div.link-column-wrapper {
     display: flex;
   }
 
-  .block.footer .footer-gray > div  > div > div {
+  .block.footer .footer-gray div.link-column-wrapper div.link-column {
     flex: 1;
   }
 }

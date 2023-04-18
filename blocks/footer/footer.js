@@ -19,10 +19,19 @@ export default async function decorate(block) {
   openExternalLinksInNewTab(footer);
   addSocialmediaIconsToLinks(footer);
 
-  footer.children[0]?.classList.add('footer-gray');
-  footer.children[0]?.firstElementChild.classList.remove('columns');
-  footer.children[1]?.classList.add('footer-bar');
-  footer.children[2]?.classList.add('footer-copyright');
+  // eslint-disable-next-line prefer-const
+  let [grayFooter, footerBar, footerCopyright] = footer.children;
+
+  // gray footer
+  grayFooter?.classList.add('footer-gray');
+  grayFooter?.firstElementChild.classList.remove('columns');
+  grayFooter.querySelectorAll('h3').forEach((h3) => {
+    h3.parentElement.classList.add('link-column');
+    h3.parentElement.parentElement.classList.add('link-column-wrapper');
+  });
+
+  footerBar?.classList.add('footer-bar');
+  footerCopyright?.classList.add('footer-copyright');
   await decorateIcons(footer);
   block.append(footer);
   addScrollToTopButton(block);
