@@ -298,3 +298,9 @@ main .section .calculator-wrapper {
     width: 90%;
   }
 }
+
+@media (min-width: 1300px) {
+  .charts-selectors {
+    margin: 0;
+  }
+}
