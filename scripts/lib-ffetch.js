@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-/* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax */
+/* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax,max-len */
 
 import {
   readBlockConfig,
@@ -334,10 +334,8 @@ async function renderFilters(data, createFilters) {
   return null;
 }
 
-// eslint-disable-next-line max-len
-export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
-  const cfg = readBlockConfig(mainEl);
-  mainEl.textContent = '';
+async function buildElements(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, cfg) {
+  const elements = {};
   let actFilter = getActiveFilters();
   let relatedPressReleases = false;
   if (cfg.tags) {
@@ -351,13 +349,14 @@ export async function createList(pressReleases, filter, createFilters, buildPres
 
   let page = parseInt(getSelectionFromUrl('page'), 10);
   page = Number.isNaN(page) ? 1 : page;
-  let pagination;
+
   if (!relatedPressReleases && createFilters) {
     const filterElements = await renderFilters(pressReleases, createFilters);
-    mainEl.appendChild(filterElements);
+    if (filterElements) {
+      elements.filter = filterElements;
+    }
     if (limitPerPage > 0) {
-      pagination = createPagination(filteredData, page, limitPerPage);
-      mainEl.appendChild(pagination);
+      elements.pagination = createPagination(filteredData, page, limitPerPage);
     }
   }
   if (limitPerPage > 0) {
@@ -372,8 +371,57 @@ export async function createList(pressReleases, filter, createFilters, buildPres
     articleItem.appendChild(pressReleaseArticle);
     articleList.appendChild(articleItem);
   });
-  mainEl.appendChild(articleList);
-  if (pagination) {
-    mainEl.appendChild(pagination.cloneNode(true));
+  elements.list = articleList;
+  return elements;
+}
+
+export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
+  /* eslint-disable no-use-before-define */
+  const cfg = readBlockConfig(mainEl);
+
+  async function reloadList(params) {
+    // push the new querystring state
+    const url = new URL(window.location);
+    [...params.entries()].forEach(([k, v]) => url.searchParams.set(k, v));
+    window.history.pushState({}, '', url);
+    // rebuild the list
+    const elements = await buildElements(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, cfg);
+    renderList(mainEl, elements);
   }
+
+  function reloadFilteredList(event) {
+    if (event) event.preventDefault();
+    reloadList(new URLSearchParams(new FormData(this)));
+  }
+
+  function reloadPaginatedList(event) {
+    event.preventDefault();
+    reloadList(new URL(event.target.href).searchParams);
+  }
+
+  function attachSubmitListners(filter) {
+    const form = filter.querySelector('form');
+    if (form) {
+      form.submit = reloadFilteredList.bind(form);
+      form.addEventListener('submit', reloadFilteredList.bind(form));
+    }
+    return filter;
+  }
+
+  function attachClickListners(pagination) {
+    pagination.querySelectorAll('a').forEach((a) => a.addEventListener('click', reloadPaginatedList));
+    return pagination;
+  }
+
+  function renderList(el, { filter, pagination, list }) {
+    const children = [];
+    if (filter) children.push(attachSubmitListners(filter));
+    if (pagination) children.push(attachClickListners(pagination));
+    children.push(list);
+    if (pagination) children.push(attachClickListners(pagination.cloneNode(true)));
+    el.replaceChildren(...children);
+  }
+
+  const elements = await buildElements(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, cfg);
+  renderList(mainEl, elements);
 }

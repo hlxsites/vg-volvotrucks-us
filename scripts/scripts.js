@@ -171,20 +171,8 @@ function buildCtaList(main) {
 
     if (isCtaList) {
       list.classList.add('cta-list');
-      lis.forEach((li, i) => {
-        li.classList.add('button-container');
-        const a = li.querySelector('a');
-        const up = a.parentElement;
-        a.classList.add('button');
-        if (up.tagName === 'EM') {
-          a.classList.add('secondary');
-        } else {
-          a.classList.add('primary');
-          if (i === 0) {
-            a.classList.add('dark');
-          }
-        }
-      });
+      const primaryLink = lis[0].querySelector('a.primary');
+      if (primaryLink) primaryLink.classList.add('dark');
     }
   });
 }
