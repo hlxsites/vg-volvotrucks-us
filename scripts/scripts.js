@@ -507,20 +507,27 @@ export function selectVideoLink(links, preferredType) {
   return localMediaLink;
 }
 
+export function createLowResolutionBanner() {
+  const lowResolutionMessage = getTextLable('Low resolution video message');
+  const changeCookieSettings = getTextLable('Change cookie settings');
+
+  const banner = document.createElement('div');
+  banner.classList.add('low-resolution-banner');
+  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
+  banner.querySelector('button').addEventListener('click', () => {
+    window.OneTrust.ToggleInfoDisplay();
+  });
+
+  return banner;
+}
+
 export function showVideoModal(linkUrl) {
   // eslint-disable-next-line import/no-cycle
   import('../common/modal/modal.js').then((modal) => {
     let beforeBanner = null;
 
     if (isLowResolutionVideoUrl(linkUrl)) {
-      const lowResolutionMessage = getTextLable('Low resolution video message');
-      const changeCookieSettings = getTextLable('Change cookie settings');
-
-      beforeBanner = document.createElement('div');
-      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
-      beforeBanner.querySelector('button').addEventListener('click', () => {
-        window.OneTrust.ToggleInfoDisplay();
-      });
+      beforeBanner = createLowResolutionBanner();
     }
 
     modal.showModal(linkUrl, beforeBanner);
@@ -533,10 +540,7 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    // eslint-disable-next-line import/no-cycle
-    import('../common/modal/modal.js').then((modal) => {
-      modal.showModal(link.getAttribute('href'));
-    });
+    showVideoModal(link.getAttribute('href'));
   });
 }
 
