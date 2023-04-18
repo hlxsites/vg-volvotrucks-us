@@ -393,6 +393,10 @@ main .section > div {
   margin: 48px auto;
 }
 
+main .section.center > div {
+  text-align: center;
+}
+
 main .section-with-background {
   --text-color: white;
 
