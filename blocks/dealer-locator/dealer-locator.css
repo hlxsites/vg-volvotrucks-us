@@ -5,6 +5,15 @@
     font-family: VolvoNovumRegular,sans-serif,sans-serif;
 }
 
+main .section.dealer-locator-container > div {
+    margin: 0;
+}
+@media (min-width: 992px) {
+    main .section.dealer-locator-container > :first-child {
+        margin: 0;
+    }
+}
+
 .dealer-locator [hidden] {
     display: none
 }
@@ -45,7 +54,8 @@
 .dealer-locator {
     width: 100% !important;
     height: calc(100vh);
-    position: absolute
+    position: absolute;
+    left: 0;
 }
 .dealer-locator input[type=text],
 .dealer-locator select,

@@ -14,6 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  getMetadata,
   toClassName,
 } from './lib-franklin.js';
 
@@ -29,6 +30,28 @@ export function getTextLable(key) {
   return placeholders.data.find((el) => el.Key === key).Text;
 }
 
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {string[]|string} classes the class or classes to add
+ * @param {object} props any other attributes to add to the element
+ * @returns the element
+ */
+export function createElement(tagName, classes, props) {
+  const elem = document.createElement(tagName);
+  if (classes) {
+    const classesArr = (typeof classes === 'string') ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      elem.setAttribute(propName, props[propName]);
+    });
+  }
+
+  return elem;
+}
+
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
     ? ctaLink.parentElement.parentElement
@@ -38,9 +61,11 @@ function getCTAContainer(ctaLink) {
 function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
-  const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
-  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
+  const nextSibling = btnContainer?.nextElementSibling;
+  const previousSibling = btnContainer?.previousElementSibling;
+  const twoPreviousSibling = previousSibling?.previousElementSibling;
+  const siblings = [previousSibling, nextSibling, twoPreviousSibling];
+  return siblings.some((elem) => elem?.localName === 'h1');
 }
 
 function buildHeroBlock(main) {
@@ -113,7 +138,7 @@ function buildHeroBlock(main) {
 
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
-  if (subnav) {
+  if (subnav && subnav.content.startsWith('/')) {
     const block = buildBlock('sub-nav', []);
     main.previousElementSibling.prepend(block);
     decorateBlock(block);
@@ -273,12 +298,55 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function addDefaultVideoLinkBehaviour(main) {
+function decorateLinks(main) {
   [...main.querySelectorAll('a')]
-    // eslint-disable-next-line no-use-before-define
-    .filter((link) => isVideoLink(link))
-    // eslint-disable-next-line no-use-before-define
-    .forEach(addVideoShowHandler);
+    .filter(({ href }) => !!href)
+    .forEach((link) => {
+      /* eslint-disable no-use-before-define */
+      if (isVideoLink(link)) {
+        addVideoShowHandler(link);
+        return;
+      }
+
+      const url = new URL(link.href);
+      const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
+      if (url.pathname.endsWith('.pdf') || external) {
+        link.target = '_blank';
+      }
+    });
+}
+
+function decorateOfferLinks(main) {
+  async function openOffer(event) {
+    event.preventDefault();
+    const module = await import(`${window.hlx.codeBasePath}/blocks/get-an-offer/get-an-offer.js`);
+    if (module.showOffer) {
+      await module.showOffer(event.target);
+    }
+  }
+  main.querySelectorAll('a[href*="offer"]').forEach((a) => {
+    if (a.href.endsWith('-offer')) {
+      let list = a.closest('ul');
+      if (!list) {
+        list = document.createElement('ul');
+        const parent = a.parentElement;
+        const li = document.createElement('li');
+        list.append(li);
+        li.append(a);
+        parent.after(list);
+        if (parent.textContent === '' && parent.children.length === 0) parent.remove();
+      }
+      list.classList.add('inline');
+      const li = document.createElement('li');
+      const clone = a.cloneNode(true);
+      clone.textContent = 'Details';
+      clone.title = clone.textContent;
+      li.append(clone);
+      list.append(li);
+      a.addEventListener('click', openOffer);
+      clone.addEventListener('click', openOffer);
+    }
+  });
 }
 
 /**
@@ -302,9 +370,36 @@ export function decorateMain(main, head) {
   decorateBlocks(main);
   decorateHyperlinkImages(main);
   decorateSectionBackgrounds(main);
-  addDefaultVideoLinkBehaviour(main);
+  decorateLinks(main);
   buildTabbedBlock(main);
+  decorateOfferLinks(main);
   buildCtaList(main);
+}
+
+async function loadTemplate(doc, templateName) {
+  try {
+    const cssLoaded = new Promise((resolve) => {
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
+    });
+    const decorationComplete = new Promise((resolve) => {
+      (async () => {
+        try {
+          const mod = await import(`../templates/${templateName}/${templateName}.js`);
+          if (mod.default) {
+            await mod.default(doc);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${templateName}`, error);
+        }
+        resolve();
+      })();
+    });
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(`failed to load block ${templateName}`, error);
+  }
 }
 
 /**
@@ -313,10 +408,13 @@ export function decorateMain(main, head) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    const templateName = getMetadata('template');
+    if (templateName) await loadTemplate(doc, templateName);
     await waitForLCP(LCP_BLOCKS);
   }
 
@@ -402,9 +500,11 @@ export function selectVideoLink(links, preferredType) {
   const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
 
-  return videoLink;
+  if (shouldUseYouTubeLinks && youTubeLink) {
+    return youTubeLink;
+  }
+  return localMediaLink;
 }
 
 export function createLowResolutionBanner() {
