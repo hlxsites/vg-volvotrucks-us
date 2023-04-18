@@ -131,8 +131,8 @@ main .section .engine-specifications-wrapper {
 }
 
 .performance-chart {
-  /* This scale factor affects the size of the fonts 
-  in the chart making them "responsive" without making 
+  /* This scale factor affects the size of the fonts
+  in the chart making them "responsive" without making
   them dependant on window size.  */
   --scale-factor: 2;
 
@@ -195,15 +195,15 @@ main .section .engine-specifications-wrapper {
 }
 
 .peak-value {
-  font-size: calc(var(--heading-font-size-s) * var(--scale-factor));
+  font-size: calc(var(--heading-font-size-s) * 1.5 * var(--scale-factor));
 }
 
 .peak-text {
-  font-size: calc(var(--body-font-size-xs) * 0.75 * var(--scale-factor));
+  font-size: calc(var(--body-font-size-xs) * 0.65 * var(--scale-factor));
 }
 
 /* Media queries */
-@media (min-width: 745px){
+@media (min-width: 768px){
   .engine-specifications-wrapper {
     margin-right: 0 !important;
   }
@@ -230,7 +230,7 @@ main .section .engine-specifications-wrapper {
   }
 
   .performance-chart {
-    --scale-factor: 1.4;
+    --scale-factor: 1.8;
   }
 
   .performance-chart-list,
@@ -245,8 +245,6 @@ main .section .engine-specifications-wrapper {
 
 @media (min-width: 1200px) {
   .performance-chart {
-    --scale-factor: 1.2;
-
     padding: 0 calc(50vw - 600px);
   }
 
@@ -295,14 +293,14 @@ main .section .engine-specifications-wrapper {
     width: 100vw;
     margin: 0;
   }
-  
+
   main .section .engine-specifications-wrapper  {
     width: 100vw;
     padding: 0 0 80px;
     background-color: #F7F7F7;
     margin-top: 0 !important;
   }
-  
+
   .engine-specifications.engine {
     background-color: var(--c-white);
     border-radius: 12px;

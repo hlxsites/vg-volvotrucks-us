@@ -102,7 +102,7 @@ const getDevice = () => {
   const width = window.innerWidth;
   let device = {};
 
-  if (width < 375) {
+  if (width < 480) {
     device = {
       name: 'mobile',
       scale: 1.9,
@@ -112,7 +112,7 @@ const getDevice = () => {
       triangle: [50, 70],
     };
   }
-  if (width >= 375 && width < 745) {
+  if (width >= 480 && width < 768) {
     device = {
       name: 'tablet',
       scale: 1.8,
@@ -122,7 +122,7 @@ const getDevice = () => {
       triangle: [50, 60],
     };
   }
-  if (width >= 744 && width < 1200) {
+  if (width >= 768 && width < 1200) {
     device = {
       name: 'desktop',
       scale: 1.5,
