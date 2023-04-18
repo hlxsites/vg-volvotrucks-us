@@ -125,6 +125,50 @@ function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
   toggleMenu(sectionMenu, true, event);
 }
 
+async function loadSearchWidget() {
+  const scripts = [{
+    link: 'https://static.searchstax.com/studio-js/v3/js/search-widget.min.js',
+  },
+  {
+    inline: `
+    function initiateSearchWidget(){
+      //Call when document is loaded
+      new SearchstudioWidget(
+        'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
+        'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+        '${window.location.origin}/search-results',
+        3,
+        'searchStudioQuery',
+        'div-widget-id',
+        'en'
+      )
+    };
+    window.initiateSearchWidget = initiateSearchWidget;
+    `,
+  }];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const script of scripts) {
+    let waitForLoad = Promise.resolve();
+    const newScript = document.createElement('script');
+
+    waitForLoad = new Promise((resolve) => {
+      newScript.addEventListener('load', resolve);
+    });
+
+    newScript.setAttribute('type', 'text/javascript');
+
+    if (script.inline) {
+      newScript.innerHTML = script.inline;
+      document.body.append(newScript);
+    } else {
+      newScript.src = script.link;
+      document.body.append(newScript);
+      // eslint-disable-next-line no-await-in-loop
+      await waitForLoad;
+    }
+  }
+}
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -272,5 +316,6 @@ export default async function decorate(block) {
     decorateIcons(nav);
     /* append result */
     block.append(nav);
+    loadSearchWidget();
   }
 }
