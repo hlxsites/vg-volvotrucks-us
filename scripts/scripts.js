@@ -171,6 +171,8 @@ function buildCtaList(main) {
 
     if (isCtaList) {
       list.classList.add('cta-list');
+      const primaryLink = lis[0].querySelector('a.primary');
+      if (primaryLink) primaryLink.classList.add('dark');
     }
   });
 }
