@@ -137,7 +137,7 @@ export default async function decorate(block) {
 
   // fetch nav content
   const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2}/)?).*');
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
   const navPath = config.nav || `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
   const resp = await fetch(`${navPath}.plain.html`);
 
@@ -165,7 +165,7 @@ export default async function decorate(block) {
         <img class="search-icon" src="/icons/search-icon.png" >
       </a>
 
-      <a class="hamburger-toggle" aria-expanded="false" >
+      <a class="hamburger-toggle semitrans-trigger" aria-expanded="false" >
         <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
       </a>
 

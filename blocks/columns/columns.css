@@ -1,7 +1,12 @@
 .columns > div {
     display: flex;
     flex-direction: column;
+    gap: 32px;
     margin: 48px 0;
+}
+
+.columns.revese-odd-rows-on-mobile > div:nth-of-type(odd) {
+    flex-direction: column-reverse;
 }
 
 .columns img {
@@ -15,16 +20,11 @@
 @media (min-width: 900px) {
     .columns > div {
         display: flex;
-        flex-direction: unset;
+        flex-direction: unset !important;
     }
 
     .columns > div > div {
         flex: 1;
-        margin-left: 32px;
-    }
-
-    .columns > div > div:first-of-type {
-        margin-left: unset;
     }
 
     .columns ul.cta-list {
@@ -32,9 +32,15 @@
     }
 
     .columns ul.cta-list li {
-        flex: 1;
+        flex: 1 0 auto;
         min-width: 242px;
         padding-left: 0;
         text-align: left;
+    }
+
+    .columns ul.cta-list.inline li {
+        min-width: unset;
+        flex: 0;
+        padding-right: 10px;
     }
 }

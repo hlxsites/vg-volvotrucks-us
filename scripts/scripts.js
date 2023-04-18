@@ -14,6 +14,7 @@ import {
   loadBlocks,
   loadCSS,
   createOptimizedPicture,
+  getMetadata,
   toClassName,
 } from './lib-franklin.js';
 
@@ -29,6 +30,28 @@ export function getTextLable(key) {
   return placeholders.data.find((el) => el.Key === key).Text;
 }
 
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {string[]|string} classes the class or classes to add
+ * @param {object} props any other attributes to add to the element
+ * @returns the element
+ */
+export function createElement(tagName, classes, props) {
+  const elem = document.createElement(tagName);
+  if (classes) {
+    const classesArr = (typeof classes === 'string') ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      elem.setAttribute(propName, props[propName]);
+    });
+  }
+
+  return elem;
+}
+
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
     ? ctaLink.parentElement.parentElement
@@ -38,9 +61,11 @@ function getCTAContainer(ctaLink) {
 function isCTALinkCheck(ctaLink) {
   const btnContainer = getCTAContainer(ctaLink);
   if (!btnContainer.classList.contains('button-container')) return false;
-  const previousSibiling = btnContainer.previousElementSibling;
-  const twoPreviousSibiling = previousSibiling?.previousElementSibling;
-  return previousSibiling?.localName === 'h1' || twoPreviousSibiling?.localName === 'h1';
+  const nextSibling = btnContainer?.nextElementSibling;
+  const previousSibling = btnContainer?.previousElementSibling;
+  const twoPreviousSibling = previousSibling?.previousElementSibling;
+  const siblings = [previousSibling, nextSibling, twoPreviousSibling];
+  return siblings.some((elem) => elem?.localName === 'h1');
 }
 
 function buildHeroBlock(main) {
@@ -52,7 +77,30 @@ function buildHeroBlock(main) {
   }
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
-  const ctaLink = firstSection.querySelector('a');
+  let ctaLink = firstSection.querySelector('a');
+  let video = null;
+
+  // eslint-disable-next-line no-use-before-define
+  if (ctaLink && isLowResolutionVideoUrl(ctaLink.getAttribute('href'))) {
+    const videoTemp = `
+      <video muted loop class="hero-video">
+        <source src="${ctaLink.getAttribute('href')}" type="video/mp4"></source>
+      </video>
+    `;
+
+    const videoWrapper = document.createElement('div');
+    videoWrapper.innerHTML = videoTemp;
+    video = videoWrapper.querySelector('video');
+    ctaLink.parentElement.remove();
+    ctaLink = firstSection.querySelector('a');
+
+    // adding video with delay to not affect page loading time
+    setTimeout(() => {
+      picture.replaceWith(video);
+      video.play();
+    }, 3000);
+  }
+
   // check if the previous element or the previous of that is an h1
   const isCTALink = ctaLink && isCTALinkCheck(ctaLink);
   if (isCTALink) ctaLink.classList.add('cta');
@@ -78,6 +126,11 @@ function buildHeroBlock(main) {
     const wrapperChildren = containerChildren[0].children;
     if (containerChildren.length <= 1 && wrapperChildren.length === 0) firstSection.remove();
     else if (wrapperChildren.length === 0) containerChildren[0].remove();
+
+    if (video) {
+      section.querySelector('.hero')?.classList.add('hero-with-video');
+    }
+
     // after all are settled, the new section can be added
     main.prepend(section);
   }
@@ -85,7 +138,7 @@ function buildHeroBlock(main) {
 
 function buildSubNavigation(main, head) {
   const subnav = head.querySelector('meta[name="sub-navigation"]');
-  if (subnav) {
+  if (subnav && subnav.content.startsWith('/')) {
     const block = buildBlock('sub-nav', []);
     main.previousElementSibling.prepend(block);
     decorateBlock(block);
@@ -118,20 +171,8 @@ function buildCtaList(main) {
 
     if (isCtaList) {
       list.classList.add('cta-list');
-      lis.forEach((li, i) => {
-        li.classList.add('button-container');
-        const a = li.querySelector('a');
-        const up = a.parentElement;
-        a.classList.add('button');
-        if (up.tagName === 'EM') {
-          a.classList.add('secondary');
-        } else {
-          a.classList.add('primary');
-          if (i === 0) {
-            a.classList.add('dark');
-          }
-        }
-      });
+      const primaryLink = lis[0].querySelector('a.primary');
+      if (primaryLink) primaryLink.classList.add('dark');
     }
   });
 }
@@ -245,12 +286,58 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function addDefaultVideoLinkBehaviour(main) {
+function decorateLinks(main) {
   [...main.querySelectorAll('a')]
-    // eslint-disable-next-line no-use-before-define
-    .filter((link) => isVideoLink(link))
-    // eslint-disable-next-line no-use-before-define
-    .forEach(addVideoShowHandler);
+    .filter(({ href }) => !!href)
+    .forEach((link) => {
+      /* eslint-disable no-use-before-define */
+      if (isVideoLink(link)) {
+        addVideoShowHandler(link);
+        return;
+      }
+      if (isSoundcloudLink(link)) {
+        addSoundcloudShowHandler(link);
+      }
+
+      const url = new URL(link.href);
+      const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
+      if (url.pathname.endsWith('.pdf') || external) {
+        link.target = '_blank';
+      }
+    });
+}
+
+function decorateOfferLinks(main) {
+  async function openOffer(event) {
+    event.preventDefault();
+    const module = await import(`${window.hlx.codeBasePath}/blocks/get-an-offer/get-an-offer.js`);
+    if (module.showOffer) {
+      await module.showOffer(event.target);
+    }
+  }
+  main.querySelectorAll('a[href*="offer"]').forEach((a) => {
+    if (a.href.endsWith('-offer')) {
+      let list = a.closest('ul');
+      if (!list) {
+        list = document.createElement('ul');
+        const parent = a.parentElement;
+        const li = document.createElement('li');
+        list.append(li);
+        li.append(a);
+        parent.after(list);
+        if (parent.textContent === '' && parent.children.length === 0) parent.remove();
+      }
+      list.classList.add('inline');
+      const li = document.createElement('li');
+      const clone = a.cloneNode(true);
+      clone.textContent = 'Details';
+      clone.title = clone.textContent;
+      li.append(clone);
+      list.append(li);
+      a.addEventListener('click', openOffer);
+      clone.addEventListener('click', openOffer);
+    }
+  });
 }
 
 /**
@@ -274,9 +361,36 @@ export function decorateMain(main, head) {
   decorateBlocks(main);
   decorateHyperlinkImages(main);
   decorateSectionBackgrounds(main);
-  addDefaultVideoLinkBehaviour(main);
+  decorateLinks(main);
   buildTabbedBlock(main);
+  decorateOfferLinks(main);
   buildCtaList(main);
+}
+
+async function loadTemplate(doc, templateName) {
+  try {
+    const cssLoaded = new Promise((resolve) => {
+      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
+    });
+    const decorationComplete = new Promise((resolve) => {
+      (async () => {
+        try {
+          const mod = await import(`../templates/${templateName}/${templateName}.js`);
+          if (mod.default) {
+            await mod.default(doc);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${templateName}`, error);
+        }
+        resolve();
+      })();
+    });
+    await Promise.all([cssLoaded, decorationComplete]);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(`failed to load block ${templateName}`, error);
+  }
 }
 
 /**
@@ -285,10 +399,13 @@ export function decorateMain(main, head) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    const templateName = getMetadata('template');
+    if (templateName) await loadTemplate(doc, templateName);
     await waitForLCP(LCP_BLOCKS);
   }
 
@@ -374,9 +491,25 @@ export function selectVideoLink(links, preferredType) {
   const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
 
-  return videoLink;
+  if (shouldUseYouTubeLinks && youTubeLink) {
+    return youTubeLink;
+  }
+  return localMediaLink;
+}
+
+export function createLowResolutionBanner() {
+  const lowResolutionMessage = getTextLable('Low resolution video message');
+  const changeCookieSettings = getTextLable('Change cookie settings');
+
+  const banner = document.createElement('div');
+  banner.classList.add('low-resolution-banner');
+  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
+  banner.querySelector('button').addEventListener('click', () => {
+    window.OneTrust.ToggleInfoDisplay();
+  });
+
+  return banner;
 }
 
 export function showVideoModal(linkUrl) {
@@ -385,14 +518,7 @@ export function showVideoModal(linkUrl) {
     let beforeBanner = null;
 
     if (isLowResolutionVideoUrl(linkUrl)) {
-      const lowResolutionMessage = getTextLable('Low resolution video message');
-      const changeCookieSettings = getTextLable('Change cookie settings');
-
-      beforeBanner = document.createElement('div');
-      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
-      beforeBanner.querySelector('button').addEventListener('click', () => {
-        window.OneTrust.ToggleInfoDisplay();
-      });
+      beforeBanner = createLowResolutionBanner();
     }
 
     modal.showModal(linkUrl, beforeBanner);
@@ -405,8 +531,39 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
+    showVideoModal(link.getAttribute('href'));
+  });
+}
+
+export function isSoundcloudLink(link) {
+  return link.getAttribute('href').includes('soundcloud.com/player')
+      && link.closest('.block.embed') === null;
+}
+
+export function addSoundcloudShowHandler(link) {
+  link.classList.add('text-link-with-soundcloud');
+
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const thumbnail = link.closest('div')?.querySelector('picture');
+    const title = link.closest('div')?.querySelector('h1, h2, h3');
+    const text = link.closest('div')?.querySelector('p:not(.button-container, .image)');
+
+    // eslint-disable-next-line import/no-cycle
     import('../common/modal/modal.js').then((modal) => {
-      modal.showModal(link.getAttribute('href'));
+      const episodeInfo = document.createElement('div');
+      episodeInfo.classList.add('modal-soundcloud');
+      episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
+      <div class="episode-text">
+          <h2></h2> 
+          <p></p>
+      </div>`;
+      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
+      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
+      episodeInfo.querySelector('p').innerText = text?.innerText || '';
+
+      modal.showModal(link.getAttribute('href'), null, episodeInfo);
     });
   });
 }
@@ -424,7 +581,7 @@ export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.innerText = '';
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary');
+  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
 
   addPlayIcon(videoLink);
 }
