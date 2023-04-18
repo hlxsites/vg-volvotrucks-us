@@ -16,6 +16,10 @@
     font-weight: bold;
 }
 
+div.text.l {
+    font-size:   var(--body-font-size-l);
+}
+
 div.text.m {
     font-size:   var(--body-font-size-m);
 }

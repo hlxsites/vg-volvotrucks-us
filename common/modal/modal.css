@@ -36,29 +36,19 @@
 }
 
 .modal-before-banner {
-  font-size: 16px;
-  background: var(--background-color);
-  text-align: center;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.modal-before-banner button {
-  border: none;
-  background: transparent;
-  color: #0d3c87;
-  text-decoration: underline;
-  font-size: 16px;
-  font-weight: 400;
-  font-family: var(--ff-volvo-novum);
+  background: white;
 }
 
 .modal-before-banner button.modal-close-button {
-  padding-left: 20px;
-  color: var( --volvo-text-light-gray);
+  color: var(--volvo-text-light-gray);
   text-decoration: none;
   font-size: 18px;
+  background: none;
+  border: none;
+  margin-left: 20px;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
