@@ -2047,3 +2047,14 @@
   color: #004fbc;
   border: 0!important;
 }
+
+.search-results .input-container-custom .sf-header-searchstudio-js .sf-form .loader {
+  transform: translateY(-50%);
+  top: 50%;
+  background: transparent;
+}
+
+.search-results .input-container-wrapper .loader .spinner-border {
+  border-color: #004FBC;
+  border-right-color: transparent;
+}
