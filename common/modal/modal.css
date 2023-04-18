@@ -69,3 +69,35 @@
     width: 1170px;
   }
 }
+
+
+/* adjustments for soundcloud variant of modal, e.g. https://www.volvotrucks.us/trucks/powertrain/i-torque/ */
+.modal-content .modal-soundcloud {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2%;
+  gap: 2%;
+}
+
+.modal-content:has(.modal-soundcloud)  {
+  aspect-ratio: unset;
+}
+
+.modal-content .modal-before-iframe:has(.modal-soundcloud) + iframe {
+  height: 200px;
+}
+
+.modal-soundcloud .episode-image {
+  flex: 20%;
+}
+
+.modal-soundcloud .episode-text {
+  flex: 80%;
+}
+
+.modal-soundcloud .episode-image img {
+  width: 100%;
+  height: unset;
+}
