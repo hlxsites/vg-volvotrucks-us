@@ -1,0 +1,11 @@
+.get-an-offer-sidebar .details {
+    display: none;
+}
+
+.get-an-offer-sidebar.show-details .details {
+    display: block;
+}
+
+.get-an-offer-sidebar.show-details .form {
+    display: none;
+}
