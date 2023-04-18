@@ -189,17 +189,23 @@ export default async function decorate(block) {
   // loading scripts one by one to prevent inappropriate script execution order.
   // eslint-disable-next-line no-restricted-syntax
   for (const script of scripts) {
+    let waitForLoad = Promise.resolve();
     const newScript = document.createElement('script');
+
+    waitForLoad = new Promise((resolve) => {
+      newScript.addEventListener('load', resolve);
+    });
 
     newScript.setAttribute('type', 'text/javascript');
 
     if (script.inline) {
       newScript.innerHTML = script.inline;
-      script.async = false;
+      document.body.append(newScript);
     } else {
-      script.async = true;
       newScript.src = script.link;
+      document.body.append(newScript);
+      // eslint-disable-next-line no-await-in-loop
+      await waitForLoad;
     }
-    document.body.append(newScript);
   }
 }
