@@ -409,16 +409,15 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
-  const templateName = getMetadata('template');
-  const templatePromise = templateName ? loadTemplate(doc, templateName) : Promise.resolve();
-
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    const templateName = getMetadata('template');
+    if (templateName) await loadTemplate(doc, templateName);
     await waitForLCP(LCP_BLOCKS);
   }
-  await templatePromise;
+
   await getPlaceholders();
 }
 
