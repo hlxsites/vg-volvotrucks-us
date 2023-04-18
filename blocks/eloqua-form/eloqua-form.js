@@ -8,6 +8,7 @@ const addForm = async (block) => {
   const thankYou = block.firstElementChild.nextElementSibling;
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   if (!data.ok) {
+    // eslint-disable no-console
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
     return;
@@ -24,6 +25,7 @@ const addForm = async (block) => {
         const body = new FormData(this);
         const { action, method } = this;
         fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
+          // eslint-disable no-console
           if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
           const firstContent = thankYou.firstElementChild.firstElementChild;
           if (firstContent.tagName === 'A') {
