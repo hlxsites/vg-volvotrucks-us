@@ -33,10 +33,19 @@
 /* mobile: show accordion */
 @media screen and (max-width: 766px) {
 
+  .block.footer .footer-gray .link-column:not(.expand) p{
+    display: none;
+  }
+
   .block.footer .footer-gray h3 {
     border-top: 1px solid var(--background-color);
     padding: 20px 1rem;
     background-color: #E1DFDD;
+    cursor: pointer;
+  }
+
+  .block.footer .footer-gray .link-column:not(.expand) h3:hover{
+    background-color: #B8DeD8;
   }
 
   .block.footer .footer-gray a {

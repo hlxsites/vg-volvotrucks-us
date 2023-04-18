@@ -1,6 +1,20 @@
 import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
 /* eslint-disable no-use-before-define */
 
+function toggleExpand(target) {
+  const { classList } = target.parentElement;
+  if (classList.contains('expand')) {
+    classList.remove('expand');
+  } else {
+    // close all others
+    target.closest('.link-column-wrapper').querySelectorAll('.link-column').forEach((column) => {
+      column.classList.remove('expand');
+    });
+
+    classList.add('expand');
+  }
+}
+
 /**
  * loads and decorates the footer
  * @param {Element} block The header block element
@@ -28,7 +42,10 @@ export default async function decorate(block) {
   grayFooter.querySelectorAll('h3').forEach((h3) => {
     h3.parentElement.classList.add('link-column');
     h3.parentElement.parentElement.classList.add('link-column-wrapper');
+    h3.addEventListener('click', (e) => toggleExpand(e.target));
   });
+  // initialize first column to be expanded
+  grayFooter.querySelector('.link-column').classList.add('expand');
 
   footerBar?.classList.add('footer-bar');
   footerCopyright?.classList.add('footer-copyright');
