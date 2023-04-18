@@ -114,7 +114,6 @@
 .block .latest-magazine-articles .content h3 {
     margin-bottom: 10px;
     font-family: var(--ff-volvo-novum-medium);
-    font-size: var(--heading-font-size-xs);
     letter-spacing: -.1px;
     color: var(--volvo-text-gray);
     margin-top: 24px;
@@ -165,7 +164,6 @@
     margin-bottom: 16px;
     display: table;
     font-family: var(--ff-volvo-novum-medium);
-    font-size: var(--heading-font-size-s);
     letter-spacing: -.1px!important;
     color: var(--volvo-text-gray);
 }
