@@ -91,12 +91,10 @@ const buildPerformanceSpecifications = (block, engineData) => {
     const engineNum = engine.rating;
     ratings.push(engineNum);
 
-    const SVGengine = getPerformanceChart(engine);
-
     const chart = document.createElement('li');
     chart.classList.add('performance-chart');
     chart.classList.add(`chart-${engineNum}`);
-    chart.innerHTML = SVGengine;
+    chart.innerHTML = getPerformanceChart(engine);
 
     chartListContainer.append(chart);
   });
