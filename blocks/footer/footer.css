@@ -13,7 +13,12 @@
 @media screen and (min-width: 767px) {
   .block.footer .footer-gray {
     margin: 0 -15px;
-    padding-top: 48px;
+    padding-top: 20px;
+    padding-bottom: 28px;
+  }
+  .block.footer .footer-gray p {
+    font-size: var(--body-font-size-xs);
+    margin-top: 2rem;
   }
 
   .block.footer .footer-gray > div  {
@@ -24,7 +29,6 @@
   .block.footer .footer-gray > div  > div {
     display: flex;
     flex-direction: column;
-    gap: 120px;
   }
 
   .block.footer .footer-gray > div  img {
@@ -52,6 +56,12 @@
   .block.footer .footer-gray a:hover {
     text-decoration: none;
     color: var(--link-hover-color);
+  }
+
+  .block.footer .footer-gray a::after {
+    font-family: var(--ff-fontawesome);
+    padding-left: 8px;
+    content: "\f105";
   }
 }
 
