@@ -1,6 +1,6 @@
 body.magazine>main {
   position: relative;
-  padding: 108px 15px 0;
+  padding: 108px 0 0;
   margin: 0 auto;
 }
 
@@ -13,7 +13,6 @@ body.magazine>main .section.template .row.size-img {
   display: flex;
   flex-flow: column wrap;
   height: 410px;
-  padding: 0;
   overflow: hidden;
 }
 
