@@ -148,6 +148,7 @@ body.magazine>main div.default-content-wrapper > blockquote > p {
   quotes: none;
   text-align: center;
   display: table;
+  margin: 0 auto;
 }
 
 body.magazine>main .section.article-sidebar p {
