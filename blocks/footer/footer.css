@@ -6,6 +6,55 @@
   width: 100%;
 }
 
+.block.footer .footer-gray {
+  background-color: #E1DFDD;
+}
+
+@media screen and (min-width: 767px) {
+  .block.footer .footer-gray {
+    margin: 0 -15px;
+    padding-top: 48px;
+  }
+
+  .block.footer .footer-gray > div  {
+    width: calc(var(--wrapper-width) - 100px);
+    margin: 0 auto;
+  }
+
+  .block.footer .footer-gray > div  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+  }
+
+  .block.footer .footer-gray > div  img {
+    width: 100%;
+  }
+
+  .block.footer .footer-gray > div .center {
+    text-align: center;
+  }
+
+  .block.footer .footer-gray > div  > div {
+    display: flex;
+    flex-direction: unset !important;
+  }
+
+  .block.footer .footer-gray > div  > div > div {
+    flex: 1;
+  }
+
+  .block.footer .footer-gray a:any-link {
+    color: var(--volvo-text-gray);
+    text-decoration: none;
+  }
+
+  .block.footer .footer-gray a:hover {
+    text-decoration: none;
+    color: var(--link-hover-color);
+  }
+}
+
 .block.footer p, .block.footer ul {
   font-family: var(--ff-volvo-novum);
   font-size: 14px;
@@ -13,16 +62,16 @@
   padding: 0;
 }
 
-.block.footer .footer-links {
+.block.footer .footer-bar {
   margin: 0 -15px;
   background-color: #000;
 }
 
-.block.footer .footer-links ul {
+.block.footer .footer-bar ul {
   text-align: center;
 }
 
-.block.footer .footer-links ul li {
+.block.footer .footer-bar ul li {
   margin: 8px 0;
   padding: 0 12px;
   display: inline-block;
@@ -30,11 +79,11 @@
   border-right: 1px solid #fff;
 }
 
-.block.footer .footer-links ul li:last-child {
+.block.footer .footer-bar ul li:last-child {
   border-right: none;
 }
 
-.block.footer .footer-links ul li a {
+.block.footer .footer-bar ul li a {
   text-decoration: none;
   color: #fff;
 }

@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
 
 function displayScrollToTop(buttonEl) {
   if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
@@ -35,16 +35,16 @@ function addScrollToTopButton(mainEl) {
 export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
-  const currentYear = new Date().getFullYear();
   const { pathname } = new URL(window.location.href);
   const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}footer`;
+  const footerPath = '/drafts/wingeier/footer';
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
   const footer = document.createElement('div');
-  footer.innerHTML = html.replaceAll('{year}', currentYear);
-  const anchors = footer.querySelectorAll('a');
-  anchors.forEach((anchor) => {
+  footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
+
+  // add target=_blank to external links
+  footer.querySelectorAll('a').forEach((anchor) => {
     try {
       const { origin } = new URL(anchor.href, window.location.href);
       if (origin && origin !== window.location.origin) {
@@ -55,11 +55,28 @@ export default async function decorate(block) {
       console.warn(`Invalid link ${anchor.href}`);
     }
   });
-  const footerItems = [...footer.children];
-  if (footerItems.length >= 2) {
-    footerItems[0].classList.add('footer-links');
-    footerItems[1].classList.add('footer-copyright');
-  }
+
+  // add icons to social media links
+  footer.querySelectorAll('a[href^="https://twitter.com/"]').forEach((anchor) => {
+    anchor.innerHTML = `<i class="fa fa-twitter"></i> ${anchor.innerHTML}`;
+  });
+  footer.querySelectorAll('a[href^="https://www.facebook.com/"]').forEach((anchor) => {
+    anchor.innerHTML = `<i class="fa fa-facebook"></i> ${anchor.innerHTML}`;
+  });
+  footer.querySelectorAll('a[href^="https://www.linkedin.com/"]').forEach((anchor) => {
+    anchor.innerHTML = `<i class="fa fa-linkedin"></i> ${anchor.innerHTML}`;
+  });
+  footer.querySelectorAll('a[href^="https://www.youtube.com/"]').forEach((anchor) => {
+    anchor.innerHTML = `<i class="fa fa-youtube"></i> ${anchor.innerHTML}`;
+  });
+  footer.querySelectorAll('a[href^="https://www.instagram.com/"]').forEach((anchor) => {
+    anchor.innerHTML = `<i class="fa fa-instagram"></i> ${anchor.innerHTML}`;
+  });
+
+  footer.children[0]?.classList.add('footer-gray');
+  footer.children[0]?.firstElementChild.classList.remove('columns');
+  footer.children[1]?.classList.add('footer-bar');
+  footer.children[2]?.classList.add('footer-copyright');
   await decorateIcons(footer);
   block.append(footer);
   addScrollToTopButton(block);
