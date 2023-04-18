@@ -186,6 +186,7 @@
 
   .teaser-cards-1 .block.teaser-cards p.image img {
     height: 100%;
+    width: 100%;
   }
 
   .teaser-cards-1 .block.teaser-cards a {
