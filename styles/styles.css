@@ -563,6 +563,33 @@ a.button.text-link-with-video::after {
   content: unset;
 }
 
+/* video low resolution banner */
+.low-resolution-banner {
+  font-size: 16px;
+  background: var(--background-color);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.low-resolution-banner-cookie-settings {
+  border: none;
+  background: transparent;
+  color: #0d3c87;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--ff-volvo-novum);
+}
+
+.low-resolution-banner button.modal-close-button {
+  padding-left: 20px;
+  color: var( --volvo-text-light-gray);
+  text-decoration: none;
+  font-size: 18px;
+}
+
 /* pagination */
 .pager .pagination ol li .last::before {
   font-family: var(--ff-fontawesome);
