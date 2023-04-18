@@ -140,7 +140,7 @@ export default async function decorate(doc) {
       sidebarSection.classList.remove('loading');
       sectionObserver.disconnect();
     }
-  })
+  });
   doc.querySelectorAll('main > .section[data-section-status]').forEach((section) => {
     sectionObserver.observe(section, { attributeFilter: ['data-section-status'] });
   });
