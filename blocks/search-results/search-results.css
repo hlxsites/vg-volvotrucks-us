@@ -2041,3 +2041,9 @@
 .search-results .card-searchstudio-js-title em {
   font-style: normal;
 }
+
+.search-results .rl-search .pagination-wrap .pagination .page-item a.page-link-searchstudio-js:not([disabled]) {
+  padding: 0.5rem;
+  color: #004fbc;
+  border: 0!important;
+}
