@@ -3,7 +3,7 @@ import templates from './templates.js';
 export default async function decorate(block) {
   block.innerHTML = `
   <div class="search-input-wrapper">
-    <div id="searchInput"></div>
+    <div id="searchResultInput"></div>
   </div>
 
   <div class="search-results-summary-options-wrapper">
@@ -113,7 +113,7 @@ export default async function decorate(block) {
             hideUniqueKey: true,
           },
           searchResults: '#searchResultsSection',
-          searchInput: '#searchInput',
+          searchInput: '#searchResultInput',
           searchResultSummarySection: '#searchResultSummarySection',
           facetSection: '#searchFacetSection',
           searchOptionsSection: '#searchOptionsSection',
