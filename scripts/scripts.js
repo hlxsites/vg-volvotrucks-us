@@ -566,9 +566,9 @@ export function addSoundcloudShowHandler(link) {
           <h2></h2> 
           <p></p>
       </div>`;
-      episodeInfo.querySelector('picture').innerHTML = thumbnail.innerHTML;
-      episodeInfo.querySelector('h2').innerText = title.innerText;
-      episodeInfo.querySelector('p').innerText = text.innerText;
+      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
+      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
+      episodeInfo.querySelector('p').innerText = text?.innerText || '';
 
       modal.showModal(link.getAttribute('href'), null, episodeInfo);
     });
