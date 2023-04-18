@@ -510,6 +510,7 @@ header nav .sections .section .navigation-cta {
     border-radius: 0;
     background-color: transparent;
     font-size: 18px;
+    z-index: 99;
   }
 
   /* sections */
@@ -541,10 +542,10 @@ header nav .sections .section .navigation-cta {
   }
 
   header nav .sections .section > a {
-      border: 0;
-      padding: 15px 24px;
-      height: 48px;
-      cursor: pointer;
+    border: 0;
+    padding: 15px 24px;
+    height: 48px;
+    cursor: pointer;
   }
 
   header nav .sections .section.expand {
@@ -758,4 +759,16 @@ header nav .sections .section .navigation-cta {
   header nav .sections .section.expand.image-list > ul > li > ul > li img {
     height: 92.5px;
   }
+}
+
+/* search widget styles */
+
+.header .search-container, 
+.studio-search-widget .search-wrapper {
+  padding: 0;
+}
+
+.studio-search-widget .studio-widget-search-icon,
+.studio-search-widget .studio-widget-small-search-icon {
+  display: none;
 }

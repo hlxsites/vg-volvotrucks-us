@@ -40,9 +40,9 @@
 
 @media (max-width: 992px) {
   .studio-search-widget {
-    padding: 10px 0 0;
     border: 1px solid #ebebea;
     background-color: #ebebea;
+    padding: 0;
   }
 
   .dealer-header .studio-search-widget {
@@ -84,15 +84,6 @@
   left: 7px;
 }
 
-.studio-search-widget .search-wrapper {
-  visibility: visible !important;
-  position: relative;
-  top: -25px;
-  width: 100% !important;
-  text-align: center;
-  padding: 10px 0;
-  transition: visibility 0.2s, width 0.2s ease-in;
-}
 
 .dealer-header .studio-search-widget .search-wrapper {
   top: -15px;
@@ -152,8 +143,9 @@
 }
 
 @media (max-width: 991px) {
-  .studio-search-widget .search-wrapper {
+  .search-container .studio-search-widget .search-wrapper {
     top: -8px;
+    padding-top: 15px;
   }
 
   .header-search-icon {
@@ -215,7 +207,8 @@
 }
 
 .studio-search-widget .search-wrapper .studio-widget-search-input {
-  padding-top: 4px;
+  width: 50%;
+  height: 40px;
 }
 
 .studio-search-widget.expanded .search-wrapper {
@@ -413,6 +406,10 @@
   .search-results-summary-options-wrapper,
   .search-results-wrapper {
     max-width: 960px;
+  }
+
+  .studio-search-widget .search-wrapper .studio-widget-search-input {
+    border: 1px solid #E1DFDD;
   }
 }
 
