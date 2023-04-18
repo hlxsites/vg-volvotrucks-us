@@ -9,7 +9,7 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-/* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax */
+/* eslint-disable no-shadow,no-await-in-loop,no-restricted-syntax,max-len */
 
 import {
   readBlockConfig,
@@ -349,14 +349,14 @@ async function buildElements(pressReleases, filter, createFilters, buildPressRel
 
   let page = parseInt(getSelectionFromUrl('page'), 10);
   page = Number.isNaN(page) ? 1 : page;
-  let pagination;
+
   if (!relatedPressReleases && createFilters) {
     const filterElements = await renderFilters(pressReleases, createFilters);
     if (filterElements) {
-      elements['filter'] = filterElements;
+      elements.filter = filterElements;
     }
     if (limitPerPage > 0) {
-      elements['pagination'] = createPagination(filteredData, page, limitPerPage);
+      elements.pagination = createPagination(filteredData, page, limitPerPage);
     }
   }
   if (limitPerPage > 0) {
@@ -371,18 +371,19 @@ async function buildElements(pressReleases, filter, createFilters, buildPressRel
     articleItem.appendChild(pressReleaseArticle);
     articleList.appendChild(articleItem);
   });
-  elements['list'] = articleList;
+  elements.list = articleList;
   return elements;
 }
-// eslint-disable-next-line max-len
+
 export async function createList(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, mainEl) {
+  /* eslint-disable no-use-before-define */
   const cfg = readBlockConfig(mainEl);
 
   async function reloadList(params) {
     // push the new querystring state
     const url = new URL(window.location);
     [...params.entries()].forEach(([k, v]) => url.searchParams.set(k, v));
-    history.pushState({}, "", url);
+    window.history.pushState({}, '', url);
     // rebuild the list
     const elements = await buildElements(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, cfg);
     renderList(mainEl, elements);
@@ -419,7 +420,7 @@ export async function createList(pressReleases, filter, createFilters, buildPres
     children.push(list);
     if (pagination) children.push(attachClickListners(pagination.cloneNode(true)));
     el.replaceChildren(...children);
-  };
+  }
 
   const elements = await buildElements(pressReleases, filter, createFilters, buildPressReleaseArticle, limitPerPage, cfg);
   renderList(mainEl, elements);
