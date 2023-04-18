@@ -376,11 +376,14 @@ function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => {
     import('./delayed.js');
-
     // check for search div loaded
     if (document.getElementById('div-widget-id') && !searchLoaded) {
       window.initiateSearchWidget();
       searchLoaded = true;
+    }
+
+    // after search widget is loaded remove autocomplete
+    if (searchLoaded && document.querySelector('.studio-widget-autosuggest-results')) {
       const searchWidget = document.querySelector('.studio-widget-search-input');
       searchWidget.setAttribute('autocomplete', 'off');
     }
@@ -389,7 +392,6 @@ function loadDelayed() {
 }
 
 async function loadSearchWidget() {
-  // const searchUrl = `${window.location.origin}/search-results`;
   const scripts = [{
     link: 'https://static.searchstax.com/studio-js/v3/js/search-widget.min.js',
   },
