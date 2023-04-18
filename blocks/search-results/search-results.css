@@ -34,6 +34,10 @@
   display: block !important;
 }
 
+.search-results.block  {
+  flex: 1;
+}
+
 @media (max-width: 992px) {
   .studio-search-widget {
     padding: 10px 0 0;

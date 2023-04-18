@@ -372,15 +372,71 @@ async function loadLazy(doc) {
  * the user experience.
  */
 function loadDelayed() {
+  let searchLoaded = false;
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    import('./delayed.js');
+
+    // check for search div loaded
+    if (document.getElementById('div-widget-id') && !searchLoaded) {
+      window.initiateSearchWidget();
+      searchLoaded = true;
+    }
+  }, 3000);
   // load anything that can be postponed to the latest here
+}
+
+async function loadSearchWidget() {
+  // const searchUrl = `${window.location.origin}/drafts/lakshmi/search-results`;
+  const scripts = [{
+    link: 'https://static.searchstax.com/studio-js/v3/js/search-widget.min.js',
+  },
+  {
+    inline: `
+    function initiateSearchWidget(){
+      //Call when document is loaded
+      new SearchstudioWidget(
+        'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
+        'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+        'http://localhost:3000/drafts/lakshmi/search',
+        3,
+        'q', 
+        'div-widget-id',
+        'en'
+      )
+    };
+    window.initiateSearchWidget = initiateSearchWidget;
+    `,
+  }];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const script of scripts) {
+    let waitForLoad = Promise.resolve();
+    const newScript = document.createElement('script');
+
+    waitForLoad = new Promise((resolve) => {
+      newScript.addEventListener('load', resolve);
+    });
+
+    newScript.setAttribute('type', 'text/javascript');
+
+    if (script.inline) {
+      newScript.innerHTML = script.inline;
+      document.body.append(newScript);
+    } else {
+      newScript.src = script.link;
+      document.body.append(newScript);
+      // eslint-disable-next-line no-await-in-loop
+      await waitForLoad;
+    }
+  }
 }
 
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+  loadSearchWidget();
 }
 
 loadPage();

@@ -175,13 +175,10 @@ export default async function decorate(block) {
         </div>
       </div>
 
-      <div class='search' aria-expanded="false">
+      <div class="search" aria-expanded="false">
         <div>
           <label for="searchInput">Search Term</label>
-          <input autocomplete="off" type="text" id="searchInput" placeholder="Search for">
-          <button class="search-button" aria-label="submit" >
-            <i class="fa fa-search"></i>
-          </button>
+          <div id="div-widget-id" class='studio-search-widget'></div>
         </div>
       </div>
 

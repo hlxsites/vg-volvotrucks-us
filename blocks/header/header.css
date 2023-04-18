@@ -759,3 +759,102 @@ header nav .sections .section .navigation-cta {
     height: 92.5px;
   }
 }
+
+studio-search-widget {
+  position: relative;
+  width: 60px;
+  text-align: center;
+  border: 1px solid #ced4da;
+  border-radius: 80px;
+  padding: 10px 0;
+}
+
+.studio-search-widget .studio-widget-search-icon{
+  position:relative;
+  display:inline-block;
+  background: #fff;
+  border-radius: 30px;
+  height: 8px;
+  width: 8px;
+  border: 2px solid #2e2e30;
+  margin-left: -5px;
+}
+
+.studio-search-widget .studio-widget-search-icon:after {
+  content: "";
+  height: 2px;
+  width: 8px;
+  background: #2e2e30;
+  position:absolute;
+  top:9px;
+  left:7px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+
+.studio-search-widget .search-wrapper{
+  width: 60px;
+  text-align: center;
+  border: 1px solid #ced4da;
+  padding: 10px 0;
+  background-color: white;
+  transition: visibility 0.2s, width 0.2s ease-in;
+  display: flex;
+}
+
+.studio-search-widget .search-wrapper .studio-widget-small-search-icon{
+  position:relative;
+  display:inline-block;
+  background: #fff;
+  border-radius: 30px;
+  height: 6px;
+  width: 6px;
+  border: none;
+  margin-left: 15px;
+  margin-right: 5px;
+  margin-top: 4px;
+}
+
+
+.studio-search-widget .search-wrapper .studio-widget-search-input{
+  padding-top: 4px;
+}
+
+.studio-search-widget.expanded .search-wrapper{
+  width: 600px;
+}
+
+
+.studio-search-widget .search-wrapper .studio-widget-autosuggest-results{
+  position: absolute;
+  width: calc(100%);
+  top: 42px;
+  box-shadow: 0 6px 15px 0 rgb(0 0 0 / 10%);
+  border-radius: 15px;
+}
+
+.studio-search-widget .search-wrapper .studio-widget-autosuggest-results .result-row{
+  width: calc(100% - 60px);
+  padding: 10px;
+  padding-left: 30px;
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.studio-search-widget .search-wrapper .studio-widget-autosuggest-results .result-row.searchstudio-active-row{
+  /* background-color: white; */
+  color: #4bb5e2;
+  cursor: pointer;
+}
+
+.studio-search-widget .search-wrapper input{
+  width: calc(100% - 40px);
+  border: none;
+  height: 13px;
+  box-shadow: none;
+  outline: none;
+  z-index: 4;
+  /* padding: 0 20px; */
+}
