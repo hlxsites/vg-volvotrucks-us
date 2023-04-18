@@ -1,23 +1,70 @@
 .footer-wrapper {
-  padding-left: 15px;
-  padding-right: 15px;
+  /*padding-left: 15px;*/
+  /*padding-right: 15px;*/
   margin: 48px auto 0;
   display: inline-block;
   width: 100%;
 }
 
-.block.footer .footer-gray {
-  background-color: #E1DFDD;
+
+.block.footer .footer-gray h3 {
+  font-size: var(--body-font-size-xs);
+}
+.block.footer .footer-gray p {
+  font-size: var(--body-font-size-xs);
 }
 
+.block.footer .footer-gray a:any-link {
+  color: var(--volvo-text-gray);
+  text-decoration: none;
+}
+
+.block.footer .footer-gray a:hover {
+  text-decoration: none;
+  color: var(--link-hover-color);
+}
+
+.block.footer .footer-gray a::after {
+  font-family: var(--ff-fontawesome);
+  padding-left: 8px;
+  content: "\f105";
+}
+
+/* mobile: show accordion */
+@media screen and (max-width: 766px) {
+
+  .block.footer .footer-gray h3 {
+    border-top: 1px solid var(--background-color);
+    padding: 20px 1rem;
+    background-color: #E1DFDD;
+  }
+
+  .block.footer .footer-gray a {
+    display: flex;
+    height: var(--item-height);
+    text-decoration: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* hide social media icons on mobile */
+  .block.footer .footer-gray a i {
+    display: none;
+  }
+
+}
+
+/* desktop */
 @media screen and (min-width: 767px) {
   .block.footer .footer-gray {
+    background-color: #E1DFDD;
     margin: 0 -15px;
-    padding-top: 20px;
+    padding-top: 48px;
     padding-bottom: 28px;
   }
+
   .block.footer .footer-gray p {
-    font-size: var(--body-font-size-xs);
     margin-top: 2rem;
   }
 
@@ -28,40 +75,10 @@
 
   .block.footer .footer-gray > div  > div {
     display: flex;
-    flex-direction: column;
-  }
-
-  .block.footer .footer-gray > div  img {
-    width: 100%;
-  }
-
-  .block.footer .footer-gray > div .center {
-    text-align: center;
-  }
-
-  .block.footer .footer-gray > div  > div {
-    display: flex;
-    flex-direction: unset !important;
   }
 
   .block.footer .footer-gray > div  > div > div {
     flex: 1;
-  }
-
-  .block.footer .footer-gray a:any-link {
-    color: var(--volvo-text-gray);
-    text-decoration: none;
-  }
-
-  .block.footer .footer-gray a:hover {
-    text-decoration: none;
-    color: var(--link-hover-color);
-  }
-
-  .block.footer .footer-gray a::after {
-    font-family: var(--ff-fontawesome);
-    padding-left: 8px;
-    content: "\f105";
   }
 }
 
