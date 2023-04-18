@@ -44,6 +44,15 @@ export default async function decorate(block) {
     h3.parentElement.parentElement.classList.add('link-column-wrapper');
     h3.addEventListener('click', (e) => toggleExpand(e.target));
   });
+  // move each link into the first paragraph
+  grayFooter.querySelectorAll('a').forEach((a) => {
+    const firstParagraph = a.closest('.link-column').querySelector('p');
+    firstParagraph.classList.add('link-column-content');
+    if (a.parentElement !== firstParagraph) {
+      a.parentElement.remove();
+    }
+    firstParagraph.append(a);
+  });
   // initialize first column to be expanded
   grayFooter.querySelector('.link-column').classList.add('expand');
 
