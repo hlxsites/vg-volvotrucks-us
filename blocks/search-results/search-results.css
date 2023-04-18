@@ -209,6 +209,7 @@
 .studio-search-widget .search-wrapper .studio-widget-search-input {
   width: 50%;
   height: 40px;
+  font-size: 14px;
 }
 
 .studio-search-widget.expanded .search-wrapper {
@@ -499,7 +500,6 @@
   top: 0;
   display: flex;
   color: #fff;
-  font-family: Roboto;
   font-weight: 500;
   font-size: 12px;
   background-color: #33475a;
@@ -566,7 +566,6 @@
   .card-searchstudio-js-path {
   margin-bottom: 8px;
   font-size: 14px;
-  font-family: Roboto;
   font-weight: 300;
   line-height: 1.2;
   overflow: hidden;
@@ -589,7 +588,6 @@
   .card-searchstudio-js-text
   span {
   font-size: 14px;
-  font-family: Roboto;
   font-weight: 300;
   line-height: 21px;
   overflow: hidden;
@@ -648,7 +646,6 @@
 
 .search-feedback-filters-custom .sf-filter-info {
   font-size: 16px;
-  font-family: Roboto;
   font-weight: 300;
   padding-left: 0;
 }
@@ -697,17 +694,6 @@
 .search-feedback-filters-custom strong {
   font-weight: 500;
   font-family: var(--fixed-font-family);
-}
-
-#sf-widget-custom,
-#sf-widget-custom .sf-form-control,
-#sf-widget-custom .sf-modal-header .sf-title,
-#sf-widget-custom a,
-#sf-widget-custom a.sf-open-feedback,
-#sf-widget-custom button,
-#sf-widget-custom label,
-#sf-widget-custom p {
-  font-family: Roboto, sans-serif;
 }
 
 @media (max-width: 1199px) {
@@ -1150,7 +1136,6 @@
 }
 
 .input-container-custom .sf-header-searchstudio-js .sf-form .form-control {
-  font-family: "Roboto Light";
   width: 100%;
   height: 64px;
   padding-left: 30px;
@@ -1199,7 +1184,6 @@
   height: 64px;
   padding-left: 30px;
   padding-right: 225px;
-  font-family: Roboto;
   font-size: 18px;
   box-shadow: none;
   background-size: 145px;
@@ -1262,6 +1246,21 @@
   right: 14px;
   top: 11px;
   cursor: pointer;
+  position: absolute;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .input-container-custom .sf-header-searchstudio-js .sf-form .btn:focus {
@@ -1305,24 +1304,6 @@
 
 .input-container-custom .sf-header-searchstudio-js .sf-form .btn .search-close {
   background-image: url("data:image/svg+xml; base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI1LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA0OCA0OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDggNDg7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRkY3OTU5O30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTI2LjksMjQuMWw2LjQsNi40YzAuOCwwLjgsMC44LDIsMCwyLjhjLTAuOCwwLjgtMiwwLjgtMi44LDBMMjQsMjYuOWwtNi40LDYuNGMtMC44LDAuOC0yLDAuOC0yLjgsMAoJYy0wLjgtMC44LTAuOC0yLDAtMi44bDYuNC02LjRsLTYuNC02LjRjLTAuOC0wLjgtMC44LTIsMC0yLjhjMC44LTAuOCwyLTAuOCwyLjgsMGw2LjQsNi40bDYuNC02LjRjMC44LTAuOCwyLTAuOCwyLjgsMAoJYzAuOCwwLjgsMC44LDIsMCwyLjhMMjYuOSwyNC4xeiBNMjQsNDguMWMtMTMuMywwLTI0LTEwLjctMjQtMjRzMTAuNy0yNCwyNC0yNHMyNCwxMC43LDI0LDI0UzM3LjMsNDguMSwyNCw0OC4xeiBNMjQsNDMuNAoJYzEwLjcsMCwxOS40LTguNywxOS40LTE5LjRTMzQuNyw0LjcsMjQsNC43UzQuNiwxMy4zLDQuNiwyNC4xUzEzLjMsNDMuNCwyNCw0My40eiIvPgo8L3N2Zz4K");
-}
-
-.input-container-custom .sf-header-searchstudio-js .sf-form .btn {
-  position: absolute;
-  display: inline-block;
-  font-weight: 400;
-  color: #212529;
-  text-align: center;
-  vertical-align: middle;
-  user-select: none;
-  background-color: transparent;
-  border: 1px solid transparent;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .sf-lists-custom {
@@ -1436,7 +1417,6 @@
   .sidebar-heading {
   position: relative;
   font-size: 16px;
-  font-family: VolvoNovumRegular;
   text-align: start;
 }
 
@@ -1451,7 +1431,6 @@
   .sidebar-heading
   a {
   position: relative;
-  font-family: Roboto;
   font-weight: 400;
   display: block;
   color: #33475a;
@@ -1621,7 +1600,6 @@
   label {
   font-size: 14px;
   text-transform: uppercase;
-  font-family: Roboto;
   font-weight: 300;
   color: #33475a;
   opacity: 0.85;
@@ -1682,7 +1660,6 @@
 
 .facet-template-container-custom .sf-sidebar-container .sf-sidebar.no-results {
   padding-top: 0;
-  font-family: Roboto;
   font-weight: 300;
 }
 
@@ -1728,7 +1705,7 @@
   .sf-sidebar-container
   .btn-custom
   .search-close {
-  background-image: url(/images/Close-Icons.png);
+  background-image: url('/images/Close-Icons.png');
 }
 
 @media (max-width: 991px) {
@@ -1819,7 +1796,6 @@
     display: flex;
     text-transform: uppercase;
     color: #33475a;
-    font-family: Roboto;
     padding: 20px 40px;
     border-bottom: 1px solid #53565a;
     align-self: flex-end;
@@ -1938,11 +1914,6 @@
 .rl-search a.text-primary {
   margin-left: 6px;
   color: #fc6730 !important;
-  font-family: "Roboto Light";
-}
-
-.rl-search a.text-primary:hover {
-  font-family: "Roboto Medium";
 }
 
 .rl-search .pagination-wrap .pagination .page-item,
