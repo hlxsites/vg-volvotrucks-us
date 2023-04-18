@@ -99,19 +99,21 @@ function filterArticles(articles, activeFilters) {
 
 async function createFilter(articles, activeFilters, createDropdown, createFullText) {
   const fullText = createFullText('search', activeFilters.search, 'Search');
-  const categoryOptions = await getFilterOptions('category');
+  const [categoryOptions, topicOptions, truckOptions] = await Promise.all([
+    getFilterOptions('category'),
+    getFilterOptions('topic'),
+    getFilterOptions('truckseries'),
+  ]);
   const categoryFilter = createDropdown(categoryOptions, activeFilters.category, 'category', 'All Categories');
   const categorySelection = categoryFilter.querySelector('select');
   categorySelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
-  const topicOptions = await getFilterOptions('topic');
   const topicFilter = createDropdown(topicOptions, activeFilters.topic, 'topic', 'All Topics');
   const topicSelection = topicFilter.querySelector('select');
   topicSelection.addEventListener('change', (e) => {
     e.target.form.submit();
   });
-  const truckOptions = await getFilterOptions('truckseries');
   const truckFilter = createDropdown(truckOptions, activeFilters.truck, 'truck', 'All Truck Series');
   const truckSelection = truckFilter.querySelector('select');
   truckSelection.addEventListener('change', (e) => {
