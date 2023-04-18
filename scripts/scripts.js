@@ -400,7 +400,7 @@ async function loadSearchWidget() {
         'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
         'http://localhost:3000/drafts/lakshmi/search',
         3,
-        'q', 
+        'searchStudioQuery', 
         'div-widget-id',
         'en'
       )
