@@ -1,12 +1,13 @@
 import { loadScript } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
+  const datasource = block.textContent.trim();
   window.locatorConfig = {
     asist: false,
     showAsistDialog: true,
     consolidateFilters: true,
     selectedBrand: 'volvo',
-    dataSource: 'https://mvservices.na.volvogroup.com/Volvo_DealerJSON.ashx',
+    dataSource: datasource,
     amenities: ['Appointments Accepted', 'Bilingual Service', 'Driver Lounge', 'Free Pickup and Delivery', 'Hotel Shuttle', 'Internet Service', 'Laundry', 'Showers', 'Telephones', 'Trailer Parking', 'Video Games'],
   };
 
