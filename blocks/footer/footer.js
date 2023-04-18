@@ -1,4 +1,32 @@
 import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
+/* eslint-disable no-use-before-define */
+
+/**
+ * loads and decorates the footer
+ * @param {Element} block The header block element
+ */
+export default async function decorate(block) {
+  const cfg = readBlockConfig(block);
+  block.textContent = '';
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  const footerPath = '/drafts/wingeier/footer';
+  const resp = await fetch(`${footerPath}.plain.html`);
+  const html = await resp.text();
+  const footer = document.createElement('div');
+  footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
+
+  openExternalLinksInNewTab(footer);
+  addSocialmediaIconsToLinks(footer);
+
+  footer.children[0]?.classList.add('footer-gray');
+  footer.children[0]?.firstElementChild.classList.remove('columns');
+  footer.children[1]?.classList.add('footer-bar');
+  footer.children[2]?.classList.add('footer-copyright');
+  await decorateIcons(footer);
+  block.append(footer);
+  addScrollToTopButton(block);
+}
 
 function displayScrollToTop(buttonEl) {
   if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
@@ -7,6 +35,7 @@ function displayScrollToTop(buttonEl) {
     buttonEl.style.display = 'none';
   }
 }
+
 function goToTopFunction() {
   let timeOut;
   if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
@@ -28,22 +57,8 @@ function addScrollToTopButton(mainEl) {
   `;
   mainEl.append(scrollToTopButton);
 }
-/**
- * loads and decorates the footer
- * @param {Element} block The header block element
- */
-export default async function decorate(block) {
-  const cfg = readBlockConfig(block);
-  block.textContent = '';
-  const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  const footerPath = '/drafts/wingeier/footer';
-  const resp = await fetch(`${footerPath}.plain.html`);
-  const html = await resp.text();
-  const footer = document.createElement('div');
-  footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
-  // add target=_blank to external links
+function openExternalLinksInNewTab(footer) {
   footer.querySelectorAll('a').forEach((anchor) => {
     try {
       const { origin } = new URL(anchor.href, window.location.href);
@@ -55,8 +70,9 @@ export default async function decorate(block) {
       console.warn(`Invalid link ${anchor.href}`);
     }
   });
+}
 
-  // add icons to social media links
+function addSocialmediaIconsToLinks(footer) {
   footer.querySelectorAll('a[href^="https://twitter.com/"]').forEach((anchor) => {
     anchor.innerHTML = `<i class="fa fa-twitter"></i> ${anchor.innerHTML}`;
   });
@@ -72,12 +88,4 @@ export default async function decorate(block) {
   footer.querySelectorAll('a[href^="https://www.instagram.com/"]').forEach((anchor) => {
     anchor.innerHTML = `<i class="fa fa-instagram"></i> ${anchor.innerHTML}`;
   });
-
-  footer.children[0]?.classList.add('footer-gray');
-  footer.children[0]?.firstElementChild.classList.remove('columns');
-  footer.children[1]?.classList.add('footer-bar');
-  footer.children[2]?.classList.add('footer-copyright');
-  await decorateIcons(footer);
-  block.append(footer);
-  addScrollToTopButton(block);
 }
