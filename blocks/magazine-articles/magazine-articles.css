@@ -76,7 +76,7 @@
     position: absolute;
     display: inline-block;
     right: 15px;
-    top: 15px;
+    top: 5px;
     bottom: 0;
     font-size: 2.4rem;
     pointer-events: none;
@@ -255,6 +255,12 @@
     /* make sure the fields have the same width when stacked */
     .block.magazine-articles .list-filter fieldset div:nth-of-type(odd) { min-width: 294px; }
     .block.magazine-articles .list-filter fieldset div:nth-of-type(even) { min-width: 239px; }
+
+    .block.magazine-articles .category-field::after,
+    .block.magazine-articles .topic-field::after,
+    .block.magazine-articles .truck-field::after  {
+        top: 15px;
+    }
 }
 
 @media screen and (min-width: 992px) {
