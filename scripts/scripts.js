@@ -389,7 +389,6 @@ function loadDelayed() {
 }
 
 async function loadSearchWidget() {
-  // const searchUrl = `${window.location.origin}/search-results`;
   const scripts = [{
     link: 'https://static.searchstax.com/studio-js/v3/js/search-widget.min.js',
   },
@@ -400,9 +399,9 @@ async function loadSearchWidget() {
       new SearchstudioWidget(
         'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
         'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
-        'http://localhost:3000/search-results',
+        '${window.location.origin}/search-results',
         3,
-        'searchStudioQuery', 
+        'searchStudioQuery',
         'div-widget-id',
         'en'
       )
