@@ -186,9 +186,15 @@ const createMagazineArticles = (main, document, url) => {
     });
 
     const relatedSection = document.querySelector('section.hubTeaser.related');
-    const relatedCells = [['Related Articles'], [[''], ['']]];
+    const relatedCells = [['Related Articles'], ['']];
     const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
     relatedSection.replaceWith(relatedArticleBlock);
+
+    const subscribeSection = document.querySelector('section.hubTextBlock');
+    const subscribeCells = [['Eloqua Form'], ['ExceedingExpectationsSignup'], ['Thanks!']];
+    const subscribeBlock = WebImporter.DOMUtils.createTable(subscribeCells, document);
+    subscribeBlock.append(document.createElement('hr'));
+    subscribeSection.replaceWith(subscribeBlock);
 
     document.querySelector('aside.sidebar')?.remove();
     document.querySelector('section.hubArticleHero')?.remove();
