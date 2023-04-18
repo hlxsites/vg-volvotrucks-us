@@ -501,9 +501,11 @@ export function selectVideoLink(links, preferredType) {
   const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
 
-  return videoLink;
+  if (shouldUseYouTubeLinks && youTubeLink) {
+    return youTubeLink;
+  }
+  return localMediaLink;
 }
 
 export function showVideoModal(linkUrl) {
