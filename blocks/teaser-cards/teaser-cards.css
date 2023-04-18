@@ -172,6 +172,18 @@
     z-index: -1;
   }
 
+  .teaser-cards-1 .block.teaser-cards p.image::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    content: "";
+    opacity: .15;
+  }
+
   .teaser-cards-1 .block.teaser-cards p.image img {
     height: 100%;
   }
