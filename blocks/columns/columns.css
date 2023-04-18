@@ -32,7 +32,7 @@
     }
 
     .columns ul.cta-list li {
-        flex: 1;
+        flex: 1 0 auto;
         min-width: 242px;
         padding-left: 0;
         text-align: left;
