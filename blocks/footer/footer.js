@@ -126,4 +126,3 @@ function toggleExpand(targetH3) {
     }
   });
 }
-

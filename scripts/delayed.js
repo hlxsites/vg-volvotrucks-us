@@ -56,6 +56,7 @@ loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaId0}`, {
   async: true,
 });
 
+/* eslint-disable  func-names */
 (function (i, s, o, g, r, a, m) {
   // eslint-disable-next-line no-unused-expressions
   i.GoogleAnalyticsObject = r; i[r] = i[r] || function () {
@@ -98,3 +99,4 @@ ga('send', 'pageview');
 fbq('init', '620334125252675');
 // eslint-disable-next-line no-undef
 fbq('track', 'PageView');
+/* eslint-enable  func-names */
