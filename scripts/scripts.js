@@ -171,20 +171,8 @@ function buildCtaList(main) {
 
     if (isCtaList) {
       list.classList.add('cta-list');
-      lis.forEach((li, i) => {
-        li.classList.add('button-container');
-        const a = li.querySelector('a');
-        const up = a.parentElement;
-        a.classList.add('button');
-        if (up.tagName === 'EM') {
-          a.classList.add('secondary');
-        } else {
-          a.classList.add('primary');
-          if (i === 0) {
-            a.classList.add('dark');
-          }
-        }
-      });
+      const primaryLink = lis[0].querySelector('a.primary');
+      if (primaryLink) primaryLink.classList.add('dark');
     }
   });
 }
@@ -307,6 +295,9 @@ function decorateLinks(main) {
         addVideoShowHandler(link);
         return;
       }
+      if (isSoundcloudLink(link)) {
+        addSoundcloudShowHandler(link);
+      }
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
@@ -409,16 +400,15 @@ async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
-  const templateName = getMetadata('template');
-  const templatePromise = templateName ? loadTemplate(doc, templateName) : Promise.resolve();
-
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    const templateName = getMetadata('template');
+    if (templateName) await loadTemplate(doc, templateName);
     await waitForLCP(LCP_BLOCKS);
   }
-  await templatePromise;
+
   await getPlaceholders();
 }
 
@@ -501,9 +491,25 @@ export function selectVideoLink(links, preferredType) {
   const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-  const videoLink = shouldUseYouTubeLinks ? youTubeLink : localMediaLink;
 
-  return videoLink;
+  if (shouldUseYouTubeLinks && youTubeLink) {
+    return youTubeLink;
+  }
+  return localMediaLink;
+}
+
+export function createLowResolutionBanner() {
+  const lowResolutionMessage = getTextLable('Low resolution video message');
+  const changeCookieSettings = getTextLable('Change cookie settings');
+
+  const banner = document.createElement('div');
+  banner.classList.add('low-resolution-banner');
+  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
+  banner.querySelector('button').addEventListener('click', () => {
+    window.OneTrust.ToggleInfoDisplay();
+  });
+
+  return banner;
 }
 
 export function showVideoModal(linkUrl) {
@@ -512,14 +518,7 @@ export function showVideoModal(linkUrl) {
     let beforeBanner = null;
 
     if (isLowResolutionVideoUrl(linkUrl)) {
-      const lowResolutionMessage = getTextLable('Low resolution video message');
-      const changeCookieSettings = getTextLable('Change cookie settings');
-
-      beforeBanner = document.createElement('div');
-      beforeBanner.innerHTML = `${lowResolutionMessage} <button>${changeCookieSettings}</button>`;
-      beforeBanner.querySelector('button').addEventListener('click', () => {
-        window.OneTrust.ToggleInfoDisplay();
-      });
+      beforeBanner = createLowResolutionBanner();
     }
 
     modal.showModal(linkUrl, beforeBanner);
@@ -532,9 +531,39 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
+    showVideoModal(link.getAttribute('href'));
+  });
+}
+
+export function isSoundcloudLink(link) {
+  return link.getAttribute('href').includes('soundcloud.com/player')
+      && link.closest('.block.embed') === null;
+}
+
+export function addSoundcloudShowHandler(link) {
+  link.classList.add('text-link-with-soundcloud');
+
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const thumbnail = link.closest('div')?.querySelector('picture');
+    const title = link.closest('div')?.querySelector('h1, h2, h3');
+    const text = link.closest('div')?.querySelector('p:not(.button-container, .image)');
+
     // eslint-disable-next-line import/no-cycle
     import('../common/modal/modal.js').then((modal) => {
-      modal.showModal(link.getAttribute('href'));
+      const episodeInfo = document.createElement('div');
+      episodeInfo.classList.add('modal-soundcloud');
+      episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
+      <div class="episode-text">
+          <h2></h2> 
+          <p></p>
+      </div>`;
+      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
+      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
+      episodeInfo.querySelector('p').innerText = text?.innerText || '';
+
+      modal.showModal(link.getAttribute('href'), null, episodeInfo);
     });
   });
 }

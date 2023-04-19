@@ -30,6 +30,7 @@ main .hero-headings h1 {
 }
 
 main .hero-headings h4 {
+    margin-top: 15px;
     margin-bottom: 8px;
     font-size: 1.6rem;
     letter-spacing: -0.1px;
