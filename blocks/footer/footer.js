@@ -43,25 +43,22 @@ export default async function decorate(block) {
 
   // gray footer
   grayFooter?.classList.add('footer-gray');
+  // in Word it is edited like a column block, but we style it differently
   grayFooter?.firstElementChild.classList.remove('columns');
   grayFooter.querySelectorAll('h3').forEach((h3) => {
     h3.parentElement.classList.add('link-column');
     h3.parentElement.parentElement.classList.add('link-column-wrapper');
     h3.addEventListener('click', (e) => toggleExpand(e.target));
+    const list = h3.parentElement.querySelector('ul');
+    list.classList.add('link-column-content');
   });
-  // move each link into the first paragraph
-  grayFooter.querySelectorAll('a').forEach((a) => {
-    const firstParagraph = a.closest('.link-column').querySelector('p');
-    firstParagraph.classList.add('link-column-content');
-    if (a.parentElement !== firstParagraph) {
-      a.parentElement.remove();
-    }
-    firstParagraph.append(a);
-  });
-  // initialize first column to be expanded
+  // First column is initially expanded
   grayFooter.querySelector('.link-column').classList.add('expand');
 
+  // footer bar with dark background
   footerBar?.classList.add('footer-bar');
+
+  // copyright line
   footerCopyright?.classList.add('footer-copyright');
   await decorateIcons(footer);
   block.append(footer);
