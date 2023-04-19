@@ -64,7 +64,10 @@ export default async function decorate(block) {
       list.classList.add('link-column-content');
     });
     // First column is initially expanded
-    grayFooter.querySelector('.link-column').classList.add('expand');
+    setTimeout(
+      () => toggleExpand(grayFooter.querySelector('.link-column h3')),
+      500
+    );
   }
 
   // footer bar with dark background
