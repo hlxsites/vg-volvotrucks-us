@@ -31,7 +31,7 @@ describe('Footer block', () => {
     expect(document.querySelector('footer .link-column').children[0].outerHTML)
       .to.equal('<h3 id="about-volvo"><strong>About Volvo</strong></h3>');
     expect(document.querySelector('footer .link-column').children[1].outerHTML).to.equal(
-      `<ul class="link-column-content">
+      `<ul class="link-column-content" style="max-height: 19px;">
           <li><a href="/about-volvo/our-story/">About</a></li>
         </ul>`,
     );
