@@ -41,19 +41,20 @@ export default async function decorate(block) {
   // eslint-disable-next-line prefer-const
   let [grayFooter, footerBar, footerCopyright] = footer.children;
 
-  // gray footer
-  grayFooter?.classList.add('footer-gray');
-  // in Word it is edited like a column block, but we style it differently
-  grayFooter?.firstElementChild.classList.remove('columns');
-  grayFooter.querySelectorAll('h3').forEach((h3) => {
-    h3.parentElement.classList.add('link-column');
-    h3.parentElement.parentElement.classList.add('link-column-wrapper');
-    h3.addEventListener('click', (e) => toggleExpand(e.target));
-    const list = h3.parentElement.querySelector('ul');
-    list.classList.add('link-column-content');
-  });
-  // First column is initially expanded
-  grayFooter.querySelector('.link-column').classList.add('expand');
+  if (grayFooter) {
+    grayFooter.classList.add('footer-gray');
+    // in Word, it is edited like a column block, but we style it differently
+    grayFooter.firstElementChild.classList.remove('columns');
+    grayFooter.querySelectorAll('h3').forEach((h3) => {
+      h3.parentElement.classList.add('link-column');
+      h3.parentElement.parentElement.classList.add('link-column-wrapper');
+      h3.addEventListener('click', (e) => toggleExpand(e.target));
+      const list = h3.parentElement.querySelector('ul');
+      list.classList.add('link-column-content');
+    });
+    // First column is initially expanded
+    grayFooter.querySelector('.link-column').classList.add('expand');
+  }
 
   // footer bar with dark background
   footerBar?.classList.add('footer-bar');
