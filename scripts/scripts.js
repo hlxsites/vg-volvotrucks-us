@@ -239,7 +239,7 @@ function decorateSectionBackgrounds(main) {
 
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
-  [...container.querySelectorAll('picture + br + a')]
+  [...container.querySelectorAll('picture + br + a, picture + a')]
     // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
@@ -250,9 +250,10 @@ function decorateHyperlinkImages(container) {
       }
     })
     .forEach((a) => {
-      const picture = a.previousElementSibling.previousElementSibling;
-      picture.remove();
       const br = a.previousElementSibling;
+      let picture = br.previousElementSibling;
+      if (br.tagName === 'PICTURE') picture = br;
+      picture.remove();
       br.remove();
       a.innerHTML = picture.outerHTML;
       // make sure the link is not decorated as a button
@@ -286,8 +287,8 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function decorateLinks(main) {
-  [...main.querySelectorAll('a')]
+export function decorateLinks(block) {
+  [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
       /* eslint-disable no-use-before-define */
@@ -301,7 +302,7 @@ function decorateLinks(main) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
         link.target = '_blank';
       }
     });
