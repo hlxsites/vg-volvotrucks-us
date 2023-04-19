@@ -297,3 +297,8 @@
     .block.magazine-articles .list-filter fieldset div:nth-of-type(odd) { min-width: 396px; }
     .block.magazine-articles .list-filter fieldset div:nth-of-type(even) { min-width: 341px; }
 }
+
+@media screen and (min-width: 1300px) {
+    .block.magazine-articles .list-filter fieldset div:nth-of-type(odd),
+    .block.magazine-articles .list-filter fieldset div:nth-of-type(even) { min-width: unset; }   
+}

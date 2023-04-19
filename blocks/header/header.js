@@ -1,4 +1,5 @@
 import { readBlockConfig, decorateIcons, loadScript } from '../../scripts/lib-franklin.js';
+import { decorateLinks } from '../../scripts/scripts.js';
 
 // media query match that indicates mobile/desktop switch
 const MQ = window.matchMedia('(min-width: 992px)');
@@ -115,6 +116,7 @@ function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
   }
 
   content.append(overviewLi, ...subSectionMenus);
+  decorateLinks(content);
   sectionMenu.append(content);
 }
 
