@@ -101,6 +101,10 @@
   display: none;
 }
 
+.block.teaser-cards .teaser.with-cta-list .cta-list {
+  margin-top: 20px;
+}
+
 /* center */
 .block.teaser-cards.center .teaser {
   text-align: center;
