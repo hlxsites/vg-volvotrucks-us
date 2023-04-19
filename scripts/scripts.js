@@ -240,15 +240,8 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a')]
-    // link text is an unformatted URL paste, and matches the link href
-    .filter((a) => {
-      try {
-        // ignore domain in comparison
-        return new URL(a.href).pathname === new URL(a.textContent).pathname;
-      } catch (e) {
-        return false;
-      }
-    })
+    // link text is an unformatted URL paste
+    .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
       const picture = a.previousElementSibling.previousElementSibling;
       picture.remove();
