@@ -70,7 +70,9 @@ export default async function decorate(block) {
   const magazineArticles = await getRelatedMagazineArticles();
   createRelatedMagazineArticles(block, magazineArticles);
   const relatedWrapper = block.children[0];
-  const relatedTitle = document.createElement('h3');
-  relatedTitle.textContent = 'RELATED CONTENT';
-  relatedWrapper.prepend(relatedTitle);
+  if (relatedWrapper.children.length > 0) {
+    const relatedTitle = document.createElement('h3');
+    relatedTitle.textContent = 'RELATED CONTENT';
+    relatedWrapper.prepend(relatedTitle);
+  }
 }
