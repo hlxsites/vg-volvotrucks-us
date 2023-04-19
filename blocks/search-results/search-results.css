@@ -1,6 +1,9 @@
 /* stylelint-disable no-descending-specificity */
 /* stylelint-disable selector-class-pattern */
 /* stylelint-disable selector-id-pattern */
+
+@import url('https://static.searchstax.com/studio-js/v3.20/css/studio-app.css');
+
 #sf-widget-custom .sf-btn,
 .search-box-container .btn {
   line-height: 1.5;

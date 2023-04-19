@@ -98,3 +98,14 @@ ga('send', 'pageview');
 fbq('init', '620334125252675');
 // eslint-disable-next-line no-undef
 fbq('track', 'PageView');
+
+// Initiate searchWidget ,  check for search div loaded
+if (document.getElementById('div-widget-id') && !document.querySelector('.studio-widget-autosuggest-results')) {
+  window.initiateSearchWidget();
+}
+
+// after search widget is loaded remove autocomplete
+if (document.querySelector('.studio-widget-autosuggest-results')) {
+  const searchWidget = document.querySelector('.studio-widget-search-input');
+  searchWidget.setAttribute('autocomplete', 'off');
+}

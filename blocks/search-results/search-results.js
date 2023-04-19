@@ -1,5 +1,7 @@
 import templates from './templates.js';
+import { loadScript } from '../../scripts/lib-franklin.js';
 
+// Implementation based on searchtax documentation https://www.searchstax.com/docs/searchstudio/searchstax-studio-searchjs-module/
 export default async function decorate(block) {
   block.innerHTML = `
   <div class="search-input-wrapper">
@@ -24,33 +26,19 @@ export default async function decorate(block) {
   </div>
   `;
 
-  // JS copied from original page
+  function setCookie(name, value, days = 7, path = '/') {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=${path}`;
+  }
+
   function getCookie(name) {
-    // eslint-disable-next-line no-useless-escape
-    const matches = document.cookie.match(new RegExp(`(?:^|; )${name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1')}=([^;]*)`));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    return document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, '');
   }
-  function setCookie(name, value, options = {}) {
-    // eslint-disable-next-line no-param-reassign
-    options = {
-      path: '/',
-      // add other defaults here if necessary
-      ...options,
-    };
-    if (options.expires instanceof Date) {
-      options.expires = options.expires.toUTCString();
-    }
-    let updatedCookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
-    for (const optionKey in options) {
-      updatedCookie += `; ${optionKey}`;
-      const optionValue = options[optionKey];
-      if (optionValue !== true) {
-        updatedCookie += `=${optionValue}`;
-      }
-    }
-    document.cookie = updatedCookie;
-  }
+
+  // generating random value for cookie when value is missing
   function makeid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -61,125 +49,101 @@ export default async function decorate(block) {
     }
     return result;
   }
-  // eslint-disable-next-line no-unused-vars
+
   function getOrSetCookie(name) {
     let cookieID = getCookie(name);
     if (cookieID == null) {
       cookieID = makeid(25);
-      setCookie(name, cookieID, {
-        secure: true,
-        'max-age': 3600,
-      });
+      setCookie(name, cookieID);
     }
     return cookieID;
   }
-  // end of JS copied from original page
 
-  window.getOrSetCookie = getOrSetCookie;
+  function formatDate(value) {
+    if (value != null) {
+      if (typeof value === 'undefined') {
+        return '';
+      }
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(value).toLocaleDateString(undefined, options);
+    }
+    return value;
+  }
 
-  const styles = [
-    'https://static.searchstax.com/studio-js/v3.20/css/studio-app.css',
-  ];
-  const scripts = [
-    {
-      inline: `
-        const session = getOrSetCookie('searchcookie');
-        function format_date(value) {
-          if (value != null) {
-            if (typeof value == 'undefined') {
-              return '';
-            }
-            date_value = Date.parse(value);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(value).toLocaleDateString(undefined, options);
-          }
-          return value;
-        }
-        const studioConfig = {
-          connector: {
-            url: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157/emselect',
-            authentication: 'YXBwMTE1Ny1hcGk6Vm9sdm90cnVja3NAMjAyMw==',
-            apikey: '3Ixo3pslPZXcRt0PCJXaYSN1evQyD3tERt1RaAUaRNU',
-            select_auth_token: 'None',
-            suggester_auth_token: 'None',
-            search_auth_type: 'basic',
-            session,
-            fields: { description: 'meta_description_t', title: '_name', url: 'result_url_creation_s' },
-            suggester: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
-            searchAPIKey: '25c0942a02ba3b11f3b1182ed398c4442d85d115',
-            language: 'en',
-            fieldFormatters: { date: format_date },
-            searchAdditionalArgs: 'hl.fragsize=200',
-            hideUniqueKey: true,
-          },
-          searchResults: '#searchResultsSection',
-          searchInput: '#searchResultInput',
-          searchResultSummarySection: '#searchResultSummarySection',
-          facetSection: '#searchFacetSection',
-          searchOptionsSection: '#searchOptionsSection',
-          relatedSearchesSection: '#relatedSearchesSection',
-          paginationSection: '#paginationSection',
-          customSearchTemplate: '#search-template',
-          customSearchFeedbackTemplate: '#searchFeedback-template',
-          customPagingTemplate: '#paging-template',
-          customPaginationTemplate: '#paging-template',
-          customSearchOptionSectionTemplate: '#searchOptionSection-template',
-          customNoResultTemplate: '#noresult-template',
-          customFacetTemplate: '#facet-template',
-          hideBranding: false,
-          isGridLayout: true,
-          display: 'multi',
-          facet_pagination: 3,
-          customResultTemplate: '#result-template',
-          customRelatedSearchesTemplate: '#customRelatedSearches-template',
-          externalSearchResults: '#external-search-result-container',
-          customExternalPromotionsTemplate: '#external-search-result-template',
-          suggestAfterMinChars: 2,
-        };
-      `,
+  window.studioConfig = {
+    connector: {
+      url: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157/emselect',
+      authentication: 'YXBwMTE1Ny1hcGk6Vm9sdm90cnVja3NAMjAyMw==',
+      apikey: '3Ixo3pslPZXcRt0PCJXaYSN1evQyD3tERt1RaAUaRNU',
+      select_auth_token: 'None',
+      suggester_auth_token: 'None',
+      search_auth_type: 'basic',
+      session: getOrSetCookie('searchcookie'),
+      fields: { description: 'meta_description_t', title: '_name', url: 'result_url_creation_s' },
+      suggester: 'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+      searchAPIKey: '25c0942a02ba3b11f3b1182ed398c4442d85d115',
+      language: 'en',
+      fieldFormatters: { date: formatDate },
+      searchAdditionalArgs: 'hl.fragsize=200',
+      hideUniqueKey: true,
     },
-    { link: 'https://static.searchstax.com/studio-js/v3.20/js/studio-app.js' },
-    { link: 'https://static.searchstax.com/studio-js/v3.20/js/studio-vendors.js' },
-    {
-      inline: `
-        var _msq = _msq || []; //declare object
-        var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
-        (function () {
-          var ms = document.createElement('script');
-          ms.type = 'text/javascript';
-          ms.src = 'https://static.searchstax.com/studio-js/v3.20/js/studio-analytics.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(ms, s);
-        })();
-      `,
-    },
-    {
-      inline: `
-        (function (w, d, s, o, f) {
-          w['sf-widget'] = o;
-          w[o] =
-            w[o] ||
-            function () {
-              (w[o].q = w[o].q || []).push(arguments);
-            };
-          js = d.createElement(s);
-          fjs = d.getElementsByTagName(s)[0];
-          js.src = f;
-          js.async = 1;
-          fjs.parentNode.insertBefore(js, fjs);
-        })(window, document, 'script', '_sf', 'https://static.searchstax.com/studio-js/v3.20/js/studio-feedback.js');
-        _sf('4kKviXTq4zCnoB4SuKAFhZHVRZTAokybcN6uMcS1HQ4');
-      `,
-    },
-  ];
+    searchResults: '#searchResultsSection',
+    searchInput: '#searchResultInput',
+    searchResultSummarySection: '#searchResultSummarySection',
+    facetSection: '#searchFacetSection',
+    searchOptionsSection: '#searchOptionsSection',
+    relatedSearchesSection: '#relatedSearchesSection',
+    paginationSection: '#paginationSection',
+    customSearchTemplate: '#search-template',
+    customSearchFeedbackTemplate: '#searchFeedback-template',
+    customPagingTemplate: '#paging-template',
+    customPaginationTemplate: '#paging-template',
+    customSearchOptionSectionTemplate: '#searchOptionSection-template',
+    customNoResultTemplate: '#noresult-template',
+    customFacetTemplate: '#facet-template',
+    hideBranding: false,
+    isGridLayout: true,
+    display: 'multi',
+    facet_pagination: 3,
+    customResultTemplate: '#result-template',
+    customRelatedSearchesTemplate: '#customRelatedSearches-template',
+    externalSearchResults: '#external-search-result-container',
+    customExternalPromotionsTemplate: '#external-search-result-template',
+    suggestAfterMinChars: 2,
+  };
 
-  // adding stylesheets
-  styles.forEach((styleSheetLink) => {
-    const styleSheetEl = document.createElement('style');
-    styleSheetEl.innerHTML = `@import url(${styleSheetLink});`;
-
-    document.head.appendChild(styleSheetEl);
-  });
+  // these functions required for searchstax
+  const scripts = [{
+    inline: `
+      var _msq = _msq || []; //declare object
+      var analyticsBaseUrl = 'https://analytics-us.searchstax.com';
+      (function () {
+        var ms = document.createElement('script');
+        ms.type = 'text/javascript';
+        ms.src = 'https://static.searchstax.com/studio-js/v3.20/js/studio-analytics.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ms, s);
+      })();
+    `,
+  },
+  {
+    inline: `
+      (function (w, d, s, o, f) {
+        w['sf-widget'] = o;
+        w[o] =
+          w[o] ||
+          function () {
+            (w[o].q = w[o].q || []).push(arguments);
+          };
+        js = d.createElement(s);
+        fjs = d.getElementsByTagName(s)[0];
+        js.src = f;
+        js.async = 1;
+        fjs.parentNode.insertBefore(js, fjs);
+      })(window, document, 'script', '_sf', 'https://static.searchstax.com/studio-js/v3.20/js/studio-feedback.js');
+      _sf('4kKviXTq4zCnoB4SuKAFhZHVRZTAokybcN6uMcS1HQ4');
+    `,
+  }];
 
   // adding templates
   const temps = document.createElement('div');
@@ -189,23 +153,16 @@ export default async function decorate(block) {
   // loading scripts one by one to prevent inappropriate script execution order.
   // eslint-disable-next-line no-restricted-syntax
   for (const script of scripts) {
-    let waitForLoad = Promise.resolve();
     const newScript = document.createElement('script');
-
-    waitForLoad = new Promise((resolve) => {
-      newScript.addEventListener('load', resolve);
-    });
 
     newScript.setAttribute('type', 'text/javascript');
 
     if (script.inline) {
       newScript.innerHTML = script.inline;
       document.body.append(newScript);
-    } else {
-      newScript.src = script.link;
-      document.body.append(newScript);
-      // eslint-disable-next-line no-await-in-loop
-      await waitForLoad;
     }
   }
+
+  loadScript('https://static.searchstax.com/studio-js/v3.20/js/studio-app.js', { type: 'text/javascript', charset: 'UTF-8' });
+  loadScript('https://static.searchstax.com/studio-js/v3.20/js/studio-vendors.js', { type: 'text/javascript', charset: 'UTF-8' });
 }

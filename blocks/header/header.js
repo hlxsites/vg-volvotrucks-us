@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { readBlockConfig, decorateIcons, loadScript } from '../../scripts/lib-franklin.js';
 
 // media query match that indicates mobile/desktop switch
 const MQ = window.matchMedia('(min-width: 992px)');
@@ -126,48 +126,22 @@ function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
 }
 
 async function loadSearchWidget() {
-  const scripts = [{
-    link: 'https://static.searchstax.com/studio-js/v3/js/search-widget.min.js',
-  },
-  {
-    inline: `
-    function initiateSearchWidget(){
-      //Call when document is loaded
-      new SearchstudioWidget(
-        'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
-        'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
-        '${window.location.origin}/search-results',
-        3,
-        'searchStudioQuery',
-        'div-widget-id',
-        'en'
-      )
-    };
-    window.initiateSearchWidget = initiateSearchWidget;
-    `,
-  }];
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const script of scripts) {
-    let waitForLoad = Promise.resolve();
-    const newScript = document.createElement('script');
-
-    waitForLoad = new Promise((resolve) => {
-      newScript.addEventListener('load', resolve);
+  loadScript('https://static.searchstax.com/studio-js/v3/js/search-widget.min.js', { type: 'text/javascript', charset: 'UTF-8' })
+    .then(() => {
+      function initiateSearchWidget() {
+        // eslint-disable-next-line no-new, no-undef
+        new SearchstudioWidget(
+          'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
+          'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+          `${window.location.origin}/search-results`,
+          3,
+          'searchStudioQuery',
+          'div-widget-id',
+          'en',
+        );
+      }
+      window.initiateSearchWidget = initiateSearchWidget;
     });
-
-    newScript.setAttribute('type', 'text/javascript');
-
-    if (script.inline) {
-      newScript.innerHTML = script.inline;
-      document.body.append(newScript);
-    } else {
-      newScript.src = script.link;
-      document.body.append(newScript);
-      // eslint-disable-next-line no-await-in-loop
-      await waitForLoad;
-    }
-  }
 }
 /**
  * decorates the header, mainly the nav

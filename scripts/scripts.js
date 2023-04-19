@@ -473,21 +473,9 @@ async function loadLazy(doc) {
  * the user experience.
  */
 function loadDelayed() {
-  let searchLoaded = false;
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => {
     import('./delayed.js');
-    // check for search div loaded
-    if (document.getElementById('div-widget-id') && !searchLoaded) {
-      window.initiateSearchWidget();
-      searchLoaded = true;
-    }
-
-    // after search widget is loaded remove autocomplete
-    if (searchLoaded && document.querySelector('.studio-widget-autosuggest-results')) {
-      const searchWidget = document.querySelector('.studio-widget-search-input');
-      searchWidget.setAttribute('autocomplete', 'off');
-    }
   }, 3000);
   // load anything that can be postponed to the latest here
 }
