@@ -29,9 +29,16 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   window.OptanonWrapper = () => {
     const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
 
+    function isSameGroups(groups1, groups2) {
+      const s1 = JSON.stringify(groups1.split(",").sort());
+      const s2 = JSON.stringify(groups2.split(",").sort());
+
+      return s1 === s2;
+    }
+
     window.OneTrust.OnConsentChanged(() => {
-      // reloading the page only when the active group has chaned
-      if (currentOnetrustActiveGroups !== window.OnetrustActiveGroups) {
+      // reloading the page only when the active group has changed
+      if (!isSameGroups(currentOnetrustActiveGroups, window.OnetrustActiveGroups)) {
         window.location.reload();
       }
     });
