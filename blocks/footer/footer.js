@@ -2,24 +2,22 @@ import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
 
 /* eslint-disable no-use-before-define */
 
-function toggleExpand(target) {
-  if (target.parentElement.classList.contains('expand')) {
-    target.parentElement.classList.remove('expand');
-    const content = target.parentElement.querySelector('.link-column-content');
-    content.style.maxHeight = null;
-  } else {
-    // close all others
-    target.closest('.link-column-wrapper').querySelectorAll('.link-column').forEach((column) => {
+function toggleExpand(targetH3) {
+  const clickedColumn = targetH3.parentElement;
+  const isExpanded = clickedColumn.classList.contains('expand');
+  const wrapper = targetH3.closest('.link-column-wrapper');
+  const columns = wrapper.querySelectorAll('.link-column');
+
+  columns.forEach((column) => {
+    const content = column.querySelector('.link-column-content');
+    if (column === clickedColumn && !isExpanded) {
+      column.classList.add('expand');
+      content.style.maxHeight = `${content.scrollHeight}px`;
+    } else {
       column.classList.remove('expand');
-      const content = column.querySelector('.link-column-content');
       content.style.maxHeight = null;
-    });
-
-    const content = target.parentElement.querySelector('.link-column-content');
-    content.style.maxHeight = `${content.scrollHeight}px`;
-
-    target.parentElement.classList.add('expand');
-  }
+    }
+  });
 }
 
 /**
