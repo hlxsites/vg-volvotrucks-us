@@ -28,7 +28,7 @@ describe('Footer block', () => {
     expect(a).to.exist;
     expect(a.href).to.equal('http://localhost:2000/about-volvo/our-story/');
 
-    const [ heading, list ] = document.querySelector('footer .link-column').children;
+    const [heading, list] = document.querySelector('footer .link-column').children;
     // style may be varying depending on the env
     list.style.maxHeight = '';
     expect(heading.outerHTML)
