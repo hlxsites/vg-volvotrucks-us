@@ -72,7 +72,7 @@
 
 .related-magazine-articles .content h3 {
     font-family: var(--ff-volvo-novum-medium);
-    font-size: var(--heading-font-size-xs);
+    font-size: var(--heading-font-size-l);
     letter-spacing: -.1px;
     color: var(--volvo-text-gray);
     margin: 16px 0;
