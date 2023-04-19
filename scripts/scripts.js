@@ -286,8 +286,8 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function decorateLinks(main) {
-  [...main.querySelectorAll('a')]
+export function decorateLinks(block) {
+  [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
       /* eslint-disable no-use-before-define */
@@ -301,7 +301,7 @@ function decorateLinks(main) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
         link.target = '_blank';
       }
     });
