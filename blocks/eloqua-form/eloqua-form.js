@@ -86,16 +86,26 @@ const addForm = async (block) => {
     }
   });
 
+  block.querySelectorAll('.form-design-field').forEach((el) => {
+    // displaying label content as input placeholder
+    const input = el.querySelector('input[type="text"], select');
+    const label = el.querySelector('label');
+
+    if (input && label) {
+      input.setAttribute('placeholder', label.innerText.replace(/\s+/g, ' ').trim());
+      label.remove();
+    }
+  });
+
   // adding class to the select parent element, so the select's arrow could be displayed.
   block.querySelectorAll('select').forEach((el) => {
     el.parentElement.classList.add('eloqua-select-wrapper');
   });
 
-  // replacing eloqua default values
-  block.querySelectorAll('[value^="~~"]').forEach((el) => {
+  block.querySelectorAll('[value^="~~"], [value^="--"], [value^="<eloqua"]').forEach((el) => {
     el.setAttribute('value', '');
   });
-
+  
   block.style.display = displayValue;
 };
 
