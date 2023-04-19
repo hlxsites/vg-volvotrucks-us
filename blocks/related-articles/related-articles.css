@@ -2,6 +2,12 @@
     display: unset;
 }
 
+.related-magazine-articles > h3 {
+    flex: 1 1 100%;
+    text-align: center;
+    padding-block-start: 3rem;
+}
+
 .related-magazine-articles article {
     margin-top: 24px;
 }
@@ -86,6 +92,7 @@
     .related-magazine-articles {
         display: flex;
         margin: 0 -15px;
+        flex-wrap: wrap;
     }
 
     .related-magazine-articles article {

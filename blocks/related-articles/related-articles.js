@@ -44,7 +44,7 @@ function filterArticles(articles, filterTags, thisArticleTitle) {
   return filteredArticles;
 }
 
-async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
+async function createRelatedMagazineArticles(mainEl, magazineArticles) {
   const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()))
     .filter((item) => item !== 'volvo-trucks-magazine');
   const articleTitle = getMetadata('og:title');
@@ -68,5 +68,9 @@ async function getRelatedMagazineArticles() {
 
 export default async function decorate(block) {
   const magazineArticles = await getRelatedMagazineArticles();
-  createRelatedtMagazineArticles(block, magazineArticles);
+  createRelatedMagazineArticles(block, magazineArticles);
+  const relatedWrapper = block.children[0];
+  const relatedTitle = document.createElement('h3');
+  relatedTitle.textContent = 'RELATED CONTENT';
+  relatedWrapper.prepend(relatedTitle);
 }
