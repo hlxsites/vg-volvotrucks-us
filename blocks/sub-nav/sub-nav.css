@@ -34,7 +34,8 @@
     color: currentcolor;
 }
 
-.block.sub-nav li.active {
+.block.sub-nav li.active,
+.block.sub-nav li strong {
     grid-row: 1;
     font-family: var(--ff-volvo-novum-medium);
 }
