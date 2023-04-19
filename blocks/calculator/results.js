@@ -144,8 +144,7 @@ const calculateSavings = (data) => {
   } = data;
   for (; power < years; power += 1) {
     const percentageIncrease = (1 + pi / 100) ** power; // ("1"+5)^n
-    const roundedIncrease = parseFloat(percentageIncrease.toFixed(2));
-    const yearIncrease = f * roundedIncrease; // (2*("1"+5)^n)
+    const yearIncrease = f * percentageIncrease; // (2*("1"+5)^n)
     const yearPercentage = ((c * p) / 100) + c; // ((3*%/100)+3)
     const formulaPart1 = ((m / c) * yearIncrease) + (m / c) * dp * (du / 100);
     const formulaPart2 = (m / yearPercentage) * yearIncrease;
