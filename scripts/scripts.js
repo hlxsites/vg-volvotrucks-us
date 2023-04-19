@@ -27,7 +27,7 @@ async function getPlaceholders() {
 }
 
 export function getTextLable(key) {
-  return placeholders.data.find((el) => el.Key === key).Text;
+  return placeholders.data.find((el) => el.Key === key)?.Text || key;
 }
 
 /**
@@ -71,10 +71,9 @@ function isCTALinkCheck(ctaLink) {
 function buildHeroBlock(main) {
   // don't create a hero if the first item is a block.
   const firstSection = main.querySelector('div');
+  if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
-  if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
-    return;
-  }
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length) return;
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -239,13 +238,14 @@ function decorateSectionBackgrounds(main) {
 
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
-  [...container.querySelectorAll('picture + br + a')]
+  [...container.querySelectorAll('picture + br + a, picture + a')]
     // link text is an unformatted URL paste
     .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
-      const picture = a.previousElementSibling.previousElementSibling;
-      picture.remove();
       const br = a.previousElementSibling;
+      let picture = br.previousElementSibling;
+      if (br.tagName === 'PICTURE') picture = br;
+      picture.remove();
       br.remove();
       a.innerHTML = picture.outerHTML;
       // make sure the link is not decorated as a button
@@ -455,7 +455,9 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    import('./delayed.js');
+  }, 3000);
   // load anything that can be postponed to the latest here
 }
 
@@ -481,7 +483,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
+  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
@@ -549,7 +552,7 @@ export function addSoundcloudShowHandler(link) {
       episodeInfo.classList.add('modal-soundcloud');
       episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
       <div class="episode-text">
-          <h2></h2> 
+          <h2></h2>
           <p></p>
       </div>`;
       episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';

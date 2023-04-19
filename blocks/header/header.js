@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { readBlockConfig, decorateIcons, loadScript } from '../../scripts/lib-franklin.js';
 import { decorateLinks } from '../../scripts/scripts.js';
 
 // media query match that indicates mobile/desktop switch
@@ -127,6 +127,24 @@ function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
   toggleMenu(sectionMenu, true, event);
 }
 
+async function loadSearchWidget() {
+  loadScript('https://static.searchstax.com/studio-js/v3/js/search-widget.min.js', { type: 'text/javascript', charset: 'UTF-8' })
+    .then(() => {
+      function initiateSearchWidget() {
+        // eslint-disable-next-line no-new, no-undef
+        new SearchstudioWidget(
+          'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
+          'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
+          `${window.location.origin}/search-results`,
+          3,
+          'searchStudioQuery',
+          'div-widget-id',
+          'en',
+        );
+      }
+      window.initiateSearchWidget = initiateSearchWidget;
+    });
+}
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -177,13 +195,13 @@ export default async function decorate(block) {
         </div>
       </div>
 
-      <div class='search' aria-expanded="false">
-        <div>
-          <label for="searchInput">Search Term</label>
-          <input autocomplete="off" type="text" id="searchInput" placeholder="Search for">
-          <button class="search-button" aria-label="submit" >
-            <i class="fa fa-search"></i>
-          </button>
+      <div class="search" aria-expanded="false">
+        <div class="search-container">
+          <div id="div-widget-id" class='studio-search-widget'>
+            <button class="search-button" aria-label="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -274,5 +292,6 @@ export default async function decorate(block) {
     decorateIcons(nav);
     /* append result */
     block.append(nav);
+    loadSearchWidget();
   }
 }
