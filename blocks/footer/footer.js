@@ -1,17 +1,24 @@
 import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
+
 /* eslint-disable no-use-before-define */
 
 function toggleExpand(target) {
-  const { classList } = target.parentElement;
-  if (classList.contains('expand')) {
-    classList.remove('expand');
+  if (target.parentElement.classList.contains('expand')) {
+    target.parentElement.classList.remove('expand');
+    const content = target.parentElement.querySelector('.link-column-content');
+    content.style.maxHeight = null;
   } else {
     // close all others
     target.closest('.link-column-wrapper').querySelectorAll('.link-column').forEach((column) => {
       column.classList.remove('expand');
+      const content = column.querySelector('.link-column-content');
+      content.style.maxHeight = null;
     });
 
-    classList.add('expand');
+    const content = target.parentElement.querySelector('.link-column-content');
+    content.style.maxHeight = `${content.scrollHeight}px`;
+
+    target.parentElement.classList.add('expand');
   }
 }
 

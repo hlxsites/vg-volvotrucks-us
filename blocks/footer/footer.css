@@ -8,13 +8,16 @@
 }
 
 
-.block.footer .footer-gray h3 {
-  font-size: var(--body-font-size-xs);
-  margin-bottom: 0;
+.block.footer p, .block.footer .footer-bar ul {
+  font-family: var(--ff-volvo-novum);
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
-.block.footer .footer-gray p {
+.block.footer .footer-gray :is(h3, p) {
   font-size: var(--body-font-size-xs);
+  margin-bottom: 0;
 }
 
 .block.footer .footer-gray a:any-link {
@@ -36,14 +39,12 @@
 /* mobile: show accordion */
 @media screen and (max-width: 766px) {
   .block.footer .footer-gray .link-column p.link-column-content {
-    transition: 400ms max-height ease;
+    transition: 300ms max-height ease;
     will-change: max-height;
-    max-height: 0;
     overflow: hidden;
-  }
 
-  .block.footer .footer-gray .link-column.expand p.link-column-content {
-    max-height: 500px;
+    /* when expanded, the actual size will be set in JS. */
+    max-height: 0;
   }
 
   .block.footer .footer-gray h3 {
@@ -101,12 +102,6 @@
   }
 }
 
-.block.footer p, .block.footer ul {
-  font-family: var(--ff-volvo-novum);
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
-}
 
 .block.footer .footer-bar {
   margin: 0 -15px;
@@ -129,7 +124,7 @@
   border-right: none;
 }
 
-.block.footer .footer-bar ul li a {
+.block.footer .footer-bar ul li a { /* stylelint-disable-line no-descending-specificity */
   text-decoration: none;
   color: #fff;
 }
