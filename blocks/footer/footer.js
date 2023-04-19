@@ -66,7 +66,7 @@ export default async function decorate(block) {
     // First column is initially expanded
     setTimeout(
       () => toggleExpand(grayFooter.querySelector('.link-column h3')),
-      500
+      500,
     );
   }
 
