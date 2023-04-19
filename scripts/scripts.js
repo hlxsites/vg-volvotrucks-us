@@ -239,7 +239,7 @@ function decorateSectionBackgrounds(main) {
 
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
-  [...container.querySelectorAll('picture + br + a')]
+  [...container.querySelectorAll('picture + br + a, picture + a')]
     // link text is an unformatted URL paste, and matches the link href
     .filter((a) => {
       try {
@@ -250,9 +250,10 @@ function decorateHyperlinkImages(container) {
       }
     })
     .forEach((a) => {
-      const picture = a.previousElementSibling.previousElementSibling;
-      picture.remove();
       const br = a.previousElementSibling;
+      let picture = br.previousElementSibling;
+      if (br.tagName === 'PICTURE') picture = br;
+      picture.remove();
       br.remove();
       a.innerHTML = picture.outerHTML;
       // make sure the link is not decorated as a button
@@ -286,8 +287,8 @@ function decorateHyperlinkImages(container) {
     });
 }
 
-function decorateLinks(main) {
-  [...main.querySelectorAll('a')]
+export function decorateLinks(block) {
+  [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
       /* eslint-disable no-use-before-define */
@@ -301,7 +302,7 @@ function decorateLinks(main) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
         link.target = '_blank';
       }
     });
@@ -488,7 +489,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
+  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
@@ -556,7 +558,7 @@ export function addSoundcloudShowHandler(link) {
       episodeInfo.classList.add('modal-soundcloud');
       episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
       <div class="episode-text">
-          <h2></h2> 
+          <h2></h2>
           <p></p>
       </div>`;
       episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
