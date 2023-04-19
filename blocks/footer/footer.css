@@ -59,6 +59,18 @@
     cursor: pointer;
   }
 
+  .block.footer .footer-gray .link-column h3::after {
+    font-family: var(--ff-fontawesome);
+    content: "\f107";
+    float: right;
+    margin-right: 5px;
+    transition: 300ms transform ease;
+  }
+
+  .block.footer .footer-gray .link-column.expand h3::after {
+    transform: scaleY(-1);
+  }
+
   .block.footer .footer-gray .link-column:not(.expand) h3:hover{
     background-color: #B8DeD8;
   }
