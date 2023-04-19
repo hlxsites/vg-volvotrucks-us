@@ -22,7 +22,7 @@ function createPressReleaseFilterFunction(activeFilters) {
       if (!terms.every((term) => !stopWords.includes(term) && text.includes(term))) return false;
     }
     return true;
-  }
+  };
 }
 
 function filterPressReleases(pressReleases, activeFilters) {
