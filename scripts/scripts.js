@@ -489,7 +489,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=1')) && preferredType !== 'local';
+  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
@@ -557,7 +558,7 @@ export function addSoundcloudShowHandler(link) {
       episodeInfo.classList.add('modal-soundcloud');
       episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
       <div class="episode-text">
-          <h2></h2> 
+          <h2></h2>
           <p></p>
       </div>`;
       episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
