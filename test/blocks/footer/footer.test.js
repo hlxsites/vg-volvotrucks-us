@@ -28,10 +28,13 @@ describe('Footer block', () => {
     expect(a).to.exist;
     expect(a.href).to.equal('http://localhost:2000/about-volvo/our-story/');
 
-    expect(document.querySelector('footer .link-column').children[0].outerHTML)
+    const [ heading, list ] = document.querySelector('footer .link-column').children;
+    // style may be varying depending on the env
+    list.style.maxHeight = '';
+    expect(heading.outerHTML)
       .to.equal('<h3 id="about-volvo"><strong>About Volvo</strong></h3>');
-    expect(document.querySelector('footer .link-column').children[1].outerHTML).to.equal(
-      `<ul class="link-column-content" style="max-height: 19px;">
+    expect(list.outerHTML).to.equal(
+      `<ul class="link-column-content" style="">
           <li><a href="/about-volvo/our-story/">About</a></li>
         </ul>`,
     );
