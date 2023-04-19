@@ -94,7 +94,6 @@
 @media screen and (min-width: 767px) {
   .block.footer .footer-gray {
     background-color: #E1DFDD;
-    margin: 0 -15px;
     padding-top: 48px;
     padding-bottom: 28px;
   }
@@ -120,7 +119,6 @@
 
 
 .block.footer .footer-bar {
-  margin: 0 -15px;
   background-color: #000;
 }
 
@@ -146,7 +144,6 @@
 }
 
 .block.footer .footer-copyright {
-  margin: 0 -15px;
   padding: 32px 0;
   text-align: center;
 }
