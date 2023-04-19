@@ -1,23 +1,34 @@
-import { decorateIcons, readBlockConfig } from '../../scripts/lib-franklin.js';
-
+import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 /* eslint-disable no-use-before-define */
 
-function toggleExpand(targetH3) {
-  const clickedColumn = targetH3.parentElement;
-  const isExpanded = clickedColumn.classList.contains('expand');
-  const wrapper = targetH3.closest('.link-column-wrapper');
-  const columns = wrapper.querySelectorAll('.link-column');
+function displayScrollToTop(buttonEl) {
+  if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
+    buttonEl.style.display = 'block';
+  } else {
+    buttonEl.style.display = 'none';
+  }
+}
 
-  columns.forEach((column) => {
-    const content = column.querySelector('.link-column-content');
-    if (column === clickedColumn && !isExpanded) {
-      column.classList.add('expand');
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    } else {
-      column.classList.remove('expand');
-      content.style.maxHeight = null;
-    }
-  });
+function goToTopFunction() {
+  let timeOut;
+  if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
+    window.scrollBy(0, -50);
+    timeOut = setTimeout(goToTopFunction, 10);
+  } else {
+    clearTimeout(timeOut);
+  }
+}
+
+function addScrollToTopButton(mainEl) {
+  const scrollToTopButton = document.createElement('button');
+  scrollToTopButton.addEventListener('click', goToTopFunction);
+  window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));
+  scrollToTopButton.classList.add('scroll-to-top');
+  scrollToTopButton.setAttribute('title', 'Go to the top of the page');
+  scrollToTopButton.innerHTML = `
+    <i class="fa fa-angle-up"><i/>
+  `;
+  mainEl.append(scrollToTopButton);
 }
 
 /**
@@ -66,36 +77,6 @@ export default async function decorate(block) {
   addScrollToTopButton(block);
 }
 
-function displayScrollToTop(buttonEl) {
-  if (document.body.scrollTop > 160 || document.documentElement.scrollTop > 160) {
-    buttonEl.style.display = 'block';
-  } else {
-    buttonEl.style.display = 'none';
-  }
-}
-
-function goToTopFunction() {
-  let timeOut;
-  if (document.body.scrollTop !== 0 || document.documentElement.scrollTop !== 0) {
-    window.scrollBy(0, -50);
-    timeOut = setTimeout(goToTopFunction, 10);
-  } else {
-    clearTimeout(timeOut);
-  }
-}
-
-function addScrollToTopButton(mainEl) {
-  const scrollToTopButton = document.createElement('button');
-  scrollToTopButton.addEventListener('click', goToTopFunction);
-  window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));
-  scrollToTopButton.classList.add('scroll-to-top');
-  scrollToTopButton.setAttribute('title', 'Go to the top of the page');
-  scrollToTopButton.innerHTML = `
-    <i class="fa fa-angle-up"><i/>
-  `;
-  mainEl.append(scrollToTopButton);
-}
-
 function openExternalLinksInNewTab(footer) {
   footer.querySelectorAll('a').forEach((anchor) => {
     try {
@@ -127,3 +108,22 @@ function addSocialmediaIconsToLinks(footer) {
     anchor.innerHTML = `<i class="fa fa-instagram"></i> ${anchor.innerHTML}`;
   });
 }
+
+function toggleExpand(targetH3) {
+  const clickedColumn = targetH3.parentElement;
+  const isExpanded = clickedColumn.classList.contains('expand');
+  const wrapper = targetH3.closest('.link-column-wrapper');
+  const columns = wrapper.querySelectorAll('.link-column');
+
+  columns.forEach((column) => {
+    const content = column.querySelector('.link-column-content');
+    if (column === clickedColumn && !isExpanded) {
+      column.classList.add('expand');
+      content.style.maxHeight = `${content.scrollHeight}px`;
+    } else {
+      column.classList.remove('expand');
+      content.style.maxHeight = null;
+    }
+  });
+}
+
