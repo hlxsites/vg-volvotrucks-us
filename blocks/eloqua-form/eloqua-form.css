@@ -75,4 +75,6 @@
   display: block;
 }
 
-
+.eloqua-form span.LV_validation_message.LV_valid {
+  display: none;
+}
