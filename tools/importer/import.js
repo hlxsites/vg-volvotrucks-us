@@ -146,20 +146,16 @@ const createMagazineArticles = (main, document, url) => {
 };
 
 function createPRDownloadBlock(main, document) {
-  const h3s = document.querySelectorAll('h3');
-  h3s.forEach((heads) => {
-    if (heads.textContent.includes('Download Press Release Images')) {
-      const cells = [['Download Images']];
-      cells.push([heads.innerHTML]);
-      const dimg = heads.parentNode.querySelectorAll('#img-grid > div');
-      dimg.forEach((imgs) => {
-        if (imgs.innerHTML.length > 0) {
-          cells.push([imgs.innerHTML.replaceAll('http://localhost:3001', '')]);
-        }
-      });
-      const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
-      heads.parentNode.replaceWith(downloadBlock);
-    }
+  const post = document.querySelectorAll('#Form1 > div.container.main-content > div > div > div > div.wb-entry > div.postSummary');
+  const cells = [['Download Images']];
+  post.forEach((heads) => {
+    heads.querySelectorAll('p img').forEach(async (img) => {
+      const newImg = document.createElement('img');
+      newImg.src = img.src;
+      cells.push([newImg]);
+    });
+    const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
+    heads.after(downloadBlock);
   });
 }
 
