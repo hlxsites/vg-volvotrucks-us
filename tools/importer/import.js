@@ -186,9 +186,11 @@ const createMagazineArticles = (main, document, url) => {
     });
 
     const relatedSection = document.querySelector('section.hubTeaser.related');
+    const relatedHeader = `<h3 class="MediumTitleSentence">Related Content</h3>`;
     const relatedCells = [['Related Articles'], ['']];
     const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
     relatedSection.replaceWith(relatedArticleBlock);
+    relatedArticleBlock.insertAdjacentHTML('beforebegin', relatedHeader);
     relatedArticleBlock.insertAdjacentElement('afterend', hr(document));
 
     const subscribeSection = document.querySelector('section.hubTextBlock');
