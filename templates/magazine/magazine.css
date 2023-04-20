@@ -310,7 +310,7 @@ div.section.eloqua-form-container>div.eloqua-form-wrapper {
   }
 
   body.magazine .eloqua-form .field-control-wrapper,
-  body.magazine .eloqua-form span.lv_validation_message {
+  body.magazine .eloqua-form span.LV_validation_message {
     width: 50%;
     margin: unset;
   }
