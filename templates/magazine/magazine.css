@@ -160,6 +160,10 @@ div#sidebar.section.template.article-sidebar.loading {
   visibility: hidden;
 }
 
+div.section.eloqua-form-container>div.default-content-wrapper {
+  text-align: center;
+}
+
 body.magazine>main .section.related-articles-container>div.default-content-wrapper {
   text-align: center;
 }
@@ -167,17 +171,6 @@ body.magazine>main .section.related-articles-container>div.default-content-wrapp
 body.magazine>main div.default-content-wrapper>blockquote>p::before,
 body.magazine>main div.default-content-wrapper>blockquote>p::after {
   content: none;
-}
-
-body.magazine>main div.default-content-wrapper>blockquote>p>picture {
-  float: left;
-  padding-right: 20px;
-}
-
-body.magazine>main div.default-content-wrapper>blockquote>p {
-  quotes: none;
-  text-align: center;
-  display: table;
 }
 
 div.section.related-articles-container>div.related-articles-wrapper {
@@ -198,10 +191,6 @@ div.section.eloqua-form-container {
   width: 756px;
   padding: 35px 15px;
   margin: 48px auto;
-}
-
-div.section.eloqua-form-container>div.default-content-wrapper {
-  text-align: center;
 }
 
 div.section.eloqua-form-container>div.eloqua-form-wrapper {
@@ -307,15 +296,5 @@ div.section.eloqua-form-container>div.eloqua-form-wrapper {
 
   body.magazine>main .section.template.article-sidebar>div.subscribe>.cta {
     padding: 15px 32px;
-  }
-
-  body.magazine .eloqua-form .field-control-wrapper,
-  body.magazine .eloqua-form span.LV_validation_message {
-    width: 50%;
-    margin: unset;
-  }
-
-  body.magazine .eloqua-form #formElement2 > div > div > div > div {
-    display: block;
   }
 }
