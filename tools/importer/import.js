@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 /* global WebImporter */
-/* eslint-disable no-console, class-methods-use-this, no-unused-vars  */
+/* eslint-disable no-console, class-methods-use-this, no-unused-vars, no-restricted-syntax */
 /* eslint-disable no-plusplus, no-use-before-define */
 
 const hr = (doc) => doc.createElement('hr');
@@ -186,7 +186,7 @@ const createMagazineArticles = (main, document, url) => {
     });
 
     const relatedSection = document.querySelector('section.hubTeaser.related');
-    const relatedHeader = `<h3 class="MediumTitleSentence">Related Content</h3>`;
+    const relatedHeader = '<h3 class="MediumTitleSentence">Related Content</h3>';
     const relatedCells = [['Related Articles'], ['']];
     const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
     relatedSection.replaceWith(relatedArticleBlock);
@@ -216,17 +216,6 @@ const createMagazineArticles = (main, document, url) => {
   }
 };
 
-// return true if the link returns 200, false otherwise
-function isLinkValidWithStatus200(url) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    return this.readyState === 4 && this.status === 200;
-  };
-
-  xhttp.open('POST', url, false);
-  xhttp.send();
-}
-
 function createPRDownloadBlock(main, document) {
   const h3s = document.querySelectorAll('h3');
   h3s.forEach((heads) => {
@@ -237,10 +226,6 @@ function createPRDownloadBlock(main, document) {
         // don't use the image src, it's a thumbnail. Instead, use the href of the parent a tag.
         let fullImageUrl = img.closest('a').href;
 
-        if (!isLinkValidWithStatus200(fullImageUrl)) {
-          console.log(`download images found invalid a.href, using image.src instead. link: ${fullImageUrl}, image: ${img.src}`);
-          fullImageUrl = img.src;
-        }
         const newImg = document.createElement('img');
         newImg.src = fullImageUrl;
         cells.push([newImg]);
@@ -1218,7 +1203,7 @@ function removeOldNewsCarousel(main, document) {
 }
 
 export default {
-  transform: ({
+  transform: async ({
     // eslint-disable-next-line no-unused-vars
     document, url, html, params,
   }) => {
