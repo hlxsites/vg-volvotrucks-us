@@ -262,7 +262,8 @@
 
   .elq-form .row {
     margin-left: -15px;
-    margin-right: -15px
+    margin-right: -15px;
+    flex: 1 1 50%;
   }
 
   .elq-form .row:after,
@@ -1269,6 +1270,35 @@
     display: none
   }
 
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .grid-layout-col {
+    width: 100%;
+  }
+
+  #form23 > div > div:nth-child(5),
+  #form23 > div > div:nth-child(6) {
+    flex: unset;
+    width: 100%;
+  }
+  #field5 {
+    width: 100%;
+  }
+  #formElement4 > div {
+    padding-right: 0;
+  }
+  #form23 > div > div:nth-child(5) > div > div {
+    padding-right: 0;
+  }
+.list-order input[type="checkbox"],
+.list-order label.checkbox-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px; /* optional: add some space between the input and label */
+}
+
   @media (max-width:767px) {
     .form-field-visible-xs-block {
       display: block
@@ -1296,7 +1326,7 @@
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
           <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
+            <div class="col-sm-12 col-xs-12">
               <label for="field1" class="label-position top ">
                 Email Address
                 <span class="required">
@@ -1313,8 +1343,8 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
+          <div id="formElement1" class="elq-field-style form-element-layout row">
+            <div class="col-sm-12 col-xs-12">
               <label for="field2" class="label-position top ">
                 First Name
                 <span class="required">
@@ -1331,8 +1361,8 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
+          <div id="formElement2" class="elq-field-style form-element-layout row">
+            <div class="col-sm-12 col-xs-12">
               <label for="field3" class="label-position top ">
                 Last Name
                 <span class="required">
@@ -1349,8 +1379,8 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
+          <div id="formElement3" class="elq-field-style form-element-layout row">
+            <div class="col-sm-12 col-xs-12">
               <label for="field4" class="label-position top ">
                 Zip or Postal Code
                 <span class="required">
@@ -1368,15 +1398,10 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
-              <label for="field5" class="label-position top ">
-                Select Profile
-                <span class="required">
-                  *
-                </span>
-              </label>
+          <div id="formElement4" class="elq-field-style form-element-layout row">
+            <div class="col-sm-12 col-xs-12">
               <select id="field5" name="dropdownMenu" class="field-size-top-small">
+                <option value="" selected="true" disabled="" style="display:none;">Select Profile*</option>
                 <option value="Dealer">
                   Dealer
                 </option>
@@ -1407,14 +1432,12 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
-            <div style="text-align:left;" class="col-sm-12 col-xs-12">
+          <div id="formElement5" class="elq-field-style form-element-layout row">
+            <div class="col-sm-12 col-xs-12">
               <span class="checkbox-span field-size-top-large">
                 <span class="list-order oneColumn">
                   <input name="singleCheckbox" type="checkbox" value="on" />
-                  <label class="checkbox-label">
-                    Yes, please subscribe me to email and newsletter updates.*
-                  </label>
+                  <label class="checkbox-label">Yes, please subscribe me to email and newsletter updates.</label>
                 </span>
               </span>
             </div>
@@ -1425,7 +1448,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div id="formElement6" class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <input type="submit" value="Submit" class="submit-button-style" />
             </div>
