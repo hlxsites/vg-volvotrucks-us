@@ -168,7 +168,7 @@ body.magazine>main .section.related-articles-container>div.default-content-wrapp
   text-align: center;
   float: unset;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 body.magazine>main div.default-content-wrapper>blockquote>p::before,
@@ -179,6 +179,7 @@ body.magazine>main div.default-content-wrapper>blockquote>p::after {
 div.section.related-articles-container {
   border-top: 1px solid var(--background-hover-color);
   display: inline-block;
+  width: 100%;
 }
 
 #driving-progress {
