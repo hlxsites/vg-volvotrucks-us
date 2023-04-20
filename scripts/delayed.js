@@ -23,15 +23,15 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', {
     type: 'text/javascript',
     charset: 'UTF-8',
-    'data-domain-script': "e8ffed56-4bb1-43fd-9b41-bc4385267ec8",
+    'data-domain-script': 'e8ffed56-4bb1-43fd-9b41-bc4385267ec8',
   });
 
   window.OptanonWrapper = () => {
     const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
 
     function isSameGroups(groups1, groups2) {
-      const s1 = JSON.stringify(groups1.split(",").sort());
-      const s2 = JSON.stringify(groups2.split(",").sort());
+      const s1 = JSON.stringify(groups1.split(',').sort());
+      const s2 = JSON.stringify(groups2.split(',').sort());
 
       return s1 === s2;
     }
