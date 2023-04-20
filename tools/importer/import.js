@@ -890,6 +890,10 @@ function make360Image(main, document) {
 
 /* this only is works with press-release 'articles' */
 function makeNewsArticle(main, document) {
+  const spot = document.querySelector('#Form1 > div.container.main-content > div > div > div > div.wb-entry > div:nth-child(2)');
+  const pubDate = document.querySelector('#Form1 > div.container.main-content > div > div > div > div.wb-entry > div.postHeading > div > div');
+  spot.textContent = pubDate.textContent;
+
   const newsArticle = document.querySelectorAll('#Form1 div.newsArticle');
   if (newsArticle && meta.template === 'article') {
     console.log(`newsArticle(s) found: ${newsArticle.length}`);
