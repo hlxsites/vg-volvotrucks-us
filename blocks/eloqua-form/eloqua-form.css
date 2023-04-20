@@ -45,7 +45,6 @@
 
 .eloqua-form .single-checkbox-row.row {
   display: flex;
-  justify-content: center;
 }
 
 .eloqua-form .eloqua-select-wrapper {
@@ -67,14 +66,14 @@
 }
 
 .eloqua-form .field-control-wrapper,
-.eloqua-form span.lv_validation_message {
-  width: 50%;
+.eloqua-form span.LV_validation_message {
+  width: 100%;
   margin: auto;
   text-align: center;
   display: block;
 }
 
-#formElement2 > div > div > div > div {
-  display: grid;
+.eloqua-form .single-checkbox-row.row {
   justify-content: center;
 }
+
