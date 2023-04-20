@@ -166,6 +166,9 @@ div.section.eloqua-form-container>div.default-content-wrapper {
 
 body.magazine>main .section.related-articles-container>div.default-content-wrapper {
   text-align: center;
+  float: unset;
+  width: 100%;
+  margin-top: 25px;
 }
 
 body.magazine>main div.default-content-wrapper>blockquote>p::before,
@@ -173,8 +176,10 @@ body.magazine>main div.default-content-wrapper>blockquote>p::after {
   content: none;
 }
 
-div.section.related-articles-container>div.related-articles-wrapper {
+div.section.related-articles-container {
   border-top: 1px solid var(--background-hover-color);
+  display: inline-block;
+  width: 100%;
 }
 
 #driving-progress {
