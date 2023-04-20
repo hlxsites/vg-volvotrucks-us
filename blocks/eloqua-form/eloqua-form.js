@@ -76,7 +76,7 @@ const addForm = async (block) => {
 
   block.querySelectorAll('.form-element-layout').forEach((el) => {
     // displaying label content as input placeholder
-    const input = el.querySelector('input[type="text"], select');
+    const input = el.querySelector('input[type="text"], select, textarea');
     const label = el.querySelector('label');
 
     if (input && label) {
