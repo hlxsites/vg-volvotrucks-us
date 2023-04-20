@@ -386,14 +386,6 @@ async function loadEager(doc) {
   }
   await templatePromise;
   await getPlaceholders();
-
-  if (document.querySelector('helix-sidekick')) {
-    import('../tools/sidekick/plugins.js');
-  } else {
-    document.addEventListener('helix-sidekick-ready', () => {
-      import('../tools/sidekick/plugins.js');
-    }, { once: true });
-  }
 }
 
 /**
