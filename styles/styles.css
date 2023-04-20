@@ -86,6 +86,7 @@
   --btn-padding: 12px 32px;
 
   /* body sizes */
+  --body-font-size-l: 2.4rem;
   --body-font-size-m: 2.2rem;
   --body-font-size-s: 1.8rem;
   --body-font-size-xs: 1.6rem;
@@ -295,10 +296,21 @@ button.primary {
   border: 2px solid var(--text-color);
 }
 
-a.button.primary.dark,
-button.primary {
-  color: var(--c-white);
+a.button.primary.dark {
   background-color: var(--text-color);
+  color: var(--c-white);
+}
+
+a.button.primary.dark:hover {
+  background-color: var(--text-color);
+  border-color: var(--text-color);
+  color: var(--c-white);
+}
+
+button, input, select, textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
 button:disabled, button:disabled:hover {
@@ -309,6 +321,16 @@ button:disabled, button:disabled:hover {
 a.button.primary:hover, button.primary:hover {
   background-color: var(--btn-background-hover);
   border-color: var(--btn-border-hover);
+  color: var(--text-color);
+}
+
+input[type=text],select,textarea {
+  display: block;
+  padding: 10px 40px 10px 15px;
+  border: none;
+  border-radius: 0;
+  background-color: var(--background-light-gray);
+  appearance: none;
 }
 
 /* commont elements */
@@ -446,6 +468,12 @@ ul.cta-list li {
   padding: 0 50px;
 }
 
+.pager .pagination ol li:not(:first-child) {
+  float: right;
+  padding: 10px;
+  margin-top: -10px;
+}
+
 main .section.tabbed-container-full-width > div {
   padding: 0;
   width: unset;
@@ -476,8 +504,8 @@ main .section.tabbed-container ul.tab-navigation button {
   margin: 0;
 }
 
-main .section.tabbed-container ul.tab-navigation li.active,
-main .section.tabbed-container ul.tab-navigation li:hover {
+.section.tabbed-container ul.tab-navigation li.active,
+.section.tabbed-container ul.tab-navigation li:hover {
   border-bottom: 3px solid var(--link-color);
 }
 
@@ -545,6 +573,86 @@ a.button.text-link-with-video i {
 
 a.button.text-link-with-video::after {
   content: unset;
+}
+
+/* video low resolution banner */
+.low-resolution-banner {
+  font-size: 16px;
+  background: var(--background-color);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.low-resolution-banner-cookie-settings {
+  border: none;
+  background: transparent;
+  color: #0d3c87;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: var(--ff-volvo-novum);
+}
+
+.low-resolution-banner button.modal-close-button {
+  padding-left: 20px;
+  color: var( --volvo-text-light-gray);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* pagination */
+.pager .pagination ol li .last::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f051";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .first::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f048";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .next::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f054";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.pager .pagination ol li .prev::before {
+  font-family: var(--ff-fontawesome);
+  content: "\f053";
+  font-size: 12px;
+  text-decoration: none;
+}
+
+div.block div.pager {
+  font-size: 1.4rem;
+  display: grid;
+  margin-bottom: 1em;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+div.block div.pager .pagination {
+  justify-self: end;
+}
+
+div.block div.pager .pagination .scroll {
+  padding: 0;
+  margin: 0 0 0 15px;
+  display: inline-flex;
+  gap: 5px;
+  list-style: none;
+}
+
+div.block div.pager .pagination .scroll li a {
+  color: var(--volvo-text-gray);
+  font-family: var(--ff-volvo-novum-medium);
 }
 
 @media screen and (min-width: 480px) {

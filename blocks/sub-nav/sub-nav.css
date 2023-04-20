@@ -34,7 +34,8 @@
     color: currentcolor;
 }
 
-.block.sub-nav li.active {
+.block.sub-nav li.active,
+.block.sub-nav li strong {
     grid-row: 1;
     font-family: var(--ff-volvo-novum-medium);
 }
@@ -101,8 +102,9 @@
         font-size: 12px;
     }
 
-    .block.sub-nav li.overview {
-        display: none;
+    .block.sub-nav li.overview,
+    .block.sub-nav li.synthetic {
+        display: none !important;
     }
 
     /* first child */

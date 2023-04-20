@@ -1,15 +1,18 @@
 body.magazine>main {
   position: relative;
-  padding: 108px 15px 0 15px;
+  padding: 10px 0 0;
   margin: 0 auto;
+}
+
+body.magazine>main div.default-content-wrapper>blockquote>p>picture {
+  float: left;
+  padding-right: 20px;
 }
 
 body.magazine>main .section.template .row.size-img {
   display: flex;
-  flex-direction: column;
+  flex-flow: column wrap;
   height: 410px;
-  padding: 0;
-  flex-wrap: wrap;
   overflow: hidden;
 }
 
@@ -17,7 +20,6 @@ body.magazine>main .section.template .row.size-img picture {
   width: 100%;
   order: 2;
   height: 140px;
-
 }
 
 body.magazine>main .section.template .row.size-img picture img {
@@ -45,8 +47,6 @@ body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-d
 }
 
 body.magazine>main .section.template.article-hero>div>div>h3.title-sentence {
-  font-size: 24px !important;
-  letter-spacing: -.1px !important;
   color: var(--volvo-text-gray);
   margin-bottom: 10px;
   font-weight: 700;
@@ -106,6 +106,7 @@ body.magazine>main .section.article-sidebar .share-icons button {
   border: 0;
   margin: 10px;
 }
+
 body.magazine>main .section.article-sidebar .share-icons button i {
   font-size: 16px;
 }
@@ -115,13 +116,13 @@ body.magazine>main .share {
   padding-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe {
+body.magazine>main .section.template.article-sidebar>div.subscribe {
   border-top: 1px solid var(--background-hover-color);
   padding-top: 30px;
   margin-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe > a {
+body.magazine>main .section.template.article-sidebar>div.subscribe>a {
   border: 2px solid var(--volvo-text-gray);
   user-select: none;
   color: var(--c-white);
@@ -136,9 +137,17 @@ body.magazine>main .section.template.article-sidebar > div.subscribe > a {
   white-space: nowrap;
 }
 
-body.magazine>main .section.template.article-sidebar > div.subscribe > a > i {
+body.magazine>main .section.template.article-sidebar>div.subscribe>a>i {
   font-size: 16px;
   padding-bottom: 4px;
+}
+
+
+body.magazine>main div.default-content-wrapper>blockquote>p {
+  quotes: none;
+  text-align: center;
+  display: table;
+  margin: 0 auto;
 }
 
 body.magazine>main .section.article-sidebar p {
@@ -151,28 +160,52 @@ div#sidebar.section.template.article-sidebar.loading {
   visibility: hidden;
 }
 
-body.magazine>main .section.related-articles-container>div.default-content-wrapper {
+div.section.eloqua-form-container>div.default-content-wrapper {
   text-align: center;
 }
 
-body.magazine>main div.default-content-wrapper > blockquote > p::before,
-body.magazine>main div.default-content-wrapper > blockquote > p::after {
+body.magazine>main .section.related-articles-container>div.default-content-wrapper {
+  text-align: center;
+  float: unset;
+  width: 100%;
+  margin-top: 25px;
+}
+
+body.magazine>main div.default-content-wrapper>blockquote>p::before,
+body.magazine>main div.default-content-wrapper>blockquote>p::after {
   content: none;
 }
 
-body.magazine>main div.default-content-wrapper > blockquote > p > picture {
-  float: left;
-  padding-right: 20px;
-}
-
-body.magazine>main div.default-content-wrapper > blockquote > p {
-  quotes: none;
-  text-align: center;
-  display: table;
-}
-
-body.magazine > main > div.section.related-articles-container > div.related-articles-wrapper {
+div.section.related-articles-container {
   border-top: 1px solid var(--background-hover-color);
+  display: inline-block;
+  width: 100%;
+}
+
+#driving-progress {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 48px;
+  line-height: 48px;
+  letter-spacing: 3.6px;
+}
+
+div.section.eloqua-form-container {
+  background-color: #D8D8D8;
+  position: relative;
+  clear: right;
+  width: 756px;
+  padding: 35px 15px;
+  margin: 48px auto;
+}
+
+div.section.eloqua-form-container>div.eloqua-form-wrapper {
+  margin: 10px auto;
+  width: 100%;
+  max-width: 960px;
+}
+
+#fe774 {
+  background-color: var(--c-white);
 }
 
 @media screen and (min-width: 992px) {
@@ -232,12 +265,24 @@ body.magazine > main > div.section.related-articles-container > div.related-arti
   body.magazine>main .section .default-content-wrapper,
   body.magazine>main .section .teaser-cards-wrapper,
   body.magazine>main .section .teaser-grid-wrapper,
-  body.magazine>main .section .columns-wrapper,
-  body.magazine>main .section .related-articles-wrapper {
+  body.magazine>main .section .columns-wrapper {
     float: right;
     margin: 0 1%;
     width: 75%;
     height: 100%;
+  }
+
+  body.magazine>main .section .related-articles-wrapper {
+    clear: right;
+    width: 100%;
+  }
+
+  div.section.eloqua-form-container {
+    width: 100%;
+  }
+
+  body>main>div.section.eloqua-form-container>div.default-content-wrapper {
+    width: 100%;
   }
 
   body.magazine>main .section.default-content-wrapper>div {
@@ -254,7 +299,7 @@ body.magazine > main > div.section.related-articles-container > div.related-arti
     width: 100%;
   }
 
-  body.magazine>main .section.template.article-sidebar > div.subscribe > .cta {
+  body.magazine>main .section.template.article-sidebar>div.subscribe>.cta {
     padding: 15px 32px;
   }
 }

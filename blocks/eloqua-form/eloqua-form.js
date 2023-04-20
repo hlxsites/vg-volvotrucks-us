@@ -1,17 +1,43 @@
+// eslint-disable no-console
 const addForm = async (block) => {
   // hiding till ready to display
   const displayValue = block.style.display;
   block.style.display = 'none';
 
-  const formName = block.innerText.trim();
+  const formName = block.firstElementChild.innerText.trim();
+  const thankYou = block.firstElementChild.nextElementSibling;
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
-  if (data.ok) {
-    const text = await data.text();
-    block.innerHTML = text;
-  } else {
-    // eslint-disable-next-line no-console
+  if (!data.ok) {
+    /* eslint-disable-next-line no-console */
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
+    return;
+  }
+
+  block.innerHTML = await data.text();
+
+  if (thankYou) {
+    const form = block.querySelector('form');
+    const oldSubmit = form.onsubmit;
+    form.onsubmit = function handleSubmit() {
+      if (oldSubmit.call(this)) {
+        const body = new FormData(this);
+        const { action, method } = this;
+        fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
+          /* eslint-disable-next-line no-console */
+          if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
+          const firstContent = thankYou.firstElementChild;
+          if (firstContent.tagName === 'A') {
+            // redirect to thank you page
+            window.location.href = firstContent.href;
+          } else {
+            // show thank you content
+            block.replaceChildren(thankYou);
+          }
+        });
+      }
+      return false;
+    };
   }
 
   const styles = block.querySelectorAll('style');
@@ -50,7 +76,7 @@ const addForm = async (block) => {
 
   block.querySelectorAll('.form-element-layout').forEach((el) => {
     // displaying label content as input placeholder
-    const input = el.querySelector('input[type="text"], select');
+    const input = el.querySelector('input[type="text"], select, textarea');
     const label = el.querySelector('label');
 
     if (input && label) {
@@ -64,8 +90,7 @@ const addForm = async (block) => {
     el.parentElement.classList.add('eloqua-select-wrapper');
   });
 
-  // replacing eloqua default values
-  block.querySelectorAll('[value^="~~"]').forEach((el) => {
+  block.querySelectorAll('[value^="~~"], [value^="--"], [value^="<eloqua"]').forEach((el) => {
     el.setAttribute('value', '');
   });
 

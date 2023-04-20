@@ -54,7 +54,6 @@
 
     .bb-news-list .news-item-content {
         width: 75%;
-        float: right;
         clear: right;
         margin-top: -40px;
     }
@@ -73,10 +72,6 @@
         width: calc(100% / 3);
         padding-left: 15px;
         padding-right: 15px;
-    }
-
-    .bb-news-list-small .news-item-content {
-        margin-top: -33px;
     }
 
     .bb-news-list-small .news-item-metadata {
