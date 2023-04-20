@@ -8,14 +8,13 @@ const addForm = async (block) => {
   const thankYou = block.firstElementChild.nextElementSibling;
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   if (!data.ok) {
-    // eslint-disable no-console
+    /* eslint-disable-next-line no-console */
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
     return;
   }
 
-  const text = await data.text();
-  block.innerHTML = text;
+  block.innerHTML = await data.text();
 
   if (thankYou) {
     const form = block.querySelector('form');
@@ -25,7 +24,7 @@ const addForm = async (block) => {
         const body = new FormData(this);
         const { action, method } = this;
         fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
-          // eslint-disable no-console
+          /* eslint-disable-next-line no-console */
           if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
           const firstContent = thankYou.firstElementChild;
           if (firstContent.tagName === 'A') {

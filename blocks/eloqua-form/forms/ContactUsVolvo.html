@@ -1,4 +1,8 @@
 <style type="text/css">
+
+  .elq-form input[type=checkbox] {
+    display: inline;
+  }
   .elq-form .elq-required {
     color: red !important;
     display: inline;
@@ -117,13 +121,19 @@
     background-color: #fff
   }
 
+  .eloqua-form span.LV_validation_message.LV_valid {
+    display: none;
+  }
+
+
   .elq-form button,
   .elq-form input,
   .elq-form select,
   .elq-form textarea {
     font-family: inherit;
     font-size: inherit;
-    line-height: inherit
+    line-height: inherit;
+    width: 100%;
   }
 
   .elq-form a {
@@ -1295,7 +1305,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field0" class="label-position top ">
                 Please Select a Topic
@@ -1304,6 +1314,8 @@
                 </span>
               </label>
               <select id="field0" name="dropdownMenu3" class="field-size-top-large">
+                <option value="" disabled selected hidden>Please Select a Topic</option>
+
                 <option value="Corporate Info">
                   Corporate Info
                 </option>
@@ -1355,7 +1367,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field1" class="label-position top ">
                 Message
@@ -1372,8 +1384,8 @@
     </div>
     <div class="row">
       <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field2" class="label-position top ">
                 Name
@@ -1385,12 +1397,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field3" class="label-position top ">
                 Email Address
@@ -1399,7 +1407,7 @@
                 </span>
               </label>
               <input id="field3" name="emailAddress" type="text" value=""
-                class="field-size-top-large" />
+                     class="field-size-top-large" />
             </div>
           </div>
         </div>
@@ -1407,8 +1415,8 @@
     </div>
     <div class="row">
       <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field4" class="label-position top ">
                 Address 1
@@ -1418,12 +1426,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field5" class="label-position top ">
                 City
@@ -1437,10 +1441,11 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field6" class="label-position top ">
                 VIN Number
@@ -1455,7 +1460,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field7" class="label-position top ">
                 Country
@@ -1480,8 +1485,8 @@
     </div>
     <div class="row">
       <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field8" class="label-position top ">
                 Phone Number
@@ -1490,18 +1495,14 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="grid-layout-col">
-        <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+        <div class="layout-col col-sm-6 col-xs-12">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <label for="field9" class="label-position top ">
                 Last Contact Date
               </label>
               <input id="field9" name="lastContactDate1" type="text" value=""
-                class="field-size-top-large" />
+                     class="field-size-top-large" />
             </div>
           </div>
         </div>
@@ -1510,7 +1511,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <span class="checkbox-span field-size-top-large">
                 <span class="list-order oneColumn">
@@ -1528,7 +1529,7 @@
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-12 col-xs-12">
-          <div id="formElement0" class="elq-field-style form-element-layout row">
+          <div  class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
               <input type="submit" value="Submit" class="submit-button-style" />
             </div>
