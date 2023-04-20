@@ -1,17 +1,12 @@
 {
   "project": "Volvo Trucks",
+  "host": "www.volvotrucks.us",
   "plugins": [
     {
       "id": "tagger",
       "title": "Tagger",
       "environments": [ "edit" ],
       "url": "/tools/tagger/index.html"
-    },
-    {
-      "id": "open original",
-      "title": "Open Original",
-      "environments": [ "dev", "preview", "live" ],
-      "event": "open-original"
     }
   ]
 }
