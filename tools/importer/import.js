@@ -189,12 +189,17 @@ const createMagazineArticles = (main, document, url) => {
     const relatedCells = [['Related Articles'], ['']];
     const relatedArticleBlock = WebImporter.DOMUtils.createTable(relatedCells, document);
     relatedSection.replaceWith(relatedArticleBlock);
+    relatedArticleBlock.insertAdjacentElement('afterend', hr(document));
 
     const subscribeSection = document.querySelector('section.hubTextBlock');
+    const formHeader = `<div class="default-content-wrapper">
+        <h2 id="driving-progress-1">Driving Progress</h2>
+        <p>Get the latest product information, Volvo Trucks news and updates delivered. Sign up below.</p>
+      </div>`;
     const subscribeCells = [['Eloqua Form'], ['ExceedingExpectationsSignup'], ['Thanks!']];
     const subscribeBlock = WebImporter.DOMUtils.createTable(subscribeCells, document);
-    subscribeBlock.append(document.createElement('hr'));
     subscribeSection.replaceWith(subscribeBlock);
+    subscribeBlock.insertAdjacentHTML('beforebegin', formHeader);
 
     document.querySelector('aside.sidebar')?.remove();
     document.querySelector('section.hubArticleHero')?.remove();
