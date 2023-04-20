@@ -27,7 +27,7 @@ async function getPlaceholders() {
 }
 
 export function getTextLable(key) {
-  return placeholders.data.find((el) => el.Key === key).Text;
+  return placeholders.data.find((el) => el.Key === key)?.Text || key;
 }
 
 /**
@@ -71,10 +71,9 @@ function isCTALinkCheck(ctaLink) {
 function buildHeroBlock(main) {
   // don't create a hero if the first item is a block.
   const firstSection = main.querySelector('div');
+  if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
-  if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
-    return;
-  }
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length) return;
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -240,15 +239,8 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a, picture + a')]
-    // link text is an unformatted URL paste, and matches the link href
-    .filter((a) => {
-      try {
-        // ignore domain in comparison
-        return new URL(a.href).pathname === new URL(a.textContent).pathname;
-      } catch (e) {
-        return false;
-      }
-    })
+    // link text is an unformatted URL paste
+    .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
       const br = a.previousElementSibling;
       let picture = br.previousElementSibling;
@@ -463,7 +455,9 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    import('./delayed.js');
+  }, 3000);
   // load anything that can be postponed to the latest here
 }
 
