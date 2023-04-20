@@ -1,3 +1,5 @@
+import { decorateLinks } from '../../scripts/scripts.js';
+
 function handleActiveClick(ul, event) {
   // on mobile we expand the navigation
   if (document.documentElement.clientWidth < 992) {
@@ -52,6 +54,7 @@ async function createSubNav(block, ref) {
 
     const nav = document.createElement('nav');
     nav.appendChild(ul);
+    decorateLinks(nav);
     block.replaceChildren(nav);
 
     // attach click listner for mobile

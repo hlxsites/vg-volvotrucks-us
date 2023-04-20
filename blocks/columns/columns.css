@@ -5,7 +5,12 @@
     margin: 48px 0;
 }
 
-.columns.revese-odd-rows-on-mobile > div:nth-of-type(odd) {
+.columns.revese-odd-rows-on-mobile > div:nth-of-type(odd),
+.columns.reverse-odd-rows-on-mobile > div:nth-of-type(odd) {
+    flex-direction: column-reverse;
+}
+
+.columns.reverse-even-rows-on-mobile > div:nth-of-type(even) {
     flex-direction: column-reverse;
 }
 

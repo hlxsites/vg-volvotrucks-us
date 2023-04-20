@@ -15,7 +15,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// OneTrust Cookies Consent Notice
+// OneTrust Cookies Consent Notice start for volvotrucks.us
 if (!window.location.host.includes('hlx.page') && !window.location.host.includes('localhost')) {
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
   // because the cookie is not persistent. To avoid this annoyance, disable unless on the
@@ -23,15 +23,22 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', {
     type: 'text/javascript',
     charset: 'UTF-8',
-    'data-domain-script': 'ec7e1b30-6b41-4e0f-ae45-623aa2563922',
+    'data-domain-script': "e8ffed56-4bb1-43fd-9b41-bc4385267ec8",
   });
 
   window.OptanonWrapper = () => {
     const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
 
+    function isSameGroups(groups1, groups2) {
+      const s1 = JSON.stringify(groups1.split(",").sort());
+      const s2 = JSON.stringify(groups2.split(",").sort());
+
+      return s1 === s2;
+    }
+
     window.OneTrust.OnConsentChanged(() => {
-      // reloading the page only when the active group has chaned
-      if (currentOnetrustActiveGroups !== window.OnetrustActiveGroups) {
+      // reloading the page only when the active group has changed
+      if (!isSameGroups(currentOnetrustActiveGroups, window.OnetrustActiveGroups)) {
         window.location.reload();
       }
     });
