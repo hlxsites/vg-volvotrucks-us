@@ -126,6 +126,10 @@ header nav .search label {
   display: none;
 }
 
+header nav #div-widget-id-autosuggest-results {
+  display: none !important;
+}
+
 /* hamburger menu: tools */
 header nav .tools {
   display: flex;
@@ -743,7 +747,7 @@ header nav .sections .section .navigation-cta {
 
 /* search widget styles */
 
-.header .search-container, 
+.header .search-container,
 .studio-search-widget .search-wrapper {
   padding: 0;
 }
