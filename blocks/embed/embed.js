@@ -19,6 +19,7 @@ export default function decorate(block) {
 
   if (!selectedLink) {
     block.innerHTML = '';
+    /* eslint-disable-next-line no-console */
     console.warn('Embed block: There is no video link. Please check if the fallback video link is provided.');
     return;
   }
