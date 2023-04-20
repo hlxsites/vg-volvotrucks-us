@@ -224,7 +224,7 @@ function createPRDownloadBlock(main, document) {
       cells.push([heads.innerHTML]);
       heads.parentNode.querySelectorAll('#img-grid > div a img').forEach(async (img) => {
         // don't use the image src, it's a thumbnail. Instead, use the href of the parent a tag.
-        let fullImageUrl = img.closest('a').href;
+        const fullImageUrl = img.closest('a').href;
 
         const newImg = document.createElement('img');
         newImg.src = fullImageUrl;
