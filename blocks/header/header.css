@@ -150,9 +150,10 @@ header nav #div-widget-id-autosuggest-results .result-row {
   width: 100%;
   padding: 10px 10px 10px 30px;
   justify-content: left;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
   text-transform: capitalize;
+  display: block;
 }
 
 @media (min-width: 768px) {
