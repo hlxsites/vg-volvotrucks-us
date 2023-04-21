@@ -1,5 +1,6 @@
 {
   "project": "Volvo Trucks",
+  "host": "www.volvotrucks.us",
   "plugins": [
     {
       "id": "tagger",
