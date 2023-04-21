@@ -220,6 +220,13 @@ h6 { font-size: var(--heading-font-size-xs) }
   font-style: initial;
 }
 
+h1#press-releases,
+h1#social-feeds,
+h1#volvo-trucks-magazine {
+  font-family: var(--ff-volvo-broadprodigital);
+  font-size: 60px;
+}
+
 p, dl, ol, ul, pre, blockquote {
   margin-top: 1em;
   margin-bottom: 1.5em;
