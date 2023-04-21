@@ -181,11 +181,11 @@ export default async function decorate(block) {
         </div>
       </div>
 
-      <a class="search-toggle" aria-expanded="false">
+      <a class="search-toggle" aria-label="search-icon" aria-expanded="false">
         <img class="search-icon" alt="search-icon" src="/icons/search-icon.png" >
       </a>
 
-      <a class="hamburger-toggle semitrans-trigger" aria-expanded="false" >
+      <a class="hamburger-toggle semitrans-trigger" aria-label="hamburger-icon" aria-expanded="false" >
         <img class="hamburger-icon" alt="hamburger-icon" src="/icons/Hamburger-mobile.png">
       </a>
 
