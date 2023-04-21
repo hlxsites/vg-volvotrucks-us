@@ -221,9 +221,9 @@ export default async function decorate(block) {
     const authoredLogoLink = navContent.children[0].querySelector('p:first-of-type > a');
     if (authoredLogoLink) {
       logo.title = authoredLogoLink.innerText;
-      logo.href= authoredLogoLink.href;
+      logo.href = authoredLogoLink.href;
     }
-    
+
     // vg_section
     nav.querySelector('.vgsection').append(navContent.children[0].querySelector('p:nth-of-type(2)').textContent);
     // location
