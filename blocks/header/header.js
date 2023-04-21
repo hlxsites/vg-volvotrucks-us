@@ -171,7 +171,7 @@ export default async function decorate(block) {
     // add all the divs that will be part of the nav
     nav.innerHTML = `
       <div class='brand'>
-        <a class='logo' href='/'>
+        <a class='logo' aria-label='VolvoTrucks.us Homepage' href='/'>
         </a>
         <div class='vgsection-location'>
           <div class='vgsection'>
@@ -182,16 +182,16 @@ export default async function decorate(block) {
       </div>
 
       <a class="search-toggle" aria-expanded="false">
-        <img class="search-icon" src="/icons/search-icon.png" >
+        <img class="search-icon" alt="search-icon" src="/icons/search-icon.png" >
       </a>
 
       <a class="hamburger-toggle semitrans-trigger" aria-expanded="false" >
-        <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
+        <img class="hamburger-icon" alt="hamburger-icon" src="/icons/Hamburger-mobile.png">
       </a>
 
       <div class='tools'>
         <div class='hamburger-close'>
-          <img src="/icons/Close-Icons.png">
+          <img alt="close-icon" src="/icons/Close-Icons.png">
         </div>
       </div>
 
