@@ -7,6 +7,15 @@
       "title": "Tagger",
       "environments": [ "edit" ],
       "url": "/tools/tagger/index.html"
+    },
+    {
+      "id": "library",
+      "title": "Library",
+      "environments": [ "edit" ],
+      "isPalette": true,
+      "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 398px; width: 360px;",
+      "url": "https://hlx.live/tools/sidekick/library?base=https://main--vg-volvotrucks-us--hlxsites.hlx.live/block-library/library.json",
+      "includePaths": [ "**.docx**" ]
     }
   ]
 }
