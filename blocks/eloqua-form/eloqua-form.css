@@ -53,7 +53,7 @@ aside>div>div>div>p.button-container>a.button.primary::after {
   justify-content: center;
 }
 
-/* stylelint-disable selector-class-pattern */
+/* stylelint-disable selector-id-pattern */
 #formElement10 .single-checkbox-row.row {
   justify-content: unset;
 }
@@ -76,6 +76,7 @@ aside>div>div>div>p.button-container>a.button.primary::after {
   pointer-events: none;
 }
 
+/* stylelint-disable selector-class-pattern */
 .eloqua-form .field-control-wrapper,
 .eloqua-form span.LV_validation_message {
   width: 100%;
