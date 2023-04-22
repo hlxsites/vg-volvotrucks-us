@@ -53,6 +53,10 @@ aside>div>div>div>p.button-container>a.button.primary::after {
   justify-content: center;
 }
 
+#formElement10 .single-checkbox-row.row {
+  justify-content: unset;
+}
+
 .eloqua-form .eloqua-select-wrapper {
   position: relative;
 }
