@@ -24,7 +24,8 @@
   max-width: none;
 }
 
-.eloqua-form .submit-button-style {
+.eloqua-form .submit-button-style,
+aside>div>div>div>p.button-container>a.button.primary {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -38,7 +39,9 @@
   margin-bottom: 30px;
   width: auto;
 }
-
+aside>div>div>div>p.button-container>a.button.primary::after {
+  content: unset;
+}
 .eloqua-form input[type="checkbox"] {
   width: auto;
 }
