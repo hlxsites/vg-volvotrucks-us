@@ -76,7 +76,6 @@ aside>div>div>div>p.button-container>a.button.primary::after {
   pointer-events: none;
 }
 
-/* stylelint-disable selector-class-pattern */
 .eloqua-form .field-control-wrapper,
 .eloqua-form span.LV_validation_message {
   width: 100%;
