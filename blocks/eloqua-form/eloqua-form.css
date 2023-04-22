@@ -53,6 +53,7 @@ aside>div>div>div>p.button-container>a.button.primary::after {
   justify-content: center;
 }
 
+/* stylelint-disable selector-class-pattern */
 #formElement10 .single-checkbox-row.row {
   justify-content: unset;
 }
