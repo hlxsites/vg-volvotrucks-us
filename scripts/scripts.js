@@ -260,15 +260,8 @@ function decorateHyperlinkImages(container) {
     // is preceded by an image (in a <p>) and image has no other siblings
     .filter((a) => a.parentNode.previousElementSibling?.firstElementChild?.tagName === 'PICTURE')
     .filter((a) => a.parentNode.previousElementSibling?.childElementCount === 1)
-    // link text is an unformatted URL pastes and matches the link href
-    .filter((a) => {
-      try {
-        // ignore domain in comparison
-        return new URL(a.href).pathname === new URL(a.textContent)?.pathname;
-      } catch (e) {
-        return false;
-      }
-    })
+    // link text is an unformatted URL paste
+    .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
       const picture = a.parentNode.previousElementSibling.firstElementChild;
       picture.parentNode.remove();
@@ -483,7 +476,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));

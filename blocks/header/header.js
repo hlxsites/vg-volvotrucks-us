@@ -170,8 +170,8 @@ export default async function decorate(block) {
     nav.id = 'nav';
     // add all the divs that will be part of the nav
     nav.innerHTML = `
-      <div class='brand'>
-        <a class='logo' href='/'>
+      <div class="brand">
+        <a class="logo" title="Homepage" href="/">
         </a>
         <div class='vgsection-location'>
           <div class='vgsection'>
@@ -181,23 +181,23 @@ export default async function decorate(block) {
         </div>
       </div>
 
-      <a class="search-toggle" aria-expanded="false">
-        <img class="search-icon" src="/icons/search-icon.png" >
+      <a href="#" class="search-toggle" role="button" title="toggle search" aria-expanded="false" aria-controls="main-nav-search">
+        <img class="search-icon" alt="" src="/icons/search-icon.png">
       </a>
 
-      <a class="hamburger-toggle semitrans-trigger" aria-expanded="false" >
-        <img class="hamburger-icon" src="/icons/Hamburger-mobile.png">
+      <a href="#" class="hamburger-toggle semitrans-trigger" role="button" title="open menu" aria-expanded="false" aria-controls="main-nav-sections,main-menu-tools">
+        <img class="hamburger-icon" alt="" src="/icons/Hamburger-mobile.png">
       </a>
 
-      <div class='tools'>
-        <div class='hamburger-close'>
-          <img src="/icons/Close-Icons.png">
-        </div>
+      <div id="main-menu-tools" class="tools">
+        <a href="#" class="hamburger-close" role="button" title="close menu" aria-expanded="false" aria-controls="main-nav-sections,main-menu-tools">
+          <img alt="close-icon" src="/icons/Close-Icons.png">
+        </a>
       </div>
 
-      <div class="search" aria-expanded="false">
+      <div id="man-nav-search" class="search">
         <div class="search-container">
-          <div id="div-widget-id" class='studio-search-widget'>
+          <div id="div-widget-id" class="studio-search-widget">
             <button class="search-button" aria-label="submit">
               <i class="fa fa-search"></i>
             </button>
@@ -205,18 +205,25 @@ export default async function decorate(block) {
         </div>
       </div>
 
-      <div class='sections'>
-        <ul class='sections-list'>
+      <div id="main-nav-sections" class="sections">
+        <ul class="sections-list">
         </ul>
       </div>
 
-      <div class='semitrans'>
+      <div class="semitrans">
       </div>
     `;
 
     // fill in the content from nav doc
     // logo
-    nav.querySelector('.logo').append(navContent.children[0].querySelector('p:first-of-type > span'));
+    const logo = nav.querySelector('.logo');
+    logo.append(navContent.children[0].querySelector('p:first-of-type > span'));
+    const authoredLogoLink = navContent.children[0].querySelector('p:first-of-type > a');
+    if (authoredLogoLink) {
+      logo.title = authoredLogoLink.innerText;
+      logo.href = authoredLogoLink.href;
+    }
+
     // vg_section
     nav.querySelector('.vgsection').append(navContent.children[0].querySelector('p:nth-of-type(2)').textContent);
     // location
@@ -257,13 +264,14 @@ export default async function decorate(block) {
 
     // for the mobile search icon
     nav.querySelector('.search-toggle').addEventListener('click', (e) => {
+      e.preventDefault();
       const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
       e.currentTarget.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      document.querySelector('header nav .search').setAttribute('aria-expanded', expanded ? 'false' : 'true');
     });
 
     // for the hamburger toggle icon
     nav.querySelector('.hamburger-toggle').addEventListener('click', (e) => {
+      e.preventDefault();
       e.currentTarget.setAttribute('aria-expanded', 'true');
       document.querySelector('header nav .semitrans').setAttribute('aria-expanded', 'true');
       if (!MQ.matches) {
@@ -272,7 +280,8 @@ export default async function decorate(block) {
     });
 
     // for the hamburger close icon
-    nav.querySelector('.hamburger-close').addEventListener('click', () => {
+    nav.querySelector('.hamburger-close').addEventListener('click', (e) => {
+      e.preventDefault();
       document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
       document.body.classList.remove('disable-scroll');
     });
