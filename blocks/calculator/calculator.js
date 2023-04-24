@@ -4,6 +4,8 @@ import {
   updatedData,
   addAnimations,
   resetData,
+  getNumberFormat,
+  reverseFormatNumber,
 } from './results.js';
 
 const calculatorPath = './calculator.json';
@@ -23,7 +25,7 @@ const formatData = (data) => {
     idx: i + 1,
     label: key,
     value,
-    type: 'number',
+    type: [2, 8].some((id) => id === i) ? 'number' : 'text',
   }));
 
   // get the last element of the excel as the disclaimer that goes on the middle
@@ -90,20 +92,23 @@ const createButton = (type) => {
 const getInputType = (e) => {
   // identify and return if the input is a number input or a select
   const inputLabel = e.label.slice(2).replaceAll('_', ' ');
-  let step = '';
-  if ([2, 3, 5, 6].some((num) => num === e.idx)) {
-    step = 'step="0.01"';
-  }
   if (e.type === 'select') {
     return `
       <label for="input-${e.idx}" class="label-input-${e.idx}">${inputLabel}</label>
-      <select name="input-${e.idx}" id="input-${e.idx}">
-        ${e.value.map((value, idx) => `<option data-value="${idx + 1}" value="${value}">${value}</option>`)}
+      <select name="input-${e.idx}" class="form-control" id="input-${e.idx}">
+        ${e.value.map((value, idx) => `
+        <option data-value="${idx + 1}" value="${value}">${value}</option>`)}
       </select>`;
   }
   return `
     <label class="label-input-${e.idx}" for="input-${e.idx}">${inputLabel}</label>
-    <input type="${e.type}" id="input-${e.idx}" value="${e.value}" ${step}/>`;
+    <input
+      type="${e.type}"
+      id="input-${e.idx}"
+      class="form-control"
+      value="${getNumberFormat(e.value, e.idx)}"
+      ${e.idx === 3 ? 'step="0.01"' : ''}/>
+    <span class="error-message">Please enter valid value</span>`;
 };
 
 const createInputs = (data, type) => {
@@ -129,6 +134,23 @@ const createInputs = (data, type) => {
   truckSection.append(inputList);
 
   return truckSection;
+};
+
+const formatDataField = (e) => {
+  if (e.target.localName === 'select') return;
+  const { target } = e;
+  const { value } = target;
+  const idx = +(target.id.split('-')[1]);
+  const fn = {
+    focus: reverseFormatNumber(value, 'en-US'),
+    blur: getNumberFormat(value, idx),
+  };
+  let hasError = false;
+  if (e.type === 'blur') {
+    target.classList.toggle('error', !reverseFormatNumber(value));
+    hasError = target.classList.contains('error');
+  }
+  if (!hasError) target.value = fn[e.type] ? fn[e.type] : value;
 };
 
 export default async function decorate(block) {
@@ -158,6 +180,9 @@ export default async function decorate(block) {
   allInputs.classList.add('calculator-inputs-form');
   allInputs.id = 'calculator';
   allInputs.oninput = (e) => resetForm(e);
+  // allInputs.addEventListener('focus', (e) => cleanDataField(e), true);
+  allInputs.addEventListener('focus', (e) => formatDataField(e), true);
+  allInputs.addEventListener('blur', (e) => formatDataField(e), true);
 
   const finalDisclaimerText = document.createElement('p');
   finalDisclaimerText.classList.add('disclaimer');
