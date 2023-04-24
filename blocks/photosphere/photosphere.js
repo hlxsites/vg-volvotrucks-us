@@ -1,4 +1,5 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
+import { getTextLable } from '../../scripts/scripts.js';
 
 // based on: https://developers.google.com/speed/webp/faq
 async function isWebpSupported() {
@@ -54,7 +55,7 @@ async function renderBlock(block) {
   block.innerHTML = '';
 
   const initPhotosphere = () => {
-    // eslint-disable-next-line no-undef, no-unused-vars
+    // eslint-disable-next-line no-undef
     const viewer = new PhotoSphereViewer.Viewer({
       container: '.photosphere.block',
       panorama: finalImageLink,
@@ -65,6 +66,53 @@ async function renderBlock(block) {
       navbar: false,
       defaultZoomLvl: 50,
       useXmpData: false,
+    });
+    const ctrlZoomId = 'ctrlZoom';
+    const outOfImageId = 'outOfImage';
+    const photosphereContainer = document.querySelector('.psv-container');
+    let showCustomOverlay = false;
+    let isCtrlZoomOverlayShown = false;
+
+    function showOverlay() {
+      viewer.overlay.show({
+        id: outOfImageId,
+        title: getTextLable('This is 360° image'),
+        text: getTextLable('Use mouse/fingers to navigate'),
+      });
+      showCustomOverlay = true;
+    }
+
+    viewer.addEventListener('ready', showOverlay, { once: true });
+
+    photosphereContainer.addEventListener('mouseover', (event) => {
+      if (event.currentTarget === photosphereContainer) {
+        viewer.overlay.hide(outOfImageId);
+        showCustomOverlay = false;
+      }
+    });
+
+    photosphereContainer.addEventListener('mouseout', (event) => {
+      if (event.currentTarget === photosphereContainer && !isCtrlZoomOverlayShown) {
+        showOverlay();
+      }
+
+      showCustomOverlay = true;
+    });
+
+    viewer.addEventListener('show-overlay', (event) => {
+      if (event.overlayId === ctrlZoomId) {
+        isCtrlZoomOverlayShown = true;
+      }
+    });
+
+    viewer.addEventListener('hide-overlay', (event) => {
+      if (event.overlayId === ctrlZoomId) {
+        isCtrlZoomOverlayShown = false;
+
+        if (showCustomOverlay) {
+          showOverlay();
+        }
+      }
     });
   };
 

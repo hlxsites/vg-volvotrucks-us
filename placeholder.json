@@ -1,7 +1,7 @@
 {
-  "total": 4,
+  "total": 6,
   "offset": 0,
-  "limit": 4,
+  "limit": 6,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -18,6 +18,14 @@
     {
       "Key": "No search results promp",
       "Text": "LET'S REFINE, OR TRY SEARCHING BY DIFFERENT SEARCH KEYWORDS INSTEAD."
+    },
+    {
+      "Key": "This is 360° image",
+      "Text": "This is 360° image"
+    },
+    {
+      "Key": "Use mouse/fingers to navigate",
+      "Text": "Use mouse/fingers to navigate"
     }
   ],
   ":type": "sheet"
