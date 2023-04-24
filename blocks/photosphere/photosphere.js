@@ -77,7 +77,6 @@ async function renderBlock(block) {
       viewer.overlay.show({
         id: outOfImageId,
         title: getTextLable('This is 360° image'),
-        text: getTextLable('Use mouse/fingers to navigate'),
       });
       showCustomOverlay = true;
     }

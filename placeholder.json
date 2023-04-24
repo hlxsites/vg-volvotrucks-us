@@ -1,7 +1,7 @@
 {
-  "total": 6,
+  "total": 5,
   "offset": 0,
-  "limit": 6,
+  "limit": 5,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -22,10 +22,6 @@
     {
       "Key": "This is 360° image",
       "Text": "This is 360° image"
-    },
-    {
-      "Key": "Use mouse/fingers to navigate",
-      "Text": "Use mouse/fingers to navigate"
     }
   ],
   ":type": "sheet"
