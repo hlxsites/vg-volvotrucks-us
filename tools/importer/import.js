@@ -217,22 +217,16 @@ const createMagazineArticles = (main, document, url) => {
 };
 
 function createPRDownloadBlock(main, document) {
-  const h3s = document.querySelectorAll('h3');
-  h3s.forEach((heads) => {
-    if (heads.textContent.includes('Download Press Release Images')) {
-      const cells = [['Download Images']];
-      cells.push([heads.innerHTML]);
-      heads.parentNode.querySelectorAll('#img-grid > div a img').forEach(async (img) => {
-        // don't use the image src, it's a thumbnail. Instead, use the href of the parent a tag.
-        const fullImageUrl = img.closest('a').href;
-
-        const newImg = document.createElement('img');
-        newImg.src = fullImageUrl;
-        cells.push([newImg]);
-      });
-      const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
-      heads.parentNode.replaceWith(downloadBlock);
-    }
+  const post = document.querySelectorAll('#Form1 > div.container.main-content > div > div > div > div.wb-entry > div.postSummary');
+  const cells = [['Download Images']];
+  post.forEach((heads) => {
+    heads.querySelectorAll('p img').forEach(async (img) => {
+      const newImg = document.createElement('img');
+      newImg.src = img.src;
+      cells.push([newImg]);
+    });
+    const downloadBlock = WebImporter.DOMUtils.createTable(cells, document);
+    heads.after(downloadBlock);
   });
 }
 
