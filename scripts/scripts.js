@@ -287,7 +287,7 @@ export function decorateLinks(block) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || url.pathname.endsWith('.jpeg') || external) {
         link.target = '_blank';
       }
     });
