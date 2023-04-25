@@ -45,8 +45,7 @@ function filterArticles(articles, filterTags, thisArticleTitle) {
 }
 
 async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()))
-    .filter((item) => item !== 'volvo-trucks-magazine');
+  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()));
   const articleTitle = getMetadata('og:title');
   const filteredData = filterArticles(magazineArticles, articleTags, articleTitle);
 
