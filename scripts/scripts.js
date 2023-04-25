@@ -287,7 +287,7 @@ export function decorateLinks(block) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || url.pathname.endsWith('.jpeg') || external) {
         link.target = '_blank';
       }
     });
@@ -476,7 +476,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
