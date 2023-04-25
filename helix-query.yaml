@@ -125,3 +125,19 @@ indices:
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+  search:
+    include:
+      - '/trucks/vnr-electric/'
+      - '/trucks/vnr/'
+      - '/news-and-stories/volvo-trucks-magazine/25-years-of-partnership/'
+    properties:
+      published:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      
