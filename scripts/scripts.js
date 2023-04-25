@@ -247,7 +247,7 @@ function decorateHyperlinkImages(container) {
       if (br.tagName === 'PICTURE') picture = br;
       picture.remove();
       br.remove();
-      a.innerHTML = picture.outerHTML;
+      a.replaceChildren(picture);
       // make sure the link is not decorated as a button
       a.parentNode.classList.remove('button-container');
       a.className = '';
