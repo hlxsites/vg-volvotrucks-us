@@ -25,7 +25,7 @@
 }
 
 .eloqua-form .submit-button-style,
-aside>div>div>div>p.button-container>a.button.primary {
+aside .get-an-offer-sidebar a.button.primary {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -40,7 +40,7 @@ aside>div>div>div>p.button-container>a.button.primary {
   width: auto;
 }
 
-aside>div>div>div>p.button-container>a.button.primary::after {
+aside .get-an-offer-sidebar a.button.primary::after {
   content: unset;
 }
 
