@@ -111,7 +111,7 @@ export default async function decorate(doc) {
   // subscribe
   const subscribeSidebar = createElement('div', 'subscribe');
   const button = createElement('a', 'cta');
-  button.href = '#eloquaForm';
+  button.href = '#form59';
   button.innerText = 'Subscribe';
   const arrowIcon = createElement('span', ['icon', 'icon-fa-angle-right']);
   button.append(arrowIcon);
