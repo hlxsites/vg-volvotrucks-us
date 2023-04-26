@@ -15,14 +15,9 @@ jobs:
     if: (github.event.client_payload.status == 200 || github.event.client_payload.status == 204) && endsWith(github.event.client_payload.path, '.md')
     runs-on: ubuntu-latest
     steps:
-    - name: Sleep for 90 seconds assuming query-index-search.json will be updated before
-      run: sleep 1s
-      shell: bash
-    - name: Remove .md extension
-      id: removeMd
-      run: PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
-      shell: bash
-    - name: Build search endpoint
-      id: searchEndpoint
-      run: echo "${{vars.UPSERT_ENDPOINT}}$PATH"
+    - name: Notify upsert endpoint
+      run: |
+        sleep 1s
+        PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
+        echo "${{vars.UPSERT_ENDPOINT}}$PAGE_PATH"
       shell: bash
