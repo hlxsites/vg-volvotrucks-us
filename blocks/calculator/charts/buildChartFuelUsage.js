@@ -16,10 +16,8 @@ const buildChartFuelUsage = (data) => {
 
   const {
     valueToPoints,
-    valueSpread,
-    minChartValue,
-    chartHeightInPoints,
-    conversionFactor,
+    chartValueRange,
+    bottomEdgeValue,
   } = calcValuesToPoints(chartValues, yAxisStart);
   // BARS
   const barHeight1 = valueToPoints(chartValues[0]);
@@ -28,12 +26,12 @@ const buildChartFuelUsage = (data) => {
   const barWidth = totalWidthChart / 4;
 
   const divisions = 6;
-  const sectionHeight = Number((valueSpread / divisions).toFixed(1));
+  const sectionHeight = Number((chartValueRange / divisions).toFixed(1));
 
   const labelValues = [];
 
   for (let i = 0; i < divisions; i += 1) {
-    const position = sectionHeight * i;
+    const position = sectionHeight * i + bottomEdgeValue;
     labelValues.push(position);
   }
 
@@ -109,10 +107,9 @@ const buildChartFuelUsage = (data) => {
     <!-- LEFT VALUES AND LINES -->
     <g data-z-index="1" aria-hidden="true" class="side-labels">
       ${labelValues.map((e) => {
-    const newMinimum = (Math.round(minChartValue / 100)) * 100;
     const roundedNumber = (Math.round(e / 100)) * 100;
-    const yValue = (newMinimum + roundedNumber).toFixed(0);
-    const yPosition = chartHeightInPoints - e * conversionFactor;
+    const yValue = roundedNumber.toFixed(0);
+    const yPosition = yAxisStart - valueToPoints(e);
 
     const lineAndValue = `
       <text

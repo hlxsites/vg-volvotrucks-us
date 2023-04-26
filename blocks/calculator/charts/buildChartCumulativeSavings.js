@@ -20,14 +20,12 @@ const buildChartCumulativeSavings = (data) => {
   const yAxisStart = 300;
   const {
     valueToPoints,
-    valueSpread,
-    minChartValue,
-    chartHeightInPoints,
-    conversionFactor,
+    chartValueRange,
+    bottomEdgeValue,
   } = calcValuesToPoints(chartValues, yAxisStart, { bottomPadding: 0 });
 
   // SIDE LABELS
-  const chartHeight = Number(valueSpread).toFixed(0);
+  const chartHeight = Number(chartValueRange).toFixed(0);
 
   // amount of lines on the chart
   const divisions = 6;
@@ -36,7 +34,7 @@ const buildChartCumulativeSavings = (data) => {
   // get the label heights to position them
   const labelValues = [];
   for (let i = 0; i < divisions; i += 1) {
-    const position = sectionHeight * i;
+    const position = sectionHeight * i + bottomEdgeValue;
     labelValues.push(position);
   }
 
@@ -109,8 +107,8 @@ const buildChartCumulativeSavings = (data) => {
       ${labelValues.map((e) => {
     // side labels and the lines are constructed with the same factor to position them
     const roundedNumber = (Math.round(e / 100)) * 100;
-    const yValue = (minChartValue + roundedNumber).toFixed(0);
-    const yPosition = chartHeightInPoints - e * conversionFactor;
+    const yValue = roundedNumber.toFixed(0);
+    const yPosition = yAxisStart - valueToPoints(e);
 
     const lineAndValue = `
       <text

@@ -15,23 +15,21 @@ const buildChartMPG = (data) => {
   const yAxisStart = 300;
   const {
     valueToPoints,
-    valueSpread,
-    minChartValue,
-    chartHeightInPoints,
-    conversionFactor,
+    chartValueRange,
+    bottomEdgeValue,
   } = calcValuesToPoints(chartValues, yAxisStart);
   const barHeight1InPoints = valueToPoints(chartValues[0]);
   const barHeight2InPoints = valueToPoints(chartValues[1]);
   const barWidth = totalWidthChart / 4;
 
   // LABELS
-  const chartHeight = Number(valueSpread).toFixed(0);
+  const chartHeight = Number(chartValueRange).toFixed(0);
   const divisions = 6;
   const sectionHeight = Number((chartHeight / divisions).toFixed(1));
   const labelValues = [];
 
   for (let i = 0; i < divisions; i += 1) {
-    const position = sectionHeight * i;
+    const position = sectionHeight * i + bottomEdgeValue;
     labelValues.push(position);
   }
 
@@ -107,8 +105,8 @@ const buildChartMPG = (data) => {
     <!-- LEFT VALUES AND LINES -->
     <g data-z-index="1" aria-hidden="true" class="side-labels">
   ${labelValues.map((e) => {
-    const yValue = (minChartValue + e).toFixed(1);
-    const yPosition = chartHeightInPoints - e * conversionFactor;
+    const yValue = e.toFixed(1);
+    const yPosition = yAxisStart - valueToPoints(e);
     const lineAndValue = `
       <text
         x="${80}"

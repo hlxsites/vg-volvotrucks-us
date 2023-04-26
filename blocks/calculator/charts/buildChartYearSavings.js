@@ -18,20 +18,18 @@ const buildChartMPG = (data) => {
   const yAxisStart = 300;
   const {
     valueToPoints,
-    valueSpread,
-    minChartValue,
-    chartHeightInPoints,
-    conversionFactor,
+    chartValueRange,
+    bottomEdgeValue,
   } = calcValuesToPoints(chartValues, yAxisStart, { bottomPadding: 0 });
 
-  const chartHeight = Number(valueSpread).toFixed(0);
+  const chartHeight = Number(chartValueRange).toFixed(0);
   const divisions = 6;
   const sectionHeight = Number((chartHeight / divisions).toFixed(1));
 
   const labelValues = [];
 
   for (let i = 0; i < divisions; i += 1) {
-    const position = sectionHeight * i;
+    const position = sectionHeight * i + bottomEdgeValue;
     labelValues.push(position);
   }
 
@@ -100,9 +98,8 @@ const buildChartMPG = (data) => {
     <g data-z-index="3" aria-hidden="true" class="side-labels">
   ${labelValues.map((e) => {
     const roundedNumber = (Math.round(e / 100)) * 100;
-    const yValue = (minChartValue + roundedNumber).toFixed(0);
-    // const yPosition = 300 - (valueToPoints(roundedNumber));
-    const yPosition = chartHeightInPoints - e * conversionFactor;
+    const yValue = roundedNumber.toFixed(0);
+    const yPosition = yAxisStart - valueToPoints(e);
 
     const lineAndValue = `
       <text

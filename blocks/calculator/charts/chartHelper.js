@@ -1,28 +1,26 @@
 export const calcValuesToPoints = (chartValues, heightInPoints, { bottomPadding } = {}) => {
   const maxValue = Math.max(...chartValues);
   const minValue = Math.min(...chartValues);
-  // padding for top and bottom of the chart so the lowest value will not be equal the first y axis
-  // and the last value will not 'touch' the chart top point
-  // it is the 1/10 of the avg of the min and max values => (minValue + maxValue) / 2 * 0.1
+  // padding for top and bottom of the chart, so the lowest value will not be equal the first y axis
+  // and the last value will not 'touch' the chart top edge
+  // by default it is the 1/10 of the avg
+  // of the min and max values => (minValue + maxValue) / 2 * 0.1 => (minValue + maxValue) * 0.05
   const paddingValue = (minValue + maxValue) * 0.05;
-  const minChartValue = bottomPadding ? minValue - bottomPadding : minValue - paddingValue;
-  const maxChartValue = maxValue + paddingValue;
-  const chartHeightInPoints = heightInPoints;
-  const valueSpread = maxChartValue - minChartValue;
+  const bottomEdgeValue = bottomPadding ? minValue - bottomPadding : minValue - paddingValue;
+  const topEdgeValue = maxValue + paddingValue;
+  const chartValueRange = topEdgeValue - bottomEdgeValue;
   // conversionFactor helps to convert the chart value to the svg points
   // it's simple proportion:
-  // chartHeightInPoints -> valueSpread
-  // x                   -> (y - minChartValue)
-  // to get the y value to poinsts just multiply the (y - minChartValue) by conversionFactory
-  const conversionFactor = chartHeightInPoints / valueSpread;
-  const valueToPoints = (value) => ((value - minChartValue) * conversionFactor).toFixed(0);
+  // heightInPoints -> valueSpread
+  // x                   -> (y - bottomEdgeValue)
+  // to get the y value to points just multiply the (y - bottomEdgeValue) by conversionFactory
+  const conversionFactor = heightInPoints / chartValueRange;
+  const valueToPoints = (value) => ((value - bottomEdgeValue) * conversionFactor).toFixed(0);
 
   return {
     valueToPoints,
-    valueSpread,
-    minChartValue,
-    chartHeightInPoints,
-    conversionFactor,
+    chartValueRange,
+    bottomEdgeValue,
   };
 };
 
