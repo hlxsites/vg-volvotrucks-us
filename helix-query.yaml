@@ -127,9 +127,15 @@ indices:
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
   search:
     include:
-      - '/trucks/vnr-electric/'
-      - '/trucks/vnr/'
-      - '/news-and-stories/volvo-trucks-magazine/25-years-of-partnership/'
+      - '/**'
+    exclude:
+      - 'drafts/**'
+      - 'images/**'
+      - '/**/footer'
+      - '/**/nav'
+      - '/fragments/**'
+      - '/**/sub-nav'
+      - '/news-and-stories/tags'
     properties:
       published:
         select: none
