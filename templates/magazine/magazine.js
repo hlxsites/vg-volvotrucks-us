@@ -30,9 +30,9 @@ async function buildArticleHero(container) {
   timeSpan.innerHTML = readtime;
   topDetails.append(timeSpan);
 
-  const titleH3 = createElement('h3', 'title-sentence');
-  titleH3.innerHTML = title;
-  content.append(titleH3);
+  const titleH1 = createElement('h1', 'title-sentence');
+  titleH1.innerText = title.includes('|') ? title.split('|')[0] : title;
+  content.append(titleH1);
   const details = createElement('div', 'details');
   content.append(details);
 
