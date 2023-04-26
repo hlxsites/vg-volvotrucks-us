@@ -4,7 +4,7 @@ indices:
     include:
       - '/**'
     exclude:
-      - 'drafts/**'
+      - '/drafts/**'
       - 'images/**'
       - '/**/footer'
       - '/**/nav'
@@ -129,7 +129,7 @@ indices:
     include:
       - '/**'
     exclude:
-      - 'drafts/**'
+      - '/drafts/**'
       - 'images/**'
       - '/**/footer'
       - '/**/nav'
