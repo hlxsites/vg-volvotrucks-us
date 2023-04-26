@@ -4,13 +4,16 @@ indices:
     include:
       - '/**'
     exclude:
-      - 'drafts/**'
+      - '/drafts/**'
       - 'images/**'
       - '/**/footer'
+      - '/footer'
       - '/**/nav'
+      - '/nav'
       - '/fragments/**'
       - '/**/sub-nav'
       - '/news-and-stories/tags'
+      - '/block-library/**'
     target: /query-index.json
     properties:
       lastModified:
@@ -129,13 +132,16 @@ indices:
     include:
       - '/**'
     exclude:
-      - 'drafts/**'
+      - '/drafts/**'
       - 'images/**'
       - '/**/footer'
+      - '/footer'
       - '/**/nav'
+      - '/nav'
       - '/fragments/**'
       - '/**/sub-nav'
       - '/news-and-stories/tags'
+      - '/block-library/**'
     properties:
       published:
         select: none
