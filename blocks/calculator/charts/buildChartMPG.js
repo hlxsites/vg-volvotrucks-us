@@ -1,41 +1,9 @@
+import { calcValuesToPoints, buildReferences } from './chartHelper.js';
+
 const colorArray = ['#919296', '#77B733'];
 
 const totalWidthChart = 800;
 const totalHeightChart = totalWidthChart * 0.6;
-
-const buildReferences = (keys) => {
-  const references = [];
-
-  keys.forEach((e, idx) => {
-    const factor = idx === 0 ? 0.3 : 0.7;
-    const xPosition = keys.length === 1 ? totalWidthChart * 0.5 : totalWidthChart * factor;
-
-    const ref = `
-      <g data-z-index="1">
-        <text
-          x="${xPosition}"
-          y="${10}"
-          text-anchor="middle"
-          data-z-index="2"
-          class="chart-reference"
-        >
-          ${e}
-        </text>
-
-        <rect
-          x="${xPosition}"
-          y="${20}"
-          width="12"
-          height="12"
-          fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
-          data-z-index="3"
-          >
-        </rect>
-      </g>`;
-    references.push(ref);
-  });
-  return references;
-};
 
 const buildChartMPG = (data) => {
   const chartName = Object.keys(data);
@@ -44,27 +12,22 @@ const buildChartMPG = (data) => {
   const chartKeys = Object.keys(valuesSets[0]);
   const chartValues = Object.values(valuesSets[0]);
 
-  const conversionFactor = 60;
-
   const yAxisStart = 300;
-
-  // BARS
-  const barHeight1 = (chartValues[0] * conversionFactor).toFixed(0) - yAxisStart;
-  const barHeight2 = (chartValues[1] * conversionFactor).toFixed(0) - yAxisStart;
-
+  const {
+    valueToPoints,
+    valueSpread,
+    minChartValue,
+    chartHeightInPoints,
+    conversionFactor,
+  } = calcValuesToPoints(chartValues, yAxisStart);
+  const barHeight1InPoints = valueToPoints(chartValues[0]);
+  const barHeight2InPoints = valueToPoints(chartValues[1]);
   const barWidth = totalWidthChart / 4;
 
-  const maxValue = Math.max(...chartValues);
-  const minValue = Math.min(...chartValues);
-
   // LABELS
-  const maxChart = Number((maxValue * 1.3).toFixed(1));
-  const minChart = Number((minValue * 0.7).toFixed(1));
-  const chartHeight = Number((maxChart - minChart).toFixed(0));
-
+  const chartHeight = Number(valueSpread).toFixed(0);
   const divisions = 6;
   const sectionHeight = Number((chartHeight / divisions).toFixed(1));
-
   const labelValues = [];
 
   for (let i = 0; i < divisions; i += 1) {
@@ -88,7 +51,7 @@ const buildChartMPG = (data) => {
     <g data-z-index="7" aria-hidden="true">
       <text
         x="${totalWidthChart * 0.5}"
-        y="${-50}"
+        y="${-70}"
         text-anchor="middle"
         data-z-index="4"
         aria-hidden="true"
@@ -100,31 +63,31 @@ const buildChartMPG = (data) => {
 
     <!-- REFERENCES -->
     <g data-z-index="7" aria-hidden="true">
-      ${buildReferences(chartKeys)}
+      ${buildReferences(chartKeys, totalWidthChart, colorArray)}
     </g>
 
     <!-- COLOR BARS AND VALUES-->
     <g data-z-index="7" aria-hidden="false" role="region" tabindex="-1" class="chart-bars">
       <rect
         x="${(totalWidthChart * 0.3) - (barWidth / 2)}"
-        y="${yAxisStart - barHeight1}"
+        y="${yAxisStart - barHeight1InPoints}"
         width="${barWidth}"
-        height="${barHeight1}"
+        height="${barHeight1InPoints}"
         fill="${colorArray[0]}"
         class="bar">
       </rect>
       <rect
         x="${(totalWidthChart * 0.7) - (barWidth / 2)}"
-        y="${yAxisStart - barHeight2}"
+        y="${yAxisStart - barHeight2InPoints}"
         width="${barWidth}"
-        height="${barHeight2}"
+        height="${barHeight2InPoints}"
         fill="${colorArray[1]}"
         class="bar">
       </rect>
       <text
         x="${totalWidthChart * 0.3}"
         text-anchor="middle"
-        y="${(yAxisStart - (barHeight1 * 0.5) + 5)}"
+        y="${(yAxisStart - (barHeight1InPoints * 0.5) + 5)}"
         opacity="1"
         class="text"
       >
@@ -133,7 +96,7 @@ const buildChartMPG = (data) => {
       <text
         x="${totalWidthChart * 0.7}"
         text-anchor="middle"
-        y="${(yAxisStart - (barHeight2 * 0.5) + 5)}"
+        y="${(yAxisStart - (barHeight2InPoints * 0.5) + 5)}"
         opacity="1"
         class="text"
       >
@@ -144,9 +107,8 @@ const buildChartMPG = (data) => {
     <!-- LEFT VALUES AND LINES -->
     <g data-z-index="1" aria-hidden="true" class="side-labels">
   ${labelValues.map((e) => {
-    const yValue = (minChart + e).toFixed(1);
-    const yPosition = 300 - (e * conversionFactor);
-
+    const yValue = (minChartValue + e).toFixed(1);
+    const yPosition = chartHeightInPoints - e * conversionFactor;
     const lineAndValue = `
       <text
         x="${80}"

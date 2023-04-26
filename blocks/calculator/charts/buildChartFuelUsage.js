@@ -1,41 +1,9 @@
+import { calcValuesToPoints, buildReferences } from './chartHelper.js';
+
 const colorArray = ['#919296', '#77B733'];
 
 const totalWidthChart = 800;
 const totalHeightChart = totalWidthChart * 0.6;
-
-const buildReferences = (keys) => {
-  const references = [];
-
-  keys.forEach((e, idx) => {
-    const factor = idx === 0 ? 0.3 : 0.7;
-    const xPosition = keys.length === 1 ? totalWidthChart * 0.5 : totalWidthChart * factor;
-
-    const ref = `
-      <g data-z-index="1">
-        <text
-          x="${xPosition}"
-          y="${10}"
-          text-anchor="middle"
-          data-z-index="2"
-          class="chart-reference"
-        >
-          ${e}
-        </text>
-
-        <rect
-          x="${xPosition}"
-          y="${20}"
-          width="12"
-          height="12"
-          fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
-          data-z-index="3"
-          >
-        </rect>
-      </g>`;
-    references.push(ref);
-  });
-  return references;
-};
 
 const buildChartFuelUsage = (data) => {
   const chartName = Object.keys(data);
@@ -44,26 +12,23 @@ const buildChartFuelUsage = (data) => {
   const chartKeys = Object.keys(valuesSets[0]);
   const chartValues = Object.values(valuesSets[0]);
 
-  const conversionFactor = 0.026;
-
   const yAxisStart = 300;
 
+  const {
+    valueToPoints,
+    valueSpread,
+    minChartValue,
+    chartHeightInPoints,
+    conversionFactor,
+  } = calcValuesToPoints(chartValues, yAxisStart);
   // BARS
-  const barHeight1 = (chartValues[0] * conversionFactor).toFixed(0) - yAxisStart;
-  const barHeight2 = (chartValues[1] * conversionFactor).toFixed(0) - yAxisStart;
+  const barHeight1 = valueToPoints(chartValues[0]);
+  const barHeight2 = valueToPoints(chartValues[1]);
 
   const barWidth = totalWidthChart / 4;
 
-  const maxValue = Math.max(...chartValues);
-  const minValue = Math.min(...chartValues);
-
-  // LABELS
-  const maxChart = Number((maxValue * 1.3).toFixed(1));
-  const minChart = Number((minValue * 0.7).toFixed(1));
-  const chartHeight = Number((maxChart - minChart).toFixed(0));
-
   const divisions = 6;
-  const sectionHeight = Number((chartHeight / divisions).toFixed(1));
+  const sectionHeight = Number((valueSpread / divisions).toFixed(1));
 
   const labelValues = [];
 
@@ -88,7 +53,7 @@ const buildChartFuelUsage = (data) => {
     <!-- TITLE -->
     <text
       x="${totalWidthChart * 0.5}"
-      y="${-50}"
+      y="${-70}"
       text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
@@ -99,7 +64,7 @@ const buildChartFuelUsage = (data) => {
 
     <!-- REFERENCES -->
     <g data-z-index="-1" aria-hidden="true">
-      ${buildReferences(chartKeys)}
+      ${buildReferences(chartKeys, totalWidthChart, colorArray)}
     </g>
 
     <!-- COLOR BARS AND VALUES-->
@@ -144,10 +109,10 @@ const buildChartFuelUsage = (data) => {
     <!-- LEFT VALUES AND LINES -->
     <g data-z-index="1" aria-hidden="true" class="side-labels">
       ${labelValues.map((e) => {
-    const newMinimum = (Math.round(minChart / 100)) * 100;
+    const newMinimum = (Math.round(minChartValue / 100)) * 100;
     const roundedNumber = (Math.round(e / 100)) * 100;
     const yValue = (newMinimum + roundedNumber).toFixed(0);
-    const yPosition = 300 - (roundedNumber * conversionFactor);
+    const yPosition = chartHeightInPoints - e * conversionFactor;
 
     const lineAndValue = `
       <text

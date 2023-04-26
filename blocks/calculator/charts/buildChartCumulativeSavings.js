@@ -1,45 +1,10 @@
+import { calcValuesToPoints, buildReferences } from './chartHelper.js';
+
 const colorArray = ['#919296', '#77B733'];
 
 // this sets the size of the svg and some measures are taken in relation to that
 const totalWidthChart = 800;
 const totalHeightChart = totalWidthChart * 0.6;
-
-const buildReferences = (keys) => {
-  // this function creates and returns the references to the chart.
-  // Its a text with a small square for each reference there is
-  const references = [];
-
-  keys.forEach((e, idx) => {
-    // these 2 variables position the references as long as there are only 1 or 2
-    const factor = idx === 0 ? 0.3 : 0.7;
-    const xPosition = keys.length === 1 ? totalWidthChart * 0.5 : totalWidthChart * factor;
-
-    const ref = `
-      <g data-z-index="1">
-        <text
-          x="${xPosition}"
-          y="${10}"
-          text-anchor="middle"
-          data-z-index="2"
-          class="chart-reference"
-        >
-          ${e}
-        </text>
-
-        <rect
-          x="${xPosition}"
-          y="${20}"
-          width="12"
-          height="12"
-          fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
-          data-z-index="3"
-          >
-        </rect>
-      </g>`;
-    references.push(ref);
-  });
-  return references;
-};
 
 const buildChartCumulativeSavings = (data) => {
   // this builds and returns the complete SVG
@@ -48,19 +13,21 @@ const buildChartCumulativeSavings = (data) => {
   const chartName = Object.keys(data);
   const valuesSets = Object.values(data);
 
-  // this conversion factor makes all the values from the chart related
-  const conversionFactor = 0.006;
   const chartKeys = Object.keys(valuesSets[0]);
   const chartValues = valuesSets[0][chartKeys[0]];
 
   // this value is because the svg counts from the top so the initial "0" is actually position 300
   const yAxisStart = 300;
-  const maxValue = Math.max(...chartValues);
+  const {
+    valueToPoints,
+    valueSpread,
+    minChartValue,
+    chartHeightInPoints,
+    conversionFactor,
+  } = calcValuesToPoints(chartValues, yAxisStart, { bottomPadding: 0 });
 
-  // SIDE LABELS - top and bottom value and an extra 30% so that the line does not go to the top
-  const maxChart = Number((maxValue * 1.3).toFixed(0));
-  const minChart = 0;
-  const chartHeight = Number((maxChart - minChart).toFixed(0));
+  // SIDE LABELS
+  const chartHeight = Number(valueSpread).toFixed(0);
 
   // amount of lines on the chart
   const divisions = 6;
@@ -90,7 +57,7 @@ const buildChartCumulativeSavings = (data) => {
     <!-- TITLE -->
     <text
       x="${totalWidthChart * 0.5}"
-      y="${-50}"
+      y="${-70}"
       text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
@@ -101,14 +68,14 @@ const buildChartCumulativeSavings = (data) => {
 
     <!-- REFERENCES -->
     <g data-z-index="-1" aria-hidden="true">
-      ${buildReferences(chartKeys)}
+      ${buildReferences(chartKeys, totalWidthChart, colorArray)}
     </g>
 
     <!-- COLOR BARS AND VALUES-->
     <g data-z-index="4" aria-hidden="false" role="region" opacity="1">
     ${chartValues.map((e, idx) => {
     // the values get converted to be able to display them in the colored bars
-    const barHeight = (e * conversionFactor).toFixed(0);
+    const barHeight = valueToPoints(e);
 
     const barWidth = totalWidthChart / 10;
     const section = (totalWidthChart - 100) / 5;
@@ -142,8 +109,8 @@ const buildChartCumulativeSavings = (data) => {
       ${labelValues.map((e) => {
     // side labels and the lines are constructed with the same factor to position them
     const roundedNumber = (Math.round(e / 100)) * 100;
-    const yValue = (minChart + roundedNumber).toFixed(0);
-    const yPosition = 300 - (roundedNumber * conversionFactor);
+    const yValue = (minChartValue + roundedNumber).toFixed(0);
+    const yPosition = chartHeightInPoints - e * conversionFactor;
 
     const lineAndValue = `
       <text
