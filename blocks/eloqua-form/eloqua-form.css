@@ -24,8 +24,7 @@
   max-width: none;
 }
 
-.eloqua-form .submit-button-style,
-aside .get-an-offer-sidebar a.button.primary {
+.eloqua-form .submit-button-style {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -38,10 +37,6 @@ aside .get-an-offer-sidebar a.button.primary {
   border: none;
   margin-bottom: 30px;
   width: auto;
-}
-
-aside .get-an-offer-sidebar a.button.primary::after {
-  content: unset;
 }
 
 .eloqua-form input[type="checkbox"] {
