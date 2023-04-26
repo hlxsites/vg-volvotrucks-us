@@ -12,7 +12,7 @@ export default function decorate(block) {
     }
     // give p containing the image a specific class
     const picture = elem.querySelector('picture');
-    if (picture) picture.closest('p').classList.add('image');
+    if (picture && picture.closest('p')) picture.closest('p').classList.add('image');
 
     const links = elem.querySelectorAll('a');
     const videos = [...links].filter((link) => isVideoLink(link));
