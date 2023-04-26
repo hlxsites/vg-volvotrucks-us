@@ -36,7 +36,7 @@ const addForm = async (block) => {
             // show thank you content
             const btn = thankYou.querySelector('a');
             const sidebar = document.querySelector('.get-an-offer-sidebar');
-            if (btn) {
+            if (btn && sidebar) {
               btn.setAttribute('href', '#');
               btn.addEventListener('click', (e) => {
                 e.preventDefault();
