@@ -125,3 +125,25 @@ indices:
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+  search:
+    include:
+      - '/**'
+    exclude:
+      - 'drafts/**'
+      - 'images/**'
+      - '/**/footer'
+      - '/**/nav'
+      - '/fragments/**'
+      - '/**/sub-nav'
+      - '/news-and-stories/tags'
+    properties:
+      published:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, "content")
+      

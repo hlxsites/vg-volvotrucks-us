@@ -46,11 +46,13 @@ body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-d
   grid: 24px / 25px 90px 25px 55px;
 }
 
-body.magazine>main .section.template.article-hero>div>div>h3.title-sentence {
+body.magazine>main .section.template.article-hero>div>div>h1.title-sentence {
   color: var(--volvo-text-gray);
   margin-bottom: 10px;
   font-weight: 700;
   line-height: 32px !important;
+  font-size: var(--heading-font-size-l);
+  letter-spacing: 0;
 }
 
 body.magazine>main .section.template.article-hero>div>div>div.details>span.author {
