@@ -98,13 +98,16 @@ const addForm = async (block) => {
 };
 
 export default async function decorate(block) {
+  const isMagazineTemplate = document.querySelector('meta[content="magazine"]');
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
+      if (isMagazineTemplate) block.removeAttribute('id');
       addForm(block);
     }
   }, {
     rootMargin: '300px',
   });
   observer.observe(block);
+  if (isMagazineTemplate) block.id = 'form59';
 }
