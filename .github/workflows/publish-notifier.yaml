@@ -20,6 +20,6 @@ jobs:
         sleep 1s
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
         URI=$(echo "${{ vars.UPSERT_ENDPOINT }}$PAGE_PATH")
-        response=$(curl -X POST -H "Authorization: Api-key ${{ secrets.UPSERT_APIKEY }}" "$URI")
+        response=$(curl -X POST "$URI")
         echo "response: $response"
       shell: bash
