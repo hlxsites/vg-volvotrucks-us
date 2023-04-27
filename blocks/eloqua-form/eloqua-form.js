@@ -1,3 +1,5 @@
+import { hideSidebar } from '../../common/sidebar/sidebar.js';
+
 // eslint-disable no-console
 const addForm = async (block) => {
   // hiding till ready to display
@@ -32,7 +34,18 @@ const addForm = async (block) => {
             window.location.href = firstContent.href;
           } else {
             // show thank you content
-            block.replaceChildren(thankYou);
+            const btn = thankYou.querySelector('a');
+            const sidebar = document.querySelector('.get-an-offer-sidebar');
+            if (btn && sidebar) {
+              btn.setAttribute('href', '#');
+              btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideSidebar();
+              });
+              sidebar?.replaceChildren(thankYou);
+            } else {
+              block.replaceChildren(thankYou);
+            }
           }
         });
       }
@@ -98,13 +111,16 @@ const addForm = async (block) => {
 };
 
 export default async function decorate(block) {
+  const isMagazineTemplate = document.querySelector('meta[content="magazine"]');
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
+      if (isMagazineTemplate) block.removeAttribute('id');
       addForm(block);
     }
   }, {
     rootMargin: '300px',
   });
   observer.observe(block);
+  if (isMagazineTemplate) block.id = 'form59';
 }
