@@ -9,3 +9,22 @@
 .get-an-offer-sidebar.show-details .form {
     display: none;
 }
+
+aside .get-an-offer-sidebar a.button.primary {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    padding: 12px 32px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    background: var(--link-color);
+    color: var(--c-white);
+    border: none;
+    margin-bottom: 30px;
+    width: auto;
+}
+
+aside .get-an-offer-sidebar a.button.primary::after {
+    content: unset;
+}
