@@ -15,7 +15,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_COMMENT="Your custom comment text here."
+          PR_COMMENT="- [ ] Your custom comment text here."
           
           PR_NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
           COMMENT_URL="https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
