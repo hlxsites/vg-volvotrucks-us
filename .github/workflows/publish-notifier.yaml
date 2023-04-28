@@ -19,7 +19,7 @@ jobs:
       run: |
         sleep 1s
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
-        URI=$(echo "${{ vars.UPSERT_ENDPOINT }}$PAGE_PATH")
+        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}$PAGE_PATH")
         response=$(curl -X POST "$URI")
         echo "response: $response"
       shell: bash
