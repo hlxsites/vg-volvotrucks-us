@@ -19,7 +19,8 @@ jobs:
       run: |
         sleep 1s
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
-        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}$PAGE_PATH")
-        response=$(curl -X POST "$URI")
+        DOMAIN_URL="${{ vars.DOMAIN_URL }}"
+        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?path=$PAGE_PATH&domain_url=$DOMAIN_URL")
+        response=$(curl -s -X POST "$URI")
         echo "response: $response"
       shell: bash
