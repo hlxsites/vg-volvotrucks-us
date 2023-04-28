@@ -18,7 +18,7 @@ jobs:
     - name: Notify upsert endpoint
       run: |
         sleep 1s
-        PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$/\//g')
+        PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$//g')
         DOMAIN_URL="${{ vars.DOMAIN_URL }}"
         URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?path=$PAGE_PATH&domain_url=$DOMAIN_URL")
         response=$(curl -s -X POST "$URI")
