@@ -3,26 +3,19 @@ name: Post Comment on Pull Request
 on:
   pull_request:
     types: [opened, synchronize]
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   comment_pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Post comment on PR
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          PR_COMMENT="- [ ] Your custom comment text here."
-          
-          PR_NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
-          COMMENT_URL="https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
-
-          curl \
-            -X POST \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\":\"$PR_COMMENT\"}" \
-            "$COMMENT_URL"
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '- [ ] 👋 Thanks for reporting!'
+            })
