@@ -1,0 +1,17 @@
+name: React to Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  process_comment:
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request != null && contains(github.event.comment.body, '/trigger-action')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Perform custom action
+        run: |
+          echo "Perform your custom action here."
