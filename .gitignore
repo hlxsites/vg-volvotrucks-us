@@ -8,3 +8,5 @@ helix-importer-ui
 .idea/*
 /tools/content-mirror/volvotrucks.us/
 /tools/content-mirror/hlxsite/
+.github/visual-tests/tests/*.ts-snapshots
+.github/visual-tests/test-results
