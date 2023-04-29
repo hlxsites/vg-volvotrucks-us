@@ -1,26 +1,28 @@
 import {expect, test} from '@playwright/test';
 
-test('compare pages', async ({page}) => {
+for (const path of ["/", "/trucks/"]) {
+  test(`compare ${path}`, async ({page}) => {
 
-  await page.goto('https://main--wknd--hlxsites.hlx.page/');
-  await page.waitForTimeout(2000);
+    await page.goto(`https://${process.env.DOMAIN1}${path}`);
+    await page.waitForTimeout(2000);
 
-  try {
-    await expect(page).toHaveScreenshot("screenshot.png");
-  } catch (error) {
-    console.log("ignoring", error.message);
-  }
+    try {
+      await expect(page).toHaveScreenshot("screenshot.png");
+    } catch (error) {
+      console.log("ignoring", error.message);
+    }
 
-  try {
+    try {
+      expect(await page.textContent('body')).toMatchSnapshot('body.txt');
+    } catch (error) {
+      console.log("ignoring", error.message);
+    }
+// TODO: instead create two screenshots and then compare. If they are different, then fail the test.
+
+    await page.goto(`https://${process.env.DOMAIN2}/${path}`);
+    await page.waitForTimeout(2000);
+    await expect(page).toHaveScreenshot("screenshot.png", {maxDiffPixels: 100});
     expect(await page.textContent('body')).toMatchSnapshot('body.txt');
-  } catch (error) {
-    console.log("ignoring", error.message);
-  }
+  });
 
-
-
-  await page.goto('https://block-library-assets--wknd--hlxsites.hlx.page/');
-  await page.waitForTimeout(2000);
-  await expect(page).toHaveScreenshot("screenshot.png", {maxDiffPixels: 100});
-  expect(await page.textContent('body')).toMatchSnapshot('body.txt');
-});
+}

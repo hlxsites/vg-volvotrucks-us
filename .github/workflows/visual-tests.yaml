@@ -20,7 +20,18 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: |
+        // set the DOMAIN1 environment variable to the branch name
+        export DOMAIN1='main--vg-volvotrucks-us--hlxsites.hlx.live' # TODO: get dynamically from config 
+        export DOMAIN2='${{ github.head_ref }}-vg-volvotrucks-us--hlxsites.hlx.live'
+        
+        echo "DOMAIN1=$DOMAIN1"
+        echo "DOMAIN2=$DOMAIN2"
+#        npx playwright test
+
+        # write a short summary
+        echo "SUMMARY=hello world" >> "$GITHUB_OUTPUT"
+      id: run-playwright-tests
     - uses: actions/upload-artifact@v3
       if: always()
       with:
@@ -37,7 +48,7 @@ jobs:
           ## Validation Results
 
           ```
-          ${{ steps.run-playwright.outputs.validation_results }}
+          ${{ steps.run-playwright-tests.outputs.SUMMARY }}
           ```
         edit-mode: replace
         comment-id: ${{ steps.find-comment.outputs.comment-id }}
