@@ -28,6 +28,7 @@ jobs:
         path: .github/visual-tests/playwright-report/
         retention-days: 30
     - name: Comment on Pull Request
+      if: always()
       uses: peter-evans/create-or-update-comment@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
