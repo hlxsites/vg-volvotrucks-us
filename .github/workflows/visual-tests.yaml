@@ -40,7 +40,7 @@ jobs:
         retention-days: 30
     - name: Comment on Pull Request
       if: always()
-      uses: peter-evans/create-or-update-comment@v1
+      uses: peter-evans/create-or-update-comment@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         issue-number: ${{ github.event.number }}
@@ -52,6 +52,3 @@ jobs:
           ```
         edit-mode: replace
         comment-id: ${{ steps.find-comment.outputs.comment-id }}
-
-# Q: You have an error in your yaml syntax on line 21
-# A: ‘
