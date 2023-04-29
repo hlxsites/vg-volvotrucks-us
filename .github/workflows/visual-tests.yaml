@@ -33,7 +33,7 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: .github/visual-tests/playwright-report/
+        path: .github/visual-tests/screenshots/
         retention-days: 30
     - name: Comment on Pull Request
       if: always()
@@ -45,7 +45,7 @@ jobs:
           ## Validation Results
 
           ```
-          ${{ steps.run-playwright-tests.outputs.SUMMARY }}
+          summary: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
           ```
         edit-mode: replace
         comment-id: ${{ steps.find-comment.outputs.comment-id }}

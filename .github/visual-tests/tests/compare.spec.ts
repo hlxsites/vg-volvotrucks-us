@@ -1,20 +1,25 @@
-import {expect, test} from '@playwright/test';
+import {expect, test, TestInfo} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
-import { writeFile } from 'fs/promises';
+import {writeFile} from 'fs/promises';
+
+function getScreenshotPath(testInfo: TestInfo, suffix) {
+  const title = testInfo.title.replace(/[/]/g, '-');
+  return `./screenshots/${(title.toLowerCase())}-before.png`;
+}
 
 for (const path of ["/", "/trucks/"]) {
-  test(`compare ${path}`, async ({page}, testInfo) => {
+  test(`${path}`, async ({page}, testInfo) => {
 
     await page.goto(`https://${process.env.DOMAIN1}${path}`);
     await page.waitForTimeout(2000);
     const beforeImage = await page.screenshot({
-      path: `./${testInfo.title}-before.png`
+      path: getScreenshotPath(testInfo, 'before')
     });
 
     await page.goto(`https://${process.env.DOMAIN2}${path}`);
     await page.waitForTimeout(2000);
     const afterImage = await page.screenshot({
-      path: `./${testInfo.title}-after.png`
+      path: getScreenshotPath(testInfo, 'after')
     });
 
     const comparator = getComparator('image/png');
@@ -26,9 +31,9 @@ for (const path of ["/", "/trucks/"]) {
     const result = comparator(beforeImage, afterImage, comparatorOptions);
     if(result) {
       // store the diff image
-      await writeFile(`./${testInfo.title}-diff.png`, result.diff);
-      testInfo.attachments.push({ name: `${testInfo.title}-diff.png`, contentType: `image/png`, path: `./${testInfo.title}-diff.png` });
-      console.log(`diff: ${path}: [diff](${testInfo.title}-diff.png)`);
+      await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
+      testInfo.attachments.push({ name: getScreenshotPath(testInfo, 'diff'), contentType: `image/png`, path: getScreenshotPath(testInfo, 'diff') });
+      console.log(`diff: ${path}: [diff](${getScreenshotPath(testInfo, 'diff')})`);
       expect(result.errorMessage, `diff: ${path}`).toBeNull();
     }
   });
