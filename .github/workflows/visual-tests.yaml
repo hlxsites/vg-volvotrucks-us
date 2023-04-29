@@ -24,10 +24,7 @@ jobs:
         # TODO: get dynamically from config
         export DOMAIN1='main--vg-volvotrucks-us--hlxsites.hlx.live' 
         export DOMAIN2='${{ github.head_ref }}-vg-volvotrucks-us--hlxsites.hlx.live'
-        
-        echo "DOMAIN1=$DOMAIN1"
-        echo "DOMAIN2=$DOMAIN2"
-        #        npx playwright test
+        npx playwright test
 
         # write a short summary
         echo "SUMMARY=hello world" >> "$GITHUB_OUTPUT"
