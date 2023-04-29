@@ -1,0 +1,54 @@
+name: Visual Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  run-playwright:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install -g playwright
+
+      - name: Run Playwright script
+        id: run-playwright
+        run: |
+          # Define the static list of URLs
+          urls=("https://example.com" "https://www.iana.org/domains/reserved")
+          results=()
+          
+          # Iterate through the URLs and perform validations
+          for url in "${urls[@]}"; do
+            result=$(node playwright-script.js "$url")
+            results+=("$result")
+          done
+          
+          # Convert the results array to a multiline string
+          results_string=$(printf '%s\n' "${results[@]}")
+          echo "::set-output name=validation_results::$results_string"
+
+      - name: Comment on Pull Request
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.number }}
+          body: |
+            ## Validation Results
+            
+            ```
+            ${{ steps.run-playwright.outputs.validation_results }}
+            ```
+          edit-mode: replace
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
