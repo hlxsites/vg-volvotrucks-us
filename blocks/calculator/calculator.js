@@ -7,6 +7,7 @@ import {
   getNumberFormat,
   reverseFormatNumber,
 } from './results.js';
+import { getTextLabel } from '../../scripts/scripts.js';
 
 const calculatorPath = './calculator.json';
 const percentagesPath = './percentages.json';
@@ -90,6 +91,7 @@ const createButton = (type) => {
 };
 
 const getInputType = (e) => {
+  const errorMessage = getTextLabel('Please enter valid value');
   // identify and return if the input is a number input or a select
   const inputLabel = e.label.slice(2).replaceAll('_', ' ');
   if (e.type === 'select') {
@@ -107,8 +109,9 @@ const getInputType = (e) => {
       id="input-${e.idx}"
       class="form-control"
       value="${getNumberFormat(e.value, e.idx)}"
-      ${e.idx === 3 ? 'step="0.01"' : ''}/>
-    <span class="error-message">Please enter valid value</span>`;
+      ${e.idx === 9 ? 'min="1"' : ''}
+      ${e.idx === 3 ? 'min="0.01" step="0.01"' : ''}/>
+    <span class="error-message">${errorMessage}</span>`;
 };
 
 const createInputs = (data, type) => {
@@ -180,7 +183,6 @@ export default async function decorate(block) {
   allInputs.classList.add('calculator-inputs-form');
   allInputs.id = 'calculator';
   allInputs.oninput = (e) => resetForm(e);
-  // allInputs.addEventListener('focus', (e) => cleanDataField(e), true);
   allInputs.addEventListener('focus', (e) => formatDataField(e), true);
   allInputs.addEventListener('blur', (e) => formatDataField(e), true);
 
