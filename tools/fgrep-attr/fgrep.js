@@ -73,8 +73,12 @@ async function fgrep(pathname, pattern) {
   const resp = await fetch(pathname, { redirect: 'manual' });
   const text = await resp.text();
   let found = false;
+
+  // ignoring case. Based on https://jsperf.app/regex-vs-tolowercase-then-regex/7
+  // toLowerCase is faster than regex. Also, we don't need to escape the pattern.
   const lowercaseText = text.toLowerCase();
   const lowercasePattern = pattern.toLowerCase();
+
   if (lowercaseText.indexOf(lowercasePattern) >= 0) {
     found = true;
 
