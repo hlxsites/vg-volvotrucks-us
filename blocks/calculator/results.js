@@ -244,7 +244,7 @@ const resetForm = (e) => {
   const { form } = e.srcElement;
   const isButton = e.target.id === 'calculator-reset-button';
   const isSelect = e.target.localName === 'select';
-  const validValue = isSelect || reverseFormatNumber(e.target.value);
+  const validValue = isButton || isSelect || reverseFormatNumber(e.target.value);
   const hasErrors = [...form].some((field) => field.classList.contains('error'));
   const data = isButton ? resetData[0] : formatDataObject(form);
   const [,, dataContainer] = updatedData; // [charts, results, dataContainer]
