@@ -1,5 +1,5 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
-import { getTextLable } from '../../scripts/scripts.js';
+import { getTextLabel } from '../../scripts/scripts.js';
 
 // based on: https://developers.google.com/speed/webp/faq
 async function isWebpSupported() {
@@ -76,7 +76,7 @@ async function renderBlock(block) {
     function showOverlay() {
       viewer.overlay.show({
         id: outOfImageId,
-        title: getTextLable('This is 360° image'),
+        title: getTextLabel('This is 360° image'),
       });
       showCustomOverlay = true;
     }

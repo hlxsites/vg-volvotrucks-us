@@ -26,7 +26,7 @@ async function getPlaceholders() {
   placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
 }
 
-export function getTextLable(key) {
+export function getTextLabel(key) {
   return placeholders.data.find((el) => el.Key === key)?.Text || key;
 }
 
@@ -489,8 +489,8 @@ export function selectVideoLink(links, preferredType) {
 }
 
 export function createLowResolutionBanner() {
-  const lowResolutionMessage = getTextLable('Low resolution video message');
-  const changeCookieSettings = getTextLable('Change cookie settings');
+  const lowResolutionMessage = getTextLabel('Low resolution video message');
+  const changeCookieSettings = getTextLabel('Change cookie settings');
 
   const banner = document.createElement('div');
   banner.classList.add('low-resolution-banner');
