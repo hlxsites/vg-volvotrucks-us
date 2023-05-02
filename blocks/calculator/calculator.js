@@ -139,6 +139,19 @@ const createInputs = (data, type) => {
   return truckSection;
 };
 
+const focusNextField = (e, form) => {
+  if (e.key === 'Enter') {
+    if (e.target.localName === 'button') {
+      resetForm(e);
+      return;
+    }
+    const formElements = [...form];
+    const idx = e.target.id.split('-')[1];
+    const nextId = idx === '9' ? 0 : +idx;
+    formElements[nextId].focus();
+  }
+};
+
 const formatDataField = (e) => {
   if (['select', 'button'].some((field) => field === e.target.localName)) return;
   const { target } = e;
@@ -183,6 +196,7 @@ export default async function decorate(block) {
   allInputs.classList.add('calculator-inputs-form');
   allInputs.id = 'calculator';
   allInputs.oninput = (e) => resetForm(e);
+  allInputs.onkeydown = (e) => focusNextField(e, allInputs);
   allInputs.addEventListener('focus', (e) => formatDataField(e), true);
   allInputs.addEventListener('blur', (e) => formatDataField(e), true);
 

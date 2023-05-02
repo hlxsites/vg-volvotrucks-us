@@ -240,6 +240,7 @@ const formatDataObject = (data) => {
 
 const resetForm = (e) => {
   e.preventDefault();
+  if (e.pointerType === '' && e.type === 'click') return;
   if (!e.srcElement.form) return;
   const { form } = e.srcElement;
   const isButton = e.target.id === 'calculator-reset-button';
