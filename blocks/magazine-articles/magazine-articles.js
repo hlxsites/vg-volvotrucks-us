@@ -68,11 +68,11 @@ async function getFilterOptions() {
   const markup = await resp.text();
   const div = document.createElement('div');
   div.innerHTML = markup;
-  const categoryList = Array.from(div.querySelectorAll('#magazine-category + ul li'))
+  const categoryList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:first-child li'))
     .map((li) => li.textContent);
-  const topicList = Array.from(div.querySelectorAll('#magazine-topic + ul li '))
+  const topicList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:nth-child(2) li'))
     .map((li) => li.textContent);
-  const truckSeriesList = Array.from(div.querySelectorAll('#magazine-truck-series + ul li'))
+  const truckSeriesList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:last-child li'))
     .map((li) => li.textContent);
 
   return { categoryList, topicList, truckSeriesList };
