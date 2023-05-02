@@ -20,7 +20,7 @@
     {
       "id": "fgrep",
       "title": "Search",
-      "environments": [ "preview", "live" ],
+      "environments": [ "dev", "preview", "live", "prod" ],
       "url": "/tools/fgrep-attr/fgrep.html"
     }
   ]
