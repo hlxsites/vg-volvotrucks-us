@@ -73,13 +73,16 @@ async function fgrep(pathname, pattern) {
   const resp = await fetch(pathname, { redirect: 'manual' });
   const text = await resp.text();
   let found = false;
-  if (text.indexOf(pattern) >= 0) {
+  const lowercaseText = text.toLowerCase();
+  const lowercasePattern = pattern.toLowerCase();
+  if (lowercaseText.indexOf(lowercasePattern) >= 0) {
     found = true;
-    let offset = text.indexOf(pattern);
+
+    let offset = lowercaseText.indexOf(lowercasePattern);
     while (offset >= 0) {
-      const endOf = text.indexOf('"', offset);
+      const endOf = lowercaseText.indexOf('"', offset);
       occurences.push(text.substring(offset, endOf));
-      offset = text.indexOf(pattern, offset + 1);
+      offset = lowercaseText.indexOf(lowercasePattern, offset + 1);
     }
   }
 
