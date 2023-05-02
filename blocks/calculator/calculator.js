@@ -140,7 +140,7 @@ const createInputs = (data, type) => {
 };
 
 const formatDataField = (e) => {
-  if (e.target.localName === 'select') return;
+  if (['select', 'button'].some((field) => field === e.target.localName)) return;
   const { target } = e;
   const { value } = target;
   const idx = +(target.id.split('-')[1]);
