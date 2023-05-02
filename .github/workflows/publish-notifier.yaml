@@ -21,6 +21,6 @@ jobs:
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$//g')
         DOMAIN_URL="${{ vars.DOMAIN_URL }}"
         URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?path=$PAGE_PATH&domain_url=$DOMAIN_URL")
-        response=$(curl -s -X POST "$URI")
+        response=$(curl -s -H "x-api-key: ${{ secrets.API_KEY }}" -X POST "$URI")
         echo "response: $response"
       shell: bash
