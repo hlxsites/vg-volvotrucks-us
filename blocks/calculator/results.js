@@ -24,6 +24,36 @@ const nth = (num) => {
   return num <= 3 ? suffix[num] : 'th';
 };
 
+export const formatNum = (num, options = {}) => {
+  const formatter = Intl.NumberFormat('en-US', options);
+  return formatter.format(num);
+};
+
+export const getNumberFormat = (num, idx) => {
+  let tempValue = num;
+  const isNumeric = idx === 4;
+  const isPercentage = [5, 7].some((n) => n === idx);
+  const isCurrency = [2, 6].some((n) => n === idx);
+  if (isNumeric) tempValue = formatNum(num);
+  else if (isPercentage) {
+    const options = { style: 'percent', maximumFractionDigits: 2 };
+    tempValue = formatNum((+num / 100), options);
+  } else if (isCurrency) {
+    const options = { currency: 'USD', style: 'currency' };
+    tempValue = formatNum(num, options);
+  }
+  return tempValue;
+};
+
+export const reverseFormatNumber = (val, locale = 'en-US') => {
+  const group = new Intl.NumberFormat(locale).format(1111).replace(/1/g, '');
+  const decimal = new Intl.NumberFormat(locale).format(1.1).replace(/1/g, '');
+  let reversedVal = val.replace(new RegExp(`\\${group}`, 'g'), '');
+  reversedVal = reversedVal.replace(new RegExp(`\\${decimal}`, 'g'), '.');
+  reversedVal = reversedVal.replace(/[$%]/, '');
+  return Number.isNaN(+reversedVal) ? null : reversedVal;
+};
+
 export const addAnimations = (component) => {
   // add the functionality to the charts / selectors
   const wrapper = component.querySelector('.calculator-charts-wrapper');
@@ -72,10 +102,10 @@ const getPercentageAndTable = (data) => {
     ${data.savings.map((e, idx) => `
         <tr>
           <td>${idx + 1}${nth(idx + 1)} Year</td>
-          <td>$${e[0]}</td>
-          <td>$${e[1]}</td>
+          <td>$${formatNum(e[0])}</td>
+          <td>$${formatNum(e[1])}</td>
         </tr>`)}`;
-  table = table.replaceAll(',', '');
+  table = table.replaceAll('</tr>,', '</tr>');
 
   const savingsTable = document.createElement('table');
   savingsTable.innerHTML = table;
@@ -144,8 +174,7 @@ const calculateSavings = (data) => {
   } = data;
   for (; power < years; power += 1) {
     const percentageIncrease = (1 + pi / 100) ** power; // ("1"+5)^n
-    const roundedIncrease = parseFloat(percentageIncrease.toFixed(2));
-    const yearIncrease = f * roundedIncrease; // (2*("1"+5)^n)
+    const yearIncrease = f * percentageIncrease; // (2*("1"+5)^n)
     const yearPercentage = ((c * p) / 100) + c; // ((3*%/100)+3)
     const formulaPart1 = ((m / c) * yearIncrease) + (m / c) * dp * (du / 100);
     const formulaPart2 = (m / yearPercentage) * yearIncrease;
@@ -197,32 +226,40 @@ const formatDataObject = (data) => {
     trucksNum,
   ] = data;
   return {
-    '1_baseline_powertrain': (baseline.selectedIndex),
-    '2_price_of_fuel': (fuelPrice.value),
-    '3_current_MPG': (currentMPG.value),
-    '4_miles/Truck/Year': (milesTruckYear.value),
-    '5_annual_fuel_price_increase': (priceIncrease.value),
-    '6_price_of_DEF': (defPrice.value),
-    '7_DEF%_usage': (defUsage.value),
-    '8_next-gen_D13TC_powertrain': (nextGen.selectedIndex),
-    '9_number_of_new_trucks': (trucksNum.value),
+    '1_baseline_powertrain': baseline.selectedIndex,
+    '2_price_of_fuel': reverseFormatNumber(fuelPrice.value),
+    '3_current_MPG': currentMPG.value,
+    '4_miles/Truck/Year': reverseFormatNumber(milesTruckYear.value),
+    '5_annual_fuel_price_increase': reverseFormatNumber(priceIncrease.value),
+    '6_price_of_DEF': reverseFormatNumber(defPrice.value),
+    '7_DEF%_usage': reverseFormatNumber(defUsage.value),
+    '8_next-gen_D13TC_powertrain': nextGen.selectedIndex,
+    '9_number_of_new_trucks': trucksNum.value,
   };
 };
 
 const resetForm = (e) => {
-  const isButton = e.target.id === 'calculator-reset-button';
   e.preventDefault();
+  if (e.pointerType === '' && e.type === 'click') return;
   if (!e.srcElement.form) return;
-  const data = isButton ? resetData[0] : formatDataObject(e.srcElement.form);
+  const { form } = e.srcElement;
+  const isButton = e.target.id === 'calculator-reset-button';
+  const isSelect = e.target.localName === 'select';
+  const validValue = isButton || isSelect || reverseFormatNumber(e.target.value);
+  const hasErrors = [...form].some((field) => field.classList.contains('error'));
+  const data = isButton ? resetData[0] : formatDataObject(form);
   const [,, dataContainer] = updatedData; // [charts, results, dataContainer]
   // if isButton then reset inputs of the form
   if (isButton) {
-    const { form } = e.srcElement;
     Object.values(data).forEach((value, i) => {
       if ([0, 7].includes(i)) form[i].selectedIndex = value;
-      else form[i].value = value;
+      else {
+        form[i].value = getNumberFormat(value, i + 1);
+        form[i].classList.remove('error');
+      }
     });
   }
+  if (!validValue || hasErrors) return;
   const tableData = calculateTableData(data);
   const chartData = calculateChartData(getDataForCharts(data, tableData));
 

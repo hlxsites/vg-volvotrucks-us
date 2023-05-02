@@ -1,40 +1,9 @@
+import { calcValuesToPoints, buildReferences } from './chartHelper.js';
+
 const colorArray = ['#919296', '#77B733'];
 
 const totalWidthChart = 800;
 const totalHeightChart = totalWidthChart * 0.6;
-
-const buildReferences = (keys) => {
-  const references = [];
-
-  keys.forEach((e, idx) => {
-    const factor = idx === 0 ? 0.3 : 0.7;
-    const xPosition = keys.length === 1 ? totalWidthChart * 0.5 : totalWidthChart * factor;
-
-    const ref = `
-      <g data-z-index="1">
-        <text
-          x="${xPosition}"
-          y="${10}"
-          text-anchor="middle"
-          data-z-index="2"
-          class="chart-reference"
-        >
-          ${e}
-        </text>
-
-        <rect
-          x="${xPosition}"
-          y="${20}"
-          width="12"
-          height="12"
-          fill="${keys.length === 1 ? colorArray[1] : colorArray[idx]}"
-          data-z-index="3">
-        </rect>
-      </g>`;
-    references.push(ref);
-  });
-  return references;
-};
 
 const buildChartMPG = (data) => {
   const chartName = Object.keys(data);
@@ -43,28 +12,24 @@ const buildChartMPG = (data) => {
   const chartKeys = Object.keys(valuesSets[0]);
   const chartArrays = Object.values(valuesSets[0]);
 
-  const conversionFactor = 0.006;
-
   const [perTrucks, totalSavings] = chartArrays;
   const chartValues = [].concat(...perTrucks.map((v, i) => [v, totalSavings[i]]));
 
   const yAxisStart = 300;
+  const {
+    valueToPoints,
+    chartValueRange,
+    bottomEdgeValue,
+  } = calcValuesToPoints(chartValues, yAxisStart, { bottomPadding: 0 });
 
-  // BARS
-  const maxValue = Math.max(...chartValues);
-
-  // LABELS
-  const maxChart = Number((maxValue * 1.3).toFixed(0));
-  const minChart = 0;
-  const chartHeight = Number((maxChart - minChart).toFixed(0));
-
+  const chartHeight = Number(chartValueRange).toFixed(0);
   const divisions = 6;
   const sectionHeight = Number((chartHeight / divisions).toFixed(1));
 
   const labelValues = [];
 
   for (let i = 0; i < divisions; i += 1) {
-    const position = sectionHeight * i;
+    const position = sectionHeight * i + bottomEdgeValue;
     labelValues.push(position);
   }
 
@@ -84,7 +49,7 @@ const buildChartMPG = (data) => {
     <!-- TITLE -->
     <text
       x="${totalWidthChart * 0.5}"
-      y="${-50}"
+      y="${-70}"
       text-anchor="middle"
       data-z-index="4"
       aria-hidden="true"
@@ -95,13 +60,13 @@ const buildChartMPG = (data) => {
 
     <!-- REFERENCES -->
     <g data-z-index="-1" aria-hidden="true">
-      ${buildReferences(chartKeys)}
+      ${buildReferences(chartKeys, totalWidthChart, colorArray)}
     </g>
 
     <!-- COLOR BARS AND VALUES-->
     <g data-z-index="4" aria-hidden="false" role="region" opacity="1">
   ${chartValues.map((e, idx) => {
-    const barHeight = (e * conversionFactor).toFixed(0);
+    const barHeight = valueToPoints(e);
     const barWidth = totalWidthChart / 20;
     const section = (totalWidthChart - 100) / 10;
 
@@ -133,8 +98,8 @@ const buildChartMPG = (data) => {
     <g data-z-index="3" aria-hidden="true" class="side-labels">
   ${labelValues.map((e) => {
     const roundedNumber = (Math.round(e / 100)) * 100;
-    const yValue = (minChart + roundedNumber).toFixed(0);
-    const yPosition = 300 - (roundedNumber * conversionFactor);
+    const yValue = roundedNumber.toFixed(0);
+    const yPosition = yAxisStart - valueToPoints(e);
 
     const lineAndValue = `
       <text
