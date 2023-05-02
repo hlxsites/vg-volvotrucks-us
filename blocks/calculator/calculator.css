@@ -62,6 +62,18 @@ main .section .calculator-wrapper {
   flex: 1 1 auto;
 }
 
+.calculator-item input {
+  background-color: var(--c-white);
+}
+
+.calculator-item select {
+  box-sizing: border-box;
+  padding-right: 29px;
+  background: url('/icons/down-arrow.png') center right var(--c-white) no-repeat;
+  background-size: 54px;
+  appearance: none;
+}
+
 .calculator-item input,
 .calculator-item select {
   font-family: var(--ff-volvo-novum-medium);
@@ -76,8 +88,25 @@ main .section .calculator-wrapper {
   max-width: none;
 }
 
-.input-2 {
-  margin: 0;
+.calculator-item .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+.calculator-item .error {
+  border-color: #e00;
+  outline-color: #e00a;
+}
+
+.calculator-item .error-message {
+  display: none;
+}
+
+.calculator-item:has(.error) .error-message {
+  display: initial;
+  position: absolute;
+  transform: translateY(-20px);
+  font-size: 85%;
+  color: #e00d;
 }
 
 .calculator-item label {
