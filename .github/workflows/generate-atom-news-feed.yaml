@@ -5,7 +5,7 @@ on:
     types:
       - resource-published
   schedule:
-    # Runs at once per day in case any event was missed
+    # Runs daily in case any event was missed
     - cron: '30 0 * * *'
   pull_request:
     paths:
