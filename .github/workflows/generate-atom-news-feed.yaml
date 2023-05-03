@@ -1,9 +1,12 @@
 name: Generate Atom news feed
 
 on:
+  repository_dispatch:
+    types:
+      - resource-published
   schedule:
-    # Runs at 5 minutes before the hour.
-    - cron: '55 * * * *'
+    # Runs at once per day in case any event was missed
+    - cron: '30 0 * * *'
   pull_request:
     paths:
       - '.github/ci/**'
