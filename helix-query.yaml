@@ -157,7 +157,4 @@ indices:
         value: attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        values: attribute(el, "content")            
-      category:
-        select: head > meta[property="category"]
-        value: attribute(el, "content")      
+        values: attribute(el, "content")   
