@@ -152,4 +152,12 @@ indices:
       description:
         select: head > meta[name="description"]
         value: attribute(el, "content")
-      
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: attribute(el, "content")            
+      category:
+        select: head > meta[property="category"]
+        value: attribute(el, "content")      
