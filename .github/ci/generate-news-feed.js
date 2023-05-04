@@ -22,7 +22,7 @@ async function main() {
     description: feedMetadata.description,
     id: feedMetadata.link,
     link: feedMetadata.link,
-    published: newestPost,
+    updated: newestPost,
     generator: 'AEM News feed generator (GitHub action)',
     language: feedMetadata.lang,
   });
@@ -34,7 +34,7 @@ async function main() {
       id: link,
       link,
       content: post.description,
-      date: new Date(post.publishDate * 1000),
+      published: new Date(post.publishDate * 1000),
     });
   });
 
