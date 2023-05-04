@@ -34,6 +34,7 @@ async function main() {
       id: link,
       link,
       content: post.description,
+      date: new Date(post.publishDate * 1000),
       published: new Date(post.publishDate * 1000),
     });
   });
