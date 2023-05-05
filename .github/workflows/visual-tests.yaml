@@ -34,13 +34,20 @@ jobs:
           else
             echo "Diffs found"
             echo "$diffs"
+          
             SUMMARY=$(cat << EOF
           ### Visual differences found: 
             $diffs
           EOF
           )
-            echo "SUMMARY=$SUMMARY" >> "$GITHUB_OUTPUT"
+          
             echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
+          
+            # using multi-line-vars from  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
+            EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+            echo "SUMMARY<<$EOF" >> "$GITHUB_OUTPUT"
+            echo "$SUMMARY" "$GITHUB_OUTPUT"
+            echo "$EOF" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/upload-artifact@v3
@@ -50,7 +57,7 @@ jobs:
           path: .github/visual-tests/screenshots/*
 
       - name: Comment on Pull Request
-        if: always()
+        if: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
