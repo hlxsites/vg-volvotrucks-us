@@ -24,14 +24,14 @@ jobs:
         run: |
           # TODO: get dynamically from config
           export DOMAIN1='main--vg-volvotrucks-us--hlxsites.hlx.live' 
-          export DOMAIN2='${{ github.head_ref }}-vg-volvotrucks-us--hlxsites.hlx.live'
+          export DOMAIN2='${{ github.head_ref }}--vg-volvotrucks-us--hlxsites.hlx.live'
           npx playwright test | tee playwright.log
           
           diffs=$(grep "$DOMAIN2" playwright.log)
           if [ -z "$diffs" ]; then
             echo "No diffs found"
             echo "No diffs found" >> "$GITHUB_STEP_SUMMARY"
-            echo "SUMMARY=" > "$GITHUB_OUTPUT"
+            echo "SUMMARY=" >> "$GITHUB_ENV"
           else
             echo "Diffs found"
           
@@ -47,9 +47,9 @@ jobs:
           
             # using multi-line-vars from  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
             EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-            echo "SUMMARY<<$EOF" >> "$GITHUB_OUTPUT"
-            echo "$SUMMARY" "$GITHUB_OUTPUT"
-            echo "$EOF" >> "$GITHUB_OUTPUT"
+            echo "SUMMARY<<$EOF" >> "$GITHUB_ENV"
+            echo "$SUMMARY" "$GITHUB_ENV"
+            echo "$EOF" >> "$GITHUB_ENV"
           fi
 
       - uses: actions/upload-artifact@v3
@@ -59,11 +59,11 @@ jobs:
           name: screenshots
 
       - name: Comment on Pull Request
-        if: steps.run-playwright-tests.outputs.SUMMARY != ''
+        if: env.SUMMARY !== ''
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.number }}
-          body: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
+          body: ${{ env.SUMMARY }}
 #        edit-mode: replace
 #        comment-id: ${{ steps.find-comment.outputs.comment-id }}
