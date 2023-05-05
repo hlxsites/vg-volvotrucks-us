@@ -10,7 +10,8 @@ function getScreenshotPath(testInfo: TestInfo, suffix) {
 for (const path of ["/", "/trucks/"]) {
   test(`${path}`, async ({page}, testInfo) => {
 
-    await page.goto(`https://${process.env.DOMAIN1}${path}`);
+    const url1 = `https://${process.env.DOMAIN1}${path}`;
+    await page.goto(url1);
     await page.waitForTimeout(2000);
     const beforeImage = await page.screenshot({
       path: getScreenshotPath(testInfo, 'main')
@@ -39,8 +40,10 @@ for (const path of ["/", "/trucks/"]) {
         contentType: `image/png`,
         path: getScreenshotPath(testInfo, 'diff')
       });
+
+      // print markdown summary to console
       if (result.errorMessage) {
-        console.log(`- ${url2} ${result.errorMessage}`);
+        console.log(` - ${path} | [main](${url1}) vs [branch](${url2}): ${result.errorMessage}`);
       }
     }
   })

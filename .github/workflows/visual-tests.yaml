@@ -33,7 +33,6 @@ jobs:
             echo "No diffs found" >> $GITHUB_STEP_SUMMARY
           else
             echo "Diffs found"
-            echo "$diffs"
           
             SUMMARY=$(cat << EOF
           ### Visual differences found: 
