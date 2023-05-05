@@ -8,7 +8,7 @@ npx playwright test | tee playwright.log
 
 if grep -q "$DOMAIN2" playwright.log; then
   echo "Diffs found"
-  SUMMARY="### :small_orange_diamond: Visual differences detected: :zap:
+  SUMMARY="### :small_orange_diamond: Visual differences detected
   $(grep "$DOMAIN2" playwright.log)
 
   See also diff image [in attached screenshots](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
