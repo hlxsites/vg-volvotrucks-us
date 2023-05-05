@@ -4,7 +4,7 @@ import {writeFile, mkdir} from 'fs/promises';
 
 function getScreenshotPath(testInfo: TestInfo, suffix) {
   const title = testInfo.title.replace(/[/]/g, '-');
-  return `./screenshots/${suffix}/${(title.toLowerCase())}.png`;
+  return `./screenshots/${(title.toLowerCase())}-${suffix}.png`;
 }
 
 for (const path of ["/", "/trucks/"]) {
@@ -33,7 +33,6 @@ for (const path of ["/", "/trucks/"]) {
     const result = comparator(beforeImage, afterImage, comparatorOptions);
     if (result) {
       // store the diff image
-      await mkdir('./screenshots/diff/', { recursive: true });
       await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
       testInfo.attachments.push({
         name: getScreenshotPath(testInfo, 'diff'),
@@ -43,7 +42,7 @@ for (const path of ["/", "/trucks/"]) {
 
       // print markdown summary to console
       if (result.errorMessage) {
-        console.log(` - ${path} | [main](${url1}) vs [branch](${url2}): ${result.errorMessage}`);
+        console.log(` - **${path}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
       }
     }
   })

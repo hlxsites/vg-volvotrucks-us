@@ -58,7 +58,7 @@ jobs:
           name: screenshots
 
       - name: Comment on Pull Request
-        if: steps.run-playwright-tests.outputs.SUMMARY
+        if: !! steps.run-playwright-tests.outputs.SUMMARY
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
