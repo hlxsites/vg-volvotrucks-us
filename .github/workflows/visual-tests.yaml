@@ -5,7 +5,7 @@ on:
     types: [ opened, synchronize ]
 
 jobs:
-  run-playwright:
+  take-snapshots:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,7 +42,7 @@ jobs:
 
   visual-diff:
     if: ${{ github.ref != 'refs/heads/master' }}
-    needs: acceptance
+    needs: take-snapshots
     runs-on: ubuntu-16.04
     steps:
       - name: Diff snapshots
