@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # TODO: get dynamically from config
 export DOMAIN1="main--vg-volvotrucks-us--hlxsites.hlx.live"
