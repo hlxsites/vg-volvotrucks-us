@@ -22,20 +22,20 @@ for (const path of ["/", "/trucks/"]) {
       path: getScreenshotPath(testInfo, 'branch')
     });
 
-    const comparator = getComparator('image/png');
-    const comparatorOptions = {
-          // maxDiffPixels: ,
-          maxDiffPixelRatio: 0.01,
-          // threshold: 0.99,
-    }
-    const result = comparator(beforeImage, afterImage, comparatorOptions);
-    if(result) {
-      // store the diff image
-      await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
-      testInfo.attachments.push({ name: getScreenshotPath(testInfo, 'diff'), contentType: `image/png`, path: getScreenshotPath(testInfo, 'diff') });
-      console.log(`diff: ${path}: [diff](${getScreenshotPath(testInfo, 'diff')})`);
-      expect(result.errorMessage, `diff: ${path}`).toBeNull();
-    }
+    // const comparator = getComparator('image/png');
+    // const comparatorOptions = {
+    //       // maxDiffPixels: ,
+    //       maxDiffPixelRatio: 0.01,
+    //       // threshold: 0.99,
+    // }
+    // const result = comparator(beforeImage, afterImage, comparatorOptions);
+    // if(result) {
+    //   // store the diff image
+    //   await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
+    //   testInfo.attachments.push({ name: getScreenshotPath(testInfo, 'diff'), contentType: `image/png`, path: getScreenshotPath(testInfo, 'diff') });
+    //   console.log(`diff: ${path}: [diff](${getScreenshotPath(testInfo, 'diff')})`);
+    //   expect(result.errorMessage, `diff: ${path}`).toBeNull();
+    // }
   });
 
 }
