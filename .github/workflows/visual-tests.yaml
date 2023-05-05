@@ -53,6 +53,7 @@ jobs:
           fi
 
       - name: Print env
+        if: always()
         run: env
 
 
