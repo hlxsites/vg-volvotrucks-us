@@ -59,7 +59,7 @@ jobs:
           name: screenshots
 
       - name: Comment on Pull Request
-        if: env.SUMMARY !== ''
+        if: env.SUMMARY != ''
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
