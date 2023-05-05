@@ -35,10 +35,10 @@ jobs:
             echo "Diffs found"
           
             SUMMARY=$(cat << EOF
-          ### Visual differences found: 
+          ### :small_orange_diamond: Visual differences detected: :zap:  
             $diffs
             
-            Screenshots [are attached](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            See also diff image [in attached screenshots](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           EOF
           )
           
@@ -55,6 +55,7 @@ jobs:
         if: always()
         with:
           path: .github/visual-tests/screenshots/*
+          name: screenshots
 
       - name: Comment on Pull Request
         if: steps.run-playwright-tests.outputs.SUMMARY
