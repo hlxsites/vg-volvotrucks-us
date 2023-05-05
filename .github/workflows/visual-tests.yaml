@@ -2,7 +2,7 @@ name: Visual Tests
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
 
 jobs:
   run-playwright:
@@ -11,49 +11,61 @@ jobs:
       run:
         working-directory: .github/visual-tests
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
-    - name: Run Playwright tests
-      id: run-playwright-tests
-      run: |
-        # TODO: get dynamically from config
-        export DOMAIN1='main--vg-volvotrucks-us--hlxsites.hlx.live' 
-        export DOMAIN2='${{ github.head_ref }}-vg-volvotrucks-us--hlxsites.hlx.live'
-        npx playwright test
-
-        # write a short summary
-        echo "SUMMARY=hello world" >> "$GITHUB_OUTPUT"
-        echo "### Hello world! \n :rocket:" >> $GITHUB_STEP_SUMMARY
-
-
-    - uses: actions/upload-artifact@v3
-      if: failure()
-      with:
-#        name: playwright-report
-        path: .github/visual-tests/screenshots/*
-        retention-days: 5
-
-    - name: Comment on Pull Request
-      if: always()
-      uses: peter-evans/create-or-update-comment@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        issue-number: ${{ github.event.number }}
-        body: |
-          ## Validation Results
-
-          ```
-          summary: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
-          ```
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright tests
+        id: run-playwright-tests
+        run: |
+          # TODO: get dynamically from config
+          export DOMAIN1='main--vg-volvotrucks-us--hlxsites.hlx.live' 
+          export DOMAIN2='${{ github.head_ref }}-vg-volvotrucks-us--hlxsites.hlx.live'
+          npx playwright test
           
-          ### Workflow Execution Details
-          [View the workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          # write a short summary
+          echo "SUMMARY=hello world" >> "$GITHUB_OUTPUT"
+          echo "### Hello world! \n :rocket:" >> $GITHUB_STEP_SUMMARY
+
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          save-only: true
+          #        name: playwright-report
+          path: .github/visual-tests/screenshots/*
+  #        retention-days: 5
+
+  visual-diff:
+    if: ${{ github.ref != 'refs/heads/master' }}
+    needs: acceptance
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Diff snapshots
+        id: visual-snapshots-diff
+        uses: getsentry/action-visual-snapshot@v2.0.0
+        snapshot-path: .github/visual-tests/screenshots/
+        base-artifact-name: main
+
+      - name: Comment on Pull Request
+        if: always()
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.number }}
+          body: |
+            ## Validation Results
+            
+            ```
+            summary: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
+            ```
+            
+            ### Workflow Execution Details
+            [View the workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
 #        edit-mode: replace
 #        comment-id: ${{ steps.find-comment.outputs.comment-id }}
