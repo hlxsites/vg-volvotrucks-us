@@ -34,9 +34,11 @@ jobs:
           else
             echo "Diffs found"
             echo "$diffs"
-            SUMMARY="Visual differences found: 
-              $diffs
-            "
+            SUMMARY=$(cat << EOF
+          ### Visual differences found: 
+            $diffs
+          EOF
+          )
             echo "SUMMARY=$SUMMARY >> "$GITHUB_OUTPUT"
             echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
           fi
