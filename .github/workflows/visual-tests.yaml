@@ -31,7 +31,7 @@ jobs:
           if [ -z "$diffs" ]; then
             echo "No diffs found"
             echo "No diffs found" >> "$GITHUB_STEP_SUMMARY"
-            echo "SUMMARY=" >> "$GITHUB_ENV"
+            echo "DIFFERENT=false" >> "$GITHUB_ENV"
           else
             echo "Diffs found"
           
@@ -47,7 +47,7 @@ jobs:
           
             # using multi-line-vars from  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
             EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-            echo "SUMMARY<<$EOF" >> "$GITHUB_ENV"
+            echo "DIFFERENT=true" >> "$GITHUB_ENV"
             echo "$SUMMARY" "$GITHUB_ENV"
             echo "$EOF" >> "$GITHUB_ENV"
           fi
@@ -64,7 +64,7 @@ jobs:
           name: screenshots
 
       - name: Comment on Pull Request
-        if: env.SUMMARY != ''
+        if: env.DIFFERENT == 'true'
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
