@@ -1,6 +1,6 @@
 import {test, TestInfo} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
-import {writeFile} from 'fs/promises';
+import {writeFile, mkdir} from 'fs/promises';
 
 function getScreenshotPath(testInfo: TestInfo, suffix) {
   const title = testInfo.title.replace(/[/]/g, '-');
@@ -32,6 +32,7 @@ for (const path of ["/", "/trucks/"]) {
     const result = comparator(beforeImage, afterImage, comparatorOptions);
     if (result) {
       // store the diff image
+      await mkdir('./screenshots/diff/');
       await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
       testInfo.attachments.push({
         name: getScreenshotPath(testInfo, 'diff'),
