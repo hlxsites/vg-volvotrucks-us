@@ -54,7 +54,7 @@ jobs:
 
       - name: Print env
         if: always()
-        run: env
+        run: echo DIFFERENT=$DIFFERENT
 
 
       - uses: actions/upload-artifact@v3
