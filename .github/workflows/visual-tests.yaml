@@ -5,7 +5,7 @@ on:
     types: [ opened, synchronize ]
 
 jobs:
-  take-snapshots:
+  compare-pages:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,7 +39,7 @@ jobs:
             $diffs
           EOF
           )
-            echo "SUMMARY=$SUMMARY >> "$GITHUB_OUTPUT"
+            echo "SUMMARY=$SUMMARY" >> "$GITHUB_OUTPUT"
             echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
           fi
 
