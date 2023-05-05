@@ -4,6 +4,7 @@ import {
 /* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
+  return;
   // apply modifiers to the wrapper as well
   const gapCls = [...block.classList].filter((cls) => cls.indexOf('gap') >= 0);
   if (gapCls.length) block.parentElement.classList.add(gapCls);
