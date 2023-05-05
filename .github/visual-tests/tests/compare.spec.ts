@@ -4,7 +4,7 @@ import {writeFile} from 'fs/promises';
 
 function getScreenshotPath(testInfo: TestInfo, suffix) {
   const title = testInfo.title.replace(/[/]/g, '-');
-  return `./screenshots/${(title.toLowerCase())}-before.png`;
+  return `./screenshots/${suffix}/${(title.toLowerCase())}.png`;
 }
 
 for (const path of ["/", "/trucks/"]) {
@@ -13,13 +13,13 @@ for (const path of ["/", "/trucks/"]) {
     await page.goto(`https://${process.env.DOMAIN1}${path}`);
     await page.waitForTimeout(2000);
     const beforeImage = await page.screenshot({
-      path: getScreenshotPath(testInfo, 'before')
+      path: getScreenshotPath(testInfo, 'main')
     });
 
     await page.goto(`https://${process.env.DOMAIN2}${path}`);
     await page.waitForTimeout(2000);
     const afterImage = await page.screenshot({
-      path: getScreenshotPath(testInfo, 'after')
+      path: getScreenshotPath(testInfo, 'branch')
     });
 
     const comparator = getComparator('image/png');
