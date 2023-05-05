@@ -62,7 +62,7 @@ function buildPressReleaseArticle(entry) {
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '414' }]);
   const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
+  const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
   </a>

@@ -20,7 +20,7 @@ function buildRelatedMagazineArticle(entry) {
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
+  const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
   card.innerHTML = `<a href="${path}" class="imgcover">
   ${pictureTag}
   </a>
