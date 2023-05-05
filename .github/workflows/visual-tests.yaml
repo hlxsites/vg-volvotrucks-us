@@ -53,7 +53,7 @@ jobs:
           fi
           
           echo "env:"
-          cat $GITHUB_ENV"
+          cat "$GITHUB_ENV"
 
       - name: Print env
         if: always()
