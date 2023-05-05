@@ -30,7 +30,8 @@ jobs:
           diffs=$(grep "$DOMAIN2" playwright.log)
           if [ -z "$diffs" ]; then
             echo "No diffs found"
-            echo "No diffs found" >> $GITHUB_STEP_SUMMARY
+            echo "No diffs found" >> "$GITHUB_STEP_SUMMARY"
+            echo "SUMMARY=" > "$GITHUB_OUTPUT"
           else
             echo "Diffs found"
           
@@ -42,7 +43,7 @@ jobs:
           EOF
           )
           
-            echo "$SUMMARY" >> $GITHUB_STEP_SUMMARY
+            echo "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
           
             # using multi-line-vars from  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#example-of-a-multiline-string
             EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
@@ -58,14 +59,11 @@ jobs:
           name: screenshots
 
       - name: Comment on Pull Request
-        if: !! steps.run-playwright-tests.outputs.SUMMARY
+        if: steps.run-playwright-tests.outputs.SUMMARY != ''
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.number }}
-          body: |
-            ```
-            ${{ steps.run-playwright-tests.outputs.SUMMARY }}
-            ```
+          body: ${{ steps.run-playwright-tests.outputs.SUMMARY }}
 #        edit-mode: replace
 #        comment-id: ${{ steps.find-comment.outputs.comment-id }}
