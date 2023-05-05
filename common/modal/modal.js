@@ -1,6 +1,6 @@
 import { loadCSS } from '../../scripts/lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
-import { createIframe } from '../../scripts/scripts.js';
+import { createIframe, isLowResolutionVideoUrl } from '../../scripts/scripts.js';
 
 const styles$ = new Promise((r) => {
   loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);
@@ -42,7 +42,20 @@ const createModal = () => {
     window.addEventListener('keydown', keyDownAction);
 
     if (newUrl) {
-      const iframe = createIframe(newUrl, { parentEl: modalContent, classes: 'modal-video' });
+      let videoOrIframe = null;
+      if (isLowResolutionVideoUrl(newUrl)) {
+        // We can't use the iframe for videos, because if the Content-Type
+        // `application/octet-stream` is returned instead of `video/mp4`, the
+        // file is downloaded instead of displayed. So we use the video element instead.
+        videoOrIframe = document.createElement('video');
+        videoOrIframe.setAttribute('src', newUrl);
+        videoOrIframe.setAttribute('controls', '');
+        videoOrIframe.setAttribute('autoplay', '');
+        videoOrIframe.classList.add('modal-video');
+        modalContent.append(videoOrIframe);
+      } else {
+        videoOrIframe = createIframe(newUrl, { parentEl: modalContent, classes: 'modal-video' });
+      }
 
       if (beforeBanner) {
         const bannerWrapper = document.createElement('div');
@@ -56,14 +69,14 @@ const createModal = () => {
         // eslint-disable-next-line no-use-before-define
         closeButton.addEventListener('click', () => hideModal());
 
-        iframe.parentElement.insertBefore(bannerWrapper, iframe);
+        videoOrIframe.before(bannerWrapper);
       }
 
       if (beforeIframe) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('modal-before-iframe');
         wrapper.appendChild(beforeIframe);
-        iframe.parentElement.insertBefore(wrapper, iframe);
+        videoOrIframe.before(wrapper);
       }
     }
 
@@ -79,7 +92,7 @@ const createModal = () => {
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
-    modalContent.querySelector('iframe').remove();
+    modalContent.querySelector('iframe, video').remove();
     modalContent.querySelector('.modal-before-banner')?.remove();
     modalContent.querySelector('.modal-before-iframe')?.remove();
   }

@@ -63,27 +63,30 @@ function buildLatestMagazineArticle(entry) {
   return card;
 }
 
-async function getFilterOptions(sheet) {
-  const indexUrl = new URL('/news-and-stories/tags.json', window.location.origin);
-  const result = await ffetch(indexUrl).sheet(sheet).map((data) => data[sheet]).all();
-  return result;
+async function getFilterOptions() {
+  const resp = await fetch('/news-and-stories/tags.plain.html');
+  const markup = await resp.text();
+  const div = document.createElement('div');
+  div.innerHTML = markup;
+  const categoryList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:first-child li'))
+    .map((li) => li.textContent);
+  const topicList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:nth-child(2) li'))
+    .map((li) => li.textContent);
+  const truckSeriesList = Array.from(div.querySelectorAll('li:nth-child(2) ul:first-child li:last-child li'))
+    .map((li) => li.textContent);
+
+  return { categoryList, topicList, truckSeriesList };
 }
 
 function filterArticles(articles, activeFilters) {
   let filteredArticles = articles;
 
-  if (activeFilters.category) {
-    filteredArticles = filteredArticles
-      .filter((n) => toClassName(n.tags).includes(activeFilters.category));
-  }
-  if (activeFilters.topic) {
-    filteredArticles = filteredArticles
-      .filter((n) => toClassName(n.tags).includes(activeFilters.topic));
-  }
-  if (activeFilters.truck) {
-    filteredArticles = filteredArticles
-      .filter((n) => toClassName(n.tags).includes(activeFilters.truck));
-  }
+  filteredArticles = filteredArticles.filter((n) => {
+    const classNames = toClassName(n.tags);
+    return (!activeFilters.category || classNames.includes(activeFilters.category))
+      && (!activeFilters.topic || classNames.includes(activeFilters.topic))
+      && (!activeFilters.truck || classNames.includes(activeFilters.truck));
+  });
 
   if (activeFilters.search) {
     const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
@@ -98,29 +101,25 @@ function filterArticles(articles, activeFilters) {
 }
 
 async function createFilter(articles, activeFilters, createDropdown, createFullText) {
-  const fullText = createFullText('search', activeFilters.search, 'Search');
-  const [categoryOptions, topicOptions, truckOptions] = await Promise.all([
-    getFilterOptions('category'),
-    getFilterOptions('topic'),
-    getFilterOptions('truckseries'),
+  const [tagList, search] = await Promise.all([
+    getFilterOptions(),
+    createFullText('search', activeFilters.search, 'Search'),
   ]);
-  const categoryFilter = createDropdown(categoryOptions, activeFilters.category, 'category', 'All Categories');
+
+  const categoryFilter = createDropdown(tagList.categoryList, activeFilters.category, 'category', 'All Categories');
   const categorySelection = categoryFilter.querySelector('select');
-  categorySelection.addEventListener('change', (e) => {
-    e.target.form.submit();
-  });
-  const topicFilter = createDropdown(topicOptions, activeFilters.topic, 'topic', 'All Topics');
+  categorySelection.addEventListener('change', (e) => e.target.form.submit());
+
+  const topicFilter = createDropdown(tagList.topicList, activeFilters.topic, 'topic', 'All Topics');
   const topicSelection = topicFilter.querySelector('select');
-  topicSelection.addEventListener('change', (e) => {
-    e.target.form.submit();
-  });
-  const truckFilter = createDropdown(truckOptions, activeFilters.truck, 'truck', 'All Truck Series');
+  topicSelection.addEventListener('change', (e) => e.target.form.submit());
+
+  const truckFilter = createDropdown(tagList.truckSeriesList, activeFilters.truck, 'truck', 'All Truck Series');
   const truckSelection = truckFilter.querySelector('select');
-  truckSelection.addEventListener('change', (e) => {
-    e.target.form.submit();
-  });
+  truckSelection.addEventListener('change', (e) => e.target.form.submit());
+
   return [
-    fullText,
+    search,
     categoryFilter,
     topicFilter,
     truckFilter,

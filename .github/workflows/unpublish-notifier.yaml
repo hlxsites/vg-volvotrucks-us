@@ -22,6 +22,6 @@ jobs:
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$//g')
         DOMAIN_URL="${{ vars.DOMAIN_URL }}"        
         URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?unique_id=$DOMAIN_URL$PAGE_PATH")
-        response=$(curl -s -X DELETE "$URI")
+        response=$(curl -s -H "x-api-key: ${{ secrets.API_KEY }}" -X DELETE "$URI")
         echo "response: $response"
       shell: bash

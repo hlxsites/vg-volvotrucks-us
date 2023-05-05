@@ -22,6 +22,10 @@
     {
       "Key": "This is 360° image",
       "Text": "This is 360° image"
+    },
+    {
+      "Key": "Please enter valid value",
+      "Text": "Please enter valid value"
     }
   ],
   ":type": "sheet"
