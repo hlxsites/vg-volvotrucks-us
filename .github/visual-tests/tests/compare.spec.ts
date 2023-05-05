@@ -32,7 +32,7 @@ for (const path of ["/", "/trucks/"]) {
     const result = comparator(beforeImage, afterImage, comparatorOptions);
     if (result) {
       // store the diff image
-      await mkdir('./screenshots/diff/');
+      await mkdir('./screenshots/diff/', { recursive: true });
       await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
       testInfo.attachments.push({
         name: getScreenshotPath(testInfo, 'diff'),
