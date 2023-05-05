@@ -10,3 +10,4 @@ helix-importer-ui
 /tools/content-mirror/hlxsite/
 .github/visual-tests/tests/*.ts-snapshots
 .github/visual-tests/test-results
+/.github/visual-tests/screenshots/
