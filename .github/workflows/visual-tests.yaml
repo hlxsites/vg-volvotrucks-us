@@ -35,7 +35,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          save-only: true
           #        name: playwright-report
           path: .github/visual-tests/screenshots/*
   #        retention-days: 5
