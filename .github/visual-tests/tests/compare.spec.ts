@@ -1,6 +1,6 @@
 import {test, TestInfo} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
-import {writeFile, mkdir} from 'fs/promises';
+import {writeFile, unlink} from 'fs/promises';
 
 import testPaths from "../generated-test-paths.json";
 
@@ -33,7 +33,7 @@ for (const path of testPaths) {
       // threshold: 0.99,
     }
     const result = comparator(beforeImage, afterImage, comparatorOptions);
-    if (result) {
+    if (result && result.errorMessage) {
       // store the diff image
       await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
       testInfo.attachments.push({
@@ -43,9 +43,11 @@ for (const path of testPaths) {
       });
 
       // print markdown summary to console
-      if (result.errorMessage) {
-        console.log(` - **${path}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
-      }
+      console.log(` - **${path}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
+    } else {
+      // if there is no difference, delete the images to save space in the artifact
+      await unlink(getScreenshotPath(testInfo, 'main'));
+      await unlink(getScreenshotPath(testInfo, 'branch'));
     }
   })
 

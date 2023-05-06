@@ -9,7 +9,7 @@ if grep -q "$DOMAIN2" playwright.log; then
   SUMMARY="### :small_orange_diamond: Visual differences detected
   $(grep "$DOMAIN2" playwright.log)
 
-  See also diff image [in attached screenshots](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
+  The diff images are [attached in the artifact](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
   "
 
   echo "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
