@@ -27,7 +27,9 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Generate path list
-        run: ./collect-urls.mjs
+        run: |
+          npm run collect-urls
+          cat generated-test-paths.json
 
       - name: Run Playwright tests
         id: run-playwright-tests
