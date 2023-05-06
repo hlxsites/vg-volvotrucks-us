@@ -11,3 +11,4 @@ helix-importer-ui
 .github/visual-tests/tests/*.ts-snapshots
 .github/visual-tests/test-results
 /.github/visual-tests/screenshots/
+/.github/visual-tests/generated-test-paths.json
