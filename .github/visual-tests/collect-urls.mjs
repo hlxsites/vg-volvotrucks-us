@@ -15,8 +15,9 @@ console.log(process.env.TEST_PATHS_INDEXES);
 for (const index of process.env.TEST_PATHS_INDEXES.split(' ')) {
   if(!index.trim().length) continue;
 
-  console.log(`https://${process.env.DOMAIN1}${index}`)
-  const response = await fetch(`https://${process.env.DOMAIN1}${index}`)
+  const indexUrl = `https://${process.env.DOMAIN1}${index}`;
+  console.log(`fetching from ${indexUrl}`);
+  const response = await fetch(indexUrl)
   const json = await response.json();
   paths.push(...json.data.map((item) => {
     const url = new URL(item.path);
