@@ -145,9 +145,8 @@ export default async function decorate(block) {
   if (typeDetector.includes('engine')) {
     buildEngineSpecifications(block);
   } else if (typeDetector.includes('performance')) {
-    const engineData = await getEngineChartData(
-      block.firstElementChild.nextElementSibling.textContent.trim();
-    );
+    const folder = block.firstElementChild.nextElementSibling.textContent.trim();
+    const engineData = await getEngineChartData(folder);
     block.firstElementChild.nextElementSibling.remove();
     buildPerformanceSpecifications(block, engineData);
   }
