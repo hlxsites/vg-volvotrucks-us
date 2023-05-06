@@ -2,12 +2,14 @@ import {test, TestInfo} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 import {writeFile, mkdir} from 'fs/promises';
 
+import testPaths from "../generated-test-paths.json";
+
 function getScreenshotPath(testInfo: TestInfo, suffix) {
   const title = testInfo.title.replace(/[/]/g, '-');
   return `./screenshots/${(title.toLowerCase())}-${suffix}.png`;
 }
 
-for (const path of ["/", "/trucks/"]) {
+for (const path of testPaths) {
   test(`${path}`, async ({page}, testInfo) => {
 
     const url1 = `https://${process.env.DOMAIN1}${path}`;

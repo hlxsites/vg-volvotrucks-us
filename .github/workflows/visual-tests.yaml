@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [ opened, synchronize ]
 
+env:
+  TEST_PATHS: "/ /trucks /trucks/vnl/ /find-a-dealer/"
+  TEST_PATHS_INDEXES: "/block-library/library.json "
+
 jobs:
   compare-pages:
     runs-on: ubuntu-latest
@@ -22,13 +26,12 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Generate path list
+        run: ./collect-urls.mjs
+
       - name: Run Playwright tests
         id: run-playwright-tests
         run: ./run.bash
-
-      - name: Print env
-        if: always()
-        run: env
 
       - uses: actions/upload-artifact@v3
         if: always()
