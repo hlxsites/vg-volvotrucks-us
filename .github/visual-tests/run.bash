@@ -2,8 +2,6 @@
 set -e
 
 # TODO: get dynamically from config
-export DOMAIN1="main--vg-volvotrucks-us--hlxsites.hlx.live"
-export DOMAIN2="${GITHUB_HEAD_REF}--vg-volvotrucks-us--hlxsites.hlx.live"
 npx playwright test | tee playwright.log
 
 if grep -q "$DOMAIN2" playwright.log; then
