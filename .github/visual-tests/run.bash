@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# TODO: get dynamically from config
 npx playwright test | tee playwright.log
 
 if grep -q "$DOMAIN2" playwright.log; then
@@ -24,6 +23,3 @@ else
   echo "No diffs found" >> "$GITHUB_STEP_SUMMARY"
   echo "SUMMARY=" >> "$GITHUB_ENV"
 fi
-
-echo "env:"
-cat "$GITHUB_ENV"

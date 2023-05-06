@@ -1,53 +1,48 @@
-import {test, TestInfo} from '@playwright/test';
+import {Page, test} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
-import {writeFile, unlink} from 'fs/promises';
+import {unlink, writeFile} from 'fs/promises';
 
 import testPaths from "../generated-test-paths.json";
 
-function getScreenshotPath(testInfo: TestInfo, suffix) {
-  const title = testInfo.title.replace(/[/]/g, '-');
+function getScreenshotPath(testPath: string, suffix) {
+  const title = testPath.replace(/[/]/g, '-');
   return `./screenshots/${(title.toLowerCase())}-${suffix}.png`;
 }
 
-for (const path of testPaths) {
-  test(`${path}`, async ({page}, testInfo) => {
+async function loadAndScreenshot(page: Page, url: string, testPath: string, suffix: string) {
+  await page.goto(url);
+  await page.waitForTimeout(2000);
+  return await page.screenshot({
+    path: getScreenshotPath(testPath, suffix)
+  });
+}
 
-    const url1 = `https://${process.env.DOMAIN1}${path}`;
-    await page.goto(url1);
-    await page.waitForTimeout(2000);
-    const beforeImage = await page.screenshot({
-      path: getScreenshotPath(testInfo, 'main')
-    });
+for (const testPath of testPaths) {
+  test(`${testPath}`, async ({page}, testInfo) => {
+    const url1 = `https://${process.env.DOMAIN1}${testPath}`;
+    const url2 = `https://${process.env.DOMAIN2}${testPath}`;
 
-    const url2 = `https://${process.env.DOMAIN2}${path}`;
-    await page.goto(url2);
-    await page.waitForTimeout(2000);
-    const afterImage = await page.screenshot({
-      path: getScreenshotPath(testInfo, 'branch')
-    });
+    const beforeImage = await loadAndScreenshot(page, url1, testPath, "main");
+    const afterImage = await loadAndScreenshot(page, url2, testPath, "branch");
 
     const comparator = getComparator('image/png');
-    const comparatorOptions = {
+    const result = comparator(beforeImage, afterImage, {
       // maxDiffPixels: ,
       maxDiffPixelRatio: 0.01,
       // threshold: 0.99,
-    }
-    const result = comparator(beforeImage, afterImage, comparatorOptions);
+    });
+
+
     if (result && result.errorMessage) {
       // store the diff image
-      await writeFile(getScreenshotPath(testInfo, 'diff'), result.diff);
-      testInfo.attachments.push({
-        name: getScreenshotPath(testInfo, 'diff'),
-        contentType: `image/png`,
-        path: getScreenshotPath(testInfo, 'diff')
-      });
+      await writeFile(getScreenshotPath(testPath, 'diff'), result.diff);
 
       // print markdown summary to console
-      console.log(` - **${path}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
+      console.log(` - **${testPath}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
     } else {
       // if there is no difference, delete the images to save space in the artifact
-      await unlink(getScreenshotPath(testInfo, 'main'));
-      await unlink(getScreenshotPath(testInfo, 'branch'));
+      await unlink(getScreenshotPath(testPath, 'main'));
+      await unlink(getScreenshotPath(testPath, 'branch'));
     }
   })
 
