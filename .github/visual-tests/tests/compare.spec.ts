@@ -11,6 +11,7 @@ function getScreenshotPath(testPath: string, suffix) {
 
 async function loadAndScreenshot(page: Page, url: string, testPath: string, suffix: string) {
   await page.goto(url);
+  // TODO: wait for the page to be ready instead of just waiting
   await page.waitForTimeout(2000);
   return await page.screenshot({
     path: getScreenshotPath(testPath, suffix)
