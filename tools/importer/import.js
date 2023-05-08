@@ -37,7 +37,7 @@ function setArticleTags(url) {
   if (request.status === 200) {
     inTags = JSON.parse(request.responseText);
   }
-  const matchUrl = `https://www.volvotrucks.us${url.replaceAll('http://localhost:3001', '').replaceAll('?host=https%3A%2F%2Fwww.volvotrucks.us', '')}`;
+  const matchUrl = `https://www.volvotrucks.ca${url.replaceAll('http://localhost:3001', '').replaceAll('?host=https%3A%2F%2Fwww.volvotrucks.ca', '')}`;
   const tags = inTags.data.find((el) => el['Page URL'] === matchUrl);
   if (tags && tags.t1) {
     meta.tags = `${tags.t1}`;
@@ -74,7 +74,7 @@ const linkToHlxPage = (main, document, url) => {
     if (new RegExp('^(https?:)?//').test(link.href)) {
       // leave links with domains as is
     } else if (link.href.startsWith('/')) {
-      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us--hlxsites.hlx.page');
+      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-ca--hlxsites.hlx.page');
       link.href = newUrl.href;
     }
   });
@@ -878,7 +878,7 @@ function makeNewsArticle(main, document) {
       if (!article.textContent.trim()) return;
 
       const cells = [['Fragment']];
-      cells.push(['https://main--vg-volvotrucks-us--hlxsites.hlx.page/fragments/press-release-boilerplate']);
+      cells.push(['https://main--vg-volvotrucks-ca--hlxsites.hlx.page/en-ca/fragments/press-release-boilerplate']);
       const table = WebImporter.DOMUtils.createTable(cells, document);
       article.replaceWith(table);
       table.insertAdjacentElement('afterend', hr(document));
@@ -1278,7 +1278,7 @@ export default {
     main.querySelectorAll('a').forEach((a) => {
       const href = a.getAttribute('href');
       if (isLinkToPdf(href)) {
-        const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.us`);
+        const u = new URL(`http://localhost:3001${new URL(href).pathname}?host=https%3A%2F%2Fwww.volvotrucks.ca`);
         const newPath = WebImporter.FileUtils.sanitizePath(u.pathname).replace(/\//, '');
         // no "element", the "from" property is provided instead
         // importer will download the "from" resource as "path"
@@ -1289,7 +1289,7 @@ export default {
 
         // update the link to new path on the target host
         // this is required to be able to follow the links in Word
-        const newHref = new URL(`https://main--vg-volvotrucks-us--hlxsites.hlx.page${newPath}`).toString();
+        const newHref = new URL(`https://main--vg-volvotrucks-ca--hlxsites.hlx.page${newPath}`).toString();
         a.setAttribute('href', newHref);
       }
     });

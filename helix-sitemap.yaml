@@ -1,5 +1,12 @@
 sitemaps:
   allindex:
-    origin: https://www.volvotrucks.us
-    source: /query-index.json
-    destination: /sitemap.xml
+    origin: https://www.volvotrucks.ca
+    languages:
+      en-ca:
+        source: /en-ca/query-index.json
+        destination: /sitemap-en.xml
+        hreflang: en-ca
+      fr-ca:
+        source: /fr-ca/query-index.json
+        destination: /sitemap-fr.xml
+        hreflang: fr-ca

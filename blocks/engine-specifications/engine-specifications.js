@@ -33,8 +33,8 @@ const addAnimations = (hpSelector, chartContainer) => {
   });
 };
 // Gets the data from the excel chart that should be on the same level as the block.
-const getEngineChartData = async () => {
-  const response = await fetch('./performance.json');
+const getEngineChartData = async (folder) => {
+  const response = await fetch(`./${folder}/performance.json`);
   const json = await response.json();
   return json.data;
 };
@@ -145,7 +145,9 @@ export default async function decorate(block) {
   if (typeDetector.includes('engine')) {
     buildEngineSpecifications(block);
   } else if (typeDetector.includes('performance')) {
-    const engineData = await getEngineChartData();
+    const folder = block.firstElementChild.nextElementSibling.textContent.trim();
+    const engineData = await getEngineChartData(folder);
+    block.firstElementChild.nextElementSibling.remove();
     buildPerformanceSpecifications(block, engineData);
   }
 }
