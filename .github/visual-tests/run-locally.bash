@@ -9,8 +9,4 @@ export TEST_PATHS="/ /trucks/vnl/ /find-a-dealer/ /trucks/vnl/interior/ /block-l
 npx playwright test
 set -e
 
-if grep -q "difference" test-results/visual-diff.md; then
-  cat test-results/visual-diff.md
-else
-  echo "No diffs found"
-fi
+cat test-results/visual-diff.md
