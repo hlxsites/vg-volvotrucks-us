@@ -56,35 +56,35 @@ indices:
       description:
         select: head > meta[name="description"]
         value: attribute(el, "content")
-#  en-press-releases:
-#    include:
-#      - '/en-ca/news-and-stories/press-releases/**'
-#    exclude:
-#      - '/en-ca/news-and-stories/press-releases'
-#      - '/en-ca/news-and-stories/press-releases/sub-nav'
-#    target: /en-ca/press-releases.json
-#    properties:
-#      title:
-#        select: head > meta[property="og:title"]
-#        value: attribute(el, "content")
-#      image:
-#        select: head > meta[property="og:image"]
-#        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-#      description:
-#          select: head > meta[property="og:description"]
-#          value: attribute(el, "content")
-#      tags:
-#        select: head > meta[property="article:tag"]
-#        values: attribute(el, "content")
-#      lastModified:
-#        select: none
-#        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
-#      publishDate:
-#        select: head > meta[name="publish-date"]
-#        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
-#      content:
-#        select: main
-#        value: textContent(el)
+  en-press-releases:
+    include:
+      - '/en-ca/news-and-stories/press-releases/**'
+    exclude:
+      - '/en-ca/news-and-stories/press-releases'
+      - '/en-ca/news-and-stories/press-releases/sub-nav'
+    target: /en-ca/press-releases.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      description:
+          select: head > meta[property="og:description"]
+          value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: attribute(el, "content")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      publishDate:
+        select: head > meta[name="publish-date"]
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
+      content:
+        select: main
+        value: textContent(el)
 #  fr-press-releases:
 #    include:
 #      - '/fr-ca/news-and-stories/press-releases/**'
