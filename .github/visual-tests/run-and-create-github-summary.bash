@@ -31,3 +31,6 @@ else
   cat test-results/visual-diff.md >> "$GITHUB_STEP_SUMMARY"
   echo "SUMMARY=" >> "$GITHUB_ENV"
 fi
+
+npm run optimize-screenshots
+
