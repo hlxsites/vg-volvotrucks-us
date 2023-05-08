@@ -115,7 +115,7 @@
     pointer-events: inherit;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 9992px) {
     .teaser-grid-wrapper:not(.no-gap,.small-gap) {
         --grid-row-gap: 10px;
     }
