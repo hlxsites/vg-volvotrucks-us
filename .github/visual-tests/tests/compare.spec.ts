@@ -20,26 +20,22 @@ async function loadAndScreenshot(page: Page, url: string, testPath: string, suff
 
 for (const testPath of testPaths) {
   test(`${testPath}`, async ({page}, testInfo) => {
-    const url1 = `https://${process.env.DOMAIN1}${testPath}`;
-    const url2 = `https://${process.env.DOMAIN2}${testPath}`;
+    const urlMain = `https://${process.env.DOMAIN_MAIN}${testPath}`;
+    const urlBranch = `https://${process.env.DOMAIN_BRANCH}${testPath}`;
 
-    const beforeImage = await loadAndScreenshot(page, url1, testPath, "main");
-    const afterImage = await loadAndScreenshot(page, url2, testPath, "branch");
+    const beforeImage = await loadAndScreenshot(page, urlMain, testPath, "main");
+    const afterImage = await loadAndScreenshot(page, urlBranch, testPath, "branch");
 
     const comparator = getComparator('image/png');
     const result = comparator(beforeImage, afterImage, {
-      // maxDiffPixels: ,
       maxDiffPixelRatio: 0.01,
-      // threshold: 0.99,
     });
 
-
     if (result && result.errorMessage) {
-      // store the diff image
       await writeFile(getScreenshotPath(testPath, 'diff'), result.diff);
 
       // print markdown summary to console
-      console.log(` - **${testPath}** ([main](${url1}) vs [branch](${url2}))<br>${result.errorMessage}`);
+      console.log(` - **${testPath}** ([main](${urlMain}) vs [branch](${urlBranch}))<br>${result.errorMessage}`);
     } else {
       // if there is no difference, delete the images to save space in the artifact
       await unlink(getScreenshotPath(testPath, 'main'));

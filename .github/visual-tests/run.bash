@@ -3,10 +3,10 @@ set -e
 
 npx playwright test | tee playwright.log
 
-if grep -q "$DOMAIN2" playwright.log; then
+if grep -q "$DOMAIN_BRANCH" playwright.log; then
   echo "Diffs found"
   SUMMARY="### :small_orange_diamond: Visual differences detected
-  $(grep "$DOMAIN2" playwright.log)
+  $(grep "$DOMAIN_BRANCH" playwright.log)
 
   The diff images are [attached in the artifact](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
   "

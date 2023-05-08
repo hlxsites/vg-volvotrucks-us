@@ -7,8 +7,8 @@ on:
 env:
   TEST_PATHS: "/ /trucks /trucks/vnl/ /find-a-dealer/"
   TEST_PATHS_INDEXES: "/block-library/library.json "
-  DOMAIN1: "main--vg-volvotrucks-us--hlxsites.hlx.live"
-  DOMAIN2: "${{github.head_ref}}--vg-volvotrucks-us--hlxsites.hlx.live"
+  DOMAIN_MAIN: "main--vg-volvotrucks-us--hlxsites.hlx.live"
+  DOMAIN_BRANCH: "${{github.head_ref}}--vg-volvotrucks-us--hlxsites.hlx.live"
 
 jobs:
   compare-pages:
