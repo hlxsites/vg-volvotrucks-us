@@ -28,6 +28,11 @@ class MyReporter implements Reporter {
           summary += `${result.error.message}\n`;
         }
       }
+
+      if(process.env.GITHUB_SERVER_URL) {
+      summary += '\n\n' +
+        `The diff images are [attached in the artifact](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`;
+      }
     } else {
       summary += `All ${Object.keys(this.testResults).length} tests passed.\n`;
     }

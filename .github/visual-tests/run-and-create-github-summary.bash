@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-variables=("GITHUB_SERVER_URL" "GITHUB_REPOSITORY" "GITHUB_RUN_ID" "GITHUB_STEP_SUMMARY" "GITHUB_ENV" "DOMAIN_MAIN" "DOMAIN_BRANCH")
 
-for var in "${variables[@]}"; do
+for var in GITHUB_SERVER_URL GITHUB_REPOSITORY GITHUB_RUN_ID GITHUB_STEP_SUMMARY GITHUB_ENV DOMAIN_MAIN DOMAIN_BRANCH; do
   if [ -z "${!var}" ]; then
-    echo "ERROR: $var is not set"
-    exit 1
+    echo "WARN: $var is not set. Link to artifacts will not be added."
   fi
 done
-
 
 export TEST_PATHS=""
 TEST_PATHS="$(cat generated-test-paths.txt)"
@@ -20,10 +17,7 @@ set -e
 
 if grep -q "difference" test-results/visual-diff.md; then
   echo "Diffs found"
-  SUMMARY="$(cat test-results/visual-diff.md)
-
-  The diff images are [attached in the artifact](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-  "
+  SUMMARY="$(cat test-results/visual-diff.md)"
 
   echo "$SUMMARY" >> "$GITHUB_STEP_SUMMARY"
 
