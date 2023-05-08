@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.volvotrucks.ca/sitemap.xml
+Sitemap: https://www.volvotrucks.ca/sitemap-index.xml
