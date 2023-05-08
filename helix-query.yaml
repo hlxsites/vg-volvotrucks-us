@@ -114,49 +114,49 @@ indices:
 #      content:
 #        select: main
 #        value: textContent(el)
-#  en-magazine-articles:
-#    include:
-#      - '/en-ca/news-and-stories/volvo-trucks-magazine/**'
-#    exclude:
-#      - '/en-ca/news-and-stories/volvo-trucks-magazine'
-#    target: /en-ca/magazine-articles.json
-#    properties:
-#      template:
-#        select: head > meta[name="template"]
-#        value: attribute(el, "content")
-#      title:
-#        select: head > meta[property="og:title"]
-#        value: attribute(el, "content")
-#      linkText:
-#        select: head > meta[property="linkText"]
-#        value: attribute(el, "content")
-#      description:
-#        select: head > meta[property="og:description"]
-#        value: attribute(el, "content")
-#      author:
-#        select: head > meta[name="author"]
-#        value: attribute(el, "content")
-#      category:
-#        select: head > meta[property="category"]
-#        value: attribute(el, "content")
-#      tags:
-#        select: head > meta[property="article:tag"]
-#        values: attribute(el, "content")
-#      image:
-#        select: head > meta[property="og:image"]
-#        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-#      readingTime:
-#        select: head > meta[name="readingtime"]
-#        value: attribute(el, "content")
-#      lastModified:
-#        select: none
-#        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
-#      publishDate:
-#        select: head > meta[name="publish-date"]
-#        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
-#      content:
-#        select: main
-#        value: textContent(el)
+  en-magazine-articles:
+    include:
+      - '/en-ca/news-and-stories/volvo-trucks-magazine/**'
+    exclude:
+      - '/en-ca/news-and-stories/volvo-trucks-magazine'
+    target: /en-ca/magazine-articles.json
+    properties:
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, "content")
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+      linkText:
+        select: head > meta[property="linkText"]
+        value: attribute(el, "content")
+      description:
+        select: head > meta[property="og:description"]
+        value: attribute(el, "content")
+      author:
+        select: head > meta[name="author"]
+        value: attribute(el, "content")
+      category:
+        select: head > meta[property="category"]
+        value: attribute(el, "content")
+      tags:
+        select: head > meta[property="article:tag"]
+        values: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      readingTime:
+        select: head > meta[name="readingtime"]
+        value: attribute(el, "content")
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      publishDate:
+        select: head > meta[name="publish-date"]
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
+      content:
+        select: main
+        value: textContent(el)
 #  fr-magazine-articles:
 #    include:
 #      - '/fr-ca/news-and-stories/volvo-trucks-magazine/**'
@@ -204,7 +204,7 @@ indices:
 #    include:
 #      - '/en-ca/parts-and-services/services/body-builder-support/news-and-events/**'
 #    exclude:
-#      - '/en-caparts-and-services/services/body-builder-support/news-and-events'
+#      - '/en-ca/parts-and-services/services/body-builder-support/news-and-events'
 #    target: /en-ca/body-builder.json
 #    properties:
 #      template:
