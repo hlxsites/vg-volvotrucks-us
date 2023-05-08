@@ -16,23 +16,23 @@
     font-weight: bold;
 }
 
-div.text.l :is(p, h1, h2, h3, h4, h5, h6) {
+div.text.l p {
     font-size:   var(--body-font-size-l);
 }
 
-div.text.m :is(p, h1, h2, h3, h4, h5, h6) {
+div.text.m p {
     font-size:   var(--body-font-size-m);
 }
 
-div.text.s :is(p, h1, h2, h3, h4, h5, h6) {
+div.text.s p {
     font-size:   var(--body-font-size-s);
 }
 
-div.text.xs :is(p, h1, h2, h3, h4, h5, h6) {
+div.text.xs p {
     font-size:   var(--body-font-size-xs);
 }
 
-div.text.xxs :is(p, h1, h2, h3, h4, h5, h6) {
+div.text.xxs p {
     font-size:   var(--body-font-size-xxs);
 }
 
