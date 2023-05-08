@@ -21,11 +21,12 @@ class MyReporter implements Reporter {
 
     let summary = ''
     if(failures.length > 0) {
-      summary += `There were ${failures.length} failures:\n`;
+      summary += `### :small_orange_diamond: ${failures.length} visual difference${failures.length > 1 ? 's' : ''} detected\n`;
       for (const [id, result] of failures) {
         const test: TestCase = this.testCases[id];
-        if(result.status === 'passed') continue;
-        summary += `${test.title} - ${result.error.message}\n`;
+        if (result.status !== 'passed') {
+          summary += `${result.error.message}\n`;
+        }
       }
     } else {
       summary += 'All tests passed!\n';
