@@ -2,7 +2,6 @@ import {Page, test} from '@playwright/test';
 import {getComparator} from 'playwright-core/lib/utils';
 import {unlink, writeFile} from 'fs/promises';
 
-import testPaths from "../generated-test-paths.json";
 
 function getScreenshotPath(testPath: string, suffix) {
   const title = testPath.replace(/[/]/g, '-');
@@ -18,7 +17,11 @@ async function loadAndScreenshot(page: Page, url: string, testPath: string, suff
   });
 }
 
-for (const testPath of testPaths) {
+
+for (let testPath of process.env.TEST_PATHS.split(/\s+/g)) {
+  testPath = testPath.trim();
+  if(!testPath) continue;
+
   test(`${testPath}`, async ({page}, testInfo) => {
     const urlMain = `https://${process.env.DOMAIN_MAIN}${testPath}`;
     const urlBranch = `https://${process.env.DOMAIN_BRANCH}${testPath}`;
@@ -35,7 +38,14 @@ for (const testPath of testPaths) {
       await writeFile(getScreenshotPath(testPath, 'diff'), result.diff);
 
       // print markdown summary to console
-      console.log(` - **${testPath}** ([main](${urlMain}) vs [branch](${urlBranch}))<br>${result.errorMessage}`);
+      const markdownSummary = ` - **${testPath}** ([main](${urlMain}) vs [branch](${urlBranch}))<br>${result.errorMessage}`;
+      console.log(markdownSummary);
+      testInfo.attachments.push({
+        name: getScreenshotPath(testPath, 'diff'),
+        contentType: `image/png`,
+        path: getScreenshotPath(testPath, 'diff')
+      });
+      throw new Error(markdownSummary);
     } else {
       // if there is no difference, delete the images to save space in the artifact
       await unlink(getScreenshotPath(testPath, 'main'));

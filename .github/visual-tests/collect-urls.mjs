@@ -25,4 +25,4 @@ for (const index of process.env.TEST_PATHS_INDEXES.split(' ')) {
   }));
 }
 
-writeFileSync('./generated-test-paths.json', JSON.stringify(paths, null, 2));
+writeFileSync('./generated-test-paths.txt', paths.join("\n"));

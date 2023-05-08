@@ -28,14 +28,14 @@ jobs:
       - name: Generate path list
         run: |
           npm run collect-urls
-          cat generated-test-paths.json
+          cat generated-test-paths.txt
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
         id: run-playwright-tests
-        run: ./run.bash
+        run: ./run-and-create-github-summary.bash
 
       - uses: actions/upload-artifact@v3
         if: always()

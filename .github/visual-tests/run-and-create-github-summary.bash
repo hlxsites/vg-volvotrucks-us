@@ -1,7 +1,23 @@
 #!/usr/bin/env bash
-set -e
 
+variables=("GITHUB_SERVER_URL" "GITHUB_REPOSITORY" "GITHUB_RUN_ID" "GITHUB_STEP_SUMMARY" "GITHUB_ENV" "DOMAIN_MAIN" "DOMAIN_BRANCH")
+
+for var in "${variables[@]}"; do
+  if [ -z "${!var}" ]; then
+    echo "ERROR: $var is not set"
+    exit 1
+  fi
+done
+
+
+export TEST_PATHS=""
+TEST_PATHS="$(cat generated-test-paths.txt)"
+
+
+# we ignore the exit code of the test command because we want to continue
 npx playwright test | tee playwright.log
+
+set -e
 
 if grep -q "$DOMAIN_BRANCH" playwright.log; then
   echo "Diffs found"
