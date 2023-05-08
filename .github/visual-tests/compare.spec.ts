@@ -13,7 +13,8 @@ async function loadAndScreenshot(page: Page, url: string, testPath: string, suff
   // TODO: wait for the page to be ready instead of just waiting
   await page.waitForTimeout(2000);
   return await page.screenshot({
-    path: getScreenshotPath(testPath, suffix)
+    path: getScreenshotPath(testPath, suffix),
+    fullPage: true
   });
 }
 
