@@ -1,35 +1,40 @@
 import { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from '@playwright/test/reporter';
+import { writeFileSync } from 'fs';
 
 class MyReporter implements Reporter {
   private testResults: { [key: string]: TestResult } = {};
   private testCases: { [key: string]: TestCase } = {};
+  private _outputFile: string | undefined;
 
-  onBegin(config: FullConfig, suite: Suite) {
-    console.log(`Starting the run with ${suite.allTests().length} tests`);
-  }
-
-  onTestBegin(test: TestCase, result: TestResult) {
-    console.log(`Starting test ${test.title}`);
+  constructor(options: { outputFile?: string } = {}) {
+    this._outputFile = options.outputFile;
   }
 
   onTestEnd(test: TestCase, result: TestResult) {
-    console.log(`Finished test ${test.title}: ${result.status}`);
     this.testResults[test.id] = result;
     this.testCases[test.id] = test;
   }
 
   onEnd(result: FullResult) {
-    console.log(`Finished the run: ${result.status}`);
     const failures = Object.entries(this.testResults)
       .filter(([id, result] )=> result.status !== 'passed');
 
+    let summary = ''
     if(failures.length > 0) {
-      console.log(`There were ${failures.length} failures:`);
+      summary += `There were ${failures.length} failures:\n`;
+      for (const [id, result] of failures) {
+        const test: TestCase = this.testCases[id];
+        if(result.status === 'passed') continue;
+        summary += `${test.title} - ${result.error.message}\n`;
+      }
+    } else {
+      summary += 'All tests passed!\n';
     }
-    for (const [id, result] of failures) {
-      const test: TestCase = this.testCases[id];
-      if(result.status === 'passed') continue;
-      console.log(`${test.title} - ${result.error.message}`);
+
+    if(this._outputFile) {
+          writeFileSync(this._outputFile, summary);
+    } else {
+      console.log(summary);
     }
   }
 }
