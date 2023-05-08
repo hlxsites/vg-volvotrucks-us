@@ -15,14 +15,12 @@ TEST_PATHS="$(cat generated-test-paths.txt)"
 
 
 # we ignore the exit code of the test command because we want to continue
-npx playwright test | tee playwright.log
-
+npx playwright test
 set -e
 
-if grep -q "$DOMAIN_BRANCH" playwright.log; then
+if grep -q "difference" test-results/visual-diff.md; then
   echo "Diffs found"
-  SUMMARY="### :small_orange_diamond: Visual differences detected
-  $(grep "$DOMAIN_BRANCH" playwright.log)
+  SUMMARY="$(cat test-results/visual-diff.md)
 
   The diff images are [attached in the artifact](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
   "
@@ -36,6 +34,6 @@ if grep -q "$DOMAIN_BRANCH" playwright.log; then
   echo "$EOF" >> "$GITHUB_ENV"
 else
   echo "No diffs found"
-  echo "No diffs found" >> "$GITHUB_STEP_SUMMARY"
+  cat test-results/visual-diff.md >> "$GITHUB_STEP_SUMMARY"
   echo "SUMMARY=" >> "$GITHUB_ENV"
 fi

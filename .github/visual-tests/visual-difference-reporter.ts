@@ -1,5 +1,5 @@
-import { FullConfig, FullResult, Reporter, Suite, TestCase, TestResult } from '@playwright/test/reporter';
-import { writeFileSync } from 'fs';
+import {FullResult, Reporter, TestCase, TestResult} from '@playwright/test/reporter';
+import {writeFileSync} from 'fs';
 
 class MyReporter implements Reporter {
   private testResults: { [key: string]: TestResult } = {};
@@ -17,10 +17,10 @@ class MyReporter implements Reporter {
 
   onEnd(result: FullResult) {
     const failures = Object.entries(this.testResults)
-      .filter(([id, result] )=> result.status !== 'passed');
+      .filter(([id, result]) => result.status !== 'passed');
 
     let summary = ''
-    if(failures.length > 0) {
+    if (failures.length > 0) {
       summary += `### :small_orange_diamond: ${failures.length} visual difference${failures.length > 1 ? 's' : ''} detected\n`;
       for (const [id, result] of failures) {
         const test: TestCase = this.testCases[id];
@@ -29,11 +29,11 @@ class MyReporter implements Reporter {
         }
       }
     } else {
-      summary += 'All tests passed!\n';
+      summary += `All ${Object.keys(this.testResults).length} tests passed.\n`;
     }
 
-    if(this._outputFile) {
-          writeFileSync(this._outputFile, summary);
+    if (this._outputFile) {
+      writeFileSync(this._outputFile, summary);
     } else {
       console.log(summary);
     }
