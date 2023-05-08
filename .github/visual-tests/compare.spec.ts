@@ -8,10 +8,52 @@ function getScreenshotPath(testPath: string, suffix) {
   return `./screenshots/${(title.toLowerCase())}-${suffix}.png`;
 }
 
+/**
+ * Wait for all images on document to be loaded.
+ *
+ * @param page {page}
+ * @param timeout {number}: how many milliseconds to wait until reject and cancel the execution.
+ * @param tickrate {number}: how many milliseconds to wait until recheck all images again.
+ * @returns {Promise}
+ *   A promise which resolve when all img on document gets fetched.
+ *   The promise get rejected if it reach the @timeout time to execute.
+ *
+ *  Based on https://stackoverflow.com/a/51652947/79461
+ */
+async function allImagesLoaded(page, timeout = 15 * 1000, tickrate = 250) {
+  const images = await page.locator('img').all();
+  const startTime = new Date().getTime();
+
+  return new Promise((resolve, reject) => {
+
+    function checkImages() {
+      const currentTime = new Date().getTime();
+
+      if (currentTime - startTime > timeout) {
+        reject({
+          message: `CheckImgReadyTimeoutException: images taking to loong to load.`
+        });
+      }
+
+      if (images.every(img => img.evaluate(el => el.complete))) {
+        resolve(images);
+      } else {
+        setTimeout(checkImages, tickrate);
+      }
+    }
+
+    checkImages();
+  });
+}
+
 async function loadAndScreenshot(page: Page, url: string, testPath: string, suffix: string) {
-  await page.goto(url);
-  // TODO: wait for the page to be ready instead of just waiting
-  await page.waitForTimeout(2000);
+  // load page and wait for network to be idle
+  await page.goto(url, {waitUntil: 'networkidle'});
+  // just to be sure, wait until footer is loaded
+  await page.locator('footer div.footer.block[data-block-status="loaded"]').waitFor();
+  // to be extra sure, also wait until all images are loaded
+  await allImagesLoaded(page);
+
   return await page.screenshot({
     path: getScreenshotPath(testPath, suffix),
     fullPage: true
@@ -21,7 +63,7 @@ async function loadAndScreenshot(page: Page, url: string, testPath: string, suff
 
 for (let testPath of process.env.TEST_PATHS.split(/\s+/g)) {
   testPath = testPath.trim();
-  if(!testPath) continue;
+  if (!testPath) continue;
 
   test(`${testPath}`, async ({page}, testInfo) => {
     const urlMain = `https://${process.env.DOMAIN_MAIN}${testPath}`;
