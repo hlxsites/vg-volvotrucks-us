@@ -16,23 +16,23 @@
     font-weight: bold;
 }
 
-div.text.l {
+div.text.l p {
     font-size:   var(--body-font-size-l);
 }
 
-div.text.m {
+div.text.m p {
     font-size:   var(--body-font-size-m);
 }
 
-div.text.s {
+div.text.s p {
     font-size:   var(--body-font-size-s);
 }
 
-div.text.xs {
+div.text.xs p {
     font-size:   var(--body-font-size-xs);
 }
 
-div.text.xxs {
+div.text.xxs p {
     font-size:   var(--body-font-size-xxs);
 }
 
