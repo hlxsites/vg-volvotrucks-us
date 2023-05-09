@@ -232,7 +232,7 @@ indices:
     include:
       - '/fr-ca/parts-and-services/services/body-builder-support/news-and-events/**'
     exclude:
-      - '/fr-caparts-and-services/services/body-builder-support/news-and-events'
+      - '/fr-ca/parts-and-services/services/body-builder-support/news-and-events'
     target: /fr-ca/body-builder.json
     properties:
       template:
