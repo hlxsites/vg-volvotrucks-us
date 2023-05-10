@@ -286,11 +286,17 @@ export function decorateLinks(block) {
       }
 
       const url = new URL(link.href);
-      const external = !url.host.match('volvotrucks.ca') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || url.pathname.endsWith('.jpeg') || external) {
+      const isExternal = !/^(.*\.)?volvotrucks\.ca$|^.*\.hlx\.(page|live)$|^localhost$/.test(url.hostname);
+      const useNewWindow = url.hostname.match(/build\.volvotrucks\.(us|ca)/)
+        || url.pathname.endsWith('.pdf')
+        || url.pathname.endsWith('.jpeg')
+        || isExternal;
+
+      if (useNewWindow) {
         link.target = '_blank';
       }
-      if (!external) {
+      // This removes the trailing slash from old links.
+      if (!isExternal) {
         link.href = link.href.replace(/\/$/, '');
       }
     });
