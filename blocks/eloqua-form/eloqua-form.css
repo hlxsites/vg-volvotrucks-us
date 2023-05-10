@@ -19,7 +19,7 @@
   padding: 10px 40px 10px 15px;
   border: none;
   border-radius: 0;
-  background-color: #ebebea;
+  background-color: var(--background-light-gray);
   appearance: none;
   max-width: none;
 }
@@ -32,8 +32,8 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  background: #004fbc;
-  color: #fff;
+  background: var(--link-color);
+  color: var(--c-white);
   border: none;
   margin-bottom: 30px;
   width: auto;
@@ -45,6 +45,12 @@
 
 .eloqua-form .single-checkbox-row.row {
   display: flex;
+  justify-content: center;
+}
+
+/* stylelint-disable selector-id-pattern */
+#formElement10 .single-checkbox-row.row {
+  justify-content: unset;
 }
 
 .eloqua-form .eloqua-select-wrapper {
@@ -61,6 +67,19 @@
   line-height: 24px;
   margin-top: -12px;
   content: "\f107";
-  color: #004fbc;
+  color: var(--link-color);
   pointer-events: none;
+}
+
+/* stylelint-disable selector-class-pattern */
+.eloqua-form .field-control-wrapper,
+.eloqua-form span.LV_validation_message {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  display: block;
+}
+
+.eloqua-form span.LV_validation_message.LV_valid {
+  display: none;
 }

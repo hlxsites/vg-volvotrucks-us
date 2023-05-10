@@ -20,7 +20,7 @@ function buildRelatedMagazineArticle(entry) {
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
+  const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
   card.innerHTML = `<a href="${path}" class="imgcover">
   ${pictureTag}
   </a>
@@ -45,8 +45,7 @@ function filterArticles(articles, filterTags, thisArticleTitle) {
 }
 
 async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
-  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()))
-    .filter((item) => item !== 'volvo-trucks-magazine');
+  const articleTags = getMetadata('article:tag').split(',').map((m) => toClassName(m.trim()));
   const articleTitle = getMetadata('og:title');
   const filteredData = filterArticles(magazineArticles, articleTags, articleTitle);
 

@@ -26,8 +26,8 @@ async function getPlaceholders() {
   placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
 }
 
-export function getTextLable(key) {
-  return placeholders.data.find((el) => el.Key === key).Text;
+export function getTextLabel(key) {
+  return placeholders.data.find((el) => el.Key === key)?.Text || key;
 }
 
 /**
@@ -71,10 +71,9 @@ function isCTALinkCheck(ctaLink) {
 function buildHeroBlock(main) {
   // don't create a hero if the first item is a block.
   const firstSection = main.querySelector('div');
+  if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
-  if (firstElement.tagName === 'DIV' && firstElement.classList.length) {
-    return;
-  }
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length) return;
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -240,15 +239,8 @@ function decorateSectionBackgrounds(main) {
 function decorateHyperlinkImages(container) {
   // picture + br + a in the same paragraph
   [...container.querySelectorAll('picture + br + a, picture + a')]
-    // link text is an unformatted URL paste, and matches the link href
-    .filter((a) => {
-      try {
-        // ignore domain in comparison
-        return new URL(a.href).pathname === new URL(a.textContent).pathname;
-      } catch (e) {
-        return false;
-      }
-    })
+    // link text is an unformatted URL paste
+    .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
       const br = a.previousElementSibling;
       let picture = br.previousElementSibling;
@@ -268,15 +260,8 @@ function decorateHyperlinkImages(container) {
     // is preceded by an image (in a <p>) and image has no other siblings
     .filter((a) => a.parentNode.previousElementSibling?.firstElementChild?.tagName === 'PICTURE')
     .filter((a) => a.parentNode.previousElementSibling?.childElementCount === 1)
-    // link text is an unformatted URL pastes and matches the link href
-    .filter((a) => {
-      try {
-        // ignore domain in comparison
-        return new URL(a.href).pathname === new URL(a.textContent)?.pathname;
-      } catch (e) {
-        return false;
-      }
-    })
+    // link text is an unformatted URL paste
+    .filter((a) => a.textContent.trim().startsWith('http'))
     .forEach((a) => {
       const picture = a.parentNode.previousElementSibling.firstElementChild;
       picture.parentNode.remove();
@@ -302,7 +287,7 @@ export function decorateLinks(block) {
 
       const url = new URL(link.href);
       const external = !url.host.match('volvotrucks.(us|ca)') && !url.host.match('.hlx.(page|live)') && !url.host.match('localhost');
-      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || external) {
+      if (url.host.match('build.volvotrucks.(us|ca)') || url.pathname.endsWith('.pdf') || url.pathname.endsWith('.jpeg') || external) {
         link.target = '_blank';
       }
     });
@@ -463,7 +448,9 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  window.setTimeout(() => {
+    import('./delayed.js');
+  }, 3000);
   // load anything that can be postponed to the latest here
 }
 
@@ -489,7 +476,8 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const cookieConsentForExternalVideos = document.cookie.split(';').some((cookie) => cookie.trim().startsWith('OptanonConsent=') && cookie.includes('isGpcEnabled=1'));
+  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
@@ -501,8 +489,8 @@ export function selectVideoLink(links, preferredType) {
 }
 
 export function createLowResolutionBanner() {
-  const lowResolutionMessage = getTextLable('Low resolution video message');
-  const changeCookieSettings = getTextLable('Change cookie settings');
+  const lowResolutionMessage = getTextLabel('Low resolution video message');
+  const changeCookieSettings = getTextLabel('Change cookie settings');
 
   const banner = document.createElement('div');
   banner.classList.add('low-resolution-banner');

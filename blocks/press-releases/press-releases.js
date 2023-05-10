@@ -6,25 +6,27 @@ import {
 import {
   toClassName,
   createOptimizedPicture,
+  readBlockConfig,
 } from '../../scripts/lib-franklin.js';
 
-function filterPressReleases(pressReleases, activeFilters) {
-  let filteredPressReleases = pressReleases;
-  if (activeFilters.tags) {
-    filteredPressReleases = filteredPressReleases
-      .filter((n) => toClassName(n.tags).includes(activeFilters.tags));
-  }
+const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
 
-  if (activeFilters.search) {
-    const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
-    const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
-    filteredPressReleases = filteredPressReleases
-      .filter((n) => {
-        const text = n.content.toLowerCase();
-        return terms.every((term) => !stopWords.includes(term) && text.includes(term));
-      });
-  }
-  return filteredPressReleases;
+function createPressReleaseFilterFunction(activeFilters) {
+  return (pr) => {
+    if (activeFilters.tags) {
+      if (!toClassName(pr.tags).includes(activeFilters.tags)) return false;
+    }
+    if (activeFilters.search) {
+      const terms = activeFilters.search.toLowerCase().split(' ').map((e) => e.trim()).filter((e) => !!e);
+      const text = pr.content.toLowerCase();
+      if (!terms.every((term) => !stopWords.includes(term) && text.includes(term))) return false;
+    }
+    return true;
+  };
+}
+
+function filterPressReleases(pressReleases, activeFilters) {
+  return pressReleases.filter(createPressReleaseFilterFunction(activeFilters));
 }
 
 function createFilter(pressReleases, activeFilters, createDropdown, createFullText) {
@@ -41,9 +43,9 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
   ];
 }
 
-async function getPressReleases(limit, filter) {
+function getPressReleases(limit, filter) {
   const indexUrl = new URL('/press-releases.json', window.location.origin);
-  let pressReleases = ffetch(indexUrl).chunks(500);
+  let pressReleases = ffetch(indexUrl);
   if (filter) pressReleases = pressReleases.filter(filter);
   if (limit) pressReleases = pressReleases.limit(limit);
   return pressReleases.all();
@@ -60,7 +62,7 @@ function buildPressReleaseArticle(entry) {
   const card = document.createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '414' }]);
   const pictureTag = picture.outerHTML;
-  const date = new Date(publishDate * 1000);
+  const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
   card.innerHTML = `<a href="${path}">
     ${pictureTag}
   </a>
@@ -104,8 +106,13 @@ export default async function decorate(block) {
       ({ path }) => links.indexOf(path) >= 0,
     );
     createFeaturedPressReleaseList(block, pressReleases);
-  } else if (isLatest) {
-    const pressReleases = await getPressReleases(3);
+    return;
+  }
+
+  if (isLatest) {
+    const cfg = readBlockConfig(block);
+    const filter = cfg.tags && createPressReleaseFilterFunction({ tags: toClassName(cfg.tags) });
+    const pressReleases = await getPressReleases(3, filter);
     createLatestPressReleases(block, pressReleases);
   } else {
     const pressReleases = await getPressReleases();

@@ -1,3 +1,5 @@
+import { hideSidebar } from '../../common/sidebar/sidebar.js';
+
 // eslint-disable no-console
 const addForm = async (block) => {
   // hiding till ready to display
@@ -8,13 +10,13 @@ const addForm = async (block) => {
   const thankYou = block.firstElementChild.nextElementSibling;
   const data = await fetch(`${window.hlx.codeBasePath}/blocks/eloqua-form/forms/${formName}.html`);
   if (!data.ok) {
+    /* eslint-disable-next-line no-console */
     console.error(`failed to load form: ${formName}`);
     block.innerHTML = '';
     return;
   }
 
-  const text = await data.text();
-  block.innerHTML = text;
+  block.innerHTML = await data.text();
 
   if (thankYou) {
     const form = block.querySelector('form');
@@ -24,14 +26,26 @@ const addForm = async (block) => {
         const body = new FormData(this);
         const { action, method } = this;
         fetch(action, { method, body, redirect: 'manual' }).then((resp) => {
+          /* eslint-disable-next-line no-console */
           if (!resp.ok) console.error(`form submission failed: ${resp.status} / ${resp.statusText}`);
-          const firstContent = thankYou.firstElementChild.firstElementChild;
+          const firstContent = thankYou.firstElementChild;
           if (firstContent.tagName === 'A') {
             // redirect to thank you page
             window.location.href = firstContent.href;
           } else {
             // show thank you content
-            block.replaceChildren(thankYou);
+            const btn = thankYou.querySelector('a');
+            const sidebar = document.querySelector('.get-an-offer-sidebar');
+            if (btn && sidebar) {
+              btn.setAttribute('href', '#');
+              btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideSidebar();
+              });
+              sidebar?.replaceChildren(thankYou);
+            } else {
+              block.replaceChildren(thankYou);
+            }
           }
         });
       }
@@ -75,7 +89,7 @@ const addForm = async (block) => {
 
   block.querySelectorAll('.form-element-layout').forEach((el) => {
     // displaying label content as input placeholder
-    const input = el.querySelector('input[type="text"], select');
+    const input = el.querySelector('input[type="text"], select, textarea');
     const label = el.querySelector('label');
 
     if (input && label) {
@@ -89,8 +103,7 @@ const addForm = async (block) => {
     el.parentElement.classList.add('eloqua-select-wrapper');
   });
 
-  // replacing eloqua default values
-  block.querySelectorAll('[value^="~~"]').forEach((el) => {
+  block.querySelectorAll('[value^="~~"], [value^="--"], [value^="<eloqua"]').forEach((el) => {
     el.setAttribute('value', '');
   });
 
@@ -98,13 +111,16 @@ const addForm = async (block) => {
 };
 
 export default async function decorate(block) {
+  const isMagazineTemplate = document.querySelector('meta[content="magazine"]');
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       observer.disconnect();
+      if (isMagazineTemplate) block.removeAttribute('id');
       addForm(block);
     }
   }, {
     rootMargin: '300px',
   });
   observer.observe(block);
+  if (isMagazineTemplate) block.id = 'form59';
 }

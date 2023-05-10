@@ -1,0 +1,8 @@
+{
+  "name": "ci",
+  "version": "1.0.0",
+  "dependencies": {
+    "feed": "^4.2.2"
+  },
+  "type": "module"
+}
