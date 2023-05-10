@@ -299,7 +299,8 @@ export function decorateLinks(block) {
         link.target = '_blank';
       }
       // This removes the trailing slash from old links.
-      if (url.host.match(/volvotrucks\.ca|localhost/) || url.host.match('.hlx.(page|live)')) {
+      // if (url.host.match(/volvotrucks\.ca|localhost/) || url.host.match('.hlx.(page|live)')) {
+      if (!isExternal) {
         link.href = link.href.replace(/\/$/, '');
       }
     });
