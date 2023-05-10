@@ -286,11 +286,7 @@ export function decorateLinks(block) {
       }
 
       const url = new URL(link.href);
-      console.log(url.hostname);
       const isExternal = !/^(volvotrucks\.ca|\w+\.hlx\.(page|live)|localhost)$/.test(url.hostname);
-      /* const isExternal = !url.host.match('volvotrucks.ca')
-        && !url.host.match(/\.hlx.(page|live)/)
-        && !url.host.startsWith('localhost'); */
       const useNewWindow = url.host.match(/build\.volvotrucks\.(us|ca)/)
         || url.pathname.endsWith('.pdf')
         || url.pathname.endsWith('.jpeg')
@@ -300,7 +296,6 @@ export function decorateLinks(block) {
         link.target = '_blank';
       }
       // This removes the trailing slash from old links.
-      // if (url.host.match(/volvotrucks\.ca|localhost/) || url.host.match('.hlx.(page|live)')) {
       if (!isExternal) {
         link.href = link.href.replace(/\/$/, '');
       }
