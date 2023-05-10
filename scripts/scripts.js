@@ -286,8 +286,8 @@ export function decorateLinks(block) {
       }
 
       const url = new URL(link.href);
-      const isExternal = !/^(volvotrucks\.ca|\w+\.hlx\.(page|live)|localhost)$/.test(url.hostname);
-      const useNewWindow = url.host.match(/build\.volvotrucks\.(us|ca)/)
+      const isExternal = !/^((.*\.)volvotrucks\.ca|\w+\.hlx\.(page|live)|localhost)$/.test(url.hostname);
+      const useNewWindow = url.hostname.match(/build\.volvotrucks\.(us|ca)/)
         || url.pathname.endsWith('.pdf')
         || url.pathname.endsWith('.jpeg')
         || isExternal;
