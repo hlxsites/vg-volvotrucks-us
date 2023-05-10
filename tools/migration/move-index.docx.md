@@ -19,6 +19,6 @@ Instead of `/foo/index.docx` you will have `/foo.docx`.
  - test that all redirects work
  - un-preview and un-publish old files
 
-Notes:
+# Notes
 
  - We used this on the Canadian site and it worked perfectly.
