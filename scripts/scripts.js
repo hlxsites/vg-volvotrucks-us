@@ -286,9 +286,10 @@ export function decorateLinks(block) {
       }
 
       const url = new URL(link.href);
-      const isExternal = !url.host.startsWith('volvotrucks.ca')
+      const isExternal = !/^(volvotrucks\.ca|\w+\.hlx\.(page|live)|localhost)$/.test(url.hostname);
+      /* const isExternal = !url.host.match('volvotrucks.ca')
         && !url.host.match(/\.hlx.(page|live)/)
-        && !url.host.startsWith('localhost');
+        && !url.host.startsWith('localhost'); */
       const useNewWindow = url.host.match(/build\.volvotrucks\.(us|ca)/)
         || url.pathname.endsWith('.pdf')
         || url.pathname.endsWith('.jpeg')
