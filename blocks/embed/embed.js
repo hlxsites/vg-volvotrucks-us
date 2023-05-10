@@ -1,5 +1,6 @@
 import {
   selectVideoLink, addPlayIcon, showVideoModal, isLowResolutionVideoUrl, createIframe,
+  createLowResolutionBanner,
 } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
@@ -15,6 +16,13 @@ export default function decorate(block) {
   const selectedLink = selectVideoLink(links, isFullWidth ? 'local' : 'auto');
   const video = document.createElement('video');
   const source = document.createElement('source');
+
+  if (!selectedLink) {
+    block.innerHTML = '';
+    console.warn('Embed block: There is no video link. Please check if the fallback video link is provided.');
+    return;
+  }
+
   const isLowResolutionVideo = isLowResolutionVideoUrl(selectedLink.getAttribute('href'));
   const showControls = isLowResolutionVideo && !isFullWidth;
 
@@ -55,6 +63,11 @@ export default function decorate(block) {
       video.addEventListener('click', () => {
         showVideoModal(selectVideoLink(links).getAttribute('href'));
       });
+    }
+
+    if (!isFullWidth) {
+      const banner = createLowResolutionBanner();
+      videoWrapper.prepend(banner);
     }
   };
 

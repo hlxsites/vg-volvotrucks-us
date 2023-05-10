@@ -73,7 +73,7 @@
 }
 
 .key-fact div.trailing-line {
-  margin-top: 48px; 
+  margin-top: 48px;
 }
 
 .key-fact div.trailing-line::before {
@@ -89,7 +89,7 @@
   .key-facts-wrapper .key-fact {
     flex: 0 0 16.6667%;
   }
-  
+
   .key-facts-wrapper .key-facts.wide-columns .key-fact {
     flex: 0 0 45%;
   }

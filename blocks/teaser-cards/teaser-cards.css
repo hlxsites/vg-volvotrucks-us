@@ -101,6 +101,10 @@
   display: none;
 }
 
+.block.teaser-cards .teaser.with-cta-list .cta-list {
+  margin-top: 20px;
+}
+
 /* center */
 .block.teaser-cards.center .teaser {
   text-align: center;
@@ -172,8 +176,21 @@
     z-index: -1;
   }
 
+  .teaser-cards-1 .block.teaser-cards p.image::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    content: "";
+    opacity: .15;
+  }
+
   .teaser-cards-1 .block.teaser-cards p.image img {
     height: 100%;
+    width: 100%;
   }
 
   .teaser-cards-1 .block.teaser-cards a {
