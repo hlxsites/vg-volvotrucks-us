@@ -1,0 +1,45 @@
+.bullet-points > div {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 48px 0;
+}
+
+.bullet-points img {
+  width: 48px;
+}
+
+.bullet-points :is(h1, h2, h3, h4, h5, h6) {
+    font-size: var(--heading-font-size-xl);
+}
+
+.bullet-points p {
+  font-size: var(--body-font-size-l);
+  margin: 0;
+}
+
+.bullet-points ul  {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.bullet-points ul li {
+  border-bottom: 1px solid;
+  line-height: 32px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+
+@media (min-width: 900px) {
+    .bullet-points > div {
+        display: flex;
+        flex-direction: unset !important;
+    }
+
+    .bullet-points > div > div:nth-of-type(1) {
+      flex: 0 0 30%;
+      text-align: center;
+    }
+}
