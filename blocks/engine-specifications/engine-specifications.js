@@ -38,6 +38,7 @@ const getEngineChartData = async (folder) => {
   const json = await response.json();
   return json.data;
 };
+
 // Builds the engine specifications block.
 const buildEngineSpecifications = (block) => {
   const children = [...block.children];
