@@ -10,6 +10,7 @@ import {
 } from '../../scripts/lib-franklin.js';
 
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+const language = location.pathname.match(/\/(en|fr)-ca\//);
 
 function createPressReleaseFilterFunction(activeFilters) {
   return (pr) => {
@@ -44,7 +45,7 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
 }
 
 function getPressReleases(limit, filter) {
-  const indexUrl = new URL('/press-releases.json', window.location.origin);
+  const indexUrl = new URL(`${language[0]}press-releases.json`, window.location.origin);
   let pressReleases = ffetch(indexUrl);
   if (filter) pressReleases = pressReleases.filter(filter);
   if (limit) pressReleases = pressReleases.limit(limit);

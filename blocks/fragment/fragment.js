@@ -34,7 +34,7 @@ async function loadFragment(path) {
 export default async function decorate(block) {
   const link = block.querySelector('a');
   let path = link ? link.getAttribute('href') : block.textContent.trim();
-  const language = block.baseURI.match(/(en|fr)-ca/);
+  const language = block.baseURI.match(/\/(en|fr)-ca\//);
   // Add the language if missing from the provided path
   if (language && !path.match(/\/(en|fr)-ca\//)) {
     path = path.replace(/\/fragments\//, `${language[0]}fragments/`);
