@@ -169,9 +169,18 @@ export default async function decorate(block) {
     const nav = document.createElement('nav');
     nav.id = 'nav';
     // add all the divs that will be part of the nav
+
+    // make sure that the two trees go to the right 'home'
+    let homePath = '/';
+    if (window.location.pathname.startsWith('/fr-ca/')) {
+      homePath = '/fr-ca/';
+    }
+    if (window.location.pathname.startsWith('/en-ca/')) {
+      homePath = '/en-ca/';
+    }
     nav.innerHTML = `
       <div class="brand">
-        <a class="logo" title="Homepage" href="/">
+        <a class="logo" title="Homepage" href="${homePath}">
         </a>
         <div class='vgsection-location'>
           <div class='vgsection'>
