@@ -12,8 +12,8 @@
 // copied from https://github.com/adobe/express-website/tree/main/tools/fgrep-attr
 
 const gitowner = 'hlxsites';
-const gitrepo = 'vg-volvotrucks-us';
-const globalSitemapURL = '/sitemap.xml';
+const gitrepo = 'vg-volvotrucks-ca';
+const globalSitemapURL = '/sitemap-fr.xml';
 
 let sitemapURLs = [];
 let totalSize = 0;
