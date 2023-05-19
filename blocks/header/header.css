@@ -10,6 +10,11 @@ header .header {
   display: flex;
 }
 
+/* ---- disable mobile search ---- */
+header a.search-toggle {
+  display: none;
+}
+
 /* nav */
 header nav {
   flex: 1;
@@ -79,7 +84,7 @@ header nav .search {
   transition: height 400ms ease-out;
   overflow: hidden;
   background-color: white;
-  display: flex;
+  display: none; /* --- disable search (was flex) --- */
   top: var(--nav-height);
   width: 100%;
 }
