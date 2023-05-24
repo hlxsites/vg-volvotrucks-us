@@ -30,7 +30,7 @@ function buildMagazineArticle(entry) {
     ${pictureTag}
     </a>
     <div class="content">
-    <ul><li>${date.toLocaleDateString()}</li>
+    <ul><li>${date.toLocaleDateString('en-CA')}</li>
     ${(category ? categoryItem.textContent(category) : '')}</ul>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>

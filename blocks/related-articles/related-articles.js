@@ -27,7 +27,7 @@ function buildRelatedMagazineArticle(entry) {
   ${pictureTag}
   </a>
   <div class="content">
-  <ul><li>${date.toLocaleDateString()}</li></ul>
+  <ul><li>${date.toLocaleDateString('en-CA')}</li></ul>
   <h3><a href="${path}">${title}</a></h3>
   <ul>
   <li>${author}</li>

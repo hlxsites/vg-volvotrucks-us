@@ -68,7 +68,7 @@ function buildPressReleaseArticle(entry) {
     ${pictureTag}
   </a>
   <div>
-    <span class="date">${date.toLocaleDateString('en-US')}</span>
+    <span class="date">${date.toLocaleDateString('en-CA')}</span>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
   </div>`;

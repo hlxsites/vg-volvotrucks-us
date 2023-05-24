@@ -1,9 +1,9 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-const endpoint = 'https://www.volvotrucks.us/press-releases.json';
-const feedInfoEndpoint = 'https://www.volvotrucks.us/news-and-stories/press-releases/feed-info.json';
-const targetDirectory = '../../news-and-stories/press-releases';
+const endpoint = process.argv[2];
+const feedInfoEndpoint = process.argv[3];
+const targetDirectory = process.argv[4];
 const targetFile = `${targetDirectory}/feed.xml`;
 const limit = 1000;
 
@@ -22,7 +22,7 @@ async function main() {
     description: feedMetadata.description,
     id: feedMetadata.link,
     link: feedMetadata.link,
-    updated: newestPost,
+    updated: newestPost.toLocaleDateString('en-CA'),
     generator: 'AEM News feed generator (GitHub action)',
     language: feedMetadata.lang,
   });
@@ -34,8 +34,8 @@ async function main() {
       id: link,
       link,
       content: post.description,
-      date: new Date(post.publishDate * 1000),
-      published: new Date(post.publishDate * 1000),
+      date: new Date(post.publishDate * 1000).toLocaleDateString('en-CA'),
+      published: new Date(post.publishDate * 1000).toLocaleDateString('en-CA'),
     });
   });
 
