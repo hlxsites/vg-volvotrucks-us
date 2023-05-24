@@ -18,6 +18,7 @@ import {
   toClassName,
 } from './lib-franklin.js';
 
+// eslint-disable-next-line no-restricted-globals
 const language = location.pathname.match(/\/(en|fr)-ca\//);
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here

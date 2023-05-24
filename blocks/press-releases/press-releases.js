@@ -10,6 +10,7 @@ import {
 } from '../../scripts/lib-franklin.js';
 
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+// eslint-disable-next-line no-restricted-globals
 const language = location.pathname.match(/\/(en|fr)-ca\//);
 
 function createPressReleaseFilterFunction(activeFilters) {
@@ -68,7 +69,7 @@ function buildPressReleaseArticle(entry) {
     ${pictureTag}
   </a>
   <div>
-    <span class="date">${date.toLocaleDateString('en-US')}</span>
+    <span class="date">${date.toLocaleDateString('en-CA')}</span>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
   </div>`;

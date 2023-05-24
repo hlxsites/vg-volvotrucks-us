@@ -8,6 +8,7 @@ import {
   toClassName,
 } from '../../scripts/lib-franklin.js';
 
+// eslint-disable-next-line no-restricted-globals
 const language = location.pathname.match(/\/(en|fr)-ca\//);
 
 function buildRelatedMagazineArticle(entry) {
@@ -27,7 +28,7 @@ function buildRelatedMagazineArticle(entry) {
   ${pictureTag}
   </a>
   <div class="content">
-  <ul><li>${date.toLocaleDateString()}</li></ul>
+  <ul><li>${date.toLocaleDateString('en-CA')}</li></ul>
   <h3><a href="${path}">${title}</a></h3>
   <ul>
   <li>${author}</li>
