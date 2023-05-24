@@ -10,6 +10,7 @@ import {
 } from '../../scripts/lib-franklin.js';
 
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
+// eslint-disable-next-line no-restricted-globals
 const language = location.pathname.match(/\/(en|fr)-ca\//);
 
 function createPressReleaseFilterFunction(activeFilters) {

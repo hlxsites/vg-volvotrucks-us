@@ -8,6 +8,7 @@ import {
   toClassName,
 } from '../../scripts/lib-franklin.js';
 
+// eslint-disable-next-line no-restricted-globals
 const language = location.pathname.match(/\/(en|fr)-ca\//);
 
 function buildMagazineArticle(entry) {
