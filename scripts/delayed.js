@@ -23,7 +23,7 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', {
     type: 'text/javascript',
     charset: 'UTF-8',
-    'data-domain-script': 'a176d5b2-ad9b-4988-b3b9-2456871ac659',
+    'data-domain-script': '89d2ae5d-6279-4a98-aa0d-be688cfceef3',
   });
 
   window.OptanonWrapper = () => {
