@@ -43,6 +43,11 @@
   width: auto;
 }
 
+.eloqua-form input[type="radio"] {
+  display: inline-block;
+  width: auto;
+}
+
 .eloqua-form .single-checkbox-row.row {
   display: flex;
   justify-content: center;
