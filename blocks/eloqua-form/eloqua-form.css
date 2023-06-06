@@ -43,7 +43,8 @@
   width: auto;
 }
 
-.eloqua-form input[type="radio"] {
+.eloqua-form input[type="radio"],
+.eloqua-form input[type="checkbox"] {
   display: inline-block;
   width: auto;
 }
@@ -86,5 +87,9 @@
 }
 
 .eloqua-form span.LV_validation_message.LV_valid {
+  display: none;
+}
+
+.eloqua-form .elq-form .hidden {
   display: none;
 }
