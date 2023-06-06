@@ -90,6 +90,7 @@
   display: none;
 }
 
+.eloqua-form .hidden,
 .eloqua-form .elq-form .hidden {
   display: none;
 }
