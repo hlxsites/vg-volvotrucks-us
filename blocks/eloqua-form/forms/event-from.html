@@ -721,7 +721,7 @@
         <div class="layout-col col-sm-12 col-xs-12">
           <div id="formElement0" class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
-              <label class="elq-label " for="fe1028">Please Select
+              <label class="elq-label " for="fe1028">Please select
               </label>
             </div>
             <div class="col-sm-12 col-xs-12">
@@ -1028,14 +1028,14 @@
         <div class="layout-col col-sm-12 col-xs-12">
           <div id="formElement10" class="elq-field-style form-element-layout row">
             <div style="text-align:left;" class="col-sm-12 col-xs-12">
-              <label class="elq-label " for="fe1033">Dietary Restrictions/Allergies Other
+              <label class="elq-label " for="fe1033">For other dietary needs
               </label>
             </div>
             <div class="col-sm-12 col-xs-12">
               <div class="row">
                 <div class="col-xs-12">
                   <div class="field-control-wrapper">
-                    <input type="text" class="elq-item-input" name="customFieldTwo2" id="fe1033" value="N/A" style="width:100%;">
+                    <input type="text" class="elq-item-input" name="customFieldTwo2" id="fe1033" style="width:100%;">
                   </div>
                 </div>
               </div>
@@ -1100,6 +1100,18 @@
       </div>
     </div>
     <hr style="margin: 40px 10px; border-top: 1px solid #b9b9b9;" id="divider-1" />
+    <div class="row" id="text-block-1">
+      <div class="grid-layout-col">
+        <div class="layout-col col-sm-12 col-xs-12" style="padding: 0 30px 20px;">
+          <p>
+          Volvo is pleased to provide all travel accommodations for the event. Please complete the information below so that we may arrange your flight and ground transportation. Our travel partner will be in contact with you directly to approve your flight prior to booking.
+          </p>
+          <input type="checkbox" id="travel-checkbox" style="margin-left: 5px;">
+          <label for="travel-checkbox" style="padding-bottom: 10px;">If arranging your own travel that won’t require assistance, please select
+          </label>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="grid-layout-col">
         <div class="layout-col col-sm-6 col-xs-12">
@@ -1694,7 +1706,7 @@
   // hidding fields below the event data when the user type is not 'customer'
   const userRadios = document.querySelectorAll('#fe1028 input[type="radio"]');
   const onCustomerTypeChange = (value) => {
-    const inputsWrappers = document.querySelectorAll('#formElement14, #formElement15, #formElement16, #formElement17, #formElement18, #fe1038, #formElement20, #formElement21, #formElement22, #formElement23, #divider-1');
+    const inputsWrappers = document.querySelectorAll('#formElement14, #formElement15, #formElement16, #formElement17, #formElement18, #fe1038, #formElement20, #formElement21, #formElement22, #formElement23, #divider-1, #text-block-1');
     // list of the inputs that are required only when are visible
     const requiredInputs = document.querySelectorAll('#fe1034, #fe1035, #radio-Delta_2kjmqlr, #radio-American_h4sros2c, #radio-United_fpz2sj1c, #radio-Aisle_16w0fk6, #radio-Middle_0nco7jjh, #radio-Window_78ggd9q, #fe1043, #fe1038, #fe1026, #radio-Male_1mvxuz8, #radio-Female_kj0txjdf');
 
@@ -1717,6 +1729,18 @@
     onCustomerTypeChange(customerField.checked);
   });
 
+  const travelCheckbox = document.querySelector('#travel-checkbox');
 
+  travelCheckbox.addEventListener('change', () => {
+    const showSections = document.querySelectorAll('#divider-1, #text-block-1');
+
+    if (travelCheckbox.checked) {
+      onCustomerTypeChange(false);
+      showSections.forEach((el) => el.classList.remove('hidden'));
+    } else {
+      onCustomerTypeChange(true);
+      showSections.forEach((el) => el.classList.remove('hidden'));
+    }
+  });
   //
 </script>
