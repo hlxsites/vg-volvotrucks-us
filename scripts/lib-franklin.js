@@ -560,10 +560,8 @@ export function loadHeader(header) {
     const headerBlock = buildBlock('header', '');
     header.prepend(headerBlock);
     decorateBlock(headerBlock);
-    return loadBlock(headerBlock);
+    loadBlock(headerBlock);
   }
-
-  return undefined;
 }
 
 /**
@@ -574,10 +572,8 @@ export function loadFooter(footer) {
     const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
-    return loadBlock(footerBlock);
+    loadBlock(footerBlock);
   }
-
-  return undefined;
 }
 
 /**
