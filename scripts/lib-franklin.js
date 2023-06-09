@@ -404,13 +404,23 @@ export async function loadBlocks(main) {
 }
 
 /**
+ * Returns the true origin of the current page in the browser.
+ * If the page is running in a iframe with srcdoc, the ancestor origin is returned.
+ * @returns {String} The true origin
+ */
+export function getOrigin() {
+  return window.location.href === "about:srcdoc" ? window.location.ancestorOrigins.item(0) : window.location.origin;
+}
+
+
+/**
  * Returns a picture element with webp and fallbacks
  * @param {string} src The image URL
  * @param {boolean} eager load image eager
  * @param {Array} breakpoints breakpoints and corresponding params (eg. width)
  */
 export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
-  const url = new URL(src, window.location.href);
+  const url = new URL(src, getOrigin());
   const picture = document.createElement('picture');
   const { pathname } = url;
   const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
@@ -547,20 +557,24 @@ export async function waitForLCP(lcpBlocks) {
  * loads a block named 'header' into header
  */
 export function loadHeader(header) {
-  const headerBlock = buildBlock('header', '');
-  header.prepend(headerBlock);
-  decorateBlock(headerBlock);
-  return loadBlock(headerBlock);
+  if(header) {
+    const headerBlock = buildBlock('header', '');
+    header.prepend(headerBlock);
+    decorateBlock(headerBlock);
+    return loadBlock(headerBlock);  
+  }
 }
 
 /**
  * loads a block named 'footer' into footer
  */
 export function loadFooter(footer) {
-  const footerBlock = buildBlock('footer', '');
-  footer.append(footerBlock);
-  decorateBlock(footerBlock);
-  return loadBlock(footerBlock);
+  if(footer) {
+    const footerBlock = buildBlock('footer', '');
+    footer.append(footerBlock);
+    decorateBlock(footerBlock);
+    return loadBlock(footerBlock);  
+  }
 }
 
 /**

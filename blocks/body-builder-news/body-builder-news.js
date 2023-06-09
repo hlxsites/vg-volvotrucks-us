@@ -1,8 +1,8 @@
-import { createOptimizedPicture, readBlockConfig } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, getOrigin, readBlockConfig } from '../../scripts/lib-franklin.js';
 import { ffetch } from '../../scripts/lib-ffetch.js';
 
 async function getArticles(path, limit) {
-  const indexUrl = new URL(path, window.location.origin);
+  const indexUrl = new URL(path, getOrigin());
   return ffetch(indexUrl).sheet('sorted').limit(limit).all();
 }
 

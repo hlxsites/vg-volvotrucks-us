@@ -5,6 +5,7 @@ import {
 import {
   createOptimizedPicture,
   getMetadata,
+  getOrigin,
   toClassName,
 } from '../../scripts/lib-franklin.js';
 
@@ -60,7 +61,7 @@ async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
 }
 
 async function getRelatedMagazineArticles() {
-  const indexUrl = new URL('/magazine-articles.json', window.location.origin);
+  const indexUrl = new URL('/magazine-articles.json', getOrigin());
   const articles = ffetch(indexUrl).all();
   return articles;
 }
