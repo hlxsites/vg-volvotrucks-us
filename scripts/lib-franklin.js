@@ -409,9 +409,8 @@ export async function loadBlocks(main) {
  * @returns {String} The true origin
  */
 export function getOrigin() {
-  return window.location.href === "about:srcdoc" ? window.location.ancestorOrigins.item(0) : window.location.origin;
+  return window.location.href === 'about:srcdoc' ? window.location.ancestorOrigins.item(0) : window.location.origin;
 }
-
 
 /**
  * Returns a picture element with webp and fallbacks
@@ -557,24 +556,28 @@ export async function waitForLCP(lcpBlocks) {
  * loads a block named 'header' into header
  */
 export function loadHeader(header) {
-  if(header) {
+  if (header) {
     const headerBlock = buildBlock('header', '');
     header.prepend(headerBlock);
     decorateBlock(headerBlock);
-    return loadBlock(headerBlock);  
+    return loadBlock(headerBlock);
   }
+
+  return undefined;
 }
 
 /**
  * loads a block named 'footer' into footer
  */
 export function loadFooter(footer) {
-  if(footer) {
+  if (footer) {
     const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
-    return loadBlock(footerBlock);  
+    return loadBlock(footerBlock);
   }
+
+  return undefined;
 }
 
 /**
