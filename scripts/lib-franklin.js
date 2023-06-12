@@ -409,7 +409,20 @@ export async function loadBlocks(main) {
  * @returns {String} The true origin
  */
 export function getOrigin() {
-  return window.location.href === 'about:srcdoc' ? window.location.ancestorOrigins.item(0) : window.location.origin;
+  return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
+}
+
+/**
+ * Returns the true href of the current page in the browser.
+ * If the page is running in a iframe with srcdoc,
+ * the ancestor origin + the path query param is returned.
+ * @returns {String} The href of the current page or the href of the block running in the library
+ */
+export function getHref() {
+  if (window.location.href !== 'about:srcdoc') return window.location.href;
+
+  const urlParams = new URLSearchParams(window.parent.location.search);
+  return `${window.parent.location.origin}${urlParams.get('path')}`;
 }
 
 /**
@@ -419,7 +432,7 @@ export function getOrigin() {
  * @param {Array} breakpoints breakpoints and corresponding params (eg. width)
  */
 export function createOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
-  const url = new URL(src, getOrigin());
+  const url = new URL(src, getHref());
   const picture = document.createElement('picture');
   const { pathname } = url;
   const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
