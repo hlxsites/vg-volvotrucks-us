@@ -7,6 +7,7 @@ import {
   toClassName,
   createOptimizedPicture,
   readBlockConfig,
+  getOrigin,
 } from '../../scripts/lib-franklin.js';
 
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
@@ -44,7 +45,7 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
 }
 
 function getPressReleases(limit, filter) {
-  const indexUrl = new URL('/press-releases.json', window.location.origin);
+  const indexUrl = new URL('/press-releases.json', getOrigin());
   let pressReleases = ffetch(indexUrl);
   if (filter) pressReleases = pressReleases.filter(filter);
   if (limit) pressReleases = pressReleases.limit(limit);

@@ -5,6 +5,7 @@ import {
 } from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
+  getOrigin,
   toClassName,
 } from '../../scripts/lib-franklin.js';
 
@@ -146,7 +147,7 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
 }
 
 async function getMagazineArticles(limit) {
-  const indexUrl = new URL('/magazine-articles.json', window.location.origin);
+  const indexUrl = new URL('/magazine-articles.json', getOrigin());
   let articles;
   if (limit) {
     articles = ffetch(indexUrl).limit(limit).all();

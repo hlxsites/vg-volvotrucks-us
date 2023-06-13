@@ -430,7 +430,7 @@ async function loadLazy(doc) {
   loadHeader(header);
   loadFooter(doc.querySelector('footer'));
 
-  const subnav = header.querySelector('.block.sub-nav');
+  const subnav = header?.querySelector('.block.sub-nav');
   if (subnav) {
     loadBlock(subnav);
   }
