@@ -1,4 +1,4 @@
-.eloqua-form {
+.eloqua-form.block {
   font-size: 16px;
   max-width: 960px;
   margin: auto;
@@ -93,4 +93,8 @@
 .eloqua-form .hidden,
 .eloqua-form .elq-form .hidden {
   display: none;
+}
+
+.eloqua-form .eloqua-thank-you {
+  text-align: center;
 }
