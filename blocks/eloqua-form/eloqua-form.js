@@ -21,6 +21,7 @@ const addForm = async (block) => {
   if (thankYou) {
     const form = block.querySelector('form');
     const oldSubmit = form.onsubmit;
+    thankYou.classList.add('eloqua-thank-you');
     form.onsubmit = function handleSubmit() {
       if (oldSubmit.call(this)) {
         const body = new FormData(this);
