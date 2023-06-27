@@ -1,7 +1,7 @@
 .bullet-points > div {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 13px;
     margin: 48px 0;
 }
 
@@ -11,6 +11,7 @@
 
 .bullet-points :is(h1, h2, h3, h4, h5, h6) {
     font-size: var(--heading-font-size-xl);
+    margin-bottom: 16px;
 }
 
 .bullet-points p {
@@ -29,6 +30,24 @@
   font-size: 16px;
   font-weight: 600;
   text-align: left;
+}
+
+.bullet-points .icon {
+  display: inline-block;
+}
+
+.bullet-points .icon,
+.bullet-points .icon svg {
+  height: 42px;
+  width: 42px;
+}
+
+@media screen and (min-width: 768px) {
+  .bullet-points .icon,
+  .bullet-points .icon svg {
+    height: 72px;
+    width: 72px;
+  }
 }
 
 

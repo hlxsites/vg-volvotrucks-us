@@ -184,7 +184,6 @@ h1 {
 }
 
 h2 {
-  font-family: var(--ff-volvo-novum);
   font-size: var(--heading-font-size-xl);
   line-height: 1.1;
   letter-spacing: -0.5px;
@@ -205,8 +204,17 @@ h4 {
   margin-bottom: 8px;
 }
 
-h5 { font-size: var(--heading-font-size-s) }
-h6 { font-size: var(--heading-font-size-xs) }
+h5 {
+  font-size: var(--heading-font-size-s);
+  line-height: 1.25;
+  font-family: var(--ff-volvo-novum);
+}
+
+h6 {
+  font-size: var(--heading-font-size-xs);
+  line-height: 1.25;
+  font-family: var(--ff-volvo-novum);
+}
 
 :is(h1, h2, h3, h4, h5, h6) > em {
   color: var(--volvo-text-light-gray);
@@ -405,10 +413,14 @@ main p img {
 
 /* sections */
 
+main .section {
+  padding: 40px 0;
+}
+
 main .section > div {
   width: var(--wrapper-width);
-  padding: 0 15px;
-  margin: 48px auto;
+  padding: 0 16px;
+  margin: auto;
 }
 
 main .section-with-background {
@@ -671,10 +683,6 @@ div.block div.pager .pagination .scroll li a {
 }
 
 @media (min-width: 768px) {
-  :root {
-    --wrapper-width: 756px;
-  }
-
   ul.cta-list {
     display: inline-flex;
     width: 100%;
@@ -702,7 +710,6 @@ div.block div.pager .pagination .scroll li a {
   :root {
     --nav-height: 176px;
     --sub-nav-height: 48px;
-    --wrapper-width: 960px;
   }
 
   main .section:first-child > :first-child {
@@ -714,8 +721,25 @@ div.block div.pager .pagination .scroll li a {
   }
 }
 
-@media (min-width: 1300px) {
+@media screen and (min-width: 768px) {
+  main .section {
+    padding: 80px 0;
+  }
+
+  main .section > div {
+   padding: 0 32px;
+   margin: auto;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main .section > div {
+    padding: 0 135px;
+  }
+}
+
+@media (min-width: 1440px) {
   :root {
-    --wrapper-width: 1200px;
+    --wrapper-width: 1440px;
   }
 }
