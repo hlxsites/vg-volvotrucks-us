@@ -2,7 +2,13 @@
   font-size: var(--heading-s-font-size);
   line-height: var(--heading-s-line-height);
   letter-spacing: var(--heading-s-letter-spacing);
-  margin: 16px 0;
+  margin: 24px 0;
+}
+
+@media screen and (min-width: 768px) {
+  .text {
+    margin: 40px 0;
+  }
 }
 
 @media screen and (min-width: 1024px) {
