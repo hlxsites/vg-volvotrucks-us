@@ -1,3 +1,18 @@
+.text {
+  font-size: var(--heading-s-font-size);
+  line-height: var(--heading-s-line-height);
+  letter-spacing: var(--heading-s-letter-spacing);
+  margin: 16px 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .text {
+    line-height: var(--heading-ml-line-height);
+    font-size: var(--heading-ml-font-size);
+    letter-spacing: var(--heading-ml-letter-spacing);
+  }
+}
+
 .text.left {
     text-align: left;
 }
@@ -58,4 +73,8 @@ div.text.alert.block > div:first-of-type {
 
 div.text.alert.block > div:last-of-type {
     margin-right: 15px;
+}
+
+div.text p.button-container {
+  margin-top: 24px;
 }

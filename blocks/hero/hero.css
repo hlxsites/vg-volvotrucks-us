@@ -224,15 +224,15 @@ main .hero.hero-large .hero-headings h4 {
 
 main .hero.hero-large .hero-headings h1 {
   font-family: var(--heading-font-family);
-  line-height: 125%;
-  font-size: 3.2rem;
-  letter-spacing: 0.25px;
+  line-height: var(--heading-ml-line-height);
+  font-size: var(--heading-ml-font-size);
+  letter-spacing: var(--heading-ml-letter-spacing);
 }
 
 main .hero.hero-large .hero-headings h4 {
-  font-size: 2rem;
-  line-height: 125%;
-  letter-spacing: 0.15px;
+  font-size: var(--heading-s-font-size);
+  line-height: var(--heading-s-line-height);
+  letter-spacing: var(--heading-s-letter-spacing);
 }
 
 main .hero.hero-large picture::after {
@@ -250,6 +250,12 @@ main .hero.hero-large picture::after {
   main .hero.hero-large picture {
     height: 948px;
     max-height: 948px;
+  }
+
+  main .hero.hero-large .hero-headings h1 {
+    line-height: var(--heading-l-line-height);
+    font-size: var(--heading-l-font-size);
+    letter-spacing: var(--heading-l-letter-spacing);
   }
 }
 

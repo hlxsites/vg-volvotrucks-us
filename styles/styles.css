@@ -103,6 +103,45 @@
   --heading-font-size-s: calc(2.0rem * var(--heading-font-size-scale));
   --heading-font-size-xs: calc(1.8rem * var(--heading-font-size-scale));
 
+  /*
+    NEW heading sizes (for redesign)
+    names in brackends refers to names on the desing
+   */
+  /* XXL (Section header/Heading 1) */
+  --heading-xxl-font-size: 7.2rem;
+  --heading-xxl-line-height: 1;
+  --heading-xxl-letter-spacing: -1.15px;
+
+  /* XL (Section header/Heading 2) */
+  --heading-xl-font-size: 5.6rem;
+  --heading-xl-line-height: 1.1;
+  --heading-xl-letter-spacing: -0.5px;
+
+  /* L (Section header/Heading 3) */
+  --heading-l-font-size: 4.8rem;
+  --heading-l-line-height: 1.1;
+  --heading-l-letter-spacing: 0;
+
+  /* ML (Section header/Heading 4) */
+  --heading-ml-font-size: 3.2rem;
+  --heading-ml-line-height: 1.25;
+  --heading-ml-letter-spacing: 0.25px;
+
+  /* M (Section header/Heading 5) */
+  --heading-m-font-size: 2.4rem;
+  --heading-m-line-height: 1.25;
+  --heading-m-letter-spacing: normal;
+
+  /* S (Section header/Heading 6) */
+  --heading-s-font-size: 2rem;
+  --heading-s-line-height: 1.25;
+  --heading-s-letter-spacing: 0.15px;
+
+  /* Body regular */
+  --body-regular-font-size: 1.6rem;
+  --body-regular-line-height: 1.3;
+  --body-regular-letter-spacing: 0.5px;
+
   /* nav height */
   --nav-height: 95px;
   --sub-nav-height: 44px;
@@ -741,5 +780,53 @@ div.block div.pager .pagination .scroll li a {
 @media (min-width: 1440px) {
   :root {
     --wrapper-width: 1440px;
+  }
+}
+
+/* Sections variant styling */
+main .section.section-with-title h1,
+main .section.section-with-title h2 {
+  font-size: var(--heading-ml-font-size);
+  line-height: var(--heading-ml-line-height);
+  letter-spacing: var(--heading-ml-letter-spacing);
+  margin: 0 0 16px;
+}
+
+main .section.section-with-title p {
+  font-size: var(--body-regular-font-size);
+  line-height: var(--body-regular-line-height);
+  letter-spacing: var(--body-regular-letter-spacing);
+  margin: 0 0 16px;
+}
+
+@media screen and (min-width: 768px) {
+  main .section.section-with-title h1,
+  main .section.section-with-title h2 {
+    font-size: var(--heading-l-font-size);
+    line-height: var(--heading-l-line-height);
+    letter-spacing: var(--heading-l-letter-spacing);
+  }
+
+  main .section.section-with-title p {
+    font-size: var(--heading-m-font-size);
+    line-height: var(--heading-m-line-height);
+    letter-spacing: var(--heading-m-letter-spacing);
+  }
+
+  main .section.section-with-title > p:last-of-type {
+    margin: 0 0 40px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main .section.section-with-title h1,
+  main .section.section-with-title h2 {
+    font-size: var(--heading-xxl-font-size);
+    line-height: var(--heading-xxl-line-height);
+    letter-spacing: var(--heading-xxl-letter-spacing);
+  }
+
+  main .section.section-with-title > p:last-of-type {
+    margin: 0 0 80px;
   }
 }
