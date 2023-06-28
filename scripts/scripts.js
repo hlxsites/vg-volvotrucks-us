@@ -69,11 +69,11 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
-  // don't create a hero if the first item is a block.
+  // don't create a hero if the first item is a block, except hero block
   const firstSection = main.querySelector('div');
   if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
-  if (firstElement.tagName === 'DIV' && firstElement.classList.length) return;
+  if (firstElement.tagName === 'DIV' && firstElement.classList.length && !firstElement.classList.contains('hero')) return;
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -109,8 +109,8 @@ function buildHeroBlock(main) {
     headings.className = 'hero-headings';
     const elems = [picture, headings];
     if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
-      // also consider a <p> without any children as sub heading
-      || (h1.nextElementSibling.matches('p') && !h1.nextElementSibling.children.length))) {
+      // also consider a <p> without any children as sub heading except BR
+      || (h1.nextElementSibling.matches('p') && ![...h1.nextElementSibling.children].filter((el) => el.tagName !== 'BR').length))) {
       const h4 = document.createElement('h4');
       h4.innerHTML = h1.nextElementSibling.innerHTML;
       h1.nextElementSibling.remove();
@@ -119,7 +119,9 @@ function buildHeroBlock(main) {
     headings.appendChild(h1);
     if (isCTALink) headings.appendChild(getCTAContainer(ctaLink));
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems }));
+    const newHeroBlock = buildBlock('hero', { elems });
+    newHeroBlock.classList.add(...firstElement.classList);
+    section.append(newHeroBlock);
     // remove the empty pre-section to avoid decorate it as empty section
     const containerChildren = firstSection.children;
     const wrapperChildren = containerChildren[0].children;
@@ -527,7 +529,7 @@ export function addVideoShowHandler(link) {
 
 export function isSoundcloudLink(link) {
   return link.getAttribute('href').includes('soundcloud.com/player')
-      && link.closest('.block.embed') === null;
+    && link.closest('.block.embed') === null;
 }
 
 export function addSoundcloudShowHandler(link) {

@@ -1,3 +1,7 @@
+main .section.hero-container {
+  padding: 0;
+}
+
 main .section.hero-container .hero-wrapper {
     padding: 0;
     margin: 0;
@@ -54,6 +58,7 @@ main .hero img {
     display: block;
     object-fit: cover;
     width: 100%;
+    height: 413px;
     max-height: 413px;
 }
 
@@ -181,4 +186,95 @@ main .hero-with-video .hero-video {
         top: 50%;
         left: 0;
     }
+}
+
+/* hero large version */
+main .hero.hero-large {
+  height: 662px;
+}
+
+main .hero.hero-large picture {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .hero.hero-large,
+main .hero.hero-large img,
+main .hero.hero-large picture {
+  max-height: 662px;
+  height: 662px;
+}
+
+main .hero.hero-large .hero-headings {
+  position: relative;
+  z-index: 1;
+  color: var(--c-white);
+  padding: 40px 16px;
+  text-align: left;
+  max-width: 70%;
+}
+
+main .hero.hero-large .hero-headings h1,
+main .hero.hero-large .hero-headings h4 {
+  text-transform: unset;
+}
+
+main .hero.hero-large .hero-headings h1 {
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-ml-line-height);
+  font-size: var(--heading-ml-font-size);
+  letter-spacing: var(--heading-ml-letter-spacing);
+}
+
+main .hero.hero-large .hero-headings h4 {
+  font-size: var(--heading-s-font-size);
+  line-height: var(--heading-s-line-height);
+  letter-spacing: var(--heading-s-letter-spacing);
+}
+
+main .hero.hero-large picture::after {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  main .hero.hero-large .hero-headings {
+    padding: 48px 32px;
+    max-width: 50%;
+  }
+
+  main .hero.hero-large,
+  main .hero.hero-large img,
+  main .hero.hero-large picture {
+    height: 948px;
+    max-height: 948px;
+  }
+
+  main .hero.hero-large .hero-headings h1 {
+    line-height: var(--heading-l-line-height);
+    font-size: var(--heading-l-font-size);
+    letter-spacing: var(--heading-l-letter-spacing);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  main .hero.hero-large .hero-headings {
+    margin: auto;
+    max-width: 1200px;
+    left: 0;
+    transform: unset;
+    padding-left: 24px;
+    width: calc(93% - 30px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main .hero.hero-large,
+  main .hero.hero-large img,
+  main .hero.hero-large picture {
+    height: 767px;
+    max-height: 767px;
+  }
 }

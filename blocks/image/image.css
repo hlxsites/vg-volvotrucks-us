@@ -1,0 +1,8 @@
+main .section > .image-wrapper.full-viewport {
+  width: 100%;
+  padding: 0;
+}
+
+.image.block.full-viewport img {
+  width: 100%;
+}

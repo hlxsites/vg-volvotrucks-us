@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.key-facts-wrapper .key-facts {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
 .key-facts-wrapper .key-facts > div {
   display: flex;
   flex-wrap: wrap;
@@ -15,6 +20,7 @@
   flex: 0 0 100%;
   align-items: center;
   padding: 0 15px;
+  margin-bottom: 32px;
 }
 
 .key-facts-wrapper .key-fact p {
@@ -26,6 +32,16 @@
 .key-facts-wrapper .key-fact i.fa {
   font-size: 30px;
   margin-bottom: 8px;
+}
+
+.key-facts-wrapper .key-fact .icon,
+.key-facts-wrapper .key-fact .icon svg {
+  height: 48px;
+  width: 48px;
+}
+
+.key-facts-wrapper .key-fact .icon + br {
+  display: none;
 }
 
 /* title */
@@ -96,7 +112,28 @@
 }
 
 @media screen and (min-width: 768px) {
+  .key-facts-wrapper .key-facts {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
   .key-facts-wrapper .key-facts.wide-columns .key-fact {
     flex: 1 0 30%;
+  }
+
+  .key-facts-wrapper .key-fact .icon,
+  .key-facts-wrapper .key-fact .icon svg {
+    height: 72px;
+    width: 72px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .key-facts-wrapper .key-facts {
+    gap: 80px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 }
