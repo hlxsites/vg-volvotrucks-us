@@ -1712,7 +1712,15 @@
 
     if (!value) {
       inputsWrappers.forEach((el) => el.classList.add('hidden'));
-      requiredInputs.forEach((el) => el.removeAttribute('required'));
+      requiredInputs.forEach((el) => {
+        el.removeAttribute('required');
+
+        if (el.type === 'radio') {
+          el.checked = false;
+        } else {
+          el.value = '';
+        }
+      });
     } else {
       inputsWrappers.forEach((el) => el.classList.remove('hidden'));
       requiredInputs.forEach((el) => el.setAttribute('required', 'required'));
