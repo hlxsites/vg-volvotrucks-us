@@ -1,8 +1,13 @@
 .bullet-points > div {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    margin: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 48px 0;
+}
+
+.bullet-points > div:first-child,
+.bullet-points > div:last-child {
+  margin-top: 16px;
 }
 
 .bullet-points img {
@@ -10,7 +15,10 @@
 }
 
 .bullet-points :is(h1, h2, h3, h4, h5, h6) {
-    font-size: var(--heading-font-size-xl);
+  font-size: var(--heading-s-font-size);
+  line-height: var(--heading-s-line-height);
+  letter-spacing: var(--heading-s-letter-spacing);
+  margin-bottom: 16px;
 }
 
 .bullet-points p {
@@ -18,28 +26,73 @@
   margin: 0;
 }
 
-.bullet-points ul  {
+.bullet-points ul {
   padding-inline-start: 0;
   list-style: none;
+  margin-top: 32px;
 }
 
 .bullet-points ul li {
-  border-bottom: 1px solid;
-  line-height: 32px;
+  border-bottom: 1px solid #e1dfdd;
+  line-height: 1.3;
   font-size: 16px;
   font-weight: 600;
   text-align: left;
+  padding: 8px 0;
+  display: block;
 }
 
+.bullet-points .icon {
+  display: flex;
+}
 
-@media (min-width: 900px) {
-    .bullet-points > div {
-        display: flex;
-        flex-direction: unset !important;
-    }
+.bullet-points .icon,
+.bullet-points .icon svg {
+  height: 42px;
+  width: 42px;
+}
 
-    .bullet-points > div > div:nth-of-type(1) {
-      flex: 0 0 30%;
-      text-align: center;
-    }
+@media screen and (min-width: 768px) {
+  .bullet-points :is(h1, h2, h3, h4, h5, h6) {
+    font-size: var(--heading-ml-font-size);
+    line-height: var(--heading-ml-line-height);
+    letter-spacing: var(--heading-ml-letter-spacing);
+  }
+
+  .bullet-points p {
+    font-size: var(--heading-m-font-size);
+    line-height: var(--heading-m-line-height);
+    letter-spacing: var(--heading-m-letter-spacing);
+  }
+
+  .bullet-points .icon,
+  .bullet-points .icon svg {
+    height: 72px;
+    width: 72px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bullet-points {
+    margin-top: 80px;
+  }
+
+  .icon {
+    margin: auto;
+  }
+
+  .bullet-points > div {
+    margin: 40px;
+    display: flex;
+    flex-direction: unset !important;
+  }
+
+  .bullet-points > div > div:nth-of-type(1) {
+    flex: 0 0 30%;
+    text-align: center;
+  }
+
+  .bullet-points ul {
+    margin-bottom: 0;
+  }
 }
