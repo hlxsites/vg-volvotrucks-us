@@ -452,14 +452,10 @@ main p img {
 
 /* sections */
 
-main .section {
-  padding: 40px 0;
-}
-
 main .section > div {
   width: var(--wrapper-width);
   padding: 0 16px;
-  margin: auto;
+  margin: 48px auto;
 }
 
 main .section-with-background {
@@ -760,39 +756,54 @@ div.block div.pager .pagination .scroll li a {
   }
 }
 
+main.blue-contract .section {
+  padding: 40px 0;
+}
+
+main.blue-contract .section > div {
+  padding: 0 16px;
+  margin: auto;
+}
+
 @media screen and (min-width: 768px) {
-  main .section {
+  main.blue-contract .section {
     padding: 80px 0;
   }
 
-  main .section > div {
+  main.blue-contract .section > div {
    padding: 0 32px;
    margin: auto;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  main .section > div {
+  main.blue-contract .section > div {
     padding: 0 135px;
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1300px) {
   :root {
-    --wrapper-width: 1440px;
+    --wrapper-width: 1200px;
   }
 }
 
 /* Sections variant styling */
-main .section.section-with-title h1,
-main .section.section-with-title h2 {
+@media (min-width: 1440px) {
+  :root main.blue-contract {
+    --wrapper-width: 1440px;
+  }
+}
+
+main.blue-contract .section.section-with-title h1,
+main.blue-contract .section.section-with-title h2 {
   font-size: var(--heading-ml-font-size);
   line-height: var(--heading-ml-line-height);
   letter-spacing: var(--heading-ml-letter-spacing);
   margin: 0 0 16px;
 }
 
-main .section.section-with-title p {
+main.blue-contract .section.section-with-title p {
   font-size: var(--body-regular-font-size);
   line-height: var(--body-regular-line-height);
   letter-spacing: var(--body-regular-letter-spacing);
@@ -800,33 +811,33 @@ main .section.section-with-title p {
 }
 
 @media screen and (min-width: 768px) {
-  main .section.section-with-title h1,
-  main .section.section-with-title h2 {
+  main.blue-contract .section.section-with-title h1,
+  main.blue-contract .section.section-with-title h2 {
     font-size: var(--heading-l-font-size);
     line-height: var(--heading-l-line-height);
     letter-spacing: var(--heading-l-letter-spacing);
   }
 
-  main .section.section-with-title p {
+  main.blue-contract .section.section-with-title p {
     font-size: var(--heading-m-font-size);
     line-height: var(--heading-m-line-height);
     letter-spacing: var(--heading-m-letter-spacing);
   }
 
-  main .section.section-with-title > p:last-of-type {
+  main.blue-contract .section.section-with-title > p:last-of-type {
     margin: 0 0 40px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  main .section.section-with-title h1,
-  main .section.section-with-title h2 {
+  main.blue-contract .section.section-with-title h1,
+  main.blue-contract .section.section-with-title h2 {
     font-size: var(--heading-xxl-font-size);
     line-height: var(--heading-xxl-line-height);
     letter-spacing: var(--heading-xxl-letter-spacing);
   }
 
-  main .section.section-with-title > p:last-of-type {
+  main.blue-contract .section.section-with-title > p:last-of-type {
     margin: 0 0 80px;
   }
 }
