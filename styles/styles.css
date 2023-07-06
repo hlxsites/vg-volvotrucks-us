@@ -782,13 +782,19 @@ main.blue-contract .section > div {
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1300px) {
   :root {
-    --wrapper-width: 1440px;
+    --wrapper-width: 1200px;
   }
 }
 
 /* Sections variant styling */
+@media (min-width: 1440px) {
+  :root main.blue-contract {
+    --wrapper-width: 1440px;
+  }
+}
+
 main.blue-contract .section.section-with-title h1,
 main.blue-contract .section.section-with-title h2 {
   font-size: var(--heading-ml-font-size);
