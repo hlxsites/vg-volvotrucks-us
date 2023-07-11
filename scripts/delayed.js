@@ -46,7 +46,7 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   };
 }
 // Google Analytics
-const gaId0 = 'AW-10868358315';
+const gaId0 = 'GTM-KP9KZWR';
 const gaId1 = 'G-4HJG91WCZF';
 window.dataLayer = window.dataLayer || [];
 
@@ -58,7 +58,7 @@ gtag('js', new Date());
 gtag('config', `${gaId0}`);
 gtag('config', `${gaId1}`);
 
-loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaId0}`, {
+loadScript(`https://www.googletagmanager.com/gtag/js?id=${gaId1}`, {
   type: 'text/javascript',
   charset: 'UTF-8',
   async: true,
