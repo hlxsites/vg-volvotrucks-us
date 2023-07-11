@@ -46,7 +46,7 @@ if (!window.location.host.includes('hlx.page') && !window.location.host.includes
   };
 }
 // Google Analytics
-const gaId0 = 'AW-10868358315';
+const gaId0 = 'GTM-KP9KZWR';
 const gaId1 = 'G-4HJG91WCZF';
 window.dataLayer = window.dataLayer || [];
 
