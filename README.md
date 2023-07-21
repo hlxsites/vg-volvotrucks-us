@@ -2,8 +2,8 @@
 Franklin site for volvotrucks.us
 
 ## Environments
-- Preview: https://main--vg-volvotrucks-us--hlxsites.hlx.page/
-- Live: https://main--vg-volvotrucks-us--hlxsites.hlx.live/
+- Preview: https://main--vg-volvotrucks-us-redesign--hlxsites.hlx.page/
+- Live: https://main--vg-volvotrucks-us-redesign--hlxsites.hlx.live/
 
 ## Installation
 
