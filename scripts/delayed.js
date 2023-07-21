@@ -3,7 +3,13 @@ import { loadScript, sampleRUM } from './lib-franklin.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
-loadGoogleTagManager();
+
+const cookieSetting = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+const isGtmAllowed = cookieSetting.includes('C0002:1');
+
+if (isGtmAllowed) {
+  loadGoogleTagManager();
+}
 
 // add more delayed functionality here
 document.addEventListener('click', (e) => {
