@@ -48,55 +48,50 @@
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
   --ff-volvo-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
   --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
-
   --font-family-body: var(--ff-volvo-novum);
   --font-family-heading: var(--ff-volvo-novum-medium);
   --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
   /* Volvo Broad Pro Digital, 60px,Uppercase, 3.6px,#53565A */
-  --f-large-title--font-size: 3.75rem;
-  --f-large-title--text-transform: uppercase;
-  --f-large-title--letter-spacing: 3.6px;
+  --f-large-title-font-size: 3.75rem;
+  --f-large-title-text-transform: uppercase;
+  --f-large-title-letter-spacing: 3.6px;
 
   /* Volvo Novum Medium, 48px, -0.1px, #53565A */
-  --f-large-text--font-size: 3rem;
-  --f-large-text--letter-spacing: -0.1px;
+  --f-large-text-font-size: 3rem;
+  --f-large-text-letter-spacing: -0.1px;
 
   /* Volvo Broad Pro Digital, 48px,Uppercase, 3.6px,#53565A */
-  --f-medium-title--font-size: 3rem;
-  --f-medium-title--text-transform: uppercase;
-  --f-medium-title--letter-spacing: 3.6px;
+  --f-medium-title-font-size: 3rem;
+  --f-medium-title-text-transform: uppercase;
+  --f-medium-title-letter-spacing: 3.6px;
 
   /* Volvo Novum Medium, 32px, , -0.1px, #53565A */
-  --f-medium-text--font-size: 2rem;
-  --f-medium-text--letter-spacing: -0.1px;
+  --f-medium-text-font-size: 2rem;
+  --f-medium-text-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium, 24px, , -0.1px, #53565A */
   /* Volvo Novum Regular, 24px, , -0.1px, #53565A */
-  --f-small--font-size: 1.5rem;
-  --f-small--letter-spacing: -0.1px;
+  --f-small-font-size: 1.5rem;
+  --f-small-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium, 16px, , -0.1px, #53565A */
-  --f-xsmall--font-size: 1rem;
-  --f-xsmall--letter-spacing: -0.1px;
+  --f-xsmall-font-size: 1rem;
+  --f-xsmall-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium, 12px, , -0.1px, #53565A */
-  --f-xxsmall--font-size: 0.75rem;
-  --f-xxsmall--letter-spacing: -0.1px;
-
   /* Volvo Novum Regular, 12px, , -0.1px, #53565A */
-  --f-xxsmall--font-size: 0.75rem;
-  --f-xxsmall--letter-spacing: -0.1px;
+  --f-xxsmall-font-size: 0.75rem;
+  --f-xxsmall-letter-spacing: -0.1px;
 
   /* Volvo Novum Regular, 16px, -0.1px,  #53565A */
-  --f-body-text--font-size: var(--f-xsmall-title--font-size);
-  --f-body-text--letter-spacing: var(--f-xsmall-title--letter-spacing);
+  --f-body-text-font-size: var(--f-xsmall-title--font-size);
+  --f-body-text-letter-spacing: var(--f-xsmall-title--letter-spacing);
 
   /* COLORS */
-  --c-black: #000000;
-  --c-white: #ffffff;
-
+  --c-black: #000;
+  --c-white: #fff;
   --c-volvo-blue: #182871;
   --c-dark-blue: #202A44;
   --c-leaf-one: #C8E691;
@@ -226,7 +221,7 @@ body {
   color: var(--text-color);
   display: none;
   font-family: var(--font-family-body);
-  font-size: var(--f-body-text--font-size);
+  font-size: var(--f-body-text-font-size);
   line-height: 1.5;
   margin: 0;
   -moz-osx-font-smoothing: grayscale;
