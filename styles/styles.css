@@ -53,7 +53,8 @@
   --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
-  /* Volvo Broad Pro Digital, 60px,Uppercase, 3.6px,#53565A */
+
+  /* Volvo Broad Pro Digital, 60px, Uppercase, 3.6px,#53565A */
   --f-large-title-font-size: 3.75rem;
   --f-large-title-text-transform: uppercase;
   --f-large-title-letter-spacing: 3.6px;
@@ -71,8 +72,7 @@
   --f-medium-text-font-size: 2rem;
   --f-medium-text-letter-spacing: -0.1px;
 
-  /* Volvo Novum Medium, 24px, , -0.1px, #53565A */
-  /* Volvo Novum Regular, 24px, , -0.1px, #53565A */
+  /* Volvo Novum Medium / Volvo Novum Regular, 24px, , -0.1px, #53565A */
   --f-small-font-size: 1.5rem;
   --f-small-letter-spacing: -0.1px;
 
@@ -80,14 +80,13 @@
   --f-xsmall-font-size: 1rem;
   --f-xsmall-letter-spacing: -0.1px;
 
-  /* Volvo Novum Medium, 12px, , -0.1px, #53565A */
-  /* Volvo Novum Regular, 12px, , -0.1px, #53565A */
+  /* Volvo Novum Medium / Volvo Novum Regular, 12px, , -0.1px, #53565A */
   --f-xxsmall-font-size: 0.75rem;
   --f-xxsmall-letter-spacing: -0.1px;
 
   /* Volvo Novum Regular, 16px, -0.1px,  #53565A */
-  --f-body-text-font-size: var(--f-xsmall-title--font-size);
-  --f-body-text-letter-spacing: var(--f-xsmall-title--letter-spacing);
+  --f-body-text-font-size: var(--f-xsmall-font-size);
+  --f-body-text-letter-spacing: var(--f-xsmall-letter-spacing);
 
   /* COLORS */
   --c-black: #000;
@@ -149,6 +148,7 @@
   --body-font-size-xxs: 1.3rem;
 
   /* heading sizes */
+
   /* the scale allows us to adjust all heading sizes but preserve the ratio */
   --heading-font-size-scale: 0.5;
   --heading-font-size-xxl: calc(7.2rem * var(--heading-font-size-scale));
@@ -163,6 +163,7 @@
     NEW heading sizes (for redesign)
     names in brackends refers to names on the desing
    */
+
   /* XXL (Section header/Heading 1) */
   --heading-xxl-font-size: 7.2rem;
   --heading-xxl-line-height: 1;
