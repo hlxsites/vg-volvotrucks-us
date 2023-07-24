@@ -57,7 +57,7 @@ div.text.xxs p {
 }
 
 div.text.black {
-    color: var(--volvo-text-black);
+    color: var(--c-black);
 }
 
 div.text.alert.block {

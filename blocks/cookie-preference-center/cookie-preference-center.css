@@ -6,7 +6,7 @@
     font-weight: 700;
     font-family: var(--ff-volvo-novum);
     font-size: var(--body-font-size-xs);
-    border: 2px solid #53565A;
+    border: 2px solid var(--c-grey-4);
 }
 
 .cookie-preference-center a.cta::after {

@@ -1,6 +1,8 @@
 import { calcValuesToPoints, buildReferences } from './chartHelper.js';
 
-const colorArray = ['#919296', '#77B733'];
+const colorGrey2 = getComputedStyle(document.documentElement).getPropertyValue('--c-grey-4');
+const colorLeaf4 = getComputedStyle(document.documentElement).getPropertyValue('--c-leaf-four');
+const colorArray = [colorGrey2, colorLeaf4];
 
 const totalWidthChart = 800;
 const totalHeightChart = totalWidthChart * 0.6;

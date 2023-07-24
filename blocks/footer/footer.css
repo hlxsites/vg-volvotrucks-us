@@ -32,7 +32,7 @@
 
 .block.footer .footer-gray a:hover {
   text-decoration: none;
-  color: var(--link-hover-color);
+  color: var(--c-cta-blue-hover);
 }
 
 .block.footer .footer-gray a::after {
@@ -53,9 +53,9 @@
   }
 
   .block.footer .footer-gray h3 {
-    border-top: 1px solid var(--background-color);
+    border-top: 1px solid var(--c-white);
     padding: 20px 1rem;
-    background-color: #E1DFDD;
+    background-color: var(--c-grey-1);
     cursor: pointer;
   }
 
@@ -93,7 +93,7 @@
 /* desktop */
 @media screen and (min-width: 767px) {
   .block.footer .footer-gray {
-    background-color: #E1DFDD;
+    background-color: var(--c-grey-1);
     padding-top: 48px;
     padding-bottom: 28px;
   }
@@ -150,7 +150,7 @@
 
 .block.footer .footer-copyright p {
   margin: 0;
-  color: #A7A8A9;
+  color: var(--c-grey-2);
 }
 
 .block.footer .scroll-to-top {
@@ -161,7 +161,7 @@
   z-index: 99;
   border: none;
   background-color: var(--volvo-text-gray);
-  color: var(--background-color);
+  color: var(--c-white);
   cursor: pointer;
   border-radius: 10px;
   padding: 12px 24px;
