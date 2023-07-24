@@ -1,9 +1,9 @@
 # Volvo Trucks US
-Franklin site for volvotrucks.us
+Franklin site redesign for volvotrucks.us
 
 ## Environments
-- Preview: https://main--vg-volvotrucks-us-redesign--hlxsites.hlx.page/
-- Live: https://main--vg-volvotrucks-us-redesign--hlxsites.hlx.live/
+- Preview: https://main--vg-volvotrucks-us-redesign--netcentric.hlx.page/
+- Live: https://main--vg-volvotrucks-us-redesign--netcentric.hlx.live/
 
 ## Installation
 
