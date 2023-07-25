@@ -93,18 +93,18 @@
   --c-white: #fff;
   --c-volvo-blue: #182871;
   --c-dark-blue: #202A44;
-  --c-leaf-one: #C8E691;
-  --c-leaf-two: #A8D46B;
-  --c-leaf-three: #8FC54E;
-  --c-leaf-four: #78B833;
-  --c-teal-one: #B8DeD8;
-  --c-teal-two: #8DC9BF;
-  --c-teal-three: #66B3A6;
-  --c-teal-four: #50A294;
-  --c-flow-one: #396976;
-  --c-flow-two: #678C96;
-  --c-flow-three: #96B0B6;
-  --c-flow-four: #C3D2D6;
+  --c-leaf-1: #C8E691;
+  --c-leaf-2: #A8D46B;
+  --c-leaf-3: #8FC54E;
+  --c-leaf-4: #78B833;
+  --c-teal-1: #B8DeD8;
+  --c-teal-2: #8DC9BF;
+  --c-teal-3: #66B3A6;
+  --c-teal-4: #50A294;
+  --c-flow-1: #396976;
+  --c-flow-2: #678C96;
+  --c-flow-3: #96B0B6;
+  --c-flow-4: #C3D2D6;
   --c-cta-blue-default: #004FBC;
   --c-cta-blue-hover: #0056D6;
   --c-cta-blue-active: #0041A3;
@@ -115,19 +115,18 @@
   --c-grey-3: #888B8D;
   --c-grey-4: #53565A;
 
-  /* 
+  /* Success / error colors */
   --c-error-red: #C4001A;
-  --c-success-green : #47962D
-  --c-warning-yellow: #F7D302
-   */
+  --c-success-green : #47962D;
+  --c-warning-yellow: #F7D302;
 
+  /* Global colors */
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
   --text-color: var(--c-grey-4);
   --btn-background-hover: var(--c-grey-1);
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
-
 
   /*
     OLD styles
