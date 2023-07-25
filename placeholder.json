@@ -1,7 +1,7 @@
 {
-  "total": 5,
+  "total": 7,
   "offset": 0,
-  "limit": 5,
+  "limit": 7,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -26,6 +26,14 @@
     {
       "Key": "Please enter valid value",
       "Text": "Please enter valid value"
+    },
+    {
+      "Key": "no eloqua message",
+      "Text": "We cannot show the content because you have not given us permission to store cooki files"
+    },
+    {
+      "Key": "no eloqua link message",
+      "Text": "Change cookie settings"
     }
   ],
   ":type": "sheet"
