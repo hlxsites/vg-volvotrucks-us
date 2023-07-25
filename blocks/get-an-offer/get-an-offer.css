@@ -18,7 +18,7 @@ aside .get-an-offer-sidebar a.button.primary {
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
-    background: var(--link-color);
+    background: var(--c-cta-blue-default);
     color: var(--c-white);
     border: none;
     margin-bottom: 30px;

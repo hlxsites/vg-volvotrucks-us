@@ -10,5 +10,5 @@ main .section .photosphere-wrapper {
 }
 
 .psv-loader-text {
-  color: var(--volvo-text-black);
+  color: var(--c-black);
 }

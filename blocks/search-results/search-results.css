@@ -225,7 +225,7 @@
   width: calc(100%);
   top: 42px;
   background-color: #fff;
-  color: #53565a;
+  color: var(--c-grey-4);
   cursor: pointer;
   margin-top: 16px;
   z-index: 999;
@@ -254,7 +254,7 @@
   .search-wrapper
   .studio-widget-autosuggest-results
   .result-row.searchstudio-active-row {
-  color: #53565a;
+  color: var(--c-grey-4);
   cursor: pointer;
   background: #f2f2f2;
 }
@@ -413,7 +413,7 @@
   }
 
   .studio-search-widget .search-wrapper .studio-widget-search-input {
-    border: 1px solid #E1DFDD;
+    border: 1px solid var(--c-grey-1);
   }
 }
 
@@ -439,7 +439,7 @@
   padding: 20px 12px;
   color: #33475a;
   border: none;
-  border-top: 1px solid #f1f0ef;
+  border-top: 1px solid var(--c-grey-1);
 }
 
 .card-searchstudio-js-custom.has-thumbnail {
@@ -582,7 +582,7 @@
   .card-searchstudio-js-body
   .card-searchstudio-js-body {
   width: 100%;
-  color: #53565a;
+  color: var(--c-grey-4);
 }
 
 .card-searchstudio-js-custom
@@ -696,7 +696,7 @@
 
 .search-feedback-filters-custom strong {
   font-weight: 500;
-  font-family: var(--fixed-font-family);
+  font-family: var(--font-family-fixed);
 }
 
 @media (max-width: 1199px) {
@@ -1800,7 +1800,7 @@
     text-transform: uppercase;
     color: #33475a;
     padding: 20px 40px;
-    border-bottom: 1px solid #53565a;
+    border-bottom: 1px solid var(--c-grey-4);
     align-self: flex-end;
   }
 

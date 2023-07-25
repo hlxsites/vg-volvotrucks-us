@@ -38,7 +38,7 @@ main .section .engine-specifications-wrapper {
 .engine-specifications .power-title,
 .engine-specifications .torque-title,
 .engine-specifications .item-title {
-  color: #888B8D;
+  color: var(--c-grey-3);
   font-family: var(--ff-volvo-novum);
   margin: 0;
   font-size: var(--body-font-size-xs);
@@ -82,7 +82,7 @@ main .section .engine-specifications-wrapper {
 
 .performance .engine-rating .rating-title {
   font-size: var(--heading-font-size-s);
-  color: #888B8D;
+  color: var(--c-grey-3);
   font-style: normal;
   font-weight: 500;
   line-height: 125%;
@@ -116,7 +116,7 @@ main .section .engine-specifications-wrapper {
 }
 
 .performance .engine-rating .rating-item a:hover {
-  border-bottom: 2px solid #888B8D;
+  border-bottom: 2px solid var(--c-grey-3);
 }
 
 .performance .engine-rating .rating-item[data-active] a {
@@ -170,7 +170,7 @@ main .section .engine-specifications-wrapper {
   font-weight: 400;
   line-height: 130%;
   letter-spacing: 0.5px;
-  fill: #888B8D;
+  fill: var(--c-grey-3);
 }
 
 .peak-rectangle-hp,

@@ -98,7 +98,7 @@
   margin: 0 auto;
   width: 20%;
   padding-top: 30px;
-  border-top: 3px solid #E1DFDD;
+  border-top: 3px solid var(--c-grey-1);
 }
 
 @media screen and (min-width: 576px) {

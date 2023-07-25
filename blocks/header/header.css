@@ -45,23 +45,23 @@ header nav .brand .vgsection-location {
 
 /* volvo group section */
 header nav .brand .vgsection-location .vgsection {
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-body);
   color: var(--text-color);
   font-weight: 700;
 }
 
 /* location */
 header nav .vgsection-location .location {
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-body);
   font-weight: 400;
-  color: #a7a8a9;
+  color: var(--c-grey-2);
 }
 
 /* the search icon */
 header nav .search-toggle .search-icon {
   width: 16px;
   height: 16px;
-  color: #a7a8a9;
+  color: var(--c-grey-2);
 }
 
 /* the hamburger icon */
@@ -69,7 +69,7 @@ header nav .hamburger-toggle .hamburger-icon {
   width: 20px;
   height: 14px;
   margin-left: 12px;
-  color: #a7a8a9;
+  color: var(--c-grey-2);
   margin-bottom: 2px;
 }
 
@@ -88,7 +88,7 @@ header nav .search div {
   display: flex;
   flex-flow: row;
   width: 100%;
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-body);
 }
 
 header nav .search-toggle[aria-expanded='true'] ~ .search {
@@ -112,7 +112,7 @@ header nav .search input {
 header nav .search .search-button {
   height: 59px;
   padding: 0 10px;
-  color: #a7a8a9;
+  color: var(--c-grey-2);
   border: none;
   border-radius: 0;
   background-color: #ebebea;
@@ -193,7 +193,7 @@ header nav .tools {
   z-index: 1052;
   background-color: white;
   transition: right 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
-  border-bottom: 1px solid #e1dfdd;
+  border-bottom: 1px solid var(--c-grey-1);
 }
 
 header nav .hamburger-toggle[aria-expanded='true'] ~ .tools {
@@ -223,7 +223,7 @@ header nav .tools ul li:first-child {
 }
 
 header nav .tools ul li a {
-  color: #53565a;
+  color: var(--c-grey-4);
   text-decoration: none;
   font-size: 8pt;
 }
@@ -288,7 +288,7 @@ header nav .sections .sections-list ul {
 
 header nav .sections .section {
   line-height: 1.5;
-  color: #53565a;
+  color: var(--c-grey-4);
 }
 
 header nav .sections .section.expand {
@@ -306,7 +306,7 @@ header nav .sections .section a {
 
 header nav .sections .section > a {
   padding: 15px;
-  border-bottom: 1px solid #e1dfdd;
+  border-bottom: 1px solid var(--c-grey-1);
   text-transform: uppercase;
 }
 
@@ -489,7 +489,7 @@ header nav .sections .section .navigation-cta {
   }
 
   header nav .tools ul li a {
-    color: #888b8d;
+    color: var(--c-grey-3);
     font-size: 1.2rem;
   }
 
@@ -524,8 +524,8 @@ header nav .sections .section .navigation-cta {
     padding: 10px 35px 10px 15px;
     width: 290px;
     height: 40px;
-    color: #53565a;
-    border: 1pt solid #e1dfdd;
+    color: var(--c-grey-4);
+    border: 1pt solid var(--c-grey-1);
     border-radius: 0;
     background-color: #fff;
     box-shadow: none;
@@ -555,7 +555,7 @@ header nav .sections .section .navigation-cta {
     grid-area: sections;
     height: 48px;
     width: 100%;
-    background-color: #e1dfdd;
+    background-color: var(--c-grey-1);
   }
 
   header nav .sections .sections-list {
@@ -673,7 +673,7 @@ header nav .sections .section .navigation-cta {
     padding: 0;
     font-size: 14px;
     margin-left: 8px;
-    color: var(--link-color);
+    color: var(--c-cta-blue-default);
   }
 
   header nav .sections .section.expand .navigation-cta a::after {
@@ -726,7 +726,7 @@ header nav .sections .section .navigation-cta {
     position: unset;
     margin-left: 8px;
     font-size: inherit;
-    color: var(--link-color);
+    color: var(--c-cta-blue-default);
     font-weight: 700;
   }
 
