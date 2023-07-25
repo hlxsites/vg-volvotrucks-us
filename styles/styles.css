@@ -55,33 +55,33 @@
   /* REDESIGN */
 
   /* Volvo Broad Pro Digital, 60px, Uppercase, 3.6px,#53565A */
-  --f-large-title-font-size: 3.75rem;
+  --f-large-title-font-size: 6rem;
   --f-large-title-text-transform: uppercase;
   --f-large-title-letter-spacing: 3.6px;
 
   /* Volvo Novum Medium, 48px, -0.1px, #53565A */
-  --f-large-text-font-size: 3rem;
+  --f-large-text-font-size: 4.8rem;
   --f-large-text-letter-spacing: -0.1px;
 
   /* Volvo Broad Pro Digital, 48px,Uppercase, 3.6px,#53565A */
-  --f-medium-title-font-size: 3rem;
+  --f-medium-title-font-size: 4.8rem;
   --f-medium-title-text-transform: uppercase;
   --f-medium-title-letter-spacing: 3.6px;
 
   /* Volvo Novum Medium, 32px, , -0.1px, #53565A */
-  --f-medium-text-font-size: 2rem;
+  --f-medium-text-font-size: 3.2rem;
   --f-medium-text-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium / Volvo Novum Regular, 24px, , -0.1px, #53565A */
-  --f-small-font-size: 1.5rem;
+  --f-small-font-size: 2.4rem;
   --f-small-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium, 16px, , -0.1px, #53565A */
-  --f-xsmall-font-size: 1rem;
+  --f-xsmall-font-size: 1.6rem;
   --f-xsmall-letter-spacing: -0.1px;
 
   /* Volvo Novum Medium / Volvo Novum Regular, 12px, , -0.1px, #53565A */
-  --f-xxsmall-font-size: 0.75rem;
+  --f-xxsmall-font-size: 1.2rem;
   --f-xxsmall-letter-spacing: -0.1px;
 
   /* Volvo Novum Regular, 16px, -0.1px,  #53565A */
@@ -213,7 +213,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 10px;
 }
 
 body {
