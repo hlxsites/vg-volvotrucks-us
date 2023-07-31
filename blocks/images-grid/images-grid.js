@@ -2,15 +2,15 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import { removeEmptyTags } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // all items are inside a ul list with classname called 'image-grid__items'
+  // all items are inside a ul list with classname called 'images-grid__items'
   const ul = document.createElement('ul');
-  ul.classList.add('image-grid__items');
+  ul.classList.add('images-grid__items');
 
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     // If cell contain any element, we add them in the ul
     if (cell.childElementCount) {
       const li = document.createElement('li');
-      li.classList.add('image-grid__item', 'border');
+      li.classList.add('images-grid__item', 'border');
       li.append(...cell.childNodes);
       ul.append(li);
     }
@@ -25,7 +25,7 @@ export default function decorate(block) {
 
     // add link to the image and move it outside of the wrapper
     const title = li.querySelector('h3');
-    title.classList.add('image-grid__title');
+    title.classList.add('images-grid__title');
     let picture = li.querySelector('picture');
 
     if (picture) {
@@ -40,7 +40,7 @@ export default function decorate(block) {
 
     // Add wrapper around the text content
     const container = document.createElement('div');
-    container.className = 'image-grid__itemText';
+    container.className = 'images-grid__itemText';
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
     section.append(container);
