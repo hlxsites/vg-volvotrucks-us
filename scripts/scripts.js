@@ -594,3 +594,47 @@ export function createIframe(url, { parentEl, classes = [] }) {
 
   return iframe;
 }
+
+export const MEDIA_BREAKPOINTS = {
+  MOBILE: 'MOBILE',
+  TABLET: 'TABLET',
+  DESKTOP: 'DESKTOP',
+};
+
+export function getImageForBreakpoint(imagesList, onChange = () => {}) {
+  const mobileMQ = window.matchMedia('(max-width: 743px)');
+  const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1439px)');
+  const desktopMQ = window.matchMedia('(min-width: 1440px)');
+
+  const [mobilePic, tabletPic, desktopPic] = imagesList.querySelectorAll('picture');
+
+  const onBreakpointChange = (mq, picture, breakpoint) => {
+    if (mq.matches) {
+      onChange(picture, breakpoint);
+    }
+  };
+  const onMobileChange = (mq) => onBreakpointChange(mq, mobilePic, MEDIA_BREAKPOINTS.MOBILE);
+  const onTabletChange = (mq) => onBreakpointChange(mq, tabletPic, MEDIA_BREAKPOINTS.TABLET);
+  const onDesktopChange = (mq) => onBreakpointChange(mq, desktopPic, MEDIA_BREAKPOINTS.DESKTOP);
+
+  mobileMQ.addEventListener('change', onMobileChange);
+  tabletMQ.addEventListener('change', onTabletChange);
+  desktopMQ.addEventListener('change', onDesktopChange);
+
+  if (mobileMQ.matches) {
+    onMobileChange(mobileMQ);
+    return;
+  }
+
+  if (tabletMQ.matches) {
+    onTabletChange(tabletMQ);
+    return;
+  }
+  onDesktopChange(desktopMQ);
+}
+
+/* REDESING CLASS CHECK */
+if (document.querySelector('main').classList.contains('redesign-v2')) {
+  document.querySelector('html').classList.add('redesign-v2');
+  document.querySelector('main').classList.remove('redesign-v2');
+}
