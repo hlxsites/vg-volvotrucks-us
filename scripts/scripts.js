@@ -603,8 +603,8 @@ export const MEDIA_BREAKPOINTS = {
 
 export function getImageForBreakpoint(imagesList, onChange = () => {}) {
   const mobileMQ = window.matchMedia('(max-width: 743px)');
-  const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1439px)');
-  const desktopMQ = window.matchMedia('(min-width: 1440px)');
+  const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1199px)');
+  const desktopMQ = window.matchMedia('(min-width: 1200px)');
 
   const [mobilePic, tabletPic, desktopPic] = imagesList.querySelectorAll('picture');
 
