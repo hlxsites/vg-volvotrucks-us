@@ -22,8 +22,6 @@ export default function decorate(block) {
   // give format to the list items
   [...ul.children].forEach((li) => {
     const section = document.createElement('div');
-
-    // add link to the image and move it outside of the wrapper
     const title = li.querySelector('h3');
     title.classList.add('images-grid-title');
     let picture = li.querySelector('picture');
@@ -36,6 +34,7 @@ export default function decorate(block) {
       picture = newPicture;
     }
 
+    // Move image outside of the wrapper
     section.prepend(picture);
 
     // Add wrapper around the text content
