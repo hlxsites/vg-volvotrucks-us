@@ -27,10 +27,15 @@
 .images-grid-item img {
   height: var(--images-grid-big-height);
   object-fit: cover;
+  width: 100%;
 }
 
 .images-grid-item:last-child {
   margin: 0;
+}
+
+.images-grid-title, .images-grid-itemtext {
+  text-wrap: balance;
 }
 
 .images-grid-title {
