@@ -1,0 +1,106 @@
+:root {
+  --image-grid-gutter: 12px;
+
+  --image-grid-big-height: 274px;
+  --image-grid-small-height: 204px;
+}
+
+.image-grid__items {
+  display: flex;
+  flex-flow: row nowrap;
+  list-style: none;
+  overflow: auto;
+  padding-left: 0;
+  scroll-snap-type: x mandatory;
+  margin: 0;
+}
+
+.image-grid__item {
+  background-color: var(--c-background-card);
+  color: var(--text-color);
+  flex: none;
+  margin-right: var(--image-grid-gutter);
+  scroll-snap-align: center;
+  text-align: center;
+  width: 90%;
+}
+
+.image-grid__item img {
+  height: var(--image-grid-big-height);
+  object-fit: cover;
+}
+
+.image-grid__item:last-child {
+  margin: 0;
+}
+
+.image-grid__title {
+  font-family: var(--font-family-heading);
+  font-size: 2.4rem;
+  line-height: 125%;
+  margin: 0;
+}
+
+.image-grid__itemText {
+  padding: 24px;
+
+  font-family: var(--font-family-body);
+  font-size: 1.6rem;
+  line-height: 130%;
+  letter-spacing: 0.5px;
+}
+
+.image-grid__itemText p {
+  margin: 12px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    --image-grid-gutter: 16px;
+  }
+
+  .image-grid__items {
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-rows: 1.9fr 0.1fr 2fr;
+    gap: var(--image-grid-gutter);
+    grid-template-areas: 
+      'area1 area2'
+      'area1 area4'
+      'area3 area4';
+    scroll-snap-type: none;
+  }
+
+  .image-grid__item {
+    margin-bottom: 0;
+    width: auto;
+    margin: 0;
+  }
+
+  .image-grid__item:nth-child(1) { grid-area: area1; }
+  .image-grid__item:nth-child(2) { grid-area: area2; }
+  .image-grid__item:nth-child(3) { grid-area: area3; }
+  .image-grid__item:nth-child(4) { grid-area: area4; }
+
+  .image-grid__item:nth-child(2) img, .image-grid__item:nth-child(3) img {
+    height: var(--image-grid-small-height);
+  }
+
+  .image-grid__title {
+    font-size: 3.2rem;
+    letter-spacing: 0.25px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    --image-grid-gutter: 24px;
+  
+    --image-grid-big-height: 480px;
+    --image-grid-small-height: 380px;
+  }
+
+  .image-grid__itemText {
+    padding: 40px 35px 32px;
+  }
+}

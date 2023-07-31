@@ -53,6 +53,7 @@
   --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
+  --border-radius: 8px;
 
   /* Volvo Broad Pro Digital, 60px, Uppercase, 3.6px,#53565A */
   --f-large-title-font-size: 6rem;
@@ -121,9 +122,11 @@
   --c-warning-yellow: #F7D302;
 
   /* Global colors */
+  --c-main-black: #141414;
+  --c-background-card: #f7f7f7;
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
-  --text-color: var(--c-grey-4);
+  --text-color: var(--c-main-black);
   --btn-background-hover: var(--c-grey-1);
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
@@ -256,6 +259,11 @@ header .sub-nav.block {
   left: 0;
   right: 0;
   position: absolute;
+}
+
+.border {
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 /* specific page styles */
@@ -846,6 +854,10 @@ main.blue-contract .section > div {
 
 /* Sections variant styling */
 @media (min-width: 1440px) {
+  :root {
+    --border-radius: 12px;
+  }
+
   :root main.blue-contract {
     --wrapper-width: 1440px;
   }

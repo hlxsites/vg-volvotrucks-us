@@ -57,7 +57,7 @@ div.text.xxs p {
 }
 
 div.text.black {
-    color: var(--c-black);
+    color: var(--text-color);
 }
 
 div.text.alert.block {
