@@ -55,7 +55,7 @@
   margin: 0;
 }
 
-.v2-dealer-locator-teaser .v2-dlt__content p .button.primary {
+.v2-dealer-locator-teaser .v2-dlt__content p .v2-dlt__button {
   color: var(--c-cta-blue-default);
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: var(--font-family-body);
@@ -88,5 +88,10 @@
 
   .v2-dealer-locator-teaser .v2-dlt__content {
     width: 400px;
+    text-align: left;
+  }
+
+  .v2-dealer-locator-teaser .v2-dlt__content p .v2-dlt__button {
+    justify-content: left;
   }
 }
