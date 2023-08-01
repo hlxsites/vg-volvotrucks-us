@@ -1,4 +1,6 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { createElement } from '../../scripts/scripts.js';
+
 /* eslint-disable no-use-before-define */
 
 function displayScrollToTop(buttonEl) {
@@ -20,14 +22,15 @@ function goToTopFunction() {
 }
 
 function addScrollToTopButton(mainEl) {
-  const scrollToTopButton = document.createElement('button');
+  const scrollToTopButton = createElement('button', 'v2-scroll-to-top', {
+    title: 'Go to the top of the page',
+  });
   scrollToTopButton.addEventListener('click', goToTopFunction);
   window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));
-  scrollToTopButton.classList.add('scroll-to-top');
-  scrollToTopButton.setAttribute('title', 'Go to the top of the page');
   scrollToTopButton.innerHTML = `
-    <i class="fa fa-angle-up"><i/>
-  `;
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9999 20C11.7237 20 11.4999 19.7761 11.4999 19.5L11.4999 5.70711L6.35341 10.8536C6.15815 11.0488 5.84157 11.0488 5.6463 10.8536C5.45104 10.6583 5.45104 10.3417 5.6463 10.1464L11.6463 4.14645C11.8416 3.95119 12.1581 3.95118 12.3534 4.14644L18.3535 10.1464C18.5488 10.3417 18.5488 10.6583 18.3536 10.8535C18.1583 11.0488 17.8417 11.0488 17.6465 10.8536L12.4999 5.70709L12.4999 19.5C12.4999 19.7761 12.276 20 11.9999 20Z" fill="#141414"/>
+    </svg>`;
   mainEl.append(scrollToTopButton);
 }
 
