@@ -938,12 +938,17 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
 .redesign-v2 a.button::after {
-  content: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE3IDE2IiBmaWxsPSJub25lIj4KICA8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTguNDkzMTEgMy43MDAzOEM4LjI5MDc1IDMuNTEyNDggOC4yNzkwNCAzLjE5NjEyIDguNDY2OTQgMi45OTM3NkM4LjY1NDg0IDIuNzkxNDEgOC45NzEyIDIuNzc5NjkgOS4xNzM1NiAyLjk2NzU5TDEzLjg0MDIgNy4zMDA5MkMxMy45NDIxIDcuMzk1NTMgMTQgNy41MjgyOSAxNCA3LjY2NzMyQzE0IDcuODA2MzUgMTMuOTQyMSA3LjkzOTExIDEzLjg0MDIgOC4wMzM3Mkw5LjE3MzU2IDEyLjM2NzFDOC45NzEyIDEyLjU1NSA4LjY1NDg0IDEyLjU0MzIgOC40NjY5NCAxMi4zNDA5QzguMjc5MDQgMTIuMTM4NSA4LjI5MDc1IDExLjgyMjIgOC40OTMxMSAxMS42MzQzTDEyLjIyNjcgOC4xNjczMkgzLjVDMy4yMjM4NiA4LjE2NzMyIDMgNy45NDM0NiAzIDcuNjY3MzJDMyA3LjM5MTE4IDMuMjIzODYgNy4xNjczMiAzLjUgNy4xNjczMkgxMi4yMjY3TDguNDkzMTEgMy43MDAzOFoiIGZpbGw9IiMwMDRGQkMiLz4KPC9zdmc+");
-  height: 16px;
-  width: 16px;
-  display: inline-flex;
-  align-self: center;
-  justify-content: center;
+  display: none;
+}
+
+.redesign-v2 .icon {
+  display: flex;
+}
+
+.redesign-v2 .icon svg {
+  fill: currentcolor;
+  height: 1em;
+  width: 1em;
 }
 
 @media (min-width: 744px) {

@@ -66,6 +66,7 @@
   letter-spacing: 0.5px;
   border: none;
   padding: 0;
+  align-items: center;
 }
 
 @media (min-width: 744px) {
