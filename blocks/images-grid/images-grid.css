@@ -2,6 +2,7 @@
   --images-grid-gutter: 12px;
   --images-grid-big-height: 274px;
   --images-grid-small-height: 204px;
+  --images-grid-full-width-height: 346px;
 }
 
 .images-grid-items {
@@ -89,9 +90,8 @@
     height: var(--images-grid-small-height);
   }
 
-  /* Do not fix height to last element */
-  .images-grid-item:not(:nth-child(5)) img {
-    height: auto;
+  .images-grid-item:nth-child(5) img {
+    height: var(--images-grid-full-width-height);
   }
 
   .images-grid-title {
@@ -105,6 +105,7 @@
     --images-grid-gutter: 24px;
     --images-grid-big-height: 480px;
     --images-grid-small-height: 380px;
+    --images-grid-full-width-height: 577px;
   }
 
   .images-grid-itemtext {
