@@ -2,14 +2,14 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import { removeEmptyTags, createElement } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // all items are inside a ul list with classname called 'images-grid-items'
+  // all items are inside a ul list with classname called 'v2-images-grid-items'
   const ul = document.createElement('ul');
-  ul.classList.add('images-grid-items');
+  ul.classList.add('v2-images-grid-items');
 
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     // If cell contain any element, we add them in the ul
     if (cell.childElementCount) {
-      const li = createElement('li', ['images-grid-item', 'border']);
+      const li = createElement('li', ['v2-images-grid-item', 'border']);
       li.append(...cell.childNodes);
       ul.append(li);
     }
@@ -22,7 +22,7 @@ export default function decorate(block) {
   [...ul.children].forEach((li) => {
     const section = createElement('div');
     const title = li.querySelector('h3');
-    title.classList.add('images-grid-title');
+    title.classList.add('v2-images-grid-title');
     let picture = li.querySelector('picture');
 
     if (picture) {
@@ -38,7 +38,7 @@ export default function decorate(block) {
 
     // Add wrapper around the text content
     const container = createElement('div');
-    container.className = 'images-grid-itemtext';
+    container.className = 'v2-images-grid-itemtext';
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
     section.append(container);
