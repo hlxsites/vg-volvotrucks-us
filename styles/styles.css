@@ -101,19 +101,27 @@
   --c-teal-2: #8DC9BF;
   --c-teal-3: #66B3A6;
   --c-teal-4: #50A294;
-  --c-flow-1: #396976;
-  --c-flow-2: #678C96;
-  --c-flow-3: #96B0B6;
-  --c-flow-4: #C3D2D6;
+  --c-flow-1: #C3D2D6;
+  --c-flow-2: #96B0B6;
+  --c-flow-3: #678C96;
+  --c-flow-4: #396976;
   --c-cta-blue-default: #004FBC;
   --c-cta-blue-hover: #0056D6;
   --c-cta-blue-active: #0041A3;
 
   /* Greyscale */
-  --c-grey-1: #E1DFDD;
-  --c-grey-2: #A7A8A9;
-  --c-grey-3: #888B8D;
-  --c-grey-4: #53565A;
+  --c-grey-50: #F7F7F7;
+  --c-grey-100: #EDEDED;
+  --c-grey-200: #E1E1E1;
+  --c-grey-300: #D0D0D0;
+  --c-grey-400: #A9A9A9;
+  --c-grey-500: #8D8D8D;
+  --c-grey-600: #6E6E6E;
+  --c-grey-700: #575757;
+  --c-grey-800: #424242;
+  --c-grey-900: #323232;
+  --c-grey-950: #212121;
+  --c-volvo-black: #141414;
 
   /* Success / error colors */
   --c-error-red: #C4001A;
@@ -128,6 +136,8 @@
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
 
+  --light-border-focus: #2B8EDE;
+
   /*
     OLD styles
     we need to remove / update once they are not used in the styles
@@ -135,6 +145,12 @@
   --background-light-gray: #ebebeb;
   --highlight-background-color: #ccc;
   --btn-border-hover: #030333;
+
+  /* Greyscale */
+  --c-grey-1: #E1DFDD;
+  --c-grey-2: #A7A8A9;
+  --c-grey-3: #888B8D;
+  --c-grey-4: #53565A;
   
   /* buttons */
   --btn-padding: 12px 32px;
