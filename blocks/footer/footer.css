@@ -162,9 +162,17 @@ q.footer-wrapper {
   cursor: pointer;
   padding: 10px;
   border-radius: 300px;
-  border: 1px solid #D8D8D8;
+  border: 1px solid #A9A9A9;
   background-color: var(--c-white);
   box-shadow: 0 4px 70px 0 rgb(0 0 0 / 20%);
+}
+
+.v2-scroll-to-top:hover {
+  background-color: #F7F7F7;
+}
+
+.v2-scroll-to-top:active {
+  background-color: #EDEDED;
 }
 
 .v2-scroll-to-top svg {
