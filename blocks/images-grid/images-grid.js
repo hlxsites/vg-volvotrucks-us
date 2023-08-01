@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { removeEmptyTags } from '../../scripts/scripts.js';
+import { removeEmptyTags, createElement } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   // all items are inside a ul list with classname called 'images-grid-items'
@@ -9,8 +9,7 @@ export default function decorate(block) {
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     // If cell contain any element, we add them in the ul
     if (cell.childElementCount) {
-      const li = document.createElement('li');
-      li.classList.add('images-grid-item', 'border');
+      const li = createElement('li', ['images-grid-item', 'border']);
       li.append(...cell.childNodes);
       ul.append(li);
     }
@@ -21,7 +20,7 @@ export default function decorate(block) {
 
   // give format to the list items
   [...ul.children].forEach((li) => {
-    const section = document.createElement('div');
+    const section = createElement('div');
     const title = li.querySelector('h3');
     title.classList.add('images-grid-title');
     let picture = li.querySelector('picture');
@@ -38,7 +37,7 @@ export default function decorate(block) {
     section.prepend(picture);
 
     // Add wrapper around the text content
-    const container = document.createElement('div');
+    const container = createElement('div');
     container.className = 'images-grid-itemtext';
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
