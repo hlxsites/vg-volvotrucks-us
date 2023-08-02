@@ -129,10 +129,6 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   margin-top: 16px;
 }
 
-.v2-stories-carousel-cta:hover svg {
-  margin-left: 14px;
-}
-
 .v2-stories-carousel-cta svg {
   height: 16px;
   margin-left: 8px;
@@ -140,6 +136,10 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   top: 1px;
   transition: margin-left 0.3s;
   width: 16px;
+}
+
+.v2-stories-carousel-cta:hover svg {
+  margin-left: 14px;
 }
 
 /* Arrow controls */
