@@ -582,7 +582,7 @@ export function loadHeader(header) {
  */
 export function loadFooter(footer) {
   if (footer) {
-    const footerBlock = buildBlock('footer', '');
+    const footerBlock = buildBlock('v2-footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
