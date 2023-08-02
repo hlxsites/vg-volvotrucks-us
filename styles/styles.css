@@ -933,10 +933,20 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
-  align-items: flex-end;
   gap: 8px;
+  color: var(--c-cta-blue-default);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: var(--font-family-body);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 0;
+  align-items: center;
 }
 
 .redesign-v2 a.button.primary:hover,
