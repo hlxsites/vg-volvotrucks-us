@@ -107,8 +107,8 @@
   --c-flow-3: #96B0B6;
   --c-flow-4: #C3D2D6;
   --c-cta-blue-default: #004FBC;
-  --c-cta-blue-hover: #0056D6;
-  --c-cta-blue-active: #0041A3;
+  --c-cta-blue-hover: #2B8EDE;
+  --c-cta-blue-active: #104E9B;
 
   /* Greyscale */
   --c-grey-1: #E1DFDD;
@@ -952,6 +952,14 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.primary:hover,
 .redesign-v2 button.primary:hover {
   background-color: unset;
+  text-decoration: underline;
+  color: var(--c-cta-blue-hover);
+}
+
+.redesign-v2 a.button.primary:active,
+.redesign-v2 button.primary:active {
+  text-decoration: underline;
+  color: var(--c-cta-blue-active);
 }
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,

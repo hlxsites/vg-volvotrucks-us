@@ -69,11 +69,17 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
+  // switching off hero autoblock for redesign
+  if (document.body.classList.contains('redesign-v2')) {
+    return;
+  }
+
   // don't create a hero if the first item is a block, except hero block
   const firstSection = main.querySelector('div');
   if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
   if (firstElement.tagName === 'DIV' && firstElement.classList.length && !firstElement.classList.contains('hero')) return;
+
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
