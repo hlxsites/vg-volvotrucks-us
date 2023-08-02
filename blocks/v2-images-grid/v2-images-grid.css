@@ -100,7 +100,7 @@
   }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   :root {
     --v2-images-grid-gutter: 24px;
     --v2-images-grid-big-height: 480px;
