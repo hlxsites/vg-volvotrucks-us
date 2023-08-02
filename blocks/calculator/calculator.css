@@ -291,7 +291,7 @@ main .section .calculator-wrapper {
 }
 
 .charts-wrapper .side-labels .line {
-  stroke: var(--c-black);
+  stroke: var(--text-color);
   opacity: 0.1;
 }
 
