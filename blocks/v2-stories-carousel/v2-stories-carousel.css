@@ -10,8 +10,8 @@ main .section.v2-stories-container {
 }
 
 main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
-  padding: 0;
   margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -27,13 +27,13 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-items {
+  display: flex;
   gap: var(--stories-carousel-gap);
   overflow: scroll hidden;
   scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
   scroll-snap-align: center;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  display: flex;
 }
 
 .v2-stories-carousel-items::-webkit-scrollbar {
@@ -41,10 +41,9 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-item {
-  /* display: block; */
+  flex: 0 0 var(--stories-carousel-img-width);
   scroll-snap-align: center;
   text-align: center;
-  flex: 0 0 var(--stories-carousel-img-width);
 }
 
 .v2-stories-carousel-item:first-child {
@@ -57,22 +56,23 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 
 .v2-stories-carousel-item img {
   display: block;
-  width: 100%;
-  object-fit: cover;
   height: var(--stories-carousel-img-height);
+  object-fit: cover;
+  width: 100%;
 }
 
 .v2-stories-carousel-text {
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
   color: var(--c-main-black);
-  text-align: center;
   font-family: var(--font-family-body);
   font-size: 1.6rem;
-  line-height: 130%;
   letter-spacing: 0.5px;
+  line-height: 130%;
+  opacity: 0;
   padding: 30px;
+  pointer-events: none;
+  text-align: center;
+  text-wrap: balance;
+  transition: opacity 0.3s;
 }
 
 .v2-stories-carousel-item.active .v2-stories-carousel-text {
@@ -81,7 +81,7 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-text h3 {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: 2.4rem;
   line-height: 125%;
 }
@@ -91,36 +91,36 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-cta {
-  margin-top: 16px;
-  display: flex;
   align-items: center;
-  justify-content: center;
   color: var(--c-cta-blue-default);
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
 }
 
 .v2-stories-carousel-cta svg {
+  height: 16px;
+  margin-left: 8px;
   position: relative;
   top: 1px;
-  margin-left: 8px;
-  width: 16px;
-  height: 16px;
   transition: margin-left 0.3s;
+  width: 16px;
 }
 
 .v2-stories-carousel-meta {
-  margin: 25px 0 0;
   display: flex;
-  justify-content: center;
   font-size: 1.2rem;
-  line-height: 125%;
+  justify-content: center;
   letter-spacing: 0.4px;
+  line-height: 125%;
+  margin: 25px 0 0;
   opacity: 0.6;
 }
 
 .v2-stories-carousel-meta li {
+  align-items: center;
   display: flex;
   justify-items: center;
-  align-items: center;
   margin: 0 8px;
 }
 
@@ -129,9 +129,9 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-meta svg {
+  height: 16px;
   margin-right: 8px;
   width: 16px;
-  height: 16px;
 }
 
 .v2-stories-carousel-cta:hover svg {
@@ -145,9 +145,9 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 /* Arrow controls */
 .v2-stories-carousel-arrowcontrols {
   display: none;
+  margin: 0;
   opacity: 0;
   transition: opacity 0.3s;
-  margin: 0;
 }
 
 .v2-stories-carousel:hover .v2-stories-carousel-arrowcontrols {
@@ -155,27 +155,27 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-arrowcontrols li {
+  align-items: center;
+  display: flex;
+  height: var(--stories-carousel-img-height);
+  left: 10%;
   position: absolute;
   top: 0;
-  left: 10%;
-  display: flex;
-  align-items: center;
-  height: var(--stories-carousel-img-height);
 }
 
 .v2-stories-carousel-arrowcontrols li:last-child {
-  right: 10%;
   left: auto;
+  right: 10%;
 }
 
 .v2-stories-carousel-arrowcontrols button {
-  position: relative;
-  margin: 0;
-  border-radius: 50%;
   background-color: var(--c-white);
-  font-size: 0;
-  padding: 10px;
+  border-radius: 50%;
   border: 1px solid var(--c-grey-400);
+  font-size: 0;
+  margin: 0;
+  padding: 10px;
+  position: relative;
 }
 
 .v2-stories-carousel-arrowcontrols button:hover,
@@ -203,8 +203,8 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   }
 
   .v2-stories-carousel-items {
-    padding: 0;
     margin: 0 auto;
+    padding: 0;
     z-index: 1;
   }
 
@@ -218,8 +218,8 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 
   .v2-stories-carousel-text h3 {
     font-size: 3.2rem;
-    line-height: 125%;
     letter-spacing: 0.25px;
+    line-height: 125%;
   }
 
   .v2-stories-carousel-cta {
@@ -231,10 +231,10 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   }
 
   .v2-stories-carousel-meta {
-    margin-top: 32px;
     font-size: 1.6rem;
-    line-height: 130%;
     letter-spacing: 0.5px;
+    line-height: 130%;
+    margin-top: 32px;
   }
 
   .v2-stories-carousel-meta li.v2-stories-carousel-author {

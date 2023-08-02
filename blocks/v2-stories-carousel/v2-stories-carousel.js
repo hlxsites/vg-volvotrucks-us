@@ -95,7 +95,7 @@ const buildStoryCard = (entry) => {
     author,
     readingTime,
   } = entry;
-  const li = createElement('li', 'v2-stories-carousel-item');
+  const li = createElement('article', 'v2-stories-carousel-item');
   const picture = createOptimizedPicture(image, title, false);
   picture.querySelector('img')?.classList.add('border');
   const pictureTag = picture.outerHTML;
@@ -140,7 +140,7 @@ const buildStoryCard = (entry) => {
 };
 
 const createStoriesCarousel = (block, stories) => {
-  const storiesSection = createElement('ul', 'v2-stories-carousel-items');
+  const storiesSection = createElement('section', 'v2-stories-carousel-items');
   block.appendChild(storiesSection);
   stories.forEach((entry) => {
     const storyArticle = buildStoryCard(entry);
