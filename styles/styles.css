@@ -102,19 +102,27 @@
   --c-teal-2: #8DC9BF;
   --c-teal-3: #66B3A6;
   --c-teal-4: #50A294;
-  --c-flow-1: #396976;
-  --c-flow-2: #678C96;
-  --c-flow-3: #96B0B6;
-  --c-flow-4: #C3D2D6;
+  --c-flow-1: #C3D2D6;
+  --c-flow-2: #96B0B6;
+  --c-flow-3: #678C96;
+  --c-flow-4: #396976;
   --c-cta-blue-default: #004FBC;
-  --c-cta-blue-hover: #0056D6;
-  --c-cta-blue-active: #0041A3;
+  --c-cta-blue-hover: #2B8EDE;
+  --c-cta-blue-active: #104E9B;
 
   /* Greyscale */
-  --c-grey-1: #E1DFDD;
-  --c-grey-2: #A7A8A9;
-  --c-grey-3: #888B8D;
-  --c-grey-4: #53565A;
+  --c-grey-50: #F7F7F7;
+  --c-grey-100: #EDEDED;
+  --c-grey-200: #E1E1E1;
+  --c-grey-300: #D0D0D0;
+  --c-grey-400: #A9A9A9;
+  --c-grey-500: #8D8D8D;
+  --c-grey-600: #6E6E6E;
+  --c-grey-700: #575757;
+  --c-grey-800: #424242;
+  --c-grey-900: #323232;
+  --c-grey-950: #212121;
+  --c-main-black: #141414;
 
   /* Success / error colors */
   --c-error-red: #C4001A;
@@ -122,7 +130,6 @@
   --c-warning-yellow: #F7D302;
 
   /* Global colors */
-  --c-main-black: #141414;
   --c-background-card: #f7f7f7;
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
@@ -130,6 +137,7 @@
   --btn-background-hover: var(--c-grey-1);
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
+  --light-border-focus: #2B8EDE;
 
   /*
     OLD styles
@@ -138,6 +146,12 @@
   --background-light-gray: #ebebeb;
   --highlight-background-color: #ccc;
   --btn-border-hover: #030333;
+
+  /* Greyscale */
+  --c-grey-1: #E1DFDD;
+  --c-grey-2: #A7A8A9;
+  --c-grey-3: #888B8D;
+  --c-grey-4: #53565A;
   
   /* buttons */
   --btn-padding: 12px 32px;
@@ -811,7 +825,7 @@ div.block div.pager .pagination .scroll li a {
     --sub-nav-height: 48px;
   }
 
-  main .section:first-child > :first-child {
+  :root:not(.redesign-v2) main .section:first-child > :first-child {
     margin-top: 30px;
   }
 
@@ -847,18 +861,14 @@ main.blue-contract .section > div {
 }
 
 @media (min-width: 1300px) {
-  :root {
+  :root:not(.html.redesign-v2) {
     --wrapper-width: 1200px;
   }
 }
 
 /* Sections variant styling */
 @media (min-width: 1440px) {
-  :root {
-    --border-radius: 12px;
-  }
-
-  :root main.blue-contract {
+  :root:not(.html.redesign-v2) main.blue-contract {
     --wrapper-width: 1440px;
   }
 }
@@ -907,5 +917,102 @@ main.blue-contract .section.section-with-title p {
 
   main.blue-contract .section.section-with-title > p:last-of-type {
     margin: 0 0 80px;
+  }
+}
+
+
+/* REDESIGN GLOBAL STYLES */
+:root.redesign-v2 {
+  font-size: 16px;
+}
+
+:root.redesign-v2 strong {
+  font-family: var(--ff-volvo-novum-medium);
+  font-weight: 100;
+}
+
+:root.redesign-v2 .section {
+  padding: 0;
+}
+
+:root.redesign-v2 .section > div {
+  padding: 0 16px;
+  margin: auto;
+}
+
+:root.redesign-v2 .section div.full-width {
+  padding: 0;
+  width: 100%;
+}
+
+.redesign-v2 a.button.primary,
+.redesign-v2 button.primary {
+  display: inline-flex;
+  justify-content: center;
+  gap: 8px;
+  color: var(--c-cta-blue-default);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: var(--font-family-body);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 0;
+  align-items: center;
+}
+
+.redesign-v2 a.button.primary:hover,
+.redesign-v2 button.primary:hover {
+  background-color: unset;
+  text-decoration: underline;
+  color: var(--c-cta-blue-hover);
+}
+
+.redesign-v2 a.button.primary:active,
+.redesign-v2 button.primary:active {
+  text-decoration: underline;
+  color: var(--c-cta-blue-active);
+}
+
+.redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
+.redesign-v2 a.button::after {
+  display: none;
+}
+
+.redesign-v2 .icon {
+  display: flex;
+}
+
+.redesign-v2 .icon svg {
+  fill: currentcolor;
+  height: 1em;
+  width: 1em;
+}
+
+@media (min-width: 744px) {
+  :root.redesign-v2 .section {
+    padding: 0;
+  }
+
+  :root.redesign-v2 .section > div {
+   padding: 0 32px;
+   margin: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root.redesign-v2 {
+    --wrapper-width: 1200px;
+    --border-radius: 12px;
+  }
+
+  :root.redesign-v2 .section > div {
+    padding: 0 135px;
+  }
+
+  :root.redesign-v2 .section div.full-width {
+    margin: 0;
   }
 }

@@ -69,11 +69,17 @@ function isCTALinkCheck(ctaLink) {
 }
 
 function buildHeroBlock(main) {
+  // switching off hero autoblock for redesign
+  if (document.body.classList.contains('redesign-v2')) {
+    return;
+  }
+
   // don't create a hero if the first item is a block, except hero block
   const firstSection = main.querySelector('div');
   if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
   if (firstElement.tagName === 'DIV' && firstElement.classList.length && !firstElement.classList.contains('hero')) return;
+
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -609,3 +615,47 @@ export const removeEmptyTags = (block) => {
     }
   });
 };
+
+export const MEDIA_BREAKPOINTS = {
+  MOBILE: 'MOBILE',
+  TABLET: 'TABLET',
+  DESKTOP: 'DESKTOP',
+};
+
+export function getImageForBreakpoint(imagesList, onChange = () => {}) {
+  const mobileMQ = window.matchMedia('(max-width: 743px)');
+  const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1199px)');
+  const desktopMQ = window.matchMedia('(min-width: 1200px)');
+
+  const [mobilePic, tabletPic, desktopPic] = imagesList.querySelectorAll('picture');
+
+  const onBreakpointChange = (mq, picture, breakpoint) => {
+    if (mq.matches) {
+      onChange(picture, breakpoint);
+    }
+  };
+  const onMobileChange = (mq) => onBreakpointChange(mq, mobilePic, MEDIA_BREAKPOINTS.MOBILE);
+  const onTabletChange = (mq) => onBreakpointChange(mq, tabletPic, MEDIA_BREAKPOINTS.TABLET);
+  const onDesktopChange = (mq) => onBreakpointChange(mq, desktopPic, MEDIA_BREAKPOINTS.DESKTOP);
+
+  mobileMQ.addEventListener('change', onMobileChange);
+  tabletMQ.addEventListener('change', onTabletChange);
+  desktopMQ.addEventListener('change', onDesktopChange);
+
+  if (mobileMQ.matches) {
+    onMobileChange(mobileMQ);
+    return;
+  }
+
+  if (tabletMQ.matches) {
+    onTabletChange(tabletMQ);
+    return;
+  }
+  onDesktopChange(desktopMQ);
+}
+
+/* REDESING CLASS CHECK */
+if (document.querySelector('main').classList.contains('redesign-v2')) {
+  document.querySelector('html').classList.add('redesign-v2');
+  document.querySelector('main').classList.remove('redesign-v2');
+}
