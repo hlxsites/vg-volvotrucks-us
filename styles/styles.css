@@ -55,39 +55,68 @@
   /* REDESIGN */
   --border-radius: 8px;
 
-  /* Volvo Broad Pro Digital, 60px, Uppercase, 3.6px,#53565A */
-  --f-large-title-font-size: 6rem;
-  --f-large-title-text-transform: uppercase;
-  --f-large-title-letter-spacing: 3.6px;
+  /* Volvo Broad Pro Digital, 70px / 4.375rem, 5px / 0.313rem, 85% */
+  --f-statement-header-font-size: 4.375rem; /* 70px */
+  --f-statement-header-letter-spacing: 0.313rem;
+  --f-statement-header-line-height: 85%;
 
-  /* Volvo Novum Medium, 48px, -0.1px, #53565A */
-  --f-large-text-font-size: 4.8rem;
-  --f-large-text-letter-spacing: -0.1px;
+  /* Volvo Novum, 72px / 4.5rem, Medium, -1.15px / 0.072rem, 100% */
+  --f-heading-1-font-size: 4.5rem; /* 72px */
+  --f-heading-1-letter-spacing: 0.072rem;
+  --f-heading-1-line-height: 100%;
 
-  /* Volvo Broad Pro Digital, 48px,Uppercase, 3.6px,#53565A */
-  --f-medium-title-font-size: 4.8rem;
-  --f-medium-title-text-transform: uppercase;
-  --f-medium-title-letter-spacing: 3.6px;
+  /* Volvo Novum, 56px / 3.5rem, Light, -0.5px / 0.031rem, 110% */
+  --f-heading-2-font-size: 3.5rem; /* 56px */
+  --f-heading-2-letter-spacing: 0.031rem;
+  --f-heading-2-line-height: 110%;
 
-  /* Volvo Novum Medium, 32px, , -0.1px, #53565A */
-  --f-medium-text-font-size: 3.2rem;
-  --f-medium-text-letter-spacing: -0.1px;
+  /* Volvo Novum, 48px / 3rem, Medium, 0px, 110% */
+  --f-heading-3-font-size: 3rem; /* 48px */
+  --f-heading-3-line-height: 110%;
 
-  /* Volvo Novum Medium / Volvo Novum Regular, 24px, , -0.1px, #53565A */
-  --f-small-font-size: 2.4rem;
-  --f-small-letter-spacing: -0.1px;
+  /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
+  --f-heading-4-font-size: 2rem; /* 32px */
+  --f-heading-4-letter-spacing: 0.016rem;
+  --f-heading-4-line-height: 125%;
 
-  /* Volvo Novum Medium, 16px, , -0.1px, #53565A */
-  --f-xsmall-font-size: 1.6rem;
-  --f-xsmall-letter-spacing: -0.1px;
+  /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
+  --f-heading-5-font-size: 1.5rem; /* 20px */
+  --f-heading-5-line-height: 125%;
 
-  /* Volvo Novum Medium / Volvo Novum Regular, 12px, , -0.1px, #53565A */
-  --f-xxsmall-font-size: 1.2rem;
-  --f-xxsmall-letter-spacing: -0.1px;
+  /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
+  --f-heading-6-font-size: 1.25rem; /* 20px */
+  --f-heading-6-letter-spacing: 0.009rem;
+  --f-heading-6-line-height: 125%;
 
-  /* Volvo Novum Regular, 16px, -0.1px,  #53565A */
-  --f-body-text-font-size: var(--f-xsmall-font-size);
-  --f-body-text-letter-spacing: var(--f-xsmall-letter-spacing);
+  /* Volvo Novum, 16px / 1rem, Medium, 0.15px / 0.009rem, 130% */
+  --f-subtitle-1-font-size: 1rem; /* 16px */
+  --f-subtitle-1-letter-spacing: 0.009rem;
+  --f-subtitle-1-line-height: 130%;
+
+  /* Volvo Novum, 14px / 0.875rem, Medium, 0.15px / 0.009rem, 130% */
+  --f-subtitle-2-font-size: 0.875rem; /* 14px */
+  --f-subtitle-2-letter-spacing: 0.009rem;
+  --f-subtitle-2-line-height: 130%;
+
+  /* Volvo Novum, 16px / 1rem, Regular, 0.5px / 0.031rem, 130% */
+  --f-body-font-size: 1rem; /* 16px */
+  --f-body-letter-spacing: 0.031rem;
+  --f-body-line-height: 130%;
+
+  /* Volvo Novum, 14px / 0.875rem, Regular, 1.25px / 0.078rem, 130% */
+  --f-button-font-size: 0.875rem; /* 14px */
+  --f-button-letter-spacing: 0.078rem;
+  --f-button-line-height: 130%;
+
+  /* Volvo Novum, 14px / 0.875rem, Regular, 0.4px / 0.025rem, 125% */
+  --f-overline-font-size: 0.875rem; /* 14px */
+  --f-overline-letter-spacing: 0.025rem;
+  --f-overline-line-height: 125%;
+
+  /* Volvo Novum, 12px / 0.75rem, Regular, 0.4px / 0.025rem, 125% */
+  --f-caption-font-size: 0.75rem; /* 12px */
+  --f-caption-letter-spacing: 0.025rem;
+  --f-caption-line-height: 125%;
 
   /* COLORS */
   --c-black: #000;
@@ -133,11 +162,19 @@
   --c-background-card: #f7f7f7;
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
-  --text-color: var(--c-main-black);
+  --text-color: var(--c-grey-4);
   --btn-background-hover: var(--c-grey-1);
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
   --light-border-focus: #2B8EDE;
+
+  /* Motions */
+  --duration-small: 160ms;
+  --duration-medium: 240ms;
+  --duration-large: 320ms;
+  --easing-entrance: cubic-bezier(0, 0, 0.4, 1);
+  --easing-exit: cubic-bezier(0.2, 0, 1, 1);
+  --easing-standard: cubic-bezier(0.2, 0, 0.1, 1);
 
   /*
     OLD styles
@@ -238,7 +275,7 @@ body {
   color: var(--text-color);
   display: none;
   font-family: var(--font-family-body);
-  font-size: var(--f-body-text-font-size);
+  font-size: var(--body-font-size-m);
   line-height: 1.5;
   margin: 0;
   -moz-osx-font-smoothing: grayscale;
@@ -526,6 +563,12 @@ main img {
 main p img {
   display: block;
   margin: auto;
+}
+
+.redesign-v2 p {
+  font-size: var(--f-body-font-size);
+  line-height: var(--f-body-line-height);
+  letter-spacing: var(--f-body-letter-spacing);
 }
 
 /* sections */
@@ -920,13 +963,27 @@ main.blue-contract .section.section-with-title p {
   }
 }
 
-
 /* REDESIGN GLOBAL STYLES */
-:root.redesign-v2 {
+.redesign-v2 {
   font-size: 16px;
 }
 
-:root.redesign-v2 strong {
+:root.redesign-v2 {
+  --text-color: var(--c-main-black);
+}
+
+.redesign-v2 ul {
+  margin: 0;
+  padding: 0;
+}
+
+.redesign-v2 body, .redesign-v2 dl, .redesign-v2 ol, .redesign-v2 ul, .redesign-v2 pre, .redesign-v2 blockquote {
+  font-size: var(--f-body-font-size);
+  line-height: var(--f-body-line-height);
+  letter-spacing: var(--f-body-letter-spacing);
+}
+
+.redesign-v2 strong {
   font-family: var(--ff-volvo-novum-medium);
   font-weight: 100;
 }
@@ -940,7 +997,7 @@ main.blue-contract .section.section-with-title p {
   margin: auto;
 }
 
-:root.redesign-v2 .section div.full-width {
+.redesign-v2 .section div.full-width {
   padding: 0;
   width: 100%;
 }
@@ -992,11 +1049,11 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media (min-width: 744px) {
-  :root.redesign-v2 .section {
+  .redesign-v2 .section {
     padding: 0;
   }
 
-  :root.redesign-v2 .section > div {
+  .redesign-v2 .section > div {
    padding: 0 32px;
    margin: auto;
   }
@@ -1008,11 +1065,11 @@ main.blue-contract .section.section-with-title p {
     --border-radius: 12px;
   }
 
-  :root.redesign-v2 .section > div {
+  .redesign-v2 .section > div {
     padding: 0 135px;
   }
 
-  :root.redesign-v2 .section div.full-width {
+  .redesign-v2 .section div.full-width {
     margin: 0;
   }
 }
