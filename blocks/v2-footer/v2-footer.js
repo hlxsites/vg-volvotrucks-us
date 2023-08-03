@@ -1,5 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
-import { createElement } from "../../scripts/scripts.js";
+import { createElement } from '../../scripts/scripts.js';
 /* eslint-disable no-use-before-define */
 
 function displayScrollToTop(buttonEl) {
@@ -51,10 +51,8 @@ export default async function decorate(block) {
 
   const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
 
-
   openExternalLinksInNewTab(footer);
   wrapSocialMediaLinks(mainLinkWrapper);
-
 
   if (mainLinkWrapper) {
     mainLinkWrapper.classList.add('v2-footer-links-wrapper');
@@ -75,7 +73,6 @@ export default async function decorate(block) {
       h3.nextElementSibling?.classList.add('link-column-content');
 
       h3.addEventListener('click', (e) => toggleExpand(e.target));
-
     });
   }
 
@@ -97,7 +94,6 @@ export default async function decorate(block) {
   }
 
   footer.appendChild(copyrightWrapper);
-  
   footerCopyright?.classList.add('footer-copyright');
   await decorateIcons(footer);
   block.append(footer);
