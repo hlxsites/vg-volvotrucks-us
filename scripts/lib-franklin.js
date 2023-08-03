@@ -578,18 +578,6 @@ export function loadHeader(header) {
 }
 
 /**
- * loads a block named 'footer' into footer
- */
-export function loadFooter(footer) {
-  if (footer) {
-    const footerBlock = buildBlock('v2-footer', '');
-    footer.append(footerBlock);
-    decorateBlock(footerBlock);
-    loadBlock(footerBlock);
-  }
-}
-
-/**
  * setup block utils
  */
 export function setup() {
