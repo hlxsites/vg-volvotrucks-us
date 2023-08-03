@@ -153,11 +153,14 @@ const createStoriesCarousel = (block, stories) => {
 };
 
 export default async function decorate(block) {
+  let limit = parseFloat(block.textContent.trim()) || 5;
+  if (limit < 3) limit = 3;
+
   block.innerHTML = '';
-  const stories = await getMagazineArticles(5);
+  const stories = await getMagazineArticles(limit);
   createStoriesCarousel(block, stories);
 
-  const ulItems = document.querySelector('.v2-stories-carousel-items');
+  const ulItems = block.querySelector('.v2-stories-carousel-items');
 
   createArrowControls(ulItems);
   listenScroll(ulItems);
