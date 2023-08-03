@@ -964,12 +964,12 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* REDESIGN GLOBAL STYLES */
-:root.redesign-v2 {
-  --text-color: var(--c-main-black);
-}
-
 .redesign-v2 {
   font-size: 16px;
+}
+
+:root.redesign-v2 {
+  --text-color: var(--c-main-black);
 }
 
 .redesign-v2 ul {
