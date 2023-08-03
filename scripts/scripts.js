@@ -70,7 +70,7 @@ function isCTALinkCheck(ctaLink) {
 
 function buildHeroBlock(main) {
   // switching off hero autoblock for redesign
-  if (document.body.classList.contains('redesign-v2')) {
+  if (document.querySelector('main').classList.contains('redesign-v2')) {
     return;
   }
 
