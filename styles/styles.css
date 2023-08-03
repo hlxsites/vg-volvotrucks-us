@@ -80,7 +80,7 @@
   --f-heading-4-line-height: 125%;
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
-  --f-heading-5-font-size: 1.5rem;
+  --f-heading-5-font-size: 1.5rem; /* 20px */
   --f-heading-5-line-height: 125%;
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
@@ -565,6 +565,12 @@ main p img {
   margin: auto;
 }
 
+.redesign-v2 p {
+  font-size: var(--f-body-font-size);
+  line-height: var(--f-body-line-height);
+  letter-spacing: var(--f-body-letter-spacing);
+}
+
 /* sections */
 
 main .section > div {
@@ -967,7 +973,7 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
 }
 
-.redesign-v2 body, .redesign-v2 p, .redesign-v2 dl, .redesign-v2 ol, .redesign-v2 ul, .redesign-v2 pre, .redesign-v2 blockquote {
+.redesign-v2 body, .redesign-v2 dl, .redesign-v2 ol, .redesign-v2 ul, .redesign-v2 pre, .redesign-v2 blockquote {
   font-size: var(--f-body-font-size);
   line-height: var(--f-body-line-height);
   letter-spacing: var(--f-body-letter-spacing);
@@ -978,11 +984,11 @@ main.blue-contract .section.section-with-title p {
   font-weight: 100;
 }
 
-.redesign-v2 .section {
+:root.redesign-v2 .section {
   padding: 0;
 }
 
-.redesign-v2 .section > div {
+:root.redesign-v2 .section > div {
   padding: 0 16px;
   margin: auto;
 }
