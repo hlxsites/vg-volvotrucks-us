@@ -162,7 +162,7 @@
   --c-background-card: #f7f7f7;
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
-  --text-color: var(--c-main-black);
+  --text-color: var(--c-grey-4);
   --btn-background-hover: var(--c-grey-1);
   --input-background-color: var(--c-grey-1);
   --overlay-background-color: var(--c-grey-1);
@@ -964,6 +964,10 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* REDESIGN GLOBAL STYLES */
+:root.redesign-v2 {
+  --text-color: var(--c-main-black);
+}
+
 .redesign-v2 {
   font-size: 16px;
 }
