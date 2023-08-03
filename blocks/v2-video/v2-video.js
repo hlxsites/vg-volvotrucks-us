@@ -10,7 +10,7 @@ const onHoverOrScroll = (element, handler) => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        if (entry.intersectionRatio >= 0.4) {
+        if (entry.intersectionRatio >= 0.2) {
           isInViewport = true;
           onChange();
         } else {
@@ -20,7 +20,7 @@ const onHoverOrScroll = (element, handler) => {
       }
     });
   }, {
-    threshold: [0.2, 0.4, 0.6, 0.8],
+    threshold: [0.1, 0.2, 0.3],
   });
   observer.observe(element);
 
@@ -67,7 +67,7 @@ export default async function decorate(block) {
   videoLink.remove();
   block.append(video);
 
-  onHoverOrScroll(block, (val) => {
+  onHoverOrScroll(block.querySelector('.v2-video__video'), (val) => {
     const action = val ? 'add' : 'remove';
 
     block.classList[action](`${blockClass}--full-width`);
