@@ -17,7 +17,7 @@
 }
 
 .v2-video.v2-video--full-width {
-  clip-path: inset(0 0 round 8px);
+  clip-path: inset(0 0 round 0);
 }
 
 .v2-video .v2-video__video {
@@ -41,11 +41,9 @@
 .v2-video .v2-video__content {
   margin: 48px;
   position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  text-shadow: 0 1.1128px 66.7674px 0 rgb(0 0 0 / 0%);
   font-family: var(--font-family-body);
   font-size: var(--f-body-font-size);
   font-style: normal;

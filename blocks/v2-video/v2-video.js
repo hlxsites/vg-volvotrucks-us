@@ -65,7 +65,7 @@ export default async function decorate(block) {
   [...ctaButtons].forEach((button) => button.classList.add(`${blockClass}__button`));
 
   videoLink.remove();
-  block.append(video);
+  block.prepend(video);
 
   onHoverOrScroll(block.querySelector('.v2-video__video'), (val) => {
     const action = val ? 'add' : 'remove';
