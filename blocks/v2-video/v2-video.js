@@ -67,7 +67,7 @@ export default async function decorate(block) {
   videoLink.remove();
   block.prepend(video);
 
-  onHoverOrScroll(block.querySelector('.v2-video__video'), (val) => {
+  onHoverOrScroll(block.querySelector('.v2-video__content-wrapper '), (val) => {
     const action = val ? 'add' : 'remove';
 
     block.classList[action](`${blockClass}--full-width`);
