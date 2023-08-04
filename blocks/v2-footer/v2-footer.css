@@ -101,7 +101,7 @@
   text-decoration: none;
 }
 
-.v2-footer-list-item a:hover {
+.v2-footer a:hover {
   color: var(--c-cta-blue-hover);
 }
 
@@ -216,7 +216,7 @@
   }
 
   .v2-footer-copyright-wrapper {
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
   }

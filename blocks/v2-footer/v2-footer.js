@@ -123,8 +123,17 @@ function openExternalLinksInNewTab(footer) {
   });
 }
 
+function findList(ele) {
+  if (ele.classList.contains('v2-footer-list')) {
+    return ele;
+  }
+  else { 
+    return findList(ele.parentElement);
+  }
+}
+
 function toggleExpand(targetH3) {
-  const clickedColumn = targetH3.parentElement;
+  const clickedColumn = findList(targetH3);
   const isExpanded = clickedColumn.classList.contains('expand');
   const wrapper = targetH3.closest('.v2-footer-list-wrapper');
   const columns = wrapper.querySelectorAll('.v2-footer-list');
