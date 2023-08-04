@@ -127,9 +127,7 @@ function findList(ele) {
   if (ele.classList.contains('v2-footer-list')) {
     return ele;
   }
-  else { 
-    return findList(ele.parentElement);
-  }
+  return findList(ele.parentElement);
 }
 
 function toggleExpand(targetH3) {
