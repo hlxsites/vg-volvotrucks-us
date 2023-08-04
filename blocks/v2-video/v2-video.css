@@ -36,6 +36,7 @@
   justify-content: flex-end;
   background: linear-gradient(0deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 0%) 100%);
   width: 100%;
+  position: relative;
 }
 
 .v2-video .v2-video__content {
