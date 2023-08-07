@@ -46,7 +46,7 @@ export default async function decorate(block) {
   const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}v2-footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
-  const footer = createElement('div');
+  const footer = createElement('div', 'v2-footer-container');
   footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
   const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
@@ -55,7 +55,7 @@ export default async function decorate(block) {
   wrapSocialMediaLinks(mainLinkWrapper);
 
   if (mainLinkWrapper) {
-    mainLinkWrapper.classList.add('v2-footer__links-wrapper');
+    mainLinkWrapper.classList.add('v2-footer-links-wrapper');
     // in Word, it is edited like a column block, but we style it differently
     mainLinkWrapper.firstElementChild.classList.remove('columns');
     mainLinkWrapper.querySelectorAll('h3').forEach((h3) => {
@@ -68,29 +68,29 @@ export default async function decorate(block) {
       h3.append(icon);
       heading.remove();
 
-      h3.parentElement.classList.add('v2-footer__list');
-      h3.parentElement.parentElement.classList.add('v2-footer__list-wrapper');
-      h3.nextElementSibling?.classList.add('v2-footer__list-item');
+      h3.parentElement.classList.add('v2-footer-list');
+      h3.parentElement.parentElement.classList.add('v2-footer-list-wrapper');
+      h3.nextElementSibling?.classList.add('v2-footer-list-item');
 
       h3.addEventListener('click', (e) => toggleExpand(e.target));
     });
   }
 
-  const seperator = createElement('hr', 'v2-footer__seperator');
+  const seperator = createElement('hr', 'v2-footer-seperator');
   footer.append(seperator);
 
-  const copyrightWrapper = createElement('div', 'v2-footer__copyright-wrapper');
+  const copyrightWrapper = createElement('div', 'v2-footer-copyright-wrapper');
 
   if (footerBar) {
     const list = footerBar.firstElementChild;
-    list?.classList.add('v2-footer__bar');
+    list?.classList.add('v2-footer-bar');
     copyrightWrapper.appendChild(list);
     footerBar.remove();
   }
 
   if (footerCopyright) {
     copyrightWrapper.appendChild(footerCopyright);
-    footerCopyright?.classList.add('v2-footer__copyright');
+    footerCopyright?.classList.add('v2-footer-copyright');
   }
 
   footer.appendChild(copyrightWrapper);
@@ -101,7 +101,7 @@ export default async function decorate(block) {
 
 function wrapSocialMediaLinks(footer) {
   footer.querySelectorAll('.icon-newtab').forEach((icon) => {
-    const textIconWrapper = createElement('span', 'v2-footer__text-icon-wrapper');
+    const textIconWrapper = createElement('span', 'v2-footer-text-icon-wrapper');
     const anchor = icon.parentElement;
     textIconWrapper.append(icon.previousSibling);
     textIconWrapper.append(icon);
@@ -124,7 +124,7 @@ function openExternalLinksInNewTab(footer) {
 }
 
 function findList(ele) {
-  if (ele.classList.contains('v2-footer__list')) {
+  if (ele.classList.contains('v2-footer-list')) {
     return ele;
   }
   return findList(ele.parentElement);
@@ -133,11 +133,11 @@ function findList(ele) {
 function toggleExpand(targetH3) {
   const clickedColumn = findList(targetH3);
   const isExpanded = clickedColumn.classList.contains('expand');
-  const wrapper = targetH3.closest('.v2-footer__list-wrapper');
-  const columns = wrapper.querySelectorAll('.v2-footer__list');
+  const wrapper = targetH3.closest('.v2-footer-list-wrapper');
+  const columns = wrapper.querySelectorAll('.v2-footer-list');
 
   columns.forEach((column) => {
-    const content = column.querySelector('.v2-footer__list-item');
+    const content = column.querySelector('.v2-footer-list-item');
     if (column === clickedColumn && !isExpanded) {
       column.classList.add('expand');
       content.style.maxHeight = `${content.scrollHeight}px`;
