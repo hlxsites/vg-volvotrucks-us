@@ -80,7 +80,7 @@
   --f-heading-4-line-height: 125%;
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
-  --f-heading-5-font-size: 1.5rem; /* 20px */
+  --f-heading-5-font-size: 1.5rem; /* 24px */
   --f-heading-5-line-height: 125%;
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
@@ -1027,10 +1027,49 @@ main.blue-contract .section.section-with-title p {
   color: var(--c-cta-blue-hover);
 }
 
-.redesign-v2 a.button.primary:active,
-.redesign-v2 button.primary:active {
-  text-decoration: underline;
-  color: var(--c-cta-blue-active);
+.redesign-v2 a.button.secondary svg,
+.redesign-v2 button.secondary svg {
+  width: 14px;
+  height: 14px;
+}
+
+.redesign-v2 a.button.secondary,
+.redesign-v2 button.secondary {
+  align-items: center;
+  background-color: var(--c-main-black);
+  border-radius: 4px;
+  border: 1px solid var(--c-main-black);
+  color: var(--c-white);
+  display: inline-flex;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  gap: 10px;
+  justify-content: center;
+  letter-spacing: 1.25px;
+  line-height: 100%;
+  padding: 17px 36px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: all var(--duration-small) var(--easing-standard);
+}
+
+.redesign-v2 a.button.secondary:hover,
+.redesign-v2 button.secondary:hover {
+  background-color: var(--c-white);
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.secondary.outline,
+.redesign-v2 button.secondary.outline {
+  background-color: var(--c-white);
+  border-color: var(--c-main-black);
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.secondary.outline:hover,
+.redesign-v2 button.secondary.outline:hover {
+  color: var(--c-white);
+  background-color: var(--c-main-black);
 }
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
