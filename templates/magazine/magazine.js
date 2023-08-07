@@ -3,7 +3,7 @@ import {
   decorateIcons,
   createOptimizedPicture,
 } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 
 async function buildArticleHero(container) {
   const title = getMetadata('og:title');

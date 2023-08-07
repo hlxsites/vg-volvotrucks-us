@@ -1,5 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { removeEmptyTags, createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
+import { removeEmptyTags } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   // all items are inside a ul list with classname called 'v2-images-grid-items'

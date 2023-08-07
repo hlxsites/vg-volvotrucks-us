@@ -7,7 +7,7 @@ import {
   getNumberFormat,
   reverseFormatNumber,
 } from './results.js';
-import { getTextLabel } from '../../scripts/scripts.js';
+import { getTextLabel } from '../../scripts/common.js';
 
 const calculatorPath = './calculator.json';
 const percentagesPath = './percentages.json';

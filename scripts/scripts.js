@@ -1,8 +1,5 @@
 import {
-  sampleRUM,
   buildBlock,
-  loadHeader,
-  loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -10,47 +7,21 @@ import {
   decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
-  loadBlock,
-  loadBlocks,
-  loadCSS,
   createOptimizedPicture,
   getMetadata,
   toClassName,
 } from './lib-franklin.js';
 
+import {
+  getPlaceholders,
+  loadLazy,
+  loadDelayed,
+  loadTemplate,
+  getTextLabel,
+} from './common.js';
+
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
-let placeholders = null;
-
-async function getPlaceholders() {
-  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
-}
-
-export function getTextLabel(key) {
-  return placeholders.data.find((el) => el.Key === key)?.Text || key;
-}
-
-/**
- * Create an element with the given id and classes.
- * @param {string} tagName the tag
- * @param {string[]|string} classes the class or classes to add
- * @param {object} props any other attributes to add to the element
- * @returns the element
- */
-export function createElement(tagName, classes, props) {
-  const elem = document.createElement(tagName);
-  if (classes) {
-    const classesArr = (typeof classes === 'string') ? [classes] : classes;
-    elem.classList.add(...classesArr);
-  }
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      elem.setAttribute(propName, props[propName]);
-    });
-  }
-
-  return elem;
-}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -152,6 +123,20 @@ function buildSubNavigation(main, head) {
   }
 }
 
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ * @param {Element} head The header element
+ */
+export function buildAutoBlocks(main, head) {
+  try {
+    buildHeroBlock(main);
+    buildSubNavigation(main, head);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = document.createElement('div');
   tabSection.classList.add('section', 'tabbed-container');
@@ -217,21 +202,6 @@ function buildTabbedBlock(main) {
     const tabbedCarouselSection = createTabbedSection(tabItems, tabType, { fullWidth });
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
-  }
-}
-
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- * @param {Element} head The header element
- */
-function buildAutoBlocks(main, head) {
-  try {
-    buildHeroBlock(main);
-    buildSubNavigation(main, head);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
   }
 }
 
@@ -361,32 +331,6 @@ export function decorateMain(main, head) {
   buildCtaList(main);
 }
 
-async function loadTemplate(doc, templateName) {
-  try {
-    const cssLoaded = new Promise((resolve) => {
-      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
-    });
-    const decorationComplete = new Promise((resolve) => {
-      (async () => {
-        try {
-          const mod = await import(`../templates/${templateName}/${templateName}.js`);
-          if (mod.default) {
-            await mod.default(doc);
-          }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(`failed to load module for ${templateName}`, error);
-        }
-        resolve();
-      })();
-    });
-    await Promise.all([cssLoaded, decorationComplete]);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`failed to load block ${templateName}`, error);
-  }
-}
-
 /**
  * loads everything needed to get to LCP.
  */
@@ -404,62 +348,6 @@ async function loadEager(doc) {
   }
 
   await getPlaceholders();
-}
-
-/**
- * Adds the favicon.
- * @param {string} href The favicon URL
- */
-export function addFavIcon(href) {
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.type = 'image/svg+xml';
-  link.href = href;
-  const existingLink = document.querySelector('head link[rel="icon"]');
-  if (existingLink) {
-    existingLink.parentElement.replaceChild(link, existingLink);
-  } else {
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-}
-
-/**
- * loads everything that doesn't need to be delayed.
- */
-async function loadLazy(doc) {
-  const main = doc.querySelector('main');
-  await loadBlocks(main);
-
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
-  const header = doc.querySelector('header');
-
-  loadHeader(header);
-  loadFooter(doc.querySelector('footer'));
-
-  const subnav = header?.querySelector('.block.sub-nav');
-  if (subnav) {
-    loadBlock(subnav);
-  }
-
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
-}
-
-/**
- * loads everything that happens a lot later, without impacting
- * the user experience.
- */
-function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => {
-    import('./delayed.js');
-  }, 3000);
-  // load anything that can be postponed to the latest here
 }
 
 async function loadPage() {
