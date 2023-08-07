@@ -10,13 +10,8 @@ const onHoverOrScroll = (element, handler) => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        if (entry.intersectionRatio >= 0.2) {
-          isInViewport = true;
-          onChange();
-        } else {
-          isInViewport = false;
-          onChange();
-        }
+        isInViewport = entry.intersectionRatio >= 0.2;
+        onChange();
       }
     });
   }, {
@@ -49,14 +44,16 @@ export default async function decorate(block) {
     block.innerHTML = '';
   }
 
-  const video = createElement('video', [`${blockClass}__video`]);
+  const video = createElement('video', [`${blockClass}__video`], {
+    loop: 'loop',
+  });
   video.muted = true;
   video.autoplay = true;
-  video.loop = true;
 
-  const source = document.createElement('source');
-  source.setAttribute('src', videoLink.getAttribute('href'));
-  source.setAttribute('type', 'video/mp4');
+  const source = createElement('source', '', {
+    src: videoLink.getAttribute('href'),
+    type: 'video/mp4',
+  });
   video.appendChild(source);
 
   contentWrapper.classList.add(`${blockClass}__content-wrapper`);
