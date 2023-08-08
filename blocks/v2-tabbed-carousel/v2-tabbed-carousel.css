@@ -45,10 +45,15 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
 }
 
 .v2-tabbed-carousel__imagesContainer {
+  align-items: flex-end;
   overflow: scroll hidden;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  align-items: flex-end;
+  scrollbar-width: none;
+}
+
+.v2-tabbed-carousel__imagesContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .v2-tabbed-carousel__imageItem {
@@ -137,9 +142,21 @@ ul.v2-tabbed-carousel__navigation {
   overflow: auto;
   padding-left: 0;
   list-style: none;
-  margin: 35px auto;
-  width: 90%;
+  margin: 35px 0;
+  padding: 0 35px;
   order: 1;
+  position: relative;
+}
+
+.v2-tabbed-carousel__navigation-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--c-main-black);
+  transition: all 0.3s;
+  margin: 0;
 }
 
 .v2-tabbed-carousel__navigation::before,
@@ -148,32 +165,11 @@ ul.v2-tabbed-carousel__navigation {
   margin: auto;
 }
 
-.v2-tabbed-carousel__navigation li {
-  flex: none;
-  scroll-snap-align: center;
-  text-align: center;
+.v2-tabbed-carousel__navigation-item {
   margin: 0 15px;
 }
 
-.v2-tabbed-carousel__navigation li.active button::after,
-.v2-tabbed-carousel__navigation button:hover::after {
-  width: 100%;
-}
-
-.v2-tabbed-carousel__navigation button::after {
-  content: '';
-  width: 0;
-  height: 2px;
-  background-color: var(--c-main-black);
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transition: width var(--duration-small) var(--easing-standard);
-}
-
 .v2-tabbed-carousel__navigation button {
-  position: relative;
   background: 0 0;
   border: none;
   padding: 0;

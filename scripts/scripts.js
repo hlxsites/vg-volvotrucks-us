@@ -284,7 +284,7 @@ function buildTruckCarouselBlock(main) {
     1: '(min-width: 1200px)',
   };
 
-  const mainChildren = [...main.querySelectorAll(':scope > div')]
+  const mainChildren = [...main.querySelectorAll(':scope > div')];
   mainChildren.forEach((section, i) => {
     const isTruckCarousel = section.dataset.truckCarousel;
     if (!isTruckCarousel) return;

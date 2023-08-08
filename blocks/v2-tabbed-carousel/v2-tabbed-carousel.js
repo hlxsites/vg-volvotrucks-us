@@ -12,15 +12,41 @@ function stripEmptyTags(main, child) {
 
 function buildTabNavigation(tabItems, clickHandler) {
   const tabNavigation = createElement('ul', `${blockName}__navigation`);
+  const navigationLine = createElement('li', `${blockName}__navigation-line`);
+  let timeout;
+
   [...tabItems].forEach((tabItem, i) => {
-    const listItem = createElement('li');
+    const listItem = createElement('li', `${blockName}__navigation-item`);
     const button = createElement('button');
     button.addEventListener('click', () => clickHandler.call(this, i));
+    if (navigationLine) {
+      button.addEventListener('mouseover', (e) => {
+        clearTimeout(timeout);
+        Object.assign(navigationLine.style, {
+          left: `${e.currentTarget.getBoundingClientRect().x + tabNavigation.scrollLeft}px`,
+          width: `${e.currentTarget.getBoundingClientRect().width}px`,
+        });
+      });
+
+      button.addEventListener('mouseout', () => {
+        timeout = setTimeout(() => {
+          const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
+          Object.assign(navigationLine.style, {
+            left: `${activeItem.getBoundingClientRect().x + tabNavigation.scrollLeft}px`,
+            width: `${activeItem.getBoundingClientRect().width}px`,
+          });
+        }, 600);
+      });
+    }
+
     const tabContent = tabItem.querySelector(':scope > div');
     button.innerHTML = tabContent.dataset.truckCarousel;
     listItem.append(button);
     tabNavigation.append(listItem);
   });
+
+  tabNavigation.append(navigationLine);
+
   return tabNavigation;
 }
 
@@ -28,11 +54,20 @@ const updateActiveItem = (index) => {
   const images = document.querySelector(`.${blockName}__imagesContainer`);
   const descriptions = document.querySelector(`.${blockName}__descriptionContainer`);
   const navigation = document.querySelector(`.${blockName}__navigation`);
+  const navigationLine = document.querySelector(`.${blockName}__navigation-line`);
 
   [images, descriptions, navigation].forEach((c) => c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
   images.children[index].classList.add('active');
   descriptions.children[index].classList.add('active');
   navigation.children[index].classList.add('active');
+
+  if (navigationLine) {
+    const activeNavigationItem = navigation.children[index];
+    Object.assign(navigationLine.style, {
+      left: `${activeNavigationItem.getBoundingClientRect().x + navigation.scrollLeft}px`,
+      width: `${activeNavigationItem.getBoundingClientRect().width}px`,
+    });
+  }
 };
 
 const listenScroll = (carousel) => {
