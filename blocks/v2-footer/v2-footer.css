@@ -167,10 +167,7 @@
     margin: 0 auto;
   }
 
-  .v2-footer-copyright-wrapper {
-    padding-left: 0;
-    padding-right: 0;
-  }
+  
 
   .v2-footer-links-wrapper {
     padding-top: 55px;
@@ -235,6 +232,8 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .v2-footer-bar {
@@ -244,6 +243,7 @@
   .v2-footer-copyright {
     flex-basis: auto;
   }
+
   .v2-footer-text-icon-wrapper {
     display: flex;
     gap: 4px;
