@@ -76,7 +76,7 @@ export default async function decorate(block) {
     });
   }
 
-  const seperator = createElement('hr', 'v2-footer-seperator');
+  const seperator = createElement('hr', 'v2-footer-separator');
   footer.append(seperator);
 
   const copyrightWrapper = createElement('div', 'v2-footer-copyright-wrapper');
