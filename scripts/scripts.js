@@ -336,6 +336,7 @@ function buildTruckCarouselBlock(main) {
     } else {
       main.append(tabbedCarouselSection);
     }
+    decorateIcons(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
   }
 }
