@@ -69,6 +69,12 @@ function isCTALinkCheck(ctaLink) {
   return siblings.some((elem) => elem?.localName === 'h1');
 }
 
+/**
+ * Returns a picture element with webp and fallbacks / allow multiple src paths for every breakpoint
+ * @param {string} src Default image URL (if no src is passed to breakpoints object)
+ * @param {boolean} eager load image eager
+ * @param {Array} breakpoints breakpoints and corresponding params (eg. src, width, media)
+ */
 export function createCustomOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
   const url = new URL(src, getHref());
   const picture = document.createElement('picture');
@@ -272,15 +278,19 @@ function createTabbedTruckSection(tabItems) {
 
 function buildTruckCarouselBlock(main) {
   const tabItems = [];
+  let nextElement;
   const BREAKPOINTS = {
     0: '(min-width: 400px)',
     1: '(min-width: 1200px)',
   };
 
-  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+  const mainChildren = [...main.querySelectorAll(':scope > div')]
+  mainChildren.forEach((section, i) => {
     const isTruckCarousel = section.dataset.truckCarousel;
     if (!isTruckCarousel) return;
 
+    // save carousel position
+    nextElement = mainChildren[i + 1];
     const sectionMeta = section.dataset.truckCarousel;
 
     const tabContent = createElement('div', 'v2-tabbed-carousel__content');
@@ -321,7 +331,11 @@ function buildTruckCarouselBlock(main) {
 
   if (tabItems.length > 0) {
     const tabbedCarouselSection = createTabbedTruckSection(tabItems);
-    main.append(tabbedCarouselSection);
+    if (nextElement) { // if we saved a position push the carousel in that position if not
+      main.insertBefore(tabbedCarouselSection, nextElement);
+    } else {
+      main.append(tabbedCarouselSection);
+    }
     decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
   }
 }

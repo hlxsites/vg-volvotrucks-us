@@ -187,6 +187,10 @@ ul.v2-tabbed-carousel__navigation {
 }
 
 /* Arrow controls */
+.v2-tabbed-carousel__carouselWrapper {
+  position: relative;
+}
+
 .v2-tabbed-carousel__arrowControls {
   display: none;
   margin: 0;

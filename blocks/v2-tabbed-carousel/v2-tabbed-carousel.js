@@ -209,11 +209,6 @@ export default function decorate(block) {
     const firstCarouselItemWidth = imagesContainer.offsetWidth * (itemWidth / 100);
     const secondCarouselItemWidth = descriptionContainer.offsetWidth;
 
-    // // Determine the number of items visible in the first carousel
-    // const firstCarouselVisibleItems = Math.ceil(
-    //   imagesContainer.offsetWidth / firstCarouselItemWidth
-    // );
-
     // Determine the number of items in the second carousel
     // that correspond to one item in the first carousel
     const itemsInSecondCarouselPerItemInFirst = Math.ceil(
