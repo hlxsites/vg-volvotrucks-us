@@ -51,8 +51,8 @@ function buildTabNavigation(tabItems, clickHandler) {
 }
 
 const updateActiveItem = (index) => {
-  const images = document.querySelector(`.${blockName}__imagesContainer`);
-  const descriptions = document.querySelector(`.${blockName}__descriptionContainer`);
+  const images = document.querySelector(`.${blockName}__images-container`);
+  const descriptions = document.querySelector(`.${blockName}__description-container`);
   const navigation = document.querySelector(`.${blockName}__navigation`);
   const navigationLine = document.querySelector(`.${blockName}__navigation-line`);
 
@@ -108,7 +108,7 @@ const setCarouselPosition = (carousel, index) => {
 
 const createArrowControls = (imagesContainer) => {
   function scroll(direction) {
-    const activeItem = imagesContainer.querySelector(`.${blockName}__imageItem.active`);
+    const activeItem = imagesContainer.querySelector(`.${blockName}__image-item.active`);
     let index = [...activeItem.parentNode.children].indexOf(activeItem);
     if (direction === 'left') {
       index -= 1;
@@ -133,7 +133,7 @@ const createArrowControls = (imagesContainer) => {
     });
   }
 
-  const arrowControls = createElement('ul', [`${blockName}__arrowControls`]);
+  const arrowControls = createElement('ul', [`${blockName}__arrow-controls`]);
   const arrows = document.createRange().createContextualFragment(`
     <li>
       <button aria-label="Previous">
@@ -159,14 +159,14 @@ const createArrowControls = (imagesContainer) => {
 
 export default function decorate(block) {
   const descriptionContainer = block.querySelector(':scope > div');
-  descriptionContainer.classList.add(`${blockName}__descriptionContainer`);
+  descriptionContainer.classList.add(`${blockName}__description-container`);
 
   const tabItems = block.querySelectorAll(':scope > div > div');
 
-  const carouselWrapper = createElement('div', `${blockName}__carouselWrapper`);
-  const imagesContainer = createElement('div', `${blockName}__imagesContainer`);
-  descriptionContainer.parentNode.prepend(carouselWrapper);
-  carouselWrapper.appendChild(imagesContainer);
+  const imagesWrapper = createElement('div', `${blockName}__slider-wrapper`);
+  const imagesContainer = createElement('div', `${blockName}__images-container`);
+  descriptionContainer.parentNode.prepend(imagesWrapper);
+  imagesWrapper.appendChild(imagesContainer);
 
   const tabNavigation = buildTabNavigation(tabItems, (index) => {
     setCarouselPosition(imagesContainer, index);
@@ -178,14 +178,14 @@ export default function decorate(block) {
   descriptionContainer.parentNode.append(tabNavigation);
 
   tabItems.forEach((tabItem) => {
-    tabItem.classList.add(`${blockName}__descItem`);
+    tabItem.classList.add(`${blockName}__desc-item`);
     const tabContent = tabItem.querySelector(':scope > div');
     const headings = tabContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
     [...headings].forEach((heading) => heading.classList.add(`${blockName}__title`));
 
     // create div for image and append inside image div container
     const picture = tabItem.querySelector('picture');
-    const imageItem = createElement('div', `${blockName}__imageItem`);
+    const imageItem = createElement('div', `${blockName}__image-item`);
     imageItem.appendChild(picture);
     imagesContainer.appendChild(imageItem);
 
@@ -207,7 +207,7 @@ export default function decorate(block) {
     }
 
     // Wrap links in container
-    const buttonContainer = createElement('div', `${blockName}__buttonsContainer`);
+    const buttonContainer = createElement('div', `${blockName}__buttons-container`);
     const buttons = tabContent.querySelectorAll('.button-container');
 
     buttons.forEach((bt, i) => {

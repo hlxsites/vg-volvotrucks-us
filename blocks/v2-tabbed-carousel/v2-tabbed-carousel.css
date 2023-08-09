@@ -26,25 +26,20 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
 
 /* End Full width block */
 
-.v2-tabbed-carousel {
-  display: flex;
-  flex-direction: column;
-}
-
-.v2-tabbed-carousel__imagesContainer,
-.v2-tabbed-carousel__descriptionContainer {
+.v2-tabbed-carousel__images-container,
+.v2-tabbed-carousel__description-container {
   display: flex;
   flex-flow: row nowrap;
   padding-left: 0;
   margin: 0;
 }
 
-.v2-tabbed-carousel__descriptionContainer {
+.v2-tabbed-carousel__description-container {
   order: 2;
   overflow: hidden;
 }
 
-.v2-tabbed-carousel__imagesContainer {
+.v2-tabbed-carousel__images-container {
   align-items: flex-end;
   overflow: scroll hidden;
   scroll-behavior: smooth;
@@ -52,18 +47,18 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
   scrollbar-width: none;
 }
 
-.v2-tabbed-carousel__imagesContainer::-webkit-scrollbar {
+.v2-tabbed-carousel__images-container::-webkit-scrollbar {
   display: none;
 }
 
-.v2-tabbed-carousel__imageItem {
+.v2-tabbed-carousel__image-item {
   flex: none;
   scroll-snap-align: center;
   text-align: center;
   width: var(--tabbed-carousel-img-width);
 }
 
-.v2-tabbed-carousel__imageItem picture {
+.v2-tabbed-carousel__image-item picture {
   display: block;
   animation-duration: 1s;
   animation-delay: 0.5s;
@@ -71,17 +66,17 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
   animation-timing-function: ease-in;
 }
 
-.v2-tabbed-carousel__imageItem:first-child {
+.v2-tabbed-carousel__image-item:first-child {
   margin-left: calc(100% - var(--tabbed-carousel-img-width)/2);
 }
 
-.v2-tabbed-carousel__imagesContainer::after {
+.v2-tabbed-carousel__images-container::after {
   content: '';
   display: block;
   flex: 0 0 calc(100% - var(--tabbed-carousel-img-width)/2);
 }
 
-.v2-tabbed-carousel__imageItem img {
+.v2-tabbed-carousel__image-item img {
   width: 100%;
   object-fit: contain;
   max-height: 570px;
@@ -93,7 +88,7 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
   text-align: center;
 }
 
-.v2-tabbed-carousel__descItem {
+.v2-tabbed-carousel__desc-item {
   color: var(--text-color);
   flex: none;
   opacity: 0;
@@ -103,7 +98,7 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
   transform: translateX(-50px);
 }
 
-.v2-tabbed-carousel__descItem.active {
+.v2-tabbed-carousel__desc-item.active {
   opacity: 1;
   transform: translateX(0);
   transition: opacity var(--duration-large) var(--easing-entrance),
@@ -127,11 +122,11 @@ p.v2-tabbed-carousel__description {
   line-height: var(--f-heading-5-line-height);
 }
 
-.v2-tabbed-carousel__buttonsContainer {
+.v2-tabbed-carousel__buttons-container {
   margin-top: 32px;
 }
 
-.v2-tabbed-carousel__buttonsContainer .button-container {
+.v2-tabbed-carousel__buttons-container .button-container {
   margin: 10px 0;
 }
 
@@ -140,7 +135,6 @@ ul.v2-tabbed-carousel__navigation {
   display: flex;
   flex-flow: row nowrap;
   overflow: auto;
-  padding-left: 0;
   list-style: none;
   margin: 35px 0;
   padding: 0 35px;
@@ -172,33 +166,32 @@ ul.v2-tabbed-carousel__navigation {
 .v2-tabbed-carousel__navigation button {
   background: 0 0;
   border: none;
-  padding: 0;
-  margin: 0;
   color: var(--text-color);
-  text-transform: uppercase;
   font-size: var(--f-button-font-size);
-  line-height: 100%;
   letter-spacing: var(--f-button-letter-spacing);
+  line-height: 100%;
+  margin: 0;
   padding: 12px 0;
+  text-transform: uppercase;
 }
 
 /* Arrow controls */
-.v2-tabbed-carousel__carouselWrapper {
+.v2-tabbed-carousel__slider-wrapper {
   position: relative;
 }
 
-.v2-tabbed-carousel__arrowControls {
+.v2-tabbed-carousel__arrow-controls {
   display: none;
   margin: 0;
   opacity: 0;
   transition: opacity var(--duration-small) var(--easing-standard);
 }
 
-.v2-tabbed-carousel__carouselWrapper:hover .v2-tabbed-carousel__arrowControls {
+.v2-tabbed-carousel__slider-wrapper:hover .v2-tabbed-carousel__arrow-controls {
   opacity: 1;
 }
 
-.v2-tabbed-carousel__arrowControls li {
+.v2-tabbed-carousel__arrow-controls li {
   align-items: center;
   display: flex;
   height: 100%;
@@ -207,12 +200,12 @@ ul.v2-tabbed-carousel__navigation {
   top: 0;
 }
 
-.v2-tabbed-carousel__arrowControls li:last-child {
+.v2-tabbed-carousel__arrow-controls li:last-child {
   left: auto;
   right: 10%;
 }
 
-.v2-tabbed-carousel__arrowControls button {
+.v2-tabbed-carousel__arrow-controls button {
   background-color: var(--c-white);
   border-radius: 50%;
   border: 1px solid var(--c-grey-400);
@@ -223,34 +216,34 @@ ul.v2-tabbed-carousel__navigation {
   line-height: 0;
 }
 
-.v2-tabbed-carousel__arrowControls button:hover,
-.v2-tabbed-carousel__arrowControls button:active {
+.v2-tabbed-carousel__arrow-controls button:hover,
+.v2-tabbed-carousel__arrow-controls button:active {
   border-color: var(--c-white);
 }
 
-.v2-tabbed-carousel__arrowControls button:hover {
+.v2-tabbed-carousel__arrow-controls button:hover {
   background-color: var(--c-grey-50);
 }
 
-.v2-tabbed-carousel__arrowControls button:active {
+.v2-tabbed-carousel__arrow-controls button:active {
   background-color: var(--c-grey-100);
 }
 
-.v2-tabbed-carousel__arrowControls button:focus {
+.v2-tabbed-carousel__arrow-controls button:focus {
   outline: 2px solid var(--light-border-focus);
 }
 
 @media screen and (min-width: 744px) {
-  .v2-tabbed-carousel__arrowControls {
+  .v2-tabbed-carousel__arrow-controls {
     display: block;
   }
 
-  .v2-tabbed-carousel__buttonsContainer {
+  .v2-tabbed-carousel__buttons-container {
     display: flex;
     justify-content: center;
   }
 
-  .v2-tabbed-carousel__buttonsContainer .button-container {
+  .v2-tabbed-carousel__buttons-container .button-container {
     margin-left: 16px;
   }
 }
@@ -260,7 +253,7 @@ ul.v2-tabbed-carousel__navigation {
     --tabbed-carousel-img-width: 60%;
   }
 
-  .v2-tabbed-carousel__imageItem img {
+  .v2-tabbed-carousel__image-item img {
     max-height: none;
   }
 
@@ -279,7 +272,7 @@ ul.v2-tabbed-carousel__navigation {
     text-align: left;
   }
 
-  .v2-tabbed-carousel__buttonsContainer {
+  .v2-tabbed-carousel__buttons-container {
     flex-direction: row;
     margin-top: 0;
   }
