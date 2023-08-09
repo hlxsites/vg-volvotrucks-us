@@ -4,7 +4,7 @@
     "selector-class-pattern": [
       "^[a-z]([-]?[a-z0-9]+)*(__[a-z0-9]([-]?[a-z0-9]+)*)?(--[a-z0-9]([-|_]?[a-z0-9]+)*)?$",
       {
-        "resolveNestedSelectors": true
+        "message": "Expected class \"%s\" to be in kebab-case or BEM-style naming."
       }
     ]
   }
