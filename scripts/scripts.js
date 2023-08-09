@@ -305,12 +305,12 @@ function buildTruckCarouselBlock(main) {
       alt: firstImage?.alt,
     };
 
-    images.forEach((pic, i) => {
+    images.forEach((pic, j) => {
       const img = pic.lastElementChild;
       imageBreakpoints.push({
         src: img.src,
         width: 2000,
-        media: BREAKPOINTS[i],
+        media: BREAKPOINTS[j],
       });
 
       pic.parentNode.remove();
