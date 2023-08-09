@@ -113,6 +113,8 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
 
 .v2-tabbed-carousel__text {
   text-wrap: balance;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .v2-tabbed-carousel__title {
@@ -142,8 +144,8 @@ ul.v2-tabbed-carousel__navigation {
   flex-flow: row nowrap;
   overflow: auto;
   list-style: none;
-  margin: 35px 0;
-  padding: 0 35px;
+  margin: 32px 0;
+  padding: 2px 32px;
   order: 1;
   position: relative;
 }
@@ -166,7 +168,7 @@ ul.v2-tabbed-carousel__navigation {
 }
 
 .v2-tabbed-carousel__navigation-item {
-  margin: 0 15px;
+  margin: 0 16px;
 }
 
 .v2-tabbed-carousel__navigation button {
@@ -276,6 +278,7 @@ ul.v2-tabbed-carousel__navigation {
   .v2-tabbed-carousel__text {
     flex-basis: 60%;
     text-align: left;
+    margin: 0;
   }
 
   .v2-tabbed-carousel__buttons-container {
