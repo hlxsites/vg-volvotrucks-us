@@ -1,4 +1,3 @@
-/* stylelint-disable selector-class-pattern */
 :root {
   --tabbed-carousel-img-width: 60%;
 }
@@ -26,6 +25,11 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
 }
 
 /* End Full width block */
+
+.v2-tabbed-carousel {
+  display: flex;
+  flex-direction: column;
+}
 
 .v2-tabbed-carousel__images-container,
 .v2-tabbed-carousel__description-container {
