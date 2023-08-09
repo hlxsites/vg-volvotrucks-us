@@ -571,6 +571,11 @@ main p img {
   letter-spacing: var(--f-body-letter-spacing);
 }
 
+.redesign-v2 a.button:focus,
+.redesign-v2 button:focus {
+  outline: 2px solid var(--light-border-focus);
+}
+
 /* sections */
 
 main .section > div {
@@ -1000,11 +1005,6 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 .section div.full-width {
   padding: 0;
   width: 100%;
-}
-
-.redesign-v2 a.button:focus,
-.redesign-v2 button:focus {
-  outline: 2px solid var(--light-border-focus);
 }
 
 .redesign-v2 a.button.primary,
