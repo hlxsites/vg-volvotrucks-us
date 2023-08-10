@@ -10,12 +10,12 @@ const onHoverOrScroll = (element, handler) => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        isInViewport = entry.intersectionRatio >= 0.2;
+        isInViewport = entry.intersectionRatio >= 0.5;
         onChange();
       }
     });
   }, {
-    threshold: [0.1, 0.2, 0.3],
+    threshold: [0.4, 0.5, 0.6],
   });
   observer.observe(element);
 
