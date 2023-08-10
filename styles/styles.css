@@ -1067,7 +1067,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 .redesign-v2 .icon svg {
-  fill: currentColor;
+  fill: currentcolor;
   height: 1rem;
   width: 1rem;
 }
