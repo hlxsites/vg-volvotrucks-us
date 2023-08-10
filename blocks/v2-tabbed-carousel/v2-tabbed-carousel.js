@@ -18,22 +18,24 @@ function buildTabNavigation(tabItems, clickHandler) {
   [...tabItems].forEach((tabItem, i) => {
     const listItem = createElement('li', `${blockName}__navigation-item`);
     const button = createElement('button');
-    button.addEventListener('click', () => clickHandler.call(this, i));
+    button.addEventListener('click', () => clickHandler(i));
     if (navigationLine) {
       button.addEventListener('mouseover', (e) => {
         clearTimeout(timeout);
+        const { x, width } = e.currentTarget.getBoundingClientRect();
         Object.assign(navigationLine.style, {
-          left: `${e.currentTarget.getBoundingClientRect().x + tabNavigation.scrollLeft}px`,
-          width: `${e.currentTarget.getBoundingClientRect().width}px`,
+          left: `${x + tabNavigation.scrollLeft}px`,
+          width: `${width}px`,
         });
       });
 
       button.addEventListener('mouseout', () => {
         timeout = setTimeout(() => {
           const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
+          const { x, width } = activeItem.getBoundingClientRect();
           Object.assign(navigationLine.style, {
-            left: `${activeItem.getBoundingClientRect().x + tabNavigation.scrollLeft}px`,
-            width: `${activeItem.getBoundingClientRect().width}px`,
+            left: `${x + tabNavigation.scrollLeft}px`,
+            width: `${width}px`,
           });
         }, 600);
       });
@@ -63,9 +65,10 @@ const updateActiveItem = (index) => {
 
   if (navigationLine) {
     const activeNavigationItem = navigation.children[index];
+    const { x, width } = activeNavigationItem.getBoundingClientRect();
     Object.assign(navigationLine.style, {
-      left: `${activeNavigationItem.getBoundingClientRect().x + navigation.scrollLeft}px`,
-      width: `${activeNavigationItem.getBoundingClientRect().width}px`,
+      left: `${x + navigation.scrollLeft}px`,
+      width: `${width}px`,
     });
   }
 };
@@ -212,8 +215,6 @@ export default function decorate(block) {
 
     buttons.forEach((bt, i) => {
       const buttonLink = bt.firstElementChild;
-      // buttonLink.classList.remove('primary');
-      // buttonLink.classList.add('secondary');
 
       if (i > 0) {
         buttonLink.classList.remove('primary');

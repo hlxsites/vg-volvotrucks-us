@@ -119,7 +119,6 @@ main .section.v2-tabbed-carousel-container .v2-tabbed-carousel-wrapper {
 
 .v2-tabbed-carousel__title {
   margin-right: 5px;
-  transform: translateY(1px);
 }
 
 .v2-tabbed-carousel__title,
