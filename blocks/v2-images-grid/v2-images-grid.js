@@ -21,8 +21,8 @@ export default function decorate(block) {
   // give format to the list items
   [...ul.children].forEach((li) => {
     const section = createElement('div');
-    const title = li.querySelector('h3');
-    title.classList.add('v2-images-grid-title');
+    const headings = li.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    [...headings].forEach((heading) => heading.classList.add('v2-images-grid-title'));
     let picture = li.querySelector('picture');
 
     if (picture) {
