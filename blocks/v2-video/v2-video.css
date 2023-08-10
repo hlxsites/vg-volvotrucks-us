@@ -12,6 +12,7 @@ main .section.v2-video-container .v2-video-wrapper {
 
 .v2-video {
   --video-inset: inset(24px 24px round 8px);
+  --video-transition: all var(--duration-large) ease-in-out;
 
   position: relative;
   overflow: hidden;
@@ -19,7 +20,7 @@ main .section.v2-video-container .v2-video-wrapper {
   justify-content: center;
   height: 100vh;
   clip-path: var(--video-inset);
-  transition: clip-path var(--duration-large) ease-in-out;
+  transition: var(--video-transition);
 }
 
 .v2-video.v2-video--full-width {
@@ -58,6 +59,7 @@ main .section.v2-video-container .v2-video-wrapper {
   line-height: var(--f-body-line-height);
   letter-spacing: var(--f-body-letter-spacing);
   text-align: center;
+  transition: var(--video-transition);
 }
 
 .v2-video .v2-video__content * {
@@ -116,7 +118,12 @@ main .section.v2-video-container .v2-video-wrapper {
   }
 
   .v2-video .v2-video__content {
-    margin: auto calc((100vw - 1200px) / 2 + 135px);
+    margin: auto calc((100vw - 1200px) / 2);
+    transform: translateX(135px);
     text-align: left;
+  }
+
+  .v2-video.v2-video--full-width .v2-video__content {
+    transform: translateX(0);
   }
 }
