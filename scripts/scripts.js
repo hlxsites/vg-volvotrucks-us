@@ -16,6 +16,7 @@ import {
   createOptimizedPicture,
   getMetadata,
   toClassName,
+  getHref,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
@@ -66,6 +67,51 @@ function isCTALinkCheck(ctaLink) {
   const twoPreviousSibling = previousSibling?.previousElementSibling;
   const siblings = [previousSibling, nextSibling, twoPreviousSibling];
   return siblings.some((elem) => elem?.localName === 'h1');
+}
+
+/**
+ * Returns a picture element with webp and fallbacks / allow multiple src paths for every breakpoint
+ * @param {string} src Default image URL (if no src is passed to breakpoints object)
+ * @param {boolean} eager load image eager
+ * @param {Array} breakpoints breakpoints and corresponding params (eg. src, width, media)
+ */
+export function createCustomOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
+  const url = new URL(src, getHref());
+  const picture = document.createElement('picture');
+  let { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
+
+  breakpoints.forEach((br) => {
+    // custom src path in breakpoint
+    if (br.src) {
+      const customUrl = new URL(br.src, getHref());
+      pathname = customUrl.pathname;
+    }
+
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('type', 'image/webp');
+    source.setAttribute('srcset', `${pathname}?width=${br.width}&format=webply&optimize=medium`);
+    picture.appendChild(source);
+  });
+
+  // fallback
+  breakpoints.forEach((br, i) => {
+    if (i < breakpoints.length - 1) {
+      const source = document.createElement('source');
+      if (br.media) source.setAttribute('media', br.media);
+      source.setAttribute('srcset', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      picture.appendChild(source);
+    } else {
+      const img = document.createElement('img');
+      img.setAttribute('loading', eager ? 'eager' : 'lazy');
+      img.setAttribute('alt', alt);
+      picture.appendChild(img);
+      img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+    }
+  });
+
+  return picture;
 }
 
 function buildHeroBlock(main) {
@@ -220,6 +266,81 @@ function buildTabbedBlock(main) {
   }
 }
 
+function createTabbedTruckSection(tabItems) {
+  const tabSection = createElement('div', ['section']);
+  tabSection.dataset.sectionStatus = 'initialized';
+  const wrapper = createElement('div');
+  tabSection.append(wrapper);
+  const tabBlock = buildBlock('v2-tabbed-carousel', [tabItems]);
+  wrapper.append(tabBlock);
+  return tabSection;
+}
+
+function buildTruckCarouselBlock(main) {
+  const tabItems = [];
+  let nextElement;
+  const BREAKPOINTS = {
+    0: '(min-width: 400px)',
+    1: '(min-width: 1200px)',
+  };
+
+  const mainChildren = [...main.querySelectorAll(':scope > div')];
+  mainChildren.forEach((section, i) => {
+    const isTruckCarousel = section.dataset.truckCarousel;
+    if (!isTruckCarousel) return;
+
+    // save carousel position
+    nextElement = mainChildren[i + 1];
+    const sectionMeta = section.dataset.truckCarousel;
+
+    const tabContent = createElement('div', 'v2-tabbed-carousel__content');
+    tabContent.dataset.truckCarousel = sectionMeta;
+    tabContent.innerHTML = section.innerHTML;
+    const images = tabContent.querySelectorAll('p > picture');
+
+    const imageBreakpoints = [];
+    const firstImage = images[0]?.lastElementChild;
+    const baseImageObj = {
+      src: firstImage?.src,
+      alt: firstImage?.alt,
+    };
+
+    images.forEach((pic, j) => {
+      const img = pic.lastElementChild;
+      imageBreakpoints.push({
+        src: img.src,
+        width: 2000,
+        media: BREAKPOINTS[j],
+      });
+
+      pic.parentNode.remove();
+    });
+    imageBreakpoints.reverse(); // order first big and then small version
+    const newPicture = createCustomOptimizedPicture(
+      baseImageObj.src,
+      baseImageObj.alt,
+      true,
+      imageBreakpoints,
+    );
+
+    tabContent.prepend(newPicture);
+
+    tabItems.push(tabContent);
+    section.remove();
+  });
+
+  if (tabItems.length > 0) {
+    const tabbedCarouselSection = createTabbedTruckSection(tabItems);
+    if (nextElement) { // if we saved a position push the carousel in that position if not
+      main.insertBefore(tabbedCarouselSection, nextElement);
+    } else {
+      main.append(tabbedCarouselSection);
+    }
+    decorateIcons(tabbedCarouselSection);
+    decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
+  }
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -359,6 +480,9 @@ export function decorateMain(main, head) {
   buildTabbedBlock(main);
   decorateOfferLinks(main);
   buildCtaList(main);
+
+  // redesign
+  buildTruckCarouselBlock(main);
 }
 
 async function loadTemplate(doc, templateName) {

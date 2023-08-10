@@ -80,7 +80,7 @@
   --f-heading-4-line-height: 125%;
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
-  --f-heading-5-font-size: 1.5rem; /* 20px */
+  --f-heading-5-font-size: 1.5rem; /* 24px */
   --f-heading-5-line-height: 125%;
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
@@ -572,6 +572,11 @@ main p img {
   letter-spacing: var(--f-body-letter-spacing);
 }
 
+.redesign-v2 a.button:focus,
+.redesign-v2 button:focus {
+  outline: 2px solid var(--light-border-focus);
+}
+
 /* sections */
 
 main .section > div {
@@ -1027,34 +1032,158 @@ main.blue-contract .section.section-with-title p {
 }
 
 .redesign-v2 a.button.primary,
-.redesign-v2 button.primary {
-  display: inline-flex;
-  justify-content: center;
-  gap: 8px;
-  color: var(--c-cta-blue-default);
-  font-feature-settings: 'clig' off, 'liga' off;
-  font-family: var(--font-family-body);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: 0.5px;
-  border: none;
-  padding: 0;
+.redesign-v2 button.primary,
+.redesign-v2 a.button.secondary,
+.redesign-v2 button.secondary,
+.redesign-v2 a.button.tertiary,
+.redesign-v2 button.tertiary,
+.redesign-v2 a.button.marketing-cta,
+.redesign-v2 button.marketing-cta {
+  border: 1px solid transparent;
   align-items: center;
+  border-radius: 4px;
+  display: inline-flex;
+  font-family: var(--font-family-body);
+  font-size: 14px;
+  gap: 10px;
+  justify-content: center;
+  letter-spacing: 1.25px;
+  line-height: 100%;
+  padding: 17px 36px;
+  text-align: center;
+  transition: all var(--duration-small) var(--easing-standard);
+}
+
+.redesign-v2 a.button.primary,
+.redesign-v2 button.primary {
+  background-color: var(--c-main-black);
+  color: var(--c-white);
 }
 
 .redesign-v2 a.button.primary:hover,
 .redesign-v2 button.primary:hover {
-  background-color: unset;
-  text-decoration: underline;
-  color: var(--c-cta-blue-hover);
+  background-color: var(--c-grey-700);
 }
 
 .redesign-v2 a.button.primary:active,
 .redesign-v2 button.primary:active {
+  background-color: var(--c-grey-900);
+}
+
+.redesign-v2 a.button.primary.dark,
+.redesign-v2 button.primary.dark {
+  background-color: var(--c-white);
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.primary.dark:hover,
+.redesign-v2 button.primary.dark:hover {
+  background-color: var(--c-grey-200);
+  border-color: transparent;
+}
+
+.redesign-v2 a.button.primary.dark:active,
+.redesign-v2 button.primary.dark:active {
+  background-color: var(--c-grey-400);
+}
+
+.redesign-v2 a.button.secondary,
+.redesign-v2 button.secondary {
+  border-color: var(--c-main-black);
+  background-color: var(--c-white);
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.secondary:hover,
+.redesign-v2 button.secondary:hover {
+  background-color: var(--c-grey-50);
+}
+
+.redesign-v2 a.button.secondary:active,
+.redesign-v2 button.secondary:active {
+  background-color: var(--c-grey-100);
+}
+
+.redesign-v2 a.button.secondary.dark,
+.redesign-v2 button.secondary.dark {
+  border: 1px solid var(--c-white);
+  background-color: var(--c-main-black);
+  color: var(--c-white);
+}
+
+.redesign-v2 a.button.secondary.dark:hover,
+.redesign-v2 button.secondary.dark:hover {
+  background-color: var(--c-grey-900);
+}
+
+.redesign-v2 a.button.secondary.dark:active,
+.redesign-v2 button.secondary.dark:active {
+  background-color: var(--c-grey-800);
+}
+
+.redesign-v2 a.button.tertiary,
+.redesign-v2 button.tertiary {
+  background-color: var(--c-white);
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.tertiary:hover,
+.redesign-v2 button.tertiary:hover {
   text-decoration: underline;
-  color: var(--c-cta-blue-active);
+  background-color: var(--c-grey-50);
+}
+
+.redesign-v2 a.button.tertiary:active,
+.redesign-v2 button.tertiary:active {
+  background-color: var(--c-grey-100);
+}
+
+.redesign-v2 a.button.tertiary.dark,
+.redesign-v2 button.tertiary.dark {
+  color: var(--c-white);
+  background-color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.tertiary.dark:hover,
+.redesign-v2 button.tertiary.dark:hover {
+  background-color: var(--c-grey-900);
+}
+
+.redesign-v2 a.button.tertiary.dark:active,
+.redesign-v2 button.tertiary.dark:active {
+  background-color: var(--c-grey-800);
+}
+
+.redesign-v2 a.button.marketing-cta,
+.redesign-v2 button.marketing-cta {
+  background-color: var(--c-cta-blue-default);
+  color: var(--c-white);
+}
+
+.redesign-v2 a.button.marketing-cta:hover,
+.redesign-v2 button.marketing-cta:hover {
+  background-color: var(--c-cta-blue-hover);
+}
+
+.redesign-v2 a.button.marketing-cta:active,
+.redesign-v2 button.marketing-cta:active {
+  background-color: var(--c-cta-blue-active);
+}
+
+.redesign-v2 a.button.marketing-cta.dark,
+.redesign-v2 button.marketing-cta.dark {
+  background-color: #44A1FF;
+  color: var(--c-main-black);
+}
+
+.redesign-v2 a.button.marketing-cta.dark:hover,
+.redesign-v2 button.marketing-cta.dark:hover {
+  background-color: #76BAFF;
+}
+
+.redesign-v2 a.button.marketing-cta.dark:active,
+.redesign-v2 button.marketing-cta.dark:active {
+  background-color: #1F78D1;
 }
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
