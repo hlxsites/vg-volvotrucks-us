@@ -1197,8 +1197,8 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 .icon svg {
   fill: currentcolor;
-  height: 1rem;
-  width: 1rem;
+  height: 1em;
+  width: 1em;
 }
 
 @media (min-width: 744px) {
