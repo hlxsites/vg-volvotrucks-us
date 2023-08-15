@@ -18,8 +18,16 @@ import {
   loadLazy,
   loadDelayed,
   loadTemplate,
-  getTextLabel,
+  createElement,
 } from './common.js';
+
+import {
+  isVideoLink,
+  isSoundcloudLink,
+  isLowResolutionVideoUrl,
+  addVideoShowHandler,
+  addSoundcloudShowHandler,
+} from './video-helper.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
@@ -128,8 +136,7 @@ function buildHeroBlock(main) {
   if (isCTALink) ctaLink.classList.add('cta');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    const headings = document.createElement('div');
-    headings.className = 'hero-headings';
+    const headings = createElement('div', { classes: 'hero-headings' });
     const elems = [picture, headings];
     if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
       // also consider a <p> without any children as sub heading except BR
@@ -174,7 +181,7 @@ function buildSubNavigation(main, head) {
  * @param {Element} main The container element
  * @param {Element} head The header element
  */
-export function buildAutoBlocks(main, head) {
+function buildAutoBlocks(main, head) {
   try {
     buildHeroBlock(main);
     buildSubNavigation(main, head);
@@ -184,8 +191,7 @@ export function buildAutoBlocks(main, head) {
   }
 }
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
-  const tabSection = document.createElement('div');
-  tabSection.classList.add('section', 'tabbed-container');
+  const tabSection = createElement('div', { classes: ['section', 'tabbed-container'] });
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
@@ -323,21 +329,6 @@ function buildTruckCarouselBlock(main) {
     }
     decorateIcons(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
-  }
-}
-
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- * @param {Element} head The header element
- */
-function buildAutoBlocks(main, head) {
-  try {
-    buildHeroBlock(main);
-    buildSubNavigation(main, head);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
   }
 }
 
@@ -496,137 +487,6 @@ async function loadPage() {
 }
 
 loadPage();
-
-/* video helpers */
-export function isLowResolutionVideoUrl(url) {
-  return url.split('?')[0].endsWith('.mp4');
-}
-
-export function isVideoLink(link) {
-  const linkString = link.getAttribute('href');
-  return (linkString.includes('youtube.com/embed/')
-    || isLowResolutionVideoUrl(linkString))
-    && link.closest('.block.embed') === null;
-}
-
-export function selectVideoLink(links, preferredType) {
-  const linksList = [...links];
-  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
-  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
-  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
-  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-
-  if (shouldUseYouTubeLinks && youTubeLink) {
-    return youTubeLink;
-  }
-  return localMediaLink;
-}
-
-export function createLowResolutionBanner() {
-  const lowResolutionMessage = getTextLabel('Low resolution video message');
-  const changeCookieSettings = getTextLabel('Change cookie settings');
-
-  const banner = document.createElement('div');
-  banner.classList.add('low-resolution-banner');
-  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
-  banner.querySelector('button').addEventListener('click', () => {
-    window.OneTrust.ToggleInfoDisplay();
-  });
-
-  return banner;
-}
-
-export function showVideoModal(linkUrl) {
-  // eslint-disable-next-line import/no-cycle
-  import('../common/modal/modal.js').then((modal) => {
-    let beforeBanner = null;
-
-    if (isLowResolutionVideoUrl(linkUrl)) {
-      beforeBanner = createLowResolutionBanner();
-    }
-
-    modal.showModal(linkUrl, beforeBanner);
-  });
-}
-
-export function addVideoShowHandler(link) {
-  link.classList.add('text-link-with-video');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    showVideoModal(link.getAttribute('href'));
-  });
-}
-
-export function isSoundcloudLink(link) {
-  return link.getAttribute('href').includes('soundcloud.com/player')
-    && link.closest('.block.embed') === null;
-}
-
-export function addSoundcloudShowHandler(link) {
-  link.classList.add('text-link-with-soundcloud');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    const thumbnail = link.closest('div')?.querySelector('picture');
-    const title = link.closest('div')?.querySelector('h1, h2, h3');
-    const text = link.closest('div')?.querySelector('p:not(.button-container, .image)');
-
-    // eslint-disable-next-line import/no-cycle
-    import('../common/modal/modal.js').then((modal) => {
-      const episodeInfo = document.createElement('div');
-      episodeInfo.classList.add('modal-soundcloud');
-      episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
-      <div class="episode-text">
-          <h2></h2>
-          <p></p>
-      </div>`;
-      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
-      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
-      episodeInfo.querySelector('p').innerText = text?.innerText || '';
-
-      modal.showModal(link.getAttribute('href'), null, episodeInfo);
-    });
-  });
-}
-
-export function addPlayIcon(parent) {
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('video-icon-wrapper');
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play', 'video-icon');
-  iconWrapper.appendChild(icon);
-  parent.appendChild(iconWrapper);
-}
-
-export function wrapImageWithVideoLink(videoLink, image) {
-  videoLink.innerText = '';
-  videoLink.appendChild(image);
-  videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
-
-  addPlayIcon(videoLink);
-}
-
-export function createIframe(url, { parentEl, classes = [] }) {
-  // iframe must be recreated every time otherwise the new history record would be created
-  const iframe = document.createElement('iframe');
-  const iframeClasses = Array.isArray(classes) ? classes : [classes];
-
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-  iframe.setAttribute('src', url);
-  iframe.classList.add(...iframeClasses);
-
-  if (parentEl) {
-    parentEl.appendChild(iframe);
-  }
-
-  return iframe;
-}
 
 export const removeEmptyTags = (block) => {
   block.querySelectorAll('*').forEach((x) => {

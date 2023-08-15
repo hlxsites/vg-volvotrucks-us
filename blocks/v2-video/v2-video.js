@@ -1,4 +1,4 @@
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;

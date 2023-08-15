@@ -22,8 +22,11 @@ function goToTopFunction() {
 }
 
 function addScrollToTopButton(mainEl) {
-  const scrollToTopButton = createElement('button', 'v2-scroll-to-top', {
-    title: 'Go to the top of the page',
+  const scrollToTopButton = createElement('button', {
+    classes: 'v2-scroll-to-top',
+    props: {
+      title: 'Go to the top of the page',
+    },
   });
   scrollToTopButton.addEventListener('click', goToTopFunction);
   window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));

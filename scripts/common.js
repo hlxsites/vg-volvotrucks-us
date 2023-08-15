@@ -48,7 +48,7 @@ export function createElement(tagName, options = {}) {
  * Adds the favicon.
  * @param {string} href The favicon URL
  */
-function addFavIcon(href) {
+export function addFavIcon(href) {
   const link = createElement('link', { props: { rel: 'icon', type: 'image/svg+xml', href } });
   const existingLink = document.querySelector('head link[rel="icon"]');
   if (existingLink) {

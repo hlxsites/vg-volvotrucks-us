@@ -10,7 +10,7 @@ export default function decorate(block) {
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     // If cell contain any element, we add them in the ul
     if (cell.childElementCount) {
-      const li = createElement('li', ['v2-images-grid-item', 'border']);
+      const li = createElement('li', { classes: ['v2-images-grid-item', 'border'] });
       li.append(...cell.childNodes);
       ul.append(li);
     }
@@ -38,8 +38,7 @@ export default function decorate(block) {
     section.prepend(picture);
 
     // Add wrapper around the text content
-    const container = createElement('div');
-    container.className = 'v2-images-grid-itemtext';
+    const container = createElement('div', { classes: 'v2-images-grid-itemtext' });
     container.innerHTML = li.innerHTML;
     li.innerHTML = '';
     section.append(container);

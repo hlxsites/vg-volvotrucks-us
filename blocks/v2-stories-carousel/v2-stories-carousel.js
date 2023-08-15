@@ -5,7 +5,7 @@ import {
   createOptimizedPicture,
   getOrigin,
 } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 
 const listenScroll = (carousel) => {
   const elements = carousel.querySelectorAll('.v2-stories-carousel-items > *');
