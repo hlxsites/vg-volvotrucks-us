@@ -52,7 +52,7 @@ body.disable-scroll, body.disable-scroll main {
   transition: visibility .2s, opacity .2s cubic-bezier(.4, 0, .2, 1);
 }
 
-.semitrans-trigger[aria-expanded=true]~.semitrans {
+.semitrans-trigger[aria-expanded='true']~.semitrans {
   visibility: visible;
   opacity: 0.7;
 }
