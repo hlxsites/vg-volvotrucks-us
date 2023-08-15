@@ -76,20 +76,20 @@ export default async function decorate(block) {
     });
   }
 
-  const seperator = createElement('hr', 'v2-footer-separator');
-  footer.append(seperator);
-
   const copyrightWrapper = createElement('div', 'v2-footer-copyright-wrapper');
+  const copyrightContainer = createElement('div', 'v2-footer-copyright-container');
+
+  copyrightWrapper.append(copyrightContainer);
 
   if (footerBar) {
     const list = footerBar.firstElementChild;
     list?.classList.add('v2-footer-bar');
-    copyrightWrapper.appendChild(list);
+    copyrightContainer.appendChild(list);
     footerBar.remove();
   }
 
   if (footerCopyright) {
-    copyrightWrapper.appendChild(footerCopyright);
+    copyrightContainer.appendChild(footerCopyright);
     footerCopyright?.classList.add('v2-footer-copyright');
   }
 
