@@ -583,10 +583,12 @@ export function loadHeader(header) {
  * @returns {Promise}
  */
 export function loadFooter(footer) {
-  const footerBlock = buildBlock('footer', '');
-  footer.append(footerBlock);
-  decorateBlock(footerBlock);
-  return loadBlock(footerBlock);
+  if (footer) {
+    const footerBlock = buildBlock('footer', '');
+    footer.append(footerBlock);
+    decorateBlock(footerBlock);
+    return loadBlock(footerBlock);
+  }
 }
 /**
  * setup block utils
