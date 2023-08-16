@@ -578,9 +578,7 @@ export function loadHeader(header) {
 }
 
 /**
- * Loads a block named 'footer' into footer
- * @param footer footer element
- * @returns {Promise}
+ * loads a block named 'footer' into footer
  */
 export function loadFooter(footer) {
   if (footer) {
