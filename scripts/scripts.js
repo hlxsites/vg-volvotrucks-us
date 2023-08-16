@@ -2,7 +2,6 @@ import {
   sampleRUM,
   buildBlock,
   loadHeader,
-  loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -455,6 +454,17 @@ function decorateOfferLinks(main) {
   });
 }
 
+/**
+ * loads a block named 'v2-footer' into footer
+ */
+function loadFooter(footer) {
+  if (footer) {
+    const footerBlock = buildBlock('v2-footer', '');
+    footer.append(footerBlock);
+    decorateBlock(footerBlock);
+    loadBlock(footerBlock);
+  }
+}
 /**
  * Decorates the main element.
  * @param {Element} main The main element
