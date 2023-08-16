@@ -587,7 +587,7 @@ export function loadFooter(footer) {
     const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
-    return loadBlock(footerBlock);
+    loadBlock(footerBlock);
   }
 }
 /**
