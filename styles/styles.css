@@ -493,7 +493,7 @@ a.button.primary:hover, button.primary:hover {
   color: var(--text-color);
 }
 
-input[type=text],select,textarea {
+input[type='text'],select,textarea {
   display: block;
   padding: 10px 40px 10px 15px;
   border: none;

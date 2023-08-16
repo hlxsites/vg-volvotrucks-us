@@ -107,10 +107,7 @@ main .hero-with-video .hero-video {
     display: block;
     content: '';
     position: absolute;
-    top: 50%;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    inset: 50% 0 0;
     background: linear-gradient(-180deg, rgb(0 0 0 / 0%), rgb(0 0 0 / 80%)) repeat-x;
   }
 }
