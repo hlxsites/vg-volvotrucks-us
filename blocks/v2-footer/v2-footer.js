@@ -54,25 +54,28 @@ export default async function decorate(block) {
   openExternalLinksInNewTab(footer);
   wrapSocialMediaLinks(mainLinkWrapper);
 
+  const headings = footer.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  [...headings].forEach((heading) => heading.classList.add('v2-footer__title'));
+
   if (mainLinkWrapper) {
     mainLinkWrapper.classList.add('v2-footer-links-wrapper');
     // in Word, it is edited like a column block, but we style it differently
     mainLinkWrapper.firstElementChild.classList.remove('columns');
-    mainLinkWrapper.querySelectorAll('h3').forEach((h3) => {
-      const heading = h3.firstElementChild;
+    mainLinkWrapper.querySelectorAll('.v2-footer__title').forEach((title) => {
+      const heading = title.firstElementChild;
       const [text, icon] = heading.childNodes;
       const spanEle = createElement('span');
       spanEle.textContent = text.textContent;
 
-      h3.append(spanEle);
-      h3.append(icon);
+      title.append(spanEle);
+      title.append(icon);
       heading.remove();
 
-      h3.parentElement.classList.add('v2-footer-list');
-      h3.parentElement.parentElement.classList.add('v2-footer-list-wrapper');
-      h3.nextElementSibling?.classList.add('v2-footer-list-item');
+      title.parentElement.classList.add('v2-footer-list');
+      title.parentElement.parentElement.classList.add('v2-footer-list-wrapper');
+      title.nextElementSibling?.classList.add('v2-footer-list-item');
 
-      h3.addEventListener('click', (e) => toggleExpand(e.target));
+      title.addEventListener('click', (e) => toggleExpand(e.target));
     });
   }
 

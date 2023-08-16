@@ -6,7 +6,7 @@
   background: var(--c-background-card);
 }
 
-.v2-footer :is(h3, p, a) {
+.v2-footer :is(.v2-footer__title, p, a) {
   font-family: var(--ff-volvo-novum);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 16px;
@@ -19,12 +19,12 @@
   list-style: none;
 }
 
-.v2-footer-links-wrapper :is(h3, li, p, a) {
+.v2-footer-links-wrapper :is(.v2-footer__title, li, p, a) {
   margin-bottom: 0;
   color: var(--c-main-black);
 }
 
-.v2-footer-list h3 {
+.v2-footer-list .v2-footer__title {
   font-family: var(--ff-volvo-novum-medium);
   border-top: 1px solid var(--border-color);
   cursor: pointer;
@@ -145,7 +145,7 @@
   background-color: var(--c-grey-100);
 }
 
-.v2-footer-list:not(.expand) h3:focus,
+.v2-footer-list:not(.expand) .v2-footer__title:focus,
 .v2-footer-list-item a:focus,
 .v2-footer-bar a:focus,
 .v2-scroll-to-top:focus {
@@ -169,13 +169,13 @@
     padding-bottom: 55px;
   }
 
-  .v2-footer-list h3 {
+  .v2-footer-list .v2-footer__title {
     border-top: 0;
     padding: 0;
     cursor: initial;
   }
 
-  .v2-footer-list:not(.expand) h3:hover {
+  .v2-footer-list:not(.expand) .v2-footer__title:hover {
     background-color: transparent;
   }
 
