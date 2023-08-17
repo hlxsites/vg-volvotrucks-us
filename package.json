@@ -8,13 +8,13 @@
     "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
     "test:watch": "npm test -- --watch",
     "lint:js": "eslint .",
-    "stylelint-staged": "stylelint 'blocks/**/*.css' 'styles/*.css' 'templates/**/*.css'",
-    "lint": "npm run lint:js && npm run stylelint-staged",
+    "lint:css": "stylelint 'blocks/**/*.css' 'styles/*.css' 'templates/**/*.css'",
+    "lint": "npm run lint:js && npm run lint:css",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.js": "npm run lint:js",
-    "*.css": "npm run stylelint-staged"
+    "*.css": "npm run lint:css"
   },
   "repository": {
     "type": "git",
