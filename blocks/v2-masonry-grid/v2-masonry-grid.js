@@ -65,14 +65,6 @@ export default function decorate(block) {
       li.prepend(video);
       link.remove();
     }
-
-    // Add wrapper around the text content
-    // const container = createElement('div');
-    // container.className = 'v2-images-grid-itemtext';
-    // container.innerHTML = li.innerHTML;
-    // li.innerHTML = '';
-    // section.append(container);
-    // li.append(section);
   });
 
   // remove empty tags
