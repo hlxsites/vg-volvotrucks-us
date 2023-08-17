@@ -49,6 +49,7 @@
 .v2-masonry-grid__item img,
 .v2-masonry-grid__item video {
   height: 100%;
+  inset: auto auto 0 0;
   object-fit: cover;
   position: absolute;
   width: 100%;
