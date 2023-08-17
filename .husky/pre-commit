@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx lint-staged
+
+# Check for untracked files
+untracked_files=$(git ls-files --others --exclude-standard)
+
+if [ -n "$untracked_files" ]; then
+  echo "Warning: There are untracked files in your repository:"
+  echo "$untracked_files"
+  echo "Consider adding them with 'git add' or update .gitignore if they should be ignored."
+fi
