@@ -50,7 +50,7 @@ export default function decorate(block) {
 
     const link = li.querySelector('a');
     const isVideo = link ? isVideoLink(link) : false;
-    if (link && isVideo) {
+    if (isVideo) {
       const video = createElement('video', [`${blockName}__video`], {
         loop: 'loop',
       });
