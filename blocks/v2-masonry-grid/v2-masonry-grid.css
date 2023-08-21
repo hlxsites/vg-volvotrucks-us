@@ -10,7 +10,7 @@
 .v2-masonry-grid__items {
   display: grid;
   gap: var(--v2-masonry-grid-gutter);
-  grid-template-columns: repeat(2, calc(50% - var(--v2-masonry-grid-gutter)));
+  grid-template-columns: repeat(2, calc(50% - var(--v2-masonry-grid-gutter) / 2));
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   margin: 0;
   padding: 0;
@@ -61,7 +61,7 @@
 
 @media screen and (min-width: 744px) {
   .v2-masonry-grid__items {
-    grid-template-columns: repeat(4, calc(25% - var(--v2-masonry-grid-gutter)));
+    grid-template-columns: repeat(4, calc(100% - var(--v2-masonry-grid-gutter) * 3) / 4);
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
     grid-template-areas:
