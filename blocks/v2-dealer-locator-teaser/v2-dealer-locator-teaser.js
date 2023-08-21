@@ -66,5 +66,8 @@ export default async function decorate(block) {
   const contentEl = block.querySelector(':scope > div > div');
   contentEl.classList.add('v2-dlt__content');
   const buttons = block.querySelectorAll('.button-container > a');
-  [...buttons].forEach((button) => button.classList.add('v2-dlt__button'));
+  [...buttons].forEach((button) => {
+    button.classList.remove('button', 'primary');
+    button.classList.add('v2-dlt__button', 'standalone-link');
+  });
 }

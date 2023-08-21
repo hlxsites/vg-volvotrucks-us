@@ -138,6 +138,7 @@
   --c-cta-blue-default: #004FBC;
   --c-cta-blue-hover: #2B8EDE;
   --c-cta-blue-active: #104E9B;
+  --c-cta-blue-visited: #346559;
 
   /* Greyscale */
   --c-grey-50: #F7F7F7;
@@ -493,7 +494,7 @@ a.button.primary:hover, button.primary:hover {
   color: var(--text-color);
 }
 
-input[type=text],select,textarea {
+input[type='text'],select,textarea {
   display: block;
   padding: 10px 40px 10px 15px;
   border: none;
@@ -1005,6 +1006,29 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 .section div.full-width {
   padding: 0;
   width: 100%;
+}
+
+.redesign-v2 a.standalone-link {
+  align-items: center;
+  color: var(--c-cta-blue-default);
+  display: inline-flex;
+  font-family: var(--font-family-body);
+  font-size: var(--f-body-font-size);
+  gap: 8px;
+  letter-spacing: var(--f-body-letter-spacing);
+  line-height: var(--f-body-line-height);
+}
+
+.redesign-v2 a.standalone-link:hover {
+  color: var(--c-cta-blue-hover);
+}
+
+.redesign-v2 a.standalone-link:active {
+  color: var(--c-cta-blue-active);
+}
+
+.redesign-v2 a.standalone-link:visited {
+  color: var(--c-cta-blue-visited);
 }
 
 .redesign-v2 a.button.primary,

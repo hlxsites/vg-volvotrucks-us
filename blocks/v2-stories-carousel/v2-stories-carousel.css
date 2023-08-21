@@ -101,6 +101,7 @@ ul.v2-stories-carousel-meta {
 .v2-stories-carousel-meta li {
   align-items: center;
   display: flex;
+  gap: 4px;
   justify-items: center;
   margin: 0 8px;
 }
@@ -109,26 +110,12 @@ ul.v2-stories-carousel-meta {
   display: none;
 }
 
-.v2-stories-carousel-meta svg {
-  height: 16px;
-  margin-right: 4px;
-  width: 16px;
-}
-
 .v2-stories-carousel-author address {
   font-style: normal;
 }
 
 .v2-stories-carousel-cta {
   margin-top: 16px;
-}
-
-.v2-stories-carousel-cta svg {
-  height: 16px;
-  margin-left: 8px;
-  position: relative;
-  top: 1px;
-  width: 16px;
 }
 
 /* Arrow controls */
@@ -223,8 +210,8 @@ ul.v2-stories-carousel-meta {
     display: flex;
   }
 
-  .v2-stories-carousel-meta svg {
-    margin-right: 8px;
+  .v2-stories-carousel-meta li {
+    gap: 8px;
   }
 
   .v2-stories-carousel-cta {

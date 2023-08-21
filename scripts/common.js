@@ -3,11 +3,24 @@ import {
   loadCSS,
   loadBlock,
   loadBlocks,
-  loadFooter,
   loadHeader,
+  buildBlock,
+  decorateBlock,
 } from './lib-franklin.js';
 
 let placeholders = null;
+
+/**
+ * loads a block named 'v2-footer' into footer
+ */
+function loadFooter(footer) {
+  if (footer) {
+    const footerBlock = buildBlock('v2-footer', '');
+    footer.append(footerBlock);
+    decorateBlock(footerBlock);
+    loadBlock(footerBlock);
+  }
+}
 
 export async function getPlaceholders() {
   placeholders = await fetch('/placeholder.json').then((resp) => resp.json());

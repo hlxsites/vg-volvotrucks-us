@@ -71,10 +71,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     content: "\f10c";
     font-family: var(--ff-fontawesome);
     font-size: 1.2rem;
@@ -134,10 +131,7 @@
         display: flex;
         position: absolute;
         justify-content: space-between;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
     }
 
     .block.carousel .desktop-controls button {
@@ -156,10 +150,7 @@
         align-items: center;
         justify-content: center;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         content: "\f104";
         font-family: var(--ff-fontawesome);
         font-size: 2rem;
