@@ -1,4 +1,5 @@
-/* eslint-env jest */
+/* eslint-disable no-unused-expressions */
+/* global describe before it afterEach */
 
 import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
@@ -6,6 +7,7 @@ import { expect } from '@esm-bundle/chai';
 /** @type {import('./types').Scripts} */
 let commonScript;
 /** @type {import('./types').LibFranklin} */
+// eslint-disable-next-line no-unused-vars
 let lib;
 
 document.body.innerHTML = await readFile({ path: './dummy.html' });

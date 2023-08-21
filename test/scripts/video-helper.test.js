@@ -1,4 +1,5 @@
-/* eslint-env jest */
+/* eslint-disable no-unused-expressions */
+/* global describe before it beforeEach */
 
 import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
@@ -77,10 +78,11 @@ describe('isVideoLink', () => {
   });
 });
 
-
 describe('selectVideoLink', () => {
   // Sample links for testing
-  let youtubeLink, mp4Link, otherLink;
+  let youtubeLink;
+  let mp4Link;
+  let otherLink;
 
   before(() => {
     youtubeLink = commonScript.createElement('a', { props: { href: 'https://www.youtube.com/embed/example-video' } });
@@ -128,7 +130,6 @@ describe('addVideoShowHandler', () => {
     linkElement.addEventListener = sinon.spy();
   });
 
-
   beforeEach(() => {
     sinon.resetHistory(); // Reset spies and fakes before each test
   });
@@ -147,7 +148,7 @@ describe('addVideoShowHandler', () => {
 
 describe('isSoundcloudLink', () => {
   it('should return true for a valid SoundCloud link', () => {
-    const linkElement = commonScript.createElement('a', { props: { href: 'https://soundcloud.com/player/track' }});
+    const linkElement = commonScript.createElement('a', { props: { href: 'https://soundcloud.com/player/track' } });
     document.body.appendChild(linkElement);
 
     const result = videoHelper.isSoundcloudLink(linkElement);
@@ -155,10 +156,10 @@ describe('isSoundcloudLink', () => {
   });
 
   it('should return false if the link is inside a block with class "embed"', () => {
-    const linkElement = commonScript.createElement('a', { props: { href: 'https://soundcloud.com/player/track' }});    
+    const linkElement = commonScript.createElement('a', { props: { href: 'https://soundcloud.com/player/track' } });
     const embedBlock = commonScript.createElement('div', { classes: ['block', 'embed'] });
     embedBlock.appendChild(linkElement);
-    
+
     document.body.appendChild(embedBlock);
 
     const result = videoHelper.isSoundcloudLink(linkElement);
@@ -166,7 +167,7 @@ describe('isSoundcloudLink', () => {
   });
 
   it('should return false for an invalid SoundCloud link', () => {
-    const linkElement = commonScript.createElement('a', { props: { href: 'https://example.com' }});
+    const linkElement = commonScript.createElement('a', { props: { href: 'https://example.com' } });
     document.body.appendChild(linkElement);
 
     const result = videoHelper.isSoundcloudLink(linkElement);
@@ -175,8 +176,8 @@ describe('isSoundcloudLink', () => {
 });
 
 describe('wrapImageWithVideoLink', () => {
-
-  let videoLink, image;
+  let videoLink;
+  let image;
 
   before(() => {
     videoLink = document.createElement('a');

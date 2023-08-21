@@ -6,6 +6,7 @@ import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 
 /** @type {import('./types').Scripts} */
+// eslint-disable-next-line no-unused-vars
 let scripts;
 /** @type {import('./types').LibFranklin} */
 let lib;
