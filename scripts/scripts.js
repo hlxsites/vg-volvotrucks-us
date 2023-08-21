@@ -788,6 +788,15 @@ export function getImageForBreakpoint(imagesList, onChange = () => {}) {
   onDesktopChange(desktopMQ);
 }
 
+export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
+  expectedVariantsNames.forEach((variant) => {
+    if (blockClasses.contains(variant)) {
+      blockClasses.remove(variant);
+      blockClasses.add(`${blockName}--${variant}`);
+    }
+  });
+};
+
 /* REDESING CLASS CHECK */
 if (document.querySelector('main').classList.contains('redesign-v2')) {
   document.querySelector('html').classList.add('redesign-v2');

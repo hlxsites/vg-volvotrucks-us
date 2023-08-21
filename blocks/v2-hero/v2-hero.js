@@ -2,6 +2,7 @@ import {
   createElement,
   isVideoLink,
   removeEmptyTags,
+  variantsClassesToBEM,
 } from '../../scripts/scripts.js';
 
 const checkVideoTime = (event) => {
@@ -12,8 +13,13 @@ const checkVideoTime = (event) => {
   }
 };
 
+const variantClasses = ['centered', 'left', 'bottom', 'dark'];
+
 export default async function decorate(block) {
   const blockName = 'v2-hero';
+
+  // add Hero variant classnames
+  variantsClassesToBEM(block.classList, variantClasses, blockName);
 
   const picture = block.querySelector('picture');
   const link = block.querySelector('a');
@@ -47,15 +53,6 @@ export default async function decorate(block) {
   const contentWrapper = block.querySelector(':scope > div');
   contentWrapper.classList.add(`${blockName}__content-wrapper`);
 
-  // add Hero text variants to the corresponding content
-  const variantClasses = ['centered', 'left', 'bottom', 'dark'];
-  variantClasses.forEach((variant) => {
-    if (block.classList.contains(variant)) {
-      if (variant !== 'dark') block.classList.remove(variant);
-      contentWrapper.classList.add(`${blockName}__content-wrapper--${variant}`);
-    }
-  });
-
   const content = block.querySelector(':scope > div > div');
   content.classList.add(`${blockName}__content`);
 
@@ -80,7 +77,7 @@ export default async function decorate(block) {
       b.classList.remove('primary');
     }
 
-    if (block.classList.contains('dark')) {
+    if (block.classList.contains(`${blockName}--dark`)) {
       b.classList.add('dark');
     }
 
