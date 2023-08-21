@@ -3,6 +3,7 @@ import {
   isVideoLink,
   removeEmptyTags,
   variantsClassesToBEM,
+  createVideo,
 } from '../../scripts/scripts.js';
 
 const checkVideoTime = (event) => {
@@ -25,15 +26,10 @@ export default async function decorate(block) {
   const link = block.querySelector('a');
   const isVideo = link ? isVideoLink(link) : false;
   if (isVideo) {
-    const video = createElement('video', [`${blockName}__video`]);
-    video.muted = true;
-    video.autoplay = true;
-
-    const source = createElement('source', '', {
-      src: link.getAttribute('href'),
-      type: 'video/mp4',
+    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+      muted: true,
+      autoplay: true,
     });
-    video.appendChild(source);
     block.prepend(video);
     link.remove();
 

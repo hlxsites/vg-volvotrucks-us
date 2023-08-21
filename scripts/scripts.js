@@ -797,6 +797,32 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
   });
 };
 
+export const createVideo = (src, className = '', props = {}) => {
+  const video = createElement('video', [className]);
+  if (props.muted) {
+    video.muted = props.muted;
+  }
+
+  if (props.autoplay) {
+    video.autoplay = props.autoplay;
+  }
+
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      video.setAttribute(propName, props[propName]);
+    });
+  }
+
+  const source = createElement('source', '', {
+    src,
+    type: 'video/mp4',
+  });
+
+  video.appendChild(source);
+
+  return video;
+};
+
 /* REDESING CLASS CHECK */
 if (document.querySelector('main').classList.contains('redesign-v2')) {
   document.querySelector('html').classList.add('redesign-v2');
