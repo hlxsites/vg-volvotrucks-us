@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-08-10T00:00:00.000Z</updated>
+    <updated>2023-08-21T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Deploys FH LNG Trucks in Exclusive, One-Time Pilot with Linde Canada]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-deploys-fh-lng-trucks-in-exclusive-one-time-pilot-with-linde-canada/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-deploys-fh-lng-trucks-in-exclusive-one-time-pilot-with-linde-canada/"/>
+        <updated>2023-08-21T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Volvo Trucks first launched the LNG product offering in 2017 with serial production beginning in 2018 for the European markets, with the trucks demonstrating exceptional torque, performance and durability while reducing CO2 emissions.]]></content>
+        <published>2023-08-21T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Showcasing Electromobility Innovations, Sustainability and Transportation Efficiency with VNR Electric Ride & Drive Opportunities and Speakers at GTSE 2023]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-showcasing-electromobility-innovations-sustainability-and-transportation-efficiency/</id>
