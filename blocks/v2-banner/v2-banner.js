@@ -73,9 +73,6 @@ export default async function decorate(block) {
   });
   content.appendChild(buttonsWrapper);
 
-  const scrollIcon = createElement('div', `${blockName}__scroll-icon`);
-  block.append(scrollIcon);
-
   removeEmptyTags(content);
 
   block.parentElement.classList.add('full-width');
