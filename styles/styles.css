@@ -1092,7 +1092,6 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.secondary,
 .redesign-v2 button.secondary {
   border-color: var(--c-main-black);
-  background-color: var(--c-white);
   color: var(--c-main-black);
 }
 
@@ -1109,7 +1108,6 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.secondary.dark,
 .redesign-v2 button.secondary.dark {
   border: 1px solid var(--c-white);
-  background-color: var(--c-main-black);
   color: var(--c-white);
 }
 
