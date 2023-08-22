@@ -1,5 +1,10 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { removeEmptyTags, createElement, isVideoLink } from '../../scripts/scripts.js';
+import {
+  removeEmptyTags,
+  createElement,
+  isVideoLink,
+  createVideo,
+} from '../../scripts/scripts.js';
 
 const blockName = 'v2-masonry-grid';
 
@@ -23,17 +28,11 @@ export default function decorate(block) {
         }
 
         if (videos.length > 0) {
-          const video = createElement('video', [`${blockName}__video`], {
+          const video = createVideo(videos[0].getAttribute('href'), `${blockName}__video`, {
+            muted: true,
+            autoplay: true,
             loop: 'loop',
           });
-          video.muted = true;
-          video.autoplay = true;
-
-          const source = createElement('source', '', {
-            src: videos[0].getAttribute('href'),
-            type: 'video/mp4',
-          });
-          video.appendChild(source);
           li.prepend(video);
           videos[0].remove();
         }
