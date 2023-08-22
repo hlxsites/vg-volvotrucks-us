@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-08-21T00:00:00.000Z</updated>
+    <updated>2023-08-22T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Introduces Turnkey Solutions Program to Provide Fleets Full-Service EV Infrastructure Development]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-introduces-turnkey-solutions-program-to-provide-fleets-full-service-ev-infrastructure-development/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-introduces-turnkey-solutions-program-to-provide-fleets-full-service-ev-infrastructure-development/"/>
+        <updated>2023-08-22T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“Identifying sources for charging infrastructure can be an overwhelming task for fleet managers, so now all aspects of EV charging are covered through the Turnkey Solutions program,” Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-08-22T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Deploys FH LNG Trucks in Exclusive, One-Time Pilot with Linde Canada]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-deploys-fh-lng-trucks-in-exclusive-one-time-pilot-with-linde-canada/</id>
