@@ -1,0 +1,85 @@
+.v2-masonry-grid {
+  --v2-masonry-grid-gutter: 16px;
+  --v2-masonry-grid-margin-bottom: 80px;
+
+  margin-bottom: var(--v2-masonry-grid-margin-bottom);
+}
+
+.v2-masonry-grid__items {
+  display: grid;
+  gap: var(--v2-masonry-grid-gutter);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  margin: 0;
+  padding: 0;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  grid-template-areas:
+    'big-landscape big-landscape'
+    'big-landscape big-landscape'
+    'square1 square2'
+    'big-square big-square'
+    'big-square big-square'
+    'landscape landscape'
+    'portrait portrait'
+    'portrait portrait'
+    'portrait portrait'
+    'square3 square4';
+}
+
+.v2-masonry-grid__item {
+  position: relative;
+}
+
+.v2-masonry-grid__item:nth-child(1) { grid-area: big-landscape; }
+.v2-masonry-grid__item:nth-child(2) { grid-area: square1; }
+.v2-masonry-grid__item:nth-child(3) { grid-area: square2; }
+.v2-masonry-grid__item:nth-child(4) { grid-area: big-square; }
+.v2-masonry-grid__item:nth-child(5) { grid-area: landscape; }
+.v2-masonry-grid__item:nth-child(6) { grid-area: portrait; }
+.v2-masonry-grid__item:nth-child(7) { grid-area: square3; }
+.v2-masonry-grid__item:nth-child(8) { grid-area: square4; }
+
+.v2-masonry-grid__item:nth-child(1),
+.v2-masonry-grid__item:nth-child(2),
+.v2-masonry-grid__item:nth-child(3),
+.v2-masonry-grid__item:nth-child(4),
+.v2-masonry-grid__item:nth-child(7),
+.v2-masonry-grid__item:nth-child(8) {
+  aspect-ratio: 1;
+}
+
+.v2-masonry-grid__item img,
+.v2-masonry-grid__item video {
+  height: 100%;
+  inset: auto auto 0 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+@media screen and (min-width: 744px) {
+  .v2-masonry-grid__items {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+    grid-template-areas:
+      'big-landscape big-landscape big-landscape big-landscape'
+      'big-landscape big-landscape big-landscape big-landscape'
+      'big-square big-square square1 square2'
+      'big-square big-square portrait portrait'
+      'landscape landscape portrait portrait'
+      'square3 square4 portrait portrait';
+  }
+
+  .v2-masonry-grid__item:nth-child(1),
+  .v2-masonry-grid__item:nth-child(4) {
+    aspect-ratio: auto;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .v2-masonry-grid {
+    --v2-masonry-grid-gutter: 32px;
+    --v2-masonry-grid-margin-bottom: 140px;
+  }
+}
