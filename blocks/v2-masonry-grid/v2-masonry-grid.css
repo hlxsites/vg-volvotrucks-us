@@ -11,7 +11,7 @@
   display: grid;
   gap: var(--v2-masonry-grid-gutter);
   grid-template-columns: repeat(2, calc(50% - var(--v2-masonry-grid-gutter) / 2));
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(10, 1fr);
   margin: 0;
   padding: 0;
   /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
@@ -62,7 +62,7 @@
 @media screen and (min-width: 744px) {
   .v2-masonry-grid__items {
     grid-template-columns: repeat(4, calc(100% - var(--v2-masonry-grid-gutter) * 3) / 4);
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
     grid-template-areas:
       'big-landscape big-landscape big-landscape big-landscape'
