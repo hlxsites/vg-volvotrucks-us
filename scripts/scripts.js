@@ -284,7 +284,7 @@ function buildTruckCarouselBlock(main) {
     nextElement = mainChildren[i + 1];
     const sectionMeta = section.dataset.truckCarousel;
 
-    const tabContent = createElement('div', 'v2-tabbed-carousel__content');
+    const tabContent = createElement('div', { classes: 'v2-tabbed-carousel__content' });
     tabContent.dataset.truckCarousel = sectionMeta;
     tabContent.innerHTML = section.innerHTML;
     const images = tabContent.querySelectorAll('p > picture');
@@ -487,21 +487,6 @@ async function loadPage() {
 }
 
 loadPage();
-
-export const removeEmptyTags = (block) => {
-  block.querySelectorAll('*').forEach((x) => {
-    const tagName = `</${x.tagName}>`;
-
-    // checking that the tag is not autoclosed to make sure we don't remove <meta />
-    // checking the innerHTML and trim it to make sure the content inside the tag is 0
-    if (
-      x.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
-      // && x.childElementCount === 0
-      && x.innerHTML.trim().length === 0) {
-      x.remove();
-    }
-  });
-};
 
 export const MEDIA_BREAKPOINTS = {
   MOBILE: 'MOBILE',

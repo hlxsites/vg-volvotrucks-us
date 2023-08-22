@@ -1,4 +1,4 @@
-import { createElement } from '../../scripts/common.js';
+import { createVideo } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;
@@ -44,17 +44,11 @@ export default async function decorate(block) {
     block.innerHTML = '';
   }
 
-  const video = createElement('video', [`${blockClass}__video`], {
+  const video = createVideo(videoLink.getAttribute('href'), `${blockClass}__video`, {
+    muted: true,
+    autoplay: true,
     loop: 'loop',
   });
-  video.muted = true;
-  video.autoplay = true;
-
-  const source = createElement('source', '', {
-    src: videoLink.getAttribute('href'),
-    type: 'video/mp4',
-  });
-  video.appendChild(source);
 
   contentWrapper.classList.add(`${blockClass}__content-wrapper`);
   content.classList.add(`${blockClass}__content`);

@@ -135,3 +135,27 @@ export function loadDelayed() {
   }, 3000);
   // load anything that can be postponed to the latest here
 }
+
+export const removeEmptyTags = (block) => {
+  block.querySelectorAll('*').forEach((x) => {
+    const tagName = `</${x.tagName}>`;
+
+    // checking that the tag is not autoclosed to make sure we don't remove <meta />
+    // checking the innerHTML and trim it to make sure the content inside the tag is 0
+    if (
+      x.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
+      // && x.childElementCount === 0
+      && x.innerHTML.trim().length === 0) {
+      x.remove();
+    }
+  });
+};
+
+export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
+  expectedVariantsNames.forEach((variant) => {
+    if (blockClasses.contains(variant)) {
+      blockClasses.remove(variant);
+      blockClasses.add(`${blockName}--${variant}`);
+    }
+  });
+};

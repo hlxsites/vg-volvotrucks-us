@@ -11,12 +11,12 @@ function stripEmptyTags(main, child) {
 }
 
 function buildTabNavigation(tabItems, clickHandler) {
-  const tabNavigation = createElement('ul', `${blockName}__navigation`);
-  const navigationLine = createElement('li', `${blockName}__navigation-line`);
+  const tabNavigation = createElement('ul', { classes: `${blockName}__navigation` });
+  const navigationLine = createElement('li', { classes: `${blockName}__navigation-line` });
   let timeout;
 
   [...tabItems].forEach((tabItem, i) => {
-    const listItem = createElement('li', `${blockName}__navigation-item`);
+    const listItem = createElement('li', { classes: `${blockName}__navigation-item` });
     const button = createElement('button');
     button.addEventListener('click', () => clickHandler(i));
     if (navigationLine) {
@@ -136,7 +136,7 @@ const createArrowControls = (imagesContainer) => {
     });
   }
 
-  const arrowControls = createElement('ul', [`${blockName}__arrow-controls`]);
+  const arrowControls = createElement('ul', { classes: [`${blockName}__arrow-controls`] });
   const arrows = document.createRange().createContextualFragment(`
     <li>
       <button aria-label="Previous">
@@ -166,8 +166,8 @@ export default function decorate(block) {
 
   const tabItems = block.querySelectorAll(':scope > div > div');
 
-  const imagesWrapper = createElement('div', `${blockName}__slider-wrapper`);
-  const imagesContainer = createElement('div', `${blockName}__images-container`);
+  const imagesWrapper = createElement('div', { classes: `${blockName}__slider-wrapper` });
+  const imagesContainer = createElement('div', { classes: `${blockName}__images-container` });
   descriptionContainer.parentNode.prepend(imagesWrapper);
   imagesWrapper.appendChild(imagesContainer);
 
@@ -188,7 +188,7 @@ export default function decorate(block) {
 
     // create div for image and append inside image div container
     const picture = tabItem.querySelector('picture');
-    const imageItem = createElement('div', `${blockName}__image-item`);
+    const imageItem = createElement('div', { classes: `${blockName}__image-item` });
     imageItem.appendChild(picture);
     imagesContainer.appendChild(imageItem);
 
@@ -201,7 +201,7 @@ export default function decorate(block) {
     [...descriptions].forEach((description) => description.classList.add(`${blockName}__description`));
 
     // Wrap text in container
-    const textContainer = createElement('div', `${blockName}__text`);
+    const textContainer = createElement('div', { classes: `${blockName}__text` });
     const text = tabContent.querySelector('.default-content-wrapper')?.querySelectorAll(':scope > *:not(.button-container)');
     if (text) {
       const parentTextContainer = text[0].parentNode;
@@ -210,7 +210,7 @@ export default function decorate(block) {
     }
 
     // Wrap links in container
-    const buttonContainer = createElement('div', `${blockName}__buttons-container`);
+    const buttonContainer = createElement('div', { classes: `${blockName}__buttons-container` });
     const buttons = tabContent.querySelectorAll('.button-container');
 
     buttons.forEach((bt, i) => {

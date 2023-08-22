@@ -1,12 +1,9 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/common.js';
-import { removeEmptyTags } from '../../scripts/scripts.js';
+import { createElement, removeEmptyTags } from '../../scripts/common.js';
 
 export default function decorate(block) {
   // all items are inside a ul list with classname called 'v2-images-grid-items'
-  const ul = document.createElement('ul');
-  ul.classList.add('v2-images-grid-items');
-
+  const ul = createElement('ul', { classes: 'v2-images-grid-items' });
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     // If cell contain any element, we add them in the ul
     if (cell.childElementCount) {

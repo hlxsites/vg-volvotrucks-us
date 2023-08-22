@@ -44,7 +44,7 @@ describe('isVideoLink', () => {
     link = commonScript.createElement('a', { props: { href: '' } });
   });
 
-  it('should return false for null link', () => {
+  it('should return false for link without href', () => {
     const result = videoHelper.isVideoLink(link);
     expect(result).to.be.false;
   });
@@ -204,5 +204,58 @@ describe('wrapImageWithVideoLink', () => {
     expect(videoLink.classList.contains('button')).to.be.false;
     expect(videoLink.classList.contains('primary')).to.be.false;
     expect(videoLink.classList.contains('text-link-with-video')).to.be.false;
+  });
+});
+
+describe('createVideo function', () => {
+  const srclink = 'https://example.com/example-video.mp4';
+
+  it('should create a video element with default attributes', () => {
+    const video = videoHelper.createVideo(srclink);
+    const source = video.querySelector('source');
+
+    expect(video.tagName).to.equal('VIDEO');
+    expect(source.src).to.equal(srclink);
+    expect(video.className).to.equal('');
+    expect(video.muted).to.be.false;
+    expect(video.autoplay).to.be.false;
+  });
+
+  it('should create a video element with custom attributes', () => {
+    const props = {
+      muted: true,
+      autoplay: true,
+      controls: true,
+    };
+    const video = videoHelper.createVideo(srclink, 'custom-class', props);
+    const source = video.querySelector('source');
+
+    expect(video.tagName).to.equal('VIDEO');
+    expect(source.src).to.equal(srclink);
+    expect(video.className).to.equal('custom-class');
+    expect(video.muted).to.be.true;
+    expect(video.autoplay).to.be.true;
+    expect(video.controls).to.be.true;
+  });
+
+  it('should set additional attributes', () => {
+    const props = {
+      loop: true,
+      preload: 'auto',
+    };
+    const video = videoHelper.createVideo(srclink, 'extra-attributes', props);
+
+    expect(video.loop).to.be.true;
+    expect(video.preload).to.equal('auto');
+  });
+
+  it('should create a source element with correct attributes', () => {
+    const video = videoHelper.createVideo(srclink);
+    const source = video.querySelector('source');
+
+    expect(source).to.exist;
+    expect(source.tagName).to.equal('SOURCE');
+    expect(source.src).to.equal(srclink);
+    expect(source.type).to.equal('video/mp4');
   });
 });

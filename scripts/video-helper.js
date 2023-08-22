@@ -129,3 +129,33 @@ export function createIframe(url, { parentEl, classes = [] }) {
 
   return iframe;
 }
+
+export const createVideo = (src, className = '', props = {}) => {
+  const video = createElement('video', {
+    classes: className,
+  });
+  if (props.muted) {
+    video.muted = props.muted;
+  }
+
+  if (props.autoplay) {
+    video.autoplay = props.autoplay;
+  }
+
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      video.setAttribute(propName, props[propName]);
+    });
+  }
+
+  const source = createElement('source', {
+    props: {
+      src,
+      type: 'video/mp4',
+    },
+  });
+
+  video.appendChild(source);
+
+  return video;
+};
