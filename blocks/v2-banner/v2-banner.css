@@ -5,6 +5,7 @@
   min-height: var(--v2-banner-height);
   overflow: hidden;
   position: relative;
+  display: flex;
 }
 
 .v2-banner__image,
@@ -22,9 +23,10 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   justify-content: center;
   padding: var(--v2-banner-padding);
-  position: relative;
+  position: absolute;
   text-align: center;
 }
 
