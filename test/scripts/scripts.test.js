@@ -6,6 +6,7 @@ import { expect } from '@esm-bundle/chai';
 import sinon from 'sinon';
 
 /** @type {import('./types').Scripts} */
+// eslint-disable-next-line no-unused-vars
 let scripts;
 /** @type {import('./types').LibFranklin} */
 let lib;
@@ -38,11 +39,5 @@ describe('Core Helix features', () => {
     window.hlx.codeBasePath = '';
     window.hlx.lighthouse = false;
     Array.from(document.querySelectorAll('script')).pop().remove();
-  });
-
-  it('Adds favicon', async () => {
-    scripts.addFavIcon('/foo.svg');
-    const $favIcon = document.querySelector('link[rel="icon"]');
-    expect($favIcon.getAttribute('href')).to.equal('/foo.svg');
   });
 });

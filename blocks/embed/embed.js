@@ -1,7 +1,7 @@
 import {
-  selectVideoLink, addPlayIcon, showVideoModal, isLowResolutionVideoUrl, createIframe,
-  createLowResolutionBanner,
-} from '../../scripts/scripts.js';
+  selectVideoLink, addPlayIcon, showVideoModal, isLowResolutionVideoUrl,
+  createLowResolutionBanner, createIframe,
+} from '../../scripts/video-helper.js';
 
 export default function decorate(block) {
   const isAutoplay = block.classList.contains('autoplay');
