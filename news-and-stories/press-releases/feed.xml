@@ -2,10 +2,34 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-06-22T00:00:00.000Z</updated>
+    <updated>2023-08-22T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Introduces Turnkey Solutions Program to Provide Fleets Full-Service EV Infrastructure Development]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-introduces-turnkey-solutions-program-to-provide-fleets-full-service-ev-infrastructure-development/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-introduces-turnkey-solutions-program-to-provide-fleets-full-service-ev-infrastructure-development/"/>
+        <updated>2023-08-22T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“Identifying sources for charging infrastructure can be an overwhelming task for fleet managers, so now all aspects of EV charging are covered through the Turnkey Solutions program,” Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-08-22T00:00:00.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Deploys FH LNG Trucks in Exclusive, One-Time Pilot with Linde Canada]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-deploys-fh-lng-trucks-in-exclusive-one-time-pilot-with-linde-canada/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-deploys-fh-lng-trucks-in-exclusive-one-time-pilot-with-linde-canada/"/>
+        <updated>2023-08-21T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Volvo Trucks first launched the LNG product offering in 2017 with serial production beginning in 2018 for the European markets, with the trucks demonstrating exceptional torque, performance and durability while reducing CO2 emissions.]]></content>
+        <published>2023-08-21T00:00:00.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Showcasing Electromobility Innovations, Sustainability and Transportation Efficiency with VNR Electric Ride & Drive Opportunities and Speakers at GTSE 2023]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-showcasing-electromobility-innovations-sustainability-and-transportation-efficiency/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-showcasing-electromobility-innovations-sustainability-and-transportation-efficiency/"/>
+        <updated>2023-08-10T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Volvo Trucks North America will offer test drives of its Class 8 VNR Electric as part of the “Acceleration to Zero” emissions initiative at the Green Transportation Summit & Expo (GTSE) August 22-24 in Tacoma, Washington.]]></content>
+        <published>2023-08-10T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks, University of Minnesota Team Up with Local Fleets to Conduct Extreme Weather Field Testing on Volvo VNR Electric Trucks]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/June/volvo-trucks-university-of-minnesota-team-up-with-local-fleets-to-conduct-extreme-weather-field-testing-on-volvo-vnr-electric-trucks/</id>
