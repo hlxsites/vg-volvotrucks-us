@@ -1,0 +1,76 @@
+:root {
+  --v2-feature-carousel-cards-gutter: 16px;
+  --v2-feature-carousel-card-width: 150px;
+  --v2-feature-carousel-card-height: 200px;
+  --v2-feature-carousel-icon-width: 48px;
+  --v2-feature-carousel-icon-height: 48px;
+  --v2-feature-carousel-svg-width: 24px;
+  --v2-feature-carousel-svg-height: 24px;
+}
+
+.v2-feature-carousel-container {
+  background-color: var(--c-grey-50);
+}
+
+.v2-feature-carousel-container .v2-feature-carousel-wrapper {
+  max-width: 1390px;
+  width: 100%;
+}
+
+.v2-feature-carousel__cards-list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--v2-feature-carousel-cards-gutter);
+  scroll-snap-type: x mandatory;
+  overflow: auto;
+  flex-flow: row nowrap;
+}
+
+.v2-feature-carousel__card {
+  display: flex;
+  flex: 0 0 auto;
+  width: var(--v2-feature-carousel-card-width);
+  height: var(--v2-feature-carousel-card-height);
+  padding: 24px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 8px;
+  background: var(--c-white);
+  scroll-snap-align: center;
+}
+
+.v2-feature-carousel__card .icon {
+  width: var(--v2-feature-carousel-icon-width);
+  height: var( --v2-feature-carousel-icon-height);
+  border: 1px solid var(--c-grey-3);
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.v2-feature-carousel__card .icon svg {
+  width: var(--v2-feature-carousel-svg-width);
+  height: var(--v2-feature-carousel-svg-height);
+}
+
+.v2-feature-carousel__card .icon-graph svg {
+  fill: none;
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --v2-feature-carousel-card-width: 200px;
+    --v2-feature-carousel-card-height: 235px;
+    --v2-feature-carousel-icon-width: 64px;
+    --v2-feature-carousel-icon-height: 64px;
+    --v2-feature-carousel-svg-width: 32px;
+    --v2-feature-carousel-svg-height: 32px;
+  }
+
+  .v2-feature-carousel__card {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
