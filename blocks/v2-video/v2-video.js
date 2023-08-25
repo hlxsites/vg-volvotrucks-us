@@ -1,4 +1,4 @@
-import { createVideo } from '../../scripts/scripts.js';
+import { createVideo } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;

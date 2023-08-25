@@ -1,7 +1,5 @@
 import {
-  sampleRUM,
   buildBlock,
-  loadHeader,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -9,48 +7,30 @@ import {
   decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
-  loadBlock,
-  loadBlocks,
-  loadCSS,
   createOptimizedPicture,
   getMetadata,
   toClassName,
   getHref,
 } from './lib-franklin.js';
 
+import {
+  getPlaceholders,
+  loadLazy,
+  loadDelayed,
+  loadTemplate,
+  createElement,
+} from './common.js';
+
+import {
+  isVideoLink,
+  isSoundcloudLink,
+  isLowResolutionVideoUrl,
+  addVideoShowHandler,
+  addSoundcloudShowHandler,
+} from './video-helper.js';
+
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
-let placeholders = null;
-
-async function getPlaceholders() {
-  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
-}
-
-export function getTextLabel(key) {
-  return placeholders.data.find((el) => el.Key === key)?.Text || key;
-}
-
-/**
- * Create an element with the given id and classes.
- * @param {string} tagName the tag
- * @param {string[]|string} classes the class or classes to add
- * @param {object} props any other attributes to add to the element
- * @returns the element
- */
-export function createElement(tagName, classes, props) {
-  const elem = document.createElement(tagName);
-  if (classes) {
-    const classesArr = (typeof classes === 'string') ? [classes] : classes;
-    elem.classList.add(...classesArr);
-  }
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      elem.setAttribute(propName, props[propName]);
-    });
-  }
-
-  return elem;
-}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -156,8 +136,7 @@ function buildHeroBlock(main) {
   if (isCTALink) ctaLink.classList.add('cta');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    const headings = document.createElement('div');
-    headings.className = 'hero-headings';
+    const headings = createElement('div', { classes: 'hero-headings' });
     const elems = [picture, headings];
     if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
       // also consider a <p> without any children as sub heading except BR
@@ -197,9 +176,22 @@ function buildSubNavigation(main, head) {
   }
 }
 
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ * @param {Element} head The header element
+ */
+function buildAutoBlocks(main, head) {
+  try {
+    buildHeroBlock(main);
+    buildSubNavigation(main, head);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
-  const tabSection = document.createElement('div');
-  tabSection.classList.add('section', 'tabbed-container');
+  const tabSection = createElement('div', { classes: ['section', 'tabbed-container'] });
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
@@ -292,7 +284,7 @@ function buildTruckCarouselBlock(main) {
     nextElement = mainChildren[i + 1];
     const sectionMeta = section.dataset.truckCarousel;
 
-    const tabContent = createElement('div', 'v2-tabbed-carousel__content');
+    const tabContent = createElement('div', { classes: 'v2-tabbed-carousel__content' });
     tabContent.dataset.truckCarousel = sectionMeta;
     tabContent.innerHTML = section.innerHTML;
     const images = tabContent.querySelectorAll('p > picture');
@@ -337,21 +329,6 @@ function buildTruckCarouselBlock(main) {
     }
     decorateIcons(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
-  }
-}
-
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- * @param {Element} head The header element
- */
-function buildAutoBlocks(main, head) {
-  try {
-    buildHeroBlock(main);
-    buildSubNavigation(main, head);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
   }
 }
 
@@ -455,17 +432,6 @@ function decorateOfferLinks(main) {
 }
 
 /**
- * loads a block named 'v2-footer' into footer
- */
-function loadFooter(footer) {
-  if (footer) {
-    const footerBlock = buildBlock('v2-footer', '');
-    footer.append(footerBlock);
-    decorateBlock(footerBlock);
-    loadBlock(footerBlock);
-  }
-}
-/**
  * Decorates the main element.
  * @param {Element} main The main element
  * @param {Element} head The header element
@@ -495,32 +461,6 @@ export function decorateMain(main, head) {
   buildTruckCarouselBlock(main);
 }
 
-async function loadTemplate(doc, templateName) {
-  try {
-    const cssLoaded = new Promise((resolve) => {
-      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
-    });
-    const decorationComplete = new Promise((resolve) => {
-      (async () => {
-        try {
-          const mod = await import(`../templates/${templateName}/${templateName}.js`);
-          if (mod.default) {
-            await mod.default(doc);
-          }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(`failed to load module for ${templateName}`, error);
-        }
-        resolve();
-      })();
-    });
-    await Promise.all([cssLoaded, decorationComplete]);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`failed to load block ${templateName}`, error);
-  }
-}
-
 /**
  * loads everything needed to get to LCP.
  */
@@ -540,62 +480,6 @@ async function loadEager(doc) {
   await getPlaceholders();
 }
 
-/**
- * Adds the favicon.
- * @param {string} href The favicon URL
- */
-export function addFavIcon(href) {
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.type = 'image/svg+xml';
-  link.href = href;
-  const existingLink = document.querySelector('head link[rel="icon"]');
-  if (existingLink) {
-    existingLink.parentElement.replaceChild(link, existingLink);
-  } else {
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-}
-
-/**
- * loads everything that doesn't need to be delayed.
- */
-async function loadLazy(doc) {
-  const main = doc.querySelector('main');
-  await loadBlocks(main);
-
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
-  const header = doc.querySelector('header');
-
-  loadHeader(header);
-  loadFooter(doc.querySelector('footer'));
-
-  const subnav = header?.querySelector('.block.sub-nav');
-  if (subnav) {
-    loadBlock(subnav);
-  }
-
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
-}
-
-/**
- * loads everything that happens a lot later, without impacting
- * the user experience.
- */
-function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => {
-    import('./delayed.js');
-  }, 3000);
-  // load anything that can be postponed to the latest here
-}
-
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
@@ -603,152 +487,6 @@ async function loadPage() {
 }
 
 loadPage();
-
-/* video helpers */
-export function isLowResolutionVideoUrl(url) {
-  return url.split('?')[0].endsWith('.mp4');
-}
-
-export function isVideoLink(link) {
-  const linkString = link.getAttribute('href');
-  return (linkString.includes('youtube.com/embed/')
-    || isLowResolutionVideoUrl(linkString))
-    && link.closest('.block.embed') === null;
-}
-
-export function selectVideoLink(links, preferredType) {
-  const linksList = [...links];
-  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
-  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
-  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
-  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
-
-  if (shouldUseYouTubeLinks && youTubeLink) {
-    return youTubeLink;
-  }
-  return localMediaLink;
-}
-
-export function createLowResolutionBanner() {
-  const lowResolutionMessage = getTextLabel('Low resolution video message');
-  const changeCookieSettings = getTextLabel('Change cookie settings');
-
-  const banner = document.createElement('div');
-  banner.classList.add('low-resolution-banner');
-  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
-  banner.querySelector('button').addEventListener('click', () => {
-    window.OneTrust.ToggleInfoDisplay();
-  });
-
-  return banner;
-}
-
-export function showVideoModal(linkUrl) {
-  // eslint-disable-next-line import/no-cycle
-  import('../common/modal/modal.js').then((modal) => {
-    let beforeBanner = null;
-
-    if (isLowResolutionVideoUrl(linkUrl)) {
-      beforeBanner = createLowResolutionBanner();
-    }
-
-    modal.showModal(linkUrl, beforeBanner);
-  });
-}
-
-export function addVideoShowHandler(link) {
-  link.classList.add('text-link-with-video');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    showVideoModal(link.getAttribute('href'));
-  });
-}
-
-export function isSoundcloudLink(link) {
-  return link.getAttribute('href').includes('soundcloud.com/player')
-    && link.closest('.block.embed') === null;
-}
-
-export function addSoundcloudShowHandler(link) {
-  link.classList.add('text-link-with-soundcloud');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    const thumbnail = link.closest('div')?.querySelector('picture');
-    const title = link.closest('div')?.querySelector('h1, h2, h3');
-    const text = link.closest('div')?.querySelector('p:not(.button-container, .image)');
-
-    // eslint-disable-next-line import/no-cycle
-    import('../common/modal/modal.js').then((modal) => {
-      const episodeInfo = document.createElement('div');
-      episodeInfo.classList.add('modal-soundcloud');
-      episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
-      <div class="episode-text">
-          <h2></h2>
-          <p></p>
-      </div>`;
-      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
-      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
-      episodeInfo.querySelector('p').innerText = text?.innerText || '';
-
-      modal.showModal(link.getAttribute('href'), null, episodeInfo);
-    });
-  });
-}
-
-export function addPlayIcon(parent) {
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('video-icon-wrapper');
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play', 'video-icon');
-  iconWrapper.appendChild(icon);
-  parent.appendChild(iconWrapper);
-}
-
-export function wrapImageWithVideoLink(videoLink, image) {
-  videoLink.innerText = '';
-  videoLink.appendChild(image);
-  videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
-
-  addPlayIcon(videoLink);
-}
-
-export function createIframe(url, { parentEl, classes = [] }) {
-  // iframe must be recreated every time otherwise the new history record would be created
-  const iframe = document.createElement('iframe');
-  const iframeClasses = Array.isArray(classes) ? classes : [classes];
-
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-  iframe.setAttribute('src', url);
-  iframe.classList.add(...iframeClasses);
-
-  if (parentEl) {
-    parentEl.appendChild(iframe);
-  }
-
-  return iframe;
-}
-
-export const removeEmptyTags = (block) => {
-  block.querySelectorAll('*').forEach((x) => {
-    const tagName = `</${x.tagName}>`;
-
-    // checking that the tag is not autoclosed to make sure we don't remove <meta />
-    // checking the innerHTML and trim it to make sure the content inside the tag is 0
-    if (
-      x.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
-      // && x.childElementCount === 0
-      && x.innerHTML.trim().length === 0) {
-      x.remove();
-    }
-  });
-};
 
 export const MEDIA_BREAKPOINTS = {
   MOBILE: 'MOBILE',
@@ -787,41 +525,6 @@ export function getImageForBreakpoint(imagesList, onChange = () => {}) {
   }
   onDesktopChange(desktopMQ);
 }
-
-export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
-  expectedVariantsNames.forEach((variant) => {
-    if (blockClasses.contains(variant)) {
-      blockClasses.remove(variant);
-      blockClasses.add(`${blockName}--${variant}`);
-    }
-  });
-};
-
-export const createVideo = (src, className = '', props = {}) => {
-  const video = createElement('video', [className]);
-  if (props.muted) {
-    video.muted = props.muted;
-  }
-
-  if (props.autoplay) {
-    video.autoplay = props.autoplay;
-  }
-
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      video.setAttribute(propName, props[propName]);
-    });
-  }
-
-  const source = createElement('source', '', {
-    src,
-    type: 'video/mp4',
-  });
-
-  video.appendChild(source);
-
-  return video;
-};
 
 /* REDESING CLASS CHECK */
 if (document.querySelector('main').classList.contains('redesign-v2')) {

@@ -1,5 +1,5 @@
 import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
-import { getTextLabel } from '../../scripts/scripts.js';
+import { getTextLabel } from '../../scripts/common.js';
 
 // based on: https://developers.google.com/speed/webp/faq
 async function isWebpSupported() {

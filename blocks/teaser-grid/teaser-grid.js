@@ -1,6 +1,6 @@
 import {
   addVideoShowHandler, isVideoLink, selectVideoLink, wrapImageWithVideoLink,
-} from '../../scripts/scripts.js';
+} from '../../scripts/video-helper.js';
 /* eslint-disable no-use-before-define */
 
 export default function decorate(block) {
