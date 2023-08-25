@@ -1,6 +1,6 @@
 import { createElement } from '../../scripts/common.js';
 
-const blockName = 'v2-tabbed-carousel';
+const blockName = 'v2-truck-lineup';
 
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
@@ -247,7 +247,7 @@ export default function decorate(block) {
 
   // Update description position to be equal to image position
   imagesContainer.addEventListener('scroll', () => {
-    const itemWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tabbed-carousel-img-width'));
+    const itemWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--truck-lineup-img-width'));
 
     const firstCarouselItemWidth = imagesContainer.offsetWidth * (itemWidth / 100);
     const secondCarouselItemWidth = descriptionContainer.offsetWidth;
