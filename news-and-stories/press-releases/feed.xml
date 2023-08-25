@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-08-22T00:00:00.000Z</updated>
+    <updated>2023-08-24T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Customer Center Triples Demonstration Track Size with New Terrain and Structural Upgrades for Enhanced Immersive Driving Experience]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-customer-center-triples-demonstration-track-size-with-new-terrain-and-structural-upgrades-for-enhanced-immersive-driving-experience/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-customer-center-triples-demonstration-track-size-with-new-terrain-and-structural-upgrades-for-enhanced-immersive-driving-experience/"/>
+        <updated>2023-08-24T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The Volvo Customer Center illustrates further investment in Volvo Trucks’ footprint in North America where customers can demo entire product lines of our new battery-electric truck models and vocational vehicles while being safely guided by our team of skilled CDL drivers,” Rob Simpson, director of the Volvo Trucks Customer Center.]]></content>
+        <published>2023-08-24T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Introduces Turnkey Solutions Program to Provide Fleets Full-Service EV Infrastructure Development]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/august/volvo-trucks-introduces-turnkey-solutions-program-to-provide-fleets-full-service-ev-infrastructure-development/</id>
