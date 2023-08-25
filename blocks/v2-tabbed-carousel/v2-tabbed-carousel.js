@@ -71,6 +71,19 @@ const updateActiveItem = (index) => {
       width: `${width}px`,
     });
   }
+
+  // Center navigation item
+  const navigationActiveItem = navigation.querySelector('.active');
+
+  if (navigation && navigationActiveItem) {
+    const { clientWidth: itemWidth, offsetLeft } = navigationActiveItem;
+    // Calculate the scroll position to center the active item
+    const scrollPosition = offsetLeft - (navigation.clientWidth - itemWidth) / 2;
+    navigation.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth',
+    });
+  }
 };
 
 const listenScroll = (carousel) => {
