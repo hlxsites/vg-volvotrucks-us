@@ -7,6 +7,7 @@ export default function decorate(block) {
   const isAutoplay = block.classList.contains('autoplay');
   const isLoopedVideo = block.classList.contains('loop');
   const isFullWidth = block.classList.contains('full-width');
+  const hideLowResolutionBanner = block.classList.contains('no-banner');
   const videoWrapper = document.createElement('div');
   // removing classes to avoid collision with other css
   block.classList.remove('loop', 'autoplay', 'full-width');
@@ -66,7 +67,7 @@ export default function decorate(block) {
       });
     }
 
-    if (!isFullWidth) {
+    if (!isFullWidth && !hideLowResolutionBanner) {
       const banner = createLowResolutionBanner();
       videoWrapper.prepend(banner);
     }

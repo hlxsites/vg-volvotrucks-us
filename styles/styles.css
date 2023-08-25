@@ -1199,6 +1199,54 @@ main.blue-contract .section.section-with-title p {
   width: 1em;
 }
 
+/* Headings classes styles */
+.redesign-v2 .h2 {
+  font-family: var(--ff-volvo-novum);
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 110%;
+  letter-spacing: -0.5px;
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 h4 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 125%;
+  letter-spacing: 0.25px;
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h5 {
+  font-family: var(--ff-volvo-novum);
+  font-size: 24px;
+  font-style: normal;
+  line-height: 125%;
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h6 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: 20px;
+  font-style: normal;
+  line-height: 125%;
+  letter-spacing: 0.15px;
+  font-feature-settings: 'clig' off, 'liga' off;
+
+}
+
+.redesign-v2 .sub-2 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: 14px;
+  font-style: normal;
+  line-height: 130%;
+  letter-spacing: 0.15px;
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
 @media (min-width: 744px) {
   .redesign-v2 .section {
     padding: 0;
