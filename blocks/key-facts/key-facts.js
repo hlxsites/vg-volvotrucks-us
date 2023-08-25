@@ -13,7 +13,7 @@ function stripEmptyTags(main, child) {
 const blockName = 'key-facts';
 const variantClasses = ['trailing-line'];
 
-const keyFactsColumns = (el) => {
+const keyFactsColumns = (el, v2) => {
   el.classList.add(`${blockName}__key-item`);
 
   // adding icon
@@ -35,27 +35,32 @@ const keyFactsColumns = (el) => {
 
   // find and split number/unit
   const value = el.querySelector('strong:only-child');
+  // separate number and unit. e.g. up | +31% | Freight efficiency, or 120,000 | psi,
+  const [, prenumber, number, postnumber, text] = value.innerHTML.match('([\\+,\\-]*)([0-9,\\.,]+)([\\%]*) *(.*)');
+  let newValue = null;
 
   if (value) {
-    // separate number and unit. e.g. up | +31% | Freight efficiency, or 120,000 | psi,
-    const [, preNumber = '', number, postNumber = '', text] = value.innerHTML.match('([\\+,\\-]*)([0-9,\\.,]+)([\\%]*) *(.*)');
+    if (v2) {
+      newValue = `<span class="${blockName}__number">${prenumber}${number}${postnumber} ${text}</span>`;
+    } else {
+      newValue = `
+        <span class="${blockName}__number">
+          <span class="${blockName}__number--small">${prenumber}</span>
+          ${number}
+          <span class="${blockName}__number--small">${postnumber}</span>
+        </span>
+      `;
+    }
 
-    if (number) {
-      const preNumberText = `<span class="${blockName}__prenumber">${preNumber}</span>`;
-      const postNumberText = `<span class="${blockName}__postnumber">${postNumber}</span>`;
-      const numberFragment = document.createRange().createContextualFragment(`
-        ${preNumberText}<span class="${blockName}__number">${number}</span>${postNumberText}
-      `);
+    const numberFragment = document.createRange().createContextualFragment(newValue);
+    value.innerHTML = '';
+    value.append(...numberFragment.childNodes);
+    value.classList.add(`${blockName}__number-wrapper`, 'h2');
 
-      value.innerHTML = '';
-      value.append(...numberFragment.childNodes);
-      value.classList.add(`${blockName}__number-wrapper`, 'h2');
-
-      if (text) {
-        const unit = createElement('strong', [`${blockName}__unit`, 'sub-2']);
-        unit.innerText = text;
-        value.parentNode.append(unit);
-      }
+    if (!v2 && text) {
+      const unit = createElement('strong', [`${blockName}__unit`, 'sub-2']);
+      unit.innerText = text;
+      value.parentNode.append(unit);
     }
   }
 
@@ -92,7 +97,8 @@ export default async function decorate(block) {
         return;
       }
 
-      keyFactsColumns(col);
+      const v2 = block.classList.contains(`${blockName}--with-media`);
+      keyFactsColumns(col, v2);
     });
   });
 }

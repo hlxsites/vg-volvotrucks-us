@@ -35,6 +35,14 @@
   width: 100%;
 }
 
+.key-facts__number {
+  display: flex;
+}
+
+.key-facts__number--small {
+  font-size: 0.5em;
+}
+
 .key-facts .key-facts__icon {
   font-size: 40px;
   justify-content: center;
@@ -105,7 +113,7 @@
     text-align: left;
   }
 
-  .key-facts__number-wrapper {
+  .key-facts--with-media .key-facts__number-wrapper {
     justify-content: left;
   }
 
