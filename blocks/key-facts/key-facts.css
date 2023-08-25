@@ -79,9 +79,12 @@
     gap: 40px;
   }
 
+  .key-facts__row {
+    gap: 80px;
+  }
+
   .key-facts--with-media .key-facts__row {
     flex-direction: column;
-    gap: 80px;
     margin: 40px 0;
   }
 
