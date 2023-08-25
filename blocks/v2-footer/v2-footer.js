@@ -1,5 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 /* eslint-disable no-use-before-define */
 
 function displayScrollToTop(buttonEl) {
@@ -21,8 +21,11 @@ function goToTopFunction() {
 }
 
 function addScrollToTopButton(mainEl) {
-  const scrollToTopButton = createElement('button', 'v2-scroll-to-top', {
-    title: 'Go to the top of the page',
+  const scrollToTopButton = createElement('button', {
+    classes: 'v2-scroll-to-top',
+    props: {
+      title: 'Go to the top of the page',
+    },
   });
   scrollToTopButton.addEventListener('click', goToTopFunction);
   window.addEventListener('scroll', () => displayScrollToTop(scrollToTopButton));
@@ -46,7 +49,7 @@ export default async function decorate(block) {
   const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}v2-footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
-  const footer = createElement('div', 'v2-footer-container');
+  const footer = createElement('div', { classes: 'v2-footer-container' });
   footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
   const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
@@ -79,8 +82,8 @@ export default async function decorate(block) {
     });
   }
 
-  const copyrightWrapper = createElement('div', 'v2-footer-copyright-wrapper');
-  const copyrightContainer = createElement('div', 'v2-footer-copyright-container');
+  const copyrightWrapper = createElement('div', { classes: 'v2-footer-copyright-wrapper' });
+  const copyrightContainer = createElement('div', { classes: 'v2-footer-copyright-container' });
 
   copyrightWrapper.append(copyrightContainer);
 
@@ -104,7 +107,7 @@ export default async function decorate(block) {
 
 function wrapSocialMediaLinks(footer) {
   footer.querySelectorAll('.icon-newtab').forEach((icon) => {
-    const textIconWrapper = createElement('span', 'v2-footer-text-icon-wrapper');
+    const textIconWrapper = createElement('span', { classes: 'v2-footer-text-icon-wrapper' });
     const anchor = icon.parentElement;
     textIconWrapper.append(icon.previousSibling);
     textIconWrapper.append(icon);

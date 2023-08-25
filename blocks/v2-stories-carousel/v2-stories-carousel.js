@@ -5,7 +5,7 @@ import {
   createOptimizedPicture,
   getOrigin,
 } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 
 const listenScroll = (carousel) => {
   const elements = carousel.querySelectorAll('.v2-stories-carousel-items > *');
@@ -52,7 +52,7 @@ const createArrowControls = (ulItems) => {
     });
   }
 
-  const arrowControls = createElement('ul', ['v2-stories-carousel-arrowcontrols']);
+  const arrowControls = createElement('ul', { classes: ['v2-stories-carousel-arrowcontrols'] });
   const arrows = document.createRange().createContextualFragment(`
     <li>
       <button aria-label="Previous">
@@ -95,7 +95,7 @@ const buildStoryCard = (entry) => {
     author,
     readingTime,
   } = entry;
-  const li = createElement('article', 'v2-stories-carousel-item');
+  const li = createElement('article', { classes: 'v2-stories-carousel-item' });
   const picture = createOptimizedPicture(image, title, false);
   picture.querySelector('img')?.classList.add('border');
   const pictureTag = picture.outerHTML;
@@ -144,7 +144,7 @@ const buildStoryCard = (entry) => {
 };
 
 const createStoriesCarousel = (block, stories) => {
-  const storiesSection = createElement('section', 'v2-stories-carousel-items');
+  const storiesSection = createElement('section', { classes: 'v2-stories-carousel-items' });
   block.appendChild(storiesSection);
   stories.forEach((entry) => {
     const storyArticle = buildStoryCard(entry);

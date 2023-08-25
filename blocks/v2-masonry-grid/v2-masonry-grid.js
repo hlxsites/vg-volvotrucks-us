@@ -1,15 +1,17 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import {
-  removeEmptyTags,
-  createElement,
   isVideoLink,
   createVideo,
-} from '../../scripts/scripts.js';
+} from '../../scripts/video-helper.js';
+import {
+  createElement,
+  removeEmptyTags,
+} from '../../scripts/common.js';
 
 const blockName = 'v2-masonry-grid';
 
 export default function decorate(block) {
-  const ul = createElement('ul', `${blockName}__items`);
+  const ul = createElement('ul', { classes: `${blockName}__items` });
 
   [...block.querySelectorAll(':scope > div > div')].forEach((cell) => {
     if (cell.childElementCount) {
@@ -19,7 +21,7 @@ export default function decorate(block) {
 
       // if video or picture available, it's part of the grid
       if (videos.length > 0 || picture) {
-        const li = createElement('li', [`${blockName}__item`, 'border']);
+        const li = createElement('li', { classes: [`${blockName}__item`, 'border'] });
 
         if (picture) {
           const img = picture.lastElementChild;
