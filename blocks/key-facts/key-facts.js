@@ -1,6 +1,5 @@
-import {
-  createElement, isVideoLink, loadAsBlock, variantsClassesToBEM,
-} from '../../scripts/scripts.js';
+import { createElement, loadAsBlock, variantsClassesToBEM } from '../../scripts/common.js';
+import { isVideoLink } from '../../scripts/video-helper.js';
 
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {

@@ -531,22 +531,3 @@ if (document.querySelector('main').classList.contains('redesign-v2')) {
   document.querySelector('html').classList.add('redesign-v2');
   document.querySelector('main').classList.remove('redesign-v2');
 }
-
-/**
- *
- * @param {string} blockName - block name with '-' instead of spaces
- * @param {string} blockContent - the content that will be set as block inner HTML
- * @param {object} options - other options like variantsClasses
- * @returns
- */
-export async function loadAsBlock(blockName, blockContent, options = {}) {
-  const { variantsClasses = [] } = options;
-  const blockEl = createElement('div', ['block', blockName, ...variantsClasses], { 'data-block-name': blockName });
-  const wrapperEl = createElement('div');
-  wrapperEl.append(blockEl);
-
-  blockEl.innerHTML = blockContent;
-  await loadBlocks(wrapperEl);
-
-  return blockEl;
-}
