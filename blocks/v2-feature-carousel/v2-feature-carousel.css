@@ -16,12 +16,11 @@
   scroll-snap-type: x mandatory;
   overflow: auto;
   flex-flow: row nowrap;
-  margin: auto;
 }
 
 .v2-feature-carousel__card {
   display: flex;
-  flex: none;
+  flex: 0 0 auto;
   width: var(--v2-feature-carousel-card-width);
   height: var(--v2-feature-carousel-card-height);
   padding: 24px;
@@ -51,6 +50,12 @@
   fill: none;
 }
 
+@media screen and (min-width: 999px) {
+  .v2-feature-carousel__cards-list {
+    justify-content: center;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   :root {
     --v2-feature-carousel-card-width: 200px;
@@ -58,6 +63,10 @@
     --v2-feature-carousel-icon-size: 64px;
     --v2-feature-carousel-svg-size: 32px;
     --v2-feature-carousel-border-radius: 10px;
+  }
+
+  .v2-feature-carousel__cards-list {
+    justify-content: initial;
   }
 
   .v2-feature-carousel__card {
