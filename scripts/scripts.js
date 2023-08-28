@@ -31,6 +31,19 @@ export function getTextLabel(key) {
 }
 
 /**
+ * Check if one trust group is checked.
+ * @param {String} groupName the one trust croup like: C0002
+ */
+export function checkOneTruckGroup(groupName) {
+  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  return oneTrustCookie.includes(`${groupName}:1`);
+}
+
+export function isEloquaFormAllowed() {
+  return checkOneTruckGroup('C0004');
+}
+
+/**
  * Create an element with the given id and classes.
  * @param {string} tagName the tag
  * @param {string[]|string} classes the class or classes to add

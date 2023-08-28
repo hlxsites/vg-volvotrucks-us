@@ -98,3 +98,19 @@
 .eloqua-form .eloqua-thank-you {
   text-align: center;
 }
+
+.eloqua-form-no-cookie {
+  min-height: 100px;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.eloqua-form-no-cookie button {
+  background: unset;
+  font-size: inherit;
+  padding: 0;
+  color: var(--link-color);
+  margin: auto;
+  border: none;
+}
