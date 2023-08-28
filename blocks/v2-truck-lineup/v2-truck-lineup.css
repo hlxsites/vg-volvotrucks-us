@@ -98,22 +98,19 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   flex: none;
   opacity: 0;
   width: 100%;
-  transition: opacity var(--duration-small) var(--easing-exit),
-    transform 1s var(--easing-entrance);
-  transform: translateX(-50px);
+  /* fadeout */
+  transition: opacity 0.3s cubic-bezier(0, 0, 0, 1);
 }
 
 .v2-truck-lineup__desc-item.active {
   opacity: 1;
-  transform: translateX(0);
-  transition: opacity var(--duration-large) var(--easing-entrance),
-    transform 1s var(--easing-entrance);
+  transition: opacity 0.5s cubic-bezier(0, 0, 0, 1) 0.5s;
 }
 
 .v2-truck-lineup__text {
-  text-wrap: balance;
-  max-width: 400px;
   margin: 0 auto;
+  max-width: 400px;
+  text-wrap: balance;
 }
 
 .v2-truck-lineup__title {

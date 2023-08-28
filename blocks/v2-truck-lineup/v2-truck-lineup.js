@@ -1,4 +1,5 @@
 import { createElement } from '../../scripts/common.js';
+import BezierEasing from './BezierEasing.js';
 
 const blockName = 'v2-truck-lineup';
 
@@ -84,6 +85,14 @@ const updateActiveItem = (index) => {
       behavior: 'smooth',
     });
   }
+
+  // Update description position
+  const descriptionWidth = descriptions.offsetWidth;
+
+  descriptions.scrollTo({
+    left: descriptionWidth * index,
+    behavior: 'smooth',
+  });
 };
 
 const listenScroll = (carousel) => {
@@ -110,43 +119,66 @@ const listenScroll = (carousel) => {
   });
 };
 
+function animateScroll(element, startScroll, endScroll, startTime, cubicBezier) {
+  const duration = 800; // Duration in milliseconds
+  const currentTime = performance.now();
+  const elapsedTime = Math.min(currentTime - startTime, duration);
+  const animationPosition = elapsedTime / duration;
+
+  const easedPosition = cubicBezier(animationPosition);
+
+  const distance = endScroll - startScroll;
+  const targetScroll = startScroll + distance * easedPosition;
+
+  // Update the scrollLeft property of the element
+  element.scrollLeft = targetScroll;
+
+  // Check if the animation is not finished
+  if (elapsedTime < duration) {
+    // Continue the animation by requesting the next frame
+    requestAnimationFrame(() => {
+      animateScroll(element, startScroll, endScroll, startTime, cubicBezier);
+    });
+  }
+}
+
 const setCarouselPosition = (carousel, index) => {
   const firstEl = carousel.firstElementChild;
   const scrollOffset = firstEl.getBoundingClientRect().width;
   const style = window.getComputedStyle(firstEl);
   const marginleft = parseFloat(style.marginLeft);
 
-  carousel.scrollTo({
-    left: index * scrollOffset + marginleft,
-    behavior: 'smooth',
-  });
+  const startScroll = carousel.scrollLeft;
+  const endScroll = index * scrollOffset + marginleft;
+
+  animateScroll(carousel, startScroll, endScroll, performance.now(), BezierEasing(0, 0, 0, 1));
 };
 
-const createArrowControls = (imagesContainer) => {
+const createArrowControls = (carousel) => {
   function scroll(direction) {
-    const activeItem = imagesContainer.querySelector(`.${blockName}__image-item.active`);
+    const activeItem = carousel.querySelector(`.${blockName}__image-item.active`);
     let index = [...activeItem.parentNode.children].indexOf(activeItem);
     if (direction === 'left') {
       index -= 1;
       if (index === -1) {
-        index = imagesContainer.childElementCount;
+        index = carousel.childElementCount;
       }
     } else {
       index += 1;
-      if (index > imagesContainer.childElementCount - 1) {
+      if (index > carousel.childElementCount - 1) {
         index = 0;
       }
     }
 
-    const firstEl = imagesContainer.firstElementChild;
+    const firstEl = carousel.firstElementChild;
     const scrollOffset = firstEl.getBoundingClientRect().width;
     const style = window.getComputedStyle(firstEl);
     const marginleft = parseFloat(style.marginLeft);
 
-    imagesContainer.scrollTo({
-      left: index * scrollOffset + marginleft,
-      behavior: 'smooth',
-    });
+    const startScroll = carousel.scrollLeft;
+    const endScroll = index * scrollOffset + marginleft;
+
+    animateScroll(carousel, startScroll, endScroll, performance.now(), BezierEasing(0, 0, 0, 1));
   }
 
   const arrowControls = createElement('ul', { classes: [`${blockName}__arrow-controls`] });
@@ -167,7 +199,7 @@ const createArrowControls = (imagesContainer) => {
     </li>
   `);
   arrowControls.append(...arrows.children);
-  imagesContainer.insertAdjacentElement('beforebegin', arrowControls);
+  carousel.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
   prevButton.addEventListener('click', () => scroll('left'));
   nextButton.addEventListener('click', () => scroll('right'));
@@ -244,26 +276,4 @@ export default function decorate(block) {
 
   // update the button indicator on scroll
   listenScroll(imagesContainer);
-
-  // Update description position to be equal to image position
-  imagesContainer.addEventListener('scroll', () => {
-    const itemWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--truck-lineup-img-width'));
-
-    const firstCarouselItemWidth = imagesContainer.offsetWidth * (itemWidth / 100);
-    const secondCarouselItemWidth = descriptionContainer.offsetWidth;
-
-    // Determine the number of items in the second carousel
-    // that correspond to one item in the first carousel
-    const itemsInSecondCarouselPerItemInFirst = Math.ceil(
-      firstCarouselItemWidth / secondCarouselItemWidth,
-    );
-
-    // Calculate the scrollLeft position of the second carousel
-    const firstCarouselScrollLeft = imagesContainer.scrollLeft;
-    const secondCarouselScrollLeft = Math.floor(firstCarouselScrollLeft / firstCarouselItemWidth)
-      * (secondCarouselItemWidth * itemsInSecondCarouselPerItemInFirst);
-
-    // Apply the calculated scrollLeft position to the second carousel
-    descriptionContainer.scrollLeft = secondCarouselScrollLeft;
-  });
 }
