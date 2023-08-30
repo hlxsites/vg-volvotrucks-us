@@ -41,7 +41,14 @@
   border-radius: var(--v2-feature-carousel-border-radius);
   background: var(--c-white);
   scroll-snap-align: center;
-  margin: auto;
+}
+
+.v2-feature-carousel__card:first-child {
+  margin-left: auto;
+}
+
+.v2-feature-carousel__card:last-child {
+  margin-right: auto;
 }
 
 .v2-feature-carousel__card .icon {
