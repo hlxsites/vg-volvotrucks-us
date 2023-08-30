@@ -254,7 +254,7 @@
   --body-regular-letter-spacing: 0.5px;
 
   /* nav height */
-  --nav-height: 95px;
+  --nav-height: 52px;
   --sub-nav-height: 44px;
 
   /* sectio style */
@@ -295,7 +295,6 @@ header {
 header .header.block {
   background-color: white;
   min-height: var(--nav-height);
-  position: relative;
   z-index: 1050;
 }
 
@@ -854,13 +853,6 @@ div.block div.pager .pagination .scroll li a {
 }
 
 @media (max-width: 991px) {
-  header .header.block {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
   header .sub-nav.block {
     position: fixed;
     top: var(--nav-height);
@@ -870,7 +862,6 @@ div.block div.pager .pagination .scroll li a {
 
 @media (min-width: 992px) {
   :root {
-    --nav-height: 176px;
     --sub-nav-height: 48px;
   }
 
@@ -1211,6 +1202,10 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media (min-width: 1200px) {
+  :root {
+    --nav-height: 64px;
+  }
+
   :root.redesign-v2 {
     --wrapper-width: 1200px;
     --border-radius: 12px;
