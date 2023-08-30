@@ -1,10 +1,12 @@
 import {
-  createElement,
   isVideoLink,
-  removeEmptyTags,
-  variantsClassesToBEM,
   createVideo,
-} from '../../scripts/scripts.js';
+} from '../../scripts/video-helper.js';
+import {
+  createElement,
+  variantsClassesToBEM,
+  removeEmptyTags,
+} from '../../scripts/common.js';
 
 const checkVideoTime = (event) => {
   const video = event.target;
@@ -56,7 +58,7 @@ export default async function decorate(block) {
   const headings = [...content.querySelectorAll('h1, h2, h3, h4, h5, h6')];
   headings.forEach((heading) => heading.classList.add(`${blockName}__title`));
 
-  const buttonsWrapper = createElement('div', `${blockName}__buttons-wrapper`);
+  const buttonsWrapper = createElement('div', { classes: `${blockName}__buttons-wrapper` });
   const ctaButtons = content.querySelectorAll('.button-container > a');
   [...ctaButtons].forEach((b, i) => {
     if (i > 0) { // change next buttons to be secondary
