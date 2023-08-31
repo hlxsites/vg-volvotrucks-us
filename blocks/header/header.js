@@ -28,7 +28,10 @@ const createMainLinks = (mainLinksWrapper) => {
     listItem.classList.add(`${blockClass}__main-nav-item`);
   });
   list.querySelectorAll('li > a').forEach((link) => {
-    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`);
+    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__main-nav-link--collapsed`, `${blockClass}__link`);
+
+    const chevronIcon = createElement('span', { classes: ['icon', 'icon-chevron-down'] });
+    link.append(chevronIcon);
   });
 
   return list;

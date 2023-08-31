@@ -76,6 +76,11 @@
 .header__main-nav-link {
   padding: 12px 0;
   border-bottom: solid 2px transparent;
+  justify-content: space-between;
+}
+
+.header__main-nav-link--collapsed .icon {
+  transform: rotate(-90deg);
 }
 
 .header__link:any-link {
@@ -224,6 +229,10 @@
     height: auto;
     position: static;
     padding: 0 16px;
+  }
+
+  .header__main-nav-link .icon {
+    display: none;
   }
 
   .header__main-nav {
