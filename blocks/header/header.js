@@ -22,6 +22,7 @@ const createLogo = (logoWrapper) => {
 const createMainLinks = (mainLinksWrapper) => {
   const list = mainLinksWrapper.querySelector('ul');
 
+  list.setAttribute('id', 'header-main-nav');
   list.classList.add(`${blockClass}__main-nav`);
   list.querySelectorAll('li').forEach((listItem) => {
     listItem.classList.add(`${blockClass}__main-nav-item`);
@@ -36,6 +37,7 @@ const createMainLinks = (mainLinksWrapper) => {
 const createActions = (actionsWrapper) => {
   const list = actionsWrapper.querySelector('ul');
 
+  list.setAttribute('id', 'header-actions-list');
   list.classList.add(`${blockClass}__actions-list`);
   list.querySelectorAll('li').forEach((listItem) => {
     listItem.classList.add(`${blockClass}__action-item`);
@@ -56,9 +58,13 @@ const createActions = (actionsWrapper) => {
       });
   });
 
-  /* ADD EXPANDED AND COLTROLS ARIA */
   const closeIcon = document.createRange().createContextualFragment(`
-    <button aria-label="Close menu" class="${blockClass}__close-menu" aria-expanded="false" aria-controls="main-nav-search">
+    <button
+      aria-label="Close menu"
+      class="${blockClass}__close-menu"
+      aria-expanded="false"
+      aria-controls="header-main-nav, header-actions-list"
+    >
       <span class="icon icon-close" />
     </button>
   `);
@@ -71,14 +77,11 @@ const createActions = (actionsWrapper) => {
 const mobileActions = () => {
   const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
 
-  /* ADD EXPANDED AND COLTROLS ARIA */
   const actions = document.createRange().createContextualFragment(`
     <a
       href="#"
       aria-label="Search"
       class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
-      aria-expanded="false"
-      aria-controls="main-nav-search"
     >
       <span class="icon icon-search-icon"></span>
       <span class="${blockClass}__search-label">Search</span>
@@ -88,7 +91,7 @@ const mobileActions = () => {
       aria-label="Open menu"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
       aria-expanded="false"
-      aria-controls="main-nav"
+      aria-controls="header-main-nav, header-actions-list"
     >
       <span class="icon icon-hamburger-icon"></span>
     </a>
@@ -166,10 +169,20 @@ export default async function decorate(block) {
   navContent.querySelector(`.${blockClass}__hamburger-menu`).addEventListener('click', () => {
     block.classList.add('header--hamburger-open');
     document.body.classList.add('disable-scroll');
+
+    // setting aria controls
+    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
+      control.setAttribute('aria-expanded', 'true');
+    });
   });
 
   navContent.querySelectorAll(`.${blockClass}__menu-background, .${blockClass}__close-menu`).forEach((el) => {
     el.addEventListener('click', closeHamburderMenu);
+
+    // setting aria controls
+    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
+      control.setAttribute('aria-expanded', 'false');
+    });
   });
 
   // hiding the hamburger menu when switch to desktop
