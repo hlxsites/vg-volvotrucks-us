@@ -124,7 +124,7 @@
   display: flex;
   gap: 24px;
   transition: var(--menu-animation);
-  right: -100%;
+  right: max(-375px, -95vw);
   position: absolute;
   width: 95vw;
   max-width: 375px;
@@ -135,7 +135,7 @@
 }
 
 .header__main-links {
-  right: -100%;
+  right: max(-375px, -95vw);
   transition: var(--menu-animation);
   position: absolute;
   display: flex;
