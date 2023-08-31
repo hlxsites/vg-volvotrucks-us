@@ -57,13 +57,13 @@ const keyFactsColumns = (el, v2) => {
     value.classList.add(`${blockName}__number-wrapper`, 'h2');
 
     if (!v2 && text) {
-      const unit = createElement('strong', [`${blockName}__unit`, 'sub-2']);
+      const unit = createElement('strong', { classes: [`${blockName}__unit`, 'sub-2'] });
       unit.innerText = text;
       value.parentNode.append(unit);
     }
   }
 
-  const div = createElement('div', `${blockName}__trailing-line`);
+  const div = createElement('div', { classes: `${blockName}__trailing-line` });
   el.append(div);
 };
 

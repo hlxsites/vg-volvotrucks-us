@@ -1204,7 +1204,9 @@ main.blue-contract .section.section-with-title p {
 /* Headings classes styles */
 .redesign-v2 .h2 {
   font-family: var(--ff-volvo-novum);
-  font-size: 56px;
+
+  /* font-size: 56px; */
+  font-size: var(--f-heading-2-font-size);
   font-style: normal;
   font-weight: 300;
   line-height: 110%;
@@ -1224,7 +1226,7 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 .h5 {
   font-family: var(--ff-volvo-novum);
-  font-size: 24px;
+  font-size: var(--f-heading-5-font-size);
   font-style: normal;
   line-height: 125%;
   font-feature-settings: 'clig' off, 'liga' off;
@@ -1232,7 +1234,7 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 .h6 {
   font-family: var(--ff-volvo-novum-medium);
-  font-size: 20px;
+  font-size: var(--f-heading-6-font-size);
   font-style: normal;
   line-height: 125%;
   letter-spacing: 0.15px;
