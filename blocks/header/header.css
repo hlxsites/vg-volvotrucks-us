@@ -78,9 +78,34 @@
   border-bottom: solid 2px transparent;
 }
 
-.header__main-nav-link:hover,
-.header__main-nav-link:focus {
-  border-bottom: solid 2px var(--c-grey-200);
+.header__link:any-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--c-grey-700);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: var(--ff-volvo-novum);
+  font-size: 12px;
+  line-height: 125%;
+  letter-spacing: 0.4px;
+  border-bottom: solid 2px transparent;
+  padding: 12px 0;
+}
+
+.header--hamburger-open .header__link:hover,
+.header--hamburger-open .header__link:focus,
+.header--hamburger-open .header__link:active {
+  border-bottom: solid 2px transparent;
+}
+
+.header__link:any-link:active {
+  color: var(--c-main-black);
+}
+
+.header__link .icon,
+.header__link svg {
+  height: 24px;
+  width: auto;
 }
 
 .header__actions {
@@ -111,40 +136,15 @@
   display: flex;
   width: 95vw;
   max-width: 375px;
-  top: 75px;
+  top: 102px;
   background: var(--c-white);
-  padding: 16px;
-  height: calc(100vh - 78px);
+  padding: 0 16px;
+  height: calc(100vh - 102px);
 }
 
 .header__action-link {
   display: flex;
   flex-direction: column;
-}
-
-.header__button {
-  height: 24px;
-  width: auto;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  border: 0;
-  gap: 4px;
-  color: var(--c-grey-700);
-  font-feature-settings: 'clig' off, 'liga' off;
-  font-family: var(--ff-volvo-novum);
-  font-size: 12px;
-  line-height: 125%;
-  letter-spacing: 0.4px;
-}
-
-.header__button .icon,
-.header__button svg {
-  width: 100%;
-  height: 100%;
 }
 
 .header__search-label {
@@ -154,27 +154,6 @@
 .header__mobile-actions {
   display: flex;
   gap: 16px;
-}
-
-.header__link {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.header__link .icon,
-.header__link svg {
-  height: 24px;
-  width: auto;
-}
-
-.header__link:any-link {
-  color: var(--c-grey-700);
-  font-feature-settings: 'clig' off, 'liga' off;
-  font-family: var(--ff-volvo-novum);
-  font-size: 12px;
-  line-height: 125%;
-  letter-spacing: 0.4px;
 }
 
 .header--hamburger-open .header__menu-background {
@@ -188,16 +167,9 @@
 }
 
 .header--hamburger-open .header__actions-list {
-  position: absolute;
-  display: flex;
   right: 0;
   top: 0;
-  padding: 16px;
-  width: 95vw;
-  max-width: 375px;
-  background: var(--c-white);
   overflow: auto;
-  border-bottom: solid 1px var(--c-grey-300);
 }
 
 .header--hamburger-open .header__action-link-text {
@@ -205,20 +177,7 @@
 }
 
 .header--hamburger-open .header__main-links {
-  display: flex;
-  position: absolute;
   right: 0;
-  width: 95vw;
-  max-width: 375px;
-  top: 75px;
-  background: var(--c-white);
-  padding: 16px;
-  height: calc(100vh - 78px);
-}
-
-.header--hamburger-open .header__main-nav-link:hover,
-.header--hamburger-open .header__main-nav-link:focus {
-  border-bottom: solid 2px transparent;
 }
 
 .header--hidden {
@@ -236,7 +195,16 @@
     max-width: 1200px;
   }
 
-  .header__hamburger-menu {
+  .header__link:hover,
+  .header__link:focus {
+    border-bottom: solid 2px var(--c-grey-200);
+  }
+
+  .header__link:any-link:active {
+    border-bottom: solid 2px var(--c-main-black);
+  }
+
+  .header__action-link.header__hamburger-menu {
     display: none;
   }
 

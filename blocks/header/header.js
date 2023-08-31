@@ -73,13 +73,25 @@ const mobileActions = () => {
 
   /* ADD EXPANDED AND COLTROLS ARIA */
   const actions = document.createRange().createContextualFragment(`
-    <button aria-label="Search" class="${blockClass}__search-button ${blockClass}__button"  aria-expanded="false" aria-controls="main-nav-search">
+    <a
+      href="#"
+      aria-label="Search"
+      class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
+      aria-expanded="false"
+      aria-controls="main-nav-search"
+    >
       <span class="icon icon-search-icon"></span>
       <span class="${blockClass}__search-label">Search</span>
-    </button>
-    <button aria-label="Open menu" class="${blockClass}__hamburger-menu ${blockClass}__button"  aria-expanded="false" aria-controls="main-nav">
+    </a>
+    <a
+      href="#"
+      aria-label="Open menu"
+      class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
+      aria-expanded="false"
+      aria-controls="main-nav"
+    >
       <span class="icon icon-hamburger-icon"></span>
-    </button>
+    </a>
   `);
 
   mobileActionsEl.append(...actions.childNodes);
