@@ -42,7 +42,7 @@
   display: block;
 }
 
-.header__logo-image svg {
+.header__logo-image.icon svg {
   width: 100%;
 }
 
@@ -108,7 +108,7 @@
 }
 
 .header__link .icon,
-.header__link svg {
+.header__link .icon svg {
   height: 24px;
   width: auto;
 }
