@@ -292,7 +292,7 @@ header {
   min-height: var(--nav-height);
 }
 
-header .header.block {
+.header {
   background-color: white;
   min-height: var(--nav-height);
   z-index: 1050;
