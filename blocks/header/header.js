@@ -91,7 +91,7 @@ const mobileActions = () => {
     >
       <span class="icon icon-search-icon"></span>
     </a>
-    <a
+    <button
       href="#"
       aria-label="${openMenuLable}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
@@ -99,7 +99,7 @@ const mobileActions = () => {
       aria-controls="header-main-nav, header-actions-list"
     >
       <span class="icon icon-hamburger-icon"></span>
-    </a>
+    </button>
   `);
 
   mobileActionsEl.append(...actions.childNodes);
