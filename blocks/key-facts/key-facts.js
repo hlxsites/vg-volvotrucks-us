@@ -30,7 +30,7 @@ const keyFactsColumns = (el, v2) => {
   });
 
   const preSubheading = el.querySelector(':scope > :not(strong, i):first-child');
-  preSubheading?.classList.add('sub-2');
+  preSubheading?.classList.add('subtitle-2');
 
   // find and split number/unit
   const value = el.querySelector('strong:only-child');
@@ -57,7 +57,7 @@ const keyFactsColumns = (el, v2) => {
     value.classList.add(`${blockName}__number-wrapper`, 'h2');
 
     if (!v2 && text) {
-      const unit = createElement('strong', { classes: [`${blockName}__unit`, 'sub-2'] });
+      const unit = createElement('strong', { classes: [`${blockName}__unit`, 'ssubtitle-2'] });
       unit.innerText = text;
       value.parentNode.append(unit);
     }
