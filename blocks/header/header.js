@@ -1,4 +1,4 @@
-import { createElement } from '../../scripts/common.js';
+import { createElement, getTextLabel } from '../../scripts/common.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
@@ -61,9 +61,10 @@ const createActions = (actionsWrapper) => {
       });
   });
 
+  const closeMenuLabel = getTextLabel('Close menu');
   const closeIcon = document.createRange().createContextualFragment(`
     <button
-      aria-label="Close menu"
+      aria-label="${closeMenuLabel}"
       class="${blockClass}__close-menu"
       aria-expanded="false"
       aria-controls="header-main-nav, header-actions-list"
@@ -79,19 +80,21 @@ const createActions = (actionsWrapper) => {
 
 const mobileActions = () => {
   const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
+  const searchLable = getTextLabel('Search');
+  const openMenuLable = getTextLabel('Open menu');
 
   const actions = document.createRange().createContextualFragment(`
     <a
       href="#"
-      aria-label="Search"
+      aria-label="${searchLable}"
       class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
     >
       <span class="icon icon-search-icon"></span>
-      <span class="${blockClass}__search-label">Search</span>
+      <span class="${blockClass}__search-label">${searchLable}</span>
     </a>
     <a
       href="#"
-      aria-label="Open menu"
+      aria-label="${openMenuLable}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
       aria-expanded="false"
       aria-controls="header-main-nav, header-actions-list"

@@ -90,7 +90,7 @@
   color: var(--c-grey-700);
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: var(--ff-volvo-novum);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 125%;
   letter-spacing: 0.4px;
   border-bottom: solid 2px transparent;
@@ -118,31 +118,28 @@
   gap: 24px;
 }
 
-.header__actions-list {
-  list-style: none;
-  margin: 0;
+.header__actions-list,
+.header__main-links {
   display: flex;
-  gap: 24px;
   transition: var(--menu-animation);
   right: max(-375px, -95vw);
   position: absolute;
   width: 95vw;
   max-width: 375px;
   background: var(--c-white);
+}
+
+.header__actions-list {
+  list-style: none;
+  margin: 0;
+  gap: 24px;
   border-bottom: solid 1px var(--c-grey-300);
   top: 0;
   padding: 16px;
 }
 
 .header__main-links {
-  right: max(-375px, -95vw);
-  transition: var(--menu-animation);
-  position: absolute;
-  display: flex;
-  width: 95vw;
-  max-width: 375px;
   top: 102px;
-  background: var(--c-white);
   padding: 0 16px;
   height: calc(100vh - 102px);
 }
@@ -213,6 +210,10 @@
     display: none;
   }
 
+  .header__search-label {
+    display: none;
+  }
+
   .header__actions-list,
   .header__main-links {
     display: flex;
@@ -229,6 +230,8 @@
     height: auto;
     position: static;
     padding: 0 16px;
+    width: auto;
+    max-width: unset;
   }
 
   .header__main-nav-link .icon {
@@ -257,9 +260,5 @@
 
   .header__close-menu {
     display: none;
-  }
-
-  .header__search-label {
-    display: inline;
   }
 }
