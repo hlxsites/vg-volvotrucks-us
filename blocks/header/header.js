@@ -90,7 +90,6 @@ const mobileActions = () => {
       class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
     >
       <span class="icon icon-search-icon"></span>
-      <span class="${blockClass}__search-label">${searchLable}</span>
     </a>
     <a
       href="#"
@@ -108,7 +107,7 @@ const mobileActions = () => {
   return mobileActionsEl;
 };
 
-const addHeaderScrollBehavtios = (header) => {
+const addHeaderScrollBehaviour = (header) => {
   let prevPosition = 0;
 
   window.addEventListener('scroll', () => {
@@ -194,7 +193,7 @@ export default async function decorate(block) {
   // hiding the hamburger menu when switch to desktop
   desktopMQ.addEventListener('change', closeHamburderMenu);
 
-  addHeaderScrollBehavtios(block);
+  addHeaderScrollBehaviour(block);
 
   nav.append(navContent);
   block.append(nav);

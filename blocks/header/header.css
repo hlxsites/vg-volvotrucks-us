@@ -149,10 +149,6 @@
   flex-direction: column;
 }
 
-.header__search-label {
-  display: none;
-}
-
 .header__mobile-actions {
   display: flex;
   gap: 16px;
@@ -207,10 +203,6 @@
   }
 
   .header__action-link.header__hamburger-menu {
-    display: none;
-  }
-
-  .header__search-label {
     display: none;
   }
 
