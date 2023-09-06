@@ -8,10 +8,6 @@
   --v2-feature-carousel-border-radius: var(--border-radius);
 }
 
-.v2-feature-carousel-container {
-  background-color: var(--c-grey-50);
-}
-
 .v2-feature-carousel-container .v2-feature-carousel-wrapper {
   max-width: 1330px;
   width: 100%;
@@ -30,6 +26,8 @@
 }
 
 .v2-feature-carousel__card {
+  background: var(--card-background);
+  color: var(--card-text);
   display: flex;
   flex: 0 0 auto;
   width: var(--v2-feature-carousel-card-width);
@@ -39,7 +37,6 @@
   justify-content: space-between;
   align-items: flex-start;
   border-radius: var(--v2-feature-carousel-border-radius);
-  background: var(--c-white);
   scroll-snap-align: center;
 }
 

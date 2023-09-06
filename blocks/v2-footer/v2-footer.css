@@ -3,7 +3,7 @@
 }
 
 .v2-footer {
-  background: var(--c-background-card);
+  background: var(--c-grey-50);
 }
 
 .v2-footer :is(.v2-footer__title, p, a) {
@@ -98,7 +98,7 @@
 
 .v2-footer-bar a,
 .v2-footer-copyright p {
-  color: var(--volvo-text-gray);
+  color: var(--c-grey-4);
   margin: 0;
   padding-top: 8px;
   padding-bottom: 8px;
