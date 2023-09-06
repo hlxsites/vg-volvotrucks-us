@@ -877,10 +877,6 @@ div.block div.pager .pagination .scroll li a {
     --sub-nav-height: 48px;
   }
 
-  :root:not(.redesign-v2) main .section:first-child > :first-child {
-    margin-top: 30px;
-  }
-
   header .sub-nav.block {
     background-color: var(--c-grey-4);
   }
@@ -1000,7 +996,8 @@ main.blue-contract .section.section-with-title p {
 /* Section Background colors */
 .section--black-background {
   --text-color: var(--c-white);
-  --card-background: var(--c-white);
+  --card-background: var(--c-grey-900);
+  --card-text: var(--c-white);
 
   color: var(--text-color);
   background-color: var(--c-main-black);
@@ -1016,7 +1013,7 @@ main.blue-contract .section.section-with-title p {
 /* End section Background colors */
 
 :root.redesign-v2 .section {
-  padding: 0;
+  padding: 32px 0;
 }
 
 :root.redesign-v2 .section > div {
@@ -1156,6 +1153,7 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 button.tertiary {
   background-color: var(--c-white);
   color: var(--c-main-black);
+  text-transform: uppercase;
 }
 
 .redesign-v2 a.button.tertiary:hover,

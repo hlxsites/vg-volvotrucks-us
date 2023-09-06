@@ -134,7 +134,7 @@ const buildStoryCard = (entry) => {
           <time datetime="${date}" pubdate="pubdate">${date.toLocaleDateString()}</time>
         </li>
       </ul>
-      <a href="${path}" class="v2-stories-carousel-cta standalone-link">
+      <a href="${path}" class="v2-stories-carousel-cta button tertiary">
         ${readMore}
         ${svgArrowRight}
       </a>
