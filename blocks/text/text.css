@@ -2,12 +2,26 @@
   font-size: var(--heading-s-font-size);
   line-height: var(--heading-s-line-height);
   letter-spacing: var(--heading-s-letter-spacing);
-  padding: 24px 0;
+  margin: 24px 0;
+}
+
+.redesign-v2 .text {
+  margin: 0 auto;
+  max-width: 600px;
+  text-wrap: balance;
+}
+
+.redesign-v2 .text > div > *:first-child {
+  margin-top: 0;
+}
+
+.redesign-v2 .text > div > *:last-child {
+  margin-bottom: 0;
 }
 
 @media screen and (min-width: 768px) {
   .text {
-    padding: 40px 0;
+    margin: 40px 0;
   }
 }
 

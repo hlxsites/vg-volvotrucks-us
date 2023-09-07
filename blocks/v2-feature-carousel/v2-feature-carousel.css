@@ -1,5 +1,4 @@
 :root {
-  --v2-feature-carousel-padding: 32px 0;
   --v2-feature-carousel-card-padding: 24px;
   --v2-feature-carousel-card-width: 150px;
   --v2-feature-carousel-card-height: 200px;
@@ -11,10 +10,6 @@
 .v2-feature-carousel-container .v2-feature-carousel-wrapper {
   max-width: 1330px;
   width: 100%;
-}
-
-.v2-feature-carousel {
-  padding: var(--v2-feature-carousel-padding);
 }
 
 .v2-feature-carousel .v2-feature-carousel__cards-list {

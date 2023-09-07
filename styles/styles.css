@@ -54,6 +54,8 @@
 
   /* REDESIGN */
   --border-radius: 8px;
+  --section-padding: 48px 0 140px;
+  --section-div-padding: 20px 16px;
 
   /* Volvo Broad Pro Digital, 70px / 4.375rem, 5px / 0.313rem, 85% */
   --f-statement-header-font-size: 4.375rem; /* 70px */
@@ -877,6 +879,10 @@ div.block div.pager .pagination .scroll li a {
     --sub-nav-height: 48px;
   }
 
+  :root:not(.redesign-v2) main .section:first-child > :first-child {
+    margin-top: 30px;
+  }
+
   header .sub-nav.block {
     background-color: var(--c-grey-4);
   }
@@ -993,6 +999,27 @@ main.blue-contract .section.section-with-title p {
   font-weight: 100;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section {
+  padding: var(--section-padding);
+}
+
+.redesign-v2 .section:first-child,
+.section:not(.section--black-background, .section--gray-background) + .section:not(.section--black-background, .section--gray-background) {
+  padding-top: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section > div {
+  padding: var(--section-div-padding);
+  margin: auto;
+}
+
+.redesign-v2 .section div.full-width {
+  padding: 0;
+  width: 100%;
+}
+
 /* Section Background colors */
 .section--black-background {
   --text-color: var(--c-white);
@@ -1001,6 +1028,7 @@ main.blue-contract .section.section-with-title p {
 
   color: var(--text-color);
   background-color: var(--c-main-black);
+  padding-top: 80px;
 }
 
 .section--gray-background {
@@ -1011,20 +1039,6 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* End section Background colors */
-
-:root.redesign-v2 .section {
-  padding: 32px 0;
-}
-
-:root.redesign-v2 .section > div {
-  padding: 0 16px;
-  margin: auto;
-}
-
-.redesign-v2 .section div.full-width {
-  padding: 0;
-  width: 100%;
-}
 
 .redesign-v2 a.standalone-link {
   align-items: center;
@@ -1242,25 +1256,16 @@ main.blue-contract .section.section-with-title p {
   width: 1em;
 }
 
-@media (min-width: 744px) {
-  .redesign-v2 .section {
-    padding: 0;
-  }
-
-  .redesign-v2 .section > div {
-   padding: 0 32px;
-   margin: auto;
-  }
+.redesign-v2 .button .icon svg {
+  height: 24px;
+  width: 24px;
 }
 
 @media (min-width: 1200px) {
   :root.redesign-v2 {
     --wrapper-width: 1200px;
     --border-radius: 12px;
-  }
-
-  .redesign-v2 .section > div {
-    padding: 0 135px;
+    --section-div-padding: 24px 0;
   }
 
   .redesign-v2 .section div.full-width {
