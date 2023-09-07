@@ -160,9 +160,20 @@ export default async function decorate(block) {
 
   decorateIcons(navContent);
 
+  const setAriaForMenu = (isMenuVisible) => {
+    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
+      control.setAttribute('aria-expanded', isMenuVisible);
+    });
+    block.querySelectorAll('#header-main-nav, #header-actions-list').forEach((item) => {
+      item.setAttribute('aria-hidden', !isMenuVisible);
+    });
+  };
+
   const closeHamburderMenu = () => {
     block.classList.remove('header--hamburger-open');
     document.body.classList.remove('disable-scroll');
+
+    setAriaForMenu(false);
   };
 
   // add actions for search
@@ -175,19 +186,11 @@ export default async function decorate(block) {
     block.classList.add('header--hamburger-open');
     document.body.classList.add('disable-scroll');
 
-    // setting aria controls
-    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
-      control.setAttribute('aria-expanded', 'true');
-    });
+    setAriaForMenu(true);
   });
 
   navContent.querySelectorAll(`.${blockClass}__menu-background, .${blockClass}__close-menu`).forEach((el) => {
     el.addEventListener('click', closeHamburderMenu);
-
-    // setting aria controls
-    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
-      control.setAttribute('aria-expanded', 'false');
-    });
   });
 
   // hiding the hamburger menu when switch to desktop
@@ -197,4 +200,6 @@ export default async function decorate(block) {
 
   nav.append(navContent);
   block.append(nav);
+
+  setAriaForMenu(false);
 }
