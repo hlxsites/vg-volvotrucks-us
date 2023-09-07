@@ -1247,7 +1247,6 @@ main.blue-contract .section.section-with-title p {
   line-height: var( --f-heading-6-line-height);
   letter-spacing: var(--f-heading-6-letter-spacing);
   font-feature-settings: 'clig' off, 'liga' off;
-
 }
 
 .redesign-v2 .subtitle-1 {
