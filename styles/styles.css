@@ -72,6 +72,7 @@
 
   /* Volvo Novum, 48px / 3rem, Medium, 0px, 110% */
   --f-heading-3-font-size: 3rem; /* 48px */
+  --f-heading-3-letter-spacing: 0;
   --f-heading-3-line-height: 110%;
 
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
@@ -81,6 +82,7 @@
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
   --f-heading-5-font-size: 1.5rem; /* 24px */
+  --f-heading-5-letter-spacing: 0;
   --f-heading-5-line-height: 125%;
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
