@@ -3,13 +3,13 @@
   justify-content: center;
 
   --menu-animation: right 450ms ease-in-out;
-  --header-animation: top 300ms ease-in-out;
+  --header-animation: transform 300ms ease-in-out;
 }
 
 @media (prefers-reduced-motion) {
   .header-wrapper {
     --menu-animation: right 0 ease-in-out;
-    --header-animation: top 0 ease-in-out;
+    --header-animation: transform 0 ease-in-out;
   }
 }
 
@@ -71,6 +71,7 @@
 .header__main-nav-item {
   border-bottom: solid 1px var(--c-grey-300);
   padding: 5px 0;
+  margin: 0 16px;
 }
 
 .header__main-nav-link {
@@ -91,8 +92,8 @@
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: var(--ff-volvo-novum);
   font-size: 14px;
-  line-height: 125%;
-  letter-spacing: 0.4px;
+  line-height: var(--f-body-line-height);
+  letter-spacing: var(--f-body-letter-spacing);
   border-bottom: solid 2px transparent;
   padding: 12px 0;
 }
@@ -133,9 +134,16 @@
   list-style: none;
   margin: 0;
   gap: 24px;
-  border-bottom: solid 1px var(--c-grey-300);
   top: 0;
   padding: 16px;
+}
+
+.header__actions-list::after {
+  content: '';
+  border-bottom: solid 1px var(--c-grey-300);
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 32px);
 }
 
 .header__action-link.header__hamburger-menu {
@@ -148,7 +156,7 @@
 
 .header__main-links {
   top: 102px;
-  padding: 0 16px;
+  padding: 0;
   height: calc(100vh - 102px);
 }
 
@@ -174,7 +182,6 @@
 
 .header--hamburger-open .header__actions-list {
   right: 0;
-  top: 0;
   overflow: auto;
 }
 
@@ -187,7 +194,7 @@
 }
 
 .header--hidden {
-  top: calc(-1 * var(--nav-height));
+  transform: translateY(-100%);
 }
 
 @media (min-width: 1200px) {
@@ -197,8 +204,7 @@
   }
 
   .header__nav {
-    padding: 0;
-    max-width: 1200px;
+    max-width: 1232px;
   }
 
   .header__link:hover,
@@ -214,16 +220,15 @@
     display: none;
   }
 
-  .header__actions-list,
-  .header__main-links {
-    display: flex;
-  }
-
   .header__actions-list {
     border: unset;
     padding: 0;
     position: static;
     width: auto;
+  }
+
+  .header__actions-list::after {
+    display: none;
   }
 
   .header__main-links {

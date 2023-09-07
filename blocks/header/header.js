@@ -92,7 +92,6 @@ const mobileActions = () => {
       <span class="icon icon-search-icon"></span>
     </a>
     <button
-      href="#"
       aria-label="${openMenuLable}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
       aria-expanded="false"
@@ -117,7 +116,8 @@ const addHeaderScrollBehaviour = (header) => {
       header.classList.remove(`${blockClass}--hidden`);
     }
 
-    prevPosition = window.scrollY;
+    // on Safari the window.scrollY can be negative so `> 0` check is needed
+    prevPosition = window.scrollY > 0 ? window.scrollY : 0;
   });
 };
 
