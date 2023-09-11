@@ -1226,3 +1226,11 @@ main.blue-contract .section.section-with-title p {
     margin: 0;
   }
 }
+
+/*
+  REMOVE AFTER MERGING
+  https://github.com/Netcentric/vg-volvotrucks-us-rd/pull/81
+*/
+.section.dark-backgrond {
+  background: var(--c-main-black);
+}
