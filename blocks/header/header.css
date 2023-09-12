@@ -34,7 +34,7 @@
   width: 100%;
 }
 
-.header__menu-background {
+.header__menu-overlay {
   display: none;
 }
 
@@ -49,14 +49,14 @@
 
 .header__close-menu {
   padding: 0;
-  height: auto;
   background: transparent;
   border: unset;
   display: flex;
   align-items: center;
   position: absolute;
   right: 16px;
-  top: 16px;
+  top: 32px;
+  height: 24px;
 }
 
 .header__main-nav {
@@ -81,7 +81,15 @@
   justify-content: space-between;
 }
 
-.header__main-nav-link--collapsed .icon {
+.header__main-nav-link::after {
+  content: '';
+  background-image: url('/icons/chevron-down.svg');
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+}
+
+.header__main-nav-link--collapsed::after {
   transform: rotate(-90deg);
 }
 
@@ -178,7 +186,7 @@
   gap: 16px;
 }
 
-.header--hamburger-open .header__menu-background {
+.header--hamburger-open .header__menu-overlay {
   position: fixed;
   top: 0;
   left: 0;

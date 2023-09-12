@@ -29,9 +29,6 @@ const createMainLinks = (mainLinksWrapper) => {
   });
   list.querySelectorAll('li > a').forEach((link) => {
     link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__main-nav-link--collapsed`, `${blockClass}__link`);
-
-    const chevronIcon = createElement('span', { classes: ['icon', 'icon-chevron-down'] });
-    link.append(chevronIcon);
   });
 
   return list;
@@ -145,10 +142,8 @@ export default async function decorate(block) {
   const [logoContainer, navigationContainer, actionsContainer] = [...content.querySelectorAll('div')];
   const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
   const navContent = document.createRange().createContextualFragment(`
-    <div class="${blockClass}__menu-background"></div>
-    <div class="${blockClass}__logo-wrapper">
-      ${createLogo(logoContainer).outerHTML}
-    </div>
+    <div class="${blockClass}__menu-overlay"></div>
+    ${createLogo(logoContainer).outerHTML}
     <div class="${blockClass}__main-links">
       ${createMainLinks(navigationContainer).outerHTML}
     </div>
@@ -169,7 +164,7 @@ export default async function decorate(block) {
     });
   };
 
-  const closeHamburderMenu = () => {
+  const closeHamburgerMenu = () => {
     block.classList.remove('header--hamburger-open');
     document.body.classList.remove('disable-scroll');
 
@@ -189,12 +184,12 @@ export default async function decorate(block) {
     setAriaForMenu(true);
   });
 
-  navContent.querySelectorAll(`.${blockClass}__menu-background, .${blockClass}__close-menu`).forEach((el) => {
-    el.addEventListener('click', closeHamburderMenu);
+  navContent.querySelectorAll(`.${blockClass}__menu-overlay, .${blockClass}__close-menu`).forEach((el) => {
+    el.addEventListener('click', closeHamburgerMenu);
   });
 
   // hiding the hamburger menu when switch to desktop
-  desktopMQ.addEventListener('change', closeHamburderMenu);
+  desktopMQ.addEventListener('change', closeHamburgerMenu);
 
   addHeaderScrollBehaviour(block);
 
