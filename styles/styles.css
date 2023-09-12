@@ -308,10 +308,16 @@ header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
   z-index: 1020;
-  bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
+  top: var(--nav-height);
+  bottom: unset;
+  transition:  top 300ms ease-in-out;
+}
+
+.header--hidden ~ .sub-nav.block {
+  top: 0;
 }
 
 .border {
@@ -851,19 +857,6 @@ div.block div.pager .pagination .scroll li a {
     width: 100%;
     justify-content: center;
     flex-flow: row wrap;
-  }
-}
-
-@media (max-width: 991px) {
-  header .sub-nav.block {
-    position: fixed;
-    top: var(--nav-height);
-    bottom: unset;
-    transition:  top 300ms ease-in-out;
-  }
-
-  .header--hidden ~ .sub-nav.block {
-    top: 0;
   }
 }
 
