@@ -60,14 +60,16 @@ const createActions = (actionsWrapper) => {
 
   const closeMenuLabel = getTextLabel('Close menu');
   const closeIcon = document.createRange().createContextualFragment(`
-    <button
-      aria-label="${closeMenuLabel}"
-      class="${blockClass}__close-menu"
-      aria-expanded="false"
-      aria-controls="header-main-nav, header-actions-list"
-    >
-      <span class="icon icon-close" />
-    </button>
+    <li class="header__action-item">
+      <button
+        aria-label="${closeMenuLabel}"
+        class="${blockClass}__close-menu"
+        aria-expanded="false"
+        aria-controls="header-main-nav, header-actions-list"
+      >
+        <span class="icon icon-close" />
+      </button>
+    </li>
   `);
 
   list.append(closeIcon);

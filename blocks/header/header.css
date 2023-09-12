@@ -54,8 +54,8 @@
   display: flex;
   align-items: center;
   position: absolute;
+  margin-top: 16px;
   right: 16px;
-  top: 32px;
   height: 24px;
 }
 
