@@ -859,6 +859,11 @@ div.block div.pager .pagination .scroll li a {
     position: fixed;
     top: var(--nav-height);
     bottom: unset;
+    transition:  top 300ms ease-in-out;
+  }
+
+  .header--hidden ~ .sub-nav.block {
+    top: 0;
   }
 }
 
