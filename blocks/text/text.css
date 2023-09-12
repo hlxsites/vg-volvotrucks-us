@@ -84,14 +84,14 @@ div.text.alert.block img {
   max-width: 40px;
 }
 
-div.text.alert.block>div:first-of-type {
+div.text.alert.block > div:first-of-type {
   padding-left: 70px;
   padding-right: 40px;
   padding-top: 20px;
   margin-right: 15px;
 }
 
-div.text.alert.block>div:last-of-type {
+div.text.alert.block > div:last-of-type {
   margin-right: 15px;
 }
 
