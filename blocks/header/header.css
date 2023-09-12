@@ -256,7 +256,7 @@
     max-width: unset;
   }
 
-  .header__main-nav-link .icon {
+  .header__main-nav-link::after {
     display: none;
   }
 
