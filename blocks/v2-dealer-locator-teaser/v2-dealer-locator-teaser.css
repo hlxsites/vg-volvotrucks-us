@@ -15,7 +15,7 @@
 
 .v2-dealer-locator-teaser .v2-dlt__content-wrapper {
   width: 100%;
-  max-width: 1170px;
+  max-width: var(--wrapper-width);
 }
 
 .v2-dealer-locator-teaser .v2-dlt__content {
@@ -60,7 +60,7 @@
   }
 
   .v2-dealer-locator-teaser .v2-dlt__content {
-    margin: 0 32px 32px;
+    margin: 0 32px 32px 0;
     padding: 32px;
     gap: 16px;
   }

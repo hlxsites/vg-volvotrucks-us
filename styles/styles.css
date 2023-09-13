@@ -259,7 +259,7 @@
   --body-regular-letter-spacing: 0.5px;
 
   /* nav height */
-  --nav-height: 95px;
+  --nav-height: 52px;
   --sub-nav-height: 44px;
 
   /* sectio style */
@@ -297,10 +297,9 @@ header {
   min-height: var(--nav-height);
 }
 
-header .header.block {
+.header {
   background-color: white;
   min-height: var(--nav-height);
-  position: relative;
   z-index: 1050;
 }
 
@@ -312,10 +311,16 @@ header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
   z-index: 1020;
-  bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
+  top: var(--nav-height);
+  bottom: unset;
+  transition:  top 300ms ease-in-out;
+}
+
+.header--hidden ~ .sub-nav.block {
+  top: 0;
 }
 
 .border {
@@ -858,24 +863,8 @@ div.block div.pager .pagination .scroll li a {
   }
 }
 
-@media (max-width: 991px) {
-  header .header.block {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  header .sub-nav.block {
-    position: fixed;
-    top: var(--nav-height);
-    bottom: unset;
-  }
-}
-
 @media (min-width: 992px) {
   :root {
-    --nav-height: 176px;
     --sub-nav-height: 48px;
   }
 
@@ -1262,6 +1251,10 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media (min-width: 1200px) {
+  :root {
+    --nav-height: 64px;
+  }
+
   :root.redesign-v2 {
     --wrapper-width: 1200px;
     --border-radius: 12px;
