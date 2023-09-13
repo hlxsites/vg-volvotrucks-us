@@ -54,6 +54,8 @@
 
   /* REDESIGN */
   --border-radius: 8px;
+  --section-padding: 48px 0 140px;
+  --section-div-padding: 20px 16px;
 
   /* Volvo Broad Pro Digital, 70px / 4.375rem, 5px / 0.313rem, 85% */
   --f-statement-header-font-size: 4.375rem; /* 70px */
@@ -162,13 +164,6 @@
   --c-warning-yellow: #F7D302;
 
   /* Global colors */
-  --c-background-card: #f7f7f7;
-  --volvo-text-gray: var(--c-grey-4);
-  --volvo-text-light-gray: var(--c-grey-2);
-  --text-color: var(--c-grey-4);
-  --btn-background-hover: var(--c-grey-1);
-  --input-background-color: var(--c-grey-1);
-  --overlay-background-color: var(--c-grey-1);
   --light-border-focus: #2B8EDE;
 
   /* Motions */
@@ -183,6 +178,14 @@
     OLD styles
     we need to remove / update once they are not used in the styles
   */
+
+  /* Global colors */
+  --volvo-text-gray: var(--c-grey-4);
+  --volvo-text-light-gray: var(--c-grey-2);
+  --text-color: var(--c-grey-4);
+  --btn-background-hover: var(--c-grey-1);
+  --input-background-color: var(--c-grey-1);
+  --overlay-background-color: var(--c-grey-1);
   --background-light-gray: #ebebeb;
   --highlight-background-color: #ccc;
   --btn-border-hover: #030333;
@@ -972,11 +975,11 @@ main.blue-contract .section.section-with-title p {
 
 /* REDESIGN GLOBAL STYLES */
 .redesign-v2 {
-  font-size: 16px;
-}
-
-:root.redesign-v2 {
+  --card-background: #f7f7f7;
+  --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
+
+  font-size: 16px;
 }
 
 .redesign-v2 ul {
@@ -995,13 +998,20 @@ main.blue-contract .section.section-with-title p {
   font-weight: 100;
 }
 
-:root.redesign-v2 .section {
-  padding: 0;
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section {
+  padding: var(--section-padding);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
-:root.redesign-v2 .section > div {
-  padding: 0 16px;
+.redesign-v2 .section:first-child,
+.section:not(.section--black-background, .section--gray-background) + .section:not(.section--black-background, .section--gray-background) {
+  padding-top: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section > div {
+  padding: var(--section-div-padding);
   margin: auto;
 }
 
@@ -1009,6 +1019,26 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
   width: 100%;
 }
+
+/* Section Background colors */
+.section--black-background {
+  --text-color: var(--c-white);
+  --card-background: var(--c-grey-900);
+  --card-text: var(--c-white);
+
+  color: var(--text-color);
+  background-color: var(--c-main-black);
+  padding-top: 80px;
+}
+
+.section--gray-background {
+  --card-background: var(--c-white);
+  --card-text: var(--c-main-black);
+
+  background-color: var(--c-grey-50);
+}
+
+/* End section Background colors */
 
 .redesign-v2 a.standalone-link {
   align-items: center;
@@ -1072,18 +1102,24 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.primary,
+.redesign-v2 .section--black-background button.primary,
 .redesign-v2 a.button.primary.dark,
 .redesign-v2 button.primary.dark {
   background-color: var(--c-white);
   color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.primary:hover,
+.redesign-v2 .section--black-background button.primary:hover,
 .redesign-v2 a.button.primary.dark:hover,
 .redesign-v2 button.primary.dark:hover {
   background-color: var(--c-grey-200);
   border-color: transparent;
 }
 
+.redesign-v2 .section--black-background a.button.primary:active,
+.redesign-v2 .section--black-background button.primary:active,
 .redesign-v2 a.button.primary.dark:active,
 .redesign-v2 button.primary.dark:active {
   background-color: var(--c-grey-400);
@@ -1105,17 +1141,23 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-100);
 }
 
+.redesign-v2 .section--black-background a.button.secondary,
+.redesign-v2 .section--black-background button.secondary,
 .redesign-v2 a.button.secondary.dark,
 .redesign-v2 button.secondary.dark {
   border: 1px solid var(--c-white);
   color: var(--c-white);
 }
 
+.redesign-v2 .section--black-background a.button.secondary:hover,
+.redesign-v2 .section--black-background button.secondary:hover,
 .redesign-v2 a.button.secondary.dark:hover,
 .redesign-v2 button.secondary.dark:hover {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.secondary:active,
+.redesign-v2 .section--black-background button.secondary:active,
 .redesign-v2 a.button.secondary.dark:active,
 .redesign-v2 button.secondary.dark:active {
   background-color: var(--c-grey-800);
@@ -1125,6 +1167,7 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 button.tertiary {
   background-color: var(--c-white);
   color: var(--c-main-black);
+  text-transform: uppercase;
 }
 
 .redesign-v2 a.button.tertiary:hover,
@@ -1138,17 +1181,23 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-100);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary,
+.redesign-v2 .section--black-background button.tertiary,
 .redesign-v2 a.button.tertiary.dark,
 .redesign-v2 button.tertiary.dark {
   color: var(--c-white);
   background-color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary:hover,
+.redesign-v2 .section--black-background button.tertiary:hover,
 .redesign-v2 a.button.tertiary.dark:hover,
 .redesign-v2 button.tertiary.dark:hover {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary:active,
+.redesign-v2 .section--black-background button.tertiary:active,
 .redesign-v2 a.button.tertiary.dark:active,
 .redesign-v2 button.tertiary.dark:active {
   background-color: var(--c-grey-800);
@@ -1170,17 +1219,23 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-cta-blue-active);
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta,
+.redesign-v2 .section--black-background button.marketing-cta,
 .redesign-v2 a.button.marketing-cta.dark,
 .redesign-v2 button.marketing-cta.dark {
   background-color: #44A1FF;
   color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta:hover,
+.redesign-v2 .section--black-background button.marketing-cta:hover,
 .redesign-v2 a.button.marketing-cta.dark:hover,
 .redesign-v2 button.marketing-cta.dark:hover {
   background-color: #76BAFF;
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta:active,
+.redesign-v2 .section--black-background button.marketing-cta:active,
 .redesign-v2 a.button.marketing-cta.dark:active,
 .redesign-v2 button.marketing-cta.dark:active {
   background-color: #1F78D1;
@@ -1201,15 +1256,9 @@ main.blue-contract .section.section-with-title p {
   width: 1em;
 }
 
-@media (min-width: 744px) {
-  .redesign-v2 .section {
-    padding: 0;
-  }
-
-  .redesign-v2 .section > div {
-   padding: 0 32px;
-   margin: auto;
-  }
+.redesign-v2 .button .icon svg {
+  height: 24px;
+  width: 24px;
 }
 
 @media (min-width: 1200px) {
@@ -1220,10 +1269,7 @@ main.blue-contract .section.section-with-title p {
   :root.redesign-v2 {
     --wrapper-width: 1200px;
     --border-radius: 12px;
-  }
-
-  .redesign-v2 .section > div {
-    padding: 0 135px;
+    --section-div-padding: 24px 0;
   }
 
   .redesign-v2 .section div.full-width {

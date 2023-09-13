@@ -169,16 +169,20 @@ ul.v2-tabbed-carousel__navigation {
   margin: 0 16px;
 }
 
-.v2-tabbed-carousel__navigation button {
+.v2-tabbed-carousel__navigation-item button {
   background: 0 0;
   border: none;
-  color: var(--text-color);
+  color: var(--c-grey-4);
   font-size: var(--f-button-font-size);
   letter-spacing: var(--f-button-letter-spacing);
   line-height: 100%;
   margin: 0;
   padding: 12px 0;
   text-transform: uppercase;
+}
+
+.v2-tabbed-carousel__navigation-item.active button {
+  color: var(--c-main-black);
 }
 
 /* Arrow controls */
@@ -211,10 +215,12 @@ ul.v2-tabbed-carousel__navigation {
   right: 10%;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .v2-tabbed-carousel__arrow-controls button {
   background-color: var(--c-white);
   border-radius: 50%;
   border: 1px solid var(--c-grey-400);
+  color: var(--c-main-black);
   font-size: 0;
   margin: 0;
   padding: 10px;

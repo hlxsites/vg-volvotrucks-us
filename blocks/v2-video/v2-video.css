@@ -76,10 +76,6 @@ main .section.v2-video-container .v2-video-wrapper {
   line-height: var(--f-heading-5-line-height);
 }
 
-.v2-video .v2-video__button.standalone-link {
-  color: var(--c-white);
-}
-
 @media (min-width: 744px) {
   .v2-video {
     --video-inset: inset(32px 48px round 8px);

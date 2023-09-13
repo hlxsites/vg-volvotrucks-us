@@ -20,6 +20,7 @@ import {
   loadTemplate,
   createElement,
   slugify,
+  variantsClassesToBEM,
 } from './common.js';
 
 import {
@@ -334,6 +335,21 @@ function buildTruckCarouselBlock(main) {
 }
 
 function decorateSectionBackgrounds(main) {
+  const variantClasses = ['black-background', 'gray-background'];
+
+  main.querySelectorAll(':scope > .section').forEach((section) => {
+    // transform background color variants into BEM classnames
+    variantsClassesToBEM(section.classList, variantClasses, 'section');
+
+    // If the section contains a background image
+    const src = section.dataset.background;
+    if (src) {
+      const picture = createOptimizedPicture(src, '', false);
+      section.appendChild(picture);
+      section.classList.add('section-with-background');
+    }
+  });
+
   main.querySelectorAll(':scope > .section[data-background]').forEach((section) => {
     const src = section.dataset.background;
     const picture = createOptimizedPicture(src, '', false);
