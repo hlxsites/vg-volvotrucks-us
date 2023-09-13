@@ -190,19 +190,19 @@ then we change it for the next section item in main */
   background-color: var(--c-cta-blue-active);
 }
 
-.v2-inpage-navigation__cta--desktop {
-  display: none;
-}
-
 @media (min-width: 1200px) {
   :root {
     --inpage-navigation-height: 64px;
   }
 
+  .v2-inpage-navigation {
+    padding: 0 32px;
+  }
+
   .v2-inpage-navigation__wrapper {
     align-items: center;
-    max-width: calc(var(--wrapper-width) + 32px);
-    padding: 11px 16px;
+    max-width: var(--wrapper-width);
+    padding: 11px 0;
     margin: 0 auto;
   }
 
@@ -223,7 +223,7 @@ then we change it for the next section item in main */
     width: 1px;
     height: 20px;
     display: block;
-    background-color: var(--c-grey-600);
+    background-color: var(--c-grey-4);
     margin: 0 26px;
   }
 
@@ -252,20 +252,16 @@ then we change it for the next section item in main */
 
   .v2-inpage-navigation__item button {
     position: relative;
-    color: var(--c-grey-600);
+    color: var(--c-grey-4);
     padding: 12px 0;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover,
+  .v2-inpage-navigation__item--active button,
+  .v2-inpage-navigation__item button:hover,
   .v2-inpage-navigation__item button:active,
   .v2-inpage-navigation__item button:focus {
     font-family: var(--ff-volvo-novum);
-  }
-
-  /* stylelint-disable-next-line no-descending-specificity */
-  .v2-inpage-navigation__item--active button {
-    font-family: var(--ff-volvo-novum-medium);
   }
 
   .v2-inpage-navigation__item button::after {
@@ -279,21 +275,14 @@ then we change it for the next section item in main */
     left: 0;
   }
 
+  .v2-inpage-navigation__item--active button::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:focus::after {
-    background-color: var(--c-grey-200);
+    background-color: var(--c-grey-4);
   }
 
   /* Blue button */
   .v2-inpage-navigation__cta:any-link {
     padding: 11px 21px;
-  }
-
-  .v2-inpage-navigation__cta--mobile {
-    display: none;
-  }
-
-  .v2-inpage-navigation__cta--desktop {
-    display: block;
   }
 }

@@ -25,26 +25,16 @@ const scrollToSection = (id) => {
 const inpageNavigationRedButton = () => {
   // if we have a button title & button link
   if (getMetadata('inpage-button') && getMetadata('inpage-link')) {
-    const titleMobile = getMetadata('inpage-button');
+    const title = getMetadata('inpage-button');
     const url = getMetadata('inpage-link');
     const link = createElement('a', {
       classes: `${blockName}__cta`,
       props: {
         href: url,
-        title: titleMobile,
+        title,
       },
     });
-    const mobileText = createElement('span', { classes: `${blockName}__cta--mobile` });
-    mobileText.textContent = titleMobile;
-    link.appendChild(mobileText);
-
-    const titleDesktop = getMetadata('inpage-button-large');
-    if (titleDesktop) {
-      const desktopText = createElement('span', { classes: `${blockName}__cta--desktop` });
-      desktopText.textContent = titleDesktop;
-      link.setAttribute('title', titleDesktop);
-      link.appendChild(desktopText);
-    }
+    link.textContent = title;
 
     return link;
   }
@@ -150,7 +140,8 @@ export default async function decorate(block) {
   const dropdownTitle = createElement('span', { classes: `${blockName}__dropdown-title` });
 
   const sectionTitle = createElement('span', { classes: `${blockName}__title` });
-  sectionTitle.innerText = 'Volvo VNL';
+  const inpageTitle = getMetadata('inpage-title');
+  sectionTitle.innerText = inpageTitle;
 
   const listCloseButton = createElement('button', { classes: `${blockName}__items-close` });
   const closeIcon = document.createRange().createContextualFragment(`
