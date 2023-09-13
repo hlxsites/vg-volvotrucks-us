@@ -158,10 +158,10 @@ export default async function decorate(block) {
   decorateIcons(navContent);
 
   const setAriaForMenu = (isMenuVisible) => {
-    block.querySelectorAll(`${blockClass}__close-menu, ${blockClass}__hamburger-menu`).forEach((control) => {
+    nav.querySelectorAll(`.${blockClass}__close-menu, .${blockClass}__hamburger-menu`).forEach((control) => {
       control.setAttribute('aria-expanded', isMenuVisible);
     });
-    block.querySelectorAll('#header-main-nav, #header-actions-list').forEach((item) => {
+    nav.querySelectorAll('#header-main-nav, #header-actions-list').forEach((item) => {
       item.setAttribute('aria-hidden', !isMenuVisible);
     });
   };

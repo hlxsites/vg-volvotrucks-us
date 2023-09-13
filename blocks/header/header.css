@@ -220,7 +220,7 @@
   }
 
   .header__nav {
-    max-width: 1232px;
+    max-width: calc(var(--wrapper-width) + 32px);;
   }
 
   .header__link:hover,
