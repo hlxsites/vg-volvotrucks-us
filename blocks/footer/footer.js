@@ -78,7 +78,7 @@ export default async function decorate(block) {
       title.parentElement.parentElement.classList.add('footer-list-wrapper');
       title.nextElementSibling?.classList.add('footer-list-item');
 
-      title.addEventListener('click', (e) => toggleExpand(e.target));
+      title.addEventListener('click', (e) => toggleExpand(e.currentTarget));
     });
   }
 
@@ -129,27 +129,35 @@ function openExternalLinksInNewTab(footer) {
   });
 }
 
-function findList(ele) {
-  if (ele.classList.contains('footer-list')) {
-    return ele;
+function findList(h3Element) {
+  let nextElement = h3Element.nextElementSibling;
+  while (nextElement && !nextElement.classList.contains('footer-list-item')) {
+    nextElement = nextElement.nextElementSibling;
   }
-  return findList(ele.parentElement);
+  return nextElement;
 }
 
 function toggleExpand(targetH3) {
-  const clickedColumn = findList(targetH3);
-  const isExpanded = clickedColumn.classList.contains('expand');
+  const isExpanded = targetH3.classList.contains('expand');
   const wrapper = targetH3.closest('.footer-list-wrapper');
   const columns = wrapper.querySelectorAll('.footer-list');
 
+  const content = findList(targetH3);
+
   columns.forEach((column) => {
-    const content = column.querySelector('.footer-list-item');
-    if (column === clickedColumn && !isExpanded) {
-      column.classList.add('expand');
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    } else {
-      column.classList.remove('expand');
-      content.style.maxHeight = null;
-    }
+    const h3s = column.querySelectorAll('h3');
+    h3s.forEach((h3) => {
+      const columnContent = findList(h3);
+      if (h3 === targetH3 && !isExpanded) {
+        h3.classList.add('expand');
+        content.style.maxHeight = `${content.scrollHeight}px`;
+      } else if (h3 === targetH3 && isExpanded) {
+        h3.classList.remove('expand');
+        content.style.maxHeight = null;
+      } else {
+        h3.classList.remove('expand');
+        columnContent.style.maxHeight = null;
+      }
+    });
   });
 }

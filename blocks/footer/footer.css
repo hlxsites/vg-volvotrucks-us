@@ -52,7 +52,7 @@
   transition: transform var(--duration-medium) cubic-bezier(0.45, 0, 0.125, 1);
 }
 
-.footer-list.expand .icon-chevron-down {
+.footer-list .expand .icon-chevron-down {
   transform: rotate(-180deg);
 }
 
@@ -145,7 +145,7 @@
   background-color: var(--c-grey-100);
 }
 
-.footer-list:not(.expand) .footer__title:focus,
+.footer-list .footer__title:not(.expand):focus,
 .footer-list-item a:focus,
 .footer-bar a:focus,
 .v2-scroll-to-top:focus {
@@ -175,7 +175,7 @@
     cursor: initial;
   }
 
-  .footer-list:not(.expand) .footer__title:hover {
+  .footer-list .footer__title:not(.expand):hover {
     background-color: transparent;
   }
 
