@@ -1,0 +1,253 @@
+:root {
+  --inpage-navigation-height: 72px;
+}
+
+.v2-inpage-navigation-wrapper {
+  background-color: var(--c-white);
+  height: auto !important;
+  left: 0;
+  overflow: unset !important;
+  position: sticky;
+  top: var(--nav-height);
+  width: 100%;
+  z-index: var(--z-index-header);
+  transition: transform 300ms ease-in-out;
+}
+
+.v2-inpage-navigation--open .v2-inpage-navigation__items-container {
+  transform: translateY(-100%);
+  transition: transform 450ms var(--easing-entrance);
+}
+
+.v2-inpage-navigation--hidden.v2-inpage-navigation-wrapper {
+  transform: translateY(calc(var(--nav-height) * -1));
+}
+
+.v2-inpage-navigation {
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #EFEFEF;
+}
+
+.v2-inpage-navigation__wrapper {
+  display: flex;
+  padding: 16px;
+}
+
+.v2-inpage-navigation__dropdown {
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-inpage-navigation__items-container {
+  background-color: var(--c-white);
+  left: 0;
+  margin: 0;
+  padding: 32px;
+  position: fixed;
+  top: 100vh;
+  width: 100%;
+  z-index: 1;
+  border-radius: 24px 24px 0 0;
+  transform: translateY(0);
+  transition: transform 450ms var(--easing-exit);
+}
+
+.v2-inpage-navigation__dropdown-background {
+  position: fixed;
+  top: calc(var(--inpage-navigation-height) * -1);
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: 1;
+  background-color: rgb(0 0 0 / 10%);
+  transition:
+    background-color var(--duration-small) 300ms ease-in-out,
+    width 0ms calc(var(--duration-small) + 300ms) ease-in-out,
+    height 0ms calc(var(--duration-small) + 300ms) ease-in-out;
+}
+
+.v2-inpage-navigation--open .v2-inpage-navigation__dropdown-background {
+  height: 100vh;
+  width: 100%;
+  background-color: rgb(0 0 0 / 80%);
+  transition: background-color var(--duration-small) ease-in-out;
+}
+
+.v2-inpage-navigation__items-close {
+  background: none;
+  border: 0;
+  color: var(--c-main-black);
+  cursor: pointer;
+  display: block;
+  margin: 0 0 0 auto;
+}
+
+.v2-inpage-navigation__items-title {
+  font-family: var(--font-family-body);
+  font-size: var(--f-heading-5-font-size);
+  line-height: var(--f-heading-5-line-height);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.v2-inpage-navigation__items {
+  background-color: var(--c-primary-white);
+  list-style: none;
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+}
+
+.v2-inpage-navigation__item button,
+.v2-inpage-navigation__selected-item-wrapper {
+  background: none;
+  border: 0;
+  color: var(--c-main-black);
+  cursor: pointer;
+  display: block;
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-subtitle-2-font-size);
+  line-height: var(--f-subtitle-2-line-height);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  margin: 0;
+  width: 100%;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-inpage-navigation__selected-item-wrapper,
+.v2-inpage-navigation__item--active button,
+.v2-inpage-navigation__item button:hover,
+.v2-inpage-navigation__item button:active,
+.v2-inpage-navigation__item button:focus,
+.v2-inpage-navigation__selected-item-wrapper:hover,
+.v2-inpage-navigation__selected-item-wrapper:active
+.v2-inpage-navigation__selected-item-wrapper:focus,
+.v2-inpage-navigation__dropdown--open .v2-inpage-navigation__selected-item-wrapper {
+  font-family: var(--ff-volvo-novum-medium);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-inpage-navigation__item button {
+  text-align: left;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-inpage-navigation__selected-item-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.v2-inpage-navigation__selected-item-wrapper svg {
+  height: 16px;
+  transition: transform var(--duration-small) var(--easing-standard);
+  width: 16px;
+}
+
+.v2-inpage-navigation__dropdown--open .v2-inpage-navigation__selected-item-wrapper svg {
+  transform: rotate(180deg);
+}
+
+/* END Customization when dropdown is open */
+
+/* Blue button */
+.v2-inpage-navigation__cta:any-link {
+  text-transform: uppercase;
+  padding: 9px 21px;
+  font-family: var(--font-family-body);
+  font-size: var(--f-button-font-size);
+  line-height: var(--f-button-line-height);
+  letter-spacing: var(--f-button-letter-spacing);
+  border: 0;
+  background-color: var(--c-cta-blue-default);
+  color: var(--c-white);
+  align-items: center;
+  display: flex;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.v2-inpage-navigation__cta:hover,
+.v2-inpage-navigation__cta:focus {
+  background-color: var(--c-cta-blue-hover);
+}
+
+.v2-inpage-navigation__cta:active {
+  background-color: var(--c-cta-blue-active);
+}
+
+.v2-inpage-navigation__cta--desktop {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --inpage-navigation-height: 64px;
+  }
+
+  .v2-inpage-navigation__wrapper {
+    align-items: center;
+    max-width: var(--wrapper-width);
+    padding: 11px 16px;
+    margin: 0 auto;
+  }
+
+  .v2-inpage-navigation__selected-item-wrapper,
+  .v2-inpage-navigation__items-close,
+  .v2-inpage-navigation__items-title,
+  .v2-inpage-navigation__dropdown-background {
+    display: none;
+  }
+
+  .v2-inpage-navigation__items-container {
+    position: unset;
+    padding: 0;
+  }
+
+  .v2-inpage-navigation__items {
+    gap: 32px;
+    flex-direction: row;
+  }
+
+  .v2-inpage-navigation__item button {
+    position: relative;
+    color: var(--c-grey-600);
+    padding: 12px 0;
+  }
+
+  .v2-inpage-navigation__item--active button {
+    font-family: var(--ff-volvo-novum-medium);
+  }
+
+  .v2-inpage-navigation__item button::after {
+    bottom: 0;
+    content: '';
+    display: block;
+    height: 2px;
+    position: absolute;
+    transition: background-color var(--duration-small) var(--easing-standard);
+    width: 100%;
+    left: 0;
+  }
+
+  .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover::after,
+  .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:focus::after {
+    background-color: var(--c-grey-200);
+  }
+
+  /* Blue button */
+  .v2-inpage-navigation__cta:any-link {
+    padding: 11px 21px;
+  }
+
+  .v2-inpage-navigation__cta--mobile {
+    display: none;
+  }
+
+  .v2-inpage-navigation__cta--desktop {
+    display: block;
+  }
+}
