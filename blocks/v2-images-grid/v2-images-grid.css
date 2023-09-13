@@ -16,8 +16,8 @@
 }
 
 .v2-images-grid-item {
-  background-color: var(--c-background-card);
-  color: var(--text-color);
+  background-color: var(--card-background);
+  color: var(--card-text);
   flex: none;
   margin-right: var(--v2-images-grid-gutter);
   scroll-snap-align: center;
