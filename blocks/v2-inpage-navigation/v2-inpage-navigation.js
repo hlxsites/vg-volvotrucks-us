@@ -147,7 +147,10 @@ export default async function decorate(block) {
   const selectedItem = createElement('div', { classes: `${blockName}__selected-item` });
 
   const listContainer = createElement('div', { classes: `${blockName}__items-container` });
-  const listTitle = createElement('span', { classes: `${blockName}__items-title` });
+  const dropdownTitle = createElement('span', { classes: `${blockName}__dropdown-title` });
+
+  const sectionTitle = createElement('span', { classes: `${blockName}__title` });
+  sectionTitle.innerText = 'Volvo VNL';
 
   const listCloseButton = createElement('button', { classes: `${blockName}__items-close` });
   const closeIcon = document.createRange().createContextualFragment(`
@@ -159,8 +162,9 @@ export default async function decorate(block) {
   listContainer.appendChild(listCloseButton);
 
   const submenuTitle = getTextLabel('Section');
-  listTitle.innerText = submenuTitle;
-  listContainer.appendChild(listTitle);
+  dropdownTitle.innerText = submenuTitle;
+  listContainer.appendChild(sectionTitle);
+  listContainer.appendChild(dropdownTitle);
 
   const list = createElement('ul', { classes: `${blockName}__items` });
 

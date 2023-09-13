@@ -14,6 +14,13 @@
   transition: transform 300ms ease-in-out;
 }
 
+/* As the first section in main doesn't need to have padding-top
+and inpage navigation is taking the first position,
+then we change it for the next section item in main */
+.v2-inpage-navigation-wrapper + .section {
+  padding-top: 0;
+}
+
 .v2-inpage-navigation--open .v2-inpage-navigation__items-container {
   transform: translateY(-100%);
   transition: transform 450ms var(--easing-entrance);
@@ -69,6 +76,10 @@
     height 0ms calc(var(--duration-small) + 300ms) ease-in-out;
 }
 
+.v2-inpage-navigation__title {
+  display: none;
+}
+
 .v2-inpage-navigation--open .v2-inpage-navigation__dropdown-background {
   height: 100vh;
   width: 100%;
@@ -85,7 +96,7 @@
   margin: 0 0 0 auto;
 }
 
-.v2-inpage-navigation__items-title {
+.v2-inpage-navigation__dropdown-title {
   font-family: var(--font-family-body);
   font-size: var(--f-heading-5-font-size);
   line-height: var(--f-heading-5-line-height);
@@ -195,9 +206,34 @@
     margin: 0 auto;
   }
 
+  .v2-inpage-navigation__title {
+    display: flex;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--f-subtitle-2-font-size);
+    line-height: var(--f-subtitle-2-line-height);
+    letter-spacing: var(--f-subtitle-2-letter-spacing);
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width var(--duration-large) var(--easing-standard);
+  }
+
+  .v2-inpage-navigation__title::after {
+    content: '';
+    width: 1px;
+    height: 20px;
+    display: block;
+    background-color: var(--c-grey-600);
+    margin: 0 26px;
+  }
+
+  .v2-inpage-navigation--hidden .v2-inpage-navigation__title {
+    max-width: 300px;
+  }
+
   .v2-inpage-navigation__selected-item-wrapper,
   .v2-inpage-navigation__items-close,
-  .v2-inpage-navigation__items-title,
+  .v2-inpage-navigation__dropdown-title,
   .v2-inpage-navigation__dropdown-background {
     display: none;
   }
@@ -205,10 +241,12 @@
   .v2-inpage-navigation__items-container {
     position: unset;
     padding: 0;
+    display: flex;
+    align-items: center;
   }
 
   .v2-inpage-navigation__items {
-    gap: 32px;
+    gap: 26px;
     flex-direction: row;
   }
 
@@ -218,6 +256,14 @@
     padding: 12px 0;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
+  .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover,
+  .v2-inpage-navigation__item button:active,
+  .v2-inpage-navigation__item button:focus {
+    font-family: var(--ff-volvo-novum);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
   .v2-inpage-navigation__item--active button {
     font-family: var(--ff-volvo-novum-medium);
   }
