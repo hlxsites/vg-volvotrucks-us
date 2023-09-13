@@ -285,6 +285,7 @@
     display: none;
   }
 
+  .header__action-item--close-menu,
   .header__close-menu {
     display: none;
   }
