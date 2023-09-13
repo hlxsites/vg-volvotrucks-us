@@ -22,7 +22,7 @@ const scrollToSection = (id) => {
   resizeObserver.observe(main);
 };
 
-const inpageNavigationRedButton = () => {
+const inpageNavigationButton = () => {
   // if we have a button title & button link
   if (getMetadata('inpage-button') && getMetadata('inpage-link')) {
     const title = getMetadata('inpage-button');
@@ -101,7 +101,7 @@ const listenScroll = () => {
       updateActive();
     }
   }, {
-    threshold: [0.2, 0.5, 0.7, 1],
+    threshold: [0.7, 1],
   });
 
   elements.forEach((el) => {
@@ -125,7 +125,7 @@ const addHeaderScrollBehaviour = (header) => {
 };
 
 export default async function decorate(block) {
-  const redButton = inpageNavigationRedButton();
+  const redButton = inpageNavigationButton();
 
   const wrapper = block.querySelector(':scope > div');
   wrapper.classList.add(`${blockName}__wrapper`);
