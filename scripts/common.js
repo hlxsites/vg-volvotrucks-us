@@ -159,3 +159,19 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
     }
   });
 };
+
+export const slugify = (text) => (
+  text.toString().toLowerCase().trim()
+    // separate accent from letter
+    .normalize('NFD')
+    // remove all separated accents
+    .replace(/[\u0300-\u036f]/g, '')
+    // replace spaces with -
+    .replace(/\s+/g, '-')
+    // replace & with 'and'
+    .replace(/&/g, '-and-')
+    // remove all non-word chars
+    .replace(/[^\w-]+/g, '')
+    // replace multiple '-' with single '-'
+    .replace(/--+/g, '-')
+);
