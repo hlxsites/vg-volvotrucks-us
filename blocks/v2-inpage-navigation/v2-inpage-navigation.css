@@ -201,7 +201,7 @@ then we change it for the next section item in main */
 
   .v2-inpage-navigation__wrapper {
     align-items: center;
-    max-width: var(--wrapper-width);
+    max-width: calc(var(--wrapper-width) + 32px);
     padding: 11px 16px;
     margin: 0 auto;
   }
