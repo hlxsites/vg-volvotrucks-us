@@ -259,8 +259,14 @@
   --nav-height: 52px;
   --sub-nav-height: 44px;
 
-  /* sectio style */
+  /* section style */
   --wrapper-width: 100%;
+
+  /* Zindex header */
+  --z-index-header: 1050;
+
+  /* In page navigation */
+  --inpage-navigation-height: 0;
 }
 
 *,
@@ -297,7 +303,7 @@ header {
 .header {
   background-color: white;
   min-height: var(--nav-height);
-  z-index: 1050;
+  z-index: var(--z-index-header);
 }
 
 header.sub-nav-wrapper {
@@ -645,6 +651,10 @@ body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
 }
 
+body.disable-body-scroll {
+  overflow: hidden;
+}
+
 ul.cta-list {
   list-style: none;
   margin: 0;
@@ -987,6 +997,7 @@ main.blue-contract .section.section-with-title p {
 
 :root.redesign-v2 .section {
   padding: 0;
+  scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
 :root.redesign-v2 .section > div {
