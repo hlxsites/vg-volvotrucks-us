@@ -23,10 +23,10 @@
   left: 0;
   right: 0;
   transition: var(--header-animation);
+  padding: 0 16px;
 }
 
 .header__nav {
-  padding: 0 16px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  color: var(--c-grey-700);
+  color: var(--c-grey-4);
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: var(--ff-volvo-novum);
   font-size: 14px;
@@ -217,15 +217,16 @@
   .header {
     width: 100%;
     justify-content: center;
+    padding: 0 32px;
   }
 
   .header__nav {
-    max-width: calc(var(--wrapper-width) + 32px);;
+    max-width: var(--wrapper-width);
   }
 
   .header__link:hover,
   .header__link:focus {
-    border-bottom: solid 2px var(--c-grey-200);
+    border-bottom: solid 2px var(--c-grey-4);
   }
 
   .header__link:any-link:active {
