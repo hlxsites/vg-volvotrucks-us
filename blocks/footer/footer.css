@@ -249,6 +249,8 @@
   .footer-list .icon-linkedin,
   .footer-list .icon-globe {
     display: flex;
+    width: 16px;
+    height: 16px;
   }
 
   .footer-copyright-container {
