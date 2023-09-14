@@ -17,7 +17,6 @@ const addForm = async (block) => {
       method="post"
       name="request-quote"
       action="${formAction}"
-      class="elq-form"
     >${formContent.default}
     </form>
   `;
