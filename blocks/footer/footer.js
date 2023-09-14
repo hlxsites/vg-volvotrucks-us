@@ -129,33 +129,33 @@ function openExternalLinksInNewTab(footer) {
   });
 }
 
-function findList(h3Element) {
-  let nextElement = h3Element.nextElementSibling;
+function findList(headingElement) {
+  let nextElement = headingElement.nextElementSibling;
   while (nextElement && !nextElement.classList.contains('footer-list-item')) {
     nextElement = nextElement.nextElementSibling;
   }
   return nextElement;
 }
 
-function toggleExpand(targetH3) {
-  const isExpanded = targetH3.classList.contains('expand');
-  const wrapper = targetH3.closest('.footer-list-wrapper');
+function toggleExpand(headingElement) {
+  const isExpanded = headingElement.classList.contains('expand');
+  const wrapper = headingElement.closest('.footer-list-wrapper');
   const columns = wrapper.querySelectorAll('.footer-list');
 
-  const content = findList(targetH3);
+  const content = findList(headingElement);
 
   columns.forEach((column) => {
-    const h3s = column.querySelectorAll('h3');
-    h3s.forEach((h3) => {
-      const columnContent = findList(h3);
-      if (h3 === targetH3 && !isExpanded) {
-        h3.classList.add('expand');
+    const headingElements = column.querySelectorAll('.footer__title');
+    headingElements.forEach((heading) => {
+      const columnContent = findList(heading);
+      if (heading === headingElement && !isExpanded) {
+        heading.classList.add('expand');
         content.style.maxHeight = `${content.scrollHeight}px`;
-      } else if (h3 === targetH3 && isExpanded) {
-        h3.classList.remove('expand');
+      } else if (heading === headingElement && isExpanded) {
+        heading.classList.remove('expand');
         content.style.maxHeight = null;
       } else {
-        h3.classList.remove('expand');
+        heading.classList.remove('expand');
         columnContent.style.maxHeight = null;
       }
     });
