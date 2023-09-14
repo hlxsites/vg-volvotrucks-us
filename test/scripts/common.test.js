@@ -95,3 +95,39 @@ describe('addFavIcon', () => {
     expect(link.getAttribute('href')).to.equal(newFavIconHref);
   });
 });
+
+describe('slugify', () => {
+  before(async () => {
+    commonScript = await import('../../scripts/common.js');
+  });
+
+  it('should trim spaces', () => {
+    const result = commonScript.slugify(' Cards   ');
+    expect(result).to.equal('cards');
+  });
+
+  it('should convert uppercapse to lowercase', () => {
+    const result = commonScript.slugify('Cards');
+    expect(result).to.equal('cards');
+  });
+
+  it('should convert spaces in hyphen', () => {
+    const result = commonScript.slugify('Cards 1');
+    expect(result).to.equal('cards-1');
+  });
+
+  it('should convert double hyphen in single hyphen', () => {
+    const result = commonScript.slugify('Cards--1');
+    expect(result).to.equal('cards-1');
+  });
+
+  it('should convert accents to characters', () => {
+    const result = commonScript.slugify('Cárüñs');
+    expect(result).to.equal('caruns');
+  });
+
+  it('should remove special characters', () => {
+    const result = commonScript.slugify('传');
+    expect(result).to.equal('');
+  });
+});
