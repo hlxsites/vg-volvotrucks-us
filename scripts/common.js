@@ -11,11 +11,11 @@ import {
 let placeholders = null;
 
 /**
- * loads a block named 'v2-footer' into footer
+ * loads a block named 'footer' into footer
  */
 function loadFooter(footer) {
   if (footer) {
-    const footerBlock = buildBlock('v2-footer', '');
+    const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
