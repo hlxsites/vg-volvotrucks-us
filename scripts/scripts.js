@@ -547,25 +547,3 @@ if (document.querySelector('main').classList.contains('redesign-v2')) {
   document.querySelector('html').classList.add('redesign-v2');
   document.querySelector('main').classList.remove('redesign-v2');
 }
-
-export const adjustPretitle = (element) => {
-  const headingSelector = 'h1, h2, h3, h4, h5, h6';
-
-  [...element.querySelectorAll(headingSelector)].forEach((heading) => {
-    const isNextElHeading = heading.nextElementSibling?.matches(headingSelector);
-
-    if (!isNextElHeading) {
-      return;
-    }
-
-    const currentLevel = Number(heading.tagName[1]);
-    const nextElLevel = Number(heading.nextElementSibling.tagName[1]);
-
-    if (currentLevel > nextElLevel) {
-      const pretitle = createElement('span', { classes: ['pretitle'] });
-      pretitle.append(...heading.childNodes);
-
-      heading.replaceWith(pretitle);
-    }
-  });
-};
