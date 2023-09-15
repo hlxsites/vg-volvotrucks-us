@@ -914,14 +914,14 @@ main.blue-contract .section > div {
 }
 
 @media (min-width: 1300px) {
-  :root:not(.html.redesign-v2) {
+  :root:not(html.redesign-v2) {
     --wrapper-width: 1200px;
   }
 }
 
 /* Sections variant styling */
 @media (min-width: 1440px) {
-  :root:not(.html.redesign-v2) main.blue-contract {
+  :root:not(html.redesign-v2) main.blue-contract {
     --wrapper-width: 1440px;
   }
 }
@@ -1275,7 +1275,7 @@ main.blue-contract .section.section-with-title p {
   }
 
   :root.redesign-v2 {
-    --wrapper-width: 1200px;
+    --wrapper-width: 1170px;
     --border-radius: 12px;
     --section-div-padding: 24px 0;
   }
