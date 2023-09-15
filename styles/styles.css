@@ -329,11 +329,6 @@ header .sub-nav.block {
   top: 0;
 }
 
-.border {
-  border-radius: var(--border-radius);
-  overflow: hidden;
-}
-
 /* specific page styles */
 main.center { text-align: center; }
 main.center :where(.block) { text-align: initial; }

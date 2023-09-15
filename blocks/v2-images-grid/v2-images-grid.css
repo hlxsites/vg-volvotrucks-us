@@ -23,6 +23,8 @@
   scroll-snap-align: center;
   text-align: center;
   width: 90%;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .v2-images-grid-item img {
