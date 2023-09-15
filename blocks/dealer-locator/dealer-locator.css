@@ -98,7 +98,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .partsasist-form {
-    z-index: 1050;
+    z-index: var(--z-index-header);
     display: none;
     display: block;
     position: absolute;
@@ -144,7 +144,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .datasource-option {
-    z-index: 1050;
+    z-index: var(--z-index-header);
     display: none;
     display: block;
     position: absolute;
