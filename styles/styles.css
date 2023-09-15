@@ -1261,6 +1261,14 @@ main.blue-contract .section.section-with-title p {
   width: 24px;
 }
 
+.redesign-v2 .pretitle {
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: var(--f-subtitle-2-font-size);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  line-height: var(--f-subtitle-2-line-height);
+  color: var(--text-color);
+}
+
 @media (min-width: 1200px) {
   :root {
     --nav-height: 64px;
@@ -1274,5 +1282,11 @@ main.blue-contract .section.section-with-title p {
 
   .redesign-v2 .section div.full-width {
     margin: 0;
+  }
+
+  .redesign-v2 .pretitle {
+    font-size: var(--f-heading-5-font-size);
+    letter-spacing: var(--f-heading-5-letter-spacing);
+    line-height: var(--f-heading-5-line-height);
   }
 }
