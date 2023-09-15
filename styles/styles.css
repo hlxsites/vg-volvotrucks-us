@@ -1266,7 +1266,7 @@ main.blue-contract .section.section-with-title p {
   font-size: var(--f-subtitle-2-font-size);
   letter-spacing: var(--f-subtitle-2-letter-spacing);
   line-height: var(--f-subtitle-2-line-height);
-  color: var(--c-grey-3);
+  color: var(--text-color);
 }
 
 @media (min-width: 1200px) {

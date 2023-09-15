@@ -31,12 +31,6 @@
   margin: 0 0 16px;
 }
 
-.v2-text-with-images__link {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
 .v2-text-with-images__images-list-col {
   max-width: unset;
   padding: 0;
