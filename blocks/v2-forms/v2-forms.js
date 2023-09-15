@@ -17,7 +17,7 @@ const addForm = async (block) => {
   const form = `
     <form
       method="post"
-      name="request-quote"
+      name="form-${formName}"
       action="${formAction}"
     >${formContent.default}
 
