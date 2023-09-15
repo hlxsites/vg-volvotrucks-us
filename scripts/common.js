@@ -11,11 +11,11 @@ import {
 let placeholders = null;
 
 /**
- * loads a block named 'v2-footer' into footer
+ * loads a block named 'footer' into footer
  */
 function loadFooter(footer) {
   if (footer) {
-    const footerBlock = buildBlock('v2-footer', '');
+    const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
@@ -181,3 +181,19 @@ export async function loadAsBlock(blockName, blockContent, options = {}) {
 
   return blockEl;
 }
+
+export const slugify = (text) => (
+  text.toString().toLowerCase().trim()
+    // separate accent from letter
+    .normalize('NFD')
+    // remove all separated accents
+    .replace(/[\u0300-\u036f]/g, '')
+    // replace spaces with -
+    .replace(/\s+/g, '-')
+    // replace & with 'and'
+    .replace(/&/g, '-and-')
+    // remove all non-word chars
+    .replace(/[^\w-]+/g, '')
+    // replace multiple '-' with single '-'
+    .replace(/--+/g, '-')
+);

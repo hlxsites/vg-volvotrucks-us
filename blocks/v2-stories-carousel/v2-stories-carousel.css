@@ -7,7 +7,8 @@
 /* Full width block */
 main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   margin: 0;
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 }
 
@@ -59,7 +60,6 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
 }
 
 .v2-stories-carousel-text {
-  color: var(--c-main-black);
   font-family: var(--font-family-body);
   font-size: var(--f-body-font-size);
   letter-spacing: var(--f-body-letter-spacing);
@@ -148,6 +148,7 @@ ul.v2-stories-carousel-meta {
   background-color: var(--c-white);
   border-radius: 50%;
   border: 1px solid var(--c-grey-400);
+  color: var(--c-main-black);
   font-size: 0;
   margin: 0;
   padding: 10px;

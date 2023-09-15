@@ -54,8 +54,8 @@ export default async function decorate(block) {
   content.classList.add(`${blockClass}__content`);
   [...headings].forEach((heading) => heading.classList.add(`${blockClass}__heading`));
   [...ctaButtons].forEach((button) => {
-    button.classList.add(`${blockClass}__button`, 'standalone-link');
-    button.classList.remove('button', 'primary');
+    button.classList.add(`${blockClass}__button`, 'tertiary');
+    button.classList.remove('primary');
   });
 
   videoLink.remove();

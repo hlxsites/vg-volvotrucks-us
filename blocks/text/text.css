@@ -5,6 +5,20 @@
   margin: 24px 0;
 }
 
+.redesign-v2 .text {
+  margin: 0 auto;
+  max-width: 600px;
+  text-wrap: balance;
+}
+
+.redesign-v2 .text > div > *:first-child {
+  margin-top: 0;
+}
+
+.redesign-v2 .text > div > *:last-child {
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: 768px) {
   .text {
     margin: 40px 0;
@@ -20,65 +34,65 @@
 }
 
 .text.left {
-    text-align: left;
+  text-align: left;
 }
 
 .text.center {
-    text-align: center;
+  text-align: center;
 }
 
 .text.right {
-    text-align: right;
+  text-align: right;
 }
 
 .text.bold {
-    font-family: var(--ff-volvo-novum-medium);
-    font-weight: bold;
+  font-family: var(--ff-volvo-novum-medium);
+  font-weight: bold;
 }
 
 div.text.l p {
-    font-size:   var(--body-font-size-l);
+  font-size: var(--body-font-size-l);
 }
 
 div.text.m p {
-    font-size:   var(--body-font-size-m);
+  font-size: var(--body-font-size-m);
 }
 
 div.text.s p {
-    font-size:   var(--body-font-size-s);
+  font-size: var(--body-font-size-s);
 }
 
 div.text.xs p {
-    font-size:   var(--body-font-size-xs);
+  font-size: var(--body-font-size-xs);
 }
 
 div.text.xxs p {
-    font-size:   var(--body-font-size-xxs);
+  font-size: var(--body-font-size-xxs);
 }
 
 div.text.black {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 div.text.alert.block {
-    background-color: #efefef;
-    display: flex;
+  background-color: #efefef;
+  display: flex;
 }
 
 div.text.alert.block img {
-    height: auto;
-    max-width: 40px;
+  height: auto;
+  max-width: 40px;
 }
 
 div.text.alert.block > div:first-of-type {
-    padding-left: 70px;
-    padding-right: 40px;
-    padding-top: 20px;
-    margin-right: 15px;
+  padding-left: 70px;
+  padding-right: 40px;
+  padding-top: 20px;
+  margin-right: 15px;
 }
 
 div.text.alert.block > div:last-of-type {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
 div.text p.button-container {
