@@ -1,7 +1,9 @@
 import { createElement } from '../../scripts/common.js';
 
 // cache contains the form element that should be reused
-const eloquaFormCache = new Map();
+const formCache = new Map();
+
+const blockName = 'v2-forms';
 
 const addForm = async (block) => {
   const displayValue = block.style.display;
@@ -18,21 +20,25 @@ const addForm = async (block) => {
       name="request-quote"
       action="${formAction}"
     >${formContent.default}
+
+      <div style="position:absolute; left:-9999px; top: -9999px;">
+          <label for="pardot_extra_field">Comments</label>
+          <input type="text" id="pardot_extra_field" name="pardot_extra_field" />
+      </div>
     </form>
   `;
 
-  if (eloquaFormCache.get(formName)) {
-    const cachedForm = eloquaFormCache.get(formName);
-    block.append(cachedForm);
+  if (formCache.get(formName)) {
+    const cachedForm = formCache.get(formName);
+    block.replaceWith(cachedForm);
     block.style.display = displayValue;
     return;
   }
 
-  const formWrapper = createElement('div', { classes: 'eloqua-form-container' });
+  const formWrapper = createElement('div', { classes: `${blockName}__container` });
   formWrapper.innerHTML = form;
-  block.innerHTML = '';
-  block.append(formWrapper);
-  eloquaFormCache.set(formName, formWrapper);
+  block.replaceWith(formWrapper);
+  formCache.set(formName, formWrapper);
 
   block.style.display = displayValue;
 };
