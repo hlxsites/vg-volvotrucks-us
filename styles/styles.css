@@ -1,3 +1,5 @@
+  /* stylelint-disable number-max-precision */
+
 /*
    Fonts
    When using fonts, please see "best practices for fonts" in Readme
@@ -106,6 +108,11 @@
   --f-body-font-size: 1rem; /* 16px */
   --f-body-letter-spacing: 0.031rem;
   --f-body-line-height: 130%;
+
+  /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
+  --f-body-2-font-size: 1.125rem; /* 18px */
+  --f-body-2-letter-spacing: 0.03125rem; /* 5px */
+  --f-body-2-line-height: 144%;
 
   /* Volvo Novum, 14px / 0.875rem, Regular, 1.25px / 0.078rem, 130% */
   --f-button-font-size: 0.875rem; /* 14px */
@@ -1160,8 +1167,8 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
-  background-color: var(--c-white);
-  color: var(--c-main-black);
+  padding: 8px 12px 8px 0;
+  color: var(--text-color);
   text-transform: uppercase;
 }
 
@@ -1181,7 +1188,6 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.tertiary.dark,
 .redesign-v2 button.tertiary.dark {
   color: var(--c-white);
-  background-color: var(--c-main-black);
 }
 
 .redesign-v2 .section--black-background a.button.tertiary:hover,
@@ -1258,10 +1264,16 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 .pretitle {
   font-feature-settings: 'clig' off, 'liga' off;
-  font-size: var(--f-subtitle-2-font-size);
-  letter-spacing: var(--f-subtitle-2-letter-spacing);
-  line-height: var(--f-subtitle-2-line-height);
+  font-size: var(--f-body-2-font-size);
+  letter-spacing: var(--f-body-2-letter-spacing);
+  line-height: var(--f-body-2-line-height);
   color: var(--text-color);
+}
+
+@media (min-width: 744px) {
+  :root.redesign-v2 {
+    --section-div-padding: 24px 32px;
+  }
 }
 
 @media (min-width: 1200px) {
