@@ -72,8 +72,7 @@ const keyFactsColumns = (el, v2) => {
   }
 
   // v2 version
-  // 1st line: text - what's inside `strong` is renderd with larger
-  //    font size then the rest of the text
+  // 1st line: text - what's inside `strong` is renderd with larger font
   // 2nd line: text - styled as subtitle
   if (v2) {
     const FONT_DECREASE_LENGTH = 12;
