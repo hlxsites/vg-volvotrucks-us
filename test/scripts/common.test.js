@@ -3,6 +3,7 @@
 
 import { readFile } from '@web/test-runner-commands';
 import { expect } from '@esm-bundle/chai';
+import { adjustPretitle } from '../../scripts/common.js';
 
 /** @type {import('./types').Scripts} */
 let commonScript;
@@ -93,6 +94,79 @@ describe('addFavIcon', () => {
     const link = document.querySelector('head link[rel="icon"]');
     expect(link).to.exist;
     expect(link.getAttribute('href')).to.equal(newFavIconHref);
+  });
+});
+
+describe('adjustPretitle', () => {
+  afterEach(async () => {
+    document.body.innerHTML = await readFile({ path: './body.html' });
+  });
+
+  it('Should NOT make changes when there is no heading', () => {
+    const testElementId = 'test-element';
+    const testNode = document.createRange().createContextualFragment(`
+      <div id=${testElementId}>
+        <span>Test content</span>
+        <p>Test paragraph</p>
+      </div>
+    `);
+    const mainEl = document.body.querySelector('main');
+    mainEl.append(testNode);
+    const beforeHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    adjustPretitle(mainEl.querySelector(`#${testElementId}`));
+
+    const afterHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    expect(beforeHTML).equal(afterHTML);
+  });
+
+  it('Should NOT make changes for HTML with headings in the correct order', () => {
+    const testElementId = 'test-element';
+    const testNode = document.createRange().createContextualFragment(`
+      <div id=${testElementId}>
+        <span>Test content</span>
+        <p>Test paragraph</p>
+        <h1>First heading</h1>
+        <h2>Second heading</h2>
+      </div>
+    `);
+    const mainEl = document.body.querySelector('main');
+    mainEl.append(testNode);
+    const beforeHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    adjustPretitle(mainEl.querySelector(`#${testElementId}`));
+
+    const afterHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    expect(beforeHTML).equal(afterHTML);
+  });
+
+  it('Should change every low level heading which is directly before the higher level heading to pretitle', () => {
+    const testElementId = 'test-element';
+    const pretitleText = 'Pretitle element';
+    const testNode = document.createRange().createContextualFragment(`
+      <div id=${testElementId}>
+        <span>Test content</span>
+        <p>Test paragraph</p>
+        <h2>${pretitleText}</h2>
+        <h1>First heading</h1>
+        <h3>Some other heading</h3>
+      </div>
+    `);
+    const mainEl = document.body.querySelector('main');
+    mainEl.append(testNode);
+    const beforeHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    adjustPretitle(mainEl.querySelector(`#${testElementId}`));
+
+    const afterHTML = mainEl.querySelector(`#${testElementId}`).outerHTML;
+
+    expect(beforeHTML).not.equal(afterHTML);
+    // no H2
+    expect(mainEl.querySelector(`#${testElementId} h2`)).to.be.null;
+    // H2 replaced with pretitle
+    expect(mainEl.querySelector(`#${testElementId} span.pretitle`).textContent).equal(pretitleText);
   });
 });
 
