@@ -26,9 +26,14 @@ const createMainLinks = (mainLinksWrapper) => {
   list.classList.add(`${blockClass}__main-nav`);
   list.querySelectorAll('li').forEach((listItem) => {
     listItem.classList.add(`${blockClass}__main-nav-item`);
+    const accordionContainer = createElement('div', { classes: `${blockClass}__accortion-container` });
+    const accordionContentWrapper = createElement('div', { classes: `${blockClass}__accortion-content-wrapper` });
+
+    accordionContainer.append(accordionContentWrapper);
+    listItem.append(accordionContainer);
   });
   list.querySelectorAll('li > a').forEach((link) => {
-    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__main-nav-link--collapsed`, `${blockClass}__link`);
+    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`, `${blockClass}__link-accordion`);
   });
 
   return list;
@@ -120,6 +125,67 @@ const addHeaderScrollBehaviour = (header) => {
   });
 };
 
+const buildMenuContent = (menuData, navEl) => {
+  const menus = [...menuData.querySelectorAll('.menu')];
+  const navLinks = [...navEl.querySelectorAll(`.${blockClass}__main-nav-link`)];
+
+  menus.forEach((menuItemData) => {
+    const tabName = menuItemData.querySelector(':scope > div > div');
+    const categories = [...menuItemData.querySelectorAll(':scope > div > div')].slice(1);
+    const navLink = navLinks.find((el) => el.textContent.trim() === tabName.textContent.trim());
+    const onAccortionItemClick = (el) => {
+      el.preventDefault();
+      el.target.parentElement.classList.toggle(`${blockClass}__menu-open`);
+    };
+
+    categories.forEach((cat) => {
+      const title = cat.querySelector(':scope > p > a');
+      const subtitle = cat.querySelector(':scope >p:nth-child(2)');
+      const list = cat.querySelector(':scope > ul');
+
+      title.classList.add(`${blockClass}__link`, `${blockClass}__link-accordion`);
+      list.classList.add(`${blockClass}__category-items`);
+      [...list.querySelectorAll('li')].forEach((item) => {
+        item.classList.add(`${blockClass}__category-item`);
+
+        [...item.childNodes].forEach((el) => {
+          // removing new lines and empty text nodes
+          if (el.tagName === 'BR') el.remove();
+
+          // wrapping orphan text
+          if (el.nodeType === Node.TEXT_NODE) {
+            if (el.textContent.trim().length) {
+              el.remove();
+            }
+
+            const textNode = createElement('span', { classes: `${blockClass}__link-description` });
+            textNode.textContent = el.textContent.trim();
+            el.replaceWith(textNode);
+          }
+        });
+      });
+      [...list.querySelectorAll('a')].forEach((el) => el.classList.add(`${blockClass}__link`));
+
+      const menuContent = document.createRange().createContextualFragment(`
+        <div class="${blockClass}__menu-content">
+          ${title.outerHTML}
+          <span class="${blockClass}__category-subtitle">${subtitle?.innerHTML || ''}</span>
+          <div class="${blockClass}__category-content ${blockClass}__accortion-container">
+            <div class="${blockClass}__accortion-content-wrapper">
+              ${list.outerHTML}
+            </div>
+          </div>
+        </div>
+      `);
+
+      menuContent.querySelector(`.${blockClass}__link-accordion`).addEventListener('click', onAccortionItemClick);
+      navLink?.closest(`.${blockClass}__main-nav-item`).querySelector(`.${blockClass}__accortion-content-wrapper`).append(menuContent);
+    });
+
+    navLink?.addEventListener('click', onAccortionItemClick);
+  });
+};
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -141,7 +207,7 @@ export default async function decorate(block) {
 
   // get the navigation text, turn it into html elements
   const content = document.createRange().createContextualFragment(await resp.text());
-  const [logoContainer, navigationContainer, actionsContainer] = [...content.querySelectorAll('div')];
+  const [logoContainer, navigationContainer, actionsContainer, menuContent] = content.children;
   const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
   const navContent = document.createRange().createContextualFragment(`
     <div class="${blockClass}__menu-overlay"></div>
@@ -199,4 +265,5 @@ export default async function decorate(block) {
   block.append(nav);
 
   setAriaForMenu(false);
+  buildMenuContent(menuContent, nav);
 }
