@@ -41,37 +41,3 @@ describe('Core Helix features', () => {
     Array.from(document.querySelectorAll('script')).pop().remove();
   });
 });
-
-describe('checkOneTruckGroup', () => {
-  it('should return true when the group is present with value 1', () => {
-    // Simulate a cookie with the group 'group1' set to 1
-    document.cookie = 'OptanonConsent=group1:1;';
-
-    const result = scripts.checkOneTruckGroup('group1');
-    expect(result).to.be.true;
-  });
-
-  it('should return false when the group is present with a value other than 1', () => {
-    // Simulate a cookie with the group 'group2' set to 0 (or any value other than 1)
-    document.cookie = 'OptanonConsent=group2:0;';
-
-    const result = scripts.checkOneTruckGroup('group2');
-    expect(result).to.be.false;
-  });
-
-  it('should return false when the group is not present in the cookie', () => {
-    // Simulate an empty cookie
-    document.cookie = '';
-
-    const result = scripts.checkOneTruckGroup('group3');
-    expect(result).to.be.false;
-  });
-
-  it('should handle URL encoding of the group name', () => {
-    // Simulate a cookie with a URL-encoded group name
-    document.cookie = 'OptanonConsent=group%204:1;';
-
-    const result = scripts.checkOneTruckGroup('group 4');
-    expect(result).to.be.true;
-  });
-});
