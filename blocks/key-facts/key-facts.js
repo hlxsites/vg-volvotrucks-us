@@ -15,56 +15,99 @@ const variantClasses = ['trailing-line'];
 const keyFactsColumns = (el, v2) => {
   el.classList.add(`${blockName}__key-item`);
 
-  // adding icon
-  const icon = el.querySelector('i, .icon');
-
-  if (icon) {
-    el.prepend(icon);
-    icon.classList.add(`${blockName}__icon`);
-  }
-
   // clearing empty paragraphs
   const paragraphs = el.querySelectorAll('p');
   paragraphs.forEach((paragraph) => {
     stripEmptyTags(el, paragraph);
   });
 
-  const preSubheading = el.querySelector(':scope > :not(strong, i):first-child');
-  preSubheading?.classList.add('subtitle-2');
+  // v1 structure:
+  // 1st line: pretitle or icon
+  // 2nd line: plus/minus sign (optional),
+  //           number with units (no space between plus,
+  //           number and units) space character subtitle (subtitle is optional)
+  //     example: "+8.5% per hour"
+  // 3rd line: text (3rd line is optional)
+  if (!v2) {
+    // adding icon
+    const icon = el.querySelector('i, .icon');
 
-  // find and split number/unit
-  const value = el.querySelector('strong:only-child');
-  // separate number and unit. e.g. up | +31% | Freight efficiency, or 120,000 | psi,
-  const [, prenumber, number, postnumber, text] = value.innerHTML.match('([\\+,\\-]*)([0-9,\\.,]+)([\\%]*) *(.*)');
-  let newValue = null;
-
-  if (value) {
-    if (v2) {
-      newValue = `<span class="${blockName}__number">${prenumber}${number}${postnumber} ${text}</span>`;
-    } else {
-      newValue = `
-        <span class="${blockName}__number">
-          <span class="${blockName}__number--small">${prenumber}</span>
-          ${number}
-          <span class="${blockName}__number--small">${postnumber}</span>
-        </span>
-      `;
+    // 1st line:
+    if (icon) {
+      el.prepend(icon);
+      icon.classList.add(`${blockName}__icon`);
     }
+
+    const preSubheading = el.querySelector(':scope > :not(strong, i):first-child');
+    preSubheading?.classList.add('subtitle-2');
+
+    // 2nd line:
+    // find and split number/unit
+    const value = el.querySelector('strong:only-child');
+    // separate number and unit. e.g. up | +31% | Freight efficiency, or 120,000 | psi,
+    const [, prenumber, number, postnumber, text] = value.innerHTML.match('([\\+,\\-]*)([0-9,\\.,]+)([\\%]*) *(.*)');
+    const newValue = `
+      <span class="${blockName}__main-text">
+        <span class="${blockName}__main-text--small">${prenumber}</span>
+        ${number}
+        <span class="${blockName}__main-text--small">${postnumber}</span>
+      </span>
+    `;
 
     const numberFragment = document.createRange().createContextualFragment(newValue);
     value.innerHTML = '';
     value.append(...numberFragment.childNodes);
-    value.classList.add(`${blockName}__number-wrapper`, 'h2');
+    value.classList.add(`${blockName}__main-text-wrapper`);
 
-    if (!v2 && text) {
-      const unit = createElement('strong', { classes: [`${blockName}__unit`, 'ssubtitle-2'] });
+    // 3rd line:
+    if (text) {
+      const unit = createElement('strong', { classes: [`${blockName}__unit`, 'subtitle-2'] });
       unit.innerText = text;
       value.parentNode.append(unit);
     }
+
+    // traing line variant
+    const div = createElement('div', { classes: `${blockName}__trailing-line` });
+    el.append(div);
   }
 
-  const div = createElement('div', { classes: `${blockName}__trailing-line` });
-  el.append(div);
+  // v2 version
+  // 1st line: text - what's inside `strong` is renderd with larger
+  //    font size then the rest of the text
+  // 2nd line: text - styled as subtitle
+  if (v2) {
+    const FONT_DECREASE_LENGTH = 12;
+    const mainText = el.querySelector('p');
+    mainText.classList.add(`${blockName}__main-text-wrapper`);
+
+    const text = mainText.textContent.trim();
+    if (text.length >= FONT_DECREASE_LENGTH) {
+      mainText.classList.add(`${blockName}__main-text-wrapper--small`);
+    }
+
+    mainText.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const textContent = node.textContent.trim();
+        // removing empty text nodes
+        if (!textContent.length) {
+          node.remove();
+          return;
+        }
+
+        // wrapping orphan text nodes
+        const newNode = createElement('span', { classes: `${blockName}__main-text--small` });
+        newNode.textContent = textContent;
+        node.replaceWith(newNode);
+      }
+
+      if (node.tagName === 'STRONG') {
+        node.classList.add(`${blockName}__main-text`);
+      }
+    });
+    const subtitle = el.querySelector('p:nth-child(2)');
+
+    subtitle?.classList.add('subtitle-2');
+  }
 };
 
 export default async function decorate(block) {
