@@ -1,4 +1,6 @@
 import { hideSidebar } from '../../common/sidebar/sidebar.js';
+import { isEloquaFormAllowed } from '../../scripts/scripts.js';
+import { getTextLabel } from '../../scripts/common.js';
 
 // eslint-disable no-console
 const addForm = async (block) => {
@@ -111,7 +113,31 @@ const addForm = async (block) => {
   block.style.display = displayValue;
 };
 
+const addNoCookieMessage = (messageContainer) => {
+  const messageText = getTextLabel('no eloqua message');
+  const messageLinkText = getTextLabel('no eloqua link message');
+
+  const messageEl = document.createElement('div');
+  messageEl.classList.add(['eloqua-form-no-cookie']);
+  messageEl.innerHTML = `
+    <span>${messageText}</span>
+    <button>${messageLinkText}</button>
+  `;
+
+  messageEl.querySelector('button').addEventListener('click', () => {
+    window.OneTrust.ToggleInfoDisplay();
+  });
+
+  messageContainer.replaceChildren(messageEl);
+};
+
 export default async function decorate(block) {
+  if (!isEloquaFormAllowed()) {
+    addNoCookieMessage(block);
+
+    return;
+  }
+
   const isMagazineTemplate = document.querySelector('meta[content="magazine"]');
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
