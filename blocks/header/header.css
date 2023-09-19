@@ -5,6 +5,9 @@
   --menu-animation: right 450ms ease-in-out;
   --header-animation: transform 300ms ease-in-out;
   --actions-links-height-mobile: 102px;
+
+  /* reassigning, as this property is used elsewhere with different values in non-v2 pages */
+  --wrapper-width: 1170px;
 }
 
 @media (prefers-reduced-motion) {
@@ -222,6 +225,7 @@
 @media (min-width: 1200px) {
   .header {
     width: 100%;
+    padding: 0;
     justify-content: center;
   }
 
