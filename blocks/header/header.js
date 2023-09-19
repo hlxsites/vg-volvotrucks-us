@@ -1,306 +1,202 @@
-import { readBlockConfig, decorateIcons, loadScript } from '../../scripts/lib-franklin.js';
-import { decorateLinks } from '../../scripts/scripts.js';
+import { createElement, getTextLabel } from '../../scripts/common.js';
+import { decorateIcons } from '../../scripts/lib-franklin.js';
 
-// media query match that indicates mobile/desktop switch
-const MQ = window.matchMedia('(min-width: 992px)');
-const ONCE = { once: true };
+const blockClass = 'header';
 
-function toggleMenu(li, preventDefault, event) {
-  const ul = li.querySelector(':scope > ul');
-  if (preventDefault || (!MQ.matches && ul)) event.preventDefault();
-  if (li.classList.contains('expand')) {
-    // collapse
-    if (!MQ.matches && ul) {
-      requestAnimationFrame(() => {
-        ul.style.height = `${ul.scrollHeight}px`;
-        ul.addEventListener('transitionend', () => {
-          ul.style.height = '0px';
-          ul.addEventListener('transitionend', () => {
-            ul.style.height = null;
-            li.classList.remove('expand');
-          }, ONCE);
-        }, ONCE);
-      });
-    } else {
-      li.classList.remove('expand');
-    }
-  } else {
-    if (!MQ.matches && ul) {
-      ul.style.height = `${ul.scrollHeight}px`;
-      ul.addEventListener('transitionend', () => {
-        ul.style.height = '100%';
-      }, ONCE);
-    } else {
-      li.parentElement.querySelectorAll('.expand').forEach((expanded) => {
-        expanded.classList.remove('expand');
-      });
-    }
-    li.classList.add('expand');
+const desktopMQ = window.matchMedia('(min-width: 1200px)');
+
+const createLogo = (logoWrapper) => {
+  const logoImage = logoWrapper.querySelector('span.icon');
+  let logoLink = null;
+
+  if (logoImage.parentElement.tagName === 'A') {
+    logoLink = logoImage.parentElement;
+    logoLink.classList.add(`${blockClass}__logo-link`);
   }
-}
 
-function buildSectionMenuContent(sectionMenu, navCta, menuBlock) {
-  // per default the section menus are link-list
-  // if there is at least one picture they will become image-list
-  sectionMenu.classList.add('link-list');
-  const content = document.createElement('ul');
-  const [firstRow, ...flyoutSections] = menuBlock.children;
-  const overviewLink = firstRow.querySelector('a');
-  overviewLink.className = 'primary-link';
-  overviewLink.textContent = 'Overview';
-  const overviewLi = document.createElement('li');
-  overviewLi.className = 'overview';
-  overviewLi.append(overviewLink);
+  logoImage.classList.add(`${blockClass}__logo-image`);
 
-  const subSectionMenus = flyoutSections.map((section) => {
-    const li = document.createElement('li');
-    const ul = section.querySelector(':scope ul');
-    li.append(ul);
+  return logoLink || logoImage;
+};
 
-    if (ul.querySelector('picture')) {
-      sectionMenu.classList.remove('link-list');
-      sectionMenu.classList.add('image-list');
-    }
+const createMainLinks = (mainLinksWrapper) => {
+  const list = mainLinksWrapper.querySelector('ul');
 
-    const [title, subtitle] = section.querySelectorAll('p');
-    if (subtitle) {
-      subtitle.className = 'subtitle';
-      li.prepend(subtitle);
-    }
-    if (title) {
-      title.className = 'title';
-      li.prepend(title);
-      const titleLink = title.querySelector('a');
-      if (titleLink) title.addEventListener('click', toggleMenu.bind(titleLink, li, false));
-    }
-
-    // find all links, first-of-type becomes .primary-link and wraps the picture if there is one
-    li.querySelectorAll('a').forEach((link) => {
-      if (link.matches(':first-of-type')) {
-        const picture = link.parentElement.querySelector('picture');
-        if (picture) {
-          const clone = link.cloneNode(false);
-          picture.replaceWith(clone);
-          clone.append(picture);
-          clone.tabIndex = -1;
-        }
-        link.className = 'primary-link button secondary cta';
-      } else {
-        link.className = 'button secondary cta';
-      }
-    });
-
-    // normalize the li content: wrap orphan texts in <p>, remove <br>
-    ul.querySelectorAll('li').forEach((child) => [...child.childNodes].forEach((node) => {
-      if (node.nodeType === 3) {
-        const textContent = node.textContent.trim();
-        if (textContent) {
-          const p = document.createElement('p');
-          p.textContent = textContent;
-          node.replaceWith(p);
-        } else {
-          node.remove();
-        }
-      }
-      if (node.nodeName === 'BR') node.remove();
-    }));
-
-    return li;
+  list.setAttribute('id', 'header-main-nav');
+  list.classList.add(`${blockClass}__main-nav`);
+  list.querySelectorAll('li').forEach((listItem) => {
+    listItem.classList.add(`${blockClass}__main-nav-item`);
+  });
+  list.querySelectorAll('li > a').forEach((link) => {
+    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__main-nav-link--collapsed`, `${blockClass}__link`);
   });
 
-  if (navCta) {
-    const li = document.createElement('li');
-    li.className = 'navigation-cta';
-    li.innerHTML = navCta.innerHTML;
-    subSectionMenus.push(li);
-  }
+  return list;
+};
 
-  content.append(overviewLi, ...subSectionMenus);
-  decorateLinks(content);
-  sectionMenu.append(content);
-}
+const createActions = (actionsWrapper) => {
+  const list = actionsWrapper.querySelector('ul');
 
-function toggleSectionMenu(sectionMenu, navCta, menuBlock, event) {
-  if (!sectionMenu.querySelector(':scope > ul')) {
-    buildSectionMenuContent(sectionMenu, navCta, menuBlock);
-  }
-  toggleMenu(sectionMenu, true, event);
-}
+  list.setAttribute('id', 'header-actions-list');
+  list.classList.add(`${blockClass}__actions-list`);
+  list.querySelectorAll('li').forEach((listItem) => {
+    listItem.classList.add(`${blockClass}__action-item`);
+  });
+  list.querySelectorAll('li > a').forEach((link) => {
+    link.classList.add(`${blockClass}__action-link`, `${blockClass}__link`);
 
-async function loadSearchWidget() {
-  loadScript('https://static.searchstax.com/studio-js/v3/js/search-widget.min.js', { type: 'text/javascript', charset: 'UTF-8' })
-    .then(() => {
-      function initiateSearchWidget() {
-        // eslint-disable-next-line no-new, no-undef
-        new SearchstudioWidget(
-          'c2ltYWNrdm9sdm86V2VsY29tZUAxMjM=',
-          'https://ss705916-dy2uj8v7-us-east-1-aws.searchstax.com/solr/productionvolvotrucks-1157-suggester/emsuggest',
-          `${window.location.origin}/search-results`,
-          3,
-          'searchStudioQuery',
-          'div-widget-id',
-          'en',
-        );
-      }
-      window.initiateSearchWidget = initiateSearchWidget;
-    });
-}
+    // wrapping text nodes into spans &
+    // adding aria labels (because text labels are hidden on mobile)
+    [...link.childNodes]
+      .filter((node) => node.nodeType === Node.TEXT_NODE)
+      .forEach((textNode) => {
+        const spanWrapper = createElement('span', { classes: [`${blockClass}__action-link-text`] });
+
+        textNode.replaceWith(spanWrapper);
+        spanWrapper.append(textNode);
+        link.setAttribute('aria-label', textNode.textContent);
+      });
+  });
+
+  const closeMenuLabel = getTextLabel('Close menu');
+  const closeIcon = document.createRange().createContextualFragment(`
+    <li class="header__action-item header__action-item--close-menu">
+      <button
+        aria-label="${closeMenuLabel}"
+        class="${blockClass}__close-menu"
+        aria-expanded="false"
+        aria-controls="header-main-nav, header-actions-list"
+      >
+        <span class="icon icon-close" />
+      </button>
+    </li>
+  `);
+
+  list.append(closeIcon);
+
+  return list;
+};
+
+const mobileActions = () => {
+  const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
+  const searchLable = getTextLabel('Search');
+  const openMenuLable = getTextLabel('Open menu');
+
+  const actions = document.createRange().createContextualFragment(`
+    <a
+      href="#"
+      aria-label="${searchLable}"
+      class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
+    >
+      <span class="icon icon-search-icon"></span>
+    </a>
+    <button
+      aria-label="${openMenuLable}"
+      class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
+      aria-expanded="false"
+      aria-controls="header-main-nav, header-actions-list"
+    >
+      <span class="icon icon-hamburger-icon"></span>
+    </button>
+  `);
+
+  mobileActionsEl.append(...actions.childNodes);
+
+  return mobileActionsEl;
+};
+
+const addHeaderScrollBehaviour = (header) => {
+  let prevPosition = 0;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > prevPosition) {
+      header.classList.add(`${blockClass}--hidden`);
+    } else {
+      header.classList.remove(`${blockClass}--hidden`);
+    }
+
+    // on Safari the window.scrollY can be negative so `> 0` check is needed
+    prevPosition = window.scrollY > 0 ? window.scrollY : 0;
+  });
+};
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // not really needed
-  const config = readBlockConfig(block);
   // clear the block
   block.textContent = '';
 
   // fetch nav content
   const { pathname } = new URL(window.location.href);
   const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  const navPath = config.nav || `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
+  const navPath = `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
   const resp = await fetch(`${navPath}.plain.html`);
 
-  if (resp.ok) {
-    // get the navigation text, turn it into html elements
-    const navContent = document.createRange().createContextualFragment(await resp.text());
-
-    // start the nav DOM
-    const nav = document.createElement('nav');
-    nav.id = 'nav';
-    // add all the divs that will be part of the nav
-    nav.innerHTML = `
-      <div class="brand">
-        <a class="logo" title="Homepage" href="/">
-        </a>
-        <div class='vgsection-location'>
-          <div class='vgsection'>
-          </div>
-          <div class='location'>
-          </div>
-        </div>
-      </div>
-
-      <a href="#" class="search-toggle" role="button" title="toggle search" aria-expanded="false" aria-controls="main-nav-search">
-        <img class="search-icon" alt="" src="/icons/search-icon.png">
-      </a>
-
-      <a href="#" class="hamburger-toggle semitrans-trigger" role="button" title="open menu" aria-expanded="false" aria-controls="main-nav-sections,main-menu-tools">
-        <img class="hamburger-icon" alt="" src="/icons/Hamburger-mobile.png">
-      </a>
-
-      <div id="main-menu-tools" class="tools">
-        <a href="#" class="hamburger-close" role="button" title="close menu" aria-expanded="false" aria-controls="main-nav-sections,main-menu-tools">
-          <img alt="close-icon" src="/icons/Close-Icons.png">
-        </a>
-      </div>
-
-      <div id="man-nav-search" class="search">
-        <div class="search-container">
-          <div id="div-widget-id" class="studio-search-widget">
-            <button class="search-button" aria-label="submit">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div id="main-nav-sections" class="sections">
-        <ul class="sections-list">
-        </ul>
-      </div>
-
-      <div class="semitrans">
-      </div>
-    `;
-
-    // fill in the content from nav doc
-    // logo
-    const logo = nav.querySelector('.logo');
-    logo.append(navContent.children[0].querySelector('p:first-of-type > span'));
-    const authoredLogoLink = navContent.children[0].querySelector('p:first-of-type > a');
-    if (authoredLogoLink) {
-      logo.title = authoredLogoLink.innerText;
-      logo.href = authoredLogoLink.href;
-    }
-
-    // vg_section
-    nav.querySelector('.vgsection').append(navContent.children[0].querySelector('p:nth-of-type(2)').textContent);
-    // location
-    nav.querySelector('.location').append(navContent.children[0].querySelector('p:nth-of-type(3)').textContent);
-    // tools
-    nav.querySelector('.tools').prepend(navContent.children[1].querySelector('ul'));
-
-    const navCta = navContent.children[3];
-    const sectionList = nav.querySelector('.sections .sections-list');
-
-    // get through all section menus
-    const sectionMenus = [...navContent.children[2].querySelectorAll('.menu')].map((menuBlock) => {
-      const sectionMenu = document.createElement('li');
-      sectionMenu.className = 'section';
-      const sectionTitle = menuBlock.firstElementChild.textContent;
-      const a = document.createElement('a');
-      a.href = '#';
-      a.textContent = sectionTitle;
-      a.addEventListener('click', toggleSectionMenu.bind(a, sectionMenu, navCta, menuBlock));
-      sectionMenu.appendChild(a);
-      return sectionMenu;
-    });
-    // write the section menu
-    if (sectionMenus.length) {
-      sectionList.append(...sectionMenus);
-    }
-
-    // add event listeners
-    // for desktop when clicking anywhere on the document
-    document.addEventListener('click', (event) => {
-      if (!sectionList.contains(event.target)) {
-        const openItem = sectionList.querySelector('.section.expand');
-        if (openItem) {
-          toggleMenu(openItem, false, event);
-        }
-      }
-    });
-
-    // for the mobile search icon
-    nav.querySelector('.search-toggle').addEventListener('click', (e) => {
-      e.preventDefault();
-      const expanded = e.currentTarget.getAttribute('aria-expanded') === 'true';
-      e.currentTarget.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-    });
-
-    // for the hamburger toggle icon
-    nav.querySelector('.hamburger-toggle').addEventListener('click', (e) => {
-      e.preventDefault();
-      e.currentTarget.setAttribute('aria-expanded', 'true');
-      document.querySelector('header nav .semitrans').setAttribute('aria-expanded', 'true');
-      if (!MQ.matches) {
-        document.body.classList.add('disable-scroll');
-      }
-    });
-
-    // for the hamburger close icon
-    nav.querySelector('.hamburger-close').addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('disable-scroll');
-    });
-
-    // force hamburger close when in destop size
-    MQ.addEventListener('change', () => {
-      document.querySelector('header nav .hamburger-toggle').setAttribute('aria-expanded', 'false');
-      document.querySelectorAll('header nav .sections .expand').forEach((el) => el.classList.remove('expand'));
-      // remove hard styled heights (from animations)
-      document.querySelectorAll('header nav .sections ul').forEach((ul) => {
-        ul.style.height = null;
-      });
-      document.body.classList.remove('disable-scroll');
-    });
-
-    /* set volvo icon */
-    decorateIcons(nav);
-    /* append result */
-    block.append(nav);
-    loadSearchWidget();
+  if (!resp.ok) {
+    // eslint-disable-next-line no-console
+    console.error(`Header is not loaded: ${resp.status}`);
   }
+
+  // get the navigation text, turn it into html elements
+  const content = document.createRange().createContextualFragment(await resp.text());
+  const [logoContainer, navigationContainer, actionsContainer] = [...content.querySelectorAll('div')];
+  const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
+  const navContent = document.createRange().createContextualFragment(`
+    <div class="${blockClass}__menu-overlay"></div>
+    ${createLogo(logoContainer).outerHTML}
+    <div class="${blockClass}__main-links">
+      ${createMainLinks(navigationContainer).outerHTML}
+    </div>
+    <div class="${blockClass}__actions">
+      ${mobileActions().outerHTML}
+      ${createActions(actionsContainer).outerHTML}
+    </div>
+  `);
+
+  decorateIcons(navContent);
+
+  const setAriaForMenu = (isMenuVisible) => {
+    nav.querySelectorAll(`.${blockClass}__close-menu, .${blockClass}__hamburger-menu`).forEach((control) => {
+      control.setAttribute('aria-expanded', isMenuVisible);
+    });
+    nav.querySelectorAll('#header-main-nav, #header-actions-list').forEach((item) => {
+      item.setAttribute('aria-hidden', !isMenuVisible);
+    });
+  };
+
+  const closeHamburgerMenu = () => {
+    block.classList.remove('header--hamburger-open');
+    document.body.classList.remove('disable-scroll');
+
+    setAriaForMenu(false);
+  };
+
+  // add actions for search
+  navContent.querySelector(`.${blockClass}__search-button`).addEventListener('click', () => {
+    window.location.href = '/search-results';
+  });
+
+  // add action for hamburger
+  navContent.querySelector(`.${blockClass}__hamburger-menu`).addEventListener('click', () => {
+    block.classList.add('header--hamburger-open');
+    document.body.classList.add('disable-scroll');
+
+    setAriaForMenu(true);
+  });
+
+  navContent.querySelectorAll(`.${blockClass}__menu-overlay, .${blockClass}__close-menu`).forEach((el) => {
+    el.addEventListener('click', closeHamburgerMenu);
+  });
+
+  // hiding the hamburger menu when switch to desktop
+  desktopMQ.addEventListener('change', closeHamburgerMenu);
+
+  addHeaderScrollBehaviour(block);
+
+  nav.append(navContent);
+  block.append(nav);
+
+  setAriaForMenu(false);
 }

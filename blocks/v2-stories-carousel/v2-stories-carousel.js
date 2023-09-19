@@ -97,7 +97,6 @@ const buildStoryCard = (entry) => {
   } = entry;
   const li = createElement('article', { classes: 'v2-stories-carousel-item' });
   const picture = createOptimizedPicture(image, title, false);
-  picture.querySelector('img')?.classList.add('border');
   const pictureTag = picture.outerHTML;
   const readMore = (linkText || 'Read full story');
   const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
@@ -134,7 +133,7 @@ const buildStoryCard = (entry) => {
           <time datetime="${date}" pubdate="pubdate">${date.toLocaleDateString()}</time>
         </li>
       </ul>
-      <a href="${path}" class="v2-stories-carousel-cta standalone-link">
+      <a href="${path}" class="v2-stories-carousel-cta button tertiary">
         ${readMore}
         ${svgArrowRight}
       </a>

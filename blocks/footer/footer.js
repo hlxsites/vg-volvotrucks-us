@@ -1,6 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
 import { createElement } from '../../scripts/common.js';
-
 /* eslint-disable no-use-before-define */
 
 function displayScrollToTop(buttonEl) {
@@ -50,41 +49,70 @@ export default async function decorate(block) {
   const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
-  const footer = document.createElement('div');
+  const footer = createElement('div', { classes: 'footer-container' });
   footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
+  const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
+
   openExternalLinksInNewTab(footer);
-  addSocialmediaIconsToLinks(footer);
+  wrapSocialMediaLinks(mainLinkWrapper);
 
-  // eslint-disable-next-line prefer-const
-  let [grayFooter, footerBar, footerCopyright] = footer.children;
+  const headings = footer.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  [...headings].forEach((heading) => heading.classList.add('footer__title'));
 
-  if (grayFooter) {
-    grayFooter.classList.add('footer-gray');
+  if (mainLinkWrapper) {
+    mainLinkWrapper.classList.add('footer-links-wrapper');
     // in Word, it is edited like a column block, but we style it differently
-    grayFooter.firstElementChild.classList.remove('columns');
-    grayFooter.querySelectorAll('h3').forEach((h3) => {
-      h3.parentElement.classList.add('link-column');
-      h3.parentElement.parentElement.classList.add('link-column-wrapper');
-      h3.addEventListener('click', (e) => toggleExpand(e.target));
-      const list = h3.parentElement.querySelector('ul');
-      list.classList.add('link-column-content');
+    mainLinkWrapper.firstElementChild.classList.remove('columns');
+    mainLinkWrapper.querySelectorAll('.footer__title').forEach((title) => {
+      const heading = title.firstElementChild;
+      const [text, icon] = heading.childNodes;
+      const spanEle = createElement('span');
+      spanEle.textContent = text.textContent;
+
+      title.append(spanEle);
+      title.append(icon);
+      heading.remove();
+
+      title.parentElement.classList.add('footer-list');
+      title.parentElement.parentElement.classList.add('footer-list-wrapper');
+      title.nextElementSibling?.classList.add('footer-list-item');
+
+      title.addEventListener('click', (e) => toggleExpand(e.currentTarget));
     });
-    // First column is initially expanded
-    setTimeout(
-      () => toggleExpand(grayFooter.querySelector('.link-column h3')),
-      500,
-    );
   }
 
-  // footer bar with dark background
-  footerBar?.classList.add('footer-bar');
+  const copyrightWrapper = createElement('div', { classes: 'footer-copyright-wrapper' });
+  const copyrightContainer = createElement('div', { classes: 'footer-copyright-container' });
 
-  // copyright line
-  footerCopyright?.classList.add('footer-copyright');
+  copyrightWrapper.append(copyrightContainer);
+
+  if (footerBar) {
+    const list = footerBar.firstElementChild;
+    list?.classList.add('footer-bar');
+    copyrightContainer.appendChild(list);
+    footerBar.remove();
+  }
+
+  if (footerCopyright) {
+    copyrightContainer.appendChild(footerCopyright);
+    footerCopyright?.classList.add('footer-copyright');
+  }
+
+  footer.appendChild(copyrightWrapper);
   await decorateIcons(footer);
   block.append(footer);
   addScrollToTopButton(block);
+}
+
+function wrapSocialMediaLinks(footer) {
+  footer.querySelectorAll('.icon-newtab').forEach((icon) => {
+    const textIconWrapper = createElement('span', { classes: 'footer-text-icon-wrapper' });
+    const anchor = icon.parentElement;
+    textIconWrapper.append(icon.previousSibling);
+    textIconWrapper.append(icon);
+    anchor.append(textIconWrapper);
+  });
 }
 
 function openExternalLinksInNewTab(footer) {
@@ -101,38 +129,35 @@ function openExternalLinksInNewTab(footer) {
   });
 }
 
-function addSocialmediaIconsToLinks(footer) {
-  footer.querySelectorAll('a[href^="https://twitter.com/"]').forEach((anchor) => {
-    anchor.innerHTML = `<i class="fa fa-twitter"></i> ${anchor.innerHTML}`;
-  });
-  footer.querySelectorAll('a[href^="https://www.facebook.com/"]').forEach((anchor) => {
-    anchor.innerHTML = `<i class="fa fa-facebook"></i> ${anchor.innerHTML}`;
-  });
-  footer.querySelectorAll('a[href^="https://www.linkedin.com/"]').forEach((anchor) => {
-    anchor.innerHTML = `<i class="fa fa-linkedin"></i> ${anchor.innerHTML}`;
-  });
-  footer.querySelectorAll('a[href^="https://www.youtube.com/"]').forEach((anchor) => {
-    anchor.innerHTML = `<i class="fa fa-youtube"></i> ${anchor.innerHTML}`;
-  });
-  footer.querySelectorAll('a[href^="https://www.instagram.com/"]').forEach((anchor) => {
-    anchor.innerHTML = `<i class="fa fa-instagram"></i> ${anchor.innerHTML}`;
-  });
+function findList(headingElement) {
+  let nextElement = headingElement.nextElementSibling;
+  while (nextElement && !nextElement.classList.contains('footer-list-item')) {
+    nextElement = nextElement.nextElementSibling;
+  }
+  return nextElement;
 }
 
-function toggleExpand(targetH3) {
-  const clickedColumn = targetH3.parentElement;
-  const isExpanded = clickedColumn.classList.contains('expand');
-  const wrapper = targetH3.closest('.link-column-wrapper');
-  const columns = wrapper.querySelectorAll('.link-column');
+function toggleExpand(headingElement) {
+  const isExpanded = headingElement.classList.contains('expand');
+  const wrapper = headingElement.closest('.footer-list-wrapper');
+  const columns = wrapper.querySelectorAll('.footer-list');
+
+  const content = findList(headingElement);
 
   columns.forEach((column) => {
-    const content = column.querySelector('.link-column-content');
-    if (column === clickedColumn && !isExpanded) {
-      column.classList.add('expand');
-      content.style.maxHeight = `${content.scrollHeight}px`;
-    } else {
-      column.classList.remove('expand');
-      content.style.maxHeight = null;
-    }
+    const headingElements = column.querySelectorAll('.footer__title');
+    headingElements.forEach((heading) => {
+      const columnContent = findList(heading);
+      if (heading === headingElement && !isExpanded) {
+        heading.classList.add('expand');
+        content.style.maxHeight = `${content.scrollHeight}px`;
+      } else if (heading === headingElement && isExpanded) {
+        heading.classList.remove('expand');
+        content.style.maxHeight = null;
+      } else {
+        heading.classList.remove('expand');
+        columnContent.style.maxHeight = null;
+      }
+    });
   });
 }

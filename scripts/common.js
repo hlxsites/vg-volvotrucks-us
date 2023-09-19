@@ -11,11 +11,11 @@ import {
 let placeholders = null;
 
 /**
- * loads a block named 'v2-footer' into footer
+ * loads a block named 'footer' into footer
  */
 function loadFooter(footer) {
   if (footer) {
-    const footerBlock = buildBlock('v2-footer', '');
+    const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
@@ -159,3 +159,54 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
     }
   });
 };
+
+export const adjustPretitle = (element) => {
+  const headingSelector = 'h1, h2, h3, h4, h5, h6';
+
+  [...element.querySelectorAll(headingSelector)].forEach((heading) => {
+    const isNextElHeading = heading.nextElementSibling?.matches(headingSelector);
+
+    if (!isNextElHeading) {
+      return;
+    }
+
+    const currentLevel = Number(heading.tagName[1]);
+    const nextElLevel = Number(heading.nextElementSibling.tagName[1]);
+
+    if (currentLevel > nextElLevel) {
+      const pretitle = createElement('span', { classes: ['pretitle'] });
+      pretitle.append(...heading.childNodes);
+
+      heading.replaceWith(pretitle);
+    }
+  });
+};
+
+export const slugify = (text) => (
+  text.toString().toLowerCase().trim()
+    // separate accent from letter
+    .normalize('NFD')
+    // remove all separated accents
+    .replace(/[\u0300-\u036f]/g, '')
+    // replace spaces with -
+    .replace(/\s+/g, '-')
+    // replace & with 'and'
+    .replace(/&/g, '-and-')
+    // remove all non-word chars
+    .replace(/[^\w-]+/g, '')
+    // replace multiple '-' with single '-'
+    .replace(/--+/g, '-')
+);
+
+/**
+ * Check if one trust group is checked.
+ * @param {String} groupName the one trust croup like: C0002
+ */
+export function checkOneTruckGroup(groupName) {
+  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  return oneTrustCookie.includes(`${groupName}:1`);
+}
+
+export function isEloquaFormAllowed() {
+  return checkOneTruckGroup('C0004');
+}

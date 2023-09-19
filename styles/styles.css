@@ -1,3 +1,5 @@
+  /* stylelint-disable number-max-precision */
+
 /*
    Fonts
    When using fonts, please see "best practices for fonts" in Readme
@@ -54,6 +56,8 @@
 
   /* REDESIGN */
   --border-radius: 8px;
+  --section-padding: 48px 0 140px;
+  --section-div-padding: 20px 16px;
 
   /* Volvo Broad Pro Digital, 70px / 4.375rem, 5px / 0.313rem, 85% */
   --f-statement-header-font-size: 4.375rem; /* 70px */
@@ -72,6 +76,7 @@
 
   /* Volvo Novum, 48px / 3rem, Medium, 0px, 110% */
   --f-heading-3-font-size: 3rem; /* 48px */
+  --f-heading-3-letter-spacing: 0;
   --f-heading-3-line-height: 110%;
 
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
@@ -81,6 +86,7 @@
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
   --f-heading-5-font-size: 1.5rem; /* 24px */
+  --f-heading-5-letter-spacing: 0;
   --f-heading-5-line-height: 125%;
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
@@ -102,6 +108,11 @@
   --f-body-font-size: 1rem; /* 16px */
   --f-body-letter-spacing: 0.031rem;
   --f-body-line-height: 130%;
+
+  /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
+  --f-body-2-font-size: 1.125rem; /* 18px */
+  --f-body-2-letter-spacing: 0.03125rem; /* 5px */
+  --f-body-2-line-height: 144%;
 
   /* Volvo Novum, 14px / 0.875rem, Regular, 1.25px / 0.078rem, 130% */
   --f-button-font-size: 0.875rem; /* 14px */
@@ -160,13 +171,6 @@
   --c-warning-yellow: #F7D302;
 
   /* Global colors */
-  --c-background-card: #f7f7f7;
-  --volvo-text-gray: var(--c-grey-4);
-  --volvo-text-light-gray: var(--c-grey-2);
-  --text-color: var(--c-grey-4);
-  --btn-background-hover: var(--c-grey-1);
-  --input-background-color: var(--c-grey-1);
-  --overlay-background-color: var(--c-grey-1);
   --light-border-focus: #2B8EDE;
 
   /* Motions */
@@ -181,6 +185,14 @@
     OLD styles
     we need to remove / update once they are not used in the styles
   */
+
+  /* Global colors */
+  --volvo-text-gray: var(--c-grey-4);
+  --volvo-text-light-gray: var(--c-grey-2);
+  --text-color: var(--c-grey-4);
+  --btn-background-hover: var(--c-grey-1);
+  --input-background-color: var(--c-grey-1);
+  --overlay-background-color: var(--c-grey-1);
   --background-light-gray: #ebebeb;
   --highlight-background-color: #ccc;
   --btn-border-hover: #030333;
@@ -254,11 +266,17 @@
   --body-regular-letter-spacing: 0.5px;
 
   /* nav height */
-  --nav-height: 95px;
+  --nav-height: 52px;
   --sub-nav-height: 44px;
 
-  /* sectio style */
+  /* section style */
   --wrapper-width: 100%;
+
+  /* Zindex header */
+  --z-index-header: 1050;
+
+  /* In page navigation */
+  --inpage-navigation-height: 0;
 }
 
 *,
@@ -292,11 +310,10 @@ header {
   min-height: var(--nav-height);
 }
 
-header .header.block {
+.header {
   background-color: white;
   min-height: var(--nav-height);
-  position: relative;
-  z-index: 1050;
+  z-index: var(--z-index-header);
 }
 
 header.sub-nav-wrapper {
@@ -307,15 +324,16 @@ header .sub-nav.block {
   height: var(--sub-nav-height);
   background-color: #7F7F7F;
   z-index: 1020;
-  bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
+  position: fixed;
+  top: var(--nav-height);
+  bottom: unset;
+  transition:  top 300ms ease-in-out;
 }
 
-.border {
-  border-radius: var(--border-radius);
-  overflow: hidden;
+.header--hidden ~ .sub-nav.block {
+  top: 0;
 }
 
 /* specific page styles */
@@ -638,6 +656,10 @@ body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
 }
 
+body.disable-body-scroll {
+  overflow: hidden;
+}
+
 ul.cta-list {
   list-style: none;
   margin: 0;
@@ -853,24 +875,8 @@ div.block div.pager .pagination .scroll li a {
   }
 }
 
-@media (max-width: 991px) {
-  header .header.block {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  header .sub-nav.block {
-    position: fixed;
-    top: var(--nav-height);
-    bottom: unset;
-  }
-}
-
 @media (min-width: 992px) {
   :root {
-    --nav-height: 176px;
     --sub-nav-height: 48px;
   }
 
@@ -910,14 +916,14 @@ main.blue-contract .section > div {
 }
 
 @media (min-width: 1300px) {
-  :root:not(.html.redesign-v2) {
+  :root:not(html.redesign-v2) {
     --wrapper-width: 1200px;
   }
 }
 
 /* Sections variant styling */
 @media (min-width: 1440px) {
-  :root:not(.html.redesign-v2) main.blue-contract {
+  :root:not(html.redesign-v2) main.blue-contract {
     --wrapper-width: 1440px;
   }
 }
@@ -971,11 +977,11 @@ main.blue-contract .section.section-with-title p {
 
 /* REDESIGN GLOBAL STYLES */
 .redesign-v2 {
-  font-size: 16px;
-}
-
-:root.redesign-v2 {
+  --card-background: #f7f7f7;
+  --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
+
+  font-size: 16px;
 }
 
 .redesign-v2 ul {
@@ -994,12 +1000,20 @@ main.blue-contract .section.section-with-title p {
   font-weight: 100;
 }
 
-:root.redesign-v2 .section {
-  padding: 0;
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section {
+  padding: var(--section-padding);
+  scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
-:root.redesign-v2 .section > div {
-  padding: 0 16px;
+.redesign-v2 .section:first-child,
+.section:not(.section--black-background, .section--gray-background) + .section:not(.section--black-background, .section--gray-background) {
+  padding-top: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section > div {
+  padding: var(--section-div-padding);
   margin: auto;
 }
 
@@ -1007,6 +1021,26 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
   width: 100%;
 }
+
+/* Section Background colors */
+.section--black-background {
+  --text-color: var(--c-white);
+  --card-background: var(--c-grey-900);
+  --card-text: var(--c-white);
+
+  color: var(--text-color);
+  background-color: var(--c-main-black);
+  padding-top: 80px;
+}
+
+.section--gray-background {
+  --card-background: var(--c-white);
+  --card-text: var(--c-main-black);
+
+  background-color: var(--c-grey-50);
+}
+
+/* End section Background colors */
 
 .redesign-v2 a.standalone-link {
   align-items: center;
@@ -1070,18 +1104,24 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.primary,
+.redesign-v2 .section--black-background button.primary,
 .redesign-v2 a.button.primary.dark,
 .redesign-v2 button.primary.dark {
   background-color: var(--c-white);
   color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.primary:hover,
+.redesign-v2 .section--black-background button.primary:hover,
 .redesign-v2 a.button.primary.dark:hover,
 .redesign-v2 button.primary.dark:hover {
   background-color: var(--c-grey-200);
   border-color: transparent;
 }
 
+.redesign-v2 .section--black-background a.button.primary:active,
+.redesign-v2 .section--black-background button.primary:active,
 .redesign-v2 a.button.primary.dark:active,
 .redesign-v2 button.primary.dark:active {
   background-color: var(--c-grey-400);
@@ -1103,17 +1143,23 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-100);
 }
 
+.redesign-v2 .section--black-background a.button.secondary,
+.redesign-v2 .section--black-background button.secondary,
 .redesign-v2 a.button.secondary.dark,
 .redesign-v2 button.secondary.dark {
   border: 1px solid var(--c-white);
   color: var(--c-white);
 }
 
+.redesign-v2 .section--black-background a.button.secondary:hover,
+.redesign-v2 .section--black-background button.secondary:hover,
 .redesign-v2 a.button.secondary.dark:hover,
 .redesign-v2 button.secondary.dark:hover {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.secondary:active,
+.redesign-v2 .section--black-background button.secondary:active,
 .redesign-v2 a.button.secondary.dark:active,
 .redesign-v2 button.secondary.dark:active {
   background-color: var(--c-grey-800);
@@ -1121,8 +1167,9 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
-  background-color: var(--c-white);
-  color: var(--c-main-black);
+  padding: 8px 12px 8px 0;
+  color: var(--text-color);
+  text-transform: uppercase;
 }
 
 .redesign-v2 a.button.tertiary:hover,
@@ -1136,17 +1183,22 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-100);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary,
+.redesign-v2 .section--black-background button.tertiary,
 .redesign-v2 a.button.tertiary.dark,
 .redesign-v2 button.tertiary.dark {
   color: var(--c-white);
-  background-color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary:hover,
+.redesign-v2 .section--black-background button.tertiary:hover,
 .redesign-v2 a.button.tertiary.dark:hover,
 .redesign-v2 button.tertiary.dark:hover {
   background-color: var(--c-grey-900);
 }
 
+.redesign-v2 .section--black-background a.button.tertiary:active,
+.redesign-v2 .section--black-background button.tertiary:active,
 .redesign-v2 a.button.tertiary.dark:active,
 .redesign-v2 button.tertiary.dark:active {
   background-color: var(--c-grey-800);
@@ -1168,17 +1220,23 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-cta-blue-active);
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta,
+.redesign-v2 .section--black-background button.marketing-cta,
 .redesign-v2 a.button.marketing-cta.dark,
 .redesign-v2 button.marketing-cta.dark {
   background-color: #44A1FF;
   color: var(--c-main-black);
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta:hover,
+.redesign-v2 .section--black-background button.marketing-cta:hover,
 .redesign-v2 a.button.marketing-cta.dark:hover,
 .redesign-v2 button.marketing-cta.dark:hover {
   background-color: #76BAFF;
 }
 
+.redesign-v2 .section--black-background a.button.marketing-cta:active,
+.redesign-v2 .section--black-background button.marketing-cta:active,
 .redesign-v2 a.button.marketing-cta.dark:active,
 .redesign-v2 button.marketing-cta.dark:active {
   background-color: #1F78D1;
@@ -1199,28 +1257,43 @@ main.blue-contract .section.section-with-title p {
   width: 1em;
 }
 
-@media (min-width: 744px) {
-  .redesign-v2 .section {
-    padding: 0;
-  }
+.redesign-v2 .button .icon svg {
+  height: 24px;
+  width: 24px;
+}
 
-  .redesign-v2 .section > div {
-   padding: 0 32px;
-   margin: auto;
+.redesign-v2 .pretitle {
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: var(--f-body-2-font-size);
+  letter-spacing: var(--f-body-2-letter-spacing);
+  line-height: var(--f-body-2-line-height);
+  color: var(--text-color);
+}
+
+@media (min-width: 744px) {
+  :root.redesign-v2 {
+    --section-div-padding: 24px 32px;
   }
 }
 
 @media (min-width: 1200px) {
-  :root.redesign-v2 {
-    --wrapper-width: 1200px;
-    --border-radius: 12px;
+  :root {
+    --nav-height: 64px;
   }
 
-  .redesign-v2 .section > div {
-    padding: 0 135px;
+  :root.redesign-v2 {
+    --wrapper-width: 1170px;
+    --border-radius: 12px;
+    --section-div-padding: 24px 0;
   }
 
   .redesign-v2 .section div.full-width {
     margin: 0;
+  }
+
+  .redesign-v2 .pretitle {
+    font-size: var(--f-heading-5-font-size);
+    letter-spacing: var(--f-heading-5-letter-spacing);
+    line-height: var(--f-heading-5-line-height);
   }
 }

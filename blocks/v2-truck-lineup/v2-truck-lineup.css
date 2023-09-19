@@ -98,6 +98,7 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   flex: none;
   opacity: 0;
   width: 100%;
+
   /* fadeout */
   transition: opacity 0.3s cubic-bezier(0, 0, 0, 1);
 }
@@ -169,13 +170,17 @@ ul.v2-truck-lineup__navigation {
 .v2-truck-lineup__navigation button {
   background: 0 0;
   border: none;
-  color: var(--text-color);
+  color: var(--c-grey-4);
   font-size: var(--f-button-font-size);
   letter-spacing: var(--f-button-letter-spacing);
   line-height: 100%;
   margin: 0;
   padding: 12px 0;
   text-transform: uppercase;
+}
+
+.v2-tabbed-carousel__navigation-item.active button {
+  color: var(--c-main-black);
 }
 
 /* Arrow controls */
@@ -208,10 +213,12 @@ ul.v2-truck-lineup__navigation {
   right: 10%;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .v2-truck-lineup__arrow-controls button {
   background-color: var(--c-white);
   border-radius: 50%;
   border: 1px solid var(--c-grey-400);
+  color: var(--c-main-black);
   font-size: 0;
   margin: 0;
   padding: 10px;

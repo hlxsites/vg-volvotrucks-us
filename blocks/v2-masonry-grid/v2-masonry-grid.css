@@ -1,8 +1,5 @@
 .v2-masonry-grid {
   --v2-masonry-grid-gutter: 16px;
-  --v2-masonry-grid-margin-bottom: 80px;
-
-  margin-bottom: var(--v2-masonry-grid-margin-bottom);
 }
 
 .v2-masonry-grid__items {
@@ -28,6 +25,8 @@
 
 .v2-masonry-grid__item {
   position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .v2-masonry-grid__item:nth-child(1) { grid-area: big-landscape; }
@@ -80,6 +79,5 @@
 @media screen and (min-width: 1200px) {
   .v2-masonry-grid {
     --v2-masonry-grid-gutter: 32px;
-    --v2-masonry-grid-margin-bottom: 140px;
   }
 }
