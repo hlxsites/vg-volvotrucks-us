@@ -3,7 +3,14 @@ import { loadScript, sampleRUM } from './lib-franklin.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
-loadGoogleTagManager();
+
+const cookieSetting = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+const isGtmAllowed = cookieSetting.includes('C0002:1');
+const isFacebookPixelAllowed = cookieSetting.includes('C0005:1');
+
+if (isGtmAllowed) {
+  loadGoogleTagManager();
+}
 
 // add more delayed functionality here
 document.addEventListener('click', (e) => {
@@ -57,33 +64,46 @@ async function loadGoogleTagManager() {
   }(window, document, 'script', 'dataLayer', 'GTM-KP9KZWR'));
 }
 
-// FaceBook Pixel
-// eslint-disable-next-line no-unused-expressions
-!(function (f, b, e, v, n, t, s) {
-  // eslint-disable-next-line no-multi-assign,no-param-reassign
-  if (f.fbq) return; n = f.fbq = function () {
-    // eslint-disable-next-line no-unused-expressions
-    n.callMethod
-    // eslint-disable-next-line prefer-spread,prefer-rest-params
-      ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-  };
-  // eslint-disable-next-line no-underscore-dangle
-  if (!f._fbq)f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-  // eslint-disable-next-line no-param-reassign
-  n.queue = []; t = b.createElement(e); t.async = !0;
-  // eslint-disable-next-line no-param-reassign,prefer-destructuring
-  t.src = v; s = b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t, s);
-}(
-  window,
-  document,
-  'script',
-  'https://connect.facebook.net/en_US/fbevents.js',
-));
-// eslint-disable-next-line no-undef
-fbq('init', '620334125252675');
-// eslint-disable-next-line no-undef
-fbq('track', 'PageView');
+function loadFacebookPixel() {
+  // FaceBook Pixel
+  // eslint-disable-next-line no-unused-expressions
+  !(function (f, b, e, v, n, t, s) {
+    // eslint-disable-next-line no-multi-assign,no-param-reassign
+    if (f.fbq) return; n = f.fbq = function () {
+      // eslint-disable-next-line no-unused-expressions
+      n.callMethod
+      // eslint-disable-next-line prefer-spread,prefer-rest-params
+        ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    // eslint-disable-next-line no-underscore-dangle
+    if (!f._fbq)f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+    // eslint-disable-next-line no-param-reassign
+    n.queue = []; t = b.createElement(e); t.async = !0;
+    // eslint-disable-next-line no-param-reassign,prefer-destructuring
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  }(
+    window,
+    document,
+    'script',
+    'https://connect.facebook.net/en_US/fbevents.js',
+  ));
+  // eslint-disable-next-line no-undef
+  fbq('init', '620334125252675');
+  // eslint-disable-next-line no-undef
+  fbq('track', 'PageView');
+}
+
+if (isFacebookPixelAllowed) {
+  loadFacebookPixel();
+}
+
+(function(h,o,t,j,a,r){
+  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+  h._hjSettings={hjid:1139895,hjsv:6}; a=o.getElementsByTagName('head')[0];
+  r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  a.appendChild(r);
+})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
 
 // Initiate searchWidget ,  check for search div loaded
 if (document.getElementById('div-widget-id') && !document.querySelector('.studio-widget-autosuggest-results')) {
