@@ -25,6 +25,8 @@
 
 .v2-masonry-grid__item {
   position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .v2-masonry-grid__item:nth-child(1) { grid-area: big-landscape; }
