@@ -21,7 +21,7 @@ export default function decorate(block) {
 
       // if video or picture available, it's part of the grid
       if (videos.length > 0 || picture) {
-        const li = createElement('li', { classes: [`${blockName}__item`, 'border'] });
+        const li = createElement('li', { classes: [`${blockName}__item`] });
 
         if (picture) {
           const img = picture.lastElementChild;
