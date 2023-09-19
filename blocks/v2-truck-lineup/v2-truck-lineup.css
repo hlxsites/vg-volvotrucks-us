@@ -135,6 +135,10 @@ p.v2-truck-lineup__description {
 }
 
 /* Navigation */
+.v2-truck-lineup__navigation::-webkit-scrollbar {
+  display: none;
+}
+
 ul.v2-truck-lineup__navigation {
   display: flex;
   flex-flow: row nowrap;

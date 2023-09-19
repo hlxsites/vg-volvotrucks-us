@@ -1,5 +1,4 @@
 import { createElement } from '../../scripts/common.js';
-import BezierEasing from './BezierEasing.js';
 
 const blockName = 'v2-truck-lineup';
 
@@ -11,6 +10,15 @@ function stripEmptyTags(main, child) {
   }
 }
 
+const moveNavigationLine = (navigationLine, activeTab, tabNavigation) => {
+  const { x: navigationX } = tabNavigation.getBoundingClientRect();
+  const { x, width } = activeTab.getBoundingClientRect();
+  Object.assign(navigationLine.style, {
+    left: `${x + tabNavigation.scrollLeft - navigationX}px`,
+    width: `${width}px`,
+  });
+};
+
 function buildTabNavigation(tabItems, clickHandler) {
   const tabNavigation = createElement('ul', { classes: `${blockName}__navigation` });
   const navigationLine = createElement('li', { classes: `${blockName}__navigation-line` });
@@ -20,27 +28,17 @@ function buildTabNavigation(tabItems, clickHandler) {
     const listItem = createElement('li', { classes: `${blockName}__navigation-item` });
     const button = createElement('button');
     button.addEventListener('click', () => clickHandler(i));
-    if (navigationLine) {
-      button.addEventListener('mouseover', (e) => {
-        clearTimeout(timeout);
-        const { x, width } = e.currentTarget.getBoundingClientRect();
-        Object.assign(navigationLine.style, {
-          left: `${x + tabNavigation.scrollLeft}px`,
-          width: `${width}px`,
-        });
-      });
+    button.addEventListener('mouseover', (e) => {
+      clearTimeout(timeout);
+      moveNavigationLine(navigationLine, e.currentTarget, tabNavigation);
+    });
 
-      button.addEventListener('mouseout', () => {
-        timeout = setTimeout(() => {
-          const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
-          const { x, width } = activeItem.getBoundingClientRect();
-          Object.assign(navigationLine.style, {
-            left: `${x + tabNavigation.scrollLeft}px`,
-            width: `${width}px`,
-          });
-        }, 600);
-      });
-    }
+    button.addEventListener('mouseout', () => {
+      timeout = setTimeout(() => {
+        const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
+        moveNavigationLine(navigationLine, activeItem, tabNavigation);
+      }, 600);
+    });
 
     const tabContent = tabItem.querySelector(':scope > div');
     button.innerHTML = tabContent.dataset.truckCarousel;
@@ -64,14 +62,8 @@ const updateActiveItem = (index) => {
   descriptions.children[index].classList.add('active');
   navigation.children[index].classList.add('active');
 
-  if (navigationLine) {
-    const activeNavigationItem = navigation.children[index];
-    const { x, width } = activeNavigationItem.getBoundingClientRect();
-    Object.assign(navigationLine.style, {
-      left: `${x + navigation.scrollLeft}px`,
-      width: `${width}px`,
-    });
-  }
+  const activeNavigationItem = navigation.children[index];
+  moveNavigationLine(navigationLine, activeNavigationItem, navigation);
 
   // Center navigation item
   const navigationActiveItem = navigation.querySelector('.active');
@@ -119,39 +111,16 @@ const listenScroll = (carousel) => {
   });
 };
 
-function animateScroll(element, startScroll, endScroll, startTime, cubicBezier) {
-  const duration = 800; // Duration in milliseconds
-  const currentTime = performance.now();
-  const elapsedTime = Math.min(currentTime - startTime, duration);
-  const animationPosition = elapsedTime / duration;
-
-  const easedPosition = cubicBezier(animationPosition);
-
-  const distance = endScroll - startScroll;
-  const targetScroll = startScroll + distance * easedPosition;
-
-  // Update the scrollLeft property of the element
-  element.scrollLeft = targetScroll;
-
-  // Check if the animation is not finished
-  if (elapsedTime < duration) {
-    // Continue the animation by requesting the next frame
-    requestAnimationFrame(() => {
-      animateScroll(element, startScroll, endScroll, startTime, cubicBezier);
-    });
-  }
-}
-
 const setCarouselPosition = (carousel, index) => {
   const firstEl = carousel.firstElementChild;
   const scrollOffset = firstEl.getBoundingClientRect().width;
   const style = window.getComputedStyle(firstEl);
   const marginleft = parseFloat(style.marginLeft);
 
-  const startScroll = carousel.scrollLeft;
-  const endScroll = index * scrollOffset + marginleft;
-
-  animateScroll(carousel, startScroll, endScroll, performance.now(), BezierEasing(0, 0, 0, 1));
+  carousel.scrollTo({
+    left: index * scrollOffset + marginleft,
+    behavior: 'smooth',
+  });
 };
 
 const createArrowControls = (carousel) => {
@@ -170,15 +139,7 @@ const createArrowControls = (carousel) => {
       }
     }
 
-    const firstEl = carousel.firstElementChild;
-    const scrollOffset = firstEl.getBoundingClientRect().width;
-    const style = window.getComputedStyle(firstEl);
-    const marginleft = parseFloat(style.marginLeft);
-
-    const startScroll = carousel.scrollLeft;
-    const endScroll = index * scrollOffset + marginleft;
-
-    animateScroll(carousel, startScroll, endScroll, performance.now(), BezierEasing(0, 0, 0, 1));
+    setCarouselPosition(carousel, index);
   }
 
   const arrowControls = createElement('ul', { classes: [`${blockName}__arrow-controls`] });
