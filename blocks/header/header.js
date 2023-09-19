@@ -25,11 +25,14 @@ const createMainLinks = (mainLinksWrapper) => {
   list.setAttribute('id', 'header-main-nav');
   list.classList.add(`${blockClass}__main-nav`);
   list.querySelectorAll('li').forEach((listItem) => {
-    listItem.classList.add(`${blockClass}__main-nav-item`);
-    const accordionContainer = createElement('div', { classes: `${blockClass}__accortion-container` });
-    const accordionContentWrapper = createElement('div', { classes: `${blockClass}__accortion-content-wrapper` });
+    const accordionContainer = document.createRange().createContextualFragment(`
+    <div class="${blockClass}__accortion-container">
+      <div class="${blockClass}__accortion-content-wrapper">
+      </div>
+    </div>
+    `);
 
-    accordionContainer.append(accordionContentWrapper);
+    listItem.classList.add(`${blockClass}__main-nav-item`);
     listItem.append(accordionContainer);
   });
   list.querySelectorAll('li > a').forEach((link) => {
@@ -125,6 +128,36 @@ const addHeaderScrollBehaviour = (header) => {
   });
 };
 
+const createOverviewLink = (linkToCopy, parent) => {
+  const overview = linkToCopy.cloneNode(true);
+  overview.classList.add(`${blockClass}__overview-link`);
+  const link = overview.querySelector('a');
+  link.classList.add('header__link');
+  link.textContent = getTextLabel('Overview');
+  parent.prepend(overview);
+};
+
+const rebuildCategoryItem = (item) => {
+  item.classList.add(`${blockClass}__category-item`);
+
+  [...item.childNodes].forEach((el) => {
+    // removing new lines and empty text nodes
+    if (el.tagName === 'BR') el.remove();
+
+    // wrapping orphan text
+    if (el.nodeType === Node.TEXT_NODE) {
+      if (!el.textContent.trim().length) {
+        el.remove();
+        return;
+      }
+
+      const textNode = createElement('span', { classes: `${blockClass}__link-description` });
+      textNode.textContent = el.textContent.trim();
+      el.replaceWith(textNode);
+    }
+  });
+};
+
 const buildMenuContent = (menuData, navEl) => {
   const menus = [...menuData.querySelectorAll('.menu')];
   const navLinks = [...navEl.querySelectorAll(`.${blockClass}__main-nav-link`)];
@@ -133,37 +166,22 @@ const buildMenuContent = (menuData, navEl) => {
     const tabName = menuItemData.querySelector(':scope > div > div');
     const categories = [...menuItemData.querySelectorAll(':scope > div > div')].slice(1);
     const navLink = navLinks.find((el) => el.textContent.trim() === tabName.textContent.trim());
+    const accordionContentWrapper = navLink?.closest(`.${blockClass}__main-nav-item`).querySelector(`.${blockClass}__accortion-content-wrapper`);
     const onAccortionItemClick = (el) => {
       el.preventDefault();
       el.target.parentElement.classList.toggle(`${blockClass}__menu-open`);
     };
+    // createing overview link - visible only on mobile
+    createOverviewLink(tabName, accordionContentWrapper);
 
     categories.forEach((cat) => {
       const title = cat.querySelector(':scope > p > a');
-      const subtitle = cat.querySelector(':scope >p:nth-child(2)');
+      const subtitle = cat.querySelector(':scope > p:nth-child(2)');
       const list = cat.querySelector(':scope > ul');
 
       title.classList.add(`${blockClass}__link`, `${blockClass}__link-accordion`);
       list.classList.add(`${blockClass}__category-items`);
-      [...list.querySelectorAll('li')].forEach((item) => {
-        item.classList.add(`${blockClass}__category-item`);
-
-        [...item.childNodes].forEach((el) => {
-          // removing new lines and empty text nodes
-          if (el.tagName === 'BR') el.remove();
-
-          // wrapping orphan text
-          if (el.nodeType === Node.TEXT_NODE) {
-            if (el.textContent.trim().length) {
-              el.remove();
-            }
-
-            const textNode = createElement('span', { classes: `${blockClass}__link-description` });
-            textNode.textContent = el.textContent.trim();
-            el.replaceWith(textNode);
-          }
-        });
-      });
+      [...list.querySelectorAll('li')].forEach(rebuildCategoryItem);
       [...list.querySelectorAll('a')].forEach((el) => el.classList.add(`${blockClass}__link`));
 
       const menuContent = document.createRange().createContextualFragment(`
@@ -179,7 +197,7 @@ const buildMenuContent = (menuData, navEl) => {
       `);
 
       menuContent.querySelector(`.${blockClass}__link-accordion`).addEventListener('click', onAccortionItemClick);
-      navLink?.closest(`.${blockClass}__main-nav-item`).querySelector(`.${blockClass}__accortion-content-wrapper`).append(menuContent);
+      accordionContentWrapper.append(menuContent);
     });
 
     navLink?.addEventListener('click', onAccortionItemClick);

@@ -197,3 +197,14 @@ export const slugify = (text) => (
     // replace multiple '-' with single '-'
     .replace(/--+/g, '-')
 );
+
+/*
+  The generateId function should be used only
+  for generating the id for UI elements
+*/
+let idValue = 0;
+
+export const generateId = (prefix = 'id') => {
+  idValue += 1;
+  return `${prefix}-${idValue}`;
+};
