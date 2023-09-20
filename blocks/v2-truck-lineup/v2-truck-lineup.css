@@ -60,7 +60,7 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   flex: none;
   scroll-snap-align: center;
   text-align: center;
-  width: var(--tabbed-carousel-img-width);
+  width: var(--truck-lineup-img-width);
 }
 
 .v2-truck-lineup__image-item picture {
@@ -72,13 +72,13 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
 }
 
 .v2-truck-lineup__image-item:first-child {
-  margin-left: calc(100% - var(--tabbed-carousel-img-width)/2);
+  margin-left: calc(100% - var(--truck-lineup-img-width)/2);
 }
 
 .v2-truck-lineup__images-container::after {
   content: '';
   display: block;
-  flex: 0 0 calc(100% - var(--tabbed-carousel-img-width)/2);
+  flex: 0 0 calc(100% - var(--truck-lineup-img-width)/2);
 }
 
 .v2-truck-lineup__image-item img {
@@ -264,7 +264,7 @@ ul.v2-truck-lineup__navigation {
 
 @media screen and (min-width: 1200px) {
   :root {
-    --tabbed-carousel-img-width: 60%;
+    --truck-lineup-img-width: 60%;
   }
 
   .v2-truck-lineup__image-item img {

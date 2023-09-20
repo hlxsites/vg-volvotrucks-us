@@ -260,7 +260,7 @@ function buildTabbedBlock(main) {
 }
 
 function createTruckLineupSection(tabItems) {
-  const tabSection = createElement('div', ['section']);
+  const tabSection = createElement('div', { classes: 'section' });
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = createElement('div');
   tabSection.append(wrapper);
