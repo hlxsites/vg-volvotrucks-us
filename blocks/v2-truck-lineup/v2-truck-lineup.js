@@ -237,4 +237,11 @@ export default function decorate(block) {
 
   // update the button indicator on scroll
   listenScroll(imagesContainer);
+
+  // Update text position + navigation line when page is resized
+  window.addEventListener('resize', () => {
+    const activeItem = imagesContainer.querySelector(`.${blockName}__image-item.active`);
+    const index = [...activeItem.parentNode.children].indexOf(activeItem);
+    updateActiveItem(index);
+  });
 }
