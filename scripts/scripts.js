@@ -259,17 +259,17 @@ function buildTabbedBlock(main) {
   }
 }
 
-function createTabbedTruckSection(tabItems) {
+function createTruckLineupSection(tabItems) {
   const tabSection = createElement('div', ['section']);
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = createElement('div');
   tabSection.append(wrapper);
-  const tabBlock = buildBlock('v2-tabbed-carousel', [tabItems]);
+  const tabBlock = buildBlock('v2-truck-lineup', [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
 }
 
-function buildTruckCarouselBlock(main) {
+function buildTruckLineupBlock(main) {
   const tabItems = [];
   let nextElement;
   const BREAKPOINTS = {
@@ -286,7 +286,7 @@ function buildTruckCarouselBlock(main) {
     nextElement = mainChildren[i + 1];
     const sectionMeta = section.dataset.truckCarousel;
 
-    const tabContent = createElement('div', { classes: 'v2-tabbed-carousel__content' });
+    const tabContent = createElement('div', { classes: 'v2-truck-lineup__content' });
     tabContent.dataset.truckCarousel = sectionMeta;
     tabContent.innerHTML = section.innerHTML;
     const images = tabContent.querySelectorAll('p > picture');
@@ -323,14 +323,14 @@ function buildTruckCarouselBlock(main) {
   });
 
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedTruckSection(tabItems);
+    const truckLineupSection = createTruckLineupSection(tabItems);
     if (nextElement) { // if we saved a position push the carousel in that position if not
-      main.insertBefore(tabbedCarouselSection, nextElement);
+      main.insertBefore(truckLineupSection, nextElement);
     } else {
-      main.append(tabbedCarouselSection);
+      main.append(truckLineupSection);
     }
-    decorateIcons(tabbedCarouselSection);
-    decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
+    decorateIcons(truckLineupSection);
+    decorateBlock(truckLineupSection.querySelector('.v2-truck-lineup'));
   }
 }
 
@@ -551,7 +551,7 @@ export function decorateMain(main, head) {
   buildCtaList(main);
 
   // redesign
-  buildTruckCarouselBlock(main);
+  buildTruckLineupBlock(main);
   buildInpageNavigationBlock(main);
 }
 
