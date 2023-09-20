@@ -1014,6 +1014,10 @@ main.blue-contract .section.section-with-title p {
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
+.redesign-v2 .section:last-child {
+  padding-bottom: 0;
+}
+
 .redesign-v2 .section:first-child,
 .section:not(.section--black-background, .section--gray-background) + .section:not(.section--black-background, .section--gray-background) {
   padding-top: 0;
