@@ -169,6 +169,8 @@ const optimiseImage = (picture) => {
 };
 
 const buildMenuContent = (menuData, navEl, menuFooter) => {
+  menuData.querySelectorAll('picture').forEach(optimiseImage);
+
   const menus = [...menuData.querySelectorAll('.menu')];
   const navLinks = [...navEl.querySelectorAll(`.${blockClass}__main-nav-link`)];
 
@@ -272,9 +274,6 @@ export default async function decorate(block) {
     menuContent,
     menuContentFooter,
   ] = content.children;
-
-  menuContent.querySelectorAll('picture').forEach(optimiseImage);
-
   const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
   const navContent = document.createRange().createContextualFragment(`
     <div class="${blockClass}__menu-overlay"></div>
