@@ -129,7 +129,7 @@
   width: 24px;
   height: 24px;
   background-repeat: no-repeat;
-  transition: transform 300ms ease-in-out;
+  transition: transform var(--menu-animation);
 }
 
 .header__menu-open > .header__link-accordion::after {
@@ -239,7 +239,7 @@
   padding: 0;
 }
 
-.header__category-items > .header__link:not(:first-of-type)
+.header__category-items > .header__link:not(:first-of-type),
 .header__menu-content picture,
 .header__category-subtitle,
 .header__menu-content-footer {

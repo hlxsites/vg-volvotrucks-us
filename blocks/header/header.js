@@ -141,18 +141,21 @@ const rebuildCategoryItem = (item) => {
   item.classList.add(`${blockClass}__category-item`);
 
   [...item.childNodes].forEach((el) => {
-    // removing new lines and empty text nodes
+    // removing new lines
     if (el.tagName === 'BR') el.remove();
 
     // wrapping orphan text
     if (el.nodeType === Node.TEXT_NODE) {
-      if (!el.textContent.trim().length) {
+      const textContent = el.textContent.trim();
+
+      // removing empty text nodes
+      if (!textContent.length) {
         el.remove();
         return;
       }
 
       const textNode = createElement('span', { classes: `${blockClass}__link-description` });
-      textNode.textContent = el.textContent.trim();
+      textNode.textContent = textContent;
       el.replaceWith(textNode);
     }
   });
