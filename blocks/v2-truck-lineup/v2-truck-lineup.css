@@ -84,6 +84,7 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
 .v2-truck-lineup__image-item img {
   aspect-ratio: 3/4;
   max-height: 80vh;
+  width: auto;
 }
 
 .v2-truck-lineup__content {

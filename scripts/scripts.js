@@ -87,6 +87,8 @@ export function createCustomOptimizedPicture(src, alt = '', eager = false, break
       const img = document.createElement('img');
       img.setAttribute('loading', eager ? 'eager' : 'lazy');
       img.setAttribute('alt', alt);
+      img.setAttribute('width', br.width);
+      img.setAttribute('height', br.height);
       picture.appendChild(img);
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
     }
@@ -302,7 +304,8 @@ function buildTruckLineupBlock(main) {
       const img = pic.lastElementChild;
       imageBreakpoints.push({
         src: img.src,
-        width: 2000,
+        width: img.width,
+        height: img.height,
         media: BREAKPOINTS[j],
       });
 
