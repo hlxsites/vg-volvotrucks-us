@@ -1,5 +1,5 @@
 import { createElement, generateId, getTextLabel } from '../../scripts/common.js';
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, decorateIcons } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
 
@@ -161,7 +161,16 @@ const rebuildCategoryItem = (item) => {
   });
 };
 
+const optimiseImage = (picture) => {
+  const img = picture.querySelector('img');
+  const newPicture = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+
+  img.replaceWith(newPicture);
+};
+
 const buildMenuContent = (menuData, navEl, menuFooter) => {
+  menuData.querySelectorAll('picture').forEach(optimiseImage);
+
   const menus = [...menuData.querySelectorAll('.menu')];
   const navLinks = [...navEl.querySelectorAll(`.${blockClass}__main-nav-link`)];
 
