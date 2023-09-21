@@ -59,6 +59,9 @@
   --section-padding: 48px 0 140px;
   --section-div-padding: 20px 16px;
 
+  /* Form styles */
+  --input-padding: 16px;
+
   /* Volvo Broad Pro Digital, 70px / 4.375rem, 5px / 0.313rem, 85% */
   --f-statement-header-font-size: 4.375rem; /* 70px */
   --f-statement-header-letter-spacing: 0.313rem;
@@ -1265,12 +1268,36 @@ main.blue-contract .section.section-with-title p {
   width: 24px;
 }
 
+/* common elements */
+.redesign-v2 main label {
+  color: var(--c-grey-4);
+  font-family: var(--font-family-heading);
+  font-size: var(--f-subtitle-2-font-size);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  line-height: var(--f-subtitle-2-line-height);
+}
+
+.redesign-v2 main input {
+  color: var(--c-grey-4);
+  padding: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--c-grey-2);
+  font-family: var(--font-family-body);
+  font-size: var(--f-subtitle-2-font-size);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  line-height: var(--f-subtitle-2-line-height);
+}
+
+.redesign-v2 main input:hover {
+  border-color: var(--c-grey-2);
+}
+
 .redesign-v2 .pretitle {
+  color: var(--text-color);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: var(--f-body-2-font-size);
   letter-spacing: var(--f-body-2-letter-spacing);
   line-height: var(--f-body-2-line-height);
-  color: var(--text-color);
 }
 
 @media (min-width: 744px) {
