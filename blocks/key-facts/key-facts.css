@@ -92,7 +92,7 @@
 }
 
 .key-facts__image-cell img {
-  border-radius: var(--border-radius);
+  border-radius: 0;
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -175,8 +175,10 @@
     justify-content: left;
   }
 
-  .key-facts__row.key-facts__row--with-media {
+  .key-facts__row.key-facts__row--with-media img,
+  .key-facts__row.key-facts__row--with-media video {
     flex-grow: 1;
     margin: 0;
+    border-radius: var(--border-radius);
   }
 }
