@@ -68,7 +68,7 @@ const createActions = (actionsWrapper) => {
 
   const closeMenuLabel = getTextLabel('Close menu');
   const closeIcon = document.createRange().createContextualFragment(`
-    <li class="header__action-item header__action-item--close-menu">
+    <li class="${blockClass}__action-item ${blockClass}__action-item--close-menu">
       <button
         aria-label="${closeMenuLabel}"
         class="${blockClass}__close-menu"
@@ -132,7 +132,7 @@ const createOverviewLink = (linkToCopy, parent) => {
   const overview = linkToCopy.cloneNode(true);
   overview.classList.add(`${blockClass}__overview-link`);
   const link = overview.querySelector('a');
-  link.classList.add('header__link');
+  link.classList.add(`${blockClass}__link`);
   link.textContent = getTextLabel('Overview');
   parent.prepend(overview);
 };
@@ -181,7 +181,7 @@ const buildMenuContent = (menuData, navEl, menuFooter) => {
       el.target.setAttribute('aria-expanded', isExpanded);
 
       // closing other open menus - on desktop
-      if (desktopMQ.matches && menuEl.classList.contains('header__main-nav-item')) {
+      if (desktopMQ.matches && menuEl.classList.contains(`${blockClass}__main-nav-item`)) {
         const openMenus = document.querySelectorAll(`.${blockClass}__menu-open`);
 
         [...openMenus].filter((menu) => menu !== menuEl).forEach((menu) => {
@@ -288,11 +288,11 @@ export default async function decorate(block) {
 
   const initAriaForAccordions = () => {
     const menuPrefix = 'menu-accordion';
-    const accordionContainers = block.querySelectorAll('.header__link-accordion ~ .header__accordion-container');
+    const accordionContainers = block.querySelectorAll(`.${blockClass}__link-accordion ~ .${blockClass}__accordion-container`);
 
     [...accordionContainers].forEach((container) => {
       const id = generateId(menuPrefix);
-      const accordionLink = container.parentElement.querySelector('.header__link-accordion');
+      const accordionLink = container.parentElement.querySelector(`.${blockClass}__link-accordion`);
 
       container.setAttribute('id', id);
       accordionLink.setAttribute('aria-controls', id);
@@ -301,7 +301,7 @@ export default async function decorate(block) {
   };
 
   const closeHamburgerMenu = () => {
-    block.classList.remove('header--hamburger-open');
+    block.classList.remove(`${blockClass}--hamburger-open`);
     document.body.classList.remove('disable-scroll');
 
     setAriaForMenu(false);
@@ -314,7 +314,7 @@ export default async function decorate(block) {
 
   // add action for hamburger
   navContent.querySelector(`.${blockClass}__hamburger-menu`).addEventListener('click', () => {
-    block.classList.add('header--hamburger-open');
+    block.classList.add(`${blockClass}--hamburger-open`);
     document.body.classList.add('disable-scroll');
 
     setAriaForMenu(true);
