@@ -232,6 +232,32 @@ ul.v2-stories-carousel-meta {
     --stories-carousel-img-width: 694px;
   }
 
+  .v2-stories-carousel {
+    max-width: calc(var(--stories-carousel-img-width) * 2.9);
+    margin: auto;
+  }
+
+  .v2-stories-carousel::after,
+  .v2-stories-carousel::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 30px;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+  }
+
+  .v2-stories-carousel::after {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
+    right: -1px;
+  }
+
+  .v2-stories-carousel::before {
+    background: linear-gradient(270deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
+    left: -1px;
+  }
+
   .v2-stories-carousel-arrowcontrols button {
     padding: 20px;
   }
