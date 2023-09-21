@@ -198,6 +198,19 @@ export const slugify = (text) => (
     .replace(/--+/g, '-')
 );
 
+/**
+ * Check if one trust group is checked.
+ * @param {String} groupName the one trust croup like: C0002
+ */
+export function checkOneTruckGroup(groupName) {
+  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  return oneTrustCookie.includes(`${groupName}:1`);
+}
+
+export function isEloquaFormAllowed() {
+  return checkOneTruckGroup('C0004');
+}
+
 /*
   The generateId function should be used only
   for generating the id for UI elements

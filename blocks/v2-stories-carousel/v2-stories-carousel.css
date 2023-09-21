@@ -57,6 +57,8 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   height: var(--stories-carousel-img-height);
   object-fit: cover;
   width: 100%;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .v2-stories-carousel-text {
