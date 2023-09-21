@@ -288,7 +288,7 @@
   }
 
   .header__nav {
-    max-width: calc(var(--wrapper-width) + 32px);
+    max-width: var(--wrapper-width);
   }
 
   .header__link:hover,
