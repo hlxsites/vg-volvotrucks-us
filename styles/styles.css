@@ -1212,16 +1212,12 @@ main.blue-contract .section.section-with-title p {
 }
 
 .redesign-v2 .section--gray-background a.button.tertiary:hover,
-.redesign-v2 .section--gray-background button.tertiary:hover,
-.redesign-v2 a.button.tertiary.dark:hover,
-.redesign-v2 button.tertiary.dark:hover {
+.redesign-v2 .section--gray-background button.tertiary:hover {
   background-color: var(--c-grey-100);
 }
 
 .redesign-v2 .section--gray-background a.button.tertiary:active,
-.redesign-v2 .section--gray-background button.tertiary:active,
-.redesign-v2 a.button.tertiary.dark:active,
-.redesign-v2 button.tertiary.dark:active {
+.redesign-v2 .section--gray-background button.tertiary:active {
   background-color: var(--c-grey-200);
 }
 
