@@ -10,7 +10,7 @@
   position: sticky;
   top: var(--nav-height);
   width: 100%;
-  z-index: var(--z-index-header);
+  z-index: var(--z-index-inpage-nav);
   transition: transform 300ms ease-in-out;
 }
 

@@ -277,6 +277,9 @@
 
   /* In page navigation */
   --inpage-navigation-height: 0;
+
+  /* Zindex inpage navigation */
+  --z-index-inpage-nav: 1049;
 }
 
 *,
