@@ -1,6 +1,6 @@
 import { createElement } from '../../scripts/common.js';
 
-const blockName = 'v2-tabbed-carousel';
+const blockName = 'v2-truck-lineup';
 
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
@@ -9,6 +9,15 @@ function stripEmptyTags(main, child) {
     stripEmptyTags(main, parent);
   }
 }
+
+const moveNavigationLine = (navigationLine, activeTab, tabNavigation) => {
+  const { x: navigationX } = tabNavigation.getBoundingClientRect();
+  const { x, width } = activeTab.getBoundingClientRect();
+  Object.assign(navigationLine.style, {
+    left: `${x + tabNavigation.scrollLeft - navigationX}px`,
+    width: `${width}px`,
+  });
+};
 
 function buildTabNavigation(tabItems, clickHandler) {
   const tabNavigation = createElement('ul', { classes: `${blockName}__navigation` });
@@ -19,27 +28,17 @@ function buildTabNavigation(tabItems, clickHandler) {
     const listItem = createElement('li', { classes: `${blockName}__navigation-item` });
     const button = createElement('button');
     button.addEventListener('click', () => clickHandler(i));
-    if (navigationLine) {
-      button.addEventListener('mouseover', (e) => {
-        clearTimeout(timeout);
-        const { x, width } = e.currentTarget.getBoundingClientRect();
-        Object.assign(navigationLine.style, {
-          left: `${x + tabNavigation.scrollLeft}px`,
-          width: `${width}px`,
-        });
-      });
+    button.addEventListener('mouseover', (e) => {
+      clearTimeout(timeout);
+      moveNavigationLine(navigationLine, e.currentTarget, tabNavigation);
+    });
 
-      button.addEventListener('mouseout', () => {
-        timeout = setTimeout(() => {
-          const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
-          const { x, width } = activeItem.getBoundingClientRect();
-          Object.assign(navigationLine.style, {
-            left: `${x + tabNavigation.scrollLeft}px`,
-            width: `${width}px`,
-          });
-        }, 600);
-      });
-    }
+    button.addEventListener('mouseout', () => {
+      timeout = setTimeout(() => {
+        const activeItem = document.querySelector(`.${blockName}__navigation-item.active`);
+        moveNavigationLine(navigationLine, activeItem, tabNavigation);
+      }, 600);
+    });
 
     const tabContent = tabItem.querySelector(':scope > div');
     button.innerHTML = tabContent.dataset.truckCarousel;
@@ -63,14 +62,29 @@ const updateActiveItem = (index) => {
   descriptions.children[index].classList.add('active');
   navigation.children[index].classList.add('active');
 
-  if (navigationLine) {
-    const activeNavigationItem = navigation.children[index];
-    const { x, width } = activeNavigationItem.getBoundingClientRect();
-    Object.assign(navigationLine.style, {
-      left: `${x + navigation.scrollLeft}px`,
-      width: `${width}px`,
+  const activeNavigationItem = navigation.children[index];
+  moveNavigationLine(navigationLine, activeNavigationItem, navigation);
+
+  // Center navigation item
+  const navigationActiveItem = navigation.querySelector('.active');
+
+  if (navigation && navigationActiveItem) {
+    const { clientWidth: itemWidth, offsetLeft } = navigationActiveItem;
+    // Calculate the scroll position to center the active item
+    const scrollPosition = offsetLeft - (navigation.clientWidth - itemWidth) / 2;
+    navigation.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth',
     });
   }
+
+  // Update description position
+  const descriptionWidth = descriptions.offsetWidth;
+
+  descriptions.scrollTo({
+    left: descriptionWidth * index,
+    behavior: 'smooth',
+  });
 };
 
 const listenScroll = (carousel) => {
@@ -80,7 +94,7 @@ const listenScroll = (carousel) => {
     entries.forEach((entry) => {
       if (
         entry.isIntersecting
-        && entry.intersectionRatio >= 0.75
+        && entry.intersectionRatio >= 0.9
       ) {
         const activeItem = entry.target;
         const currentIndex = [...activeItem.parentNode.children].indexOf(activeItem);
@@ -89,7 +103,7 @@ const listenScroll = (carousel) => {
     });
   }, {
     root: carousel,
-    threshold: 0.75,
+    threshold: 0.9,
   });
 
   elements.forEach((el) => {
@@ -109,31 +123,23 @@ const setCarouselPosition = (carousel, index) => {
   });
 };
 
-const createArrowControls = (imagesContainer) => {
+const createArrowControls = (carousel) => {
   function scroll(direction) {
-    const activeItem = imagesContainer.querySelector(`.${blockName}__image-item.active`);
+    const activeItem = carousel.querySelector(`.${blockName}__image-item.active`);
     let index = [...activeItem.parentNode.children].indexOf(activeItem);
     if (direction === 'left') {
       index -= 1;
       if (index === -1) {
-        index = imagesContainer.childElementCount;
+        index = carousel.childElementCount;
       }
     } else {
       index += 1;
-      if (index > imagesContainer.childElementCount - 1) {
+      if (index > carousel.childElementCount - 1) {
         index = 0;
       }
     }
 
-    const firstEl = imagesContainer.firstElementChild;
-    const scrollOffset = firstEl.getBoundingClientRect().width;
-    const style = window.getComputedStyle(firstEl);
-    const marginleft = parseFloat(style.marginLeft);
-
-    imagesContainer.scrollTo({
-      left: index * scrollOffset + marginleft,
-      behavior: 'smooth',
-    });
+    setCarouselPosition(carousel, index);
   }
 
   const arrowControls = createElement('ul', { classes: [`${blockName}__arrow-controls`] });
@@ -154,7 +160,7 @@ const createArrowControls = (imagesContainer) => {
     </li>
   `);
   arrowControls.append(...arrows.children);
-  imagesContainer.insertAdjacentElement('beforebegin', arrowControls);
+  carousel.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
   prevButton.addEventListener('click', () => scroll('left'));
   nextButton.addEventListener('click', () => scroll('right'));
@@ -232,25 +238,10 @@ export default function decorate(block) {
   // update the button indicator on scroll
   listenScroll(imagesContainer);
 
-  // Update description position to be equal to image position
-  imagesContainer.addEventListener('scroll', () => {
-    const itemWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tabbed-carousel-img-width'));
-
-    const firstCarouselItemWidth = imagesContainer.offsetWidth * (itemWidth / 100);
-    const secondCarouselItemWidth = descriptionContainer.offsetWidth;
-
-    // Determine the number of items in the second carousel
-    // that correspond to one item in the first carousel
-    const itemsInSecondCarouselPerItemInFirst = Math.ceil(
-      firstCarouselItemWidth / secondCarouselItemWidth,
-    );
-
-    // Calculate the scrollLeft position of the second carousel
-    const firstCarouselScrollLeft = imagesContainer.scrollLeft;
-    const secondCarouselScrollLeft = Math.floor(firstCarouselScrollLeft / firstCarouselItemWidth)
-      * (secondCarouselItemWidth * itemsInSecondCarouselPerItemInFirst);
-
-    // Apply the calculated scrollLeft position to the second carousel
-    descriptionContainer.scrollLeft = secondCarouselScrollLeft;
+  // Update text position + navigation line when page is resized
+  window.addEventListener('resize', () => {
+    const activeItem = imagesContainer.querySelector(`.${blockName}__image-item.active`);
+    const index = [...activeItem.parentNode.children].indexOf(activeItem);
+    updateActiveItem(index);
   });
 }
