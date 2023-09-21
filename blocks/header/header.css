@@ -61,6 +61,10 @@
   padding: 12px 0;
 }
 
+.header__overview-link .header__link {
+  padding: 20px 0;
+}
+
 .header--hamburger-open .header__link:hover,
 .header--hamburger-open .header__link:focus,
 .header--hamburger-open .header__link:active {
@@ -87,6 +91,7 @@
   margin-top: 16px;
   right: 16px;
   height: 24px;
+  font-size: 24px;
 }
 
 .header__main-nav {
@@ -144,7 +149,7 @@
   background: var(--c-white);
 }
 
-.header__actions-list {
+.header .header__actions-list {
   list-style: none;
   margin: 0;
   gap: 24px;
@@ -223,9 +228,9 @@
   transform: translateY(-100%);
 }
 
-.header__menu-content,
-.header__category-items,
-.header__overview-link {
+.header .header__menu-content,
+.header .header__category-items,
+.header .header__overview-link {
   margin: 0 0 0 20px;
   list-style: none;
   padding: 0;
