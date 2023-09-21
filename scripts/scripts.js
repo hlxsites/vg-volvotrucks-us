@@ -312,7 +312,7 @@ function buildTruckLineupBlock(main) {
     const newPicture = createCustomOptimizedPicture(
       baseImageObj.src,
       baseImageObj.alt,
-      true,
+      false,
       imageBreakpoints,
     );
 
