@@ -1,4 +1,4 @@
-import { createElement, getTextLabel } from '../../scripts/common.js';
+import { createElement, generateId, getTextLabel } from '../../scripts/common.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
@@ -26,8 +26,8 @@ const createMainLinks = (mainLinksWrapper) => {
   list.classList.add(`${blockClass}__main-nav`);
   list.querySelectorAll('li').forEach((listItem) => {
     const accordionContainer = document.createRange().createContextualFragment(`
-    <div class="${blockClass}__accortion-container">
-      <div class="${blockClass}__accortion-content-wrapper">
+    <div class="${blockClass}__accordion-container">
+      <div class="${blockClass}__accordion-content-wrapper">
       </div>
     </div>
     `);
@@ -158,7 +158,7 @@ const rebuildCategoryItem = (item) => {
   });
 };
 
-const buildMenuContent = (menuData, navEl) => {
+const buildMenuContent = (menuData, navEl, menuFooter) => {
   const menus = [...menuData.querySelectorAll('.menu')];
   const navLinks = [...navEl.querySelectorAll(`.${blockClass}__main-nav-link`)];
 
@@ -166,10 +166,32 @@ const buildMenuContent = (menuData, navEl) => {
     const tabName = menuItemData.querySelector(':scope > div > div');
     const categories = [...menuItemData.querySelectorAll(':scope > div > div')].slice(1);
     const navLink = navLinks.find((el) => el.textContent.trim() === tabName.textContent.trim());
-    const accordionContentWrapper = navLink?.closest(`.${blockClass}__main-nav-item`).querySelector(`.${blockClass}__accortion-content-wrapper`);
-    const onAccortionItemClick = (el) => {
+    const accordionContentWrapper = navLink?.closest(`.${blockClass}__main-nav-item`).querySelector(`.${blockClass}__accordion-content-wrapper`);
+
+    const onAccordionItemClick = (el) => {
+      // on desktop only main nav links works as accordions
+      if (desktopMQ.matches && !el.target.classList.contains(`${blockClass}__main-nav-link`)) {
+        return;
+      }
+
       el.preventDefault();
-      el.target.parentElement.classList.toggle(`${blockClass}__menu-open`);
+      const menuEl = el.target.parentElement;
+      menuEl.classList.toggle(`${blockClass}__menu-open`);
+      const isExpanded = menuEl.classList.contains(`${blockClass}__menu-open`);
+      el.target.setAttribute('aria-expanded', isExpanded);
+
+      // closing other open menus - on desktop
+      if (desktopMQ.matches && menuEl.classList.contains('header__main-nav-item')) {
+        const openMenus = document.querySelectorAll(`.${blockClass}__menu-open`);
+
+        [...openMenus].filter((menu) => menu !== menuEl).forEach((menu) => {
+          menu.classList.remove(`${blockClass}__menu-open`);
+          menu.querySelector(':scope > a').setAttribute('aria-expanded', false);
+        });
+      }
+
+      // disabling scroll when menu is open
+      document.body.classList[isExpanded ? 'add' : 'remove']('disable-scroll');
     };
     // createing overview link - visible only on mobile
     createOverviewLink(tabName, accordionContentWrapper);
@@ -178,29 +200,37 @@ const buildMenuContent = (menuData, navEl) => {
       const title = cat.querySelector(':scope > p > a');
       const subtitle = cat.querySelector(':scope > p:nth-child(2)');
       const list = cat.querySelector(':scope > ul');
+      const isImagesList = !!cat.querySelector('img');
+      let extraClasses = '';
 
-      title.classList.add(`${blockClass}__link`, `${blockClass}__link-accordion`);
+      if (isImagesList) {
+        extraClasses += `${blockClass}__category--images-list`;
+        accordionContentWrapper.classList.add(`${blockClass}__accordion-content-wrapper--with-images`);
+      }
+
+      title.classList.add(`${blockClass}__link`, `${blockClass}__link-accordion`, `${blockClass}__menu-heading`);
       list.classList.add(`${blockClass}__category-items`);
       [...list.querySelectorAll('li')].forEach(rebuildCategoryItem);
       [...list.querySelectorAll('a')].forEach((el) => el.classList.add(`${blockClass}__link`));
 
       const menuContent = document.createRange().createContextualFragment(`
-        <div class="${blockClass}__menu-content">
+        <div class="${blockClass}__menu-content ${extraClasses}">
           ${title.outerHTML}
           <span class="${blockClass}__category-subtitle">${subtitle?.innerHTML || ''}</span>
-          <div class="${blockClass}__category-content ${blockClass}__accortion-container">
-            <div class="${blockClass}__accortion-content-wrapper">
+          <div class="${blockClass}__category-content ${blockClass}__accordion-container">
+            <div class="${blockClass}__accordion-content-wrapper">
               ${list.outerHTML}
             </div>
           </div>
         </div>
       `);
 
-      menuContent.querySelector(`.${blockClass}__link-accordion`).addEventListener('click', onAccortionItemClick);
+      menuContent.querySelector(`.${blockClass}__link-accordion`).addEventListener('click', onAccordionItemClick);
       accordionContentWrapper.append(menuContent);
     });
 
-    navLink?.addEventListener('click', onAccortionItemClick);
+    navLink?.addEventListener('click', onAccordionItemClick);
+    accordionContentWrapper.parentElement.append(menuFooter.cloneNode(true));
   });
 };
 
@@ -225,7 +255,13 @@ export default async function decorate(block) {
 
   // get the navigation text, turn it into html elements
   const content = document.createRange().createContextualFragment(await resp.text());
-  const [logoContainer, navigationContainer, actionsContainer, menuContent] = content.children;
+  const [
+    logoContainer,
+    navigationContainer,
+    actionsContainer,
+    menuContent,
+    menuContentFooter,
+  ] = content.children;
   const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
   const navContent = document.createRange().createContextualFragment(`
     <div class="${blockClass}__menu-overlay"></div>
@@ -247,6 +283,20 @@ export default async function decorate(block) {
     });
     nav.querySelectorAll('#header-main-nav, #header-actions-list').forEach((item) => {
       item.setAttribute('aria-hidden', !isMenuVisible);
+    });
+  };
+
+  const initAriaForAccordions = () => {
+    const menuPrefix = 'menu-accordion';
+    const accordionContainers = block.querySelectorAll('.header__link-accordion ~ .header__accordion-container');
+
+    [...accordionContainers].forEach((container) => {
+      const id = generateId(menuPrefix);
+      const accordionLink = container.parentElement.querySelector('.header__link-accordion');
+
+      container.setAttribute('id', id);
+      accordionLink.setAttribute('aria-controls', id);
+      accordionLink.setAttribute('aria-expanded', false);
     });
   };
 
@@ -283,5 +333,19 @@ export default async function decorate(block) {
   block.append(nav);
 
   setAriaForMenu(false);
-  buildMenuContent(menuContent, nav);
+  menuContentFooter.classList.add(`${blockClass}__menu-content-footer`);
+  buildMenuContent(menuContent, nav, menuContentFooter);
+  initAriaForAccordions();
+
+  // hiding nav when clicking outside the menu
+  document.addEventListener('click', (event) => {
+    const isTargetOutsideMenu = !event.target.closest(`.${blockClass}__main-nav`);
+    const openMenu = block.querySelector(`.${blockClass}__main-nav-item.${blockClass}__menu-open`);
+
+    if (isTargetOutsideMenu && openMenu) {
+      openMenu.classList.remove(`${blockClass}__menu-open`);
+      openMenu.setAttribute('aria-expanded', false);
+      document.body.classList.remove('disable-scroll');
+    }
+  });
 }
