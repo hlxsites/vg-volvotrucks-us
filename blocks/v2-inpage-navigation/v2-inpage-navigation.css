@@ -278,7 +278,7 @@ then we change it for the next section item in main */
   .v2-inpage-navigation__item--active button::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:focus::after {
-    background-color: var(--c-grey-4);
+    background-color: var(--c-main-black);
   }
 
   /* Blue button */
