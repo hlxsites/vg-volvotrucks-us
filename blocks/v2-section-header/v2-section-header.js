@@ -1,4 +1,4 @@
-import { adjustPretitle } from '../../scripts/common.js';
+import { adjustPretitle, unwrapDivs } from '../../scripts/common.js';
 
 export default function decorate(block) {
   const blockName = 'v2-section-header';
@@ -13,21 +13,6 @@ export default function decorate(block) {
     button.classList.remove('primary');
     button.classList.add('tertiary');
   });
-
-  // Function to unwrap <div> tags
-  function unwrapDivs(element) {
-    Array.from(element.children).forEach((node) => {
-      if (node.tagName === 'DIV' && node.attributes.length === 0) {
-        while (node.firstChild) {
-          element.insertBefore(node.firstChild, node);
-        }
-        node.remove();
-        unwrapDivs(element);
-      } else {
-        unwrapDivs(node);
-      }
-    });
-  }
 
   // Unwrap <div> tags
   unwrapDivs(block);
