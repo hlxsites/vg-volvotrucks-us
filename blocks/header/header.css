@@ -385,7 +385,7 @@
     width: var(--wrapper-width);
     left: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+    box-shadow: 0 -8px 0 0 rgb(255 255 255), 0 10px 15px rgb(0 0 0 / 20%);
     top: var(--nav-height);
     transition: unset;
     overflow-y: auto;
@@ -404,6 +404,7 @@
     box-sizing: border-box;
     min-width: 180px;
     gap: 30px;
+    overflow-y: auto;
   }
 
   .header__main-nav-item > .header__accordion-container > .header__accordion-content-wrapper {
@@ -416,7 +417,7 @@
   }
 
   .header__main-nav-link.header__link:any-link {
-    border: solid 2px transparent;
+    border-bottom: solid 2px transparent;
   }
 
   .header__main-nav-link.header__link:hover,
