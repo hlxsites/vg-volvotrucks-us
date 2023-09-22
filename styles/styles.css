@@ -56,8 +56,8 @@
 
   /* REDESIGN */
   --border-radius: 8px;
-  --section-padding: 48px 0 140px;
-  --section-div-padding: 20px 16px;
+  --section-padding: 40px 0;
+  --section-div-padding: 24px 16px;
 
   /* Form styles */
   --input-padding: 16px;
@@ -1015,7 +1015,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 .redesign-v2 .section:last-child {
-  padding-bottom: 0;
+  padding-bottom: 24px;
 }
 
 .redesign-v2 .section:first-child,
@@ -1387,6 +1387,7 @@ main.blue-contract .section.section-with-title p {
 
 @media (min-width: 744px) {
   :root.redesign-v2 {
+    --section-padding: 40px 0 56px;
     --section-div-padding: 24px 32px;
   }
 }
@@ -1399,6 +1400,7 @@ main.blue-contract .section.section-with-title p {
   :root.redesign-v2 {
     --wrapper-width: 1170px;
     --border-radius: 12px;
+    --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
   }
 
