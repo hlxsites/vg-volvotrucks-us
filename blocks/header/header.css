@@ -397,6 +397,7 @@
     display: flex;
     min-height: 370px;
     flex-direction: column;
+    justify-content: space-between;
   }
 
   .header__accordion-content-wrapper {
