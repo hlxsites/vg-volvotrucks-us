@@ -151,6 +151,20 @@ export const removeEmptyTags = (block) => {
   });
 };
 
+export const unwrapDivs = (element) => {
+  Array.from(element.children).forEach((node) => {
+    if (node.tagName === 'DIV' && node.attributes.length === 0) {
+      while (node.firstChild) {
+        element.insertBefore(node.firstChild, node);
+      }
+      node.remove();
+      unwrapDivs(element);
+    } else {
+      unwrapDivs(node);
+    }
+  });
+};
+
 export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
   expectedVariantsNames.forEach((variant) => {
     if (blockClasses.contains(variant)) {
