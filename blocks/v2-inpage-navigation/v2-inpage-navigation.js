@@ -43,7 +43,7 @@ const inpageNavigationButton = () => {
 };
 
 // Retrieve an array of sections with its corresponding intersectionRatio
-const wrapSectionItens = (elements) => {
+const wrapSectionItems = (elements) => {
   const elementsData = [];
   const viewportHeight = window.innerHeight;
   elements.forEach((item) => {
@@ -221,7 +221,7 @@ export default async function decorate(block) {
   // listen scroll to change the url + navigation item
   window.addEventListener('scroll', debounce(() => {
     // Calculate intersectionRatio from all section items
-    const elementsData = wrapSectionItens(sectionsList);
+    const elementsData = wrapSectionItems(sectionsList);
 
     // Get intersected item that occupies most of the space in the viewport
     const intersectedItem = elementsData.reduce((prev, current) => (
