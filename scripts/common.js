@@ -232,3 +232,17 @@ export function checkOneTruckGroup(groupName) {
 export function isEloquaFormAllowed() {
   return checkOneTruckGroup('C0004');
 }
+
+/**
+ * Helper for delaying a function
+ * @param {function} func callback function
+ * @param {number} timeout time to debouce in ms, default 200
+*/
+export function debounce(func, timeout = 200) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}

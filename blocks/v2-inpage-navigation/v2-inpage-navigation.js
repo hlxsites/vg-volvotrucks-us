@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/lib-franklin.js';
-import { createElement, getTextLabel } from '../../scripts/common.js';
+import { createElement, getTextLabel, debounce } from '../../scripts/common.js';
 
 const blockName = 'v2-inpage-navigation';
 
@@ -42,6 +42,29 @@ const inpageNavigationButton = () => {
   return null;
 };
 
+// Retrieve an array of sections with its corresponding intersectionRatio
+const wrapSectionItems = (elements) => {
+  const elementsData = [];
+  const viewportHeight = window.innerHeight;
+  elements.forEach((item) => {
+    const elementRect = item.getBoundingClientRect();
+
+    // Calculate the vertical space occupied by the element within the viewport
+    const verticalSpace = Math.min(elementRect.bottom, viewportHeight)
+      - Math.max(elementRect.top, 0);
+
+    // Calculate the ratio of vertical space to the viewport height
+    const spaceRatio = verticalSpace / viewportHeight;
+
+    elementsData.push({
+      element: item,
+      intersectionRatio: Math.max(0, Math.min(1, spaceRatio)),
+    });
+  });
+
+  return elementsData;
+};
+
 const gotoSection = (event) => {
   const { target } = event;
   const button = target.closest('button');
@@ -78,35 +101,6 @@ const updateActive = (id) => {
   } else {
     window.history.replaceState({}, '', `${pathname}`);
   }
-};
-
-const listenScroll = () => {
-  let timeout;
-  const elements = document.querySelectorAll('main .section');
-
-  const io = new IntersectionObserver((entries) => {
-    // Reduce entries to the one with higher intersectionRatio
-    const intersectedEntry = entries.reduce((prev, current) => (
-      prev.intersectionRatio > current.intersectionRatio ? prev : current
-    ));
-
-    if (intersectedEntry.isIntersecting && intersectedEntry.target.dataset?.inpageid) {
-      clearTimeout(timeout);
-
-      // wait to update the active item
-      timeout = setTimeout(() => {
-        updateActive(intersectedEntry.target.dataset.inpageid);
-      }, 500);
-    } else {
-      updateActive();
-    }
-  }, {
-    threshold: [0.7, 1],
-  });
-
-  elements.forEach((el) => {
-    io.observe(el);
-  });
 };
 
 const addHeaderScrollBehaviour = (header) => {
@@ -223,8 +217,23 @@ export default async function decorate(block) {
     }
   });
 
-  // listen scroll to change the url
-  listenScroll();
+  const sectionsList = document.querySelectorAll('main .section');
+  // listen scroll to change the url + navigation item
+  window.addEventListener('scroll', debounce(() => {
+    // Calculate intersectionRatio from all section items
+    const elementsData = wrapSectionItems(sectionsList);
+
+    // Get intersected item that occupies most of the space in the viewport
+    const intersectedItem = elementsData.reduce((prev, current) => (
+      prev.intersectionRatio > current.intersectionRatio ? prev : current
+    ));
+
+    if (intersectedItem.element.dataset?.inpageid) {
+      updateActive(intersectedItem.element.dataset.inpageid);
+    } else {
+      updateActive();
+    }
+  }));
 
   addHeaderScrollBehaviour(block.parentNode);
 }
