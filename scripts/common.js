@@ -160,6 +160,28 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
   });
 };
 
+/**
+ *
+ * @param {string} blockName - block name with '-' instead of spaces
+ * @param {string} blockContent - the content that will be set as block inner HTML
+ * @param {object} options - other options like variantsClasses
+ * @returns
+ */
+export async function loadAsBlock(blockName, blockContent, options = {}) {
+  const { variantsClasses = [] } = options;
+  const blockEl = createElement('div', {
+    classes: ['block', blockName, ...variantsClasses],
+    props: { 'data-block-name': blockName },
+  });
+  const wrapperEl = createElement('div');
+  wrapperEl.append(blockEl);
+
+  blockEl.innerHTML = blockContent;
+  await loadBlocks(wrapperEl);
+
+  return blockEl;
+}
+
 export const adjustPretitle = (element) => {
   const headingSelector = 'h1, h2, h3, h4, h5, h6';
 

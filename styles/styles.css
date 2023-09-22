@@ -82,6 +82,11 @@
   --f-heading-3-letter-spacing: 0;
   --f-heading-3-line-height: 110%;
 
+  /* Section Header/Heading 3.5 */
+  --f-heading-3-5-font-size: 2rem;
+  --f-heading-3-5-letter-spacing: 0;
+  --f-heading-3-5-line-height: 125%;
+
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
   --f-heading-4-font-size: 2rem; /* 32px */
   --f-heading-4-letter-spacing: 0.016rem;
@@ -1030,6 +1035,7 @@ main.blue-contract .section.section-with-title p {
   --text-color: var(--c-white);
   --card-background: var(--c-grey-900);
   --card-text: var(--c-white);
+  --c-cta-blue-default: #44A1FF;
 
   color: var(--text-color);
   background-color: var(--c-main-black);
@@ -1258,6 +1264,70 @@ main.blue-contract .section.section-with-title p {
   fill: currentcolor;
   height: 1em;
   width: 1em;
+}
+
+/* Headings classes styles */
+.redesign-v2 .h1 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-1-font-size);
+  line-height: var(--f-heading-1-line-height);
+  letter-spacing: var(--f-heading-1-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h2 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-2-font-size);
+  line-height: var(--f-heading-2-line-height);
+  letter-spacing: var(--f-heading-2-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h3 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-3-font-size);
+  line-height: var(--f-heading-3-line-height);
+  letter-spacing: var(--f-heading-3-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h4 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-4-font-size);
+  line-height: var(--f-heading-4-line-height);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h5 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-5-font-size);
+  line-height: var(--f-heading-5-line-height);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h6 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-6-font-size);
+  line-height: var( --f-heading-6-line-height);
+  letter-spacing: var(--f-heading-6-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .subtitle-1 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-subtitle-1-font-size);
+  line-height: var(--f-subtitle-1-line-height);
+  letter-spacing: var(--f-subtitle-1-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .subtitle-2 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-subtitle-2-font-size);
+  line-height: var(--f-subtitle-2-line-height);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
 }
 
 .redesign-v2 .button .icon svg {
