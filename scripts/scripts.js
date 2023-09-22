@@ -87,6 +87,8 @@ export function createCustomOptimizedPicture(src, alt = '', eager = false, break
       const img = document.createElement('img');
       img.setAttribute('loading', eager ? 'eager' : 'lazy');
       img.setAttribute('alt', alt);
+      img.setAttribute('width', br.width);
+      img.setAttribute('height', br.height);
       picture.appendChild(img);
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
     }
@@ -259,17 +261,17 @@ function buildTabbedBlock(main) {
   }
 }
 
-function createTabbedTruckSection(tabItems) {
-  const tabSection = createElement('div', ['section']);
+function createTruckLineupSection(tabItems) {
+  const tabSection = createElement('div', { classes: 'section' });
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = createElement('div');
   tabSection.append(wrapper);
-  const tabBlock = buildBlock('v2-tabbed-carousel', [tabItems]);
+  const tabBlock = buildBlock('v2-truck-lineup', [tabItems]);
   wrapper.append(tabBlock);
   return tabSection;
 }
 
-function buildTruckCarouselBlock(main) {
+function buildTruckLineupBlock(main) {
   const tabItems = [];
   let nextElement;
   const BREAKPOINTS = {
@@ -286,7 +288,7 @@ function buildTruckCarouselBlock(main) {
     nextElement = mainChildren[i + 1];
     const sectionMeta = section.dataset.truckCarousel;
 
-    const tabContent = createElement('div', { classes: 'v2-tabbed-carousel__content' });
+    const tabContent = createElement('div', { classes: 'v2-truck-lineup__content' });
     tabContent.dataset.truckCarousel = sectionMeta;
     tabContent.innerHTML = section.innerHTML;
     const images = tabContent.querySelectorAll('p > picture');
@@ -302,7 +304,8 @@ function buildTruckCarouselBlock(main) {
       const img = pic.lastElementChild;
       imageBreakpoints.push({
         src: img.src,
-        width: 2000,
+        width: img.width,
+        height: img.height,
         media: BREAKPOINTS[j],
       });
 
@@ -312,7 +315,7 @@ function buildTruckCarouselBlock(main) {
     const newPicture = createCustomOptimizedPicture(
       baseImageObj.src,
       baseImageObj.alt,
-      true,
+      false,
       imageBreakpoints,
     );
 
@@ -323,14 +326,14 @@ function buildTruckCarouselBlock(main) {
   });
 
   if (tabItems.length > 0) {
-    const tabbedCarouselSection = createTabbedTruckSection(tabItems);
+    const truckLineupSection = createTruckLineupSection(tabItems);
     if (nextElement) { // if we saved a position push the carousel in that position if not
-      main.insertBefore(tabbedCarouselSection, nextElement);
+      main.insertBefore(truckLineupSection, nextElement);
     } else {
-      main.append(tabbedCarouselSection);
+      main.append(truckLineupSection);
     }
-    decorateIcons(tabbedCarouselSection);
-    decorateBlock(tabbedCarouselSection.querySelector('.v2-tabbed-carousel'));
+    decorateIcons(truckLineupSection);
+    decorateBlock(truckLineupSection.querySelector('.v2-truck-lineup'));
   }
 }
 
@@ -551,7 +554,7 @@ export function decorateMain(main, head) {
   buildCtaList(main);
 
   // redesign
-  buildTruckCarouselBlock(main);
+  buildTruckLineupBlock(main);
   buildInpageNavigationBlock(main);
 }
 
