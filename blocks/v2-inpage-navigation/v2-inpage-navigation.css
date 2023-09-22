@@ -190,6 +190,13 @@ then we change it for the next section item in main */
   background-color: var(--c-cta-blue-active);
 }
 
+@media (min-width: 744px) {
+  .v2-inpage-navigation__wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
 @media (min-width: 1200px) {
   :root {
     --inpage-navigation-height: 64px;
@@ -278,7 +285,7 @@ then we change it for the next section item in main */
   .v2-inpage-navigation__item--active button::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:hover::after,
   .v2-inpage-navigation__item:not(.v2-inpage-navigation__item--active) button:focus::after {
-    background-color: var(--c-grey-4);
+    background-color: var(--c-main-black);
   }
 
   /* Blue button */

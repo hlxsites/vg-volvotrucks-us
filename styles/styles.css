@@ -74,7 +74,7 @@
 
   /* Volvo Novum, 56px / 3.5rem, Light, -0.5px / 0.031rem, 110% */
   --f-heading-2-font-size: 3.5rem; /* 56px */
-  --f-heading-2-letter-spacing: 0.031rem;
+  --f-heading-2-letter-spacing: 0.03125rem;
   --f-heading-2-line-height: 110%;
 
   /* Volvo Novum, 48px / 3rem, Medium, 0px, 110% */
@@ -82,9 +82,14 @@
   --f-heading-3-letter-spacing: 0;
   --f-heading-3-line-height: 110%;
 
+  /* Section Header/Heading 3.5 */
+  --f-heading-3-5-font-size: 2rem;
+  --f-heading-3-5-letter-spacing: 0;
+  --f-heading-3-5-line-height: 125%;
+
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
   --f-heading-4-font-size: 2rem; /* 32px */
-  --f-heading-4-letter-spacing: 0.016rem;
+  --f-heading-4-letter-spacing: 0.015625rem;
   --f-heading-4-line-height: 125%;
 
   /* Volvo Novum, 24px / 1.5rem, Light, 0px, 125% */
@@ -94,12 +99,12 @@
 
   /* Volvo Novum, 20px / 1.25rem, Medium, 0.15px / 0.009rem, 125% */
   --f-heading-6-font-size: 1.25rem; /* 20px */
-  --f-heading-6-letter-spacing: 0.009rem;
+  --f-heading-6-letter-spacing: 0.009375rem;
   --f-heading-6-line-height: 125%;
 
   /* Volvo Novum, 16px / 1rem, Medium, 0.15px / 0.009rem, 130% */
   --f-subtitle-1-font-size: 1rem; /* 16px */
-  --f-subtitle-1-letter-spacing: 0.009rem;
+  --f-subtitle-1-letter-spacing: 0.009375rem;
   --f-subtitle-1-line-height: 130%;
 
   /* Volvo Novum, 14px / 0.875rem, Medium, 0.15px / 0.009rem, 130% */
@@ -109,7 +114,7 @@
 
   /* Volvo Novum, 16px / 1rem, Regular, 0.5px / 0.031rem, 130% */
   --f-body-font-size: 1rem; /* 16px */
-  --f-body-letter-spacing: 0.031rem;
+  --f-body-letter-spacing: 0.03125rem;
   --f-body-line-height: 130%;
 
   /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
@@ -119,7 +124,7 @@
 
   /* Volvo Novum, 14px / 0.875rem, Regular, 1.25px / 0.078rem, 130% */
   --f-button-font-size: 0.875rem; /* 14px */
-  --f-button-letter-spacing: 0.078rem;
+  --f-button-letter-spacing: 0.078125rem;
   --f-button-line-height: 130%;
 
   /* Volvo Novum, 14px / 0.875rem, Regular, 0.4px / 0.025rem, 125% */
@@ -1033,6 +1038,7 @@ main.blue-contract .section.section-with-title p {
   --text-color: var(--c-white);
   --card-background: var(--c-grey-900);
   --card-text: var(--c-white);
+  --c-cta-blue-default: #44A1FF;
 
   color: var(--text-color);
   background-color: var(--c-main-black);
@@ -1089,9 +1095,13 @@ main.blue-contract .section.section-with-title p {
   justify-content: center;
   letter-spacing: 1.25px;
   line-height: 100%;
-  padding: 17px 36px;
-  text-align: center;
+  max-width: 21.5em;
+  height: 48px;
+  padding: 0 36px;
+  text-align: left;
+  text-transform: uppercase;
   transition: all var(--duration-small) var(--easing-standard);
+  white-space: wrap;
 }
 
 .redesign-v2 a.button.primary,
@@ -1173,9 +1183,9 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
-  padding: 8px 12px 8px 0;
+  padding: 8px 0;
+  height: 40px;
   color: var(--text-color);
-  text-transform: uppercase;
 }
 
 .redesign-v2 a.button.tertiary:hover,
@@ -1208,6 +1218,16 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.tertiary.dark:active,
 .redesign-v2 button.tertiary.dark:active {
   background-color: var(--c-grey-800);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:hover,
+.redesign-v2 .section--gray-background button.tertiary:hover {
+  background-color: var(--c-grey-100);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:active,
+.redesign-v2 .section--gray-background button.tertiary:active {
+  background-color: var(--c-grey-200);
 }
 
 .redesign-v2 a.button.marketing-cta,
@@ -1261,6 +1281,70 @@ main.blue-contract .section.section-with-title p {
   fill: currentcolor;
   height: 1em;
   width: 1em;
+}
+
+/* Headings classes styles */
+.redesign-v2 .h1 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-1-font-size);
+  line-height: var(--f-heading-1-line-height);
+  letter-spacing: var(--f-heading-1-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h2 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-2-font-size);
+  line-height: var(--f-heading-2-line-height);
+  letter-spacing: var(--f-heading-2-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h3 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-3-font-size);
+  line-height: var(--f-heading-3-line-height);
+  letter-spacing: var(--f-heading-3-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h4 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-4-font-size);
+  line-height: var(--f-heading-4-line-height);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h5 {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-5-font-size);
+  line-height: var(--f-heading-5-line-height);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .h6 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-6-font-size);
+  line-height: var( --f-heading-6-line-height);
+  letter-spacing: var(--f-heading-6-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .subtitle-1 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-subtitle-1-font-size);
+  line-height: var(--f-subtitle-1-line-height);
+  letter-spacing: var(--f-subtitle-1-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
+}
+
+.redesign-v2 .subtitle-2 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-subtitle-2-font-size);
+  line-height: var(--f-subtitle-2-line-height);
+  letter-spacing: var(--f-subtitle-2-letter-spacing);
+  font-feature-settings: 'clig' off, 'liga' off;
 }
 
 .redesign-v2 .button .icon svg {

@@ -151,6 +151,20 @@ export const removeEmptyTags = (block) => {
   });
 };
 
+export const unwrapDivs = (element) => {
+  Array.from(element.children).forEach((node) => {
+    if (node.tagName === 'DIV' && node.attributes.length === 0) {
+      while (node.firstChild) {
+        element.insertBefore(node.firstChild, node);
+      }
+      node.remove();
+      unwrapDivs(element);
+    } else {
+      unwrapDivs(node);
+    }
+  });
+};
+
 export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
   expectedVariantsNames.forEach((variant) => {
     if (blockClasses.contains(variant)) {
@@ -159,6 +173,28 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
     }
   });
 };
+
+/**
+ *
+ * @param {string} blockName - block name with '-' instead of spaces
+ * @param {string} blockContent - the content that will be set as block inner HTML
+ * @param {object} options - other options like variantsClasses
+ * @returns
+ */
+export async function loadAsBlock(blockName, blockContent, options = {}) {
+  const { variantsClasses = [] } = options;
+  const blockEl = createElement('div', {
+    classes: ['block', blockName, ...variantsClasses],
+    props: { 'data-block-name': blockName },
+  });
+  const wrapperEl = createElement('div');
+  wrapperEl.append(blockEl);
+
+  blockEl.innerHTML = blockContent;
+  await loadBlocks(wrapperEl);
+
+  return blockEl;
+}
 
 export const adjustPretitle = (element) => {
   const headingSelector = 'h1, h2, h3, h4, h5, h6';
@@ -221,3 +257,17 @@ export const generateId = (prefix = 'id') => {
   idValue += 1;
   return `${prefix}-${idValue}`;
 };
+
+/**
+ * Helper for delaying a function
+ * @param {function} func callback function
+ * @param {number} timeout time to debouce in ms, default 200
+*/
+export function debounce(func, timeout = 200) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
