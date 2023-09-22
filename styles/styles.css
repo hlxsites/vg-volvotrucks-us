@@ -1092,9 +1092,13 @@ main.blue-contract .section.section-with-title p {
   justify-content: center;
   letter-spacing: 1.25px;
   line-height: 100%;
-  padding: 17px 36px;
-  text-align: center;
+  max-width: 21.5em;
+  height: 48px;
+  padding: 0 36px;
+  text-align: left;
+  text-transform: uppercase;
   transition: all var(--duration-small) var(--easing-standard);
+  white-space: wrap;
 }
 
 .redesign-v2 a.button.primary,
@@ -1176,9 +1180,9 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
-  padding: 8px 12px 8px 0;
+  padding: 8px 0;
+  height: 40px;
   color: var(--text-color);
-  text-transform: uppercase;
 }
 
 .redesign-v2 a.button.tertiary:hover,
@@ -1211,6 +1215,16 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 a.button.tertiary.dark:active,
 .redesign-v2 button.tertiary.dark:active {
   background-color: var(--c-grey-800);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:hover,
+.redesign-v2 .section--gray-background button.tertiary:hover {
+  background-color: var(--c-grey-100);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:active,
+.redesign-v2 .section--gray-background button.tertiary:active {
+  background-color: var(--c-grey-200);
 }
 
 .redesign-v2 a.button.marketing-cta,
