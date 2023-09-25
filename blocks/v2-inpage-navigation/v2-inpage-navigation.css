@@ -269,6 +269,7 @@ then we change it for the next section item in main */
   .v2-inpage-navigation__item button:active,
   .v2-inpage-navigation__item button:focus {
     font-family: var(--ff-volvo-novum);
+    color: var(--c-main-black);
   }
 
   .v2-inpage-navigation__item button::after {
