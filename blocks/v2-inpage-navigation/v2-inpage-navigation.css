@@ -10,7 +10,7 @@
   position: sticky;
   top: var(--nav-height);
   width: 100%;
-  z-index: var(--z-index-header);
+  z-index: var(--z-index-inpage-nav);
   transition: transform 300ms ease-in-out;
 }
 
@@ -188,6 +188,13 @@ then we change it for the next section item in main */
 
 .v2-inpage-navigation__cta:active {
   background-color: var(--c-cta-blue-active);
+}
+
+@media (min-width: 744px) {
+  .v2-inpage-navigation__wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 @media (min-width: 1200px) {

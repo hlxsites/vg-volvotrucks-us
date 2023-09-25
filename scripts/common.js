@@ -151,6 +151,20 @@ export const removeEmptyTags = (block) => {
   });
 };
 
+export const unwrapDivs = (element) => {
+  Array.from(element.children).forEach((node) => {
+    if (node.tagName === 'DIV' && node.attributes.length === 0) {
+      while (node.firstChild) {
+        element.insertBefore(node.firstChild, node);
+      }
+      node.remove();
+      unwrapDivs(element);
+    } else {
+      unwrapDivs(node);
+    }
+  });
+};
+
 export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
   expectedVariantsNames.forEach((variant) => {
     if (blockClasses.contains(variant)) {
@@ -231,4 +245,29 @@ export function checkOneTruckGroup(groupName) {
 
 export function isEloquaFormAllowed() {
   return checkOneTruckGroup('C0004');
+}
+
+/*
+  The generateId function should be used only
+  for generating the id for UI elements
+*/
+let idValue = 0;
+
+export const generateId = (prefix = 'id') => {
+  idValue += 1;
+  return `${prefix}-${idValue}`;
+};
+
+/**
+ * Helper for delaying a function
+ * @param {function} func callback function
+ * @param {number} timeout time to debouce in ms, default 200
+*/
+export function debounce(func, timeout = 200) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
 }

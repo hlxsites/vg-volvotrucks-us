@@ -1,3 +1,7 @@
+.redesign-v2 .v2-banner-container:last-child {
+  padding-bottom: 0;
+}
+
 .v2-banner {
   --v2-banner-padding: 32px;
   --v2-banner-height: 421px;

@@ -123,7 +123,7 @@
   .v2-text-with-images__col {
     align-self: flex-start;
     position: sticky;
-    top: var(--nav-height);
+    top: calc(var(--nav-height) + var(--inpage-navigation-height) + 8px);
     text-align: left;
     align-items: flex-start;
     width: 360px;
@@ -147,8 +147,11 @@
     margin: 16px 0 24px;
   }
 
-  .v2-text-with-images__text {
+  p.v2-text-with-images__text {
     margin: 0 0 32px;
+    font-size: var(--f-body-2-font-size);
+    letter-spacing: var(--f-body-2-letter-spacing);
+    line-height: var(--f-body-2-line-height);
   }
 
   .v2-text-with-images__images-list-item {
