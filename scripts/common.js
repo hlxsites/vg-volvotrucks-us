@@ -247,6 +247,17 @@ export function isEloquaFormAllowed() {
   return checkOneTruckGroup('C0004');
 }
 
+/*
+  The generateId function should be used only
+  for generating the id for UI elements
+*/
+let idValue = 0;
+
+export const generateId = (prefix = 'id') => {
+  idValue += 1;
+  return `${prefix}-${idValue}`;
+};
+
 /**
  * Helper for delaying a function
  * @param {function} func callback function
