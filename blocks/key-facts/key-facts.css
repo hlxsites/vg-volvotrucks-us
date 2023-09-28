@@ -145,6 +145,7 @@
   }
 
   .key-facts__row {
+    text-align: center;
     width: 100%;
     max-width: var(--wrapper-width);
     gap: unset;
