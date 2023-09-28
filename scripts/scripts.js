@@ -352,13 +352,6 @@ function decorateSectionBackgrounds(main) {
       section.classList.add('section-with-background');
     }
   });
-
-  main.querySelectorAll(':scope > .section[data-background]').forEach((section) => {
-    const src = section.dataset.background;
-    const picture = createOptimizedPicture(src, '', false);
-    section.appendChild(picture);
-    section.classList.add('section-with-background');
-  });
 }
 
 function decorateHyperlinkImages(container) {
