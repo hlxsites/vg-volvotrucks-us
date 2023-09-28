@@ -16,6 +16,7 @@
   flex-flow: row wrap;
   row-gap: 32px;
   column-gap: 8px;
+  text-align: center;
 }
 
 .key-facts__key-item {
@@ -145,7 +146,6 @@
   }
 
   .key-facts__row {
-    text-align: center;
     width: 100%;
     max-width: var(--wrapper-width);
     gap: unset;
