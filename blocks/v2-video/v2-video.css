@@ -17,7 +17,7 @@ main .section.v2-video-container .v2-video-wrapper {
 /* End Full width block */
 
 .v2-video {
-  --video-inset: inset(24px 24px round 8px);
+  --video-inset: inset(16px 16px round 8px);
   --video-transition: all var(--duration-large) ease-in-out;
 
   position: relative;
@@ -85,8 +85,12 @@ main .section.v2-video-container .v2-video-wrapper {
 }
 
 @media (min-width: 744px) {
+  .section + .section.v2-video-container {
+    margin-top: -56px;
+  }
+
   .v2-video {
-    --video-inset: inset(32px 48px round 8px);
+    --video-inset: inset(32px 32px round 8px);
   }
 
   .v2-video .v2-video__content {

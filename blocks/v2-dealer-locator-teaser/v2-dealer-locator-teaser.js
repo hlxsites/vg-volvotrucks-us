@@ -58,6 +58,9 @@ function prepareBackgroundImage(block) {
 
 export default async function decorate(block) {
   prepareBackgroundImage(block);
+  const headings = block.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  [...headings].forEach((heading) => heading.classList.add('v2-dlt__title'));
 
   block.parentElement.classList.add('full-width');
 
