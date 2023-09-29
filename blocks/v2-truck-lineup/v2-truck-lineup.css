@@ -79,6 +79,7 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   content: '';
   display: block;
   flex: 0 0 50vw;
+  min-height: 1px; /* In this case, Safari doesn't render element properly without height */
 }
 
 .v2-truck-lineup__image-item img {
