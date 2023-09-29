@@ -1,3 +1,7 @@
+.section + .v2-dealer-locator-teaser-container {
+  margin-top: -40px;
+}
+
 .v2-dealer-locator-teaser {
   height: 509px;
   display: flex;
@@ -55,6 +59,10 @@
 }
 
 @media (min-width: 744px) {
+  .section + .v2-dealer-locator-teaser-container {
+    margin-top: -56px;
+  }
+
   .v2-dealer-locator-teaser {
     height: 665px;
   }
@@ -67,6 +75,10 @@
 }
 
 @media (min-width: 1200px) {
+  .section + .v2-dealer-locator-teaser-container {
+    margin-top: -136px;
+  }
+
   .v2-dealer-locator-teaser {
     align-items: center;
     height: 792px;
