@@ -59,6 +59,10 @@
 }
 
 @media (min-width: 744px) {
+  .section + .v2-dealer-locator-teaser-container {
+    margin-top: -56px;
+  }
+
   .v2-dealer-locator-teaser {
     height: 665px;
   }
