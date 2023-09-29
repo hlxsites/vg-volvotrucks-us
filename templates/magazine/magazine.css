@@ -1,52 +1,52 @@
-body.magazine>main {
+body.magazine > main {
   position: relative;
   padding: 10px 0 0;
   margin: 0 auto;
 }
 
-body.magazine>main div.default-content-wrapper>blockquote>p>picture {
+body.magazine > main div.default-content-wrapper > blockquote > p > picture {
   float: left;
   padding-right: 20px;
 }
 
-body.magazine>main .section.template .row.size-img {
+body.magazine > main .section.template .row.size-img {
   display: flex;
   flex-flow: column wrap;
   height: 410px;
   overflow: hidden;
 }
 
-body.magazine>main .section.template .row.size-img picture {
+body.magazine > main .section.template .row.size-img picture {
   width: 100%;
   order: 2;
   height: 140px;
 }
 
-body.magazine>main .section.template .row.size-img picture img {
+body.magazine > main .section.template .row.size-img picture img {
   object-fit: cover;
   width: 100%;
   height: 250px;
 }
 
-body.magazine>main .section.template.article-hero>div>div.content {
+body.magazine > main .section.template.article-hero > div > div.content {
   order: 1;
   width: 100%;
   height: 175px;
 }
 
-body.magazine>main i.fa {
+body.magazine > main i.fa {
   font-size: 20px;
   min-width: 20px;
   display: inline-block;
   vertical-align: middle;
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-desktop {
+body.magazine > main .section.template.article-hero > div > div > div.top-details.hide-desktop {
   display: inline-grid;
   grid: 24px / 25px 90px 25px 55px;
 }
 
-body.magazine>main .section.template.article-hero>div>div>h1.title-sentence {
+body.magazine > main .section.template.article-hero > div > div > h1.title-sentence {
   color: var(--volvo-text-gray);
   margin-bottom: 10px;
   font-weight: 700;
@@ -55,28 +55,28 @@ body.magazine>main .section.template.article-hero>div>div>h1.title-sentence {
   letter-spacing: 0;
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.details>span.author {
+body.magazine > main .section.template.article-hero > div > div > div.details > span.author {
   white-space: nowrap;
   margin-top: 6px;
   padding: 0 10px 0 0;
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.details .hide-mobile {
+body.magazine > main .section.template.article-hero > div > div > div.details .hide-mobile {
   display: none;
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.top-details {
+body.magazine > main .section.template.article-hero > div > div > div.top-details {
   font-size: var(--body-font-size-xs);
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.details {
+body.magazine > main .section.template.article-hero > div > div > div.details {
   color: var(--volvo-text-light-gray);
   font-size: var(--body-font-size-xs);
   display: inline-grid;
   grid: 33px / 45px auto 25px 100px 25px auto;
 }
 
-body.magazine>main .section.template.article-hero>div>div>div.details>i.fa-user {
+body.magazine > main .section.template.article-hero > div > div > div.details > i.fa-user {
   line-height: 35px;
   border-radius: 35px;
   background-color: var(--volvo-text-light-gray);
@@ -86,13 +86,13 @@ body.magazine>main .section.template.article-hero>div>div>div.details>i.fa-user 
   width: 35px;
 }
 
-body.magazine>main .section.template.article-sidebar>div.topics>ul.topic-list>li {
+body.magazine > main .section.template.article-sidebar > div.topics > ul.topic-list > li {
   list-style: none;
   line-height: 1.2;
   color: var(--volvo-text-light-gray);
 }
 
-body.magazine>main .section.template.article-sidebar>div.topics>ul.topic-list>li::before {
+body.magazine > main .section.template.article-sidebar > div.topics > ul.topic-list > li::before {
   content: '';
   border: 4px solid var(--volvo-text-gray) !important;
   margin-top: 5px;
@@ -100,7 +100,7 @@ body.magazine>main .section.template.article-sidebar>div.topics>ul.topic-list>li
   position: absolute;
 }
 
-body.magazine>main .section.article-sidebar .share-icons button {
+body.magazine > main .section.article-sidebar .share-icons button {
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -109,22 +109,22 @@ body.magazine>main .section.article-sidebar .share-icons button {
   margin: 10px;
 }
 
-body.magazine>main .section.article-sidebar .share-icons button i {
+body.magazine > main .section.article-sidebar .share-icons button i {
   font-size: 16px;
 }
 
-body.magazine>main .share {
+body.magazine > main .share {
   border-top: 1px solid var(--btn-background-hover);
   padding-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar>div.subscribe {
+body.magazine > main .section.template.article-sidebar > div.subscribe {
   border-top: 1px solid var(--c-grey-1);
   padding-top: 30px;
   margin-top: 30px;
 }
 
-body.magazine>main .section.template.article-sidebar>div.subscribe>a {
+body.magazine > main .section.template.article-sidebar > div.subscribe > a {
   border: 2px solid var(--volvo-text-gray);
   user-select: none;
   color: var(--c-white);
@@ -139,20 +139,20 @@ body.magazine>main .section.template.article-sidebar>div.subscribe>a {
   white-space: nowrap;
 }
 
-body.magazine>main .section.template.article-sidebar>div.subscribe>a>i {
+body.magazine > main .section.template.article-sidebar > div.subscribe > a > i {
   font-size: 16px;
   padding-bottom: 4px;
 }
 
 
-body.magazine>main div.default-content-wrapper>blockquote>p {
+body.magazine > main div.default-content-wrapper > blockquote > p {
   quotes: none;
   text-align: center;
   display: table;
   margin: 0 auto;
 }
 
-body.magazine>main .section.article-sidebar p {
+body.magazine > main .section.article-sidebar p {
   color: var(--volvo-text-gray);
   font-weight: 700;
   font-size: 12px;
@@ -162,19 +162,19 @@ div#sidebar.section.template.article-sidebar.loading {
   visibility: hidden;
 }
 
-div.section.eloqua-form-container>div.default-content-wrapper {
+div.section.eloqua-form-container > div.default-content-wrapper {
   text-align: center;
 }
 
-body.magazine>main .section.related-articles-container>div.default-content-wrapper {
+body.magazine > main .section.related-articles-container > div.default-content-wrapper {
   text-align: center;
   float: unset;
   width: 100%;
   margin-top: 25px;
 }
 
-body.magazine>main div.default-content-wrapper>blockquote>p::before,
-body.magazine>main div.default-content-wrapper>blockquote>p::after {
+body.magazine > main div.default-content-wrapper > blockquote > p::before,
+body.magazine > main div.default-content-wrapper > blockquote > p::after {
   content: none;
 }
 
@@ -195,12 +195,16 @@ div.section.eloqua-form-container {
   background-color: #D8D8D8;
   position: relative;
   clear: right;
-  width: 756px;
+  width: 100%;
   padding: 35px 15px;
   margin: 48px auto;
+
+  @media (min-width: 774px) {
+    width: 756px;
+  }
 }
 
-div.section.eloqua-form-container>div.eloqua-form-wrapper {
+div.section.eloqua-form-container > div.eloqua-form-wrapper {
   margin: 10px auto;
   width: 100%;
   max-width: 960px;
@@ -211,44 +215,44 @@ div.section.eloqua-form-container>div.eloqua-form-wrapper {
 }
 
 @media screen and (min-width: 992px) {
-  body.magazine>main {
+  body.magazine > main {
     padding-top: 0;
     width: 75% !important;
   }
 
-  body.magazine>main .section>div {
+  body.magazine > main .section > div {
     width: 75%;
   }
 
-  body.magazine>main .section.template .row.size-img {
+  body.magazine > main .section.template .row.size-img {
     flex-direction: unset;
     margin-left: 0;
     margin-right: 0;
     width: 100%;
   }
 
-  body.magazine>main .section.template.article-hero>div>div>div.top-details.hide-desktop {
+  body.magazine > main .section.template.article-hero > div > div > div.top-details.hide-desktop {
     display: none;
   }
 
-  body.magazine>main .section.template.article-hero>div>div>div.details>.hide-mobile {
+  body.magazine > main .section.template.article-hero > div > div > div.details > .hide-mobile {
     display: inline;
     margin-top: 6px;
     padding-left: 8px;
   }
 
-  body.magazine>main .section.template .row.size-img picture {
+  body.magazine > main .section.template .row.size-img picture {
     order: 1;
     flex: 0 0 50%;
     max-width: 50%;
     height: unset;
   }
 
-  body.magazine>main .section.template .row.size-img picture img {
+  body.magazine > main .section.template .row.size-img picture img {
     height: 410px !important;
   }
 
-  body.magazine>main .section.template.article-hero>div>div.content {
+  body.magazine > main .section.template.article-hero > div > div.content {
     order: 2;
     border-top: 1px solid var(--c-grey-1);
     border-bottom: 1px solid var(--c-grey-1);
@@ -259,49 +263,45 @@ div.section.eloqua-form-container>div.eloqua-form-wrapper {
     position: relative;
   }
 
-  .section.template.article-hero>div>div>div.details {
+  .section.template.article-hero > div > div > div.details {
     position: absolute;
     bottom: 10px;
   }
 
-  body.magazine>main .section .default-content-wrapper,
-  body.magazine>main .section .teaser-cards-wrapper,
-  body.magazine>main .section .teaser-grid-wrapper,
-  body.magazine>main .section .columns-wrapper {
+  body.magazine > main .section .default-content-wrapper,
+  body.magazine > main .section .teaser-cards-wrapper,
+  body.magazine > main .section .teaser-grid-wrapper,
+  body.magazine > main .section .columns-wrapper {
     float: right;
     margin: 0 1%;
     width: 75%;
     height: 100%;
   }
 
-  body.magazine>main .section .related-articles-wrapper {
+  body.magazine > main .section .related-articles-wrapper {
     clear: right;
     width: 100%;
   }
 
-  div.section.eloqua-form-container {
+  body > main > div.section.eloqua-form-container > div.default-content-wrapper {
     width: 100%;
   }
 
-  body>main>div.section.eloqua-form-container>div.default-content-wrapper {
+  body.magazine > main .section.default-content-wrapper > div {
     width: 100%;
   }
 
-  body.magazine>main .section.default-content-wrapper>div {
-    width: 100%;
-  }
-
-  body.magazine>main .section.template.article-sidebar {
+  body.magazine > main .section.template.article-sidebar {
     width: 20% !important;
     margin: 0 1%;
     padding: 6px 0 0;
   }
 
-  body.magazine>main .section.template.article-sidebar>div {
+  body.magazine > main .section.template.article-sidebar > div {
     width: 100%;
   }
 
-  body.magazine>main .section.template.article-sidebar>div.subscribe>.cta {
+  body.magazine > main .section.template.article-sidebar > div.subscribe > .cta {
     padding: 15px 32px;
   }
 }
