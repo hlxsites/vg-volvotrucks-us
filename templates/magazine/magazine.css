@@ -198,10 +198,6 @@ div.section.eloqua-form-container {
   width: 100%;
   padding: 35px 15px;
   margin: 48px auto;
-
-  @media (min-width: 774px) {
-    width: 756px;
-  }
 }
 
 div.section.eloqua-form-container > div.eloqua-form-wrapper {
