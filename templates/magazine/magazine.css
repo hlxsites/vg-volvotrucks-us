@@ -137,6 +137,7 @@ body.magazine > main .section.template.article-sidebar > div.subscribe > a {
   margin: 4px 2px;
   font-weight: 700;
   white-space: nowrap;
+  width: 100%;
 }
 
 body.magazine > main .section.template.article-sidebar > div.subscribe > a > i {
