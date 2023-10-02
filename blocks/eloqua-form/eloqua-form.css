@@ -32,7 +32,7 @@
   text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-  background: var(--link-color);
+  background: var(--c-cta-blue-default);
   color: var(--c-white);
   border: none;
   margin-bottom: 30px;
@@ -73,7 +73,7 @@
   line-height: 24px;
   margin-top: -12px;
   content: "\f107";
-  color: var(--link-color);
+  color: var(--c-cta-blue-default);
   pointer-events: none;
 }
 

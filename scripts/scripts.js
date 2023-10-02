@@ -1,8 +1,5 @@
 import {
-  sampleRUM,
   buildBlock,
-  loadHeader,
-  loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -10,60 +7,32 @@ import {
   decorateBlock,
   decorateTemplateAndTheme,
   waitForLCP,
-  loadBlock,
-  loadBlocks,
-  loadCSS,
   createOptimizedPicture,
   getMetadata,
   toClassName,
+  getHref,
 } from './lib-franklin.js';
+
+import {
+  getPlaceholders,
+  loadLazy,
+  loadDelayed,
+  loadTemplate,
+  createElement,
+  slugify,
+  variantsClassesToBEM,
+} from './common.js';
+
+import {
+  isVideoLink,
+  isSoundcloudLink,
+  isLowResolutionVideoUrl,
+  addVideoShowHandler,
+  addSoundcloudShowHandler,
+} from './video-helper.js';
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
-let placeholders = null;
-
-async function getPlaceholders() {
-  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
-}
-
-export function getTextLabel(key) {
-  return placeholders.data.find((el) => el.Key === key)?.Text || key;
-}
-
-/**
- * Check if one trust group is checked.
- * @param {String} groupName the one trust croup like: C0002
- */
-export function checkOneTruckGroup(groupName) {
-  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  return oneTrustCookie.includes(`${groupName}:1`);
-}
-
-export function isEloquaFormAllowed() {
-  return checkOneTruckGroup('C0004');
-}
-
-/**
- * Create an element with the given id and classes.
- * @param {string} tagName the tag
- * @param {string[]|string} classes the class or classes to add
- * @param {object} props any other attributes to add to the element
- * @returns the element
- */
-export function createElement(tagName, classes, props) {
-  const elem = document.createElement(tagName);
-  if (classes) {
-    const classesArr = (typeof classes === 'string') ? [classes] : classes;
-    elem.classList.add(...classesArr);
-  }
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      elem.setAttribute(propName, props[propName]);
-    });
-  }
-
-  return elem;
-}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -81,12 +50,65 @@ function isCTALinkCheck(ctaLink) {
   return siblings.some((elem) => elem?.localName === 'h1');
 }
 
+/**
+ * Returns a picture element with webp and fallbacks / allow multiple src paths for every breakpoint
+ * @param {string} src Default image URL (if no src is passed to breakpoints object)
+ * @param {boolean} eager load image eager
+ * @param {Array} breakpoints breakpoints and corresponding params (eg. src, width, media)
+ */
+export function createCustomOptimizedPicture(src, alt = '', eager = false, breakpoints = [{ media: '(min-width: 400px)', width: '2000' }, { width: '750' }]) {
+  const url = new URL(src, getHref());
+  const picture = document.createElement('picture');
+  let { pathname } = url;
+  const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
+
+  breakpoints.forEach((br) => {
+    // custom src path in breakpoint
+    if (br.src) {
+      const customUrl = new URL(br.src, getHref());
+      pathname = customUrl.pathname;
+    }
+
+    const source = document.createElement('source');
+    if (br.media) source.setAttribute('media', br.media);
+    source.setAttribute('type', 'image/webp');
+    source.setAttribute('srcset', `${pathname}?width=${br.width}&format=webply&optimize=medium`);
+    picture.appendChild(source);
+  });
+
+  // fallback
+  breakpoints.forEach((br, i) => {
+    if (i < breakpoints.length - 1) {
+      const source = document.createElement('source');
+      if (br.media) source.setAttribute('media', br.media);
+      source.setAttribute('srcset', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      picture.appendChild(source);
+    } else {
+      const img = document.createElement('img');
+      img.setAttribute('loading', eager ? 'eager' : 'lazy');
+      img.setAttribute('alt', alt);
+      img.setAttribute('width', br.width);
+      img.setAttribute('height', br.height);
+      picture.appendChild(img);
+      img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+    }
+  });
+
+  return picture;
+}
+
 function buildHeroBlock(main) {
+  // switching off hero autoblock for redesign
+  if (document.querySelector('main').classList.contains('redesign-v2')) {
+    return;
+  }
+
   // don't create a hero if the first item is a block, except hero block
   const firstSection = main.querySelector('div');
   if (!firstSection) return;
   const firstElement = firstSection.firstElementChild;
   if (firstElement.tagName === 'DIV' && firstElement.classList.length && !firstElement.classList.contains('hero')) return;
+
   const h1 = firstSection.querySelector('h1');
   const picture = firstSection.querySelector('picture');
   let ctaLink = firstSection.querySelector('a');
@@ -118,8 +140,7 @@ function buildHeroBlock(main) {
   if (isCTALink) ctaLink.classList.add('cta');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    const headings = document.createElement('div');
-    headings.className = 'hero-headings';
+    const headings = createElement('div', { classes: 'hero-headings' });
     const elems = [picture, headings];
     if (h1.nextElementSibling && (h1.nextElementSibling.matches('h2,h3,h4')
       // also consider a <p> without any children as sub heading except BR
@@ -159,9 +180,22 @@ function buildSubNavigation(main, head) {
   }
 }
 
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ * @param {Element} head The header element
+ */
+function buildAutoBlocks(main, head) {
+  try {
+    buildHeroBlock(main);
+    buildSubNavigation(main, head);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Blocking failed', error);
+  }
+}
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
-  const tabSection = document.createElement('div');
-  tabSection.classList.add('section', 'tabbed-container');
+  const tabSection = createElement('div', { classes: ['section', 'tabbed-container'] });
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
   tabSection.dataset.sectionStatus = 'initialized';
   const wrapper = document.createElement('div');
@@ -227,27 +261,96 @@ function buildTabbedBlock(main) {
   }
 }
 
-/**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- * @param {Element} head The header element
- */
-function buildAutoBlocks(main, head) {
-  try {
-    buildHeroBlock(main);
-    buildSubNavigation(main, head);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Auto Blocking failed', error);
+function createTruckLineupSection(tabItems) {
+  const tabSection = createElement('div', { classes: 'section' });
+  tabSection.dataset.sectionStatus = 'initialized';
+  const wrapper = createElement('div');
+  tabSection.append(wrapper);
+  const tabBlock = buildBlock('v2-truck-lineup', [tabItems]);
+  wrapper.append(tabBlock);
+  return tabSection;
+}
+
+function buildTruckLineupBlock(main) {
+  const tabItems = [];
+  let nextElement;
+  const BREAKPOINTS = {
+    0: '(min-width: 400px)',
+    1: '(min-width: 1200px)',
+  };
+
+  const mainChildren = [...main.querySelectorAll(':scope > div')];
+  mainChildren.forEach((section, i) => {
+    const isTruckCarousel = section.dataset.truckCarousel;
+    if (!isTruckCarousel) return;
+
+    // save carousel position
+    nextElement = mainChildren[i + 1];
+    const sectionMeta = section.dataset.truckCarousel;
+
+    const tabContent = createElement('div', { classes: 'v2-truck-lineup__content' });
+    tabContent.dataset.truckCarousel = sectionMeta;
+    tabContent.innerHTML = section.innerHTML;
+    const images = tabContent.querySelectorAll('p > picture');
+
+    const imageBreakpoints = [];
+    const firstImage = images[0]?.lastElementChild;
+    const baseImageObj = {
+      src: firstImage?.src,
+      alt: firstImage?.alt,
+    };
+
+    images.forEach((pic, j) => {
+      const img = pic.lastElementChild;
+      imageBreakpoints.push({
+        src: img.src,
+        width: img.width,
+        height: img.height,
+        media: BREAKPOINTS[j],
+      });
+
+      pic.parentNode.remove();
+    });
+    imageBreakpoints.reverse(); // order first big and then small version
+    const newPicture = createCustomOptimizedPicture(
+      baseImageObj.src,
+      baseImageObj.alt,
+      false,
+      imageBreakpoints,
+    );
+
+    tabContent.prepend(newPicture);
+
+    tabItems.push(tabContent);
+    section.remove();
+  });
+
+  if (tabItems.length > 0) {
+    const truckLineupSection = createTruckLineupSection(tabItems);
+    if (nextElement) { // if we saved a position push the carousel in that position if not
+      main.insertBefore(truckLineupSection, nextElement);
+    } else {
+      main.append(truckLineupSection);
+    }
+    decorateIcons(truckLineupSection);
+    decorateBlock(truckLineupSection.querySelector('.v2-truck-lineup'));
   }
 }
 
 function decorateSectionBackgrounds(main) {
-  main.querySelectorAll(':scope > .section[data-background]').forEach((section) => {
+  const variantClasses = ['black-background', 'gray-background'];
+
+  main.querySelectorAll(':scope > .section').forEach((section) => {
+    // transform background color variants into BEM classnames
+    variantsClassesToBEM(section.classList, variantClasses, 'section');
+
+    // If the section contains a background image
     const src = section.dataset.background;
-    const picture = createOptimizedPicture(src, '', false);
-    section.appendChild(picture);
-    section.classList.add('section-with-background');
+    if (src) {
+      const picture = createOptimizedPicture(src, '', false);
+      section.appendChild(picture);
+      section.classList.add('section-with-background');
+    }
   });
 }
 
@@ -341,6 +444,82 @@ function decorateOfferLinks(main) {
   });
 }
 
+const createInpageNavigation = (main) => {
+  const navItems = [];
+  const tabItemsObj = [];
+
+  // Extract the inpage navigation info from sections
+  [...main.querySelectorAll(':scope > div')].forEach((section) => {
+    const title = section.dataset.inpage;
+    if (title) {
+      const countDuplcated = tabItemsObj.filter((item) => item.title === title)?.length || 0;
+      const order = parseFloat(section.dataset.inpageOrder);
+      const anchorID = (countDuplcated > 0) ? slugify(`${section.dataset.inpage}-${countDuplcated}`) : slugify(section.dataset.inpage);
+      const obj = {
+        title,
+        id: anchorID,
+      };
+
+      if (order) {
+        obj.order = order;
+      }
+
+      tabItemsObj.push(obj);
+
+      // Set section with ID
+      section.dataset.inpageid = anchorID;
+    }
+  });
+
+  // Sort the object by order
+  const sortedObject = tabItemsObj.slice().sort((obj1, obj2) => {
+    if (!obj1.order) {
+      return 1; // Move 'a' to the end
+    }
+    if (!obj2.order) {
+      return -1; // Move 'b' to the end
+    }
+    return obj1.order - obj2.order;
+  });
+
+  // From the array of objects create the DOM
+  sortedObject.forEach((item) => {
+    const subnavItem = createElement('div');
+    const subnavLink = createElement('button', {
+      props: {
+        'data-id': item.id,
+        title: item.title,
+      },
+    });
+
+    subnavLink.textContent = item.title;
+
+    subnavItem.append(subnavLink);
+    navItems.push(subnavItem);
+  });
+
+  return navItems;
+};
+
+function buildInpageNavigationBlock(main) {
+  const inapgeClassName = 'v2-inpage-navigation';
+
+  const items = createInpageNavigation(main);
+
+  if (items.length > 0) {
+    const section = createElement('div');
+    Object.assign(section.style, {
+      height: '48px',
+      overflow: 'hidden',
+    });
+
+    section.append(buildBlock(inapgeClassName, { elems: items }));
+    main.prepend(section);
+
+    decorateBlock(section.querySelector(`.${inapgeClassName}`));
+  }
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -366,32 +545,10 @@ export function decorateMain(main, head) {
   buildTabbedBlock(main);
   decorateOfferLinks(main);
   buildCtaList(main);
-}
 
-async function loadTemplate(doc, templateName) {
-  try {
-    const cssLoaded = new Promise((resolve) => {
-      loadCSS(`${window.hlx.codeBasePath}/templates/${templateName}/${templateName}.css`, resolve);
-    });
-    const decorationComplete = new Promise((resolve) => {
-      (async () => {
-        try {
-          const mod = await import(`../templates/${templateName}/${templateName}.js`);
-          if (mod.default) {
-            await mod.default(doc);
-          }
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(`failed to load module for ${templateName}`, error);
-        }
-        resolve();
-      })();
-    });
-    await Promise.all([cssLoaded, decorationComplete]);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`failed to load block ${templateName}`, error);
-  }
+  // redesign
+  buildTruckLineupBlock(main);
+  buildInpageNavigationBlock(main);
 }
 
 /**
@@ -413,62 +570,6 @@ async function loadEager(doc) {
   await getPlaceholders();
 }
 
-/**
- * Adds the favicon.
- * @param {string} href The favicon URL
- */
-export function addFavIcon(href) {
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.type = 'image/svg+xml';
-  link.href = href;
-  const existingLink = document.querySelector('head link[rel="icon"]');
-  if (existingLink) {
-    existingLink.parentElement.replaceChild(link, existingLink);
-  } else {
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-}
-
-/**
- * loads everything that doesn't need to be delayed.
- */
-async function loadLazy(doc) {
-  const main = doc.querySelector('main');
-  await loadBlocks(main);
-
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
-  const header = doc.querySelector('header');
-
-  loadHeader(header);
-  loadFooter(doc.querySelector('footer'));
-
-  const subnav = header?.querySelector('.block.sub-nav');
-  if (subnav) {
-    loadBlock(subnav);
-  }
-
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
-}
-
-/**
- * loads everything that happens a lot later, without impacting
- * the user experience.
- */
-function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => {
-    import('./delayed.js');
-  }, 3000);
-  // load anything that can be postponed to the latest here
-}
-
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
@@ -477,133 +578,46 @@ async function loadPage() {
 
 loadPage();
 
-/* video helpers */
-export function isLowResolutionVideoUrl(url) {
-  return url.split('?')[0].endsWith('.mp4');
-}
+export const MEDIA_BREAKPOINTS = {
+  MOBILE: 'MOBILE',
+  TABLET: 'TABLET',
+  DESKTOP: 'DESKTOP',
+};
 
-export function isVideoLink(link) {
-  const linkString = link.getAttribute('href');
-  return (linkString.includes('youtube.com/embed/')
-    || isLowResolutionVideoUrl(linkString))
-    && link.closest('.block.embed') === null;
-}
+export function getImageForBreakpoint(imagesList, onChange = () => {}) {
+  const mobileMQ = window.matchMedia('(max-width: 743px)');
+  const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1199px)');
+  const desktopMQ = window.matchMedia('(min-width: 1200px)');
 
-export function selectVideoLink(links, preferredType) {
-  const linksList = [...links];
-  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
-  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
-  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
-  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const [mobilePic, tabletPic, desktopPic] = imagesList.querySelectorAll('picture');
 
-  if (shouldUseYouTubeLinks && youTubeLink) {
-    return youTubeLink;
-  }
-  return localMediaLink;
-}
-
-export function createLowResolutionBanner() {
-  const lowResolutionMessage = getTextLabel('Low resolution video message');
-  const changeCookieSettings = getTextLabel('Change cookie settings');
-
-  const banner = document.createElement('div');
-  banner.classList.add('low-resolution-banner');
-  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
-  banner.querySelector('button').addEventListener('click', () => {
-    window.OneTrust.ToggleInfoDisplay();
-  });
-
-  return banner;
-}
-
-export function showVideoModal(linkUrl) {
-  // eslint-disable-next-line import/no-cycle
-  import('../common/modal/modal.js').then((modal) => {
-    let beforeBanner = null;
-
-    if (isLowResolutionVideoUrl(linkUrl)) {
-      beforeBanner = createLowResolutionBanner();
+  const onBreakpointChange = (mq, picture, breakpoint) => {
+    if (mq.matches) {
+      onChange(picture, breakpoint);
     }
+  };
+  const onMobileChange = (mq) => onBreakpointChange(mq, mobilePic, MEDIA_BREAKPOINTS.MOBILE);
+  const onTabletChange = (mq) => onBreakpointChange(mq, tabletPic, MEDIA_BREAKPOINTS.TABLET);
+  const onDesktopChange = (mq) => onBreakpointChange(mq, desktopPic, MEDIA_BREAKPOINTS.DESKTOP);
 
-    modal.showModal(linkUrl, beforeBanner);
-  });
-}
+  mobileMQ.addEventListener('change', onMobileChange);
+  tabletMQ.addEventListener('change', onTabletChange);
+  desktopMQ.addEventListener('change', onDesktopChange);
 
-export function addVideoShowHandler(link) {
-  link.classList.add('text-link-with-video');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    showVideoModal(link.getAttribute('href'));
-  });
-}
-
-export function isSoundcloudLink(link) {
-  return link.getAttribute('href').includes('soundcloud.com/player')
-    && link.closest('.block.embed') === null;
-}
-
-export function addSoundcloudShowHandler(link) {
-  link.classList.add('text-link-with-soundcloud');
-
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    const thumbnail = link.closest('div')?.querySelector('picture');
-    const title = link.closest('div')?.querySelector('h1, h2, h3');
-    const text = link.closest('div')?.querySelector('p:not(.button-container, .image)');
-
-    // eslint-disable-next-line import/no-cycle
-    import('../common/modal/modal.js').then((modal) => {
-      const episodeInfo = document.createElement('div');
-      episodeInfo.classList.add('modal-soundcloud');
-      episodeInfo.innerHTML = `<div class="episode-image"><picture></div>
-      <div class="episode-text">
-          <h2></h2>
-          <p></p>
-      </div>`;
-      episodeInfo.querySelector('picture').innerHTML = thumbnail?.innerHTML || '';
-      episodeInfo.querySelector('h2').innerText = title?.innerText || '';
-      episodeInfo.querySelector('p').innerText = text?.innerText || '';
-
-      modal.showModal(link.getAttribute('href'), null, episodeInfo);
-    });
-  });
-}
-
-export function addPlayIcon(parent) {
-  const iconWrapper = document.createElement('div');
-  iconWrapper.classList.add('video-icon-wrapper');
-  const icon = document.createElement('i');
-  icon.classList.add('fa', 'fa-play', 'video-icon');
-  iconWrapper.appendChild(icon);
-  parent.appendChild(iconWrapper);
-}
-
-export function wrapImageWithVideoLink(videoLink, image) {
-  videoLink.innerText = '';
-  videoLink.appendChild(image);
-  videoLink.classList.add('link-with-video');
-  videoLink.classList.remove('button', 'primary', 'text-link-with-video');
-
-  addPlayIcon(videoLink);
-}
-
-export function createIframe(url, { parentEl, classes = [] }) {
-  // iframe must be recreated every time otherwise the new history record would be created
-  const iframe = document.createElement('iframe');
-  const iframeClasses = Array.isArray(classes) ? classes : [classes];
-
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowfullscreen', 'allowfullscreen');
-  iframe.setAttribute('src', url);
-  iframe.classList.add(...iframeClasses);
-
-  if (parentEl) {
-    parentEl.appendChild(iframe);
+  if (mobileMQ.matches) {
+    onMobileChange(mobileMQ);
+    return;
   }
 
-  return iframe;
+  if (tabletMQ.matches) {
+    onTabletChange(tabletMQ);
+    return;
+  }
+  onDesktopChange(desktopMQ);
+}
+
+/* REDESING CLASS CHECK */
+if (document.querySelector('main').classList.contains('redesign-v2')) {
+  document.querySelector('html').classList.add('redesign-v2');
+  document.querySelector('main').classList.remove('redesign-v2');
 }

@@ -86,6 +86,11 @@ var uptimeClicked = false;
 $electricDealer = false;
 $hoverText = $('#hoverText').val();
 
+const colorGrey1 = getComputedStyle(document.documentElement).getPropertyValue('--c-grey-1');
+const colorGrey2 = getComputedStyle(document.documentElement).getPropertyValue('--c-grey-2');
+const colorGrey3 = getComputedStyle(document.documentElement).getPropertyValue('--c-grey-3');
+const colorGrey4 = getComputedStyle(document.documentElement).getPropertyValue('--c-grey-4');
+
 // Google callback letting us know maps is ready to be used
 (function () {
   initMap = function () {
@@ -103,7 +108,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "geometry",
           "stylers": [
             {
-              "color": "#f5f5f5"
+              "color": colorGrey1
             }
           ]
         },
@@ -119,7 +124,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.fill",
           "stylers": [
             {
-              "color": "#616161"
+              "color": colorGrey4
             }
           ]
         },
@@ -127,7 +132,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.stroke",
           "stylers": [
             {
-              "color": "#f5f5f5"
+              "color": colorGrey1
             }
           ]
         },
@@ -136,7 +141,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.fill",
           "stylers": [
             {
-              "color": "#bdbdbd"
+              "color": colorGrey2
             }
           ]
         },
@@ -145,7 +150,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "geometry",
           "stylers": [
             {
-              "color": "#eeeeee"
+              "color": colorGrey1
             }
           ]
         },
@@ -154,7 +159,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.fill",
           "stylers": [
             {
-              "color": "#757575"
+              "color": colorGrey3
             }
           ]
         },
@@ -190,7 +195,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.fill",
           "stylers": [
             {
-              "color": "#757575"
+              "color": colorGrey3
             }
           ]
         },
@@ -208,7 +213,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "labels.text.fill",
           "stylers": [
             {
-              "color": "#616161"
+              "color": colorGrey4
             }
           ]
         },
@@ -235,7 +240,7 @@ $hoverText = $('#hoverText').val();
           "elementType": "geometry",
           "stylers": [
             {
-              "color": "#eeeeee"
+              "color": colorGrey1
             }
           ]
         },

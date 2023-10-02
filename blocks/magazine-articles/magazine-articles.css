@@ -84,7 +84,7 @@
 
 /* Latest magazine articles */
 .block.latest .latest-magazine-articles article .content h3 a {
-    color: var(--link-color);
+    color: var(--c-cta-blue-default);
     font-weight: 700;
     border: none;
     padding: 0;

@@ -3,7 +3,7 @@ import {
   decorateIcons,
   createOptimizedPicture,
 } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/scripts.js';
+import { createElement } from '../../scripts/common.js';
 
 async function buildArticleHero(container) {
   const title = getMetadata('og:title');
@@ -13,32 +13,32 @@ async function buildArticleHero(container) {
   const headPic = getMetadata('og:image');
   const headAlt = getMetadata('og:image:alt');
 
-  const row = createElement('div', ['row', 'size-img']);
+  const row = createElement('div', { classes: ['row', 'size-img'] });
   const headImg = createOptimizedPicture(headPic, headAlt);
-  const content = createElement('div', 'content');
-  const topDetails = createElement('div', ['top-details', 'hide-desktop']);
+  const content = createElement('div', { classes: 'content' });
+  const topDetails = createElement('div', { classes: ['top-details', 'hide-desktop'] });
   content.append(topDetails);
-  const calendarIcon = createElement('span', ['icon', 'icon-fa-calendar']);
+  const calendarIcon = createElement('span', { classes: ['icon', 'icon-fa-calendar'] });
   topDetails.append(calendarIcon);
-  const pubDateSpan = createElement('span', 'date');
+  const pubDateSpan = createElement('span', { classes: 'date' });
   pubDateSpan.innerHTML = pubdate;
   topDetails.append(pubDateSpan);
 
-  const timeIcon = createElement('span', ['icon', 'icon-fa-clock-o']);
+  const timeIcon = createElement('span', { classes: ['icon', 'icon-fa-clock-o'] });
   topDetails.append(timeIcon);
-  const timeSpan = createElement('span', 'time');
+  const timeSpan = createElement('span', { classes: 'time' });
   timeSpan.innerHTML = readtime;
   topDetails.append(timeSpan);
 
-  const titleH1 = createElement('h1', 'title-sentence');
+  const titleH1 = createElement('h1', { classes: 'title-sentence' });
   titleH1.innerText = title.includes('|') ? title.split('|')[0] : title;
   content.append(titleH1);
-  const details = createElement('div', 'details');
+  const details = createElement('div', { classes: 'details' });
   content.append(details);
 
-  const userIcon = createElement('span', ['icon', 'icon-fa-user']);
+  const userIcon = createElement('span', { classes: ['icon', 'icon-fa-user'] });
   details.append(userIcon);
-  const authorSpan = createElement('span', 'author');
+  const authorSpan = createElement('span', { classes: 'author' });
   authorSpan.innerHTML = author;
   details.append(authorSpan);
 
@@ -58,7 +58,7 @@ async function buildArticleHero(container) {
   // row
   row.append(headImg);
   row.append(content);
-  const section = createElement('div', ['section', 'template', 'article-hero']);
+  const section = createElement('div', { classes: ['section', 'template', 'article-hero'] });
   section.insertAdjacentElement('afterbegin', row);
   container.insertAdjacentElement('afterbegin', section);
 }
@@ -68,15 +68,15 @@ export default async function decorate(doc) {
   buildArticleHero(container);
 
   const classes = ['section', 'template', 'article-sidebar', 'loading'];
-  const sidebarSection = createElement('div', classes, { id: 'sidebar' });
+  const sidebarSection = createElement('div', { classes, props: { id: 'sidebar' } });
   // topics
-  const topicsSidebar = createElement('div', 'topics');
+  const topicsSidebar = createElement('div', { classes: 'topics' });
   sidebarSection.append(topicsSidebar);
   const topicsHeading = createElement('p');
-  topicsHeading.innerHTML = 'Topics in this article';
+  topicsHeading.textContent = 'Topics in this article';
   topicsSidebar.append(topicsHeading);
   const topics = getMetadata('article:tag').split(',');
-  const topicsList = createElement('ul', 'topic-list');
+  const topicsList = createElement('ul', { classes: 'topic-list' });
   topics.forEach((topic) => {
     const topicItem = createElement('li');
     topicItem.innerHTML = topic;
@@ -91,13 +91,13 @@ export default async function decorate(doc) {
     ['linkedin', 'Share on LinkedIn', 'https://www.linkedin.com/sharing/share-offsite/?url='],
     ['facebook', 'Share on Facebook', 'https://www.facebook.com/sharer/sharer.php?u='],
   ];
-  const shareSidebar = createElement('div', 'share');
+  const shareSidebar = createElement('div', { classes: 'share' });
   const shareHeading = createElement('p');
-  shareHeading.innerHTML = 'Share this article';
+  shareHeading.textContent = 'Share this article';
   shareSidebar.append(shareHeading);
-  const shareList = createElement('div', 'share-icons');
+  const shareList = createElement('div', { classes: 'share-icons' });
   shareItems.forEach((share) => {
-    const icon = createElement('span', ['icon', `icon-fa-${share[0]}`]);
+    const icon = createElement('span', { classes: ['icon', `icon-fa-${share[0]}`] });
     const shareItem = createElement('button', share[0], { title: share[1], type: 'button' });
     shareItem.addEventListener('click', () => {
       window.open(`${share[2]}${window.location.href}`, '_blank');
@@ -109,11 +109,10 @@ export default async function decorate(doc) {
   sidebarSection.append(shareSidebar);
 
   // subscribe
-  const subscribeSidebar = createElement('div', 'subscribe');
-  const button = createElement('a', 'cta');
-  button.href = '#form59';
-  button.innerText = 'Subscribe';
-  const arrowIcon = createElement('span', ['icon', 'icon-fa-angle-right']);
+  const subscribeSidebar = createElement('div', { classes: 'subscribe' });
+  const button = createElement('a', { classes: 'cta', props: { href: '#form59' } });
+  button.textContent = 'Subscribe';
+  const arrowIcon = createElement('span', { classes: ['icon', 'icon-fa-angle-right'] });
   button.append(arrowIcon);
   subscribeSidebar.append(button);
   sidebarSection.append(subscribeSidebar);

@@ -36,7 +36,14 @@ async function createSubNav(block, ref) {
     });
 
     // move the active link to the top
-    let activeLink = [...ul.querySelectorAll('li a')].find((a) => new URL(a.href).pathname === pathname);
+    const currentPathname = pathname.endsWith('/') ? pathname : `${pathname}/`;
+    let activeLink = [...ul.querySelectorAll('li a')].find((a) => {
+      let linkPathname = new URL(a.href).pathname;
+      linkPathname = linkPathname.endsWith('/') ? linkPathname : `${linkPathname}/`;
+
+      return linkPathname === currentPathname;
+    });
+
     if (activeLink) activeLink.closest('li').classList.add('active');
     else {
       // if there is no active link, create one for the current page for mobile

@@ -1,4 +1,4 @@
-import { wrapImageWithVideoLink, selectVideoLink, isVideoLink } from '../../scripts/scripts.js';
+import { wrapImageWithVideoLink, selectVideoLink, isVideoLink } from '../../scripts/video-helper.js';
 
 export default function decorate(block) {
   const cols = block.firstElementChild.children.length;

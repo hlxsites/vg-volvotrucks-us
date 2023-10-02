@@ -1,5 +1,5 @@
 # Volvo Trucks US
-Franklin site for volvotrucks.us
+Franklin site redesign for volvotrucks.us
 
 ## Environments
 - Preview: https://main--vg-volvotrucks-us--hlxsites.hlx.page/

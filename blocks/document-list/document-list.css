@@ -13,7 +13,7 @@
 
 .document-list.block a {
     padding: 10px 50px 10px 20px;
-    color: #53565A;
+    color: var(--c-grey-4);
     text-overflow: ellipsis;
     cursor: pointer;
     display: block;

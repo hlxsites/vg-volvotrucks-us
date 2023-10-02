@@ -1,4 +1,4 @@
-import { selectVideoLink } from '../../scripts/scripts.js';
+import { selectVideoLink } from '../../scripts/video-helper.js';
 
 export default function decorate(block) {
   const links = block.querySelectorAll('a');
