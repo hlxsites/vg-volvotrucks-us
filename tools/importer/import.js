@@ -74,7 +74,7 @@ const linkToHlxPage = (main, document, url) => {
     if (new RegExp('^(https?:)?//').test(link.href)) {
       // leave links with domains as is
     } else if (link.href.startsWith('/')) {
-      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us--hlxsites.hlx.page');
+      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us-rd--netcentric.hlx.page');
       link.href = newUrl.href;
     }
   });
@@ -596,7 +596,7 @@ function makeTabbedCarousel(main, document) {
           ytLink.href = videoSrc;
           const fallbackLink = document.createElement('a');
           fallbackLink.textContent = 'Fallback Vide Link Missing';
-          fallbackLink.href = 'https://main--vg-volvotrucks-us--hlxsites.hlx.page/media_188a071943b60070cb995240235c66862e9ca5e95.mp4';
+          fallbackLink.href = 'https://main--vg-volvotrucks-us-rd--netcentric.hlx.page/media_188a071943b60070cb995240235c66862e9ca5e95.mp4';
           const cells = [
             ['Embed (autoplay, loop, full width)'],
             [fallbackLink],
@@ -878,7 +878,7 @@ function makeNewsArticle(main, document) {
       if (!article.textContent.trim()) return;
 
       const cells = [['Fragment']];
-      cells.push(['https://main--vg-volvotrucks-us--hlxsites.hlx.page/fragments/press-release-boilerplate']);
+      cells.push(['https://main--vg-volvotrucks-us-rd--netcentric.hlx.page/fragments/press-release-boilerplate']);
       const table = WebImporter.DOMUtils.createTable(cells, document);
       article.replaceWith(table);
       table.insertAdjacentElement('afterend', hr(document));
@@ -1289,7 +1289,7 @@ export default {
 
         // update the link to new path on the target host
         // this is required to be able to follow the links in Word
-        const newHref = new URL(`https://main--vg-volvotrucks-us--hlxsites.hlx.page${newPath}`).toString();
+        const newHref = new URL(`https://main--vg-volvotrucks-us-rd--netcentric.hlx.page${newPath}`).toString();
         a.setAttribute('href', newHref);
       }
     });
