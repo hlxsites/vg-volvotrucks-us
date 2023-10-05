@@ -183,3 +183,29 @@
         --grid-rowheader-width: 200px;
     }
 }
+
+/* styles for arrow accordion */
+.specifications.arrow-accordion .rowgroup-header::after {
+    content: "\f107";
+    font-size: 25px;
+    transition: transform var(--duration-medium) cubic-bezier(0.45, 0, 0.125, 1);;
+}
+
+.specifications.arrow-accordion .rowgroup-header[aria-expanded="true"]::after {
+    content: "\f106";
+}
+
+.specifications.arrow-accordion .rowgroup-header:first-child {
+    border-top: none;
+}
+
+.specifications.arrow-accordion .rowgroup-header:not(:first-child) {
+    border-top: 2px;
+}
+
+.block.specifications.arrow-accordion .row .cell {
+    background-color: var(--c-white);
+}
+.specifications.arrow-accordion h3 {
+    font-size: 16px;
+}
