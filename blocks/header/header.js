@@ -12,6 +12,10 @@ const createLogo = (logoWrapper) => {
   if (logoImage.parentElement.tagName === 'A') {
     logoLink = logoImage.parentElement;
     logoLink.classList.add(`${blockClass}__logo-link`);
+    const logoLinkText = createElement('span', { classes: ['screenreader'] });
+    logoLinkText.append('Go to Volvo Trucks homepage');
+
+    logoLink.append(logoLinkText);
   }
 
   logoImage.classList.add(`${blockClass}__logo-image`);
@@ -75,7 +79,7 @@ const createActions = (actionsWrapper) => {
         aria-expanded="false"
         aria-controls="header-main-nav, header-actions-list"
       >
-        <span class="icon icon-close" />
+        <span class="icon icon-close" aria-hidden="true" />
       </button>
     </li>
   `);
@@ -87,24 +91,24 @@ const createActions = (actionsWrapper) => {
 
 const mobileActions = () => {
   const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
-  const searchLable = getTextLabel('Search');
-  const openMenuLable = getTextLabel('Open menu');
+  const searchLabel = getTextLabel('Search');
+  const openMenuLabel = getTextLabel('Open menu');
 
   const actions = document.createRange().createContextualFragment(`
     <a
       href="#"
-      aria-label="${searchLable}"
+      aria-label="${searchLabel}"
       class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
     >
-      <span class="icon icon-search-icon"></span>
+      <span class="icon icon-search-icon" aria-hidden="true"></span>
     </a>
     <button
-      aria-label="${openMenuLable}"
+      aria-label="${openMenuLabel}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
       aria-expanded="false"
       aria-controls="header-main-nav, header-actions-list"
     >
-      <span class="icon icon-hamburger-icon"></span>
+      <span class="icon icon-hamburger-icon" aria-hidden="true"></span>
     </button>
   `);
 
@@ -163,12 +167,12 @@ const rebuildCategoryItem = (item) => {
 
 const optimiseImage = (picture) => {
   const img = picture.querySelector('img');
-  const newPicture = createOptimizedPicture(img.src, img.alt, false, [{ width: '200' }]);
+  const newPicture = createOptimizedPicture(img.src, img.alt, false, [{ media: '(min-width: 1200px) and (min-resolution: 2x)', width: '320' }, { media: '(min-width: 1200px)', width: '180' }]);
 
-  img.replaceWith(newPicture);
+  picture.replaceWith(newPicture);
 };
 
-const buildMenuContent = (menuData, navEl, menuFooter) => {
+const buildMenuContent = (menuData, navEl) => {
   menuData.querySelectorAll('picture').forEach(optimiseImage);
 
   const menus = [...menuData.querySelectorAll('.menu')];
@@ -195,6 +199,7 @@ const buildMenuContent = (menuData, navEl, menuFooter) => {
       // closing other open menus - on desktop
       if (desktopMQ.matches && menuEl.classList.contains(`${blockClass}__main-nav-item`)) {
         const openMenus = document.querySelectorAll(`.${blockClass}__menu-open`);
+        navEl.parentElement.classList.toggle(`${blockClass}--menu-open`, isExpanded);
 
         [...openMenus].filter((menu) => menu !== menuEl).forEach((menu) => {
           menu.classList.remove(`${blockClass}__menu-open`);
@@ -203,14 +208,15 @@ const buildMenuContent = (menuData, navEl, menuFooter) => {
       }
 
       // disabling scroll when menu is open
-      document.body.classList[isExpanded ? 'add' : 'remove']('disable-scroll');
+      if (!desktopMQ.matches) {
+        document.body.classList[isExpanded ? 'add' : 'remove']('disable-scroll');
+      }
     };
-    // createing overview link - visible only on mobile
+    // creating overview link - visible only on mobile
     createOverviewLink(tabName, accordionContentWrapper);
 
     categories.forEach((cat) => {
       const title = cat.querySelector(':scope > p > a');
-      const subtitle = cat.querySelector(':scope > p:nth-child(2)');
       const list = cat.querySelector(':scope > ul');
       const isImagesList = !!cat.querySelector('img');
       let extraClasses = '';
@@ -228,7 +234,6 @@ const buildMenuContent = (menuData, navEl, menuFooter) => {
       const menuContent = document.createRange().createContextualFragment(`
         <div class="${blockClass}__menu-content ${extraClasses}">
           ${title.outerHTML}
-          <span class="${blockClass}__category-subtitle">${subtitle?.innerHTML || ''}</span>
           <div class="${blockClass}__category-content ${blockClass}__accordion-container">
             <div class="${blockClass}__accordion-content-wrapper">
               ${list.outerHTML}
@@ -242,7 +247,6 @@ const buildMenuContent = (menuData, navEl, menuFooter) => {
     });
 
     navLink?.addEventListener('click', onAccordionItemClick);
-    accordionContentWrapper.parentElement.append(menuFooter.cloneNode(true));
   });
 };
 
@@ -272,7 +276,6 @@ export default async function decorate(block) {
     navigationContainer,
     actionsContainer,
     menuContent,
-    menuContentFooter,
   ] = content.children;
   const nav = createElement('nav', { classes: [`${blockClass}__nav`] });
   const navContent = document.createRange().createContextualFragment(`
@@ -313,7 +316,7 @@ export default async function decorate(block) {
   };
 
   const closeHamburgerMenu = () => {
-    block.classList.remove(`${blockClass}--hamburger-open`);
+    block.classList.remove(`${blockClass}--menu-open`, `${blockClass}--hamburger-open`);
     document.body.classList.remove('disable-scroll');
 
     setAriaForMenu(false);
@@ -326,7 +329,7 @@ export default async function decorate(block) {
 
   // add action for hamburger
   navContent.querySelector(`.${blockClass}__hamburger-menu`).addEventListener('click', () => {
-    block.classList.add(`${blockClass}--hamburger-open`);
+    block.classList.add(`${blockClass}--menu-open`, `${blockClass}--hamburger-open`);
     document.body.classList.add('disable-scroll');
 
     setAriaForMenu(true);
@@ -345,8 +348,7 @@ export default async function decorate(block) {
   block.append(nav);
 
   setAriaForMenu(false);
-  menuContentFooter.classList.add(`${blockClass}__menu-content-footer`);
-  buildMenuContent(menuContent, nav, menuContentFooter);
+  buildMenuContent(menuContent, nav);
   initAriaForAccordions();
 
   // hiding nav when clicking outside the menu
@@ -355,8 +357,9 @@ export default async function decorate(block) {
     const openMenu = block.querySelector(`.${blockClass}__main-nav-item.${blockClass}__menu-open`);
 
     if (isTargetOutsideMenu && openMenu) {
+      block.classList.remove(`${blockClass}--menu-open`);
       openMenu.classList.remove(`${blockClass}__menu-open`);
-      openMenu.setAttribute('aria-expanded', false);
+      openMenu.querySelector(':scope > a').setAttribute('aria-expanded', false);
       document.body.classList.remove('disable-scroll');
     }
   });
