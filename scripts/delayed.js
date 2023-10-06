@@ -12,6 +12,10 @@ if (isGtmAllowed) {
   loadGoogleTagManager();
 }
 
+if (isFacebookPixelAllowed) {
+  loadFacebookPixel();
+}
+
 // add more delayed functionality here
 document.addEventListener('click', (e) => {
   if (e.target.matches('.semitrans')) {
@@ -64,10 +68,10 @@ async function loadGoogleTagManager() {
   }(window, document, 'script', 'dataLayer', 'GTM-KP9KZWR'));
 }
 
-function loadFacebookPixel() {
+async function loadFacebookPixel() {
   // FaceBook Pixel
   // eslint-disable-next-line no-unused-expressions
-  !(function (f, b, e, v, n, t, s) {
+  (function (f, b, e, v, n, t, s) {
     // eslint-disable-next-line no-multi-assign,no-param-reassign
     if (f.fbq) return; n = f.fbq = function () {
       // eslint-disable-next-line no-unused-expressions
@@ -92,10 +96,6 @@ function loadFacebookPixel() {
   fbq('init', '620334125252675');
   // eslint-disable-next-line no-undef
   fbq('track', 'PageView');
-}
-
-if (isFacebookPixelAllowed) {
-  loadFacebookPixel();
 }
 
 (function(h,o,t,j,a,r){
