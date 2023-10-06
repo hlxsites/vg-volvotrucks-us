@@ -67,7 +67,7 @@
 
 .footer-list .icon-chevron-down {
   margin-left: auto;
-  transition: transform var(--duration-medium) cubic-bezier(0.45, 0, 0.125, 1);
+  transition: transform var(--duration-small) var(--easing-standard);
 }
 
 .footer-list .expand .icon-chevron-down {

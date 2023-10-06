@@ -136,11 +136,11 @@
   background: url('/icons/chevron-down.svg') no-repeat;
   width: 24px;
   height: 24px;
-  transition: transform var(--duration-small) ease-in-out;
+  transition: transform var(--duration-small) var(--easing-standard);
 }
 
 .header__menu-open > .header__link-accordion::after {
-  transform: rotate(180deg);
+  transform: rotate(-180deg);
 }
 
 .header__actions {
