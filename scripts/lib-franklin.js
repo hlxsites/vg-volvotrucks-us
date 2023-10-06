@@ -588,7 +588,6 @@ export function loadFooter(footer) {
     loadBlock(footerBlock);
   }
 }
-
 /**
  * setup block utils
  */

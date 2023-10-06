@@ -1,7 +1,5 @@
 import { hideSidebar } from '../../common/sidebar/sidebar.js';
-import {
-  getTextLabel, isEloquaFormAllowed,
-} from '../../scripts/scripts.js';
+import { getTextLabel, isEloquaFormAllowed } from '../../scripts/common.js';
 
 // eslint-disable no-console
 const addForm = async (block) => {

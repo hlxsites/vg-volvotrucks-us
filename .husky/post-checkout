@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# If package.json OR package-lock.json has changed, run npm install
+if git diff --name-only $1 $2 | grep -E '^(package\.json|package-lock\.json)$'; then
+    echo "Detected changes in package.json or package-lock.json. Running npm install…"
+    npm install
+fi
+
+exit 0

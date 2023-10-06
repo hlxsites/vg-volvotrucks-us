@@ -24,7 +24,7 @@
 }
 
 .bb-news-list .news-item-date {
-    color: #A7A8A9;
+    color: var(--c-grey-2);
 }
 
 .bb-news-list .news-item-content {
@@ -75,7 +75,7 @@
     }
 
     .bb-news-list-small .news-item-metadata {
-        color: #A7A8A9;
+        color: var(--c-grey-2);
         text-transform: uppercase;
         font-size: 16px;
         margin-top: 16px;

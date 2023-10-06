@@ -43,7 +43,7 @@
 }
 
 .block.specifications .column-header .cell {
-    background-color: #53565A;
+    background-color: var(--c-grey-4);
     color: white;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .block.specifications .rowgroup-header:hover {
-    background-color: #E1DFDD;
+    background-color: var(--c-grey-1);
 }
 
 .block.specifications .rowgroup-header::after {
@@ -115,7 +115,7 @@
 }
 
 .block.specifications .column-header-mobile select {
-    background-color: #53565A;
+    background-color: var(--c-grey-4);
     color: white;
     width: 100%;
     padding: 15px;

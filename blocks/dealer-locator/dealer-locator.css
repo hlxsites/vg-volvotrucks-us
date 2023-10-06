@@ -98,7 +98,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .partsasist-form {
-    z-index: 1050;
+    z-index: var(--z-index-header);
     display: none;
     display: block;
     position: absolute;
@@ -126,7 +126,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .partsasist-form .regForm #select-form #eloquaForm {
-    color: #4d4e53!important
+    color: var(--c-grey-4)!important
 }
 
 .dealer-locator .partsasist-form .regForm #select-form #eloquaForm .field-holder {
@@ -144,7 +144,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .datasource-option {
-    z-index: 1050;
+    z-index: var(--z-index-header);
     display: none;
     display: block;
     position: absolute;
@@ -171,7 +171,7 @@ main .section.dealer-locator-container > div {
     height: 350px;
     display: grid;
     align-items: center;
-    border: 15px solid #4d4e53
+    border: 15px solid var(--c-grey-4)
 }
 
 @media (max-width: 991px) {
@@ -195,7 +195,7 @@ main .section.dealer-locator-container > div {
     touch-action: manipulation;
     cursor: pointer;
     background-image: none;
-    border: 2px solid #4d4e53;
+    border: 2px solid var(--c-grey-4);
     white-space: nowrap;
     padding: 12px 32px;
     font-size: 16px;
@@ -203,7 +203,7 @@ main .section.dealer-locator-container > div {
     border-radius: 0;
     user-select: none;
     user-select: none;
-    color: #4d4e53;
+    color: var(--c-grey-4);
     background-color: #FFF
 }
 
@@ -286,7 +286,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .main-directions .go-back button:hover {
     opacity: 1;
-    background-color: #e6e6e6;
+    background-color: var(--c-grey-1);
     border: 1px solid transparent
 }
 
@@ -308,7 +308,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .select-directions .go-back button:hover {
     opacity: 1;
-    background-color: #e6e6e6;
+    background-color: var(--c-grey-1);
     border: 1px solid transparent
 }
 
@@ -329,7 +329,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .go-back-pin button:hover {
     opacity: 1;
-    background-color: #e6e6e6;
+    background-color: var(--c-grey-1);
     border: 1px solid transparent
 }
 
@@ -368,7 +368,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .nearby-pins .panel-card {
     box-shadow: none;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid var(--c-grey-1);
     cursor: default
 }
 
@@ -464,7 +464,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-bottom .left .call,.dealer-locator .nearby-pins article.teaser .teaser-bottom .left .direction,.dealer-locator .nearby-pins article.teaser .teaser-bottom .left .more,.dealer-locator .nearby-pins article.teaser .teaser-bottom .right .call,.dealer-locator .nearby-pins article.teaser .teaser-bottom .right .direction,.dealer-locator .nearby-pins article.teaser .teaser-bottom .right .more {
-    border: 1px solid #A7A8A9;
+    border: 1px solid var(--c-grey-2);
     padding: 3px 0 0;
     margin-left: 10px;
     border-radius: 4px;
@@ -489,7 +489,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-bottom .left .website,.dealer-locator .nearby-pins article.teaser .teaser-bottom .right .website {
-    border: 1px solid #A7A8A9;
+    border: 1px solid var(--c-grey-2);
     padding: 3px 0 0;
     border-radius: 4px;
     width: 69px;
@@ -534,7 +534,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .nearby-select .panel-card {
     box-shadow: none;
-    border-bottom: 1px solid #e6e6e6
+    border-bottom: 1px solid var(--c-grey-1)
 }
 
 .dealer-locator .nearby-select .panel-card:hover {
@@ -690,13 +690,13 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .go-back-filter button {
     border-radius: 4px;
-    border: 1px solid #A7A8A9;
+    border: 1px solid var(--c-grey-2);
     margin-bottom: 10px
 }
 
 .dealer-locator .go-back-direction button {
     border-radius: 4px;
-    border: 1px solid #A7A8A9;
+    border: 1px solid var(--c-grey-2);
     margin-bottom: 5px
 }
 
@@ -775,7 +775,7 @@ main .section.dealer-locator-container > div {
     }
 
     .dealer-locator .mobile-main-header .panel-header.add-directions:hover {
-        background-color: #e6e6e6
+        background-color: var(--c-grey-1)
     }
 
     .dealer-locator .mobile-main-header .panel-header.to-directions {
@@ -794,8 +794,8 @@ main .section.dealer-locator-container > div {
         border: none;
         z-index: 1;
         background-color: transparent;
-        -webkit-text-fill-color: #4d4e53;
-        color: #4d4e53;
+        -webkit-text-fill-color: var(--c-grey-4);
+        color: var(--c-grey-4);
         transition: all 218ms ease 0s;
         opacity: 1;
         text-align: left;
@@ -982,7 +982,7 @@ main .section.dealer-locator-container > div {
     background: #FFF;
     border-radius: 4px;
     float: right;
-    border: 1px solid #A7A8A9;
+    border: 1px solid var(--c-grey-2);
     right: 0;
     left: 0;
     padding: 1px 6px;
@@ -993,7 +993,7 @@ main .section.dealer-locator-container > div {
 .dealer-locator .sidebar {
     float: left;
     height: 100%;
-    background: #E1DFDD!important;
+    background: var(--c-grey-1)!important;
     left: -408px;
     z-index: 99;
     box-shadow: 5px 0 5px -5px rgb(0 0 0 / 30%);
@@ -1367,7 +1367,7 @@ main .section.dealer-locator-container > div {
     background: 0 0;
     border: 0;
     width: fit-content;
-    border-bottom: 1px solid #e6e6e6
+    border-bottom: 1px solid var(--c-grey-1)
 }
 
 .dealer-locator .sidebar .sidebar-content .pin-actions .join-select {
@@ -1386,7 +1386,7 @@ main .section.dealer-locator-container > div {
     padding: 24px;
     font-size: 13px;
     display: inline-grid;
-    color: #1251B5;
+    color: var(--c-cta-blue-default);
     cursor: pointer;
     opacity: .8;
     outline: 0
@@ -1660,7 +1660,7 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .sidebar .panel-header.add-directions:hover {
-    background-color: #e6e6e6
+    background-color: var(--c-grey-1)
 }
 
 .dealer-locator .sidebar .panel-header input {
@@ -1675,8 +1675,8 @@ main .section.dealer-locator-container > div {
     border: none;
     z-index: 1;
     background-color: transparent;
-    -webkit-text-fill-color: #4d4e53;
-    color: #4d4e53;
+    -webkit-text-fill-color: var(--c-grey-4);
+    color: var(--c-grey-4);
     transition: all 218ms ease 0s;
     opacity: 1;
     text-align: left;
@@ -1942,7 +1942,7 @@ main .section.dealer-locator-container > div {
     width: 100%;
     height: 15px;
     border-radius: 5px;
-    background: #E1DFDD;
+    background: var(--c-grey-1);
     outline: 0;
     opacity: .7;
     transition: .2s;
@@ -2072,7 +2072,7 @@ main .section.dealer-locator-container > div {
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: var(--c-grey-1);
     border-radius: 50%
 }
 
@@ -2417,7 +2417,7 @@ main .section.dealer-locator-container > div {
 
     .sidebar .panel-card {
         box-shadow: none;
-        border-bottom: 1px solid #e6e6e6;
+        border-bottom: 1px solid var(--c-grey-1);
         cursor: default
     }
 

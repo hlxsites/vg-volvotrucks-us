@@ -43,7 +43,7 @@
 }
 
 .block.press-releases p.button-container a:hover {
-    background-color: var(--background-hover-color);
+    background-color: var(--c-grey-1);
 }
 
 .block.press-releases .list-filter input,
@@ -72,7 +72,7 @@
 }
 
 .block.press-releases .search-field button {
-    background-color: var(--link-color);
+    background-color: var(--c-cta-blue-default);
     color: var(--c-white);
     border: 0;
 }
@@ -107,7 +107,7 @@
 .block.press-releases .tags-field select {
     width: 100%;
     appearance: none;
-    background-color: var(--link-color);
+    background-color: var(--c-cta-blue-default);
     color: var(--c-white);
     padding: 15px 40px 15px 15px;
 }

@@ -119,7 +119,7 @@ body.magazine>main .share {
 }
 
 body.magazine>main .section.template.article-sidebar>div.subscribe {
-  border-top: 1px solid var(--background-hover-color);
+  border-top: 1px solid var(--c-grey-1);
   padding-top: 30px;
   margin-top: 30px;
 }
@@ -179,7 +179,7 @@ body.magazine>main div.default-content-wrapper>blockquote>p::after {
 }
 
 div.section.related-articles-container {
-  border-top: 1px solid var(--background-hover-color);
+  border-top: 1px solid var(--c-grey-1);
   display: inline-block;
   width: 100%;
 }
@@ -250,8 +250,8 @@ div.section.eloqua-form-container>div.eloqua-form-wrapper {
 
   body.magazine>main .section.template.article-hero>div>div.content {
     order: 2;
-    border-top: 1px solid var(--background-hover-color);
-    border-bottom: 1px solid var(--background-hover-color);
+    border-top: 1px solid var(--c-grey-1);
+    border-bottom: 1px solid var(--c-grey-1);
     flex: 0 0 50%;
     max-width: 50%;
     padding: 30px 45px;
