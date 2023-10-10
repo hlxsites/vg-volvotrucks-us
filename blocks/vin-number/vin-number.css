@@ -1,0 +1,55 @@
+.vin-number__form {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.vin-number__input-wrapper {
+  position: relative;
+}
+
+.vin-number__input {
+  margin: 0;
+  max-width: 100%;
+}
+
+.vin-number__label {
+  left: var(--input-padding);
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    top var(--duration-small) var(--easing-standard),
+    left var(--duration-small) var(--easing-standard);
+}
+
+.vin-number__input:focus ~ .vin-number__label,
+.vin-number__input:not(:placeholder-shown) ~ .vin-number__label,
+.vin-number__input:not(:focus):valid ~ .v2-forms__label {
+  bottom: 0;
+  left: 0;
+  top: 3px;
+}
+
+@media (min-width: 744px) {
+  .vin-number__form {
+    max-width: 506px;
+    margin: 0 auto;
+  }
+
+  .vin-number__submit {
+    align-self: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .vin-number__form {
+    flex-direction: row;
+    max-width: 100%;
+  }
+
+  .vin-number__input-wrapper {
+    flex: 1;
+  }
+}
