@@ -42,6 +42,10 @@
   background-color: var(--c-cta-blue-active);
 }
 
+.nhtsa-header .hide {
+  display: none;
+}
+
 @media (min-width: 1200px) {
   :root {
     --nhtsa-header-gutter: 32px;

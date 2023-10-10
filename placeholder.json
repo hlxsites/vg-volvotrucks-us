@@ -1,7 +1,7 @@
 {
-  "total": 14,
+  "total": 15,
   "offset": 0,
-  "limit": 14,
+  "limit": 15,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -52,12 +52,16 @@
       "Text": "Change cookie settings"
     },
     {
-      "Key": "vin label",
+      "Key": "vinlabel",
       "Text": "Enter your 17-digit VIN (Vehicle Identification Number)"
     }, 
     {
       "Key": "submit",
       "Text": "Submit"
+    }, 
+    {
+      "Key": "vinformat",
+      "Text": "Please provide proper vin number"
     }
   ],
   ":type": "sheet"

@@ -33,9 +33,9 @@ export default async function decorate(block) {
         maxlength="17"
         required
         class="vin-number__input"
-        pattern="^[1|4][V][1|2|4|5][K|N|R|W][A-Z0-9^IOQioq_]{13}$"
+        pattern="^[1,4][V,v][1,2,4,5][K,N,R,W,k,n,r,w][A-Za-z0-9]{13}$"
       />
-      <label for="vin_number" class="vin-number__label">${getTextLabel('vin label')}</label>
+      <label for="vin_number" class="vin-number__label">${getTextLabel('vinlabel')}</label>
     </div>
     <button class="button primary vin-number__submit" type="submit" name="submit">${getTextLabel('submit')}</button>
   `);
@@ -43,4 +43,10 @@ export default async function decorate(block) {
   form.addEventListener('submit', fetchRecalls, false);
   form.append(...formChildren.children);
   block.append(form);
+
+  const vinInput = block.querySelector('.vin-number__input');
+
+  vinInput.oninvalid = (e) => {
+    e.target.setCustomValidity(getTextLabel('vinformat'));
+  };
 }

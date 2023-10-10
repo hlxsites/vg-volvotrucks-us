@@ -13,6 +13,10 @@
   max-width: 100%;
 }
 
+.redesign-v2 .vin-number__form .vin-number__submit {
+  max-width: 100%;
+}
+
 .vin-number__label {
   left: var(--input-padding);
   pointer-events: none;

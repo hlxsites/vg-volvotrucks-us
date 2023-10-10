@@ -1,25 +1,20 @@
-import { unwrapDivs, createElement } from '../../scripts/common.js';
+import { unwrapDivs } from '../../scripts/common.js';
 
-const siteoOptions = [{
-  origin: 'us',
-  url: 'https://www.volvotrucks.us/',
-  textValue: 'English',
-}, {
-  origin: 'french',
-  url: 'https://www.volvotrucks.fr/',
-  textValue: 'French',
-}];
+// hide buttoms fro, content if they are from same origin
+function hideButtons(buttons) {
+  buttons.forEach((element) => {
+    element.classList.add('button', 'nhsta-header__langauge-switch');
+    const url = element.href;
+    const { location: { origin } = {} } = window.location.origin;
+
+    if (origin === url || ((window.location.host.includes('localhost')) && url === 'https://www.volvotrucks.us/')) {
+      element.classList.add('hide');
+    }
+  });
+}
 
 export default async function decorate(block) {
   unwrapDivs(block);
-  const currentOrigin = window.location.host.includes('hlx.page') || window.location.host.includes('localhost') ? 'us' : window.location.origin.split('volvotrucks.').pop();
-  const buttonProps = siteoOptions.find((item) => item.origin !== currentOrigin);
-  const langSwitch = createElement('a', {
-    classes: ['button', 'nhsta-header__langauge-switch'],
-    props: {
-      href: buttonProps.url,
-    },
-  });
-  langSwitch.innerText = buttonProps.textValue;
-  block.append(langSwitch);
+  const anchorTags = block.querySelectorAll('a');
+  hideButtons(anchorTags);
 }
