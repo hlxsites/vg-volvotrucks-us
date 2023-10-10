@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-09-20T00:00:00.000Z</updated>
+    <updated>2023-10-10T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks’ SuperTruck 2 Exceeds Freight Efficiency Goals with Focus on Aerodynamics and Advanced Engineering]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-supertruck-exceeds-freight-efficiency-goals-with-focus-on-aerodynamics-and-advanced-engineering/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-supertruck-exceeds-freight-efficiency-goals-with-focus-on-aerodynamics-and-advanced-engineering/"/>
+        <updated>2023-10-10T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“Partnering with the DOE for the SuperTruck program provides an exciting opportunity to push the technology envelope to see what’s technically possible for heavy-duty transportation and which solutions can be scaled into production, but equally important, which solutions don't work for scaled production,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-10-10T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Coke Canada Bottling Debuts First Volvo VNR Electric Trucks in its Iconic ‘Red Fleet’]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/septmber/coke-canada-bottling-debuts-first-volvo-vnr-electric-trucks-in-its-iconic-red-fleet/</id>
