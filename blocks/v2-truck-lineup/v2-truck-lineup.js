@@ -99,26 +99,29 @@ const updateActiveItem = (index) => {
 };
 
 const listenScroll = (carousel) => {
-  const elements = carousel.querySelectorAll(':scope > *');
+  const imageLoadPromises = Array.from(carousel.querySelectorAll('picture > img'))
+    .filter((img) => !img.complete)
+    .map((img) => new Promise((resolve) => {
+      img.addEventListener('load', resolve);
+    }));
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (
-        entry.isIntersecting
-        && entry.intersectionRatio >= 0.9
-      ) {
-        const activeItem = entry.target;
-        const currentIndex = [...activeItem.parentNode.children].indexOf(activeItem);
-        updateActiveItem(currentIndex);
-      }
+  Promise.all(imageLoadPromises).then(() => {
+    const elements = carousel.querySelectorAll(':scope > *');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+          const activeItem = entry.target;
+          const currentIndex = Array.from(activeItem.parentNode.children).indexOf(activeItem);
+          updateActiveItem(currentIndex);
+        }
+      });
+    }, {
+      root: carousel,
+      threshold: 0.9,
     });
-  }, {
-    root: carousel,
-    threshold: 0.9,
-  });
 
-  elements.forEach((el) => {
-    io.observe(el);
+    elements.forEach((el) => io.observe(el));
   });
 };
 
