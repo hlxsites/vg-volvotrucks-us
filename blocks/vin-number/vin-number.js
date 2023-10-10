@@ -35,7 +35,7 @@ export default async function decorate(block) {
         class="vin-number__input"
         pattern="^[1|4][V][1|2|4|5][K|N|R|W][A-Z0-9^IOQioq_]{13}$"
       />
-      <label for="vin_number" class="vin-number__label">${getTextLabel('vin-label')}</label>
+      <label for="vin_number" class="vin-number__label">${getTextLabel('vin label')}</label>
     </div>
     <button class="button primary vin-number__submit" type="submit" name="submit">${getTextLabel('submit')}</button>
   `);
