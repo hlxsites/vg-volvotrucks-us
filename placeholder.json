@@ -50,6 +50,14 @@
     {
       "Key": "no eloqua link message",
       "Text": "Change cookie settings"
+    },
+    {
+      "Key": "vin-label",
+      "Text": "Enter your 17-digit VIN (Vehicle Identification Number)"
+    }, 
+    {
+      "Key": "submit",
+      "Text": "Submit"
     }
   ],
   ":type": "sheet"
