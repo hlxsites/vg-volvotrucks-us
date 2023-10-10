@@ -57,10 +57,21 @@ const updateActiveItem = (index) => {
   const navigation = document.querySelector(`.${blockName}__navigation`);
   const navigationLine = document.querySelector(`.${blockName}__navigation-line`);
 
-  [images, descriptions, navigation].forEach((c) => c.querySelectorAll('.active').forEach((i) => i.classList.remove('active')));
+  [images, descriptions, navigation].forEach((c) => c.querySelectorAll('.active').forEach((i) => {
+    i.classList.remove('active');
+
+    // Remove aria-hidden and tabindex from previously active items
+    i.setAttribute('aria-hidden', 'true');
+    i.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
+  }));
+
   images.children[index].classList.add('active');
   descriptions.children[index].classList.add('active');
   navigation.children[index].classList.add('active');
+
+  // Make links of current item are accessible by keyboard
+  descriptions.children[index].setAttribute('aria-hidden', 'false');
+  descriptions.children[index].querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '0'));
 
   const activeNavigationItem = navigation.children[index];
   moveNavigationLine(navigationLine, activeNavigationItem, navigation);
@@ -184,7 +195,7 @@ export default function decorate(block) {
   // Arrows
   createArrowControls(imagesContainer);
 
-  descriptionContainer.parentNode.append(tabNavigation);
+  descriptionContainer.parentNode.prepend(tabNavigation);
 
   tabItems.forEach((tabItem) => {
     tabItem.classList.add(`${blockName}__desc-item`);

@@ -144,16 +144,16 @@ ul.v2-truck-lineup__navigation {
   display: flex;
   flex-flow: row nowrap;
   list-style: none;
-  margin: 32px 0;
+  margin: 24px 0;
   order: 1;
   overflow: auto;
-  padding: 2px 32px;
+  padding: 10px 32px;
   position: relative;
 }
 
 .v2-truck-lineup__navigation-line {
   background: var(--c-main-black);
-  bottom: 0;
+  bottom: 8px;
   height: 2px;
   left: 0;
   margin: 0;
@@ -175,6 +175,7 @@ ul.v2-truck-lineup__navigation {
 .v2-truck-lineup__navigation button {
   background: 0 0;
   border: none;
+  border-radius: 1px;
   color: var(--c-grey-4);
   font-size: var(--f-button-font-size);
   letter-spacing: var(--f-button-letter-spacing);
@@ -184,7 +185,16 @@ ul.v2-truck-lineup__navigation {
   text-transform: uppercase;
 }
 
-.v2-tabbed-carousel__navigation-item.active button {
+.v2-truck-lineup__navigation button:focus {
+  outline: 0;
+}
+
+.v2-truck-lineup__navigation button:focus-visible {
+  outline: 2px solid var(--light-border-focus);
+  outline-offset: 5px;
+}
+
+.v2-truck-lineup__navigation-item.active button {
   color: var(--c-main-black);
 }
 
@@ -196,12 +206,6 @@ ul.v2-truck-lineup__navigation {
 .v2-truck-lineup__arrow-controls {
   display: none;
   margin: 0;
-  opacity: 0;
-  transition: opacity var(--duration-small) var(--easing-standard);
-}
-
-.v2-truck-lineup__slider-wrapper:hover .v2-truck-lineup__arrow-controls {
-  opacity: 1;
 }
 
 .v2-truck-lineup__arrow-controls li {
@@ -229,11 +233,8 @@ ul.v2-truck-lineup__navigation {
   margin: 0;
   padding: 10px;
   position: relative;
-}
-
-.v2-truck-lineup__arrow-controls button:hover,
-.v2-truck-lineup__arrow-controls button:active {
-  border-color: var(--c-white);
+  opacity: 0;
+  transition: opacity var(--duration-small) var(--easing-standard);
 }
 
 .v2-truck-lineup__arrow-controls button:hover {
@@ -245,7 +246,19 @@ ul.v2-truck-lineup__navigation {
 }
 
 .v2-truck-lineup__arrow-controls button:focus {
+  outline: 0;
+}
+
+.v2-truck-lineup__arrow-controls button:focus-visible {
   outline: 2px solid var(--light-border-focus);
+  outline-offset: 1px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-truck-lineup__slider-wrapper:hover .v2-truck-lineup__arrow-controls button,
+.v2-truck-lineup__arrow-controls button:focus-visible,
+.v2-truck-lineup__arrow-controls:focus-within button {
+  opacity: 1;
 }
 
 @media screen and (min-width: 744px) {
