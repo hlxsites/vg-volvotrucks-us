@@ -26,7 +26,7 @@
   --scroll-dot-width: 9px;
   --v2-hero-padding: 32px;
 
-  height: calc(100vh - var(--nav-height));
+  height: calc(100vh - (var(--nav-height) * 2));
   overflow: hidden;
   position: relative;
 }
