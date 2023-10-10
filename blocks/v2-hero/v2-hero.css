@@ -26,9 +26,14 @@
   --scroll-dot-width: 9px;
   --v2-hero-padding: 32px;
 
-  height: calc(100vh - (var(--nav-height) * 2));
+  height: calc(100vh - var(--nav-height));
   overflow: hidden;
   position: relative;
+}
+
+/* Reduce the Hero height by the inpage-navigation height */
+.v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
+  height: calc(100vh - (var(--nav-height) * 2));
 }
 
 .section.v2-hero-container {
