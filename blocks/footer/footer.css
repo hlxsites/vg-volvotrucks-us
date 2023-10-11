@@ -6,7 +6,7 @@
   background: var(--c-grey-50);
 }
 
-.footer :is(.footer__title, p, a) {
+.footer :is(p, a) {
   font-family: var(--ff-volvo-novum);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 16px;
@@ -38,10 +38,11 @@
 }
 
 .footer-list .footer__title {
-  font-family: var(--ff-volvo-novum-medium);
+  font: var(--f-subtitle-1-font-size) / var(--f-subtitle-1-line-height) var(--ff-volvo-novum-medium);
+  letter-spacing: var(--f-subtitle-1-letter-spacing);
   border-top: 1px solid var(--border-color);
   cursor: pointer;
-  padding: 22px 16px;
+  padding: 24px 16px;
   display: flex;
   align-items: center;
 }
@@ -68,6 +69,11 @@
 .footer-list .icon-chevron-down {
   margin-left: auto;
   transition: transform var(--duration-small) var(--easing-standard);
+}
+
+.footer-list .icon-chevron-down svg {
+  width: 24px;
+  height: 24px;
 }
 
 .footer-list .expand .icon-chevron-down {
@@ -171,6 +177,7 @@
   outline: 2px solid var(--light-border-focus);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .v2-scroll-to-top svg {
   display: block;
 }
