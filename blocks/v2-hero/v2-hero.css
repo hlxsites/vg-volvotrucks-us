@@ -31,6 +31,11 @@
   position: relative;
 }
 
+/* Reduce the Hero height by the inpage-navigation height */
+.v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
+  height: calc(100vh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
+}
+
 .section.v2-hero-container {
   padding-bottom: 0;
 }
