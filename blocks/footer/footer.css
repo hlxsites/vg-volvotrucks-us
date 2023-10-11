@@ -38,7 +38,7 @@
 }
 
 .footer-list .footer__title {
-  font: var(--f-subtitle-1-font-size) / var(--f-subtitle-1-line-height) var(--ff-volvo-novum-medium);
+  font: 16px / var(--f-subtitle-1-line-height) var(--ff-volvo-novum-medium);
   letter-spacing: var(--f-subtitle-1-letter-spacing);
   border-top: 1px solid var(--border-color);
   cursor: pointer;
