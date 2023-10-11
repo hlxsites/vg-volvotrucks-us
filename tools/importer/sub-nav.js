@@ -40,7 +40,7 @@ const linkToHlxPage = (main, document, url) => {
     if (new RegExp('^(https?:)?//').test(link.href)) {
       // leave links with domains as is
     } else if (link.href.startsWith('/')) {
-      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us-rd--netcentric.hlx.page');
+      const newUrl = new URL(link.href, 'https://main--vg-volvotrucks-us--hlxsites.hlx.page');
       link.href = newUrl.href;
     }
   });

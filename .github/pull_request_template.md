@@ -3,5 +3,5 @@ Please always provide the [GitHub issue(s)](../issues) your PR is for, as well a
 Fix #<gh-issue-id>
 
 Test URLs:
-- Before: https://main--vg-volvotrucks-us-rd--netcentric.hlx.page/
-- After: https://<branch>--vg-volvotrucks-us-rd--netcentric.hlx.page/
+- Before: https://main--vg-volvotrucks-us--hlxsites.hlx.page/
+- After: https://<branch>--vg-volvotrucks-us--hlxsites.hlx.page/
