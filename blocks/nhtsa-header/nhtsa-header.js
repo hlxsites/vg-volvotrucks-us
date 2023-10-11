@@ -7,7 +7,7 @@ function hideButtons(buttons) {
     const url = element.href;
     const { location: { origin } = {} } = window.location.origin;
 
-    if (origin === url || ((window.location.host.includes('localhost')) && url === 'https://www.volvotrucks.us/')) {
+    if (origin === url || (((window.location.host.includes('localhost') || window.location.host.includes('hlx.page')) && url === 'https://www.volvotrucks.us/'))) {
       element.classList.add('hide');
     }
   });

@@ -61,7 +61,63 @@
     }, 
     {
       "Key": "vinformat",
-      "Text": "Please provide proper vin number"
+      "Text": "Please provide correct vin number format"
+    }, 
+    {
+      "Key": "result text",
+      "Text": "${count} recalls available for \"${vin}\" VIN"
+    }, 
+    {
+      "Key": "recalls",
+      "Text": "Recalls"
+    },
+    {
+      "Key": "recall_date",
+      "Text": "Issue date"
+    },
+    {
+      "Key": "recall_description",
+      "Text": "Description"
+    },
+    {
+      "Key": "safety_risk_description",
+      "Text": "Safety Risk"
+    },
+    {
+      "Key": "remedy_description",
+      "Text": "Remedy"
+    }, 
+    {
+      "Key": "published_info",
+      "Text": "Information last updated"
+    },
+    {
+      "Key": "mfr_recall_status",
+      "Text": "Recall Status"
+    },
+    {
+      "Key": "recall_complete",
+      "Text": "Recall Complete"
+    },
+    {
+      "Key": "recall_incomplete",
+      "Text": "Recall Incomplete"
+    }, 
+    {
+      "Key": "recall_incomplete_no_remedy",
+      "Text": "Recall Complete, remedy not available"
+    }, 
+    {
+      "Key": "loading recalls",
+      "Text": " Loading Recalls ....."
+    },
+    {
+      "Key": "no recalls",
+      "Text": "No recalls for vin"
+    },
+    {
+      "Key": "mfr_notes",
+      "Text": "Next steps"
     }
   ],
   ":type": "sheet"

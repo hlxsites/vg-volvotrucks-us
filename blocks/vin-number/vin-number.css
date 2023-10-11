@@ -36,18 +36,43 @@
   top: 3px;
 }
 
-@media (min-width: 744px) {
-  .vin-number__form {
-    max-width: 506px;
-    margin: 0 auto;
-  }
-
-  .vin-number__submit {
-    align-self: center;
-  }
+/* recalls list styling */
+.vin-number__results-container{
+  padding: 20px 0;
 }
 
-@media (min-width: 1200px) {
+.vin-number__recalls-wrapper {
+  margin-top: 40px;
+}
+
+.vin-number__recalls-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px
+}
+
+.vin-number__list {
+  list-style: none;
+}
+
+.vin-number__list-item {
+  border-top: 1px solid var(--c-black);
+  padding: 20px 0;
+}
+
+.vin-number__item-title:not(:first-child){
+  margin-top: 10px;
+}
+
+.vin-number__recall-incomplete {
+  color: var(--c-error-red);
+}
+
+.vin-number__recall-complete {
+  color: var(--c-leaf-4);
+}
+
+@media (min-width: 744px) {
   .vin-number__form {
     flex-direction: row;
     max-width: 100%;
