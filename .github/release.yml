@@ -1,0 +1,22 @@
+# .github/release.yml
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: Functional requirements
+      labels:
+        - FR
+    - title: Non-functional requirements
+      labels:
+        - NFR
+    - title: Bugfixes
+      labels:
+        - Bugfix
+    - title: Known issues
+      labels:
+        - wontfix
+    - title: Other changes
+      labels:
+        - "*"

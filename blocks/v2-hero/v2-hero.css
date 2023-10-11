@@ -31,6 +31,11 @@
   position: relative;
 }
 
+/* Reduce the Hero height by the inpage-navigation height */
+.v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
+  height: calc(100vh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
+}
+
 .section.v2-hero-container {
   padding-bottom: 0;
 }
@@ -129,6 +134,37 @@
   position: absolute;
   top: 5px;
   width: var(--scroll-dot-width);
+}
+
+.v2-hero .icon-play-video {
+  display: none;
+  justify-content: center;
+}
+
+.v2-hero .icon-pause-video {
+  display: flex;
+  justify-content: center;
+}
+
+.v2-hero .v2-hero__playback-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: transparent;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  border: 0;
+  padding: 0;
+}
+
+.v2-hero .v2-hero__playback-button:hover svg circle {
+  fill: var(--c-grey-50);
+}
+
+.v2-hero .v2-hero__playback-button .icon svg {
+  width: 26px;
+  height: 26px;
 }
 
 @media (min-width: 744px) {
