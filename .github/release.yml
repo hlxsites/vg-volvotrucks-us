@@ -3,20 +3,20 @@
 changelog:
   exclude:
     labels:
-      - 'Ignore for release'
+      - ignore-for-release
   categories:
     - title: Functional requirements
       labels:
-        - 'Agile Requirement'
-    - title: Non-Functional Requirements
+        - FR
+    - title: Non-functional requirements
       labels:
         - NFR
     - title: Bugfixes
       labels:
-        - Bug
+        - Bugfix
     - title: Known issues
       labels:
         - wontfix
-    - title: Other Changes
+    - title: Other changes
       labels:
         - "*"
