@@ -99,7 +99,7 @@
   overflow: hidden;
 }
 
-.key-facts__row .block.embed,
+.key-facts__video,
 .key-facts__row .embed-video {
   width: 100%;
 }
@@ -120,6 +120,11 @@
 
   .key-facts--with-media .key-facts__key-item {
     width: 25%;
+  }
+
+  .key-facts__row.key-facts__row--with-media img,
+  .key-facts__row.key-facts__row--with-media video {
+    border-radius: var(--border-radius);
   }
 }
 
@@ -180,6 +185,5 @@
   .key-facts__row.key-facts__row--with-media video {
     flex-grow: 1;
     margin: 0;
-    border-radius: var(--border-radius);
   }
 }
