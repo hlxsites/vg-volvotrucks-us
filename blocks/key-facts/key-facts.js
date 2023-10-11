@@ -1,5 +1,5 @@
-import { createElement, loadAsBlock, variantsClassesToBEM } from '../../scripts/common.js';
-import { isVideoLink } from '../../scripts/video-helper.js';
+import { createElement, variantsClassesToBEM } from '../../scripts/common.js';
+import { isVideoLink, createVideo } from '../../scripts/video-helper.js';
 
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
@@ -124,8 +124,13 @@ export default async function decorate(block) {
         block.classList.add(`${blockName}--with-media`);
         row.classList.add(`${blockName}__row--with-media`);
 
-        const embedBlock = await loadAsBlock('embed', col.outerHTML, { variantsClasses: ['no-banner'] });
-        col.replaceWith(embedBlock);
+        const video = createVideo(videoLinks[0].getAttribute('href'), `${blockName}__video`, {
+          muted: true,
+          autoplay: true,
+          loop: 'loop',
+        });
+        col.replaceWith(video);
+        videoLinks[0].remove();
 
         return;
       }

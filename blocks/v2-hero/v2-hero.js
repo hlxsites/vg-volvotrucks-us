@@ -3,18 +3,10 @@ import {
   createVideo,
 } from '../../scripts/video-helper.js';
 import {
-  createElement,
+  createElement, getTextLabel,
   removeEmptyTags,
   variantsClassesToBEM,
 } from '../../scripts/common.js';
-
-const checkVideoTime = (event) => {
-  const video = event.target;
-  if (video.currentTime > 3) {
-    video.pause();
-    video.removeEventListener('timeupdate', checkVideoTime);
-  }
-};
 
 const variantClasses = ['centered', 'left', 'bottom', 'dark'];
 
@@ -31,12 +23,65 @@ export default async function decorate(block) {
     const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
       muted: true,
       autoplay: true,
+      loop: true,
+      playsinline: true,
     });
     block.prepend(video);
     link.remove();
 
-    // prevent video to reproduce more than 3s
-    video.addEventListener('timeupdate', checkVideoTime);
+    // Hero video play/pause button icons
+    const contentWrapper = block.querySelector(':scope > div');
+    contentWrapper.classList.add(`${blockName}__content-wrapper`);
+
+    const playPauseButton = createElement('button', {
+      props: { type: 'button', class: 'v2-hero__playback-button' },
+    });
+
+    const pauseIconFragment = document.createRange().createContextualFragment(`
+    <span class="icon icon-pause-video">
+       <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="36" cy="36" r="30" fill="white"/>
+          <rect x="28.25" y="24.45" width="2.75" height="23.09" fill="#141414"/>
+          <rect x="41" y="24.45" width="2.75" height="23.09" fill="#141414"/>
+       </svg>
+    </span>
+    `);
+
+    const playIconFragment = document.createRange().createContextualFragment(`
+    <span class="icon icon-play-video">
+       <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="36" cy="36" r="30" fill="white"/>
+         <path fill-rule="evenodd" clip-rule="evenodd" d="M49.3312 35.9998L29.3312 24.4528L29.3312 47.5468L49.3312 35.9998ZM44.3312 35.9998L31.8312 28.7829L31.8312 43.2167L44.3312 35.9998Z" fill="#141414"/>
+       </svg>
+    </span>
+    `);
+
+    playPauseButton.appendChild(pauseIconFragment);
+    playPauseButton.appendChild(playIconFragment);
+    contentWrapper.appendChild(playPauseButton);
+
+    const playIcon = block.querySelector('.icon-play-video');
+    const pauseIcon = block.querySelector('.icon-pause-video');
+
+    const pauseVideoLabel = getTextLabel('Pause video');
+    const playVideoLabel = getTextLabel('Play video');
+
+    playPauseButton.setAttribute('aria-label', pauseVideoLabel);
+
+    // Toggle the play/pause icon on click
+    playPauseButton.addEventListener('click', () => {
+      const isPaused = video.paused;
+      video[isPaused ? 'play' : 'pause']();
+      if (!isPaused) {
+        pauseIcon.style.display = 'none';
+        playIcon.style.display = 'flex';
+        playPauseButton.setAttribute('aria-label', playVideoLabel);
+      } else {
+        pauseIcon.style.display = 'flex';
+        playIcon.style.display = 'none';
+        playPauseButton.setAttribute('aria-label', pauseVideoLabel);
+      }
+    });
   }
 
   if (picture) {
