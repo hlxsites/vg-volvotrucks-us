@@ -153,4 +153,8 @@ export default async function decorate(block) {
   vinInput.oninvalid = (e) => {
     e.target.setCustomValidity(getTextLabel('vinformat'));
   };
+
+  vinInput.oninput = (e) => {
+    e.target.setCustomValidity('');
+  };
 }
