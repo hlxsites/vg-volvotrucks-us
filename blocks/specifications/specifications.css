@@ -188,7 +188,7 @@
 .specifications.arrow-accordion .rowgroup-header::after {
     content: "\f107";
     font-size: 25px;
-    transition: transform var(--duration-medium) cubic-bezier(0.45, 0, 0.125, 1);;
+    transition: transform var(--duration-medium) cubic-bezier(0.45, 0, 0.125, 1);
 }
 
 .specifications.arrow-accordion .rowgroup-header[aria-expanded="true"]::after {
