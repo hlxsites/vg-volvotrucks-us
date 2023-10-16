@@ -109,7 +109,7 @@
 
   /* Volvo Novum, 14px / 0.875rem, Medium, 0.15px / 0.009rem, 130% */
   --f-subtitle-2-font-size: 0.875rem; /* 14px */
-  --f-subtitle-2-letter-spacing: 0.009rem;
+  --f-subtitle-2-letter-spacing: 0.009375rem;
   --f-subtitle-2-line-height: 130%;
 
   /* Volvo Novum, 16px / 1rem, Regular, 0.5px / 0.031rem, 130% */
@@ -891,7 +891,7 @@ div.block div.pager .pagination .scroll li a {
     --sub-nav-height: 48px;
   }
 
-  :root:not(.redesign-v2) main .section:first-child > :first-child {
+  :root:not(.redesign-v2) main:not(.remove-top-margin) .section:first-child > :first-child {
     margin-top: 30px;
   }
 
@@ -1416,4 +1416,17 @@ main.blue-contract .section.section-with-title p {
     letter-spacing: var(--f-heading-5-letter-spacing);
     line-height: var(--f-heading-5-line-height);
   }
+}
+
+.screenreader {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
