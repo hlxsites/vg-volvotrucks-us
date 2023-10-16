@@ -4,33 +4,28 @@ const VIN_URL = 'https://vinlookup-dev-euw-ase-01.azurewebsites.net/v1/api/vin/'
 const API_KEY = '0e13506b59674706ad9bae72d94fc83c';
 
 const docRange = document.createRange();
-const isFrench = window.location.origin.indexOf('fr') > -1;
 
 // list of things to be display for each recall
 const valueDisplayList = [{
+  key: 'recall_description',
+}, {
+  key: 'mfr_recall_status',
+}, {
   key: 'recall_date',
 },
 {
-  key: 'mfr_recall_status',
-},
-{
-  key: 'recall_description',
-  frenchKey: 'recall_description_french',
-}, {
   key: 'safety_risk_description',
-  frenchKey: 'safety_risk_description_french',
 }, {
   key: 'remedy_description',
-  frenchKey: 'remedy_description_french',
 }, {
   key: 'mfr_notes',
 }];
 
 // use this to map values from API
 const recallStatus = {
-  11: getTextLabel('recall_incomplete'),
-  0: getTextLabel('recall_complete'),
-  12: getTextLabel('recall_incomplete_no_remedy'),
+  11: 'recall_incomplete',
+  0: 'recall_complete',
+  12: 'recall_incomplete_no_remedy',
 };
 
 function renderRecalls(recallsData) {
@@ -57,10 +52,10 @@ function renderRecalls(recallsData) {
       recall.mfr_recall_status = recallStatus[recall.mfr_recall_status];
 
       valueDisplayList.forEach((item) => {
-        const recallClass = item.key === 'mfr_recall_status' ? `vin-number__${recall.mfr_recall_status.replace(/ /g, '-').toLowerCase()}` : '';
+        const recallClass = item.key === 'mfr_recall_status' ? `vin-number__${recall.mfr_recall_status.replace(/_/g, '-').toLowerCase()}` : '';
         const itemFragment = docRange.createContextualFragment(`
           <div class="vin-number__item-title subtitle-1"> ${getTextLabel(item.key)} </div>
-          <div class="vin-number__item-value ${recallClass}">${item.frenchKey && isFrench ? recall[item.frenchKey] : recall[item.key]}</div>
+          <div class="vin-number__item-value ${recallClass}">${recallClass ? getTextLabel(recall[item.key]) : recall[item.key]}</div>
         `);
         liEl.append(...itemFragment.children);
       });
@@ -128,7 +123,7 @@ export default async function decorate(block) {
         maxlength="17"
         required
         class="vin-number__input"
-        pattern="^[1,4][V,v][1,2,4,5][K,N,R,W,k,n,r,w][A-Za-z0-9]{13}$"
+        pattern="^[1,4][V,v,R,r][1,2,4,5,k,K,Y,y][K,N,R,W,H,Y,k,n,r,w,y,h][A-Za-z0-9]{13}$"
       />
       <label for="vin_number" class="vin-number__label">${getTextLabel('vinlabel')}</label>
     </div>

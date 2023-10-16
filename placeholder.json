@@ -105,7 +105,7 @@
     }, 
     {
       "Key": "recall_incomplete_no_remedy",
-      "Text": "Recall Complete, remedy not available"
+      "Text": "Recall In Complete, remedy not available"
     }, 
     {
       "Key": "loading recalls",

@@ -64,7 +64,8 @@
   margin-top: 10px;
 }
 
-.vin-number__recall-incomplete {
+.vin-number__recall-incomplete,
+.vin-number__recall-incomplete-no-remedy {
   color: var(--c-error-red);
 }
 
