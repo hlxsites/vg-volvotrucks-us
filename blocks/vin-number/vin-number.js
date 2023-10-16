@@ -123,7 +123,7 @@ export default async function decorate(block) {
         maxlength="17"
         required
         class="vin-number__input"
-        pattern="^[1,4][V,v,R,r][1,2,4,5,k,K,Y,y][K,N,R,W,H,Y,k,n,r,w,y,h][A-Za-z0-9]{13}$"
+        pattern="^[1,4][V,v,R,r][1,2,4,5,k,K][B-C,E-H,J-N,R-S,V-Y,b-c,e-h,j-n,r-s,v-y][A-Za-z0-9]{13}$"
       />
       <label for="vin_number" class="vin-number__label">${getTextLabel('vinlabel')}</label>
     </div>
