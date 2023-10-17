@@ -118,6 +118,10 @@
     {
       "Key": "mfr_notes",
       "Text": "Next steps"
+    }, 
+    {
+      "Key": "mfr_recall_number",
+      "Text": "Campaign/NHTSA #"
     }
   ],
   ":type": "sheet"

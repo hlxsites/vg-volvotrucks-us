@@ -9,6 +9,8 @@ const docRange = document.createRange();
 const valueDisplayList = [{
   key: 'recall_description',
 }, {
+  key: 'mfr_recall_number',
+}, {
   key: 'mfr_recall_status',
 }, {
   key: 'recall_date',
@@ -53,9 +55,17 @@ function renderRecalls(recallsData) {
 
       valueDisplayList.forEach((item) => {
         const recallClass = item.key === 'mfr_recall_status' ? `vin-number__${recall.mfr_recall_status.replace(/_/g, '-').toLowerCase()}` : '';
+        let itemValue = recall[item.key];
+
+        if (recallClass) {
+          itemValue = getTextLabel(recall[item.key]);
+        } else if (item.key === 'mfr_recall_number') {
+          itemValue = `${recall[item.key]}/#${recall.nhtsa_recall_number}`;
+        }
+
         const itemFragment = docRange.createContextualFragment(`
           <div class="vin-number__item-title subtitle-1"> ${getTextLabel(item.key)} </div>
-          <div class="vin-number__item-value ${recallClass}">${recallClass ? getTextLabel(recall[item.key]) : recall[item.key]}</div>
+          <div class="vin-number__item-value ${recallClass}">${itemValue}</div>
         `);
         liEl.append(...itemFragment.children);
       });
