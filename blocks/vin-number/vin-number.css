@@ -1,3 +1,7 @@
+:root {
+  --label-top: -6px;
+}
+
 .vin-number__form {
   display: flex;
   gap: 8px;
@@ -33,7 +37,7 @@
 .vin-number__input:not(:focus):valid ~ .v2-forms__label {
   bottom: 0;
   left: 0;
-  top: 3px;
+  top: var(--label-top);
 }
 
 /* recalls list styling */
@@ -45,10 +49,15 @@
   margin-top: 40px;
 }
 
-.vin-number__recalls-heading {
+.vin-number__recalls-heading-wrapper {
   display: flex;
   align-items: center;
-  gap: 16px
+  gap: 16px;
+  margin-bottom: 5px;
+}
+
+.vin-number__recalls-heading {
+  margin-bottom: 0;
 }
 
 .vin-number__list {
@@ -74,6 +83,10 @@
 }
 
 @media (min-width: 744px) {
+  :root {
+    --label-top: 3px;
+  }
+
   .vin-number__form {
     flex-direction: row;
     max-width: 100%;
