@@ -77,7 +77,7 @@
     },
     {
       "Key": "recall_description",
-      "Text": "Description"
+      "Text": "Summary"
     },
     {
       "Key": "safety_risk_description",
@@ -121,8 +121,13 @@
     }, 
     {
       "Key": "mfr_recall_number",
-      "Text": "Campaign/NHTSA #"
+      "Text": "Brand Recall number"
+    },
+    {
+      "Key": "nhtsa_recall_number",
+      "Text": "NHTSA recall number"
     }
+
   ],
   ":type": "sheet"
 }

@@ -60,7 +60,8 @@
   margin-bottom: 0;
 }
 
-.vin-number__list {
+.vin-number__list,
+.vin-number__detail-list {
   list-style: none;
 }
 
@@ -69,7 +70,17 @@
   padding: 20px 0;
 }
 
-.vin-number__item-title:not(:first-child){
+.vin-number__detail-item {
+  display: flex;
+  gap: 16px;
+}
+
+.vin-number__detail-item--column {
+  flex-direction: column;
+  gap: 0;
+}
+
+.vin-number__detail-item:not(:first-child){
   margin-top: 10px;
 }
 
