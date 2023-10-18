@@ -82,8 +82,8 @@ function renderRecalls(recallsData) {
           }
 
           const itemFragment = docRange.createContextualFragment(`<li class="vin-number__detail-item ${item.class ? item.class : ''}" >
-            <div class="vin-number__detail-title subtitle-1"> ${getTextLabel(item.key)} </div>
-            <div class="vin-number__detail-value ${recallClass}">${itemValue}</div>
+            <h5 class="vin-number__detail-title subtitle-1"> ${getTextLabel(item.key)} </h5>
+            <span class="vin-number__detail-value ${recallClass}">${itemValue}</span>
           </li>`);
           recallDetailsList.append(...itemFragment.children);
         }
@@ -120,6 +120,8 @@ async function fetchRecalls(e) {
             if (response.error_code) {
               resultText.innerHTML = `${getTextLabel('no recalls')} ${vin}`;
             } else {
+              response.recalls.sort((a, b) => (b.mfr_recall_status - a.mfr_recall_status)
+                || (new Date(b.date) - new Date(a.date)));
               renderRecalls(response);
             }
 
