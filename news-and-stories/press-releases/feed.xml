@@ -2,10 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-10-16T00:00:00.000Z</updated>
+    <updated>2023-10-17T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Continues Expansion of Electromobility Ecosystem with 11 New Certified EV Dealers in North America]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-continues-expansion-of-electromobility-ecosystem-with-11-new-certified-ev-dealers-in-north-america/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-continues-expansion-of-electromobility-ecosystem-with-11-new-certified-ev-dealers-in-north-america/"/>
+        <updated>2023-10-17T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The continued growth of our Certified EV Dealership network underscores our commitment to providing customers the full ecosystem of resources they need to successfully adopt battery-electric vehicles, beyond just selling the truck,” said Jared Ruiz, regional vice president – West for Volvo Trucks North America.]]></content>
+        <published>2023-10-17T00:00:00.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Extends Exclusive Sponsorship of America’s Road Team for 2024]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-extends-exclusive-sponsorship-of-americas-road-team-for-2024/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-extends-exclusive-sponsorship-of-americas-road-team-for-2024/"/>
+        <updated>2023-10-17T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The professional drivers who make up America’s Road Team are the elite of their profession, and I am proud to honor them on behalf of Volvo Trucks North America,” said Voorhoeve.]]></content>
+        <published>2023-10-17T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Launches Volvo Connect, All-in-One Fleet Management Portal]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-launches-volvo-connect-all-in-one-fleet-management-portal/</id>
