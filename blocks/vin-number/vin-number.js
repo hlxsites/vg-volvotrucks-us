@@ -7,6 +7,9 @@ const docRange = document.createRange();
 
 // list of things to be display for each recall
 const valueDisplayList = [{
+  key: 'recall_date',
+},
+{
   key: 'mfr_recall_number',
 },
 {
@@ -64,14 +67,10 @@ function renderRecalls(recallsData) {
         classes: 'vin-number__list-item',
       });
 
-      const recallDetailsList = createElement('ul', { classes: 'vin-number__detail-list' });
       // map the number from api to correct status
       recall.mfr_recall_status = recallStatus[recall.mfr_recall_status];
 
-      const dateFragment = docRange.createContextualFragment(`<li class="vin-number__detail-item" >
-        <div class="vin-number__detail-title subtitle-1"> ${recall.recall_date} </div>
-      </li>`);
-      recallDetailsList.append(dateFragment);
+      const recallDetailsList = createElement('ul', { classes: 'vin-number__detail-list' });
 
       valueDisplayList.forEach((item) => {
         if (recall[item.key]) {
