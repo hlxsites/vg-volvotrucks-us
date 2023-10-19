@@ -4,6 +4,7 @@ const VIN_URL = 'https://vinlookup-dev-euw-ase-01.azurewebsites.net/v1/api/vin/'
 const API_KEY = '0e13506b59674706ad9bae72d94fc83c';
 
 const docRange = document.createRange();
+const isFrench = window.location.href.indexOf('fr') > -1;
 
 // list of things to be display for each recall
 const valueDisplayList = [{
@@ -78,6 +79,8 @@ function renderRecalls(recallsData) {
           let itemValue = item.class ? capitalize(recall[item.key]) : recall[item.key];
           if (recallClass) {
             itemValue = getTextLabel(recall[item.key]);
+          } else if (isFrench && item.frenchKey) {
+            itemValue = recall[item.frenchKey];
           }
 
           const itemFragment = docRange.createContextualFragment(`<li class="vin-number__detail-item ${item.class ? item.class : ''}" >
@@ -154,7 +157,7 @@ export default async function decorate(block) {
         maxlength="17"
         required
         class="vin-number__input"
-        pattern="^[1,4][V,v,R,r][1,2,4,5,k,K][B-C,E-H,J-N,R-S,V-Y,b-c,e-h,j-n,r-s,v-y][A-Za-z0-9]{13}$"
+        pattern="^[1,2,4][N,n,R,r,P,p,V,v][1,2,4,5,C,c,K,k,V,v][B-C,E-H,J-N,R-S,V-Y,b-c,e-h,j-n,r-s,v-y][A-Za-z0-9]{13}$"
       />
       <label for="vin_number" class="vin-number__label">${getTextLabel('vinlabel')}</label>
     </div>
