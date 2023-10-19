@@ -54,7 +54,8 @@ export default async function decorate(block) {
       const newVideo = createVideo(videoLinks[0].getAttribute('href'), `${blockName}__media`, {
         muted: true,
         autoplay: true,
-        loop: 'loop',
+        loop: true,
+        playsinline: true,
       });
       section.prepend(newVideo);
       videoLinks[0].remove();
