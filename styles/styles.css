@@ -1098,14 +1098,14 @@ main.blue-contract .section.section-with-title p {
   gap: 10px;
   justify-content: center;
   letter-spacing: 1.25px;
-  line-height: 100%;
+  line-height: 1.4;
   max-width: 21.5em;
   height: 48px;
   padding: 0 36px;
   text-align: left;
   text-transform: uppercase;
   transition: all var(--duration-small) var(--easing-standard);
-  white-space: wrap;
+  white-space: normal;
 }
 
 .redesign-v2 a.button.primary,
