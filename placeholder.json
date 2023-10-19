@@ -61,7 +61,7 @@
     }, 
     {
       "Key": "vinformat",
-      "Text": "Please provide correct vin number format"
+      "Text": "The VIN entered is not valid for Volvo Trucks, Nova Bus, or Prevost vehicles"
     }, 
     {
       "Key": "result text",
@@ -126,8 +126,11 @@
     {
       "Key": "nhtsa_recall_number",
       "Text": "NHTSA recall number"
+    },
+    {
+      "Key": "recall_oldest_info",
+      "Text": "Recall information available since: Jan 15,2008"
     }
-
   ],
   ":type": "sheet"
 }
