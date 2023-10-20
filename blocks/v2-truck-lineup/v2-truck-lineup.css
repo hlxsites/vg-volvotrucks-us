@@ -17,6 +17,11 @@
   }
 }
 
+.section + .v2-truck-lineup-container {
+  /* remove 40px section padding, add 16px margin  */
+  margin-top: -24px;
+}
+
 /* Full width block */
 main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   margin: 0;
@@ -266,6 +271,11 @@ ul.v2-truck-lineup__navigation {
 }
 
 @media screen and (min-width: 744px) {
+  .section + .v2-truck-lineup-container {
+    /* remove 56px section padding, add 16px margin  */
+    margin-top: -40px;
+  }
+
   .v2-truck-lineup__arrow-controls {
     display: block;
   }
@@ -274,6 +284,11 @@ ul.v2-truck-lineup__navigation {
 @media screen and (min-width: 1200px) {
   :root {
     --truck-lineup-img-width: 60%;
+  }
+
+  .section + .v2-truck-lineup-container {
+    /* remove 136px section padding, add 24px margin  */
+    margin-top: -112px;
   }
 
   .v2-truck-lineup__image-item img {

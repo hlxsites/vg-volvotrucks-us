@@ -47,7 +47,7 @@
 }
 
 .section.v2-hero-container {
-  padding-bottom: 0;
+  padding-bottom: 40px;
 }
 
 .v2-hero__image,
@@ -180,6 +180,10 @@
 @media (min-width: 744px) {
   .v2-hero {
     --v2-hero-padding: 50px;
+  }
+
+  .section.v2-hero-container {
+    padding-bottom: 56px;
   }
 
   .v2-hero__title {
