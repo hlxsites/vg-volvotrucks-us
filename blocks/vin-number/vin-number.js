@@ -1,10 +1,18 @@
 import { getTextLabel, createElement, getJsonFromUrl } from '../../scripts/common.js';
 
-const VIN_URL = 'https://vinlookup-dev-euw-ase-01.azurewebsites.net/v1/api/vin/';
-const API_KEY = '0e13506b59674706ad9bae72d94fc83c';
-
 const docRange = document.createRange();
 const isFrench = window.location.href.indexOf('fr') > -1;
+
+const apiConfig = {
+  dev: {
+    url: 'https://vinlookup-dev-euw-ase-01.azurewebsites.net/v1/api/vin/',
+    key: '0e13506b59674706ad9bae72d94fc83c',
+  },
+  prod: {
+    url: 'https://vinlookup-dev-euw-ase-01.azurewebsites.net/v1/api/vin/',
+    key: '0e13506b59674706ad9bae72d94fc83c',
+  },
+};
 
 // list of things to be display for each recall
 const valueDisplayList = [{
@@ -21,24 +29,28 @@ const valueDisplayList = [{
 },
 {
   key: 'recall_description',
+  frenchKey: 'recall_description_french',
   class: 'vin-number__detail-item--column',
 },
 {
   key: 'safety_risk_description',
+  frenchKey: 'safety_risk_description_french',
   class: 'vin-number__detail-item--column',
 }, {
   key: 'remedy_description',
+  frenchKey: 'remedy_description_french',
   class: 'vin-number__detail-item--column',
 }, {
   key: 'mfr_notes',
+  frenchKey: 'mfr_notes_french',
   class: 'vin-number__detail-item--column',
 }];
 
 // use this to map values from API
 const recallStatus = {
-  11: 'recall_incomplete',
-  0: 'recall_complete',
-  12: 'recall_incomplete_no_remedy',
+  11: 'recall-incomplete',
+  0: 'recall-complete',
+  12: 'recall-incomplete-no-remedy',
 };
 
 function capitalize(text) {
@@ -79,7 +91,7 @@ function renderRecalls(recallsData) {
           let itemValue = item.class ? capitalize(recall[item.key]) : recall[item.key];
           if (recallClass) {
             itemValue = getTextLabel(recall[item.key]);
-          } else if (isFrench && item.frenchKey) {
+          } else if (isFrench && item.frenchKey && recall[item.frenchKey]) {
             itemValue = recall[item.frenchKey];
           }
 
@@ -99,6 +111,11 @@ function renderRecalls(recallsData) {
   }
 }
 
+function getAPIConfig() {
+  const env = window.location.host.includes('hlx.page') || window.location.host.includes('localhost') ? 'dev' : 'prod';
+  return apiConfig[env];
+}
+
 async function fetchRecalls(e) {
   e.preventDefault();
   if (e && e.target) {
@@ -116,14 +133,13 @@ async function fetchRecalls(e) {
     const vin = formData.get('vin');
 
     if (vin) {
+      const { url, key } = getAPIConfig();
       try {
-        getJsonFromUrl(`${VIN_URL}${vin}?api_key=${API_KEY}&mode=company`)
+        getJsonFromUrl(`${url}${vin}?api_key=${key}&mode=company`)
           .then((response) => {
             if (response.error_code) {
               resultText.innerHTML = `${getTextLabel('no recalls')} ${vin}`;
             } else {
-              response.recalls.sort((a, b) => (b.mfr_recall_status - a.mfr_recall_status)
-                || (new Date(b.date) - new Date(a.date)));
               renderRecalls(response);
             }
 

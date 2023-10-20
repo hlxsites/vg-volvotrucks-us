@@ -96,15 +96,15 @@
       "Text": "Recall Status"
     },
     {
-      "Key": "recall_complete",
+      "Key": "recall-complete",
       "Text": "Recall Complete"
     },
     {
-      "Key": "recall_incomplete",
+      "Key": "recall-incomplete",
       "Text": "Recall Incomplete"
     }, 
     {
-      "Key": "recall_incomplete_no_remedy",
+      "Key": "recall-incomplete-no-remedy",
       "Text": "Recall In Complete, remedy not available"
     }, 
     {
@@ -121,11 +121,11 @@
     }, 
     {
       "Key": "mfr_recall_number",
-      "Text": "Brand Recall number"
+      "Text": "Brand Recall Number"
     },
     {
       "Key": "nhtsa_recall_number",
-      "Text": "NHTSA recall number"
+      "Text": "NHTSA Recall Number"
     },
     {
       "Key": "recall_oldest_info",

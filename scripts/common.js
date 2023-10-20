@@ -23,7 +23,12 @@ function loadFooter(footer) {
 }
 
 export async function getPlaceholders() {
-  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
+  const language = window.location.pathname.match(/\/fr\//);
+  let url = '/placeholder.json';
+  if (language) {
+    url = `${language[0]}placeholder.json`;
+  }
+  placeholders = await fetch(url).then((resp) => resp.json());
 }
 
 export function getTextLabel(key) {
