@@ -122,6 +122,12 @@ const listenScroll = (carousel) => {
     });
 
     elements.forEach((el) => io.observe(el));
+
+    // force to go to the first item on load
+    carousel.scrollTo({
+      left: 0,
+      behavior: 'instant',
+    });
   });
 };
 
