@@ -92,10 +92,12 @@ const updateActiveItem = (index) => {
   // Update description position
   const descriptionWidth = descriptions.offsetWidth;
 
-  descriptions.scrollTo({
-    left: descriptionWidth * index,
-    behavior: 'smooth',
-  });
+  setTimeout(() => {
+    descriptions.scrollTo({
+      left: descriptionWidth * index,
+      behavior: 'smooth',
+    });
+  }, 50);
 };
 
 const listenScroll = (carousel) => {
