@@ -1095,13 +1095,13 @@ main.blue-contract .section.section-with-title p {
   display: inline-flex;
   font-family: var(--font-family-body);
   font-size: 14px;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
   letter-spacing: 1.25px;
   line-height: 1.4;
   max-width: 21.5em;
   height: 48px;
-  padding: 0 36px;
+  padding: 0 32px;
   text-align: left;
   text-transform: uppercase;
   transition: all var(--duration-small) var(--easing-standard);
