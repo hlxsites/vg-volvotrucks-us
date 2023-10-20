@@ -36,6 +36,16 @@
   height: calc(100vh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
 }
 
+@supports (height: 1svh) {
+  .v2-hero {
+    height: calc(100svh - var(--nav-height));
+  }
+
+  .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
+    height: calc(100svh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
+  }
+}
+
 .section.v2-hero-container {
   padding-bottom: 0;
 }
