@@ -23,7 +23,12 @@ function loadFooter(footer) {
 }
 
 export async function getPlaceholders() {
-  placeholders = await fetch('/placeholder.json').then((resp) => resp.json());
+  const language = window.location.pathname.match(/\/fr\//);
+  let url = '/placeholder.json';
+  if (language) {
+    url = `${language[0]}placeholder.json`;
+  }
+  placeholders = await fetch(url).then((resp) => resp.json());
 }
 
 export function getTextLabel(key) {
@@ -271,3 +276,21 @@ export function debounce(func, timeout = 200) {
     timer = setTimeout(() => { func.apply(this, args); }, timeout);
   };
 }
+
+/**
+ * Returns a list of properties listed in the block
+ * @param {string} route get the Json data from the route
+ * @returns {Object} the json data object
+*/
+export const getJsonFromUrl = async (route) => {
+  try {
+    const response = await fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+};

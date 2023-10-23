@@ -1,0 +1,115 @@
+:root {
+  --label-top: -6px;
+}
+
+.vin-number__form {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.vin-number__input-wrapper {
+  position: relative;
+}
+
+.vin-number__input {
+  margin: 0;
+  max-width: 100%;
+}
+
+.redesign-v2 .vin-number__form .vin-number__submit {
+  max-width: 100%;
+}
+
+.vin-number__form .vin-number__submit:disabled {
+  background-color: var(--overlay-background-color);
+  cursor: unset;
+}
+
+.vin-number__label {
+  left: var(--input-padding);
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    top var(--duration-small) var(--easing-standard),
+    left var(--duration-small) var(--easing-standard);
+}
+
+.vin-number__input:focus ~ .vin-number__label,
+.vin-number__input:not(:placeholder-shown) ~ .vin-number__label,
+.vin-number__input:not(:focus):valid ~ .v2-forms__label {
+  bottom: 0;
+  left: 0;
+  top: var(--label-top);
+}
+
+/* recalls list styling */
+.vin-number__results-container{
+  padding: 20px 0;
+}
+
+.vin-number__recalls-wrapper {
+  margin-top: 40px;
+}
+
+.vin-number__recalls-heading-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.vin-number__recalls-heading {
+  margin-bottom: 0;
+}
+
+.vin-number__list,
+.vin-number__detail-list {
+  list-style: none;
+}
+
+.vin-number__list-item {
+  border-top: 1px solid var(--c-black);
+  padding: 20px 0;
+}
+
+.vin-number__detail-item {
+  display: flex;
+  gap: 16px;
+}
+
+.vin-number__detail-item--column {
+  flex-direction: column;
+  gap: 0;
+}
+
+.vin-number__detail-item:not(:first-child){
+  margin-top: 10px;
+}
+
+.vin-number__recall-incomplete,
+.vin-number__recall-incomplete-no-remedy {
+  color: var(--c-error-red);
+}
+
+.vin-number__recall-complete {
+  color: var(--c-leaf-4);
+}
+
+@media (min-width: 744px) {
+  :root {
+    --label-top: 3px;
+  }
+
+  .vin-number__form {
+    flex-direction: row;
+    max-width: 100%;
+  }
+
+  .vin-number__input-wrapper {
+    flex: 1;
+  }
+}

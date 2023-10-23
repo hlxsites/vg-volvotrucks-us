@@ -1,0 +1,69 @@
+:root {
+  --nhtsa-header-gutter: 16px;
+}
+
+.nhtsa-header {
+  display: flex;
+  gap: var(--nhtsa-header-gutter);
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nhtsa-header .icon-nova-bus svg,
+.nhtsa-header .icon-prevost svg,
+.nhtsa-header .icon-logo svg {
+  width: 100px;
+  height: 20px;
+}
+
+.nhtsa-header .nhsta-header__langauge-switch {
+  background-color: var(--c-cta-blue-default);
+  color: var(--c-white);
+  text-transform: uppercase;
+  padding: 9px 21px;
+  font-family: var(--font-family-body);
+  font-size: var(--f-button-font-size);
+  line-height: var(--f-button-line-height);
+  letter-spacing: var(--f-button-letter-spacing);
+  border: 0;
+  align-items: center;
+  display: flex;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.nhtsa-header .nhsta-header__langauge-switch:hover,
+.nhtsa-header .nhsta-header__langauge-switch:focus {
+  background-color: var(--c-cta-blue-hover);
+}
+
+.nhtsa-header .nhsta-header__langauge-switch:active {
+  background-color: var(--c-cta-blue-active);
+}
+
+.nhtsa-header .hide {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --nhtsa-header-gutter: 32px;
+  }
+
+  .nhtsa-header-wrapper {
+    border-top: 1px solid var(--c-grey-300);
+  }
+
+  .nhtsa-header .icon-logo svg {
+    width: 160px;
+    height: 30px;
+  }
+
+  .nhtsa-header .icon-nova-bus svg,
+  .nhtsa-header .icon-prevost svg {
+    width: initial;
+    height: initial;
+  }
+
+}

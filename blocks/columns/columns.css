@@ -5,6 +5,11 @@
     margin: 48px 0;
 }
 
+.columns.nhtsa > div {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .columns.revese-odd-rows-on-mobile > div:nth-of-type(odd),
 .columns.reverse-odd-rows-on-mobile > div:nth-of-type(odd) {
     flex-direction: column-reverse;
@@ -48,4 +53,20 @@
         flex: 0;
         padding-right: 10px;
     }
+}
+
+/* styling for nhtsa */
+.columns.nhtsa p {
+    margin-bottom: 0;
+}
+
+.columns.nhtsa a.button.primary {
+    padding: 0;
+    background-color: transparent;
+    color: var( --c-cta-blue-default);
+    height: auto;
+}
+
+.columns.nhtsa a.button.primary:hover {
+    color: var(--c-cta-blue-hover);
 }

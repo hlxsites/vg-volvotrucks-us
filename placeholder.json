@@ -1,7 +1,7 @@
 {
-  "total": 12,
+  "total": 30,
   "offset": 0,
-  "limit": 12,
+  "limit": 30,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -50,6 +50,86 @@
     {
       "Key": "no eloqua link message",
       "Text": "Change cookie settings"
+    },
+    {
+      "Key": "vinlabel",
+      "Text": "Enter your 17-digit VIN (Vehicle Identification Number)"
+    }, 
+    {
+      "Key": "submit",
+      "Text": "Submit"
+    }, 
+    {
+      "Key": "vinformat",
+      "Text": "The VIN entered is not valid for Volvo Trucks, Nova Bus, or Prevost vehicles"
+    }, 
+    {
+      "Key": "result text",
+      "Text": "${count} recalls available for \"${vin}\" VIN"
+    }, 
+    {
+      "Key": "recalls",
+      "Text": "Recalls"
+    },
+    {
+      "Key": "recall_date",
+      "Text": "Issue date"
+    },
+    {
+      "Key": "recall_description",
+      "Text": "Summary"
+    },
+    {
+      "Key": "safety_risk_description",
+      "Text": "Safety Risk"
+    },
+    {
+      "Key": "remedy_description",
+      "Text": "Remedy"
+    }, 
+    {
+      "Key": "published_info",
+      "Text": "Information last updated"
+    },
+    {
+      "Key": "mfr_recall_status",
+      "Text": "Recall Status"
+    },
+    {
+      "Key": "recall-complete",
+      "Text": "Recall Complete"
+    },
+    {
+      "Key": "recall-incomplete",
+      "Text": "Recall Incomplete"
+    }, 
+    {
+      "Key": "recall-incomplete-no-remedy",
+      "Text": "Recall In Complete, remedy not available"
+    }, 
+    {
+      "Key": "loading recalls",
+      "Text": " Loading Recalls ....."
+    },
+    {
+      "Key": "no recalls",
+      "Text": "No recalls for vin"
+    },
+    {
+      "Key": "mfr_notes",
+      "Text": "Next steps"
+    }, 
+    {
+      "Key": "mfr_recall_number",
+      "Text": "Brand Recall Number"
+    },
+    {
+      "Key": "nhtsa_recall_number",
+      "Text": "NHTSA Recall Number"
+    },
+    {
+      "Key": "recall_oldest_info",
+      "Text": "Recall information available since: Jan 15, 2008"
     }
   ],
   ":type": "sheet"
