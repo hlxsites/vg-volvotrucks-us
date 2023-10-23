@@ -31,6 +31,8 @@ export default async function decorate(block) {
     const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
       muted: true,
       autoplay: true,
+      loop: true,
+      playsinline: true,
     });
     block.prepend(video);
     link.remove();

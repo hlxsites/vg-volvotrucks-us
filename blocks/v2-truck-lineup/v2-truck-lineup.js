@@ -92,10 +92,12 @@ const updateActiveItem = (index) => {
   // Update description position
   const descriptionWidth = descriptions.offsetWidth;
 
-  descriptions.scrollTo({
-    left: descriptionWidth * index,
-    behavior: 'smooth',
-  });
+  setTimeout(() => {
+    descriptions.scrollTo({
+      left: descriptionWidth * index,
+      behavior: 'smooth',
+    });
+  }, 50);
 };
 
 const listenScroll = (carousel) => {
@@ -122,6 +124,12 @@ const listenScroll = (carousel) => {
     });
 
     elements.forEach((el) => io.observe(el));
+
+    // force to go to the first item on load
+    carousel.scrollTo({
+      left: 0,
+      behavior: 'instant',
+    });
   });
 };
 

@@ -47,7 +47,8 @@ export default async function decorate(block) {
   const video = createVideo(videoLink.getAttribute('href'), `${blockClass}__video`, {
     muted: true,
     autoplay: true,
-    loop: 'loop',
+    loop: true,
+    playsinline: true,
   });
 
   contentWrapper.classList.add(`${blockClass}__content-wrapper`);
