@@ -165,6 +165,7 @@
 
   .v2-content-card--images-grid .v2-content-card__item:nth-child(5) .v2-content-card__media {
     aspect-ratio: 2/1;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
   }
 
   /* Specific styles for images-grid-masonry variant */

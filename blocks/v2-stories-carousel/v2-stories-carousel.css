@@ -72,6 +72,7 @@ main .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   text-align: center;
   text-wrap: balance;
   transition: opacity var(--duration-small) var(--easing-exit);
+  will-change: opacity;
 }
 
 .v2-stories-carousel-item.active .v2-stories-carousel-text {
