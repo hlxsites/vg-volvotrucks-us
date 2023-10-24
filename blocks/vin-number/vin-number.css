@@ -50,8 +50,14 @@
   padding: 20px 0;
 }
 
+.vin-number__no-french-info {
+  padding-top: 20px;
+  color: var(--c-grey-800);
+  font-family: var(--ff-volvo-novum-medium);
+}
+
 .vin-number__recalls-wrapper {
-  margin-top: 40px;
+  margin-top: 25px;
 }
 
 .vin-number__recalls-heading-wrapper {

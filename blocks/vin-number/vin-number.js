@@ -25,6 +25,9 @@ const valueDisplayList = [{
   key: 'nhtsa_recall_number',
 },
 {
+  key: 'tc_recall_nbr',
+},
+{
   key: 'mfr_recall_status',
 },
 {
@@ -60,6 +63,7 @@ function capitalize(text) {
 function renderRecalls(recallsData) {
   const resultText = document.querySelector('.vin-number__results-text');
   resultText.innerText = getTextLabel('result text').replace(/\${count}/, recallsData.number_of_recalls).replace(/\${vin}/, recallsData.vin);
+  let noFrenchInfo = false;
 
   if (recallsData.recalls_available) {
     const blockEl = document.querySelector('.vin-number__recalls-wrapper');
@@ -91,8 +95,14 @@ function renderRecalls(recallsData) {
           let itemValue = item.class ? capitalize(recall[item.key]) : recall[item.key];
           if (recallClass) {
             itemValue = getTextLabel(recall[item.key]);
-          } else if (isFrench && item.frenchKey && recall[item.frenchKey]) {
-            itemValue = recall[item.frenchKey];
+          } else if (isFrench && item.frenchKey) {
+            if (recall[item.frenchKey]) {
+              itemValue = recall[item.frenchKey];
+            } else if (!noFrenchInfo) {
+              const noFrenchInoEl = document.querySelector('.vin-number__no-french-info');
+              noFrenchInoEl.textContent = getTextLabel('no-french-info');
+              noFrenchInfo = true;
+            }
           }
 
           const itemFragment = docRange.createContextualFragment(`<li class="vin-number__detail-item ${item.class ? item.class : ''}" >
@@ -125,6 +135,9 @@ async function fetchRecalls(e) {
 
     const recalls = document.querySelector('.vin-number__recalls-wrapper');
     recalls.innerHTML = '';
+
+    const noFrenchInoEl = document.querySelector('.vin-number__no-french-info');
+    noFrenchInoEl.textContent = '';
 
     const resultText = document.querySelector('.vin-number__results-text');
     resultText.innerText = getTextLabel('loading recalls');
@@ -183,6 +196,7 @@ export default async function decorate(block) {
   const vinResultsContainer = createElement('div', { classes: 'vin-number__results-container' });
   const innerContent = docRange.createContextualFragment(`
     <span class="vin-number__results-text"></span>
+    <div class="vin-number__no-french-info"></div>
     <div class="vin-number__recalls-wrapper"></div>
   `);
 
