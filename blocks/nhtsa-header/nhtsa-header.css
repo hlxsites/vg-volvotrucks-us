@@ -55,15 +55,10 @@
     border-top: 1px solid var(--c-grey-300);
   }
 
-  .nhtsa-header .icon-logo svg {
+  .nhtsa-header .icon-logo svg,
+  .nhtsa-header .icon-nova-bus svg,
+  .nhtsa-header .icon-prevost svg {
     width: 160px;
     height: 30px;
   }
-
-  .nhtsa-header .icon-nova-bus svg,
-  .nhtsa-header .icon-prevost svg {
-    width: initial;
-    height: initial;
-  }
-
 }
