@@ -1,5 +1,5 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/common.js';
+import { createElement, getLanguagePath } from '../../scripts/common.js';
 /* eslint-disable no-use-before-define */
 
 function displayScrollToTop(buttonEl) {
@@ -44,9 +44,7 @@ function addScrollToTopButton(mainEl) {
 export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
-  const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  const footerPath = cfg.footer || `${langCodeMatch ? langCodeMatch[1] : '/'}footer`;
+  const footerPath = cfg.footer || `${getLanguagePath()}footer`;
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
   const footer = createElement('div', { classes: 'footer-container' });
