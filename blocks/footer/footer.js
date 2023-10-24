@@ -50,15 +50,17 @@ export default async function decorate(block) {
   const footer = createElement('div', { classes: 'footer-container' });
   footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
+  const isRecallTemplate = document.querySelector('meta[content="recalls"]');
+
   const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
 
   openExternalLinksInNewTab(footer);
-  wrapSocialMediaLinks(mainLinkWrapper);
 
   const headings = footer.querySelectorAll('h1, h2, h3, h4, h5, h6');
   [...headings].forEach((heading) => heading.classList.add('footer__title'));
 
-  if (mainLinkWrapper) {
+  if (mainLinkWrapper && !isRecallTemplate) {
+    wrapSocialMediaLinks(mainLinkWrapper);
     mainLinkWrapper.classList.add('footer-links-wrapper');
     // in Word, it is edited like a column block, but we style it differently
     mainLinkWrapper.firstElementChild.classList.remove('columns');
@@ -78,6 +80,8 @@ export default async function decorate(block) {
 
       title.addEventListener('click', (e) => toggleExpand(e.currentTarget));
     });
+  } else if (isRecallTemplate) {
+    mainLinkWrapper.remove();
   }
 
   const copyrightWrapper = createElement('div', { classes: 'footer-copyright-wrapper' });
