@@ -27,29 +27,38 @@ const listenScroll = (carousel) => {
   });
 };
 
+const getScrollOffset = (ulItems) => {
+  const first = ulItems.firstElementChild;
+  const second = first.nextElementSibling;
+  return second.getBoundingClientRect().x - first.getBoundingClientRect().x;
+};
+
+const scrollToIndex = (ulItems, index) => {
+  const scrollOffset = getScrollOffset(ulItems);
+  ulItems.scrollTo({
+    left: index * scrollOffset,
+    behavior: 'smooth',
+  });
+};
+
 const createArrowControls = (ulItems) => {
-  function scroll(direction) {
+  function navigate(direction) {
     const activeItem = ulItems.querySelector('.v2-stories-carousel-item.active');
     let index = [...activeItem.parentNode.children].indexOf(activeItem);
-    const first = ulItems.firstElementChild;
-    const second = first.nextElementSibling;
-    const scrollOffset = second.getBoundingClientRect().x - first.getBoundingClientRect().x;
+
     if (direction === 'left') {
       index -= 1;
-      if (index === -1) {
+      if (index === -1) { // Go to the last item if at the start
         index = ulItems.childElementCount;
       }
     } else {
       index += 1;
       if (index > ulItems.childElementCount - 1) {
-        index = 0;
+        index = 0; // Go to the first item if at the end
       }
     }
 
-    ulItems.scrollTo({
-      left: index * scrollOffset,
-      behavior: 'smooth',
-    });
+    scrollToIndex(ulItems, index);
   }
 
   const arrowControls = createElement('ul', { classes: ['v2-stories-carousel-arrowcontrols'] });
@@ -72,8 +81,8 @@ const createArrowControls = (ulItems) => {
   arrowControls.append(...arrows.children);
   ulItems.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
-  prevButton.addEventListener('click', () => scroll('left'));
-  nextButton.addEventListener('click', () => scroll('right'));
+  prevButton.addEventListener('click', () => navigate('left'));
+  nextButton.addEventListener('click', () => navigate('right'));
   return arrowControls;
 };
 
@@ -163,4 +172,11 @@ export default async function decorate(block) {
 
   createArrowControls(ulItems);
   listenScroll(ulItems);
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      if (ulItems) {
+        scrollToIndex(ulItems, 1); // Scroll to the second item
+      }
+    });
+  });
 }

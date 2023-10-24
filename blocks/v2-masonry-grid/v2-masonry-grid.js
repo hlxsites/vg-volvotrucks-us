@@ -33,7 +33,8 @@ export default function decorate(block) {
           const video = createVideo(videos[0].getAttribute('href'), `${blockName}__video`, {
             muted: true,
             autoplay: true,
-            loop: 'loop',
+            loop: true,
+            playsinline: true,
           });
           li.prepend(video);
           videos[0].remove();
