@@ -6,6 +6,7 @@ import {
   loadHeader,
   buildBlock,
   decorateBlock,
+  getMetadata,
 } from './lib-franklin.js';
 
 let placeholders = null;
@@ -15,7 +16,8 @@ let placeholders = null;
  */
 function loadFooter(footer) {
   if (footer) {
-    const footerBlock = buildBlock('footer', '');
+    const blockName = getMetadata('footer-block') || 'footer';
+    const footerBlock = buildBlock(blockName, '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
@@ -293,4 +295,10 @@ export const getJsonFromUrl = async (route) => {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
+};
+
+export const getLanguagePath = () => {
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  return langCodeMatch ? langCodeMatch[1] : '/';
 };
