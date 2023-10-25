@@ -7,14 +7,22 @@ import {
 } from '../../scripts/lib-franklin.js';
 import { createElement } from '../../scripts/common.js';
 
+const updateActiveClass = (elements, targetElement) => {
+  elements.forEach((el) => {
+    if (el === targetElement) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+};
+
 const listenScroll = (carousel) => {
   const elements = carousel.querySelectorAll('.v2-stories-carousel-items > *');
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      } else {
-        entry.target.classList.remove('active');
+        updateActiveClass(elements, entry.target);
       }
     });
   }, {
@@ -39,28 +47,34 @@ const scrollToIndex = (ulItems, index) => {
     left: index * scrollOffset,
     behavior: 'smooth',
   });
+
+  const elements = ulItems.querySelectorAll('.v2-stories-carousel-items > *');
+  updateActiveClass(elements, elements[index]);
+};
+
+const navigate = (ulItems, direction) => {
+  const activeItem = ulItems.querySelector('.v2-stories-carousel-item.active');
+  let index = [...activeItem.parentNode.children].indexOf(activeItem);
+
+  if (direction === 'left') {
+    index -= 1;
+    if (index === -1) { // Go to the last item if at the start
+      index = ulItems.childElementCount - 1;
+    }
+  } else {
+    index += 1;
+    if (index > ulItems.childElementCount - 1) {
+      index = 0; // Go to the first item if at the end
+    }
+  }
+
+  scrollToIndex(ulItems, index);
+
+  const elements = ulItems.querySelectorAll('.v2-stories-carousel-items > *');
+  updateActiveClass(elements, elements[index]);
 };
 
 const createArrowControls = (ulItems) => {
-  function navigate(direction) {
-    const activeItem = ulItems.querySelector('.v2-stories-carousel-item.active');
-    let index = [...activeItem.parentNode.children].indexOf(activeItem);
-
-    if (direction === 'left') {
-      index -= 1;
-      if (index === -1) { // Go to the last item if at the start
-        index = ulItems.childElementCount;
-      }
-    } else {
-      index += 1;
-      if (index > ulItems.childElementCount - 1) {
-        index = 0; // Go to the first item if at the end
-      }
-    }
-
-    scrollToIndex(ulItems, index);
-  }
-
   const arrowControls = createElement('ul', { classes: ['v2-stories-carousel-arrowcontrols'] });
   const arrows = document.createRange().createContextualFragment(`
     <li>
@@ -81,8 +95,8 @@ const createArrowControls = (ulItems) => {
   arrowControls.append(...arrows.children);
   ulItems.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
-  prevButton.addEventListener('click', () => navigate('left'));
-  nextButton.addEventListener('click', () => navigate('right'));
+  prevButton.addEventListener('click', () => navigate(ulItems, 'left'));
+  nextButton.addEventListener('click', () => navigate(ulItems, 'right'));
   return arrowControls;
 };
 
