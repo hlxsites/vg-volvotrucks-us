@@ -5,7 +5,7 @@ function hideButtons(buttons) {
   buttons.forEach((element) => {
     if (element.href.match(/\/recalls/)) {
       element.classList.add('button', 'nhsta-header__langauge-switch');
-    } else if (element.href.match(/www.volvotrucks.us/)) {
+    } else if (element.href.match(/www.volvotrucks/)) {
       element.target = '_blank';
     }
   });
