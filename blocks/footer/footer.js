@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons } from '../../scripts/lib-franklin.js';
+import { readBlockConfig, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 import { createElement, getLanguagePath } from '../../scripts/common.js';
 /* eslint-disable no-use-before-define */
 
@@ -44,22 +44,28 @@ function addScrollToTopButton(mainEl) {
 export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
-  const footerPath = cfg.footer || `${getLanguagePath()}footer`;
+  let footerPath = cfg.footer || `${getLanguagePath()}footer`;
+  const isCustomFooter = getMetadata('custom-footer');
+  if (isCustomFooter) {
+    footerPath = cfg.footer || `${getLanguagePath()}${getMetadata('custom-footer')}`;
+  }
+
   const resp = await fetch(`${footerPath}.plain.html`);
   const html = await resp.text();
   const footer = createElement('div', { classes: 'footer-container' });
   footer.innerHTML = html.replaceAll('{year}', new Date().getFullYear());
 
-  const isRecallTemplate = document.querySelector('meta[content="recalls"]');
-
-  const [mainLinkWrapper, footerBar, footerCopyright] = footer.children;
+  // for custom footer we don't need the external link section,
+  // so check if columns block exist
+  const coulmnsWrapper = footer.querySelector('.columns');
+  let footerBar = footer.children[1];
+  let footerCopyright = footer.children[2];
+  let mainLinkWrapper;
 
   openExternalLinksInNewTab(footer);
 
-  const headings = footer.querySelectorAll('h1, h2, h3, h4, h5, h6');
-  [...headings].forEach((heading) => heading.classList.add('footer__title'));
-
-  if (mainLinkWrapper && !isRecallTemplate) {
+  if (coulmnsWrapper) {
+    mainLinkWrapper = coulmnsWrapper.parentElement;
     wrapSocialMediaLinks(mainLinkWrapper);
     mainLinkWrapper.classList.add('footer-links-wrapper');
     // in Word, it is edited like a column block, but we style it differently
@@ -80,8 +86,8 @@ export default async function decorate(block) {
 
       title.addEventListener('click', (e) => toggleExpand(e.currentTarget));
     });
-  } else if (isRecallTemplate) {
-    mainLinkWrapper.remove();
+  } else {
+    [footerBar, footerCopyright] = footer.children;
   }
 
   const copyrightWrapper = createElement('div', { classes: 'footer-copyright-wrapper' });
