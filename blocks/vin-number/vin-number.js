@@ -95,6 +95,8 @@ function renderRecalls(recallsData) {
           let itemValue = item.class ? capitalize(recall[item.key]) : recall[item.key];
           if (recallClass) {
             itemValue = getTextLabel(recall[item.key]);
+          } else if (item.key === 'recall_date' && isFrench) {
+            itemValue = new Date(recall[item.key]).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' });
           } else if (isFrench && item.frenchKey) {
             if (recall[item.frenchKey]) {
               itemValue = recall[item.frenchKey];
@@ -210,6 +212,10 @@ export default async function decorate(block) {
   const vinInput = block.querySelector('.vin-number__input');
 
   vinInput.oninvalid = (e) => {
+    if (e.target.value.length < e.target.maxLength) {
+      e.target.setCustomValidity(getTextLabel('vinformat-length'));
+      return;
+    }
     e.target.setCustomValidity(getTextLabel('vinformat'));
   };
 

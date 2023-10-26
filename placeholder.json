@@ -138,6 +138,10 @@
     {
       "Key": "no-french-info",
       "Text": "* Some of the information is available in english"
+    },
+    {
+      "Key": "vinformat-length",
+      "Text": "Please fill out this field"
     }
   ],
   ":type": "sheet"
