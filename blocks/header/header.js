@@ -30,27 +30,28 @@ const createLogo = (logoWrapper) => {
 
 const createMainLinks = (mainLinksWrapper, menuContent) => {
   const list = mainLinksWrapper.querySelector('ul');
-
-  list.setAttribute('id', 'header-main-nav');
-  list.classList.add(`${blockClass}__main-nav`);
-  list.querySelectorAll('li').forEach((listItem) => {
-    listItem.classList.add(`${blockClass}__main-nav-item`);
-    if (menuContent) {
-      const accordionContainer = document.createRange().createContextualFragment(`
-      <div class="${blockClass}__accordion-container">
-        <div class="${blockClass}__accordion-content-wrapper">
+  if (list) {
+    list.setAttribute('id', 'header-main-nav');
+    list.classList.add(`${blockClass}__main-nav`);
+    list.querySelectorAll('li').forEach((listItem) => {
+      listItem.classList.add(`${blockClass}__main-nav-item`);
+      if (menuContent) {
+        const accordionContainer = document.createRange().createContextualFragment(`
+        <div class="${blockClass}__accordion-container">
+          <div class="${blockClass}__accordion-content-wrapper">
+          </div>
         </div>
-      </div>
-      `);
-      listItem.append(accordionContainer);
-    }
-  });
+        `);
+        listItem.append(accordionContainer);
+      }
+    });
 
-  list.querySelectorAll('li > a').forEach((link) => {
-    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`, `${blockClass}__link-accordion`);
-  });
-
-  return list;
+    list.querySelectorAll('li > a').forEach((link) => {
+      link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`, `${blockClass}__link-accordion`);
+    });
+    return list;
+  }
+  return null;
 };
 
 const createActions = (actionsWrapper) => {
@@ -64,13 +65,6 @@ const createActions = (actionsWrapper) => {
 
   list.querySelectorAll('li > a').forEach((link) => {
     link.classList.add(`${blockClass}__action-link`, `${blockClass}__link`);
-
-    // in case of custome header it will be only CTA no icons
-    if (link.childNodes.length === 1) {
-      link.classList.add(`${blockClass}__custom-button`);
-      link.parentElement.classList.add(`${blockClass}__custom-action-item`);
-    }
-
     // wrapping text nodes into spans &
     // adding aria labels (because text labels are hidden on mobile)
     [...link.childNodes]
@@ -103,18 +97,15 @@ const createActions = (actionsWrapper) => {
   return list;
 };
 
-const mobileActions = (isCustomHeader) => {
+const mobileActions = () => {
   const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
   const searchLabel = getTextLabel('Search');
   const openMenuLabel = getTextLabel('Open menu');
 
-  const searchIconFragmnet = `<a href="#" aria-label="${searchLabel}" class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link">
-    <span class="icon icon-search-icon" aria-hidden="true"></span>
-  </a>`;
-
   const actions = document.createRange().createContextualFragment(`
-    ${!isCustomHeader ? searchIconFragmnet : ''}
-    
+    <a href="#" aria-label="${searchLabel}" class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link">
+      <span class="icon icon-search-icon" aria-hidden="true"></span>
+    </a>
     <button
       aria-label="${openMenuLabel}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
@@ -261,6 +252,16 @@ const buildMenuContent = (menuData, navEl) => {
   });
 };
 
+const decorateCTA = (wrapper) => {
+  const anchorTags = wrapper.querySelectorAll('a');
+  anchorTags.forEach((link) => {
+    link.classList.add(`${blockClass}__custom-button`);
+    wrapper.appendChild(link);
+  });
+  wrapper.firstElementChild.remove();
+  return wrapper;
+};
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -295,12 +296,12 @@ export default async function decorate(block) {
   const navContent = document.createRange().createContextualFragment(`
     <div class="${blockClass}__menu-overlay"></div>
     ${createLogo(logoContainer).outerHTML}
-    <div class="${blockClass}__main-links">
-      ${createMainLinks(navigationContainer, menuContent).outerHTML}
-    </div>
+    ${navigationContainer.children.length ? `<div class="${blockClass}__main-links">
+      ${createMainLinks(navigationContainer).outerHTML}
+    </div>` : ''}
     <div class="${blockClass}__actions">
-      ${mobileActions(isCustomHeader).outerHTML}
-      ${createActions(actionsContainer, isCustomHeader).outerHTML}
+      ${isCustomHeader ? '' : mobileActions().outerHTML}
+      ${isCustomHeader ? decorateCTA(actionsContainer).outerHTML : createActions(actionsContainer).outerHTML}
     </div>
   `);
 

@@ -512,10 +512,6 @@
 }
 
 /* custom header styles */
-.header__custom-action-item {
-  align-self: center;
-}
-
 .header__custom-button:any-link {
   padding: 9px 21px;
   background-color: var(--c-cta-blue-default);
@@ -531,8 +527,4 @@
 
 .header__custom-button:active {
   background-color: var(--c-cta-blue-active);
-}
-
-.header__custom .header__link-accordion::after {
-  content: none;
 }
