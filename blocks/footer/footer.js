@@ -47,7 +47,7 @@ export default async function decorate(block) {
   let footerPath = cfg.footer || `${getLanguagePath()}footer`;
   const isCustomFooter = getMetadata('custom-footer');
   if (isCustomFooter) {
-    footerPath = cfg.footer || `${getLanguagePath()}${getMetadata('custom-footer')}`;
+    footerPath = cfg.footer || `${getLanguagePath()}${isCustomFooter}`;
   }
 
   const resp = await fetch(`${footerPath}.plain.html`);

@@ -510,3 +510,29 @@
     gap: 32px;
   }
 }
+
+/* custom header styles */
+.header__custom-action-item {
+  align-self: center;
+}
+
+.header__custom-button:any-link {
+  padding: 9px 21px;
+  background-color: var(--c-cta-blue-default);
+  color: var(--c-white);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.header__custom-button:hover,
+.header__custom-button:focus {
+  background-color: var(--c-cta-blue-hover);
+}
+
+.header__custom-button:active {
+  background-color: var(--c-cta-blue-active);
+}
+
+.header__custom .header__link-accordion::after {
+  content: none;
+}
