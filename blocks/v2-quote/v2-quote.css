@@ -1,0 +1,66 @@
+.redesign-v2 .section > div.v2-quote-wrapper {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.v2-quote {
+  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--card-background);
+  color: var(--card-text);
+  text-align: center;
+}
+
+.v2-quote blockquote,
+.v2-quote blockquote p {
+  hanging-punctuation: none;
+  text-indent: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.v2-quote__quote-text,
+.v2-quote__quote-source {
+  margin: 0 auto;
+  max-width: var(--text-block-max-width, calc(100vw - 32px));
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-quote__quote-text p {
+  font: 400 var(--f-heading-6-font-size) / var(--f-heading-6-line-height) var(--font-family-heading);
+  letter-spacing: var(--f-heading-6-letter-spacing);
+  text-wrap: balance;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.v2-quote__quote-text + p {
+  font: var(--f-subtitle-1-font-size) / var(--f-subtitle-1-line-height) var(--font-family-heading);
+  letter-spacing: var(--f-subtitle-1-letter-spacing);
+}
+
+@media screen and (min-width: 744px) {
+  .v2-quote {
+    gap: 16px;
+  }
+
+  .v2-quote__quote-text p {
+    font-size: var(--f-heading-4-font-size);
+    line-height: var(--f-heading-4-line-height);
+    letter-spacing: var(--f-heading-4-letter-spacing);
+  }
+
+  .v2-quote__quote-text + p {
+    font-size: var(--f-heading-6-font-size);
+    line-height: var(--f-heading-6-line-height);
+    letter-spacing: var(--f-heading-6-letter-spacing);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .v2-quote {
+    padding: 200px 0;
+    gap: 24px;
+  }
+}
