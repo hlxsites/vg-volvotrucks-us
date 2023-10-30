@@ -28,22 +28,20 @@ const createLogo = (logoWrapper) => {
   return logoLink || logoImage;
 };
 
-const createMainLinks = (mainLinksWrapper, menuContent) => {
+const createMainLinks = (mainLinksWrapper) => {
   const list = mainLinksWrapper.querySelector('ul');
   if (list) {
     list.setAttribute('id', 'header-main-nav');
     list.classList.add(`${blockClass}__main-nav`);
     list.querySelectorAll('li').forEach((listItem) => {
       listItem.classList.add(`${blockClass}__main-nav-item`);
-      if (menuContent) {
-        const accordionContainer = document.createRange().createContextualFragment(`
+      const accordionContainer = document.createRange().createContextualFragment(`
         <div class="${blockClass}__accordion-container">
           <div class="${blockClass}__accordion-content-wrapper">
           </div>
         </div>
-        `);
-        listItem.append(accordionContainer);
-      }
+      `);
+      listItem.append(accordionContainer);
     });
 
     list.querySelectorAll('li > a').forEach((link) => {
