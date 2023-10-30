@@ -6,7 +6,6 @@ import {
   loadHeader,
   buildBlock,
   decorateBlock,
-  getMetadata,
 } from './lib-franklin.js';
 
 let placeholders = null;
@@ -16,8 +15,7 @@ let placeholders = null;
  */
 function loadFooter(footer) {
   if (footer) {
-    const blockName = getMetadata('footer-block') || 'footer';
-    const footerBlock = buildBlock(blockName, '');
+    const footerBlock = buildBlock('footer', '');
     footer.append(footerBlock);
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
