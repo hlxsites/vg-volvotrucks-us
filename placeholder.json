@@ -117,7 +117,7 @@
     },
     {
       "Key": "mfr_notes",
-      "Text": "Next steps"
+      "Text": "Next Steps"
     }, 
     {
       "Key": "mfr_recall_number",
@@ -130,6 +130,18 @@
     {
       "Key": "recall_oldest_info",
       "Text": "Recall information available since: Jan 15, 2008"
+    },
+    {
+      "Key": "tc_recall_nbr",
+      "Text": "Transport Canada Number"
+    },
+    {
+      "Key": "no-french-info",
+      "Text": "* Some of the information is available in english"
+    },
+    {
+      "Key": "vinformat-length",
+      "Text": "Please fill out this field"
     }
   ],
   ":type": "sheet"

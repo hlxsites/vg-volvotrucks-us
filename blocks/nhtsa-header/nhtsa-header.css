@@ -22,14 +22,12 @@
   color: var(--c-white);
   text-transform: uppercase;
   padding: 9px 21px;
-  font-family: var(--font-family-body);
   font-size: var(--f-button-font-size);
   line-height: var(--f-button-line-height);
   letter-spacing: var(--f-button-letter-spacing);
   border: 0;
   align-items: center;
   display: flex;
-  text-decoration: none;
   border-radius: 4px;
 }
 
@@ -55,15 +53,10 @@
     border-top: 1px solid var(--c-grey-300);
   }
 
-  .nhtsa-header .icon-logo svg {
+  .nhtsa-header .icon-logo svg,
+  .nhtsa-header .icon-nova-bus svg,
+  .nhtsa-header .icon-prevost svg {
     width: 160px;
     height: 30px;
   }
-
-  .nhtsa-header .icon-nova-bus svg,
-  .nhtsa-header .icon-prevost svg {
-    width: initial;
-    height: initial;
-  }
-
 }
