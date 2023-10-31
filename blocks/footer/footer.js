@@ -62,6 +62,9 @@ export default async function decorate(block) {
   let footerCopyright = footer.children[2];
   let mainLinkWrapper;
 
+  const headings = footer.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  [...headings].forEach((heading) => heading.classList.add('footer__title'));
+
   openExternalLinksInNewTab(footer);
 
   if (coulmnsWrapper) {
