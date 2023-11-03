@@ -706,16 +706,22 @@ main .section.dealer-locator-container > div {
     width: 100%
 }
 
+.dealer-locator #map > div .gm-style {
+    height: calc(100% - 176px) !important;
+}
+  
+@media (max-width: 992px) {
+    .dealer-locator #map > div .gm-style {
+        height: calc(100% - 40px) !important;
+    }
+}
+
 .dealer-locator #map .gmnoprint {
     top: 0;
     margin-top: 45px
 }
 
 @media (max-width: 992px) {
-    .dealer-locator #map .gmnoprint {
-        display:none
-    }
-
     .dealer-locator #map {
         height: 50%
     }
