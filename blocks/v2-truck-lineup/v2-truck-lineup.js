@@ -1,4 +1,5 @@
 import { createElement } from '../../scripts/common.js';
+import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
 const blockName = 'v2-truck-lineup';
 
@@ -125,7 +126,7 @@ const listenScroll = (carousel) => {
 
     elements.forEach((el) => io.observe(el));
 
-    // force to go to the first item on load
+    // Force to go to the first item on load
     carousel.scrollTo({
       left: 0,
       behavior: 'instant',
@@ -134,36 +135,33 @@ const listenScroll = (carousel) => {
 };
 
 const setCarouselPosition = (carousel, index) => {
-  const firstEl = carousel.firstElementChild;
-  const scrollOffset = firstEl.getBoundingClientRect().width;
-  const style = window.getComputedStyle(firstEl);
-  const marginleft = parseFloat(style.marginLeft);
+  const scrollOffset = carousel.firstElementChild.getBoundingClientRect().width;
+  const targetX = index * scrollOffset;
 
-  carousel.scrollTo({
-    left: index * scrollOffset + marginleft,
-    behavior: 'smooth',
-  });
+  smoothScrollHorizontal(carousel, targetX, 1200);
+};
+
+const navigate = (carousel, direction) => {
+  if (carousel.classList.contains('is-animating')) return;
+
+  const activeItem = carousel.querySelector(`.${blockName}__image-item.active`);
+  let index = [...activeItem.parentNode.children].indexOf(activeItem);
+  if (direction === 'left') {
+    index -= 1;
+    if (index === -1) {
+      index = carousel.childElementCount - 1;
+    }
+  } else {
+    index += 1;
+    if (index > carousel.childElementCount - 1) {
+      index = 0;
+    }
+  }
+
+  setCarouselPosition(carousel, index);
 };
 
 const createArrowControls = (carousel) => {
-  function scroll(direction) {
-    const activeItem = carousel.querySelector(`.${blockName}__image-item.active`);
-    let index = [...activeItem.parentNode.children].indexOf(activeItem);
-    if (direction === 'left') {
-      index -= 1;
-      if (index === -1) {
-        index = carousel.childElementCount;
-      }
-    } else {
-      index += 1;
-      if (index > carousel.childElementCount - 1) {
-        index = 0;
-      }
-    }
-
-    setCarouselPosition(carousel, index);
-  }
-
   const arrowControls = createElement('ul', { classes: [`${blockName}__arrow-controls`] });
   const arrows = document.createRange().createContextualFragment(`
     <li>
@@ -184,8 +182,8 @@ const createArrowControls = (carousel) => {
   arrowControls.append(...arrows.children);
   carousel.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
-  prevButton.addEventListener('click', () => scroll('left'));
-  nextButton.addEventListener('click', () => scroll('right'));
+  prevButton.addEventListener('click', () => navigate(carousel, 'left'));
+  nextButton.addEventListener('click', () => navigate(carousel, 'right'));
 };
 
 export default function decorate(block) {
@@ -214,13 +212,13 @@ export default function decorate(block) {
     const headings = tabContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
     [...headings].forEach((heading) => heading.classList.add(`${blockName}__title`));
 
-    // create div for image and append inside image div container
+    // Create div for image and append inside image div container
     const picture = tabItem.querySelector('picture');
     const imageItem = createElement('div', { classes: `${blockName}__image-item` });
     imageItem.appendChild(picture);
     imagesContainer.appendChild(imageItem);
 
-    // remove empty tags
+    // Remove empty tags
     tabContent.querySelectorAll('p, div').forEach((item) => {
       stripEmptyTags(tabContent, item);
     });
@@ -257,7 +255,7 @@ export default function decorate(block) {
     }
   });
 
-  // update the button indicator on scroll
+  // Update the button indicator on scroll
   listenScroll(imagesContainer);
 
   // Update text position + navigation line when page is resized

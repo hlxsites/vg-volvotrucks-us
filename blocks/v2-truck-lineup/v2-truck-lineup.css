@@ -77,13 +77,13 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
 }
 
 .v2-truck-lineup__image-item:first-child {
-  margin-left: 50vw;
+  margin-left: 20vw;
 }
 
 .v2-truck-lineup__images-container::after {
   content: '';
   display: block;
-  flex: 0 0 50vw;
+  flex: 0 0 20vw;
   min-height: 1px; /* In this case, Safari doesn't render element properly without height */
 }
 
@@ -106,12 +106,12 @@ main .section.v2-truck-lineup-container .v2-truck-lineup-wrapper {
   width: 100%;
 
   /* fadeout */
-  transition: opacity 0.3s cubic-bezier(0, 0, 0, 1);
+  transition: opacity var(--duration-medium) var(--easing-exit);
 }
 
 .v2-truck-lineup__desc-item.active {
   opacity: 1;
-  transition: opacity 0.5s cubic-bezier(0, 0, 0, 1) 0.5s;
+  transition: opacity 0.5s var(--easing-entrance) var(--duration-medium);
 }
 
 .v2-truck-lineup__text {
@@ -240,7 +240,7 @@ ul.v2-truck-lineup__navigation {
   font-size: 0;
   line-height: 0;
   margin: 0;
-  padding: 10px;
+  padding: 12px;
   position: relative;
   opacity: 0;
   transition: opacity var(--duration-small) var(--easing-standard);
