@@ -15,11 +15,31 @@ const isPerformanceAllowed = cookieSetting.includes(COOKIES.performance);
 const isSocialAllowed = cookieSetting.includes(COOKIES.social);
 
 if (isPerformanceAllowed) {
-  loadGoogleTagManager();
+  loadGoogleTagManager(); // facebook pixel is added by gtm too
   loadHotjar();
-}
+  if (!isSocialAllowed) {
+    //remove facebook pixel aka fbevents.js
+    const htmlElement = document.querySelector('html');
 
-if (isSocialAllowed) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeName === 'SCRIPT' && node.src.includes('fbevents.js')) {
+            node.remove();
+            [...document.querySelectorAll('script[id]')]
+              .filter((script) => script.innerHTML.includes('fbevents.js'))[0].remove();
+            [...document.querySelectorAll('noscript')]
+              .filter((script) => script.innerHTML.includes('facebook.com'))[0].remove();
+            console.log('%cRemoved facebook pixel', 'color: #f00');
+            observer.disconnect();
+          }
+        });
+      });
+    });
+
+    observer.observe(htmlElement, { childList: true });
+  }
+} else if (isSocialAllowed) {
   loadFacebookPixel();
 }
 
