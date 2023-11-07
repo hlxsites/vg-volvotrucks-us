@@ -1,5 +1,10 @@
-import { createElement, generateId, getTextLabel } from '../../scripts/common.js';
-import { createOptimizedPicture, decorateIcons } from '../../scripts/lib-franklin.js';
+import {
+  createElement,
+  generateId,
+  getTextLabel,
+  getLanguagePath,
+} from '../../scripts/common.js';
+import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
 
@@ -25,25 +30,26 @@ const createLogo = (logoWrapper) => {
 
 const createMainLinks = (mainLinksWrapper) => {
   const list = mainLinksWrapper.querySelector('ul');
+  if (list) {
+    list.setAttribute('id', 'header-main-nav');
+    list.classList.add(`${blockClass}__main-nav`);
+    list.querySelectorAll('li').forEach((listItem) => {
+      listItem.classList.add(`${blockClass}__main-nav-item`);
+      const accordionContainer = document.createRange().createContextualFragment(`
+        <div class="${blockClass}__accordion-container">
+          <div class="${blockClass}__accordion-content-wrapper">
+          </div>
+        </div>
+      `);
+      listItem.append(accordionContainer);
+    });
 
-  list.setAttribute('id', 'header-main-nav');
-  list.classList.add(`${blockClass}__main-nav`);
-  list.querySelectorAll('li').forEach((listItem) => {
-    const accordionContainer = document.createRange().createContextualFragment(`
-    <div class="${blockClass}__accordion-container">
-      <div class="${blockClass}__accordion-content-wrapper">
-      </div>
-    </div>
-    `);
-
-    listItem.classList.add(`${blockClass}__main-nav-item`);
-    listItem.append(accordionContainer);
-  });
-  list.querySelectorAll('li > a').forEach((link) => {
-    link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`, `${blockClass}__link-accordion`);
-  });
-
-  return list;
+    list.querySelectorAll('li > a').forEach((link) => {
+      link.classList.add(`${blockClass}__main-nav-link`, `${blockClass}__link`, `${blockClass}__link-accordion`);
+    });
+    return list;
+  }
+  return null;
 };
 
 const createActions = (actionsWrapper) => {
@@ -54,9 +60,9 @@ const createActions = (actionsWrapper) => {
   list.querySelectorAll('li').forEach((listItem) => {
     listItem.classList.add(`${blockClass}__action-item`);
   });
+
   list.querySelectorAll('li > a').forEach((link) => {
     link.classList.add(`${blockClass}__action-link`, `${blockClass}__link`);
-
     // wrapping text nodes into spans &
     // adding aria labels (because text labels are hidden on mobile)
     [...link.childNodes]
@@ -95,11 +101,7 @@ const mobileActions = () => {
   const openMenuLabel = getTextLabel('Open menu');
 
   const actions = document.createRange().createContextualFragment(`
-    <a
-      href="#"
-      aria-label="${searchLabel}"
-      class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link"
-    >
+    <a href="#" aria-label="${searchLabel}" class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link">
       <span class="icon icon-search-icon" aria-hidden="true"></span>
     </a>
     <button
@@ -248,6 +250,16 @@ const buildMenuContent = (menuData, navEl) => {
   });
 };
 
+const decorateCTA = (wrapper) => {
+  const anchorTags = wrapper.querySelectorAll('a');
+  anchorTags.forEach((link) => {
+    link.classList.add(`${blockClass}__custom-button`);
+    wrapper.appendChild(link);
+  });
+  wrapper.firstElementChild.remove();
+  return wrapper;
+};
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -257,9 +269,12 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // fetch nav content
-  const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  const navPath = `${langCodeMatch ? langCodeMatch[1] : '/'}nav`;
+  let navPath = `${getLanguagePath()}nav`;
+  const isCustomHeader = getMetadata('custom-header');
+  if (isCustomHeader) {
+    navPath = `${getLanguagePath()}${isCustomHeader}`;
+    block.classList.add(`${blockClass}__custom`);
+  }
   const resp = await fetch(`${navPath}.plain.html`);
 
   if (!resp.ok) {
@@ -279,12 +294,12 @@ export default async function decorate(block) {
   const navContent = document.createRange().createContextualFragment(`
     <div class="${blockClass}__menu-overlay"></div>
     ${createLogo(logoContainer).outerHTML}
-    <div class="${blockClass}__main-links">
+    ${navigationContainer.children.length ? `<div class="${blockClass}__main-links">
       ${createMainLinks(navigationContainer).outerHTML}
-    </div>
+    </div>` : ''}
     <div class="${blockClass}__actions">
-      ${mobileActions().outerHTML}
-      ${createActions(actionsContainer).outerHTML}
+      ${isCustomHeader ? '' : mobileActions().outerHTML}
+      ${isCustomHeader ? decorateCTA(actionsContainer).outerHTML : createActions(actionsContainer).outerHTML}
     </div>
   `);
 
@@ -325,12 +340,12 @@ export default async function decorate(block) {
   };
 
   // add actions for search
-  navContent.querySelector(`.${blockClass}__search-button`).addEventListener('click', () => {
+  navContent.querySelector(`.${blockClass}__search-button`)?.addEventListener('click', () => {
     window.location.href = '/search-results';
   });
 
   // add action for hamburger
-  navContent.querySelector(`.${blockClass}__hamburger-menu`).addEventListener('click', () => {
+  navContent.querySelector(`.${blockClass}__hamburger-menu`)?.addEventListener('click', () => {
     block.classList.add(`${blockClass}--menu-open`, `${blockClass}--hamburger-open`);
     document.body.classList.add('disable-scroll');
 
@@ -350,8 +365,11 @@ export default async function decorate(block) {
   block.append(nav);
 
   setAriaForMenu(false);
-  buildMenuContent(menuContent, nav);
-  initAriaForAccordions();
+
+  if (menuContent) {
+    buildMenuContent(menuContent, nav);
+    initAriaForAccordions();
+  }
 
   // hide nav when clicking outside the menu on desktop
   document.addEventListener('click', (event) => {
