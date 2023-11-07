@@ -167,7 +167,7 @@
   color: var(--c-main-black);
   cursor: pointer;
   display: none;
-  padding: 10px;
+  padding: 12px;
   position: fixed;
   right: 30px;
   z-index: 99;
@@ -183,9 +183,17 @@
 
 .footer-list .footer__title:not(.expand):focus,
 .footer-list-item a:focus,
-.footer-bar a:focus,
-.v2-scroll-to-top:focus {
+.footer-bar a:focus {
   outline: 2px solid var(--light-border-focus);
+}
+
+button.v2-scroll-to-top:focus {
+  outline: 0;
+}
+
+.v2-scroll-to-top:focus-visible {
+  outline: 2px solid var(--light-border-focus);
+  outline-offset: 1px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
