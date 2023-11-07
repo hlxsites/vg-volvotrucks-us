@@ -1,20 +1,27 @@
-import {
-  ffetch,
-} from '../../scripts/lib-ffetch.js';
-import {
-  createOptimizedPicture,
-  getOrigin,
-} from '../../scripts/lib-franklin.js';
+import { ffetch } from '../../scripts/lib-ffetch.js';
+import { createOptimizedPicture, getOrigin } from '../../scripts/lib-franklin.js';
 import { createElement } from '../../scripts/common.js';
+import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
+
+const blockName = 'v2-stories-carousel';
+
+const updateActiveClass = (elements, targetElement) => {
+  elements.forEach((el) => {
+    if (el === targetElement) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+};
 
 const listenScroll = (carousel) => {
-  const elements = carousel.querySelectorAll('.v2-stories-carousel-items > *');
+  const elements = carousel.querySelectorAll(':scope > *');
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      } else {
-        entry.target.classList.remove('active');
+        updateActiveClass(elements, entry.target);
       }
     });
   }, {
@@ -22,46 +29,47 @@ const listenScroll = (carousel) => {
     threshold: 1,
   });
 
-  elements.forEach((el) => {
-    io.observe(el);
-  });
+  elements.forEach((el) => io.observe(el));
 };
 
-const getScrollOffset = (ulItems) => {
-  const first = ulItems.firstElementChild;
+const getScrollOffset = (carousel) => {
+  const first = carousel.firstElementChild;
   const second = first.nextElementSibling;
   return second.getBoundingClientRect().x - first.getBoundingClientRect().x;
 };
 
-const scrollToIndex = (ulItems, index) => {
-  const scrollOffset = getScrollOffset(ulItems);
-  ulItems.scrollTo({
-    left: index * scrollOffset,
-    behavior: 'smooth',
-  });
+const setCarouselPosition = (carousel, index) => {
+  const elements = carousel.querySelectorAll(':scope > *');
+  const scrollOffset = getScrollOffset(carousel);
+  const targetX = index * scrollOffset;
+
+  smoothScrollHorizontal(carousel, targetX, 500);
+  updateActiveClass(elements, elements[index]);
 };
 
-const createArrowControls = (ulItems) => {
-  function navigate(direction) {
-    const activeItem = ulItems.querySelector('.v2-stories-carousel-item.active');
-    let index = [...activeItem.parentNode.children].indexOf(activeItem);
+const navigate = (carousel, direction) => {
+  if (carousel.classList.contains('is-animating')) return;
 
-    if (direction === 'left') {
-      index -= 1;
-      if (index === -1) { // Go to the last item if at the start
-        index = ulItems.childElementCount;
-      }
-    } else {
-      index += 1;
-      if (index > ulItems.childElementCount - 1) {
-        index = 0; // Go to the first item if at the end
-      }
+  const activeItem = carousel.querySelector(`.${blockName}-item.active`);
+  let index = [...activeItem.parentNode.children].indexOf(activeItem);
+
+  if (direction === 'left') {
+    index -= 1;
+    if (index === -1) { // Go to the last item if at the start
+      index = carousel.childElementCount - 1;
     }
-
-    scrollToIndex(ulItems, index);
+  } else {
+    index += 1;
+    if (index > carousel.childElementCount - 1) {
+      index = 0; // Go to the first item if at the end
+    }
   }
 
-  const arrowControls = createElement('ul', { classes: ['v2-stories-carousel-arrowcontrols'] });
+  setCarouselPosition(carousel, index);
+};
+
+const createArrowControls = (carousel) => {
+  const arrowControls = createElement('ul', { classes: [`${blockName}-arrowcontrols`] });
   const arrows = document.createRange().createContextualFragment(`
     <li>
       <button aria-label="Previous">
@@ -79,10 +87,10 @@ const createArrowControls = (ulItems) => {
     </li>
   `);
   arrowControls.append(...arrows.children);
-  ulItems.insertAdjacentElement('beforebegin', arrowControls);
+  carousel.insertAdjacentElement('beforebegin', arrowControls);
   const [prevButton, nextButton] = arrowControls.querySelectorAll(':scope button');
-  prevButton.addEventListener('click', () => navigate('left'));
-  nextButton.addEventListener('click', () => navigate('right'));
+  prevButton.addEventListener('click', () => navigate(carousel, 'left'));
+  nextButton.addEventListener('click', () => navigate(carousel, 'right'));
   return arrowControls;
 };
 
@@ -104,7 +112,7 @@ const buildStoryCard = (entry) => {
     author,
     readingTime,
   } = entry;
-  const li = createElement('article', { classes: 'v2-stories-carousel-item' });
+  const li = createElement('article', { classes: `${blockName}-item` });
   const picture = createOptimizedPicture(image, title, false);
   const pictureTag = picture.outerHTML;
   const readMore = (linkText || 'Read full story');
@@ -125,24 +133,24 @@ const buildStoryCard = (entry) => {
     <a href="${path}">
       ${pictureTag}
     </a>
-    <div class="v2-stories-carousel-text">
+    <div class="${blockName}-text">
       <h3>${title}</h3>
       <p>${description}</p>
-      <ul class="v2-stories-carousel-meta">
-        <li class="v2-stories-carousel-timetoread">
+      <ul class="${blockName}-meta">
+        <li class="${blockName}-timetoread">
           ${svgClock}
           <span>${readingTime}</span>
         </li>
-        <li class="v2-stories-carousel-author">
+        <li class="${blockName}-author">
           ${svgUser}
           <address rel="author">${author}</address>
         </li>
-        <li class="v2-stories-carousel-date">
+        <li class="${blockName}-date">
           ${svgCalendar}
           <time datetime="${date}" pubdate="pubdate">${date.toLocaleDateString()}</time>
         </li>
       </ul>
-      <a href="${path}" class="v2-stories-carousel-cta button tertiary">
+      <a href="${path}" class="${blockName}-cta button tertiary">
         ${readMore}
         ${svgArrowRight}
       </a>
@@ -152,7 +160,7 @@ const buildStoryCard = (entry) => {
 };
 
 const createStoriesCarousel = (block, stories) => {
-  const storiesSection = createElement('section', { classes: 'v2-stories-carousel-items' });
+  const storiesSection = createElement('section', { classes: `${blockName}-items` });
   block.appendChild(storiesSection);
   stories.forEach((entry) => {
     const storyArticle = buildStoryCard(entry);
@@ -168,14 +176,14 @@ export default async function decorate(block) {
   const stories = await getMagazineArticles(limit);
   createStoriesCarousel(block, stories);
 
-  const ulItems = block.querySelector('.v2-stories-carousel-items');
+  const carousel = block.querySelector(`.${blockName}-items`);
 
-  createArrowControls(ulItems);
-  listenScroll(ulItems);
+  createArrowControls(carousel);
+  listenScroll(carousel);
   requestAnimationFrame(() => {
     setTimeout(() => {
-      if (ulItems) {
-        scrollToIndex(ulItems, 1); // Scroll to the second item
+      if (carousel) {
+        setCarouselPosition(carousel, 1); // Scroll to the second item
       }
     });
   });
