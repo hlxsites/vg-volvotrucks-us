@@ -1392,6 +1392,7 @@ main.blue-contract .section.section-with-title p {
   :root.redesign-v2 {
     --section-padding: 40px 0 56px;
     --section-div-padding: 24px 32px;
+    --text-block-max-width: 506px;
   }
 }
 
@@ -1405,6 +1406,7 @@ main.blue-contract .section.section-with-title p {
     --border-radius: 12px;
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
+    --text-block-max-width: 694px;
   }
 
   .redesign-v2 .section div.full-width {

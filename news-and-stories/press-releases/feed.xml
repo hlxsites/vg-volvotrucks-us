@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-11-01T00:00:00.000Z</updated>
+    <updated>2023-11-09T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America Honored for its Leadership Supporting the Advancement of Women in the Trucking Industry]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-trucks-north-america-honored-for-its-leadership-supporting-the-advancement-of-women-in-the-trucking-industry/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-trucks-north-america-honored-for-its-leadership-supporting-the-advancement-of-women-in-the-trucking-industry/"/>
+        <updated>2023-11-09T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“This year, Volvo Trucks increased its sponsorship commitment to the highest level to help spotlight the vital contributions of women across the transportation industry. As we navigate towards a more inclusive future, we are working to empower more women to drive their careers to greater success," said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-11-09T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo VNR Electric Trucks Deliver Zero-Tailpipe Emissions and Groceries for Loblaw, Canada's Grocery Retail Leader]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deliver-zero-tailpipe-emissions-and-groceries-for-loblaw-canadas-grocery-retail-leader/</id>

@@ -1,5 +1,6 @@
 .v2-section-header {
   margin: 0 auto;
+  max-width: var(--text-block-max-width, calc(100vw - 16px));
   font-size: var(--heading-s-font-size);
   line-height: var(--heading-s-line-height);
   letter-spacing: var(--heading-s-letter-spacing);
@@ -21,17 +22,7 @@
   line-height: var(--f-heading-4-line-height);
 }
 
-@media (min-width: 744px) {
-  .v2-section-header {
-    max-width: 506px;
-  }
-}
-
 @media (min-width: 1200px) {
-  .v2-section-header {
-    max-width: 694px;
-  }
-
   .v2-section-header__title {
     font-size: var(--f-heading-3-font-size);
     letter-spacing: var(--f-heading-3-letter-spacing);
