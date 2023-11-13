@@ -85,6 +85,7 @@
 }
 
 .key-facts__row--with-media {
+  position: relative;
   margin: 0 -16px;
 }
 

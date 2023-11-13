@@ -32,7 +32,7 @@ export async function getPlaceholders() {
 }
 
 export function getTextLabel(key) {
-  return placeholders.data.find((el) => el.Key === key)?.Text || key;
+  return placeholders?.data.find((el) => el.Key === key)?.Text || key;
 }
 
 /**
