@@ -1,0 +1,156 @@
+.v2-media-with-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-media-with-tabs .v2-media-with-tabs__images-section {
+  position: relative;
+  max-width: 100%;
+  height: 70vw;
+}
+
+.v2-media-with-tabs__images-section .v2-media-with-tabs__image {
+  position: absolute;
+  display: none;
+  inset: 0;
+}
+
+.v2-media-with-tabs__images-section .v2-media-with-tabs__image.active {
+  display: block;
+}
+
+.v2-media-with-tabs__images-section .v2-media-with-tabs__image img {
+  border-radius: var(--border-radius);
+}
+
+.v2-media-with-tabs .v2-media-with-tabs__texts-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-media-with-tabs__texts-section .v2-media-with-tabs__tabs-section::-webkit-scrollbar {
+  display: none;
+}
+
+.v2-media-with-tabs .v2-media-with-tabs__tabs-section {
+  order: 1;
+  overflow: auto;
+  white-space: nowrap;
+  margin: 24px 0 32px;
+}
+
+.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab {
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0.9;
+  color: var(--volvo-text-gray);
+  padding: 12px 0;
+  margin: 0 32px 0 0;
+}
+
+.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:hover {
+  cursor: pointer;
+}
+
+.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab.active {
+  opacity: 1;
+  color: var(--c-main-black);
+  border-bottom: 2px solid var(--c-main-black);
+}
+
+.v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
+  order: 2;
+}
+
+.v2-media-with-tabs__header-section .v2-media-with-tabs__heading {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-5-font-size);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+  line-height: var(--f-heading-5-line-height);
+}
+
+.v2-media-with-tabs__header-section .v2-media-with-tabs__subtitle {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 744px) {
+  .v2-media-with-tabs__texts-section .v2-media-with-tabs__tabs-section {
+    margin: 32px 0;
+  }
+  
+  .v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .section.v2-media-with-tabs-container .v2-media-with-tabs-wrapper {
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 64px 0 32px;
+  }
+
+  .v2-media-with-tabs {
+    flex-direction: row;
+  }
+  
+  .v2-media-with-tabs .v2-media-with-tabs__images-section {
+    width: 70%;
+  }
+
+  .v2-media-with-tabs .v2-media-with-tabs__images-section,
+  .v2-media-with-tabs .v2-media-with-tabs__texts-section {
+    height: 50vw;
+  }
+
+  .v2-media-with-tabs .v2-media-with-tabs__texts-section {
+    width: 30%;
+    margin-left: 48px;
+    justify-content: center;
+  }
+
+  .v2-media-with-tabs__header-section .v2-media-with-tabs__subtitle {
+    margin-bottom: 48px;
+  }
+  
+  .v2-media-with-tabs__images-section .v2-media-with-tabs__image img {
+    max-height: unset;
+  }
+
+  .v2-media-with-tabs .v2-media-with-tabs__tabs-section {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab {
+    margin-bottom: 16px;
+  }
+
+  .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:last-of-type {
+    margin-bottom: 0;
+  }
+
+
+  .v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
+    order: 1;
+    width: 100%;
+  }
+  
+}
+
+@media screen and (min-width: 1440px) {
+  .section.v2-media-with-tabs-container .v2-media-with-tabs-wrapper {
+    margin: 0 auto;
+  }
+
+  .v2-media-with-tabs .v2-media-with-tabs__images-section,
+  .v2-media-with-tabs .v2-media-with-tabs__texts-section {
+    height: 700px;
+  }
+}
+
