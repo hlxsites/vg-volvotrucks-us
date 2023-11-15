@@ -44,7 +44,7 @@ export default function decorate(block) {
     const image = el.querySelector('picture');
     image.classList.add(`${blockName}__image`, `img-${idx}`);
 
-    const tab = createElement('span', { classes: [`${blockName}__tab`, `tab-${idx}`] });
+    const tab = createElement('button', { classes: [`${blockName}__tab`, `tab-${idx}`] });
     tab.classList.add(`${blockName}__tab`, `tab-${idx}`);
     tab.textContent = el.innerText;
     tab.onclick = (e) => handleChangeTab(e);

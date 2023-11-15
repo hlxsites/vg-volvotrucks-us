@@ -36,28 +36,41 @@
   order: 1;
   overflow: auto;
   white-space: nowrap;
-  margin: 24px 0 32px;
+  padding: 24px 0 32px;
 }
 
 .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab {
+  background: 0 0;
+  border: none;
+  border-radius: 1px;
   display: inline-block;
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
-  opacity: 0.9;
-  color: var(--volvo-text-gray);
+  font-size: var(--f-button-font-size);
+  letter-spacing: var(--f-button-letter-spacing);
+  line-height: 100%;
+  color: var(--c-grey-4);
   padding: 12px 0;
-  margin: 0 32px 0 0;
+  margin: 0 16px;
 }
 
-.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:hover {
-  cursor: pointer;
-}
-
-.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab.active {
-  opacity: 1;
+.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab.active {
   color: var(--c-main-black);
   border-bottom: 2px solid var(--c-main-black);
+}
+
+.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab:focus {
+  outline: 0;
+}
+
+.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab:focus-visible {
+  outline: 2px solid var(--light-border-focus);
+  outline-offset: 5px;
+}
+
+.v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:hover button {
+  cursor: pointer;
 }
 
 .v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
