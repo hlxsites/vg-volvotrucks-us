@@ -6,7 +6,7 @@
 .v2-media-with-tabs .v2-media-with-tabs__images-section {
   position: relative;
   max-width: 100%;
-  height: 70vw;
+  height: 62vw;
 }
 
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image {
@@ -90,7 +90,7 @@
 
 @media screen and (min-width: 744px) {
   .v2-media-with-tabs__texts-section .v2-media-with-tabs__tabs-section {
-    margin: 32px 0;
+    padding: 32px 0;
   }
   
   .v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
@@ -110,16 +110,16 @@
   }
   
   .v2-media-with-tabs .v2-media-with-tabs__images-section {
-    width: 70%;
+    width: 75%;
   }
 
   .v2-media-with-tabs .v2-media-with-tabs__images-section,
   .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    height: 50vw;
+    height: 45vw;
   }
 
   .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    width: 30%;
+    width: 25%;
     margin-left: 48px;
     justify-content: center;
   }
@@ -137,11 +137,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding-bottom: 0;
     margin: 0;
   }
 
   .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab {
     margin-bottom: 16px;
+    margin-left: 0;
   }
 
   .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:last-of-type {
@@ -163,7 +165,7 @@
 
   .v2-media-with-tabs .v2-media-with-tabs__images-section,
   .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    height: 700px;
+    height: 653px;
   }
 }
 
