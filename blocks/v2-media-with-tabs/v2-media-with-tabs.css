@@ -12,6 +12,7 @@
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image {
   position: absolute;
   display: none;
+  inset: 0;
 }
 
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image.active {
@@ -21,6 +22,8 @@
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image img {
   object-fit: cover;
   border-radius: var(--border-radius);
+  height: 100%;
+  width: 100%;
 }
 
 .v2-media-with-tabs .v2-media-with-tabs__texts-section {
@@ -100,7 +103,7 @@
   }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1200px) {
   .section.v2-media-with-tabs-container .v2-media-with-tabs-wrapper {
     width: 100%;
     padding: 0 64px 0 32px;
