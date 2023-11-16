@@ -62,6 +62,15 @@
   padding: 12px 0;
 }
 
+.section--black-background .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab {
+  color: var(--c-grey-300);
+}
+
+.section--black-background .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab.active {
+  color: var(--text-color);
+  border-bottom-color: var(--text-color);
+}
+
 .v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab.active {
   color: var(--c-main-black);
   border-bottom-color: var(--c-main-black);
