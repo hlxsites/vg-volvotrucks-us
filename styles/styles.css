@@ -996,6 +996,7 @@ main.blue-contract .section.section-with-title p {
   --card-background: #f7f7f7;
   --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
+  --text-subtle: var(--c-grey-4);
 
   font-size: 16px;
 }
@@ -1048,6 +1049,7 @@ main.blue-contract .section.section-with-title p {
   --card-background: var(--c-grey-900);
   --card-text: var(--c-white);
   --c-cta-blue-default: #44A1FF;
+  --text-subtle: var(--c-grey-2);
 
   color: var(--text-color);
   background-color: var(--c-main-black);
