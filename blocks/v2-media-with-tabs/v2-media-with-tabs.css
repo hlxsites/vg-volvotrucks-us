@@ -6,13 +6,12 @@
 .v2-media-with-tabs .v2-media-with-tabs__images-section {
   position: relative;
   max-width: 100%;
-  height: 62vw;
+  aspect-ratio: 4/3;
 }
 
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image {
   position: absolute;
   display: none;
-  inset: 0;
 }
 
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image.active {
@@ -20,12 +19,14 @@
 }
 
 .v2-media-with-tabs__images-section .v2-media-with-tabs__image img {
+  object-fit: cover;
   border-radius: var(--border-radius);
 }
 
 .v2-media-with-tabs .v2-media-with-tabs__texts-section {
   display: flex;
   flex-direction: column;
+  scrollbar-width: none;
 }
 
 .v2-media-with-tabs__texts-section .v2-media-with-tabs__tabs-section::-webkit-scrollbar {
@@ -47,6 +48,7 @@
   min-width: fit-content;
   border: none;
   border-radius: 1px;
+  border-bottom: 2px solid transparent;
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
@@ -59,7 +61,7 @@
 
 .v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab.active {
   color: var(--c-main-black);
-  border-bottom: 2px solid var(--c-main-black);
+  border-bottom-color: var(--c-main-black);
 }
 
 .v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab:focus {
@@ -80,10 +82,8 @@
 }
 
 .v2-media-with-tabs__header-section .v2-media-with-tabs__heading {
-  font-family: var(--ff-volvo-novum-medium);
-  font-size: var(--f-heading-5-font-size);
+  font: 400 var(--f-heading-5-font-size) / var(--f-heading-5-line-height) var(--font-family-heading);
   letter-spacing: var(--f-heading-4-letter-spacing);
-  line-height: var(--f-heading-5-line-height);
 }
 
 .v2-media-with-tabs__header-section .v2-media-with-tabs__subtitle {
@@ -100,9 +100,8 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1440px) {
   .section.v2-media-with-tabs-container .v2-media-with-tabs-wrapper {
-    max-width: 1440px;
     width: 100%;
     padding: 0 64px 0 32px;
   }
@@ -112,22 +111,23 @@
   }
   
   .v2-media-with-tabs .v2-media-with-tabs__images-section {
-    width: 75%;
-  }
-
-  .v2-media-with-tabs .v2-media-with-tabs__images-section,
-  .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    height: 45vw;
+    width: 70%;
   }
 
   .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    width: 25%;
+    width: 30%;
     margin-left: 48px;
     justify-content: center;
   }
 
+  .v2-media-with-tabs__header-section .v2-media-with-tabs__heading {
+    font: 500 var(--f-heading-4-font-size) / var(--f-heading-4-line-height) var(--font-family-heading);
+    letter-spacing: var(--f-heading-4-letter-spacing);
+  }
+
   .v2-media-with-tabs__header-section .v2-media-with-tabs__subtitle {
     margin-bottom: 48px;
+    font-size: var(--f-body-2-font-size);
   }
   
   .v2-media-with-tabs__images-section .v2-media-with-tabs__image img {
@@ -142,12 +142,12 @@
     padding: 0;
     margin: 0;
     gap: 16px;
+    overflow: unset;
   }
 
   .v2-media-with-tabs__tabs-section .v2-media-with-tabs__tab:last-of-type {
     margin-bottom: 0;
   }
-
 
   .v2-media-with-tabs__texts-section .v2-media-with-tabs__header-section {
     order: 1;
@@ -155,15 +155,3 @@
   }
   
 }
-
-@media screen and (min-width: 1440px) {
-  .section.v2-media-with-tabs-container .v2-media-with-tabs-wrapper {
-    margin: 0 auto;
-  }
-
-  .v2-media-with-tabs .v2-media-with-tabs__images-section,
-  .v2-media-with-tabs .v2-media-with-tabs__texts-section {
-    height: 653px;
-  }
-}
-
