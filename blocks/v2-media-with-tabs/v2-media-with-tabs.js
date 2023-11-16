@@ -17,7 +17,9 @@ const handleChangeTab = (e) => {
 
   parentBlock.querySelector(`.${blockName}__image.img-${activeNumber}`).classList.add('active');
   e.target.classList.add('active');
-  e.target.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'center' });
+  if (window.innerWidth < 1200) {
+    e.target.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'center' });
+  }
 };
 
 export default function decorate(block) {
