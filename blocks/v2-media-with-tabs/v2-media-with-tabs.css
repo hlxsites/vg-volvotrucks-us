@@ -59,6 +59,7 @@
   line-height: 100%;
   color: var(--text-subtle);
   padding: 12px 0;
+  overflow: visible;
 }
 
 .v2-media-with-tabs__tab::after {
@@ -69,6 +70,10 @@
   width: 100%;
   position: relative;
   top: 12px;
+}
+
+.v2-media-with-tabs__tab.active {
+  color: var(--text-color);
 }
 
 .v2-media-with-tabs__tab.active::after {
