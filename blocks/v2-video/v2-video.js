@@ -1,4 +1,4 @@
-import { createVideo } from '../../scripts/video-helper.js';
+import { createVideo, setPlaybackControls } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;
@@ -60,7 +60,10 @@ export default async function decorate(block) {
   });
 
   videoLink.remove();
+
   block.prepend(video);
+
+  setPlaybackControls();
 
   onHoverOrScroll(block.querySelector(`.${blockClass}__content-wrapper`), (val) => {
     const action = val ? 'add' : 'remove';

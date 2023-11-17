@@ -1,9 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import {
-  adjustPretitle,
-  createElement,
-  removeEmptyTags,
-  variantsClassesToBEM,
+  adjustPretitle, createElement, removeEmptyTags, variantsClassesToBEM,
 } from '../../scripts/common.js';
 import { createVideo, isVideoLink } from '../../scripts/video-helper.js';
 
@@ -57,8 +54,32 @@ export default async function decorate(block) {
         loop: true,
         playsinline: true,
       });
+
       section.prepend(newVideo);
       videoLinks[0].remove();
+
+      const playbackControls = newVideo.querySelector('button');
+      const { parentElement } = playbackControls.parentElement;
+      parentElement.style.position = 'relative';
+      parentElement.append(playbackControls);
+
+      // Get the element's height(use requestAnimationFrame to get actual height instead of 0)
+      requestAnimationFrame(() => {
+        const height = newVideo.offsetHeight - 60;
+        playbackControls.style.top = `${height.toString()}px`;
+      });
+
+      // Get the element's height on resize
+      const getVideoHeight = (entries) => {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const entry of entries) {
+          const height = entry.target.offsetHeight - 60;
+          playbackControls.style.top = `${height.toString()}px`;
+        }
+      };
+
+      const resizeObserver = new ResizeObserver(getVideoHeight);
+      resizeObserver.observe(newVideo);
     }
 
     // Add wrapper around the text content
