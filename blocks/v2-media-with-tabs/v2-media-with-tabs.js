@@ -1,5 +1,6 @@
-import { createElement, unwrapDivs } from '../../scripts/common.js';
+import { createElement, unwrapDivs, variantsClassesToBEM } from '../../scripts/common.js';
 
+const variantClasses = ['media-right'];
 const blockName = 'v2-media-with-tabs';
 
 const handleChangeTab = (e) => {
@@ -23,6 +24,8 @@ const handleChangeTab = (e) => {
 };
 
 export default function decorate(block) {
+  variantsClassesToBEM(block.classList, variantClasses, blockName);
+
   const content = block.querySelectorAll(':scope > div > div');
   const [header, list] = content;
 
