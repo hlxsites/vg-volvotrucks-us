@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-10-17T00:00:00.000Z</updated>
+    <updated>2023-11-01T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo VNR Electric Trucks Deliver Zero-Tailpipe Emissions and Groceries for Loblaw, Canada's Grocery Retail Leader]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deliver-zero-tailpipe-emissions-and-groceries-for-loblaw-canadas-grocery-retail-leader/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deliver-zero-tailpipe-emissions-and-groceries-for-loblaw-canadas-grocery-retail-leader/"/>
+        <updated>2023-11-01T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“It is a win-win opportunity to support customers who share our commitment to a sustainable future, so we are honored to be to be part of this journey with Loblaw as they work to transition their fleet to fossil-free solutions,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-11-01T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Continues Expansion of Electromobility Ecosystem with 11 New Certified EV Dealers in North America]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/october/volvo-trucks-continues-expansion-of-electromobility-ecosystem-with-11-new-certified-ev-dealers-in-north-america/</id>

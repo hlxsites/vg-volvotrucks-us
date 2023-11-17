@@ -294,3 +294,9 @@ export const getJsonFromUrl = async (route) => {
   }
   return null;
 };
+
+export const getLanguagePath = () => {
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  return langCodeMatch ? langCodeMatch[1] : '/';
+};
