@@ -51,25 +51,28 @@
   min-width: fit-content;
   border: none;
   border-radius: 1px;
-  border-bottom: 2px solid transparent;
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
   font-size: var(--f-button-font-size);
   letter-spacing: var(--f-button-letter-spacing);
   line-height: 100%;
-  color: var(--c-grey-600);
+  color: var(--text-subtle);
   padding: 12px 0;
 }
 
-/* Gray inactive tabs on dark backgraound */
-.section--black-background .v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab {
-  color: var(--c-grey-300);
+.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab::after {
+  content: '';
+  display: block;
+  background-color: var(transparent);
+  height: 2px;
+  width: 100%;
+  position: relative;
+  top: 10px;
 }
 
-.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab.active {
-  color: var(--text-color);
-  border-bottom-color: var(--text-color);
+.v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab.active::after {
+  background-color: var(--text-color);
 }
 
 .v2-media-with-tabs__tabs-section button.v2-media-with-tabs__tab:focus {
