@@ -8,3 +8,10 @@ helix-importer-ui
 .idea/*
 /tools/content-mirror/volvotrucks.us/
 /tools/content-mirror/hlxsite/
+
+fstab.yaml
+pull_request_template.md
+README.md
+tools/importer/import.js
+tools/importer/sub-nav.js
+config.json
