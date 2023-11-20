@@ -1,18 +1,45 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
 
+const COOKIES = {
+  performance: 'C0002:1',
+  social: 'C0005:1',
+};
+
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-const cookieSetting = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-const isGtmAllowed = cookieSetting.includes('C0002:1');
-const isFacebookPixelAllowed = cookieSetting.includes('C0005:1');
+const cookieSetting = decodeURIComponent(document.cookie.split(';')
+  .find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+const isPerformanceAllowed = cookieSetting.includes(COOKIES.performance);
+const isSocialAllowed = cookieSetting.includes(COOKIES.social);
 
-if (isGtmAllowed) {
-  loadGoogleTagManager();
-}
+if (isPerformanceAllowed) {
+  loadGoogleTagManager(); // facebook pixel is added by gtm too
+  loadHotjar();
+  if (!isSocialAllowed) {
+    //remove facebook pixel aka fbevents.js
+    const htmlElement = document.querySelector('html');
 
-if (isFacebookPixelAllowed) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeName === 'SCRIPT' && node.src.includes('fbevents.js')) {
+            node.remove();
+            [...document.querySelectorAll('script[id]')]
+              .filter((script) => script.innerHTML.includes('fbevents.js'))[0].remove();
+            [...document.querySelectorAll('noscript')]
+              .filter((script) => script.innerHTML.includes('facebook.com'))[0].remove();
+            console.log('%cRemoved facebook pixel', 'color: #f00');
+            observer.disconnect();
+          }
+        });
+      });
+    });
+
+    observer.observe(htmlElement, { childList: true });
+  }
+} else if (isSocialAllowed) {
   loadFacebookPixel();
 }
 
@@ -71,20 +98,14 @@ async function loadGoogleTagManager() {
 
 async function loadFacebookPixel() {
   // FaceBook Pixel
-  // eslint-disable-next-line no-unused-expressions
+  /* eslint-disable */
   (function (f, b, e, v, n, t, s) {
-    // eslint-disable-next-line no-multi-assign,no-param-reassign
     if (f.fbq) return; n = f.fbq = function () {
-      // eslint-disable-next-line no-unused-expressions
       n.callMethod
-      // eslint-disable-next-line prefer-spread,prefer-rest-params
         ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
     };
-    // eslint-disable-next-line no-underscore-dangle
     if (!f._fbq)f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-    // eslint-disable-next-line no-param-reassign
     n.queue = []; t = b.createElement(e); t.async = !0;
-    // eslint-disable-next-line no-param-reassign,prefer-destructuring
     t.src = v; s = b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t, s);
   }(
@@ -93,18 +114,20 @@ async function loadFacebookPixel() {
     'script',
     'https://connect.facebook.net/en_US/fbevents.js',
   ));
-  // eslint-disable-next-line no-undef
   fbq('init', '620334125252675');
-  // eslint-disable-next-line no-undef
   fbq('track', 'PageView');
+  /* eslint-disable */
 }
 
-(function(h,o,t,j,a,r){
-  h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-  h._hjSettings={hjid:1139895,hjsv:6}; a=o.getElementsByTagName('head')[0];
-  r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-  a.appendChild(r);
-})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+// Hotjar Tracking Code for volvotrucks.us
+async function loadHotjar() {
+  (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:1139895,hjsv:6}; a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+}
 
 // Initiate searchWidget ,  check for search div loaded
 if (document.getElementById('div-widget-id') && !document.querySelector('.studio-widget-autosuggest-results')) {
@@ -116,4 +139,3 @@ if (document.querySelector('.studio-widget-autosuggest-results')) {
   const searchWidget = document.querySelector('.studio-widget-search-input');
   searchWidget.setAttribute('autocomplete', 'off');
 }
-/* eslint-enable  func-names */
