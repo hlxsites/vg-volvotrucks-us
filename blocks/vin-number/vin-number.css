@@ -17,6 +17,11 @@
   max-width: 100%;
 }
 
+.vin-number__refresh-date-wrapper {
+  text-align: center;
+  padding-top: 20px;
+}
+
 .redesign-v2 .vin-number__form .vin-number__submit {
   max-width: 100%;
 }
@@ -47,7 +52,7 @@
 
 /* recalls list styling */
 .vin-number__results-container{
-  padding: 20px 0;
+  margin: 40px 0;
 }
 
 .vin-number__no-french-info {

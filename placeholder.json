@@ -61,7 +61,7 @@
     }, 
     {
       "Key": "vinformat",
-      "Text": "The VIN entered is not valid for Volvo Trucks, Nova Bus, or Prevost vehicles"
+      "Text": "The VIN entered is not valid for Volvo Trucks, Prevost, Nova Bus, or Volvo Bus vehicles"
     }, 
     {
       "Key": "result text",
