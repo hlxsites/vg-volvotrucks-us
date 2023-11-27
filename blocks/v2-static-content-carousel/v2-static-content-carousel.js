@@ -8,7 +8,7 @@ const updateActiveClass = (elements, targetElement, carousel) => {
   elements.forEach((el, index) => {
     if (el === targetElement) {
       el.classList.add('active');
-      let arrowControl = document.querySelector(`.${blockName}__button:disabled`);
+      let arrowControl = carousel.nextElementSibling.querySelector(`.${blockName}__button:disabled`);
 
       if (arrowControl) {
         arrowControl.disabled = false;
@@ -16,9 +16,9 @@ const updateActiveClass = (elements, targetElement, carousel) => {
       }
       // disable arrow buttons
       if (index === 0) {
-        arrowControl = document.querySelector(`.${blockName}__button-prev`);
+        arrowControl = carousel.nextElementSibling.querySelector(`.${blockName}__button-prev`);
       } else if (index === el.parentNode.children.length - 1) {
-        arrowControl = document.querySelector(`.${blockName}__button-next`);
+        arrowControl = carousel.nextElementSibling.querySelector(`.${blockName}__button-next`);
       }
       if (arrowControl) {
         arrowControl.disabled = true;

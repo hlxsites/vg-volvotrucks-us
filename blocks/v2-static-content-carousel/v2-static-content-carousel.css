@@ -96,6 +96,7 @@
 .v2-static-content-carousel__button:disabled:hover {
   background: transparent;
   border: none;
+  border-radius: 4px;
 }
 
 .v2-static-content-carousel__button .icon-arrow-left svg,
@@ -168,7 +169,7 @@
     position: absolute;
     top: 0;
     pointer-events: none;
-    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
+    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, var(--background-gradient) 100%);
     right: 0;
   }
 }

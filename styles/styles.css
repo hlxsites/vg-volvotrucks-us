@@ -1003,6 +1003,7 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
   --text-subtle: var(--c-grey-4);
+  --background-gradient: rgb(255 255 255 / 100%);
 
   font-size: 16px;
 }
@@ -1056,6 +1057,7 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-white);
   --c-cta-blue-default: #44A1FF;
   --text-subtle: var(--c-grey-2);
+  --background-gradient: rgb(20 20 20 / 100%);
 
   color: var(--text-color);
   background-color: var(--c-main-black);
@@ -1065,6 +1067,7 @@ main.blue-contract .section.section-with-title p {
 .section--gray-background {
   --card-background: var(--c-white);
   --card-text: var(--c-main-black);
+  --background-gradient: rgb(247 247 247 / 100%);
 
   background-color: var(--c-grey-50);
 }
