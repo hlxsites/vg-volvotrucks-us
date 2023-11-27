@@ -1490,3 +1490,107 @@ main.blue-contract .section.section-with-title p {
   width: 1px;
   white-space: nowrap;
 }
+
+/* generic tooltip styles  starts here */
+.redesign-v2 .tooltip {
+  position: relative;
+}
+
+.redesign-v2 .tooltip::before,
+.redesign-v2 .tooltip::after {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-small) linear, visibility var(--duration-small) linear;
+}
+
+.redesign-v2 .tooltip.show::before,
+.redesign-v2 .tooltip.show::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.redesign-v2 .tooltip::before {
+  content: attr(data-tooltip);
+  z-index: 2;
+  padding: 4px 8px 5px;
+  white-space: nowrap;
+  color: var(--c-main-black);
+  background: var(--c-white);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 0.3px 0.5px 0 rgb(0 0 0 / 10%);
+}
+
+.redesign-v2 .tooltip::after {
+  content: "";
+  width: 0;
+  height: 0;
+  z-index: 4;
+  filter: drop-shadow(0 6px 4px rgb(0 0 0 / 10%));
+}
+
+/* tooltip position top */
+.redesign-v2 .tooltip--top::before,
+.redesign-v2 .tooltip--top::after {
+  bottom: 60%;
+  left: 50%;
+  transform: translate(-50%);
+  margin-bottom: 15px;
+}
+
+.redesign-v2 .tooltip--top::after {
+  margin-bottom: 8.5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid var(--c-white);
+}
+
+/* tooltip position right */
+.redesign-v2 .tooltip--right::before,
+.redesign-v2 .tooltip--right::after {
+  top: 50%;
+  left: 60%;
+  transform: translate(0, -50%);
+  margin-left: 15px;
+}
+
+.redesign-v2 .tooltip--right::after {
+  margin-left: 8.5px;
+  border-top: 5px solid transparent;
+  border-right: 7px solid var(--c-white);
+  border-bottom: 5px solid transparent;
+}
+
+/* tooltip position left */
+.redesign-v2 .tooltip--left::before,
+.redesign-v2 .tooltip--left::after {
+  top: 50%;
+  right: 60%;
+  transform: translate(0, -50%);
+  margin-right: 15px;
+}
+
+.redesign-v2 .tooltip--left::after {
+  margin-right: 8.5px;
+  border-top: 5px solid transparent;
+  border-left: 7px solid var(--c-white);
+  border-bottom: 5px solid transparent;
+}
+
+/* tooltip position bottom */
+.redesign-v2 .tooltip--bottom::before,
+.redesign-v2 .tooltip--bottom::after {
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 15px;
+}
+
+.redesign-v2 .tooltip--bottom::after {
+  margin-top: 8.5px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 7px solid var(--c-white);
+}
+
+/* generic tooltip styles  ends here */

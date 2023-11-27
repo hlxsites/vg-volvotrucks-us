@@ -1,0 +1,107 @@
+.redesign-v2 .section.v2-social-block-container {
+  padding: 40px 16px;
+}
+
+.v2-social-block-container {
+  --social-block-padding: 24px 16px;
+  --social-block-gap: 16px;
+  --social-block-list-gap: 12px;
+}
+
+.v2-social-block {
+  --social-link-color: var(--c-main-black);
+  --social-text-color: var(--c-main-black);
+}
+
+.redesign-v2 .section .v2-social-block-wrapper {
+  padding: var(--social-block-padding);
+  border-radius: 8px;
+}
+
+.v2-social-block-wrapper--black {
+  background-color: var(--c-main-black);
+}
+
+.v2-social-block--black {
+  --social-link-color: var(--c-white);
+  --social-text-color: var(--c-grey-2);
+}
+
+.v2-social-block-wrapper--gray {
+  background-color: var(--c-grey-50);
+}
+
+.v2-social-block__list-wrapper {
+  display: flex;
+  flex-flow: column;
+  gap: var(--social-block-gap);
+  align-items: center;
+}
+
+.v2-social-block__title {
+  font-family: var(--font-family-body);
+  font-size: var(--f-heading-5-font-size);
+  letter-spacing: var(--f-heading-5-letter-spacing);
+  line-height: var(--f-heading-5-line-height);
+  margin-bottom: 0;
+  color: var(--social-text-color);
+}
+
+.v2-social-block__list {
+  list-style-type: none;
+  display: flex;
+}
+
+.v2-social-block__button:any-link {
+  color: var(--social-link-color);
+  background-color: transparent;
+  align-items: center;
+  display: inline-flex;
+  font: var(--f-caption-font-size) / var(--f-caption-line-height) var(--font-family-body);
+  letter-spacing: 0.4px;
+  justify-content: center;
+  max-width: 21.5em;
+  height: 48px;
+  padding: 0 var(--social-block-gap);
+  border-radius: 4px;
+}
+
+.v2-social-block__button:focus-visible {
+  outline: 2px solid var(--light-border-focus);
+  outline-offset: 1px;
+}
+
+.v2-social-block__button .icon svg {
+  height: 24px;
+  width: 24px;
+}
+
+@media screen and (min-width: 744px) {
+  .redesign-v2 .section.v2-social-block-container {
+    padding: 40px 32px;
+  }
+
+  .v2-social-block-container {
+    --social-block-padding: 32px;
+  }
+
+  .v2-social-block__list-wrapper {
+    max-width: 680px;
+    margin: auto;
+  }
+
+  .v2-social-block__list {
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .redesign-v2 .section.v2-social-block-container {
+    padding: 48px 0;
+  }
+
+  .v2-social-block-container {
+    --social-block-padding: 48px 40px;
+    --social-block-gap: 32px;
+  }  
+}
