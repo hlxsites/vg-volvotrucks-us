@@ -608,7 +608,13 @@ main p img {
 
 .redesign-v2 a.button:focus,
 .redesign-v2 button:focus {
+  outline: 0;
+}
+
+.redesign-v2 a.button:focus-visible,
+.redesign-v2 button:focus-visible {
   outline: 2px solid var(--light-border-focus);
+  outline-offset: 2px;
 }
 
 /* sections */
