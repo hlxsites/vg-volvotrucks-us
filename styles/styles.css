@@ -348,10 +348,12 @@ header .sub-nav.block {
 }
 
 /* specific page styles */
+div:where([role="dialog"]).center,
 main.center {
   text-align: center;
 }
 
+div:where([role="dialog"]).center :where(.block),
 main.center :where(.block) {
   text-align: initial;
 }
@@ -538,7 +540,7 @@ input[type='text'], select, textarea {
 }
 
 /* commont elements */
-
+div:where([role="dialog"]) input,
 main input {
   font-size: 1.25rem;
   width: 100%;
@@ -553,10 +555,12 @@ main input {
   background-color: var(--c-white);
 }
 
+div:where([role="dialog"]) input:hover,
 main input:hover {
   border: 1px solid var(--text-color);
 }
 
+div:where([role="dialog"]) pre,
 main pre {
   background-color: var(--overlay-background-color);
   padding: 1em;
@@ -565,6 +569,7 @@ main pre {
   white-space: pre;
 }
 
+div:where([role="dialog"]) blockquote,
 main blockquote {
   font-style: italic;
   margin: 3rem;
@@ -572,11 +577,13 @@ main blockquote {
   hanging-punctuation: first;
 }
 
+div:where([role="dialog"]) blockquote p::before,
 main blockquote p::before {
   content: "“";
   line-height: 0;
 }
 
+div:where([role="dialog"]) blockquote p::after,
 main blockquote p::after {
   content: "”";
   line-height: 0;
@@ -589,12 +596,14 @@ hr {
   border-bottom: 1px solid var(--overlay-background-color);
 }
 
+div:where([role="dialog"]) img,
 main img {
   max-width: 100%;
   height: auto;
   vertical-align: middle
 }
 
+div:where([role="dialog"]) p img,
 main p img {
   display: block;
   margin: auto;
@@ -619,12 +628,14 @@ main p img {
 
 /* sections */
 
+div:where([role="dialog"]) .section > div,
 main .section > div {
   width: var(--wrapper-width);
   padding: 0 16px;
   margin: 48px auto;
 }
 
+div:where([role="dialog"]) .section-with-background,
 main .section-with-background {
   --text-color: white;
 
@@ -638,16 +649,21 @@ main .section-with-background {
   padding: 48px 0;
 }
 
+div:where([role="dialog"]) .section-with-background > div:first-of-type,
 main .section-with-background > div:first-of-type,
+div:where([role="dialog"]) .section-with-background > div:first-of-type > :first-child,
 main .section-with-background > div:first-of-type > :first-child {
   margin-top: 0;
 }
 
+div:where([role="dialog"]) .section-with-background > div:last-of-type,
 main .section-with-background > div:last-of-type,
+div:where([role="dialog"]) .section-with-background > div:last-of-type > :last-child,
 main .section-with-background > div:last-of-type > :last-child {
   margin-bottom: 0;
 }
 
+div:where([role="dialog"]) .section-with-background > picture:last-of-type img,
 main .section-with-background > picture:last-of-type img {
   width: var(--wrapper-width);
   height: 100%;
@@ -660,16 +676,20 @@ main .section-with-background > picture:last-of-type img {
   object-fit: cover;
 }
 
+div:where([role="dialog"]) .section:first-child > :first-child,
 main .section:first-child > :first-child {
   margin-top: 0;
 }
 
 /* progressive section appearance */
+div:where([role="dialog"]) .section[data-section-status='loading'],
 main .section[data-section-status='loading'],
+div:where([role="dialog"]) .section[data-section-status='initialized'],
 main .section[data-section-status='initialized'] {
   display: none;
 }
 
+div:where([role="dialog"]) .section.highlight,
 main .section.highlight {
   background-color: var(--highlight-background-color);
 }
@@ -699,21 +719,25 @@ ul.cta-list li {
   margin-top: -10px;
 }
 
+div:where([role="dialog"]) .section.tabbed-container-full-width > div,
 main .section.tabbed-container-full-width > div {
   padding: 0;
   width: unset;
 }
 
+div:where([role="dialog"]) .section.tabbed-container-full-width,
 main .section.tabbed-container-full-width {
   --horizontal-padding: calc((100% - var(--wrapper-width)) / 2);
 }
 
+div:where([role="dialog"]) .section.tabbed-container ul.tab-navigation,
 main .section.tabbed-container ul.tab-navigation {
   padding: 0;
   margin: 25px;
   text-align: center;
 }
 
+div:where([role="dialog"]) .section.tabbed-container ul.tab-navigation li,
 main .section.tabbed-container ul.tab-navigation li {
   margin: 0 auto;
   padding: 0 1% 8px;
@@ -721,6 +745,7 @@ main .section.tabbed-container ul.tab-navigation li {
   width: 35%;
 }
 
+div:where([role="dialog"]) .section.tabbed-container ul.tab-navigation button,
 main .section.tabbed-container ul.tab-navigation button {
   background: 0 0;
   border: none;
@@ -881,6 +906,7 @@ div.block div.pager .pagination .scroll li a {
 }
 
 @media screen and (min-width: 480px) {
+  div:where([role="dialog"]) .section.tabbed-container ul.tab-navigation li,
   main .section.tabbed-container ul.tab-navigation li {
     margin: 0 3%;
     display: inline-block;
@@ -902,6 +928,7 @@ div.block div.pager .pagination .scroll li a {
     --sub-nav-height: 48px;
   }
 
+  :root:not(.redesign-v2) div:where([role="dialog"]):not(.remove-top-margin) .section:first-child > :first-child,
   :root:not(.redesign-v2) main:not(.remove-top-margin) .section:first-child > :first-child {
     margin-top: 30px;
   }
@@ -911,20 +938,24 @@ div.block div.pager .pagination .scroll li a {
   }
 }
 
+div:where([role="dialog"]).blue-contract .section,
 main.blue-contract .section {
   padding: 40px 0;
 }
 
+div:where([role="dialog"]).blue-contract .section > div,
 main.blue-contract .section > div {
   padding: 0 16px;
   margin: auto;
 }
 
 @media screen and (min-width: 768px) {
+  div:where([role="dialog"]).blue-contract .section,
   main.blue-contract .section {
     padding: 80px 0;
   }
 
+  div:where([role="dialog"]).blue-contract .section > div,
   main.blue-contract .section > div {
     padding: 0 32px;
     margin: auto;
@@ -932,6 +963,7 @@ main.blue-contract .section > div {
 }
 
 @media screen and (min-width: 1024px) {
+  div:where([role="dialog"]).blue-contract .section > div,
   main.blue-contract .section > div {
     padding: 0 135px;
   }
@@ -945,12 +977,15 @@ main.blue-contract .section > div {
 
 /* Sections variant styling */
 @media (min-width: 1440px) {
+  :root:not(html.redesign-v2) div:where([role="dialog"]).blue-contract,
   :root:not(html.redesign-v2) main.blue-contract {
     --wrapper-width: 1440px;
   }
 }
 
+div:where([role="dialog"]).blue-contract .section.section-with-title h1,
 main.blue-contract .section.section-with-title h1,
+div:where([role="dialog"]).blue-contract .section.section-with-title h2,
 main.blue-contract .section.section-with-title h2 {
   font-size: var(--heading-ml-font-size);
   line-height: var(--heading-ml-line-height);
@@ -958,6 +993,7 @@ main.blue-contract .section.section-with-title h2 {
   margin: 0 0 16px;
 }
 
+div:where([role="dialog"]).blue-contract .section.section-with-title p,
 main.blue-contract .section.section-with-title p {
   font-size: var(--body-regular-font-size);
   line-height: var(--body-regular-line-height);
@@ -966,32 +1002,39 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media screen and (min-width: 768px) {
+  div:where([role="dialog"]).blue-contract .section.section-with-title h1,
   main.blue-contract .section.section-with-title h1,
+  div:where([role="dialog"]).blue-contract .section.section-with-title h2,
   main.blue-contract .section.section-with-title h2 {
     font-size: var(--heading-l-font-size);
     line-height: var(--heading-l-line-height);
     letter-spacing: var(--heading-l-letter-spacing);
   }
 
+  div:where([role="dialog"]).blue-contract .section.section-with-title p,
   main.blue-contract .section.section-with-title p {
     font-size: var(--heading-m-font-size);
     line-height: var(--heading-m-line-height);
     letter-spacing: var(--heading-m-letter-spacing);
   }
 
+  div:where([role="dialog"]).blue-contract .section.section-with-title > p:last-of-type,
   main.blue-contract .section.section-with-title > p:last-of-type {
     margin: 0 0 40px;
   }
 }
 
 @media screen and (min-width: 1024px) {
+  div:where([role="dialog"]).blue-contract .section.section-with-title h1,
   main.blue-contract .section.section-with-title h1,
+  div:where([role="dialog"]).blue-contract .section.section-with-title h2,
   main.blue-contract .section.section-with-title h2 {
     font-size: var(--heading-xxl-font-size);
     line-height: var(--heading-xxl-line-height);
     letter-spacing: var(--heading-xxl-letter-spacing);
   }
 
+  div:where([role="dialog"]).blue-contract .section.section-with-title > p:last-of-type,
   main.blue-contract .section.section-with-title > p:last-of-type {
     margin: 0 0 80px;
   }
@@ -1373,6 +1416,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* common elements */
+.redesign-v2 div:where([role="dialog"]) label,
 .redesign-v2 main label {
   color: var(--c-grey-4);
   font-family: var(--font-family-heading);
@@ -1381,6 +1425,7 @@ main.blue-contract .section.section-with-title p {
   line-height: var(--f-subtitle-2-line-height);
 }
 
+.redesign-v2 div:where([role="dialog"]) input,
 .redesign-v2 main input {
   color: var(--c-grey-4);
   padding: 16px;
@@ -1392,6 +1437,7 @@ main.blue-contract .section.section-with-title p {
   line-height: var(--f-subtitle-2-line-height);
 }
 
+.redesign-v2 div:where([role="dialog"]) input:hover,
 .redesign-v2 main input:hover {
   border-color: var(--c-grey-2);
 }

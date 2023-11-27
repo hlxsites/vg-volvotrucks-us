@@ -11,6 +11,7 @@ import {
   getMetadata,
   toClassName,
   getHref,
+  loadBlocks,
 } from './lib-franklin.js';
 
 import {
@@ -390,6 +391,49 @@ function decorateHyperlinkImages(container) {
     });
 }
 
+document.addEventListener('open-modal', (event) => {
+  // eslint-disable-next-line import/no-cycle
+  import('../common/modal/modal.js').then((modal) => {
+    const variantClasses = ['black', 'gray'];
+    const modalClasses = [...event.detail.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
+    // changing the modal variants classes to BEM naming
+    variantClasses.forEach((variant) => {
+      const index = modalClasses.findIndex((el) => el === `modal-${variant}`);
+
+      if (index >= 0) {
+        modalClasses[index] = modalClasses[index].replace('modal-', 'modal--');
+      }
+    });
+
+    modal.showModal(event.detail.content, { modalClasses, invokeContext: event.detail.target });
+  });
+});
+
+const handleModalLinks = (link) => {
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const modalContentLink = link.getAttribute('data-modal-content');
+    const resp = await fetch(`${modalContentLink}.plain.html`);
+    const main = document.createElement('main');
+
+    if (resp.ok) {
+      main.innerHTML = await resp.text();
+      // eslint-disable-next-line no-use-before-define
+      decorateMain(main, main);
+      await loadBlocks(main);
+    }
+
+    const modalEvent = new CustomEvent('open-modal', {
+      detail: {
+        content: main.children,
+        target: event.target,
+      },
+    });
+
+    document.dispatchEvent(modalEvent, { bubbles: true });
+  });
+};
+
 export function decorateLinks(block) {
   [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
@@ -401,6 +445,14 @@ export function decorateLinks(block) {
       }
       if (isSoundcloudLink(link)) {
         addSoundcloudShowHandler(link);
+      }
+      if (link.getAttribute('href').startsWith('/modal-content=')) {
+        const href = link.getAttribute('href');
+        link.setAttribute('data-modal-content', href.split('modal-content=')[1]);
+        // removing the `/modal-content=` so the link can be opened in the other tab by coping link
+        link.setAttribute('href', link.getAttribute('href').replace('/modal-content=', ''));
+        handleModalLinks(link);
+        return;
       }
 
       const url = new URL(link.href);
@@ -581,7 +633,7 @@ export const MEDIA_BREAKPOINTS = {
   DESKTOP: 'DESKTOP',
 };
 
-export function getImageForBreakpoint(imagesList, onChange = () => {}) {
+export function getImageForBreakpoint(imagesList, onChange = () => { }) {
   const mobileMQ = window.matchMedia('(max-width: 743px)');
   const tabletMQ = window.matchMedia('(min-width: 744px) and (max-width: 1199px)');
   const desktopMQ = window.matchMedia('(min-width: 1200px)');
