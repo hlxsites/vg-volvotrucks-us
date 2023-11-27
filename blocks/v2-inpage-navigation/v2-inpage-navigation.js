@@ -28,7 +28,7 @@ const inpageNavigationButton = () => {
     const title = getMetadata('inpage-button');
     const url = getMetadata('inpage-link');
     const link = createElement('a', {
-      classes: `${blockName}__cta`,
+      classes: ['button', 'marketing-cta', `${blockName}__cta`],
       props: {
         href: url,
         title,
@@ -85,7 +85,7 @@ const updateActive = (id) => {
   // Remove focus position
   document.activeElement.blur();
 
-  // check active id is equal to id dont do anything
+  // check active id is equal to id don't do anything
   const selectedItem = document.querySelector(`.${blockName}__selected-item`);
   activeItemInList?.classList.remove(`${blockName}__item--active`);
   const itemsButton = document.querySelectorAll(`.${blockName}__items button`);
@@ -119,7 +119,7 @@ const addHeaderScrollBehaviour = (header) => {
 };
 
 export default async function decorate(block) {
-  const redButton = inpageNavigationButton();
+  const ctaButton = inpageNavigationButton();
 
   const wrapper = block.querySelector(':scope > div');
   wrapper.classList.add(`${blockName}__wrapper`);
@@ -182,8 +182,8 @@ export default async function decorate(block) {
 
   itemsWrapper.remove();
 
-  if (redButton) {
-    wrapper.appendChild(redButton);
+  if (ctaButton) {
+    wrapper.appendChild(ctaButton);
   }
 
   list.addEventListener('click', gotoSection);

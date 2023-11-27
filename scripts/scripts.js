@@ -473,13 +473,10 @@ const createInpageNavigation = (main) => {
 
   // Sort the object by order
   const sortedObject = tabItemsObj.slice().sort((obj1, obj2) => {
-    if (!obj1.order) {
-      return 1; // Move 'a' to the end
-    }
-    if (!obj2.order) {
-      return -1; // Move 'b' to the end
-    }
-    return obj1.order - obj2.order;
+    const order1 = obj1.order ?? Infinity; // Fallback to a large number if 'order' is not present
+    const order2 = obj2.order ?? Infinity;
+
+    return order1 - order2;
   });
 
   // From the array of objects create the DOM

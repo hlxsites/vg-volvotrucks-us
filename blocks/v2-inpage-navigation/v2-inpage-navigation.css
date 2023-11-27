@@ -90,10 +90,23 @@ then we change it for the next section item in main */
 .v2-inpage-navigation__items-close {
   background: none;
   border: 0;
+  border-radius: 4px;
   color: var(--c-main-black);
   cursor: pointer;
   display: block;
   margin: 0 0 0 auto;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+}
+
+.v2-inpage-navigation__items-close svg {
+  display: block;
+  margin: auto;
+}
+
+.v2-inpage-navigation__items-close:focus-visible {
+  outline: 2px solid var(--light-border-focus);
 }
 
 .v2-inpage-navigation__dropdown-title {
@@ -125,6 +138,11 @@ then we change it for the next section item in main */
   letter-spacing: var(--f-subtitle-2-letter-spacing);
   margin: 0;
   width: 100%;
+  border-radius: 1px;
+  }
+
+.v2-inpage-navigation__item button:focus-visible {
+  outline-offset: 5px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -164,30 +182,10 @@ then we change it for the next section item in main */
 
 /* END Customization when dropdown is open */
 
-/* Blue button */
-.v2-inpage-navigation__cta:any-link {
-  text-transform: uppercase;
-  padding: 9px 21px;
-  font-family: var(--font-family-body);
-  font-size: var(--f-button-font-size);
+.redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+  height: auto;
+  padding: 8px 20px;
   line-height: var(--f-button-line-height);
-  letter-spacing: var(--f-button-letter-spacing);
-  border: 0;
-  background-color: var(--c-cta-blue-default);
-  color: var(--c-white);
-  align-items: center;
-  display: flex;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.v2-inpage-navigation__cta:hover,
-.v2-inpage-navigation__cta:focus {
-  background-color: var(--c-cta-blue-hover);
-}
-
-.v2-inpage-navigation__cta:active {
-  background-color: var(--c-cta-blue-active);
 }
 
 @media (min-width: 744px) {
@@ -250,6 +248,9 @@ then we change it for the next section item in main */
     padding: 0;
     display: flex;
     align-items: center;
+
+    /* fix overlap issue for focus state of CTA */
+    background-color: transparent;
   }
 
   .v2-inpage-navigation__items {
@@ -289,8 +290,7 @@ then we change it for the next section item in main */
     background-color: var(--c-main-black);
   }
 
-  /* Blue button */
-  .v2-inpage-navigation__cta:any-link {
-    padding: 11px 21px;
+  .redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+    padding: 10px 20px;
   }
 }
