@@ -1,5 +1,5 @@
 import { createElement, variantsClassesToBEM } from '../../scripts/common.js';
-import { isVideoLink, createVideo } from '../../scripts/video-helper.js';
+import { isVideoLink, createVideo, setPlaybackControls } from '../../scripts/video-helper.js';
 
 function stripEmptyTags(main, child) {
   if (child !== main && child.innerHTML.trim() === '') {
@@ -131,6 +131,8 @@ export default async function decorate(block) {
         });
         col.replaceWith(video);
         videoLinks[0].remove();
+
+        setPlaybackControls();
 
         return;
       }

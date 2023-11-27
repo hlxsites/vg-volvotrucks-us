@@ -77,13 +77,6 @@ main .section.v2-video-container .v2-video-wrapper {
   font-style: normal;
 }
 
-.v2-video .v2-video__heading {
-  font-family: var(--font-family-heading);
-  font-size: var(--f-heading-5-font-size);
-  font-style: normal;
-  line-height: var(--f-heading-5-line-height);
-}
-
 @media (min-width: 744px) {
   .section + .section.v2-video-container {
     margin-top: -56px;

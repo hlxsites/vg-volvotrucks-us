@@ -8,7 +8,7 @@ export function isLowResolutionVideoUrl(url) {
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
   return (linkString.includes('youtube.com/embed/')
-    || isLowResolutionVideoUrl(linkString))
+      || isLowResolutionVideoUrl(linkString))
     && link.closest('.block.embed') === null;
 }
 
@@ -130,6 +130,14 @@ export function createIframe(url, { parentEl, classes = [] }) {
   return iframe;
 }
 
+export function setPlaybackControls() {
+  const playbackControls = document.querySelectorAll('video > button');
+  playbackControls.forEach((control) => {
+    const { parentElement } = control.parentElement;
+    parentElement.append(control);
+  });
+}
+
 export const createVideo = (src, className = '', props = {}) => {
   const video = createElement('video', {
     classes: className,
@@ -155,6 +163,53 @@ export const createVideo = (src, className = '', props = {}) => {
     },
   });
 
+  // Playback controls - play and pause button
+  const playPauseButton = createElement('button', {
+    props: { type: 'button', class: 'v2-video__playback-button' },
+  });
+
+  const videoControls = document.createRange().createContextualFragment(`
+    <span class="icon icon-pause-video">
+       <svg width="27" height="27" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="36" cy="36" r="30" fill="white"/>
+          <rect x="28.25" y="24.45" width="2.75" height="23.09" fill="#141414"/>
+          <rect x="41" y="24.45" width="2.75" height="23.09" fill="#141414"/>
+       </svg>
+    </span>
+    <span class="icon icon-play-video">
+      <svg width="27" height="27" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="30" fill="white"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M49.3312 35.9998L29.3312 24.4528L29.3312 47.5468L49.3312 35.9998ZM44.3312 35.9998L31.8312 28.7829L31.8312 43.2167L44.3312 35.9998Z" fill="#141414"/>
+      </svg>
+    </span>`);
+
+  playPauseButton.append(...videoControls.children);
+  video.appendChild(playPauseButton);
+
+  const playIcon = video.querySelector('.icon-play-video');
+  const pauseIcon = video.querySelector('.icon-pause-video');
+
+  const pauseVideoLabel = getTextLabel('Pause video');
+  const playVideoLabel = getTextLabel('Play video');
+
+  playPauseButton.setAttribute('aria-label', pauseVideoLabel);
+
+  // Toggle the play/pause icon on click
+  playPauseButton.addEventListener('click', () => {
+    const isPaused = video.paused;
+    video[isPaused ? 'play' : 'pause']();
+    if (!isPaused) {
+      pauseIcon.style.display = 'none';
+      playIcon.style.display = 'flex';
+      playPauseButton.setAttribute('aria-label', playVideoLabel);
+    } else {
+      pauseIcon.style.display = 'flex';
+      playIcon.style.display = 'none';
+      playPauseButton.setAttribute('aria-label', pauseVideoLabel);
+    }
+  });
+
+  setPlaybackControls();
   video.appendChild(source);
 
   return video;
