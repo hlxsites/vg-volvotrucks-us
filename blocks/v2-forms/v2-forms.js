@@ -1,9 +1,47 @@
+import { loadScript } from '../../scripts/lib-franklin.js';
 import { createElement } from '../../scripts/common.js';
 
 // cache contains the form element that should be reused
 const formCache = new Map();
 
 const blockName = 'v2-forms';
+
+function serialize(obj) {
+  const str = Object.keys(obj).map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`);
+  return str.join('&');
+}
+
+function constructPayload(form) {
+  const payload = {};
+  [...form.elements].forEach((fe) => {
+    if (fe.name) {
+      if (fe.type === 'radio') {
+        if (fe.checked) payload[fe.name] = fe.value;
+      } else if (fe.type === 'checkbox') {
+        if (fe.checked) payload[fe.name] = payload[fe.name] ? `${payload[fe.name]},${fe.value}` : fe.value;
+      } else if (fe.type !== 'file') {
+        payload[fe.name] = fe.value;
+      }
+    }
+  });
+  payload.callback = 'logResult';
+  return { payload };
+}
+
+async function prepareRequest(form) {
+  const { payload } = constructPayload(form);
+  const url = form.dataset.action;
+
+  const serializedData = serialize(payload);
+  loadScript(`${url}?${serializedData}`, { type: 'text/javascript', charset: 'UTF-8' });
+}
+
+async function handleSubmit(form) {
+  if (form.getAttribute('data-submitting') !== 'true') {
+    form.setAttribute('data-submitting', 'true');
+    await prepareRequest(form);
+  }
+}
 
 const addForm = async (block) => {
   const displayValue = block.style.display;
@@ -21,9 +59,9 @@ const addForm = async (block) => {
       action="${formAction}"
     >${formContent.default}
 
-      <div style="position:absolute; left:-9999px; top: -9999px;">
-          <label for="pardot_extra_field">Comments</label>
-          <input type="text" id="pardot_extra_field" name="pardot_extra_field" />
+      <div style="position:absolute; left:-9999px; top: -9999px;" aria-hidden="true">
+        <label for="pardot_extra_field">Comments</label>
+        <input type="text" id="pardot_extra_field" name="pardot_extra_field" />
       </div>
     </form>
   `;
@@ -41,6 +79,21 @@ const addForm = async (block) => {
   formCache.set(formName, formWrapper);
 
   block.style.display = displayValue;
+
+  const formObj = document.querySelector('form');
+  // eslint-disable-next-line prefer-destructuring
+  formObj.addEventListener('submit', (e) => {
+    let isValid = true;
+    if (formObj.hasAttribute('novalidate')) {
+      isValid = formObj.checkValidity();
+    }
+    e.preventDefault();
+    if (isValid) {
+      e.submitter.setAttribute('disabled', '');
+      formObj.dataset.action = e.currentTarget.action;
+      handleSubmit(formObj);
+    }
+  });
 };
 
 export default async function decorate(block) {
