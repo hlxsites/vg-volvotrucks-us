@@ -7,7 +7,7 @@
   margin-top: -40px;
 }
 
-main .section.v2-video-container .v2-video-wrapper {
+body .section.v2-video-container .v2-video-wrapper {
   padding: 0;
   color: var(--c-white);
   margin: 0;
