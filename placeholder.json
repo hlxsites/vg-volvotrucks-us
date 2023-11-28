@@ -61,7 +61,7 @@
     }, 
     {
       "Key": "vinformat",
-      "Text": "The VIN entered is not valid for Volvo Trucks, Nova Bus, or Prevost vehicles"
+      "Text": "The VIN entered is not valid for Volvo Trucks, Prevost, Nova Bus, or Volvo Bus vehicles"
     }, 
     {
       "Key": "result text",
@@ -129,7 +129,7 @@
     },
     {
       "Key": "recall_oldest_info",
-      "Text": "Recall information available since: Jan 15, 2008"
+      "Text": "Recall information available since:"
     },
     {
       "Key": "tc_recall_nbr",
