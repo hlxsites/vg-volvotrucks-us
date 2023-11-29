@@ -26,24 +26,27 @@
   --scroll-dot-width: 9px;
   --v2-hero-padding: 32px;
 
-  height: calc(100vh - var(--nav-height));
+  min-height: calc(100vh - var(--nav-height));
   overflow: hidden;
   position: relative;
+  background-color: var(--c-grey-1);
 }
 
 /* Reduce the Hero height by the inpage-navigation height */
 .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
-  height: calc(100vh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
+  min-height: calc(100vh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
 }
 
 @supports (height: 1svh) {
   .v2-hero {
-    height: calc(100svh - var(--nav-height));
+    min-height: calc(100svh - var(--nav-height));
   }
 
-  .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero {
-    height: calc(100svh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
+  .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero,
+  .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero__content-wrapper {
+    min-height: calc(100svh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
   }
+
 }
 
 .section.v2-hero-container {
@@ -58,15 +61,19 @@
   width: 100%;
 }
 
+.v2-hero--background-right .v2-hero__image, .v2-hero--background-right .v2-hero__video {
+  object-position: center right;
+}
+
 .v2-hero__content-wrapper {
   color: var(--c-main-black);
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: calc(100svh - var(--nav-height));
   padding: var(--v2-hero-padding);
   padding-bottom: calc((var(--v2-hero-padding) * 2) + var(--scroll-icon-height));
-  background: linear-gradient(180deg, rgb(255 255 255 / 50%) 0%, rgb(255 255 255 / 0%) 100%);
+  background: linear-gradient(180deg, rgb(255 255 255 / 40%) 0%, rgb(255 255 255 / 0%) 100%);
 }
 
 .v2-hero--centered .v2-hero__content-wrapper {
@@ -75,18 +82,22 @@
   text-align: center;
 }
 
-.v2-hero--left .v2-hero__content-wrapper {
+.v2-hero--left-center .v2-hero__content-wrapper {
   justify-content: center;
 }
 
-.v2-hero--bottom .v2-hero__content-wrapper {
+.v2-hero--center-bottom .v2-hero__content-wrapper {
   align-items: center;
   justify-content: flex-end;
   text-align: center;
 }
 
+.v2-hero--dark {
+  background-color: var(--c-grey-4);
+}
+
 .v2-hero--dark .v2-hero__content-wrapper {
-  background: linear-gradient(180deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 0%) 100%);
+  background: linear-gradient(180deg, rgb(0 0 0 / 40%) 0%, rgb(0 0 0 / 0%) 100%);
   color: var(--c-white);
 }
 
@@ -95,11 +106,11 @@
 }
 
 .v2-hero__content > * {
-  max-width: 600px;
+  max-width: var(--text-block-max-width);
 }
 
 .v2-hero--centered .v2-hero__content > *,
-.v2-hero--bottom .v2-hero__content > * {
+.v2-hero--center-bottom .v2-hero__content > * {
   margin-left: auto;
   margin-right: auto;
 }
@@ -109,18 +120,27 @@
   font-size: 70px;
   line-height: 85%;
   letter-spacing: 5px;
+  margin-bottom: 0;
+  text-wrap: balance;
 }
 
-.v2-hero__title,
+.v2-hero__title + p {
+  margin-top: 8px;
+}
+
 .v2-hero__content p {
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .v2-hero__buttons-wrapper {
   display: inline-flex;
   flex-flow: column wrap;
-  gap: 8px;
-  margin-top: 24px;
+  gap: 24px;
+  padding: 24px 0 0;
+}
+
+.v2-hero__buttons-wrapper .button {
+  width: max-content;
 }
 
 /* Scroll icon */
@@ -146,6 +166,48 @@
   width: var(--scroll-dot-width);
 }
 
+/* START - Countdown  */
+
+.v2-hero__countdown {
+  display: flex;
+  gap: 32px;
+  padding: 24px 0;
+}
+
+.v2-hero--centered .v2-hero__countdown, .v2-hero--center-bottom .v2-hero__countdown {
+  justify-content: center;
+}
+
+.v2-hero__countdown-segment {
+  position: relative;
+  flex-basis: 50px;
+  text-align: center;
+}
+
+.v2-hero__countdown-segment + .v2-hero__countdown-segment::before {
+  content: ":";
+  position: absolute;
+  font: 400 var(--f-heading-3-5-font-size) / var(--f-heading-3-5-line-height) var(--ff-volvo-novum-medium);
+  top: 0;
+  left: -16px;
+  transform: translate(-50%, 0);
+}
+
+.v2-hero__countdown-number {
+  font: 400 var(--f-heading-3-5-font-size) / var(--f-heading-3-5-line-height) var(--ff-volvo-novum-medium);
+  letter-spacing: 0.25px;
+  font-feature-settings: 'tnum';
+}
+
+.v2-hero__countdown-label {
+  font: 400 var(--f-caption-font-size) / var(--f-caption-line-height) var(--ff-volvo-novum);
+  letter-spacing: var(--f-caption-letter-spacing);
+  text-transform: capitalize;
+}
+
+/* END - Countdown  */
+
+
 @media (min-width: 744px) {
   .v2-hero {
     --v2-hero-padding: 50px;
@@ -158,7 +220,7 @@
   .v2-hero__title {
     font-size: 92px;
     line-height: 100%;
-    letter-spacing: -1.15px;
+    letter-spacing: 6.5px;
   }
 
   .v2-hero__buttons-wrapper {
@@ -175,6 +237,6 @@
   .v2-hero__title {
     font-size: 100px;
     line-height: 85%;
-    letter-spacing: 2px;
+    letter-spacing: 7px;
   }
 }
