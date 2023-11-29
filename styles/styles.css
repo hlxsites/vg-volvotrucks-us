@@ -1463,13 +1463,6 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
 }
 
-.v2-video .v2-video__heading {
-  font-family: var(--font-family-heading);
-  font-size: var(--f-heading-5-font-size);
-  font-style: normal;
-  line-height: var(--f-heading-5-line-height);
-}
-
 .v2-video__playback-button .icon-play-video {
   display: none;
   justify-content: center;
