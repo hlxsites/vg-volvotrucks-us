@@ -144,6 +144,22 @@
       "Text": "Please fill out this field"
     },
     {
+      "Key": "day",
+      "Text": "day"
+    },
+    {
+      "Key": "hour",
+      "Text": "hour"
+    },
+    {
+      "Key": "minute",
+      "Text": "minute"
+    },
+    {
+      "Key": "second",
+      "Text": "second"
+    },
+    {
       "Key": "Close",
       "Text": "Close"
     },
