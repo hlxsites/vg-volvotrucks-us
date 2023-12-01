@@ -33,13 +33,18 @@ async function prepareRequest(form) {
   const url = form.dataset.action;
 
   const serializedData = serialize(payload);
-  loadScript(`${url}?${serializedData}`, { type: 'text/javascript', charset: 'UTF-8' });
+
+  return loadScript(`${url}?${serializedData}`, { type: 'text/javascript', charset: 'UTF-8' });
 }
 
 async function handleSubmit(form) {
   if (form.getAttribute('data-submitting') !== 'true') {
     form.setAttribute('data-submitting', 'true');
-    await prepareRequest(form);
+    try {
+      await prepareRequest(form);
+    } catch (error) {
+      window.logResult({ result: 'success', log: error });
+    }
   }
 }
 
@@ -83,6 +88,12 @@ const addForm = async (block) => {
   const formObj = document.querySelector('form');
   // eslint-disable-next-line prefer-destructuring
   formObj.addEventListener('submit', (e) => {
+    if (formContent.onSubmit) {
+      e.preventDefault();
+      formObj.dataset.action = e.currentTarget.action;
+      formContent.onSubmit(formObj, handleSubmit);
+    }
+
     let isValid = true;
     if (formObj.hasAttribute('novalidate')) {
       isValid = formObj.checkValidity();
@@ -91,9 +102,12 @@ const addForm = async (block) => {
     if (isValid) {
       e.submitter.setAttribute('disabled', '');
       formObj.dataset.action = e.currentTarget.action;
+
       handleSubmit(formObj);
     }
   });
+
+  formContent.postLoad?.(formObj);
 };
 
 export default async function decorate(block) {

@@ -4,12 +4,6 @@ export default async function decorate(block) {
   const blockName = 'v2-social-block';
   const variantClasses = ['black', 'gray'];
 
-  if (block.classList.contains('black')) {
-    block.parentElement.classList.add('v2-social-block-wrapper--black');
-  } else if (block.classList.contains('gray')) {
-    block.parentElement.classList.add('v2-social-block-wrapper--gray');
-  }
-
   variantsClassesToBEM(block.classList, variantClasses, blockName);
 
   const headings = block.querySelectorAll('h1, h2, h3, h4, h5, h6');

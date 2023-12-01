@@ -184,7 +184,7 @@
 .footer-list .footer__title:not(.expand):focus,
 .footer-list-item a:focus,
 .footer-bar a:focus {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
 }
 
 button.v2-scroll-to-top:focus {
@@ -192,7 +192,7 @@ button.v2-scroll-to-top:focus {
 }
 
 .v2-scroll-to-top:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 1px;
 }
 
@@ -230,7 +230,7 @@ button.v2-scroll-to-top:focus {
     gap: 20px
   }
 
-  .footer-list, 
+  .footer-list,
   .footer-list-item {
     display: flex;
     flex-direction: column;
@@ -247,7 +247,7 @@ button.v2-scroll-to-top:focus {
     max-height: 100%;
     overflow: auto;
   }
-  
+
   .footer-list-item a {
     gap: 8px;
     align-items: center;
