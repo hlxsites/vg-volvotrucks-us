@@ -157,17 +157,26 @@ export const removeEmptyTags = (block) => {
 };
 
 export const unwrapDivs = (element) => {
-  Array.from(element.children).forEach((node) => {
-    if (node.tagName === 'DIV' && node.attributes.length === 0) {
-      while (node.firstChild) {
-        element.insertBefore(node.firstChild, node);
+  const stack = [element];
+
+  while (stack.length > 0) {
+    const currentElement = stack.pop();
+
+    let i = 0;
+    while (i < currentElement.children.length) {
+      const node = currentElement.children[i];
+
+      if (node.tagName === 'DIV' && node.attributes.length === 0) {
+        while (node.firstChild) {
+          currentElement.insertBefore(node.firstChild, node);
+        }
+        node.remove();
+      } else {
+        stack.push(node);
+        i += 1;
       }
-      node.remove();
-      unwrapDivs(element);
-    } else {
-      unwrapDivs(node);
     }
-  });
+  }
 };
 
 export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockName) => {
