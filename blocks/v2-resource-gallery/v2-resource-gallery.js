@@ -6,12 +6,12 @@ import {
 } from '../../scripts/video-helper.js';
 import { createElement, getTextLabel, unwrapDivs } from '../../scripts/common.js';
 
-const blockName = 'v2-resources-gallery';
+const blockName = 'v2-resource-gallery';
 
 export default function decorate(block) {
   const blockHeading = block.querySelector('div:first-child');
   blockHeading.classList.add(`${blockName}__heading-wrapper`);
-  const title = blockHeading.querySelector('h4');
+  const title = blockHeading.querySelector('h1, h2, h3, h4, h5, h6');
   title?.classList.add(`${blockName}__heading`);
   unwrapDivs(blockHeading);
 
