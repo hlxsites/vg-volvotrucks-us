@@ -166,7 +166,35 @@
     {
       "Key": "Copied",
       "Text": "Copied!"
-    }, 
+    },
+    {
+      "Key": "event-notify:first-name",
+      "Text": "First name"
+    },
+    {
+      "Key": "event-notify:last-name",
+      "Text": "Last name"
+    },
+    {
+      "Key": "event-notify:zip",
+      "Text": "ZIP"
+    },
+    {
+      "Key": "event-notify:email",
+      "Text": "Email"
+    },
+    {
+      "Key": "event-notify:agreement",
+      "Text": "I agree to receive email updates from Volvo Trucks North America"
+    },
+    {
+      "Key": "event-notify:notify",
+      "Text": "Notify me"
+    },
+    {
+      "Key": "event-notify:add-event",
+      "Text": "Add event to calendar"
+    },
     {
       "Key": "view all",
       "Text": "View all"

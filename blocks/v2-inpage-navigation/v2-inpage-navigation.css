@@ -106,7 +106,7 @@ then we change it for the next section item in main */
 }
 
 .v2-inpage-navigation__items-close:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
 }
 
 .v2-inpage-navigation__dropdown-title {

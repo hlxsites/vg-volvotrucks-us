@@ -168,7 +168,7 @@ ul.v2-stories-carousel-meta {
 }
 
 .v2-stories-carousel-arrowcontrols button:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 1px;
 }
 

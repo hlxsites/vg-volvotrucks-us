@@ -101,7 +101,7 @@
 }
 
 .modal-top-bar .modal-close-button:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 5px;
 }
 

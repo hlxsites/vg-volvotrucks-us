@@ -199,7 +199,7 @@ ul.v2-truck-lineup__navigation {
 }
 
 .v2-truck-lineup__navigation button:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 5px;
 }
 
@@ -259,7 +259,7 @@ ul.v2-truck-lineup__navigation {
 }
 
 .v2-truck-lineup__arrow-controls button:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 1px;
 }
 
