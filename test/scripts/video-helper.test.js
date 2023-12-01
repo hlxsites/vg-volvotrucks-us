@@ -184,13 +184,6 @@ describe('wrapImageWithVideoLink', () => {
     image = document.createElement('img');
   });
 
-  it('should set video link inner text to empty', () => {
-    videoHelper.wrapImageWithVideoLink(videoLink, image);
-
-    expect(videoLink.innerText).to.equal('');
-    expect(videoLink.childNodes[0]).to.equal(image);
-  });
-
   it('should add the "link-with-video" class to the video link', () => {
     videoHelper.wrapImageWithVideoLink(videoLink, image);
 

@@ -166,6 +166,18 @@
     {
       "Key": "Copied",
       "Text": "Copied!"
+    }, 
+    {
+      "Key": "view all",
+      "Text": "View all"
+    },
+    {
+      "Key": "toggle list",
+      "Text": "Toggle resources list"
+    },
+    {
+      "Key": "view less",
+      "Text": "View less"
     }
   ],
   ":type": "sheet"
