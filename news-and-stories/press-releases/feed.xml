@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-11-09T00:00:00.000Z</updated>
+    <updated>2023-11-30T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo VNR Electric Trucks Deployed by Tim Hortons as Company Begins First Zero-Tailpipe Emission Deliveries in Ontario and British Columbia, Canada]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deployed-by-tim-hortons-as-company-begins-first-zero-tailpipe-emission-deliveries-in-ontario-and-british-columbia/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deployed-by-tim-hortons-as-company-begins-first-zero-tailpipe-emission-deliveries-in-ontario-and-british-columbia/"/>
+        <updated>2023-11-30T00:00:00.000Z</updated>
+        <content type="html"><![CDATA["Today, as we celebrate the deployment of these cutting-edge electric vehicles into the company’s fleet, we are confident that the positive impact on both its drivers and employees will be felt for years to come,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2023-11-30T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks North America Honored for its Leadership Supporting the Advancement of Women in the Trucking Industry]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-trucks-north-america-honored-for-its-leadership-supporting-the-advancement-of-women-in-the-trucking-industry/</id>
