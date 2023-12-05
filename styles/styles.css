@@ -1151,6 +1151,7 @@ main.blue-contract .section.section-with-title p {
   gap: 8px;
   letter-spacing: var(--f-body-letter-spacing);
   line-height: var(--f-body-line-height);
+  border-radius: 1px;
 }
 
 .redesign-v2 a.standalone-link:hover {
@@ -1159,10 +1160,6 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.standalone-link:active {
   color: var(--c-cta-blue-active);
-}
-
-.redesign-v2 a.standalone-link:visited {
-  color: var(--c-cta-blue-visited);
 }
 
 .redesign-v2 a.button.primary,

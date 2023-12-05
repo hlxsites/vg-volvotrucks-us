@@ -39,7 +39,7 @@
 }
 
 .v2-resource-gallery__heading-wrapper .v2-resource-gallery__heading {
-  text-transform: capitalize;
+  text-transform: none;
 }
 
 .v2-resource-gallery__video-list {
@@ -110,10 +110,11 @@
 
 .v2-resource-gallery__document-list a.button.standalone-link {
   text-decoration: underline;
-  text-underline-offset: 4px;
-  text-transform: capitalize;
-  display: flex;
+  text-underline-offset: 3px;
+  align-items: flex-start;
   gap: 8px;
+  white-space: normal;
+  text-align: left;
 }
 
 .v2-resource-gallery__heading-wrapper button.v2-resource-gallery__button.tertiary:hover {
