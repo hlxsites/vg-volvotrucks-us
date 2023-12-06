@@ -1,5 +1,5 @@
 import { createElement, getTextLabel } from '../../scripts/common.js';
-import { loadCSS } from '../../scripts/lib-franklin.js';
+import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createIframe, isLowResolutionVideoUrl } from '../../scripts/video-helper.js';
 
@@ -16,15 +16,14 @@ const createModalTopBar = (parentEl) => {
     <div class="modal-top-bar">
       <div class="modal-top-bar-content">
         <h2 class="modal-top-bar-heading" id="modal-heading"></h2>
-        <button class="modal-close-button" aria-label=${getTextLabel('close')}>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.97979 4.97979C5.17505 4.78453 5.49163 4.78453 5.6869 4.97979L16 15.2929L26.3131 4.97979C26.5084 4.78453 26.825 4.78453 27.0202 4.97979C27.2155 5.17505 27.2155 5.49163 27.0202 5.6869L16.7071 16L27.0202 26.3131C27.2155 26.5084 27.2155 26.825 27.0202 27.0202C26.825 27.2155 26.5084 27.2155 26.3131 27.0202L16 16.7071L5.6869 27.0202C5.49163 27.2155 5.17505 27.2155 4.97979 27.0202C4.78453 26.825 4.78453 26.5084 4.97979 26.3131L15.2929 16L4.97979 5.6869C4.78453 5.49163 4.78453 5.17505 4.97979 4.97979Z" fill="var(--color-icon, #000)"/>
-          </svg>
+        <button type="button" class="modal-close-button" aria-label=${getTextLabel('close')}>
+          <span class="icon icon-close" aria-hidden="true" />
         </button>
       </div>
     </div>
   `);
 
+  decorateIcons(topBar);
   parentEl.prepend(...topBar.children);
   // eslint-disable-next-line no-use-before-define
   parentEl.querySelector('.modal-close-button').addEventListener('click', () => hideModal());
@@ -126,12 +125,6 @@ const createModal = () => {
         bannerWrapper.classList.add('modal-before-banner');
         bannerWrapper.addEventListener('click', (event) => event.stopPropagation());
         bannerWrapper.appendChild(beforeBanner);
-        const closeButton = document.createElement('button');
-        closeButton.classList.add('modal-close-button');
-        closeButton.innerHTML = '<i class="fa fa-close"></i>';
-        bannerWrapper.appendChild(closeButton);
-        // eslint-disable-next-line no-use-before-define
-        closeButton.addEventListener('click', () => hideModal());
 
         videoOrIframe.before(bannerWrapper);
       }
