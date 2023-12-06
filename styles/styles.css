@@ -1455,6 +1455,14 @@ main.blue-contract .section.section-with-title p {
   border-color: var(--c-grey-2);
 }
 
+.redesign-v2 div:where([role="dialog"]) input:focus,
+.redesign-v2 main input:focus,
+.redesign-v2 div:where([role="dialog"]) input:focus-visible,
+.redesign-v2 main input:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 .redesign-v2 .checkbox-with-label {
   position: relative;
 }
@@ -1468,6 +1476,13 @@ main.blue-contract .section.section-with-title p {
   opacity: 1;
   margin: 0;
   z-index: -1;
+  appearance: none;
+  border: 0;
+}
+
+.redesign-v2 .checkbox-with-label input[type='checkbox']:focus,
+.redesign-v2 .checkbox-with-label input[type='checkbox']:focus-visible {
+  outline: none;
 }
 
 .redesign-v2 .checkbox-with-label input[type='checkbox'] + label {
@@ -1509,6 +1524,7 @@ main.blue-contract .section.section-with-title p {
   background-position-y: var(--checkbox-margin);
 }
 
+.redesign-v2 .checkbox-with-label input[type='checkbox']:focus + label::before,
 .redesign-v2 .checkbox-with-label input[type='checkbox']:focus-visible + label::before {
   outline: 2px solid var(--border-focus);
   outline-offset: 1px;
