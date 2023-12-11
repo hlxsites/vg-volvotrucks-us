@@ -94,6 +94,14 @@
   border-color: var(--c-error-red);
 }
 
+@supports not selector(:user-invalid) {
+  .v2-event-notify__container input:invalid,
+  .v2-event-notify__container input:invalid:hover,
+  .v2-event-notify__container input:invalid:focus {
+    border-color: var(--c-error-red);
+  }
+}
+
 .v2-event-notify__container .event-notify__add-event-button {
   cursor: pointer;
 }

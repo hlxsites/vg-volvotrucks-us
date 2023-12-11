@@ -162,9 +162,14 @@ export default async function decorate(block) {
   // we can inject the policy content when form content loaded
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      const formRef = [...mutation.addedNodes];
-      const policyEl = formRef.find((el) => el.querySelector('.event-notify__policy'))?.querySelector('.event-notify__policy');
-      const calendarButtonEl = formRef.find((el) => el.querySelector('.event-notify__add-event-button'))?.querySelector('.event-notify__add-event-button');
+      const formRef = [...mutation.addedNodes].find((el) => el instanceof Element && el.classList.contains('v2-forms__container'));
+
+      if (!formRef) {
+        return;
+      }
+
+      const policyEl = formRef.querySelector('.event-notify__policy');
+      const calendarButtonEl = formRef.querySelector('.event-notify__add-event-button');
 
       if (formRef) {
         policyEl.append(policyText);
