@@ -42,13 +42,16 @@ const formContent = `
   </div>
 `;
 
-const checkFieldValidity = (field) => {
+const checkFieldValidity = (field, useUserInvalid = true) => {
   const errorMessageEl = field.parentElement.querySelector(`:scope > .${formName}__error-message`);
 
   if (errorMessageEl) {
-    const isUserInvalid = field.parentElement.querySelector(':scope:user-invalid') === field;
-    errorMessageEl.innerText = isUserInvalid ? '' : field.validationMessage;
-    errorMessageEl.classList[isUserInvalid ? 'add' : 'remove'](`${formName}__error-message--hidden`);
+    const isSupportingUserInvalid = CSS.supports('selector(:user-invalid)');
+    const invalidSelector = isSupportingUserInvalid && useUserInvalid ? ':user-invalid' : ':invalid';
+    const isInvalid = field.parentElement.querySelector(`:scope ${invalidSelector}`) === field;
+
+    errorMessageEl.innerText = isInvalid ? field.validationMessage : '';
+    errorMessageEl.classList[isInvalid ? 'remove' : 'add'](`${formName}__error-message--hidden`);
   }
 };
 
@@ -61,13 +64,19 @@ export const postLoad = (form) => {
     field.addEventListener('input', () => {
       checkFieldValidity(field);
     });
+
+    field.addEventListener('focusout', () => {
+      checkFieldValidity(field);
+    });
+
+    checkFieldValidity(field);
   });
 };
 
 export const onSubmit = async (form, handleSubmit) => {
   const fields = [...form.querySelectorAll('input')];
 
-  fields.forEach(checkFieldValidity);
+  fields.forEach((el) => checkFieldValidity(el, false));
 
   if (form.checkValidity()) {
     await handleSubmit(form);
