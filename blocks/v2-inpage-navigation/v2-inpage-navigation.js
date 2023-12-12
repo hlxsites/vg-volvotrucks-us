@@ -1,4 +1,4 @@
-import { getMetadata } from '../../scripts/lib-franklin.js';
+import { decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 import { createElement, getTextLabel, debounce } from '../../scripts/common.js';
 
 const blockName = 'v2-inpage-navigation';
@@ -28,7 +28,7 @@ const inpageNavigationButton = () => {
     const title = getMetadata('inpage-button');
     const url = getMetadata('inpage-link');
     const link = createElement('a', {
-      classes: `${blockName}__cta`,
+      classes: ['button', 'marketing-cta', `${blockName}__cta`],
       props: {
         href: url,
         title,
@@ -85,7 +85,7 @@ const updateActive = (id) => {
   // Remove focus position
   document.activeElement.blur();
 
-  // check active id is equal to id dont do anything
+  // check active id is equal to id don't do anything
   const selectedItem = document.querySelector(`.${blockName}__selected-item`);
   activeItemInList?.classList.remove(`${blockName}__item--active`);
   const itemsButton = document.querySelectorAll(`.${blockName}__items button`);
@@ -119,7 +119,7 @@ const addHeaderScrollBehaviour = (header) => {
 };
 
 export default async function decorate(block) {
-  const redButton = inpageNavigationButton();
+  const ctaButton = inpageNavigationButton();
 
   const wrapper = block.querySelector(':scope > div');
   wrapper.classList.add(`${blockName}__wrapper`);
@@ -138,12 +138,9 @@ export default async function decorate(block) {
   sectionTitle.innerText = inpageTitle;
 
   const listCloseButton = createElement('button', { classes: `${blockName}__items-close` });
-  const closeIcon = document.createRange().createContextualFragment(`
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.64645 3.64645C3.84171 3.45118 4.15829 3.45118 4.35355 3.64645L12 11.2929L19.6464 3.64645C19.8417 3.45118 20.1583 3.45118 20.3536 3.64645C20.5488 3.84171 20.5488 4.15829 20.3536 4.35355L12.7071 12L20.3536 19.6464C20.5488 19.8417 20.5488 20.1583 20.3536 20.3536C20.1583 20.5488 19.8417 20.5488 19.6464 20.3536L12 12.7071L4.35355 20.3536C4.15829 20.5488 3.84171 20.5488 3.64645 20.3536C3.45118 20.1583 3.45118 19.8417 3.64645 19.6464L11.2929 12L3.64645 4.35355C3.45118 4.15829 3.45118 3.84171 3.64645 3.64645Z" fill="currentColor"/>
-  </svg>`);
+  const closeIcon = createElement('span', { classes: ['icon', 'icon-close'] });
 
-  listCloseButton.appendChild(...closeIcon.children);
+  listCloseButton.appendChild(closeIcon);
   listContainer.appendChild(listCloseButton);
 
   const submenuTitle = getTextLabel('Section');
@@ -165,13 +162,10 @@ export default async function decorate(block) {
     list.appendChild(listItem);
   });
 
-  const dropdownArrowIcon = document.createRange().createContextualFragment(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M3.73502 9.46224C3.51675 9.29308 3.20268 9.33289 3.03353 9.55116C2.86437 9.76943 2.90418 10.0835 3.12245 10.2527L11.6939 16.8955C11.8742 17.0352 12.1262 17.0352 12.3064 16.8955L20.8779 10.2527C21.0961 10.0835 21.136 9.76943 20.9668 9.55116C20.7976 9.33289 20.4836 9.29308 20.2653 9.46224L12.0002 15.8677L3.73502 9.46224Z" fill="currentColor"/>
-    </svg>`);
+  const dropdownArrowIcon = createElement('span', { classes: ['icon', 'icon-chevron-down'] });
 
   selectedItemWrapper.append(selectedItem);
-  selectedItemWrapper.appendChild(...dropdownArrowIcon.children);
+  selectedItemWrapper.appendChild(dropdownArrowIcon);
 
   dropdownWrapper.append(selectedItemWrapper);
   listContainer.append(list);
@@ -182,8 +176,10 @@ export default async function decorate(block) {
 
   itemsWrapper.remove();
 
-  if (redButton) {
-    wrapper.appendChild(redButton);
+  decorateIcons(wrapper);
+
+  if (ctaButton) {
+    wrapper.appendChild(ctaButton);
   }
 
   list.addEventListener('click', gotoSection);

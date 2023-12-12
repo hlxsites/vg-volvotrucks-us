@@ -86,7 +86,7 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .v2-static-content-carousel__button:focus-visible {
-  outline: 2px solid var(--light-border-focus);
+  outline: 2px solid var(--border-focus);
   outline-offset: 1px;
 }
 
@@ -96,15 +96,16 @@
 .v2-static-content-carousel__button:disabled:hover {
   background: transparent;
   border: none;
+  border-radius: 4px;
 }
 
 .v2-static-content-carousel__button .icon-arrow-left svg,
-.v2-static-content-carousel__button .icon-arrow-right svg { 
+.v2-static-content-carousel__button .icon-arrow-right svg {
   width: 48px;
   height: 48px;
 }
 
-.v2-static-content-carousel__button:disabled .icon-arrow-right svg path, 
+.v2-static-content-carousel__button:disabled .icon-arrow-right svg path,
 .v2-static-content-carousel__button:disabled .icon-arrow-left svg path {
   fill: var(--c-grey-2)
 }
@@ -168,7 +169,7 @@
     position: absolute;
     top: 0;
     pointer-events: none;
-    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 100%) 100%);
+    background: linear-gradient(90deg, rgb(255 255 255 / 0%) 0%, var(--background-gradient) 100%);
     right: 0;
   }
 }

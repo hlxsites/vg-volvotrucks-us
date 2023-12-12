@@ -3,7 +3,7 @@
 changelog:
   exclude:
     labels:
-      - ignore-for-release
+      - Ignore for release
   categories:
     - title: Functional requirements
       labels:

@@ -2,7 +2,7 @@ import { createElement, getTextLabel } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
-  return url.split('?')[0].endsWith('.mp4');
+  return (typeof url === 'string') && url.split('?')[0].endsWith('.mp4');
 }
 
 export function isVideoLink(link) {
@@ -49,7 +49,7 @@ export function showVideoModal(linkUrl) {
       beforeBanner = createLowResolutionBanner();
     }
 
-    modal.showModal(linkUrl, beforeBanner);
+    modal.showModal(linkUrl, { beforeBanner });
   });
 }
 
@@ -91,16 +91,21 @@ export function addSoundcloudShowHandler(link) {
       episodeInfo.querySelector('h2').innerText = title?.innerText || '';
       episodeInfo.querySelector('p').innerText = text?.innerText || '';
 
-      modal.showModal(link.getAttribute('href'), null, episodeInfo);
+      modal.showModal(link.getAttribute('href'), { beforeIframe: episodeInfo });
     });
   });
 }
 
 export function addPlayIcon(parent) {
-  const iconWrapper = createElement('div', { classes: 'video-icon-wrapper' });
-  const icon = createElement('i', { classes: ['fa', 'fa-play', 'video-icon'] });
-  iconWrapper.appendChild(icon);
-  parent.appendChild(iconWrapper);
+  const playButton = document.createRange().createContextualFragment(`
+    <span class="icon icon-play-video">
+      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="30" fill="white"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M49.3312 35.9998L29.3312 24.4528L29.3312 47.5468L49.3312 35.9998ZM44.3312 35.9998L31.8312 28.7829L31.8312 43.2167L44.3312 35.9998Z" fill="#141414"/>
+      </svg>
+    </span>`);
+
+  parent.appendChild(playButton);
 }
 
 export function wrapImageWithVideoLink(videoLink, image) {
@@ -108,7 +113,6 @@ export function wrapImageWithVideoLink(videoLink, image) {
   videoLink.appendChild(image);
   videoLink.classList.add('link-with-video');
   videoLink.classList.remove('button', 'primary', 'text-link-with-video');
-
   addPlayIcon(videoLink);
 }
 

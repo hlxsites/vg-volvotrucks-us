@@ -45,8 +45,10 @@
   margin: 0;
 }
 
-.v2-newsletter__form-container .button {
-  text-transform: uppercase;
+.v2-newsletter__form-container p {
+  margin: 0;
+  max-width: var(--text-block-max-width);
+  text-align: center;
 }
 
 @media screen and (min-width: 744px) {

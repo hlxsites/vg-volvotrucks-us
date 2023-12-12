@@ -1,5 +1,5 @@
 :root {
-  --inpage-navigation-height: 72px;
+  --inpage-navigation-height: 58px;
 }
 
 .v2-inpage-navigation-wrapper {
@@ -11,7 +11,7 @@
   top: var(--nav-height);
   width: 100%;
   z-index: var(--z-index-inpage-nav);
-  transition: transform var(--duration-medium) ease-in-out;
+  transition: transform var(--duration-medium) ease-in-out, z-index var(--duration-medium) ease-in-out;
 }
 
 /* As the first section in main doesn't need to have padding-top
@@ -19,6 +19,10 @@ and inpage navigation is taking the first position,
 then we change it for the next section item in main */
 .v2-inpage-navigation-wrapper + .section {
   padding-top: 0;
+}
+
+.v2-inpage-navigation--open {
+  z-index: var(--z-index-inpage-nav-open);
 }
 
 .v2-inpage-navigation--open .v2-inpage-navigation__items-container {
@@ -33,12 +37,13 @@ then we change it for the next section item in main */
 .v2-inpage-navigation {
   border-width: 1px 0;
   border-style: solid;
-  border-color: #EFEFEF;
+  border-color: var(--c-grey-50);
+  height: var(--inpage-navigation-height);
 }
 
 .v2-inpage-navigation__wrapper {
   display: flex;
-  padding: 16px;
+  padding: 8px 16px;
 }
 
 .v2-inpage-navigation__dropdown {
@@ -90,10 +95,25 @@ then we change it for the next section item in main */
 .v2-inpage-navigation__items-close {
   background: none;
   border: 0;
+  border-radius: 4px;
   color: var(--c-main-black);
   cursor: pointer;
   display: block;
   margin: 0 0 0 auto;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+}
+
+.v2-inpage-navigation__items-close .icon svg {
+  display: block;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+}
+
+.v2-inpage-navigation__items-close:focus-visible {
+  outline: 2px solid var(--border-focus);
 }
 
 .v2-inpage-navigation__dropdown-title {
@@ -114,9 +134,10 @@ then we change it for the next section item in main */
 
 .v2-inpage-navigation__item button,
 .v2-inpage-navigation__selected-item-wrapper {
+  padding: 0;
   background: none;
   border: 0;
-  color: var(--c-main-black);
+  color: var(--c-grey-4);
   cursor: pointer;
   display: block;
   font-family: var(--ff-volvo-novum);
@@ -125,19 +146,20 @@ then we change it for the next section item in main */
   letter-spacing: var(--f-subtitle-2-letter-spacing);
   margin: 0;
   width: 100%;
+  border-radius: 1px;
+}
+
+.v2-inpage-navigation__item button:focus-visible {
+  outline-offset: 5px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.v2-inpage-navigation__selected-item-wrapper,
 .v2-inpage-navigation__item--active button,
 .v2-inpage-navigation__item button:hover,
 .v2-inpage-navigation__item button:active,
-.v2-inpage-navigation__item button:focus,
-.v2-inpage-navigation__selected-item-wrapper:hover,
-.v2-inpage-navigation__selected-item-wrapper:active
-.v2-inpage-navigation__selected-item-wrapper:focus,
-.v2-inpage-navigation__dropdown--open .v2-inpage-navigation__selected-item-wrapper {
+.v2-inpage-navigation__item button:focus {
   font-family: var(--ff-volvo-novum-medium);
+  color: var(--c-main-black);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -152,10 +174,10 @@ then we change it for the next section item in main */
   gap: 8px;
 }
 
-.v2-inpage-navigation__selected-item-wrapper svg {
-  height: 16px;
+.v2-inpage-navigation__selected-item-wrapper .icon svg {
+  width: 24px;
+  height: 24px;
   transition: transform var(--duration-small) var(--easing-standard);
-  width: 16px;
 }
 
 .v2-inpage-navigation__dropdown--open .v2-inpage-navigation__selected-item-wrapper svg {
@@ -164,30 +186,10 @@ then we change it for the next section item in main */
 
 /* END Customization when dropdown is open */
 
-/* Blue button */
-.v2-inpage-navigation__cta:any-link {
-  text-transform: uppercase;
-  padding: 9px 21px;
-  font-family: var(--font-family-body);
-  font-size: var(--f-button-font-size);
+.redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+  height: auto;
+  padding: 10px 20px;
   line-height: var(--f-button-line-height);
-  letter-spacing: var(--f-button-letter-spacing);
-  border: 0;
-  background-color: var(--c-cta-blue-default);
-  color: var(--c-white);
-  align-items: center;
-  display: flex;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.v2-inpage-navigation__cta:hover,
-.v2-inpage-navigation__cta:focus {
-  background-color: var(--c-cta-blue-hover);
-}
-
-.v2-inpage-navigation__cta:active {
-  background-color: var(--c-cta-blue-active);
 }
 
 @media (min-width: 744px) {
@@ -209,7 +211,7 @@ then we change it for the next section item in main */
   .v2-inpage-navigation__wrapper {
     align-items: center;
     max-width: var(--wrapper-width);
-    padding: 11px 0;
+    padding: 10px 0;
     margin: 0 auto;
   }
 
@@ -250,6 +252,9 @@ then we change it for the next section item in main */
     padding: 0;
     display: flex;
     align-items: center;
+
+    /* fix overlap issue for focus state of CTA */
+    background-color: transparent;
   }
 
   .v2-inpage-navigation__items {
@@ -259,7 +264,6 @@ then we change it for the next section item in main */
 
   .v2-inpage-navigation__item button {
     position: relative;
-    color: var(--c-grey-4);
     padding: 12px 0;
   }
 
@@ -289,8 +293,7 @@ then we change it for the next section item in main */
     background-color: var(--c-main-black);
   }
 
-  /* Blue button */
-  .v2-inpage-navigation__cta:any-link {
-    padding: 11px 21px;
+  .redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+    padding: 10px 20px;
   }
 }

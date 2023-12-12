@@ -1,0 +1,184 @@
+.v2-event-notify__container > * {
+  max-width: 694px;
+  margin: auto;
+}
+
+.v2-event-notify__container .v2-event-notify__text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+  max-width: var(--text-block-max-width);
+  margin: 40px auto;
+}
+
+.v2-event-notify__container .v2-event-notify__title {
+  font-size: var(--f-heading-4-font-size);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+  line-height: var(--f-heading-4-line-height);
+  margin: 0;
+}
+
+.v2-event-notify__container .v2-event-notify__text-wrapper p {
+  margin: 0;
+}
+
+.v2-event-notify__container .event-notify__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.v2-event-notify__container .event-notify__field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v2-event-notify__container .v2-forms__container input {
+  background: var(--c-primary-white);
+  font-size: var(--f-body-font-size);
+  letter-spacing: var(--f-body-letter-spacing);
+  line-height: var(--f-body-line-height);
+  margin: 0;
+}
+
+.v2-event-notify__container .event-notify__buttons {
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v2-event-notify__container .event-notify__agreement-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+.v2-event-notify__container .event-notify__error-message {
+  color: var(--c-error-red);
+  font-size: var(--f-caption-font-size);
+  line-height: var(--f-caption-line-height);
+  letter-spacing: var(--f-caption-letter-spacing);
+}
+
+.v2-event-notify__container .v2-event-notify__message-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 0;
+  text-align: center;
+  max-width: 506px;
+}
+
+.v2-event-notify__container .v2-event-notify__message-text p {
+  margin: 0;
+}
+
+.v2-event-notify__container .v2-event-notify__button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.v2-event-notify__container .v2-social-block {
+  max-width: unset;
+}
+
+.v2-event-notify__container input:user-invalid,
+.v2-event-notify__container input:user-invalid:hover,
+.v2-event-notify__container input:user-invalid:focus {
+  border-color: var(--c-error-red);
+}
+
+@supports not selector(:user-invalid) {
+  .v2-event-notify__container input:invalid,
+  .v2-event-notify__container input:invalid:hover,
+  .v2-event-notify__container input:invalid:focus {
+    border-color: var(--c-error-red);
+  }
+}
+
+.v2-event-notify__container .event-notify__add-event-button {
+  cursor: pointer;
+}
+
+.event-notify__policy {
+  margin: 16px 0 32px;
+}
+
+@media (min-width: 744px) {
+  .v2-event-notify__container .event-notify__wrapper {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .v2-event-notify__container .event-notify__wrapper > * {
+    width: calc(50% - 8px);
+  }
+
+  .v2-event-notify__container .v2-event-notify__text-wrapper {
+    gap: 16px;
+  }
+
+  .v2-event-notify__container .event-notify__agreement-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .v2-event-notify__container .event-notify__buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .v2-event-notify__container .v2-event-notify__message-text {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .v2-event-notify__container .v2-event-notify__text-wrapper {
+    margin: 48px auto;
+    gap: 24px;
+  }
+
+  .v2-event-notify__container .v2-event-notify__title {
+    font-size: var(--f-heading-3-font-size);
+    letter-spacing: var(--f-heading-3-letter-spacing);
+    line-height: var(--f-heading-3-line-height);
+    margin: 0;
+  }
+
+  .v2-event-notify__container .v2-event-notify__text-wrapper p {
+    font-size: var(--f-body-2-font-size);
+    letter-spacing: var(--f-body-2-letter-spacing);
+    line-height: var(--f-body-2-line-height);
+  }
+
+  .v2-event-notify__container .event-notify__wrapper {
+    column-gap: 20px;
+    row-gap: 24px;
+  }
+
+  .v2-event-notify__container .event-notify__wrapper > * {
+    width: calc(50% - 10px);
+  }
+
+  .v2-event-notify__container .event-notify__agreement-section {
+    margin-top: 48px;
+  }
+
+  .v2-event-notify__container .v2-event-notify__message-text {
+    gap: 24px;
+    padding: 48px 0;
+  }
+
+  .v2-event-notify__container .v2-event-notify__button-wrapper {
+    margin-bottom: 48px;
+  }
+}
