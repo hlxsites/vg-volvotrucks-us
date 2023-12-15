@@ -1,7 +1,7 @@
 import { createElement, adjustPretitle } from '../../scripts/common.js';
 
 export default function decorate(block) {
-  const blockName = 'v2-text-with-images';
+  const blockName = 'v2-media-gallery';
   const rows = [...block.querySelectorAll(':scope > div')];
   rows.forEach((row) => { row.classList.add(`${blockName}__row`); });
 

@@ -291,7 +291,7 @@
   --z-index-header: 1050;
 
   /* In page navigation */
-  --inpage-navigation-height: 0;
+  --inpage-navigation-height: 0px;
 
   /* Zindex inpage navigation */
   --z-index-inpage-nav: 1049;
@@ -1597,7 +1597,6 @@ main.blue-contract .section.section-with-title p {
 
   :root.redesign-v2 {
     --wrapper-width: 1170px;
-    --border-radius: 12px;
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
     --text-block-max-width: 694px;
