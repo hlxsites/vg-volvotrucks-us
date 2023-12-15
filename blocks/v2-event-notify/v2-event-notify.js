@@ -11,42 +11,6 @@ let successText;
 let errorText;
 let socialsLinks;
 
-const onSuccess = async () => {
-  sampleRUM('form:submit');
-  const block = document.querySelector(`.${blockName}__container`);
-  const addToEventButton = block.querySelector('.event-notify__add-event-button');
-
-  block.innerHTML = '';
-  const buttonWrapper = createElement('div', { classes: `${blockName}__button-wrapper` });
-  addToEventButton.classList.remove('secondary');
-  addToEventButton.classList.add('primary');
-
-  const socialsLinksBlock = document.createRange().createContextualFragment(`
-    <div class="v2-social-block v2-social-block--gray block" data-block-name="v2-social-block" data-block-status="">
-      <div>
-        <div></div>
-      </div>
-    </div>`);
-
-  const socialLinkBlockEl = socialsLinksBlock.children[0];
-  socialLinkBlockEl.querySelector(':scope > div > div').innerHTML = socialsLinks.innerHTML;
-
-  await loadBlock(socialLinkBlockEl);
-
-  buttonWrapper.append(addToEventButton);
-  block.append(successText, buttonWrapper, socialLinkBlockEl);
-};
-
-const onError = (error) => {
-  // eslint-disable-next-line no-console
-  console.error(error);
-
-  const block = document.querySelector(`.${blockName}__container`);
-
-  block.innerHTML = '';
-  block.append(errorText);
-};
-
 // Convert date to ICS format (e.g., 20231210T120000Z)
 function formatDateToICS(date) {
   return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -93,12 +57,44 @@ function downloadICSFile(icsData, filename) {
   URL.revokeObjectURL(url);
 }
 
-window.logResult = function logResult(json) {
-  if (json.result === 'success') {
-    onSuccess();
-  } else if (json.result === 'error') {
-    onError(json.log);
-  }
+const onSuccess = async (calendarEventData) => {
+  sampleRUM('form:submit');
+  const block = document.querySelector(`.${blockName}__container`);
+  const addToEventButton = block.querySelector('.event-notify__add-event-button').cloneNode(true);
+
+  block.innerHTML = '';
+  const buttonWrapper = createElement('div', { classes: `${blockName}__button-wrapper` });
+  addToEventButton.classList.remove('secondary');
+  addToEventButton.classList.add('primary');
+  addToEventButton.addEventListener('click', () => {
+    const icsFileContent = generateICS(calendarEventData);
+    downloadICSFile(icsFileContent, 'event.ics');
+  });
+
+  const socialsLinksBlock = document.createRange().createContextualFragment(`
+    <div class="v2-social-block v2-social-block--gray block" data-block-name="v2-social-block" data-block-status="">
+      <div>
+        <div></div>
+      </div>
+    </div>`);
+
+  const socialLinkBlockEl = socialsLinksBlock.children[0];
+  socialLinkBlockEl.querySelector(':scope > div > div').innerHTML = socialsLinks.innerHTML;
+
+  await loadBlock(socialLinkBlockEl);
+
+  buttonWrapper.append(addToEventButton);
+  block.append(successText, buttonWrapper, socialLinkBlockEl);
+};
+
+const onError = (error) => {
+  // eslint-disable-next-line no-console
+  console.error(error);
+
+  const block = document.querySelector(`.${blockName}__container`);
+
+  block.innerHTML = '';
+  block.append(errorText);
 };
 
 export default async function decorate(block) {
@@ -128,6 +124,14 @@ export default async function decorate(block) {
     startDate: new Date(blockSection?.dataset.eventStartDate),
     endDate: new Date(blockSection?.dataset.eventEndDate),
     description: blockSection?.dataset.eventDescription,
+  };
+
+  window.logResult = function logResult(json) {
+    if (json.result === 'success') {
+      onSuccess(calendarEventData);
+    } else if (json.result === 'error') {
+      onError(json.log);
+    }
   };
 
   const container = createElement('div', { classes: `${blockName}__container` });
@@ -162,24 +166,31 @@ export default async function decorate(block) {
   // we can inject the policy content when form content loaded
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      const formRef = [...mutation.addedNodes].find((el) => el instanceof Element && el.classList.contains('v2-forms__container'));
+      const formRef = [...mutation.addedNodes];
+      const formContainerEl = formRef.find((el) => el instanceof Element && el.classList.contains('v2-forms__container'));
 
-      if (!formRef) {
+      if (!formContainerEl) {
         return;
       }
 
-      const policyEl = formRef.querySelector('.event-notify__policy');
-      const calendarButtonEl = formRef.querySelector('.event-notify__add-event-button');
-
-      if (formRef) {
-        policyEl.append(policyText);
-        calendarButtonEl.addEventListener('click', () => {
-          const icsFileContent = generateICS(calendarEventData);
-          downloadICSFile(icsFileContent, 'event.ics');
-        });
-
+      if (formContainerEl.getAttribute('data-initialized') === 'true') {
         observer.disconnect();
+        formContainerEl.querySelector('form')?.reset();
+
+        return;
       }
+
+      const policyEl = formContainerEl.querySelector('.event-notify__policy');
+      const calendarButtonEl = formContainerEl.querySelector('.event-notify__add-event-button');
+
+      policyEl.append(policyText);
+      calendarButtonEl.addEventListener('click', () => {
+        const icsFileContent = generateICS(calendarEventData);
+        downloadICSFile(icsFileContent, 'event.ics');
+      });
+
+      observer.disconnect();
+      formContainerEl.setAttribute('data-initialized', 'true');
     });
   });
 
