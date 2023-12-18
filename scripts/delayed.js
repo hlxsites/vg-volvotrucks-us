@@ -51,8 +51,8 @@ if (!window.location.pathname.includes('srcdoc')
     const currentOnetrustActiveGroups = window.OnetrustActiveGroups;
 
     function isSameGroups(groups1, groups2) {
-      const s1 = JSON.stringify(groups1.split(',').sort());
-      const s2 = JSON.stringify(groups2.split(',').sort());
+      const s1 = JSON.stringify(groups1.split(','));
+      const s2 = JSON.stringify(groups2.split(','));
 
       return s1 === s2;
     }
