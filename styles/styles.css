@@ -1065,6 +1065,7 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
   --text-subtle: var(--c-grey-4);
+  --background-color: var(--c-white);
   --background-gradient: rgb(255 255 255 / 100%);
 
   font-size: 16px;
@@ -1093,8 +1094,6 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
-  --background-color: var(--c-white);
-
   padding: var(--section-padding);
   background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
