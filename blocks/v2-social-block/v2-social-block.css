@@ -9,9 +9,9 @@
 .v2-social-block {
   --social-block-padding: 24px 16px;
   --social-block-gap: 16px;
-  --social-block-list-gap: 12px;
+  --social-block-list-gap: 24px;
   --social-link-color: var(--c-main-black);
-  --social-text-color: var(--c-main-black);
+  --social-text-color: var(--c-grey-4);
 
   padding: var(--social-block-padding);
   border-radius: 8px;
@@ -37,9 +37,9 @@
 
 .v2-social-block__title {
   font-family: var(--font-family-body);
-  font-size: var(--f-heading-5-font-size);
-  letter-spacing: var(--f-heading-5-letter-spacing);
-  line-height: var(--f-heading-5-line-height);
+  font-size: var(--f-body-2-font-size);
+  letter-spacing: var(--f-body-2-letter-spacing);
+  line-height: var(--f-body-2-line-height);
   margin-bottom: 0;
   color: var(--social-text-color);
 }
@@ -47,6 +47,7 @@
 .v2-social-block__list {
   list-style-type: none;
   display: flex;
+  gap: var(--social-block-list-gap);
 }
 
 .v2-social-block__button:any-link {
@@ -58,8 +59,8 @@
   letter-spacing: 0.4px;
   justify-content: center;
   max-width: 21.5em;
-  height: 48px;
-  padding: 0 var(--social-block-gap);
+  height: auto;
+  padding: 0;
   border-radius: 4px;
 }
 
@@ -80,15 +81,12 @@
 
   .v2-social-block {
     --social-block-padding: 32px;
+    --social-block-list-gap: 40px;
   }
 
   .v2-social-block__list-wrapper {
     max-width: 680px;
     margin: auto;
-  }
-
-  .v2-social-block__list {
-    gap: 16px;
   }
 }
 
@@ -100,5 +98,11 @@
   .v2-social-block {
     --social-block-padding: 48px 40px;
     --social-block-gap: 32px;
+  }
+
+  .v2-social-block__title {
+    font-size: var(--f-heading-5-font-size);
+    letter-spacing: var(--f-heading-5-letter-spacing);
+    line-height: var(--f-heading-5-line-height);
   }
 }
