@@ -1097,6 +1097,8 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
+  --background-color: var(--c-white);
+
   padding: var(--section-padding);
   background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
