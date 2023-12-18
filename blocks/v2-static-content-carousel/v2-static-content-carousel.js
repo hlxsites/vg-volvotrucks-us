@@ -23,12 +23,6 @@ const updateActiveClass = (elements, targetElement, carousel) => {
       if (arrowControl) {
         arrowControl.disabled = true;
       }
-
-      if (index !== el.parentNode.children.length - 1) {
-        carousel.parentElement.classList.add(`${blockName}__images-list-col--gradient`);
-      } else {
-        carousel.parentElement.classList.remove(`${blockName}__images-list-col--gradient`);
-      }
     } else {
       el.classList.remove('active');
     }

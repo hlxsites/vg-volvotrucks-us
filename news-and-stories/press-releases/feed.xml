@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2023-11-30T00:00:00.000Z</updated>
+    <updated>2023-12-04T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Expands Certified EV Dealer Network into Arizona, Georgia and North Carolina as Vanguard Truck Centers Adds Five Locations]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/december/volvo-trucks-expands-certified-ev-dealer-network-into-arizona-georgia-and-north-carolina-as-vanguard-truck-centers-adds-five-locations/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2023/december/volvo-trucks-expands-certified-ev-dealer-network-into-arizona-georgia-and-north-carolina-as-vanguard-truck-centers-adds-five-locations/"/>
+        <updated>2023-12-04T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Volvo Financial Services introduces new financing opportunities for customers and dealers to invest in the resources needed for a successful electromobility transition.]]></content>
+        <published>2023-12-04T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo VNR Electric Trucks Deployed by Tim Hortons as Company Begins First Zero-Tailpipe Emission Deliveries in Ontario and British Columbia, Canada]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2023/november/volvo-vnr-electric-trucks-deployed-by-tim-hortons-as-company-begins-first-zero-tailpipe-emission-deliveries-in-ontario-and-british-columbia/</id>

@@ -1093,7 +1093,10 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
+  --background-color: var(--c-white);
+
   padding: var(--section-padding);
+  background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
@@ -1125,19 +1128,18 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-white);
   --c-cta-blue-default: #44A1FF;
   --text-subtle: var(--c-grey-2);
+  --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
 
   color: var(--text-color);
-  background-color: var(--c-main-black);
   padding-top: 80px;
 }
 
 .section--gray-background {
   --card-background: var(--c-white);
   --card-text: var(--c-main-black);
+  --background-color: var(--c-grey-50);
   --background-gradient: rgb(247 247 247 / 100%);
-
-  background-color: var(--c-grey-50);
 }
 
 /* End section Background colors */
