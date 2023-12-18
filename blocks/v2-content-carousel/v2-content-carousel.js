@@ -2,7 +2,7 @@ import { createElement, adjustPretitle } from '../../scripts/common.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
-const blockName = 'v2-static-content-carousel';
+const blockName = 'v2-content-carousel';
 
 const updateActiveClass = (elements, targetElement, carousel) => {
   elements.forEach((el, index) => {
