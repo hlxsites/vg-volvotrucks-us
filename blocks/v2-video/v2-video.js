@@ -1,3 +1,4 @@
+import { removeEmptyTags, variantsClassesToBEM } from '../../scripts/common.js';
 import { createVideo, setPlaybackControls } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
@@ -30,13 +31,17 @@ const onHoverOrScroll = (element, handler) => {
   });
 };
 
+const variantClasses = ['expanding'];
+
 export default async function decorate(block) {
-  const blockClass = 'v2-video';
+  const blockName = 'v2-video';
   const videoLink = block.querySelector('a');
   const headings = block.querySelectorAll('h1, h2, h3, h4, h5, h6');
   const ctaButtons = block.querySelectorAll('.button-container a');
   const contentWrapper = block.querySelector(':scope > div');
   const content = block.querySelector(':scope > div > div');
+
+  variantsClassesToBEM(block.classList, variantClasses, blockName);
 
   if (!videoLink) {
     // eslint-disable-next-line no-console
@@ -44,18 +49,18 @@ export default async function decorate(block) {
     block.innerHTML = '';
   }
 
-  const video = createVideo(videoLink.getAttribute('href'), `${blockClass}__video`, {
+  const video = createVideo(videoLink.getAttribute('href'), `${blockName}__video`, {
     muted: true,
     autoplay: true,
     loop: true,
     playsinline: true,
   });
 
-  contentWrapper.classList.add(`${blockClass}__content-wrapper`);
-  content.classList.add(`${blockClass}__content`);
-  [...headings].forEach((heading) => heading.classList.add(`${blockClass}__heading`));
+  contentWrapper.classList.add(`${blockName}__content-wrapper`);
+  content.classList.add(`${blockName}__content`);
+  [...headings].forEach((heading) => heading.classList.add(`${blockName}__heading`));
   [...ctaButtons].forEach((button) => {
-    button.classList.add(`${blockClass}__button`, 'tertiary', 'dark');
+    button.classList.add(`${blockName}__button`, 'tertiary', 'dark');
     button.classList.remove('primary');
   });
 
@@ -65,9 +70,19 @@ export default async function decorate(block) {
 
   setPlaybackControls();
 
-  onHoverOrScroll(block.querySelector(`.${blockClass}__content-wrapper`), (val) => {
-    const action = val ? 'add' : 'remove';
+  removeEmptyTags(block);
 
-    block.classList[action](`${blockClass}--full-width`);
-  });
+  if (contentWrapper.innerHTML.trim().length === 0) {
+    contentWrapper.remove();
+  }
+
+  if (block.classList.contains(`${blockName}--expanding`)) {
+    onHoverOrScroll(block, (val) => {
+      const action = val ? 'add' : 'remove';
+
+      block.classList[action](`${blockName}--full-width`);
+    });
+  } else {
+    block.classList.add(`${blockName}--full-width`);
+  }
 }

@@ -4,10 +4,32 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: white;
+  background: var(--background-color);
+  color: var(--text-color);
   z-index: 1051;
-  transition: opacity 0.15s linear, visibility 0.15s linear;
+  transition: opacity var(--duration-small) var(--easing-entrance),
+    visibility var(--duration-small) var(--easing-entrance);
   opacity: 1;
+
+  --background-color: var(--c-white);
+  --top-bar-height: 64px;
+  --text-color: var(--c-black);
+}
+
+@supports (height: 1svh) {
+  .modal-background {
+    height: 100svh;
+  }
+}
+
+.modal--black {
+  --background-color: var(--c-black);
+  --text-color: var(--c-white);
+  --color-icon: var(--c-white);
+}
+
+.modal--gray {
+  --background-color: var(--c-grey-50);
 }
 
 .modal-hidden {
@@ -26,7 +48,70 @@
   position: relative;
   transform: translateY(-100vh);
   transition: transform 0.3s ease-out;
+}
+
+:root:not(.redesign-v2) .modal-content {
+  margin-top: 100px;
   background-color: var(--c-grey-1);
+}
+
+.modal-content--wide {
+  margin: 0;
+  overflow: auto;
+  height: calc(100% - var(--top-bar-height));
+  background-color: var(--background-color);
+}
+
+.modal-top-bar {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-top-bar-content {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 16px;
+  gap: 10px;
+  min-height: var(--top-bar-height);
+  align-items: flex-start;
+  width: 100%;
+  padding: 32px 0;
+}
+
+.modal-top-bar-heading {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-subtitle-1-font-size);
+  line-height: var(--f-subtitle-1-line-height);
+  letter-spacing: var(--f-subtitle-1-letter-spacing);
+  align-self: center;
+  margin: 0;
+}
+
+.modal-top-bar .modal-close-button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: inherit;
+  display: flex;
+  border-radius: 1px;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-top-bar .modal-close-button:focus {
+  outline: 0;
+}
+
+.modal-top-bar .modal-close-button:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 5px;
+}
+
+.modal-top-bar .icon svg {
+  height: 24px;
+  width: 24px;
 }
 
 .modal-content .modal-video {
@@ -38,7 +123,7 @@
 .modal-before-banner {
   display: flex;
   justify-content: center;
-  background: white;
+  background: var(--background-color);
 }
 
 .modal-before-banner button.modal-close-button {
@@ -52,24 +137,41 @@
 }
 
 @media (min-width: 768px) {
-  .modal-content {
+  :root:not(.redesign-v2) .modal-content {
     margin: 100px auto;
     width: 726px;
   }
 }
 
 @media (min-width: 992px) {
-  .modal-content {
+  :root:not(.redesign-v2) .modal-content {
     width: 930px;
   }
 }
 
 @media (min-width: 1300px) {
-  .modal-content {
+  :root:not(.redesign-v2) .modal-content {
     width: 1170px;
   }
 }
 
+@media (min-width: 744px) {
+  .modal-top-bar-content {
+    margin: 0 32px;
+  }
+
+  .modal-top-bar-heading {
+    font-size: var(--f-heading-6-font-size);
+    line-height: var(--f-heading-6-line-height);
+    letter-spacing: var(--f-heading-6-letter-spacing);
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal-top-bar-content {
+    max-width: 1170px;
+  }
+}
 
 /* adjustments for soundcloud variant of modal, e.g. https://www.volvotrucks.us/trucks/powertrain/i-torque/ */
 .modal-content .modal-soundcloud {
@@ -81,7 +183,8 @@
   gap: 2%;
 }
 
-.modal-content:has(.modal-soundcloud)  {
+/* stylelint-disable-next-line no-descending-specificity */
+.modal-content:has(.modal-soundcloud) {
   aspect-ratio: unset;
 }
 
@@ -100,4 +203,37 @@
 .modal-soundcloud .episode-image img {
   width: 100%;
   height: unset;
+}
+
+.redesign-v2 .modal-content:has(.modal-video) {
+  padding: 0 16px;
+  max-width: calc(var(--wrapper-width) + 32px);
+}
+
+.redesign-v2 .modal-video {
+  width: calc(100% - 32px);
+  height: auto;
+  border-radius: 8px 8px 0 0;
+}
+
+@media (min-width: 744px) {
+  .redesign-v2 .modal-content:has(.modal-video) {
+    padding: 0 32px;
+  }
+
+  .redesign-v2 .modal-video {
+    width: calc(100% - 64px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .redesign-v2 .modal-content:has(.modal-video) {
+    padding: 0;
+    margin: 0 auto;
+    max-width: var(--wrapper-width);
+  }
+
+  .redesign-v2 .modal-video {
+    width: 100%;
+  }
 }

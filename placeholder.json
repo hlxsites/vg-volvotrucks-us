@@ -1,7 +1,7 @@
 {
-  "total": 30,
+  "total": 36,
   "offset": 0,
-  "limit": 30,
+  "limit": 36,
   "data": [
     {
       "Key": "Low resolution video message",
@@ -54,11 +54,11 @@
     {
       "Key": "vinlabel",
       "Text": "Enter your 17-digit VIN (Vehicle Identification Number)"
-    }, 
+    },
     {
       "Key": "submit",
       "Text": "Submit"
-    }, 
+    },
     {
       "Key": "vinformat",
       "Text": "The VIN entered is not valid for Volvo Trucks, Prevost, Nova Bus, or Volvo Bus vehicles"
@@ -66,7 +66,7 @@
     {
       "Key": "result text",
       "Text": "${count} recalls available for \"${vin}\" VIN"
-    }, 
+    },
     {
       "Key": "recalls",
       "Text": "Recalls"
@@ -86,7 +86,7 @@
     {
       "Key": "remedy_description",
       "Text": "Remedy"
-    }, 
+    },
     {
       "Key": "published_info",
       "Text": "Information last updated"
@@ -102,11 +102,11 @@
     {
       "Key": "recall-incomplete",
       "Text": "Recall Incomplete"
-    }, 
+    },
     {
       "Key": "recall-incomplete-no-remedy",
       "Text": "Recall In Complete, remedy not available"
-    }, 
+    },
     {
       "Key": "loading recalls",
       "Text": " Loading Recalls ....."
@@ -118,7 +118,7 @@
     {
       "Key": "mfr_notes",
       "Text": "Next Steps"
-    }, 
+    },
     {
       "Key": "mfr_recall_number",
       "Text": "Brand Recall Number"
@@ -146,6 +146,70 @@
     {
       "Key": "recall_available_info",
       "Text": "since:"
+    },
+    {
+      "Key": "day",
+      "Text": "day"
+    },
+    {
+      "Key": "hour",
+      "Text": "hour"
+    },
+    {
+      "Key": "minute",
+      "Text": "minute"
+    },
+    {
+      "Key": "second",
+      "Text": "second"
+    },
+    {
+      "Key": "Close",
+      "Text": "Close"
+    },
+    {
+      "Key": "Copied",
+      "Text": "Copied!"
+    },
+    {
+      "Key": "event-notify:first-name",
+      "Text": "First name"
+    },
+    {
+      "Key": "event-notify:last-name",
+      "Text": "Last name"
+    },
+    {
+      "Key": "event-notify:zip",
+      "Text": "ZIP"
+    },
+    {
+      "Key": "event-notify:email",
+      "Text": "Email"
+    },
+    {
+      "Key": "event-notify:agreement",
+      "Text": "I agree to receive email updates from Volvo Trucks North America"
+    },
+    {
+      "Key": "event-notify:notify",
+      "Text": "Notify me"
+    },
+    {
+      "Key": "event-notify:add-event",
+      "Text": "Add event to calendar"
+    },
+    {
+      "Key": "view all",
+      "Text": "View all"
+    },
+    {
+      "Key": "toggle list",
+      "Text": "Toggle resources list"
+    },
+    {
+      "Key": "view less",
+      "Text": "View less"
     }
   ],
   ":type": "sheet"

@@ -1,14 +1,49 @@
 import {
-  loadBlock,
+  loadBlock, sampleRUM,
 } from '../../scripts/lib-franklin.js';
-import {
-  createElement,
-} from '../../scripts/common.js';
+import { getTextLabel, createElement } from '../../scripts/common.js';
 
 const blockName = 'v2-newsletter';
 
+//* init response handling *
+const successTitle = getTextLabel('Success newsletter title');
+const successText = getTextLabel('Success newsletter text');
+
+async function submissionSuccess() {
+  sampleRUM('form:submit');
+  const form = document.querySelector('form[data-submitting=true]');
+  form.setAttribute('data-submitting', 'false');
+  const title = document.querySelector(`.${blockName}__title`);
+  const message = document.createElement('p');
+  message.textContent = successText;
+  title.textContent = successTitle;
+  form.replaceWith(message);
+}
+
+const errorTitle = getTextLabel('Error submission title');
+const errorText = getTextLabel('Error submission text');
+
+async function submissionFailure() {
+  const form = document.querySelector('form[data-submitting=true]');
+  form.setAttribute('data-submitting', 'false');
+  const title = document.querySelector(`.${blockName}__title`);
+  const message = document.createElement('p');
+  message.textContent = errorText;
+  title.textContent = errorTitle;
+  form.replaceWith(message);
+}
+//* end response handling *
+
+window.logResult = function logResult(json) {
+  if (json.result === 'success') {
+    submissionSuccess();
+  } else if (json.result === 'error') {
+    submissionFailure();
+  }
+};
+
 export default async function decorate(block) {
-  const formLimk = block.firstElementChild.innerText.trim();
+  const formLink = block.firstElementChild.innerText.trim();
   const html = block.firstElementChild.nextElementSibling.firstElementChild.innerHTML;
 
   const container = createElement('div', { classes: `${blockName}__container` });
@@ -26,7 +61,7 @@ export default async function decorate(block) {
         <div>subscribe</div>
       </div>
       <div>
-        <div>${formLimk}</div>
+        <div>${formLink}</div>
       </div>
     </div>`);
 
