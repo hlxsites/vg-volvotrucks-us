@@ -156,8 +156,9 @@ export const removeEmptyTags = (block) => {
   });
 };
 
-export const unwrapDivs = (element) => {
+export const unwrapDivs = (element, options = {}) => {
   const stack = [element];
+  const { ignoreDataAlign = false } = options;
 
   while (stack.length > 0) {
     const currentElement = stack.pop();
@@ -165,8 +166,15 @@ export const unwrapDivs = (element) => {
     let i = 0;
     while (i < currentElement.children.length) {
       const node = currentElement.children[i];
+      const attributesLength = [...node.attributes].filter((el) => {
+        if (ignoreDataAlign) {
+          return !(el.name.startsWith('data-align') || el.name.startsWith('data-valign'));
+        }
 
-      if (node.tagName === 'DIV' && node.attributes.length === 0) {
+        return el;
+      }).length;
+
+      if (node.tagName === 'DIV' && attributesLength === 0) {
         while (node.firstChild) {
           currentElement.insertBefore(node.firstChild, node);
         }
