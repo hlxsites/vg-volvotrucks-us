@@ -1729,3 +1729,21 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* generic tooltip styles  ends here */
+
+/* external app styles start */
+
+.external-app header,
+.external-app footer {
+  display: none;
+}
+
+.external-app .v2-iframe-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.external-app .section.v2-iframe-container {
+  padding: 0;
+}
+
+/* external app styles end */

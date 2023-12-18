@@ -1,0 +1,14 @@
+.v2-iframe iframe {
+  width: 100%;
+}
+
+.v2-iframe.v2-iframe--full-viewport {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.v2-iframe--full-viewport iframe {
+  width: 100%;
+  height: 100%;
+}
