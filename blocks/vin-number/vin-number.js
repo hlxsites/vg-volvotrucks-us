@@ -66,13 +66,13 @@ function capitalize(text) {
 }
 
 function renderRecalls(recallsData) {
-  const resultText = document.querySelector(`.${blockName}__results-text`);
-  resultText.innerText = getTextLabel('result text').replace(/\${count}/, recallsData.number_of_recalls).replace(/\${vin}/, recallsData.vin);
+  const resultTextEle = document.querySelector(`.${blockName}__results-text`);
+  let resultContent = getTextLabel('result text').replace(/\${count}/, recallsData.number_of_recalls).replace(/\${vin}/, recallsData.vin);
   let noFrenchInfo = false;
 
+  const recallsOldestDate = isFrench ? new Date(recallsData.recalls_since).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' }) : recallsData.recalls_since;
   if (recallsData.recalls_available) {
     const blockEl = document.querySelector(`.${blockName}__recalls-wrapper`);
-    const recallsOldestDate = isFrench ? new Date(recallsData.recalls_since).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' }) : recallsData.recalls_since;
     const listWrapperFragment = docRange.createContextualFragment(`
       <div class="${blockName}__recalls-heading-wrapper">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -126,7 +126,11 @@ function renderRecalls(recallsData) {
 
     blockEl.append(listWrapperFragment);
     blockEl.appendChild(list);
+  } else {
+    resultContent = `${resultContent} [${getTextLabel('recall_available_info')} ${recallsOldestDate}]`;
   }
+
+  resultTextEle.innerText = resultContent;
 }
 
 function getAPIConfig() {

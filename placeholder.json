@@ -210,6 +210,10 @@
     {
       "Key": "go to top",
       "Text": "Go to the top of the page"
+    },
+    {
+      "Key": "recall_available_info",
+      "Text": "since:"
     }
   ],
   ":type": "sheet"
