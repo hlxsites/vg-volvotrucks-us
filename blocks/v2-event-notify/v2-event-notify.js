@@ -9,7 +9,6 @@ const blockName = 'v2-event-notify';
 
 let successText;
 let errorText;
-let socialsLinks;
 
 // Convert date to ICS format (e.g., 20231210T120000Z)
 function formatDateToICS(date) {
@@ -38,7 +37,7 @@ function generateICS(event) {
     `DTSTART:${formatDateToICS(event.startDate)}`,
     `DTEND:${formatDateToICS(event.endDate)}`,
     `DESCRIPTION:${event.description}`,
-    'LOCATION:online',
+    `LOCATION:${event.location}`,
     'END:VEVENT',
     'END:VCALENDAR',
   ].join('\r\n');
@@ -68,23 +67,11 @@ const onSuccess = async (calendarEventData) => {
   addToEventButton.classList.add('primary');
   addToEventButton.addEventListener('click', () => {
     const icsFileContent = generateICS(calendarEventData);
-    downloadICSFile(icsFileContent, 'event.ics');
+    downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);
   });
 
-  const socialsLinksBlock = document.createRange().createContextualFragment(`
-    <div class="v2-social-block v2-social-block--gray block" data-block-name="v2-social-block" data-block-status="">
-      <div>
-        <div></div>
-      </div>
-    </div>`);
-
-  const socialLinkBlockEl = socialsLinksBlock.children[0];
-  socialLinkBlockEl.querySelector(':scope > div > div').innerHTML = socialsLinks.innerHTML;
-
-  await loadBlock(socialLinkBlockEl);
-
   buttonWrapper.append(addToEventButton);
-  block.append(successText, buttonWrapper, socialLinkBlockEl);
+  block.append(successText, buttonWrapper);
 };
 
 const onError = (error) => {
@@ -110,8 +97,6 @@ export default async function decorate(block) {
   const formLink = contentData.link.innerText.trim();
   const beforeFormText = contentData['before form'];
   const policyText = contentData.policy;
-  socialsLinks = contentData.socials;
-  socialsLinks.classList.add(`${blockName}__socials`);
   errorText = contentData['error message'];
   errorText.classList.add(`${blockName}__message-text`);
   successText = contentData['success message'];
@@ -120,10 +105,12 @@ export default async function decorate(block) {
   // Calendar event meta data
   const blockSection = block.parentElement?.parentElement;
   const calendarEventData = {
+    fileName: blockSection?.dataset.eventFileName,
     summary: blockSection?.dataset.eventSummary,
     startDate: new Date(blockSection?.dataset.eventStartDate),
     endDate: new Date(blockSection?.dataset.eventEndDate),
     description: blockSection?.dataset.eventDescription,
+    location: blockSection?.dataset.eventLocation,
   };
 
   window.logResult = function logResult(json) {
@@ -186,7 +173,7 @@ export default async function decorate(block) {
       policyEl.append(policyText);
       calendarButtonEl.addEventListener('click', () => {
         const icsFileContent = generateICS(calendarEventData);
-        downloadICSFile(icsFileContent, 'event.ics');
+        downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);
       });
 
       observer.disconnect();

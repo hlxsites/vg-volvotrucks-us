@@ -44,7 +44,7 @@
 }
 
 .v2-event-notify__container .v2-forms__container input {
-  background: var(--c-primary-white);
+  background: var(--c-white);
   font-size: var(--f-body-font-size);
   letter-spacing: var(--f-body-letter-spacing);
   line-height: var(--f-body-line-height);
@@ -90,10 +90,6 @@
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
-}
-
-.v2-event-notify__container .v2-social-block {
-  max-width: unset;
 }
 
 .v2-event-notify__container input:user-invalid,

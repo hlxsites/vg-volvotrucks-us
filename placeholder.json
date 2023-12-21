@@ -177,7 +177,7 @@
     },
     {
       "Key": "event-notify:zip",
-      "Text": "ZIP"
+      "Text": "Zip or Postal Code"
     },
     {
       "Key": "event-notify:email",
