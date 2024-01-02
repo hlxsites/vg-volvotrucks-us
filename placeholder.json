@@ -214,6 +214,14 @@
     {
       "Key": "recall_available_info",
       "Text": "since:"
+    },
+    {
+      "Key": "make",
+      "Text": "Make"
+    },
+    {
+      "Key": "model",
+      "Text": "Model"
     }
   ],
   ":type": "sheet"

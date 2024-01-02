@@ -61,11 +61,8 @@
   font-family: var(--ff-volvo-novum-medium);
 }
 
-.vin-number__recalls-wrapper {
-  margin-top: 25px;
-}
-
 .vin-number__recalls-heading-wrapper {
+  margin-top: 25px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -108,6 +105,11 @@
 
 .vin-number__recall-complete {
   color: var(--c-leaf-4);
+}
+
+.vin-number__recalls-make-wrapper {
+  display: flex;
+  gap: 32px;
 }
 
 @media (min-width: 744px) {
