@@ -57,6 +57,7 @@
 
 .vin-number__no-french-info {
   padding-top: 20px;
+  padding-bottom: 20px;
   color: var(--c-grey-800);
   font-family: var(--ff-volvo-novum-medium);
 }
