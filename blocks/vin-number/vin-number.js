@@ -75,6 +75,10 @@ function renderRecalls(recallsData) {
 
   const recallsMake = createElement('div', { classes: `${blockName}__recalls-make-wrapper` });
   const makeFragment = docRange.createContextualFragment(`
+    <div class="${blockName}__recalls-model-year">
+      <span class="${blockName}__recalls-make subtitle-1">${getTextLabel('model year')}</span>
+      <span> ${recallsData.year}</span>
+    </div>
     <div class="${blockName}__recalls-make">
       <span class="${blockName}__recalls-make subtitle-1">${getTextLabel('make')}</span>
       <span> ${recallsData.make}</span>
