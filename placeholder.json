@@ -210,6 +210,14 @@
     {
       "Key": "view less",
       "Text": "View less"
+    },
+    {
+      "Key": "make",
+      "Text": "Make"
+    },
+    {
+      "Key": "model",
+      "Text": "Model"
     }
   ],
   ":type": "sheet"
