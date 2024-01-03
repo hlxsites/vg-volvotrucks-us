@@ -110,7 +110,8 @@
 
 .vin-number__recalls-make-wrapper {
   display: flex;
-  gap: 32px;
+  flex-direction: row;
+  gap: 16px;
 }
 
 @media (min-width: 744px) {
