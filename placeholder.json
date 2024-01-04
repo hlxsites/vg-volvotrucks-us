@@ -210,6 +210,18 @@
     {
       "Key": "view less",
       "Text": "View less"
+    },
+    {
+      "Key": "make",
+      "Text": "Make"
+    },
+    {
+      "Key": "model",
+      "Text": "Model"
+    },
+    {
+      "Key": "model year",
+      "Text": "Model year"
     }
   ],
   ":type": "sheet"

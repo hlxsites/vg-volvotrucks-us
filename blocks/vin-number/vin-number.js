@@ -71,8 +71,28 @@ function renderRecalls(recallsData) {
   let noFrenchInfo = false;
 
   const recallsOldestDate = isFrench ? new Date(recallsData.recalls_since).toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' }) : recallsData.recalls_since;
+  const blockEl = document.querySelector(`.${blockName}__recalls-wrapper`);
+
+  const recallsMake = createElement('div', { classes: `${blockName}__recalls-make-wrapper` });
+  const makeFragment = docRange.createContextualFragment(`
+    <div class="${blockName}__recalls-model-year">
+      <span class="${blockName}__recalls-make subtitle-1">${getTextLabel('model year')}</span>
+      <span> ${recallsData.year}</span>
+    </div>
+    <div class="${blockName}__recalls-make">
+      <span class="${blockName}__recalls-make subtitle-1">${getTextLabel('make')}</span>
+      <span> ${recallsData.make}</span>
+    </div>
+    <div class="${blockName}__recalls-model">
+      <span class="${blockName}__recalls-model subtitle-1">${getTextLabel('model')}</span>
+      <span> ${recallsData.model}</span>
+    </div>
+  `);
+
+  recallsMake.append(...makeFragment.children);
+  blockEl.append(recallsMake);
+
   if (recallsData.recalls_available) {
-    const blockEl = document.querySelector(`.${blockName}__recalls-wrapper`);
     const listWrapperFragment = docRange.createContextualFragment(`
       <div class="${blockName}__recalls-heading-wrapper">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
