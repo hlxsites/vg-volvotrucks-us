@@ -158,27 +158,38 @@
   display: inline-block;
 }
 
-.v2-scroll-to-top {
+.scroll-to-top-container {
+  padding: 24px;
+  display: block;
+  position: absolute;
+  top: calc(100vh - 1px);
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+a.scroll-to-top {
   background-color: var(--c-white);
   border-radius: 50%;
   border: 1px solid var(--c-grey-400);
-  bottom: 20px;
+  display: block;
   box-shadow: 0 4px 70px 0 rgb(0 0 0 / 20%);
   color: var(--c-main-black);
   cursor: pointer;
-  display: none;
   padding: 12px;
-  position: fixed;
-  right: 30px;
+  position: sticky;
+  top: calc(100vh - 24px - 50px);
   z-index: 99;
 }
 
-.v2-scroll-to-top:hover {
+a.scroll-to-top:hover {
   background-color: var(--c-grey-50);
+  color: var(--c-main-black);
 }
 
-.v2-scroll-to-top:active {
+a.scroll-to-top:active {
   background-color: var(--c-grey-100);
+  color: var(--c-main-black);
 }
 
 .footer-list .footer__title:not(.expand):focus,
@@ -187,17 +198,17 @@
   outline: 2px solid var(--border-focus);
 }
 
-button.v2-scroll-to-top:focus {
+a.scroll-to-top:focus {
   outline: 0;
 }
 
-.v2-scroll-to-top:focus-visible {
+.scroll-to-top:focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 1px;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.v2-scroll-to-top svg {
+.scroll-to-top svg {
   display: block;
 }
 

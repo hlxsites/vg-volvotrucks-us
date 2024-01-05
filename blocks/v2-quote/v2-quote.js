@@ -5,7 +5,7 @@ export default function decorate(block) {
   const blockquotes = [...block.querySelectorAll('blockquote')];
   const pSiblingsOfBlockquote = block.querySelectorAll('blockquote + p');
 
-  unwrapDivs(block);
+  unwrapDivs(block, { ignoreDataAlign: true });
 
   blockquotes.forEach((bq) => {
     const em = bq.querySelector('em');

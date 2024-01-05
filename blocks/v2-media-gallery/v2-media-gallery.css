@@ -1,25 +1,25 @@
-.v2-text-with-images {
+.v2-media-gallery {
   --text-with-images-image-gap: 12px;
   --text-with-images-next-slide-preview: 22px;
 }
 
-.v2-text-with-images__row {
+.v2-media-gallery__row {
   display: flex;
   flex-direction: column;
 }
 
-.v2-text-with-images__col {
+.v2-media-gallery__col {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   color: var(--text-color);
   padding-bottom: 40px;
-  max-width: 500px;
+  max-width: var(--text-block-max-width);
   align-self: center;
 }
 
-.v2-text-with-images__heading {
+.v2-media-gallery__heading {
   font-family: var(--ff-volvo-novum-medium);
   font-size: var(--f-heading-4-font-size);
   letter-spacing: var(--f-heading-4-letter-spacing);
@@ -27,17 +27,17 @@
   margin: 16px 0 8px;
 }
 
-.v2-text-with-images__text {
+.v2-media-gallery__text {
   margin: 0 0 16px;
 }
 
-.v2-text-with-images__images-list-col {
+.v2-media-gallery__images-list-col {
   max-width: unset;
   padding: 0;
   margin: 0 -16px;
 }
 
-.v2-text-with-images__images-list {
+.v2-media-gallery__images-list {
   display: flex;
   flex-flow: row nowrap;
   list-style: none;
@@ -45,14 +45,14 @@
   padding-left: 0;
   scroll-snap-type: x mandatory;
   margin: 0;
-  gap: 12px;
+  gap: 16px;
 }
 
-.v2-text-with-images__images-list::-webkit-scrollbar {
+.v2-media-gallery__images-list::-webkit-scrollbar {
   display: none;
 }
 
-.v2-text-with-images__images-list-item {
+.v2-media-gallery__images-list-item {
   text-align: left;
   width: calc(
     100% -
@@ -69,101 +69,98 @@
   max-width: 500px;
 }
 
-.v2-text-with-images__images-list-item:first-child {
+.v2-media-gallery__images-list-item:first-child {
   margin-left: calc(
     100% - var(--text-with-images-next-slide-preview) +
       var(--text-with-images-image-gap)
   );
 }
 
-.v2-text-with-images__images-list-item:last-child {
+.v2-media-gallery__images-list-item:last-child {
   margin-right: calc(
     100% - var(--text-with-images-next-slide-preview) +
       var(--text-with-images-image-gap)
   );
 }
 
-.v2-text-with-images__figure {
+.v2-media-gallery__figure {
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.v2-text-with-images__image {
+.v2-media-gallery__image {
   aspect-ratio: 4/3;
   width: 100%;
+  border-radius: var(--border-radius);
 }
 
 @media screen and (min-width: 744px) {
-  .v2-text-with-images {
+  .v2-media-gallery {
     --text-with-images-image-gap: 24px;
     --text-with-images-next-slide-preview: 90px;
   }
 
-  .v2-text-with-images__images-list {
-    gap: 24px;
-  }
-
-  .v2-text-with-images__heading {
+  .v2-media-gallery__heading {
     margin: 16px 0;
   }
 
-  .v2-text-with-images__text {
+  .v2-media-gallery__text {
     margin: 0 0 24px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .v2-text-with-images__row {
+  .v2-media-gallery__row {
     flex-direction: row;
     justify-content: space-between;
   }
 
-  .v2-text-with-images__col {
+  .v2-media-gallery__col {
     align-self: flex-start;
     position: sticky;
     top: calc(var(--nav-height) + var(--inpage-navigation-height) + 8px);
     text-align: left;
     align-items: flex-start;
-    width: 360px;
+    width: 21rem;
     margin: 0;
   }
 
-  .v2-text-with-images__images-list-col {
+  .v2-media-gallery__images-list-col {
     width: auto;
   }
 
-  .v2-text-with-images__images-list {
+  .v2-media-gallery__images-list {
     flex-direction: column;
     gap: 32px;
-    max-width: 700px;
+    max-width: var(--text-block-max-width);
   }
 
-  .v2-text-with-images__heading {
+  .v2-media-gallery__heading {
     font-size: var(--f-heading-3-font-size);
     letter-spacing: var(--f-heading-3-letter-spacing);
     line-height: var(--f-heading-3-line-height);
     margin: 16px 0 24px;
   }
 
-  p.v2-text-with-images__text {
+  p.v2-media-gallery__text {
     margin: 0 0 32px;
     font-size: var(--f-body-2-font-size);
     letter-spacing: var(--f-body-2-letter-spacing);
     line-height: var(--f-body-2-line-height);
   }
 
-  .v2-text-with-images__images-list-item {
+  .v2-media-gallery__images-list-item {
     max-width: unset;
-    width: 700px;
+    width: var(--text-block-max-width);
   }
 
-  .v2-text-with-images__images-list-item:first-child {
+  .v2-media-gallery__images-list-item:first-child {
     margin-left: 0;
   }
 
-  .v2-text-with-images__images-list-item:last-child {
+  .v2-media-gallery__images-list-item:last-child {
     margin-right: 0;
   }
 }

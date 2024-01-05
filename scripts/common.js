@@ -7,6 +7,8 @@ import {
   buildBlock,
   decorateBlock,
 } from './lib-franklin.js';
+// eslint-disable-next-line import/no-cycle
+import { createVideo, isVideoLink } from './video-helper.js';
 
 let placeholders = null;
 
@@ -61,6 +63,44 @@ export function createElement(tagName, options = {}) {
   }
 
   return elem;
+}
+
+/**
+ * Create a new section with the specific name.
+ * Append the given node to this section.
+ * @param {string} blockName - Block name.
+ * @param {string} sectionName - Name of the section
+ *  (content-section, media-section etc...).
+ * @param {HTMLElement} node - HTML element that represents
+ *  the node to append to the section.
+ * @returns {HTMLElement} - Returns an HTML element representing
+ *  the new section with appended cell.
+ */
+export function createNewSection(blockName, sectionName, node) {
+  const section = createElement('div', { classes: `${blockName}__${sectionName}-section` });
+  section.append(node);
+  return section;
+}
+
+/**
+ * Provides the functionality to add a video
+ * to the provided section if the link corresponds to a video.
+ * @param {string} blockName - Name of the block.
+ * @param {HTMLElement} section - Represents the section to which the video should be added.
+ * @param {HTMLAnchorElement} link - Anchor link
+ * @returns {HTMLElement} - Section with added video
+ */
+export function addVideoToSection(blockName, section, link) {
+  const isVideo = link ? isVideoLink(link) : false;
+  if (isVideo) {
+    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+      muted: true, autoplay: true, loop: true, playsinline: true,
+    });
+    const playbackControls = video.querySelector('button');
+    link.remove();
+    section.append(video, playbackControls);
+  }
+  return section;
 }
 /**
  * Adds the favicon.
@@ -145,6 +185,10 @@ export const removeEmptyTags = (block) => {
   block.querySelectorAll('*').forEach((x) => {
     const tagName = `</${x.tagName}>`;
 
+    // exclude iframes
+    if (x.tagName.toUpperCase() === 'IFRAME') {
+      return;
+    }
     // checking that the tag is not autoclosed to make sure we don't remove <meta />
     // checking the innerHTML and trim it to make sure the content inside the tag is 0
     if (
@@ -156,8 +200,9 @@ export const removeEmptyTags = (block) => {
   });
 };
 
-export const unwrapDivs = (element) => {
+export const unwrapDivs = (element, options = {}) => {
   const stack = [element];
+  const { ignoreDataAlign = false } = options;
 
   while (stack.length > 0) {
     const currentElement = stack.pop();
@@ -165,8 +210,15 @@ export const unwrapDivs = (element) => {
     let i = 0;
     while (i < currentElement.children.length) {
       const node = currentElement.children[i];
+      const attributesLength = [...node.attributes].filter((el) => {
+        if (ignoreDataAlign) {
+          return !(el.name.startsWith('data-align') || el.name.startsWith('data-valign'));
+        }
 
-      if (node.tagName === 'DIV' && node.attributes.length === 0) {
+        return el;
+      }).length;
+
+      if (node.tagName === 'DIV' && attributesLength === 0) {
         while (node.firstChild) {
           currentElement.insertBefore(node.firstChild, node);
         }
@@ -188,6 +240,18 @@ export const variantsClassesToBEM = (blockClasses, expectedVariantsNames, blockN
   });
 };
 
+/**
+ * Adds a CSS class to the parent element of a child element
+ * if the child element's class list includes the specified class.
+ *
+ * @param {HTMLElement} child - The child HTML element.
+ * @param {string} className - The name of the class to check and add.
+ */
+export function addClassIfChildHasClass(child, className) {
+  if (child.className.includes(className)) {
+    child.parentElement.classList.add(className);
+  }
+}
 /**
  *
  * @param {string} blockName - block name with '-' instead of spaces

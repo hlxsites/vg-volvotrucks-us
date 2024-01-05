@@ -291,7 +291,7 @@
   --z-index-header: 1050;
 
   /* In page navigation */
-  --inpage-navigation-height: 0;
+  --inpage-navigation-height: 0px;
 
   /* Zindex inpage navigation */
   --z-index-inpage-nav: 1049;
@@ -305,6 +305,8 @@
 }
 
 html {
+  min-height: 100%;
+  position: relative;
   font-size: 10px;
 }
 
@@ -1065,9 +1067,11 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
   --text-subtle: var(--c-grey-4);
+  --background-color: var(--c-white);
   --background-gradient: rgb(255 255 255 / 100%);
 
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 .redesign-v2 ul {
@@ -1093,7 +1097,10 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
+  --background-color: var(--c-white);
+
   padding: var(--section-padding);
+  background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
 }
 
@@ -1118,6 +1125,11 @@ main.blue-contract .section.section-with-title p {
   width: 100%;
 }
 
+:root.redesign-v2 .section .expanded-width {
+  max-width: var(--wrapper-expanded-width);
+  width: 100%;
+}
+
 /* Section Background colors */
 .section--black-background {
   --text-color: var(--c-white);
@@ -1125,19 +1137,18 @@ main.blue-contract .section.section-with-title p {
   --card-text: var(--c-white);
   --c-cta-blue-default: #44A1FF;
   --text-subtle: var(--c-grey-2);
+  --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
 
   color: var(--text-color);
-  background-color: var(--c-main-black);
   padding-top: 80px;
 }
 
 .section--gray-background {
   --card-background: var(--c-white);
   --card-text: var(--c-main-black);
+  --background-color: var(--c-grey-50);
   --background-gradient: rgb(247 247 247 / 100%);
-
-  background-color: var(--c-grey-50);
 }
 
 /* End section Background colors */
@@ -1539,7 +1550,8 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Global video block styles */
-.v2-video__playback-button {
+.v2-video__playback-button,
+.v2-video__mute-controls{
   position: absolute;
   top: 18px;
   right: 18px;
@@ -1551,28 +1563,43 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
 }
 
-.v2-video__playback-button .icon-play-video {
+.v2-video__mute-controls{
+  top: 70px;
+}
+
+.v2-video__playback-button .icon-play-video,
+.v2-video__mute-controls .icon-mute{
   display: none;
   justify-content: center;
 }
 
-.v2-video__playback-button .icon-pause-video {
+.v2-video__playback-button .icon-pause-video,
+.v2-video__mute-controls .icon-unmute{
   display: flex;
   justify-content: center;
 }
 
-.v2-video__playback-button:hover svg circle {
+.v2-video__playback-button:hover svg circle,
+.v2-video__mute-controls:hover svg circle{
   fill: var(--c-grey-50);
 }
 
+.v2-video__playback-button .icon,
+.v2-video__mute-controls .icon{
+    height: 100%;
+    align-items: center;
+}
+
 /* stylelint-disable-next-line no-descending-specificity */
-.v2-video__playback-button .icon svg {
+.v2-video__playback-button .icon svg,
+.v2-video__mute-controls .icon svg{
   width: 32px;
   height: 32px;
 }
 
 @media (max-width: 744px) {
-  .v2-content-card__item .v2-video__playback-button {
+  .v2-content-card__item .v2-video__playback-button,
+  .v2-content-card__item .v2-video__mute-controls{
     top: 18px !important;
   }
 }
@@ -1584,11 +1611,17 @@ main.blue-contract .section.section-with-title p {
     --text-block-max-width: 506px;
   }
 
-  .v2-video__playback-button {
+  .v2-video__playback-button,
+  .v2-video__mute-controls{
     bottom: 18px;
     top: initial;
+  } 
+  
+  .v2-video__mute-controls{
+    bottom: 70px;
   }
 }
+
 
 @media (min-width: 1200px) {
   :root {
@@ -1597,10 +1630,15 @@ main.blue-contract .section.section-with-title p {
 
   :root.redesign-v2 {
     --wrapper-width: 1170px;
-    --border-radius: 12px;
+    --wrapper-expanded-width: 1440px;
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
     --text-block-max-width: 694px;
+  }
+
+  :root.redesign-v2 .section .expanded-width {
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   .redesign-v2 .section div.full-width {
@@ -1730,3 +1768,21 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* generic tooltip styles  ends here */
+
+/* external app styles start */
+
+.external-app header,
+.external-app footer {
+  display: none;
+}
+
+.external-app .v2-iframe-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.external-app .section.v2-iframe-container {
+  padding: 0;
+}
+
+/* external app styles end */
