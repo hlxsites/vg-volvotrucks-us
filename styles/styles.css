@@ -305,6 +305,8 @@
 }
 
 html {
+  min-height: 100%;
+  position: relative;
   font-size: 10px;
 }
 
@@ -1069,6 +1071,7 @@ main.blue-contract .section.section-with-title p {
   --background-gradient: rgb(255 255 255 / 100%);
 
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 .redesign-v2 ul {
