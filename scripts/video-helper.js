@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { createElement, getTextLabel } from './common.js';
 
 /* video helpers */
@@ -7,9 +8,7 @@ export function isLowResolutionVideoUrl(url) {
 
 export function isVideoLink(link) {
   const linkString = link.getAttribute('href');
-  return (linkString.includes('youtube.com/embed/')
-      || isLowResolutionVideoUrl(linkString))
-    && link.closest('.block.embed') === null;
+  return (linkString.includes('youtube.com/embed/') || isLowResolutionVideoUrl(linkString)) && link.closest('.block.embed') === null;
 }
 
 export function selectVideoLink(links, preferredType) {
@@ -64,8 +63,7 @@ export function addVideoShowHandler(link) {
 }
 
 export function isSoundcloudLink(link) {
-  return link.getAttribute('href').includes('soundcloud.com/player')
-    && link.closest('.block.embed') === null;
+  return link.getAttribute('href').includes('soundcloud.com/player') && link.closest('.block.embed') === null;
 }
 
 export function addSoundcloudShowHandler(link) {
@@ -121,9 +119,7 @@ export function createIframe(url, { parentEl, classes = [] }) {
   const iframe = createElement('iframe', {
     classes: Array.isArray(classes) ? classes : [classes],
     props: {
-      frameborder: '0',
-      allowfullscreen: 'allowfullscreen',
-      src: url,
+      frameborder: '0', allowfullscreen: 'allowfullscreen', src: url,
     },
   });
 
@@ -162,8 +158,7 @@ export const createVideo = (src, className = '', props = {}) => {
 
   const source = createElement('source', {
     props: {
-      src,
-      type: 'video/mp4',
+      src, type: 'video/mp4',
     },
   });
 
@@ -217,4 +212,138 @@ export const createVideo = (src, className = '', props = {}) => {
   video.appendChild(source);
 
   return video;
+};
+
+export function getDynamicVideoHeight(video, playbackControls) {
+  // Get the element's height(use requestAnimationFrame to get actual height instead of 0)
+  requestAnimationFrame(() => {
+    const height = video.offsetHeight - 60;
+    playbackControls.style.top = `${height.toString()}px`;
+  });
+
+  // Get the element's height on resize
+  const getVideoHeight = (entries) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const entry of entries) {
+      const height = entry.target.offsetHeight - 60;
+      playbackControls.style.top = `${height.toString()}px`;
+    }
+  };
+
+  const resizeObserver = new ResizeObserver(getVideoHeight);
+  resizeObserver.observe(video);
+}
+
+/**
+ * Creates a video element with a poster image.
+ * @param {HTMLElement} linkEl - The link element that contains the video URL.
+ * @param {HTMLPictureElement} poster - The URL of the poster image.
+ * @param {string} blockName - The name of the CSS block for styling.
+ * @return {HTMLElement} - The container element that holds the video and poster.
+ */
+export function createVideoWithPoster(linkEl, poster, blockName) {
+  const linkUrl = linkEl.getAttribute('href');
+  const videoContainer = document.createElement('div');
+  videoContainer.classList.add(`${blockName}__video-container`, `${blockName}--video-with-poster`);
+
+  let videoOrIframe;
+  let playButton;
+
+  const showVideo = (e) => {
+    const ele = e.currentTarget;
+    const eleParent = ele.parentElement;
+    const picture = eleParent?.querySelector('picture');
+    const video = eleParent?.querySelector('video');
+    const iframe = eleParent?.querySelector('iframe');
+    if (eleParent && picture) {
+      ele.remove();
+      picture.remove();
+      if (video) video.style.display = 'block';
+      if (iframe) iframe.style.display = 'block';
+    }
+  };
+
+  if (isLowResolutionVideoUrl(linkUrl)) {
+    videoOrIframe = createVideo(linkUrl, `${blockName}__video`, {
+      muted: false, autoplay: false, loop: true, playsinline: true, controls: true,
+    });
+  } else {
+    videoOrIframe = createIframe(linkUrl, { classes: `${blockName}__iframe` });
+    playButton = createElement('button', {
+      props: { type: 'button', class: 'v2-video__playback-button' },
+    });
+    addPlayIcon(playButton);
+    videoContainer.append(playButton);
+  }
+  videoContainer.append(poster, videoOrIframe);
+  videoContainer.querySelector('.v2-video__playback-button').addEventListener('click', showVideo);
+  videoContainer.querySelector('.icon-pause-video')?.remove();
+  return videoContainer;
+}
+
+const getMuteSvg = () => `<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16.335" cy="16.335" r="13.335" fill="white"/>
+    <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M9.887 10.181a.5.5 0 0 0-.707.708l12.934 12.928a.5.5 0 0 0 .706-.707L9.887 10.182Zm6.05 1.997a.5.5 0 0 0-.851-.357l-.56.553-.309.306-.099.098-.027.027-.007.007-.002.002.348.353-.348-.353a.5.5 0 1 0 .703.711l-.35-.353.35.353.002-.002.007-.008.028-.027.098-.097.016-.016v.738a.5.5 0 1 0 1 0v-1.935Zm-4.358 3.239h-.992v3.332h1.54c.238 0 .483.064.693.152.211.09.426.218.594.382l.002.002-.351.356.351-.355h.002l.004.005.017.017.064.063.231.229.728.719.474.47v-2.071a.5.5 0 1 1 1 0v3.27a.5.5 0 0 1-.853.354c-.186-.186-.777-.771-1.324-1.312l-.728-.719-.23-.229-.065-.063-.017-.016-.003-.003a.953.953 0 0 0-.284-.177.855.855 0 0 0-.305-.074h-1.936a.614.614 0 0 1-.604-.61v-4.112c0-.319.254-.61.604-.61h1.388a.5.5 0 0 1 0 1Zm8.418-2.332a.5.5 0 1 0-.42.908 3.406 3.406 0 0 1 1.983 3.088c0 .873-.33 1.666-.872 2.268a.5.5 0 1 0 .743.67 4.374 4.374 0 0 0 1.13-2.938c0-1.78-1.06-3.3-2.564-3.996Zm-1.787 2.23a.5.5 0 0 1 .662-.249 2.209 2.209 0 0 1 1.299 2.018 2.2 2.2 0 0 1-.342 1.183.5.5 0 1 1-.845-.535 1.2 1.2 0 0 0 .186-.648c0-.496-.29-.916-.711-1.107a.5.5 0 0 1-.249-.662Z"
+          fill="#141414"/>
+</svg>`;
+
+const getUnmuteSvg = () => `<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16.335" cy="16.335" r="13.335" fill="white"/>
+        <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M16.284 11.633a.5.5 0 0 1 .306.46v9.811a.5.5 0 0 1-.853.354c-.186-.186-.777-.771-1.324-1.312l-.727-.719-.232-.229-.064-.063-.017-.016-.003-.003a.957.957 0 0 0-.284-.177.855.855 0 0 0-.305-.074H10.84a.613.613 0 0 1-.604-.61v-4.112c0-.064.012-.126.034-.182a.604.604 0 0 1 .576-.428h1.936c.07 0 .18-.022.305-.075a.956.956 0 0 0 .283-.174l.004-.004.017-.017.064-.063.231-.23.728-.72 1.327-1.313a.5.5 0 0 1 .544-.104Zm-2.565 2.808.352.355-.003.003a1.94 1.94 0 0 1-.594.381c-.21.089-.455.153-.693.153h-1.546v3.332h1.546c.238 0 .483.064.693.152.211.09.426.218.594.382l.002.002-.351.356.351-.355.002.001.004.004.017.017.064.063.231.229.728.719.474.47V13.29l-.474.47-.727.72-.231.23-.064.063-.017.016-.005.004v.002h-.001l-.352-.355Zm4.82-1.198a.5.5 0 0 1 .663-.244 4.406 4.406 0 0 1 2.563 3.996c0 1.78-1.06 3.299-2.563 3.995a.5.5 0 1 1-.42-.907 3.406 3.406 0 0 0 1.983-3.088c0-1.37-.815-2.547-1.983-3.088a.5.5 0 0 1-.244-.664Zm-.456 1.735a.5.5 0 1 0-.413.911 1.215 1.215 0 0 1-.004 2.216.5.5 0 1 0 .421.907 2.215 2.215 0 0 0 1.295-2.016c0-.901-.532-1.67-1.299-2.018Z"
+              fill="#141414"/>
+    </svg>`;
+
+/**
+ * Adds mute controls to a given section.
+ * @param {HTMLElement} section - The section element to add the controls to.
+ * @returns {void}
+ */
+export const addMuteControls = (section) => {
+  const muteSvg = getMuteSvg();
+  const unmuteSvg = getUnmuteSvg();
+
+  const controls = createElement('button', {
+    props: { type: 'button', class: 'v2-video__mute-controls' },
+  });
+
+  const iconsHTML = document.createRange().createContextualFragment(`
+    <span class="icon icon-mute">${muteSvg}</span>
+    <span class="icon icon-unmute">${unmuteSvg}</span>
+  `);
+
+  controls.append(...iconsHTML.children);
+  section.appendChild(controls);
+
+  const video = section.querySelector('video');
+  const muteIcon = section.querySelector('.icon-mute');
+  const unmuteIcon = section.querySelector('.icon-unmute');
+  const muteIconLabel = getTextLabel('Mute video');
+  const unmuteIconLabel = getTextLabel('Unmute video');
+
+  controls.setAttribute('aria-label', muteIconLabel);
+
+  if (!video) return;
+
+  const showHideMuteIcon = (isMuted) => {
+    if (!isMuted) {
+      muteIcon.style.display = 'none';
+      unmuteIcon.style.display = 'flex';
+      controls.setAttribute('aria-label', unmuteIconLabel);
+    } else {
+      muteIcon.style.display = 'flex';
+      unmuteIcon.style.display = 'none';
+      controls.setAttribute('aria-label', muteIconLabel);
+    }
+  };
+  showHideMuteIcon(video?.muted);
+
+  const toggleMute = (vid) => {
+    vid.muted = !vid.muted;
+    const isMuted = vid.muted;
+    showHideMuteIcon(isMuted);
+  };
+
+  controls.addEventListener('click', () => toggleMute(video));
 };

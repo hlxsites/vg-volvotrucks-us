@@ -125,7 +125,6 @@ then we change it for the next section item in main */
 }
 
 .v2-inpage-navigation__items {
-  background-color: var(--c-primary-white);
   list-style: none;
   display: flex;
   gap: 24px;

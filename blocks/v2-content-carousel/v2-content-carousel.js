@@ -2,7 +2,7 @@ import { createElement, adjustPretitle } from '../../scripts/common.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
-const blockName = 'v2-static-content-carousel';
+const blockName = 'v2-content-carousel';
 
 const updateActiveClass = (elements, targetElement, carousel) => {
   elements.forEach((el, index) => {
@@ -22,12 +22,6 @@ const updateActiveClass = (elements, targetElement, carousel) => {
       }
       if (arrowControl) {
         arrowControl.disabled = true;
-      }
-
-      if (index !== el.parentNode.children.length - 1) {
-        carousel.parentElement.classList.add(`${blockName}__images-list-col--gradient`);
-      } else {
-        carousel.parentElement.classList.remove(`${blockName}__images-list-col--gradient`);
       }
     } else {
       el.classList.remove('active');

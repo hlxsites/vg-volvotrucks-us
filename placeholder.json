@@ -144,10 +144,6 @@
       "Text": "Please fill out this field"
     },
     {
-      "Key": "recall_available_info",
-      "Text": "since:"
-    },
-    {
       "Key": "day",
       "Text": "day"
     },
@@ -181,7 +177,7 @@
     },
     {
       "Key": "event-notify:zip",
-      "Text": "ZIP"
+      "Text": "Zip or Postal Code"
     },
     {
       "Key": "event-notify:email",
@@ -212,6 +208,14 @@
       "Text": "View less"
     },
     {
+      "Key": "go to top",
+      "Text": "Go to the top of the page"
+    },
+    {
+      "Key": "recall_available_info",
+      "Text": "since:"
+    },
+    {
       "Key": "make",
       "Text": "Make"
     },
@@ -222,6 +226,10 @@
     {
       "Key": "model year",
       "Text": "Model year"
+    },
+    {
+      "Key": "go to top",
+      "Text": "Go to the top of the page"
     }
   ],
   ":type": "sheet"

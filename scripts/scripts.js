@@ -665,8 +665,15 @@ export function getImageForBreakpoint(imagesList, onChange = () => { }) {
   onDesktopChange(desktopMQ);
 }
 
-/* REDESING CLASS CHECK */
-if (document.querySelector('main').classList.contains('redesign-v2')) {
-  document.querySelector('html').classList.add('redesign-v2');
-  document.querySelector('main').classList.remove('redesign-v2');
-}
+const moveClassToHtmlEl = (className, elementSelector = 'main') => {
+  if (document.querySelector(elementSelector).classList.contains(className)) {
+    document.querySelector('html').classList.add(className);
+    document.querySelector(elementSelector).classList.remove(className);
+  }
+};
+
+/* REDESIGN CLASS CHECK */
+moveClassToHtmlEl('redesign-v2');
+
+/* EXTERNAL APP CLASS CHECK */
+moveClassToHtmlEl('external-app');

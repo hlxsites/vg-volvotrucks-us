@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import {
   adjustPretitle, createElement, removeEmptyTags, variantsClassesToBEM,
 } from '../../scripts/common.js';
-import { createVideo, isVideoLink } from '../../scripts/video-helper.js';
+import { createVideo, getDynamicVideoHeight, isVideoLink } from '../../scripts/video-helper.js';
 
 const variantClasses = ['images-grid', 'images-grid-masonry', 'editorial'];
 
@@ -63,23 +63,7 @@ export default async function decorate(block) {
       parentElement.style.position = 'relative';
       parentElement.append(playbackControls);
 
-      // Get the element's height(use requestAnimationFrame to get actual height instead of 0)
-      requestAnimationFrame(() => {
-        const height = newVideo.offsetHeight - 60;
-        playbackControls.style.top = `${height.toString()}px`;
-      });
-
-      // Get the element's height on resize
-      const getVideoHeight = (entries) => {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const entry of entries) {
-          const height = entry.target.offsetHeight - 60;
-          playbackControls.style.top = `${height.toString()}px`;
-        }
-      };
-
-      const resizeObserver = new ResizeObserver(getVideoHeight);
-      resizeObserver.observe(newVideo);
+      getDynamicVideoHeight(newVideo, playbackControls);
     }
 
     // Add wrapper around the text content
