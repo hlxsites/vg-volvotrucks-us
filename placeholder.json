@@ -226,6 +226,10 @@
     {
       "Key": "model year",
       "Text": "Model year"
+    },
+    {
+      "Key": "go to top",
+      "Text": "Go to the top of the page"
     }
   ],
   ":type": "sheet"
