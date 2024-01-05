@@ -1120,6 +1120,11 @@ main.blue-contract .section.section-with-title p {
   width: 100%;
 }
 
+:root.redesign-v2 .section .expanded-width {
+  max-width: var(--wrapper-expanded-width);
+  width: 100%;
+}
+
 /* Section Background colors */
 .section--black-background {
   --text-color: var(--c-white);
@@ -1540,7 +1545,8 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Global video block styles */
-.v2-video__playback-button {
+.v2-video__playback-button,
+.v2-video__mute-controls{
   position: absolute;
   top: 18px;
   right: 18px;
@@ -1552,28 +1558,43 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
 }
 
-.v2-video__playback-button .icon-play-video {
+.v2-video__mute-controls{
+  top: 70px;
+}
+
+.v2-video__playback-button .icon-play-video,
+.v2-video__mute-controls .icon-mute{
   display: none;
   justify-content: center;
 }
 
-.v2-video__playback-button .icon-pause-video {
+.v2-video__playback-button .icon-pause-video,
+.v2-video__mute-controls .icon-unmute{
   display: flex;
   justify-content: center;
 }
 
-.v2-video__playback-button:hover svg circle {
+.v2-video__playback-button:hover svg circle,
+.v2-video__mute-controls:hover svg circle{
   fill: var(--c-grey-50);
 }
 
+.v2-video__playback-button .icon,
+.v2-video__mute-controls .icon{
+    height: 100%;
+    align-items: center;
+}
+
 /* stylelint-disable-next-line no-descending-specificity */
-.v2-video__playback-button .icon svg {
+.v2-video__playback-button .icon svg,
+.v2-video__mute-controls .icon svg{
   width: 32px;
   height: 32px;
 }
 
 @media (max-width: 744px) {
-  .v2-content-card__item .v2-video__playback-button {
+  .v2-content-card__item .v2-video__playback-button,
+  .v2-content-card__item .v2-video__mute-controls{
     top: 18px !important;
   }
 }
@@ -1585,11 +1606,17 @@ main.blue-contract .section.section-with-title p {
     --text-block-max-width: 506px;
   }
 
-  .v2-video__playback-button {
+  .v2-video__playback-button,
+  .v2-video__mute-controls{
     bottom: 18px;
     top: initial;
+  } 
+  
+  .v2-video__mute-controls{
+    bottom: 70px;
   }
 }
+
 
 @media (min-width: 1200px) {
   :root {
@@ -1598,9 +1625,15 @@ main.blue-contract .section.section-with-title p {
 
   :root.redesign-v2 {
     --wrapper-width: 1170px;
+    --wrapper-expanded-width: 1440px;
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
     --text-block-max-width: 694px;
+  }
+
+  :root.redesign-v2 .section .expanded-width {
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   .redesign-v2 .section div.full-width {
