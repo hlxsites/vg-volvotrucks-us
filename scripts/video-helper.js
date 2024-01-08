@@ -17,7 +17,7 @@ export function selectVideoLink(links, preferredType) {
   const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
-  const aemHostedLink = link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets/');
+  const aemHostedLink = linksList.find((link) => link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
   if (shouldUseYouTubeLinks && youTubeLink) {
