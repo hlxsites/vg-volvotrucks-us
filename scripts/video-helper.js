@@ -16,11 +16,14 @@ export function selectVideoLink(links, preferredType) {
   const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
   const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
-  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/') || link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets/'));
+  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const aemHostedLink = link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets/');
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
   if (shouldUseYouTubeLinks && youTubeLink) {
     return youTubeLink;
+  } else if (aemHostedLink) {
+    return aemHostedLink;
   }
   return localMediaLink;
 }
