@@ -25,7 +25,6 @@
 .modal--black {
   --background-color: var(--c-black);
   --text-color: var(--c-white);
-  --color-icon: var(--c-white);
 }
 
 .modal--gray {

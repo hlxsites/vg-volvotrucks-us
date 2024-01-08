@@ -61,6 +61,7 @@
   --border-radius: 8px;
   --section-padding: 40px 0;
   --section-div-padding: 24px 16px;
+  --background-color: var(--c-white);
 
   /* Form styles */
   --input-padding: 16px;
@@ -1097,8 +1098,6 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
-  --background-color: var(--c-white);
-
   padding: var(--section-padding);
   background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
@@ -1145,6 +1144,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 .section--gray-background {
+  --text-color: var(--c-main-black);
   --card-background: var(--c-white);
   --card-text: var(--c-main-black);
   --background-color: var(--c-grey-50);
