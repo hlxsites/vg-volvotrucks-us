@@ -18,9 +18,17 @@ export function selectVideoLink(links, preferredType) {
   const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+  const aemMp4VideoLink = linksList.find((link) =>
+      link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets') && link.textContent.endsWith('.mp4')
+    );
 
   if (shouldUseYouTubeLinks && youTubeLink) {
     return youTubeLink;
+  }
+  if (aemMp4VideoLink) {
+    const mp4Url = aemMp4VideoLink.getAttribute('href').replace('/play', '/original/as/video.mp4');
+    aemMp4VideoLink.setAttribute('href', mp4Url);
+    return aemMp4VideoLink;
   }
   return localMediaLink;
 }
