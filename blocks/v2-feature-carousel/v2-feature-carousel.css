@@ -1,4 +1,6 @@
 :root {
+  --v2-feature-carousel-container-margin: -16px;
+  --v2-feature-carousel-container-padding: 16px;
   --v2-feature-carousel-card-padding: 24px;
   --v2-feature-carousel-card-width: 150px;
   --v2-feature-carousel-card-height: 200px;
@@ -12,12 +14,22 @@
   width: 100%;
 }
 
+.v2-feature-carousel {
+  margin: 0 var(--v2-feature-carousel-container-margin);
+}
+
 .v2-feature-carousel .v2-feature-carousel__cards-list {
+  padding: 0 var(--v2-feature-carousel-container-padding);
   display: flex;
   gap: 16px;
   scroll-snap-type: x mandatory;
+  scrollbar-width: none;
   overflow: auto;
   flex-flow: row nowrap;
+}
+
+.v2-feature-carousel__cards-list::-webkit-scrollbar {
+  display: none;
 }
 
 .v2-feature-carousel__card {
@@ -62,8 +74,17 @@
   fill: none;
 }
 
+@media screen and (min-width: 744px) {
+  :root {
+    --v2-feature-carousel-container-margin: 0 -32px;
+    --v2-feature-carousel-container-padding: 0 32px;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   :root {
+    --v2-feature-carousel-container-margin: 0;
+    --v2-feature-carousel-container-padding: 0;
     --v2-feature-carousel-card-padding: 32px 24px;
     --v2-feature-carousel-card-width: 200px;
     --v2-feature-carousel-card-height: 235px;

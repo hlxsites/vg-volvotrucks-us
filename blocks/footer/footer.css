@@ -166,6 +166,7 @@
   right: 0;
   bottom: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 a.scroll-to-top {
@@ -180,6 +181,7 @@ a.scroll-to-top {
   position: sticky;
   top: calc(100vh - 24px - 50px);
   z-index: 99;
+  pointer-events: all;
 }
 
 a.scroll-to-top:hover {

@@ -158,6 +158,7 @@ ul.v2-truck-lineup__navigation {
   overflow: auto;
   padding: 10px 32px;
   position: relative;
+  scrollbar-width: none;
 }
 
 .v2-truck-lineup__navigation-line {

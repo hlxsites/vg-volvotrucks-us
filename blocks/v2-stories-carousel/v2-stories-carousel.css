@@ -30,6 +30,7 @@ body .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   scroll-behavior: smooth;
   scroll-snap-align: center;
   scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
 .v2-stories-carousel-items::-webkit-scrollbar {

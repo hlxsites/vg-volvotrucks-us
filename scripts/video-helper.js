@@ -1,5 +1,56 @@
+/**
+ * Create an element with the given id and classes.
+ * @param {string} tagName the tag
+ * @param {Object} options the element options
+ * @param {string[]|string} [options.classes=[]] the class or classes to add
+ * @param {Object} [options.props={}] any other attributes to add to the element
+ * @returns {HTMLElement} the element
+ */
+export function createElement(tagName, options = {}) {
+  const { classes = [], props = {} } = options;
+  const elem = document.createElement(tagName);
+  const isString = typeof classes === 'string';
+  if (classes || (isString && classes !== '') || (!isString && classes.length > 0)) {
+    const classesArr = isString ? [classes] : classes;
+    elem.classList.add(...classesArr);
+  }
+  if (!isString && classes.length === 0) elem.removeAttribute('class');
+
+  if (props) {
+    Object.keys(props).forEach((propName) => {
+      const value = propName === props[propName] ? '' : props[propName];
+      elem.setAttribute(propName, value);
+    });
+  }
+
+  return elem;
+}
+
+let placeholders = null;
+
+export function getTextLabel(key) {
+  return placeholders?.data.find((el) => el.Key === key)?.Text || key;
+}
+
+/**
+ * Check if one trust group is checked.
+ * @param {String} groupName the one trust croup like: C0002
+ */
+export function checkOneTrustGroup(groupName) {
+  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
+  return oneTrustCookie.includes(`${groupName}:1`);
+}
+
+export function isEloquaFormAllowed() {
+  return checkOneTrustGroup('C0004');
+}
+
+export function isExternalVideoAllowed() {
+  return checkOneTrustGroup('C0005');
+}
+
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
+// import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
@@ -211,11 +262,8 @@ export const createVideo = (src, className = '', props = {}) => {
 
   playPauseButton.setAttribute('aria-label', pauseVideoLabel);
 
-  // Toggle the play/pause icon on click
-  playPauseButton.addEventListener('click', () => {
-    const isPaused = video.paused;
-    video[isPaused ? 'play' : 'pause']();
-    if (!isPaused) {
+  const togglePlayPauseIcon = (isPaused) => {
+    if (isPaused) {
       pauseIcon.style.display = 'none';
       playIcon.style.display = 'flex';
       playPauseButton.setAttribute('aria-label', playVideoLabel);
@@ -224,7 +272,35 @@ export const createVideo = (src, className = '', props = {}) => {
       playIcon.style.display = 'none';
       playPauseButton.setAttribute('aria-label', pauseVideoLabel);
     }
+  };
+  togglePlayPauseIcon(video.paused);
+
+  const togglePlayPause = (video) => {
+    video[video.paused ? 'play' : 'pause']();
+  };
+
+  playPauseButton.addEventListener('click', () => {
+    togglePlayPause(video);
   });
+  video.addEventListener('playing', () => {
+    togglePlayPauseIcon(video.paused);
+  });
+  video.addEventListener('pause', () => {
+    togglePlayPauseIcon(video.paused);
+  });
+
+  // If the video is not playing, we’ll try to play again
+  if (props.autoplay) {
+    video.addEventListener('loadedmetadata', () => {
+      setTimeout(() => {
+        if (video.paused) {
+          // eslint-disable-next-line no-console
+          console.warn('Failed to autoplay video, fallback code executed');
+          video.play();
+        }
+      }, 500);
+    }, { once: true });
+  }
 
   setPlaybackControls();
   video.appendChild(source);
@@ -340,30 +416,32 @@ export const addMuteControls = (section) => {
   const muteIconLabel = getTextLabel('Mute video');
   const unmuteIconLabel = getTextLabel('Unmute video');
 
-  controls.setAttribute('aria-label', muteIconLabel);
+  controls.setAttribute('aria-label', unmuteIconLabel);
 
   if (!video) return;
 
   const showHideMuteIcon = (isMuted) => {
-    if (!isMuted) {
-      muteIcon.style.display = 'none';
-      unmuteIcon.style.display = 'flex';
-      controls.setAttribute('aria-label', unmuteIconLabel);
-    } else {
+    if (isMuted) {
       muteIcon.style.display = 'flex';
       unmuteIcon.style.display = 'none';
       controls.setAttribute('aria-label', muteIconLabel);
+    } else {
+      muteIcon.style.display = 'none';
+      unmuteIcon.style.display = 'flex';
+      controls.setAttribute('aria-label', unmuteIconLabel);
     }
   };
-  showHideMuteIcon(video?.muted);
 
-  const toggleMute = (vid) => {
-    vid.muted = !vid.muted;
-    const isMuted = vid.muted;
-    showHideMuteIcon(isMuted);
+  const toggleMute = (video) => {
+    video.muted = !video.muted;
   };
 
-  controls.addEventListener('click', () => toggleMute(video));
+  controls.addEventListener('click', () => {
+    toggleMute(video);
+  });
+  video.addEventListener('volumechange', () => {
+    showHideMuteIcon(video.muted);
+  });
 };
 
 export function loadYouTubeIframeAPI() {

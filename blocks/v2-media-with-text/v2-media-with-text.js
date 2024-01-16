@@ -78,6 +78,6 @@ export default async function decorate(block) {
   const medias = block.querySelectorAll(['img', 'video', 'iframe']);
   medias.forEach((media) => media.classList.add(`${blockName}__media`));
 
-  unwrapDivs(block);
+  unwrapDivs(block, { ignoreDataAlign: true });
   removeEmptyTags(block);
 }

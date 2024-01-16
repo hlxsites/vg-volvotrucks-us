@@ -29,6 +29,12 @@ body .section.v2-video-container .v2-video-wrapper {
   background: var(--c-grey-4);
 }
 
+@supports (height: 1svh) {
+  .v2-video {
+    min-height: calc(100svh - var(--nav-height));
+  }
+}
+
 .v2-video--expanding {
   clip-path: var(--video-inset);
   transition: var(--video-transition);

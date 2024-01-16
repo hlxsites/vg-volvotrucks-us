@@ -78,7 +78,7 @@
 }
 
 .modal-top-bar-heading {
-  font-family: var(--ff-volvo-novum);
+  font-family: var(--ff-volvo-novum-medium);
   font-size: var(--f-subtitle-1-font-size);
   line-height: var(--f-subtitle-1-line-height);
   letter-spacing: var(--f-subtitle-1-letter-spacing);

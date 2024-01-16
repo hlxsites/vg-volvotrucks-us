@@ -147,6 +147,8 @@ const createModal = () => {
 
     // disable page scrolling
     document.body.classList.add('disable-scroll');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${window.scrollY}px`;
   }
 
   function hideModal() {
@@ -163,6 +165,9 @@ const createModal = () => {
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-scroll');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
     modalContent.querySelector('iframe, video')?.remove();
     modalContent.querySelector('.modal-before-banner')?.remove();
     modalContent.querySelector('.modal-before-iframe')?.remove();

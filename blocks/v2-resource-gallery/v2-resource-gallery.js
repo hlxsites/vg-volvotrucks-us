@@ -4,36 +4,18 @@ import {
   isVideoLink,
   addVideoShowHandler,
 } from '../../scripts/video-helper.js';
-import { createElement, getTextLabel, unwrapDivs } from '../../scripts/common.js';
+import { createElement, getTextLabel, unwrapDivs, variantsClassesToBEM } from '../../scripts/common.js';
 
 const blockName = 'v2-resource-gallery';
+const variantClasses = ['no-expand'];
 
 export default function decorate(block) {
+  variantsClassesToBEM(block.classList, variantClasses, blockName);
   const blockHeading = block.querySelector('div:first-child');
   blockHeading.classList.add(`${blockName}__heading-wrapper`);
   const title = blockHeading.querySelector('h1, h2, h3, h4, h5, h6');
   title?.classList.add(`${blockName}__heading`);
   unwrapDivs(blockHeading);
-
-  const viewAllButton = createElement('button', {
-    classes: [`${blockName}__button`, 'tertiary'],
-    props: { 'aria-expanded': false },
-  });
-  viewAllButton.innerHTML = `
-    <span class="icon-plus">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 3.5C12.5 3.22386 12.2761 3 12 3C11.7239 3 11.5 3.22386 11.5 3.5V11.5H3.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H11.5V20.5C11.5 20.7761 11.7239 21 12 21C12.2761 21 12.5 20.7761 12.5 20.5V12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H12.5V3.5Z" fill="var(--text-color)"/>
-      </svg>
-    </span>
-    <span class="icon-minus">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 11.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H3.5Z" fill="var(--text-color)"/>
-      </svg>
-    </span>
-    <span class="${blockName}__button-text"> ${getTextLabel('view all')} </span>
-  `;
-
-  blockHeading.append(viewAllButton);
 
   const videoWrapper = createElement('div', { classes: `${blockName}__video-list` });
   const documentWrapper = createElement('div', { classes: `${blockName}__document-list` });
@@ -95,29 +77,51 @@ export default function decorate(block) {
     }
   });
 
-  block.append(videoWrapper);
-  block.append(documentWrapper);
+  if (!block.classList.contains(`${blockName}--no-expand`)) {
+    const viewAllButton = createElement('button', {
+      classes: [`${blockName}__button`, 'tertiary'],
+      props: { 'aria-expanded': false },
+    });
+    viewAllButton.innerHTML = `
+      <span class="icon-plus">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 3.5C12.5 3.22386 12.2761 3 12 3C11.7239 3 11.5 3.22386 11.5 3.5V11.5H3.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H11.5V20.5C11.5 20.7761 11.7239 21 12 21C12.2761 21 12.5 20.7761 12.5 20.5V12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H12.5V3.5Z" fill="var(--text-color)"/>
+        </svg>
+      </span>
+      <span class="icon-minus">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 11.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H3.5Z" fill="var(--text-color)"/>
+        </svg>
+      </span>
+      <span class="${blockName}__button-text"> ${getTextLabel('view all')} </span>
+    `;
 
-  function toggleListEle(ariaValue) {
-    [...block.querySelectorAll(`li[aria-hidden="${ariaValue}"]`)].forEach((li) => {
-      li.setAttribute('aria-hidden', !ariaValue);
+    blockHeading.append(viewAllButton);
+
+    function toggleListEle(ariaValue) {
+      [...block.querySelectorAll(`li[aria-hidden="${ariaValue}"]`)].forEach((li) => {
+        li.setAttribute('aria-hidden', !ariaValue);
+      });
+    }
+  
+    viewAllButton.addEventListener('click', () => {
+      const buttonText = viewAllButton.lastElementChild;
+      if (viewAllButton.ariaExpanded === 'true') {
+        viewAllButton.ariaExpanded = 'false';
+        buttonText.innerText = getTextLabel('view all');
+        block.classList.remove(`${blockName}__list--expand`);
+        toggleListEle(false);
+      } else {
+        viewAllButton.ariaExpanded = 'true';
+        buttonText.innerText = getTextLabel('view less');
+        block.classList.add(`${blockName}__list--expand`);
+        toggleListEle(true);
+      }
     });
   }
 
-  viewAllButton.addEventListener('click', () => {
-    const buttonText = viewAllButton.lastElementChild;
-    if (viewAllButton.ariaExpanded === 'true') {
-      viewAllButton.ariaExpanded = 'false';
-      buttonText.innerText = getTextLabel('view all');
-      block.classList.remove(`${blockName}__list--expand`);
-      toggleListEle(false);
-    } else {
-      viewAllButton.ariaExpanded = 'true';
-      buttonText.innerText = getTextLabel('view less');
-      block.classList.add(`${blockName}__list--expand`);
-      toggleListEle(true);
-    }
-  });
+  block.append(videoWrapper);
+  block.append(documentWrapper);
 
   unwrapDivs(block);
 }

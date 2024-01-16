@@ -72,6 +72,9 @@
 
 .v2-content-carousel__figure {
   margin: 0;
+}
+
+.v2-content-carousel__figure picture {
   background-color: var(--media-background);
   border-radius: var(--border-radius);
 }

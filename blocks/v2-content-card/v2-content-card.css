@@ -1,4 +1,5 @@
 :root {
+  --v2-content-card-container-margin: 16px;
   --v2-content-card-gutter: 16px;
   --v2-content-card-padding: 24px;
   --v2-content-card-text-gutter: 8px;
@@ -81,16 +82,30 @@
 
 /* Specific styles for images-grid variant */
 .v2-content-card--images-grid.v2-content-card {
+  margin: 0 calc(var(--v2-content-card-container-margin) * -1);
   flex-flow: row nowrap;
   overflow: auto;
   scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.v2-content-card--images-grid.v2-content-card::-webkit-scrollbar {
+  display: none;
 }
 
 .v2-content-card--images-grid .v2-content-card__item {
-  width: 90%;
+  width: calc(100vw - (var(--v2-content-card-container-margin) * 3));
   scroll-snap-align: center;
   text-align: center;
   text-wrap: balance;
+}
+
+.v2-content-card--images-grid .v2-content-card__item:first-child {
+  margin-left: var(--v2-content-card-container-margin);
+}
+
+.v2-content-card--images-grid .v2-content-card__item:last-child {
+  margin-right: var(--v2-content-card-container-margin);
 }
 
 .section--black-background .v2-content-card a.button.tertiary:hover,
@@ -115,6 +130,7 @@
 
 @media screen and (min-width: 744px) {
   :root {
+    --v2-content-card-container-margin: 0px;
     --v2-content-card-gutter: 20px;
     --v2-content-card-padding: 24px 32px;
   }
@@ -129,8 +145,7 @@
   }
 
   .v2-content-card__item:nth-child(odd):last-child .v2-content-card__media {
-    aspect-ratio: 16/10;
-    height: 100%;
+    aspect-ratio: 1;
 
     /* Safari needs to have set border-radius explicitly for videos */
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
@@ -205,6 +220,10 @@
   .v2-content-card picture,
   .v2-content-card__content {
     aspect-ratio: unset;
+  }
+
+  .v2-content-card__item:nth-child(odd):last-child .v2-content-card__media {
+    aspect-ratio: 16/10;
   }
 
   .v2-content-card:not(.v2-content-card--images-grid) .v2-content-card__item:nth-child(odd):last-child > article {

@@ -100,7 +100,7 @@
 
 .key-facts__row--with-media {
   position: relative;
-  margin: 0 -16px;
+  /* margin: 0 -16px; */
 }
 
 .key-facts__image-cell {
@@ -117,6 +117,8 @@
 .key-facts__video,
 .key-facts__row .embed-video {
   width: 100%;
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
 }
 
 @media (min-width: 744px) {
@@ -174,11 +176,12 @@
   }
 
   .key-facts--with-media .key-facts__row {
-    flex-direction: column;
-    margin: 40px 0;
-    justify-content: space-between;
+    margin: 0;
+    padding: 0;
     width: auto;
     max-width: unset;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .key-facts--with-media .key-facts__row:not(.key-facts__row--with-media) {

@@ -46,7 +46,7 @@ export default function decorate(block) {
     cell.remove();
   });
 
-  block.firstElementChild.append(ul);
+  block.append(ul);
 
   // remove empty tags
   removeEmptyTags(block);

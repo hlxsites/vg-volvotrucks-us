@@ -74,6 +74,6 @@ export default function decorate(block) {
   textSection.append(tabsSection, headerSection);
   block.append(imageSection, textSection);
 
-  unwrapDivs(block);
+  unwrapDivs(block, { ignoreDataAlign: true });
   removeEmptyTags(block);
 }

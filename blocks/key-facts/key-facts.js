@@ -128,6 +128,7 @@ export default async function decorate(block) {
           muted: true,
           autoplay: true,
           loop: 'loop',
+          playsinline: true,
         });
         col.replaceWith(video);
         videoLinks[0].remove();

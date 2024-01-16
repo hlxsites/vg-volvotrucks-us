@@ -12,7 +12,6 @@
   /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   grid-template-areas:
     'big-landscape big-landscape'
-    'big-landscape big-landscape'
     'square1 square2'
     'big-square big-square'
     'big-square big-square'
@@ -40,7 +39,6 @@
 .v2-masonry-grid__item:nth-child(7) { grid-area: square3; }
 .v2-masonry-grid__item:nth-child(8) { grid-area: square4; }
 
-.v2-masonry-grid__item:nth-child(1),
 .v2-masonry-grid__item:nth-child(2),
 .v2-masonry-grid__item:nth-child(3),
 .v2-masonry-grid__item:nth-child(4),
