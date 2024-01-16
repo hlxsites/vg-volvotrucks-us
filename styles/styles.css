@@ -874,6 +874,33 @@ a.button.text-link-with-video::after {
   font-size: 18px;
 }
 
+.redesign-v2 .low-resolution-banner {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: var(--c-grey-4);
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: var(--c-white);
+}
+
+.redesign-v2 .low-resolution-banner p {
+  margin: 0;
+}
+
+.redesign-v2 .low-resolution-banner .button.secondary {
+  margin-left: auto;
+}
+
+@media screen and (min-width: 1200px) {
+  .redesign-v2 .low-resolution-banner {
+    padding: 16px 32px;
+  }
+}
+
 /* pagination */
 .pager .pagination ol li .last::before {
   font-family: var(--ff-fontawesome);

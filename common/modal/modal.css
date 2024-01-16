@@ -236,3 +236,20 @@
     width: 100%;
   }
 }
+
+.modal-reveal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.modal-reveal .modal-content {
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.modal-reveal .section > div {
+  padding-top: 0;
+  padding-bottom: 0;
+}

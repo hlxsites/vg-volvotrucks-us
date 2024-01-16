@@ -1,3 +1,4 @@
+// eslint-disable no-console
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
 
@@ -13,6 +14,40 @@ const cookieSetting = decodeURIComponent(document.cookie.split(';')
   .find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
 const isPerformanceAllowed = cookieSetting.includes(COOKIES.performance);
 const isSocialAllowed = cookieSetting.includes(COOKIES.social);
+
+export function updateCookieValue(cookieName, oldValue, newValue, domain, path, expires, sameSite) {
+  let cookies = decodeURIComponent(document.cookie).split(';');
+  console.info(cookies);
+
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].trim();
+    if (cookie.startsWith(cookieName)) {
+      let cookieValue = cookie.substring(cookieName.length);
+      console.info(cookieValue);
+      if (cookieValue.includes(oldValue)) {
+        console.info(oldValue);
+        let updatedValue = encodeURIComponent(cookieValue.replace(oldValue, newValue));
+        console.info(updatedValue);
+        let updatedCookie = cookieName + updatedValue;
+        console.info(updatedCookie);
+        if (domain) {
+          updatedCookie += `; domain=${domain}`;
+        }
+        if (path) {
+          updatedCookie += `; path=${path}`;
+        }
+        if (expires) {
+          updatedCookie += `; expires=${expires.toUTCString()}`;
+        }
+        if (sameSite) {
+          updatedCookie += `; SameSite=${sameSite}`;
+        }
+        document.cookie = updatedCookie;
+      }
+      break;
+    }
+  }
+}
 
 if (isPerformanceAllowed) {
   loadGoogleTagManager();
@@ -57,9 +92,14 @@ if (!window.location.pathname.includes('srcdoc')
       return s1 === s2;
     }
 
+    const isSingleVideo = document.cookie.split('; ').reduce((r, v) => {
+      const parts = v.split('=');
+      return parts[0] === 'isSingleVideo' ? decodeURIComponent(parts[1]) : r;
+    }, '');
+
     window.OneTrust.OnConsentChanged(() => {
       // reloading the page only when the active group has changed
-      if (!isSameGroups(currentOnetrustActiveGroups, window.OnetrustActiveGroups)) {
+      if (!isSameGroups(currentOnetrustActiveGroups, window.OnetrustActiveGroups) && isSingleVideo !== 'true') {
         window.location.reload();
       }
     });
