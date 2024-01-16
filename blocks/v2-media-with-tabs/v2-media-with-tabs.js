@@ -1,6 +1,7 @@
 import {
   addClassIfChildHasClass,
   createElement,
+  removeEmptyTags,
   unwrapDivs,
   variantsClassesToBEM,
 } from '../../scripts/common.js';
@@ -74,4 +75,5 @@ export default function decorate(block) {
   block.append(imageSection, textSection);
 
   unwrapDivs(block);
+  removeEmptyTags(block);
 }

@@ -88,10 +88,10 @@ describe('selectVideoLink', () => {
     youtubeLink = commonScript.createElement('a', { props: { href: 'https://www.youtube.com/embed/example-video' } });
     mp4Link = commonScript.createElement('a', { props: { href: 'https://example.com/example-video.mp4' } });
     otherLink = commonScript.createElement('a', { props: { href: 'https://example.com/other-link' } });
-    document.cookie = 'OptanonConsent=C0005:1';
   });
 
   it('should return YouTube link when preferredType is not "local" and YouTube link is available', () => {
+    document.cookie = 'OptanonConsent=C0005:1';
     const links = [youtubeLink, mp4Link];
     const result = videoHelper.selectVideoLink(links, 'external');
     expect(result).to.equal(youtubeLink);

@@ -44,9 +44,15 @@
 }
 
 .key-facts .key-facts__main-text-wrapper--small {
+  flex-direction: column;
   font-size: var(--f-heading-5-font-size);
   letter-spacing: var(--f-heading-5-letter-spacing);
   line-height: var(--f-heading-5-line-height);
+}
+
+.key-facts .key-facts__main-text-wrapper--small br {
+  content: '';
+  display: none;
 }
 
 .key-facts__main-text-wrapper .key-facts__main-text {
@@ -54,8 +60,16 @@
   font-family: var(--ff-volvo-novum);
 }
 
+.key-facts__main-text + .key-facts__main-text--small::before {
+  content: '\00a0';
+}
+
 .key-facts__main-text--small {
   font-size: 0.75em;
+}
+
+.key-facts__main-text-wrapper--small .key-facts__main-text--small {
+  width: 100%;
 }
 
 .key-facts__main-text--extra-small {

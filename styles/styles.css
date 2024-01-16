@@ -61,6 +61,7 @@
   --border-radius: 8px;
   --section-padding: 40px 0;
   --section-div-padding: 24px 16px;
+  --background-color: var(--c-white);
 
   /* Form styles */
   --input-padding: 16px;
@@ -873,6 +874,33 @@ a.button.text-link-with-video::after {
   font-size: 18px;
 }
 
+.redesign-v2 .low-resolution-banner {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: var(--c-grey-4);
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: var(--c-white);
+}
+
+.redesign-v2 .low-resolution-banner p {
+  margin: 0;
+}
+
+.redesign-v2 .low-resolution-banner .button.secondary {
+  margin-left: auto;
+}
+
+@media screen and (min-width: 1200px) {
+  .redesign-v2 .low-resolution-banner {
+    padding: 16px 32px;
+  }
+}
+
 /* pagination */
 .pager .pagination ol li .last::before {
   font-family: var(--ff-fontawesome);
@@ -1097,8 +1125,6 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section {
-  --background-color: var(--c-white);
-
   padding: var(--section-padding);
   background-color: var(--background-color);
   scroll-margin-top: calc(var(--nav-height) + var(--inpage-navigation-height));
@@ -1145,6 +1171,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 .section--gray-background {
+  --text-color: var(--c-main-black);
   --card-background: var(--c-white);
   --card-text: var(--c-main-black);
   --background-color: var(--c-grey-50);

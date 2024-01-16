@@ -1,0 +1,63 @@
+.v2-livestream-embed {
+  border-radius: var(--border-radius);
+  aspect-ratio: 16/9;
+  width: 100%;
+}
+
+.v2-livestream-embed iframe {
+  display: block;
+}
+
+.v2-livestream-embed .cookie-message {
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.v2-livestream-embed .cookie-message__title,
+.v2-livestream-embed .cookie-message__text {
+  max-width: var(--text-block-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.v2-livestream-embed .cookie-message__title {
+  font: var(--f-heading-5-font-size)/var(--f-heading-5-line-height) var(--ff-volvo-novum-medium);
+  letter-spacing: var(--f-heading-5-letter-spacing);
+}
+
+.v2-livestream-embed .cookie-message__text {
+  font: var(--f-body-font-size)/var(--f-body-line-height) var(--font-family-body);
+}
+
+.v2-livestream-embed .cookie-message__text a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.v2-livestream-embed .cookie-message__text a:hover {
+  color: var(--c-grey-300);
+}
+
+.v2-livestream-embed .cookie-message__button-container {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+@media screen and (min-width: 1200px) {
+  .v2-livestream-embed .cookie-message__title {
+    font-size: var(--f-heading-4-font-size);
+    line-height: var(--f-heading-4-line-height);
+  }
+
+  .v2-livestream-embed .cookie-message__text {
+    font-size: var(--f-body-2-font-size);
+    line-height: var(--f-body-2-line-height);
+  }
+}

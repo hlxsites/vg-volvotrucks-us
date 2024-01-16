@@ -11,10 +11,41 @@
 .embed-video-element {
   aspect-ratio: 16/9;
   width: 100%;
+  display: block;
 }
 
 .embed .video-icon-wrapper {
   pointer-events: none;
+}
+
+.embed .cookie-message {
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.embed .cookie-message__title,
+.embed .cookie-message__text {
+  max-width: var(--text-block-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.embed .cookie-message__title {
+  font: var(--f-heading-5-font-size)/var(--f-heading-5-line-height) var(--ff-volvo-novum-medium);
+  letter-spacing: var(--f-heading-5-letter-spacing);
+}
+
+.embed .cookie-message__text {
+  font: var(--f-body-font-size)/var(--f-body-line-height) var(--font-family-body);
+}
+
+.embed .cookie-message__text a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {

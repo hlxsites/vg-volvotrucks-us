@@ -228,8 +228,20 @@
       "Text": "Model year"
     },
     {
-      "Key": "go to top",
-      "Text": "Go to the top of the page"
+      "Key": "single video message title",
+      "Text": "Enable cookies to view the reveal in high resolution?"
+    },
+    {
+      "Key": "single video message text",
+      "Text": "<p class=\"cookie-message__text\">Our media viewer uses social media cookies and/or similar technologies set by third-party services, as outlined in our <a href=\"/cookies/\">Cookie Notice</a>. We and our digital partners use cookies to improve your browsing experience, save your preferences and provide us with information on how you use our website.</p><p class=\"cookie-message__text\">You can click “Accept All Cookies” to view the reveal and to agree to the storing of cookies on your device and to our use of cookies. You can also configure or reject cookies by clicking on “Cookie Settings” or “Reject All.” Please note that rejecting cookies means that you will not be able to view the reveal. Please also note that selecting “Reject All” still implies that necessary cookies will remain.</p>"
+    },
+    {
+      "Key": "single video message button",
+      "Text": "Accept All Cookies"
+    },
+    {
+      "Key": "single video message button deny",
+      "Text": "Reject All"
     }
   ],
   ":type": "sheet"
