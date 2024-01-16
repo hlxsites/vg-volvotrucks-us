@@ -316,13 +316,17 @@ export const slugify = (text) => (
  * Check if one trust group is checked.
  * @param {String} groupName the one trust croup like: C0002
  */
-export function checkOneTruckGroup(groupName) {
+export function checkOneTrustGroup(groupName) {
   const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
 export function isEloquaFormAllowed() {
-  return checkOneTruckGroup('C0004');
+  return checkOneTrustGroup('C0004');
+}
+
+export function isExternalVideoAllowed() {
+  return checkOneTrustGroup('C0005');
 }
 
 /*

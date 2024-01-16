@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel } from './common.js';
+import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
@@ -13,12 +13,13 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const optanonConsentCookieValue = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  const cookieConsentForExternalVideos = optanonConsentCookieValue.includes('C0005:1');
-  const shouldUseYouTubeLinks = cookieConsentForExternalVideos && preferredType !== 'local';
+  const shouldUseYouTubeLinks = isExternalVideoAllowed() && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
+  if (preferredType === 'singleVideo' && youTubeLink) {
+    return youTubeLink;
+  }
   if (shouldUseYouTubeLinks && youTubeLink) {
     return youTubeLink;
   }
@@ -28,13 +29,30 @@ export function selectVideoLink(links, preferredType) {
 export function createLowResolutionBanner() {
   const lowResolutionMessage = getTextLabel('Low resolution video message');
   const changeCookieSettings = getTextLabel('Change cookie settings');
+  let banner;
 
-  const banner = document.createElement('div');
-  banner.classList.add('low-resolution-banner');
-  banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
-  banner.querySelector('button').addEventListener('click', () => {
-    window.OneTrust.ToggleInfoDisplay();
-  });
+  if (document.documentElement.classList.contains('redesign-v2')) {
+    banner = createElement('div', { classes: 'low-resolution-banner' });
+    const bannerText = createElement('p');
+    const bannerButton = createElement('button', { classes: ['button', 'secondary', 'dark'] });
+
+    bannerText.textContent = lowResolutionMessage;
+    bannerButton.textContent = changeCookieSettings;
+
+    banner.appendChild(bannerText);
+    banner.appendChild(bannerButton);
+
+    bannerButton.addEventListener('click', () => {
+      window.OneTrust.ToggleInfoDisplay();
+    });
+  } else {
+    banner = document.createElement('div');
+    banner.classList.add('low-resolution-banner');
+    banner.innerHTML = `${lowResolutionMessage} <button class="low-resolution-banner-cookie-settings">${changeCookieSettings}</button>`;
+    banner.querySelector('button').addEventListener('click', () => {
+      window.OneTrust.ToggleInfoDisplay();
+    });
+  }
 
   return banner;
 }
@@ -347,3 +365,10 @@ export const addMuteControls = (section) => {
 
   controls.addEventListener('click', () => toggleMute(video));
 };
+
+export function loadYouTubeIframeAPI() {
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}

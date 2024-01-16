@@ -1,5 +1,6 @@
 import {
-  selectVideoLink, addPlayIcon, showVideoModal, isLowResolutionVideoUrl,
+  selectVideoLink, addPlayIcon,
+  showVideoModal, isLowResolutionVideoUrl,
   createLowResolutionBanner, createIframe,
 } from '../../scripts/video-helper.js';
 
@@ -13,8 +14,13 @@ export default function decorate(block) {
   block.classList.remove('loop', 'autoplay', 'full-width');
   videoWrapper.classList.add('embed-video');
 
+  const preferredType = (() => {
+    if (isFullWidth) return 'local';
+    return 'auto';
+  })();
+
   const links = block.querySelectorAll('a');
-  const selectedLink = selectVideoLink(links, isFullWidth ? 'local' : 'auto');
+  const selectedLink = selectVideoLink(links, preferredType);
   const video = document.createElement('video');
   const source = document.createElement('source');
 

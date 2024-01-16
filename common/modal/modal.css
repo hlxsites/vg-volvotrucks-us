@@ -25,7 +25,6 @@
 .modal--black {
   --background-color: var(--c-black);
   --text-color: var(--c-white);
-  --color-icon: var(--c-white);
 }
 
 .modal--gray {
@@ -236,4 +235,21 @@
   .redesign-v2 .modal-video {
     width: 100%;
   }
+}
+
+.modal-reveal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.modal-reveal .modal-content {
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.modal-reveal .section > div {
+  padding-top: 0;
+  padding-bottom: 0;
 }

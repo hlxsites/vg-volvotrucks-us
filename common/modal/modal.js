@@ -35,8 +35,10 @@ const createModal = () => {
   modalBackground.setAttribute('role', 'dialog');
 
   modalBackground.addEventListener('click', () => {
-    // eslint-disable-next-line no-use-before-define
-    hideModal();
+    if (!modalBackground.classList.contains('modal-reveal')) {
+      // eslint-disable-next-line no-use-before-define
+      hideModal();
+    }
   });
 
   const keyDownAction = (event) => {
