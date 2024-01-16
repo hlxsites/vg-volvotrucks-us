@@ -1,4 +1,3 @@
-// eslint-disable no-console
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
 
@@ -17,19 +16,14 @@ const isSocialAllowed = cookieSetting.includes(COOKIES.social);
 
 export function updateCookieValue(cookieName, oldValue, newValue, domain, path, expires, sameSite) {
   let cookies = decodeURIComponent(document.cookie).split(';');
-  console.info(cookies);
 
   for (let i = 0; i < cookies.length; i++) {
     let cookie = cookies[i].trim();
     if (cookie.startsWith(cookieName)) {
       let cookieValue = cookie.substring(cookieName.length);
-      console.info(cookieValue);
       if (cookieValue.includes(oldValue)) {
-        console.info(oldValue);
         let updatedValue = encodeURIComponent(cookieValue.replace(oldValue, newValue));
-        console.info(updatedValue);
         let updatedCookie = cookieName + updatedValue;
-        console.info(updatedCookie);
         if (domain) {
           updatedCookie += `; domain=${domain}`;
         }
