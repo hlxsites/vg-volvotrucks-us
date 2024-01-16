@@ -7,6 +7,8 @@
   position: relative;
   max-width: 100%;
   aspect-ratio: 4/3;
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
 }
 
 .v2-media-with-tabs__image {
@@ -65,7 +67,7 @@
 .v2-media-with-tabs__tab::after {
   content: '';
   display: block;
-  background-color: var(transparent);
+  background-color: transparent;
   height: 2px;
   width: 100%;
   position: relative;

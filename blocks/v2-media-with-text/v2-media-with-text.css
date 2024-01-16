@@ -13,14 +13,16 @@
 }
 
 .v2-media-with-text__media-section {
+  width: 100%;
   position: relative;
 }
 
 .v2-media-with-text__media-section .v2-media-with-text__media {
-  border-radius: var(--border-radius);
   object-fit: cover;
   aspect-ratio: 7/5;
   display: block;
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
 }
 
 

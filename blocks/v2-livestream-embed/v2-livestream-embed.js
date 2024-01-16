@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { loadScript } from '../../scripts/lib-franklin.js';
 import { createElement, getTextLabel, isExternalVideoAllowed } from '../../scripts/common.js';
-import { updateCookieValue } from '../../scripts/delayed.js';
 import { hideModal } from '../../common/modal/modal.js';
 
 let player;
@@ -26,11 +25,11 @@ export function playVideo() {
   }
 }
 
-function addVideo(block, videoLink) {
+function addVideo(block, videoId) {
   const iframeYT = document.createRange().createContextualFragment(`
     <iframe class="v2-livestream-embed" id="livestream"
       frameborder="0" allowfullscreen="" allow="autoplay"
-      src="https://www.youtube.com/embed/${videoLink}?color=white&amp;rel=0&amp;playsinline=1&amp;enablejsapi=1&amp;autoplay=1">
+      src="https://www.youtube.com/embed/${videoId}?color=white&amp;rel=0&amp;playsinline=1&amp;enablejsapi=1&amp;autoplay=1">
     </iframe>
   `);
 
@@ -40,14 +39,14 @@ function addVideo(block, videoLink) {
 }
 
 export default function decorate(block) {
+  let videoId = block.querySelector('p + p');
+  videoId = videoId.innerText;
+
+  window.isSingleVideo = true;
+
   loadScript('https://www.youtube.com/iframe_api');
 
-  let [videoLink] = block.querySelectorAll('a');
-  const [, videoId] = videoLink.getAttribute('href').split('/embed/');
-  const [videoCode] = videoId.split('?');
-  videoLink = videoCode;
-
-  if (!videoLink) {
+  if (!videoId) {
     block.innerHTML = '';
     /* eslint-disable-next-line no-console */
     console.warn('V2 Livestream Embed block: There is no video link. Please check the provided URL.');
@@ -90,22 +89,15 @@ export default function decorate(block) {
     block.append(cookieMsgContainer);
 
     block.querySelector('.cookie-message__button-container .primary')?.addEventListener('click', () => {
-      const domain = '.volvotrucks.us';
-      const path = '/'; // assuming root path
-      const expirationDate = new Date();
-      expirationDate.setFullYear(expirationDate.getFullYear() + 1); // 1 year from now
-      const sameSite = 'Lax';
+      window.OneTrust.AllowAll();
 
-      updateCookieValue('OptanonConsent=', 'C0005:0', 'C0005:1', domain, path, expirationDate, sameSite);
-      addVideo(block, videoLink);
+      addVideo(block, videoId);
     });
 
     block.querySelector('.cookie-message__button-container .secondary')?.addEventListener('click', () => {
       hideModal();
     });
-
-    return;
   } else {
-    addVideo(block, videoLink);
+    addVideo(block, videoId);
   }
 }

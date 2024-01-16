@@ -107,6 +107,7 @@ const createModal = () => {
     if (newContent && (typeof newContent !== 'string')) {
       handleNewContent(newContent);
     } else if (newContent) {
+      clearModalContent();
       let videoOrIframe = null;
       if (isLowResolutionVideoUrl(newContent)) {
         // We can't use the iframe for videos, because if the Content-Type
@@ -157,6 +158,7 @@ const createModal = () => {
       currentInvokeContext.focus();
     }
     currentInvokeContext = null;
+    modalContent.scrollTo(0,0);
     modalBackground.classList.add(HIDE_MODAL_CLASS);
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);

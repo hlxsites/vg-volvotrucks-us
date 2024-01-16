@@ -12,7 +12,7 @@
   opacity: 1;
 
   --background-color: var(--c-white);
-  --top-bar-height: 64px;
+  --top-bar-height: 108px;
   --text-color: var(--c-black);
 }
 
@@ -212,7 +212,7 @@
 .redesign-v2 .modal-video {
   width: calc(100% - 32px);
   height: auto;
-  border-radius: 8px 8px 0 0;
+  border-radius: var(--border-radius);
 }
 
 @media (min-width: 744px) {

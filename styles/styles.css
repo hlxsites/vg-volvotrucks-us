@@ -875,6 +875,7 @@ a.button.text-link-with-video::after {
 }
 
 .redesign-v2 .low-resolution-banner {
+  width: 100%;
   margin-bottom: 16px;
   padding: 16px;
   background: var(--c-grey-4);
@@ -1091,6 +1092,7 @@ main.blue-contract .section.section-with-title p {
 
 /* REDESIGN GLOBAL STYLES */
 .redesign-v2 {
+  --media-background: var(--c-grey-100);
   --card-background: #f7f7f7;
   --card-text: var(--c-main-black);
   --text-color: var(--c-main-black);
@@ -1158,6 +1160,7 @@ main.blue-contract .section.section-with-title p {
 
 /* Section Background colors */
 .section--black-background {
+  --media-background: var(--c-grey-900);
   --text-color: var(--c-white);
   --card-background: var(--c-grey-900);
   --card-text: var(--c-white);

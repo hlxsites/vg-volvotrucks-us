@@ -84,6 +84,8 @@
 
 .v2-resource-gallery__video-list .v2-resource-gallery__video-image {
   margin: 0 0 16px;
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
 }
 
 .v2-resource-gallery__video-image img {

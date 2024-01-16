@@ -1,5 +1,5 @@
 .v2-masonry-grid {
-  --v2-masonry-grid-gutter: 16px;
+  --v2-masonry-grid-gutter: 8px;
 }
 
 .v2-masonry-grid__items {
@@ -27,6 +27,8 @@
   position: relative;
   border-radius: var(--border-radius);
   overflow: hidden;
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
 }
 
 .v2-masonry-grid__item:nth-child(1) { grid-area: big-landscape; }
@@ -57,6 +59,10 @@
 }
 
 @media screen and (min-width: 744px) {
+  .v2-masonry-grid {
+    --v2-masonry-grid-gutter: 16px;
+  }
+
   .v2-masonry-grid__items {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -78,6 +84,6 @@
 
 @media screen and (min-width: 1200px) {
   .v2-masonry-grid {
-    --v2-masonry-grid-gutter: 32px;
+    --v2-masonry-grid-gutter: 20px;
   }
 }

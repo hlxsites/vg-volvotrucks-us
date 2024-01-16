@@ -90,6 +90,11 @@
   gap: 8px;
 }
 
+.v2-media-gallery__figure picture {
+  background-color: var(--media-background);
+  border-radius: var(--border-radius);
+}
+
 .v2-media-gallery__image {
   aspect-ratio: 4/3;
   width: 100%;
