@@ -1,6 +1,4 @@
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 import { loadScript } from '../../scripts/lib-franklin.js';
 import { createElement, getTextLabel, isExternalVideoAllowed } from '../../scripts/common.js';
 import { updateCookieValue } from '../../scripts/delayed.js';
@@ -9,17 +7,16 @@ import { hideModal } from '../../common/modal/modal.js';
 let player;
 
 function onPlayerReady(event) {
-  console.info('Event: onPlayerReady');
   event.target.playVideo();
 }
 
 function onPlayerError(event) {
-  console.warn('Event: onPlayerError');
+  /* eslint-disable-next-line no-console */
   console.warn(event.data);
 }
 
 function onPlayerAutoplayBlocked(event) {
-  console.warn('Event: onPlayerAutoplayBlocked');
+  /* eslint-disable-next-line no-console */
   console.warn(event.data);
 }
 
@@ -29,6 +26,19 @@ export function playVideo() {
   }
 }
 
+function addVideo(block, videoLink) {
+  const iframeYT = document.createRange().createContextualFragment(`
+    <iframe class="v2-livestream-embed" id="livestream"
+      frameborder="0" allowfullscreen="" allow="autoplay"
+      src="https://www.youtube.com/embed/${videoLink}?color=white&amp;rel=0&amp;playsinline=1&amp;enablejsapi=1&amp;autoplay=1">
+    </iframe>
+  `);
+
+  block.innerHTML = '';
+
+  block.append(...iframeYT.childNodes);
+}
+
 export default function decorate(block) {
   loadScript('https://www.youtube.com/iframe_api');
 
@@ -36,8 +46,6 @@ export default function decorate(block) {
   const [, videoId] = videoLink.getAttribute('href').split('/embed/');
   const [videoCode] = videoId.split('?');
   videoLink = videoCode;
-
-  console.info(`video id: ${videoLink}`);
 
   if (!videoLink) {
     block.innerHTML = '';
@@ -88,9 +96,8 @@ export default function decorate(block) {
       expirationDate.setFullYear(expirationDate.getFullYear() + 1); // 1 year from now
       const sameSite = 'Lax';
 
-      console.log('updatecookie');
-
       updateCookieValue('OptanonConsent=', 'C0005:0', 'C0005:1', domain, path, expirationDate, sameSite);
+      addVideo(block, videoLink);
     });
 
     block.querySelector('.cookie-message__button-container .secondary')?.addEventListener('click', () => {
@@ -98,16 +105,7 @@ export default function decorate(block) {
     });
 
     return;
+  } else {
+    addVideo(block, videoLink);
   }
-
-  const iframeYT = document.createRange().createContextualFragment(`
-    <iframe class="v2-livestream-embed" id="livestream"
-      frameborder="0" allowfullscreen="" allow="autoplay"
-      src="https://www.youtube.com/embed/${videoLink}?color=white&amp;rel=0&amp;playsinline=1&amp;enablejsapi=1&amp;autoplay=1">
-    </iframe>
-  `);
-
-  block.innerHTML = '';
-
-  block.append(...iframeYT.childNodes);
 }
