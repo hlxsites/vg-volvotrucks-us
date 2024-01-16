@@ -82,7 +82,7 @@ export default function decorate(block) {
     block.append(cookieMsgContainer);
 
     block.querySelector('.cookie-message__button-container .primary')?.addEventListener('click', () => {
-      const domain = 'localhost';
+      const domain = '.volvotrucks.us';
       const path = '/'; // assuming root path
       const expirationDate = new Date();
       expirationDate.setFullYear(expirationDate.getFullYear() + 1); // 1 year from now
