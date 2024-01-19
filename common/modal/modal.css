@@ -12,7 +12,7 @@
   opacity: 1;
 
   --background-color: var(--c-white);
-  --top-bar-height: 108px;
+  --top-bar-height: 64px;
   --text-color: var(--c-black);
 }
 
@@ -74,7 +74,7 @@
   min-height: var(--top-bar-height);
   align-items: flex-start;
   width: 100%;
-  padding: 32px 0;
+  padding: 8px 0;
 }
 
 .modal-top-bar-heading {
@@ -170,6 +170,10 @@
   .modal-top-bar-content {
     max-width: 1170px;
   }
+  .modal-top-bar .icon svg {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* adjustments for soundcloud variant of modal, e.g. https://www.volvotrucks.us/trucks/powertrain/i-torque/ */
@@ -205,7 +209,7 @@
 }
 
 .redesign-v2 .modal-content:has(.modal-video) {
-  padding: 0 16px;
+  padding: 32px 16px 0;
   max-width: calc(var(--wrapper-width) + 32px);
 }
 
@@ -217,7 +221,7 @@
 
 @media (min-width: 744px) {
   .redesign-v2 .modal-content:has(.modal-video) {
-    padding: 0 32px;
+    padding: 48px 32px 0;
   }
 
   .redesign-v2 .modal-video {
@@ -227,7 +231,7 @@
 
 @media (min-width: 1200px) {
   .redesign-v2 .modal-content:has(.modal-video) {
-    padding: 0;
+    padding: 48px 0 0;
     margin: 0 auto;
     max-width: var(--wrapper-width);
   }
@@ -237,19 +241,19 @@
   }
 }
 
-.modal-reveal {
+.modal--reveal {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.modal-reveal .modal-content {
+.modal--reveal .modal-content {
   height: auto;
   aspect-ratio: auto;
 }
 
-.modal-reveal .section > div {
+.modal--reveal .section > div {
   padding-top: 0;
   padding-bottom: 0;
 }

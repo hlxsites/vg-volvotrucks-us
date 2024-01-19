@@ -394,7 +394,7 @@ function decorateHyperlinkImages(container) {
 document.addEventListener('open-modal', (event) => {
   // eslint-disable-next-line import/no-cycle
   import('../common/modal/modal.js').then((modal) => {
-    const variantClasses = ['black', 'gray'];
+    const variantClasses = ['black', 'gray', 'reveal'];
     const modalClasses = [...event.detail.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
     // changing the modal variants classes to BEM naming
     variantClasses.forEach((variant) => {

@@ -733,6 +733,7 @@ body.disable-scroll main {
 }
 
 body.disable-body-scroll {
+  scroll-behavior: auto;
   overflow: hidden;
 }
 
