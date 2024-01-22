@@ -12,6 +12,7 @@ import {
   toClassName,
   getHref,
   loadBlocks,
+  loadScript,
 } from './lib-franklin.js';
 
 import {
@@ -391,9 +392,19 @@ function decorateHyperlinkImages(container) {
     });
 }
 
+let modal;
+
+async function loadModalScript() {
+  if (!modal) {
+    modal = await import('../common/modal/modal.js');
+  }
+
+  return modal;
+}
+
 document.addEventListener('open-modal', (event) => {
   // eslint-disable-next-line import/no-cycle
-  import('../common/modal/modal.js').then((modal) => {
+  loadModalScript().then((modal) => {
     const variantClasses = ['black', 'gray', 'reveal'];
     const modalClasses = [...event.detail.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
     // changing the modal variants classes to BEM naming
@@ -410,6 +421,9 @@ document.addEventListener('open-modal', (event) => {
 });
 
 const handleModalLinks = (link) => {
+  if (!modal) {
+    loadModalScript();
+  }
   link.addEventListener('click', async (event) => {
     event.preventDefault();
     const modalContentLink = link.getAttribute('data-modal-content');

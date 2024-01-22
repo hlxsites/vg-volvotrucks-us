@@ -95,6 +95,7 @@ const createModal = () => {
   async function showModal(newContent, {
     beforeBanner, beforeIframe, modalClasses = [], invokeContext,
   }) {
+    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
     currentInvokeContext = invokeContext;
     // disabling focus for header, footer and main elements when modal is open
     document.querySelectorAll('header, footer, main').forEach((el) => {
