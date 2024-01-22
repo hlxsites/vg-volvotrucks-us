@@ -249,6 +249,7 @@
     text-align: center;
   }
 
+  .v2-media-with-text__content-section,
   .v2-media-with-text__content-section p {
     font-size: var(--f-body-2-font-size);
     letter-spacing: var(--f-body-2-letter-spacing);
