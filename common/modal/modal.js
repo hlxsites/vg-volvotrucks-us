@@ -121,6 +121,7 @@ const createModal = () => {
         videoOrIframe.setAttribute('controls', '');
         videoOrIframe.setAttribute('autoplay', '');
         videoOrIframe.classList.add('modal-video');
+        modalBackground.classList.add('modal--video');
         modalContent.append(videoOrIframe);
       } else {
         videoOrIframe = createIframe(newContent, { parentEl: modalContent, classes: 'modal-video' });
@@ -168,6 +169,7 @@ const createModal = () => {
     currentInvokeContext = null;
     modalContent.scrollTo(0,0);
     modalBackground.classList.add(HIDE_MODAL_CLASS);
+    modalBackground.classList.remove('modal--video');
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-body-scroll');
