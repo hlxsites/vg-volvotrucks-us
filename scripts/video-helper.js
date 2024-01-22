@@ -1,56 +1,5 @@
-/**
- * Create an element with the given id and classes.
- * @param {string} tagName the tag
- * @param {Object} options the element options
- * @param {string[]|string} [options.classes=[]] the class or classes to add
- * @param {Object} [options.props={}] any other attributes to add to the element
- * @returns {HTMLElement} the element
- */
-export function createElement(tagName, options = {}) {
-  const { classes = [], props = {} } = options;
-  const elem = document.createElement(tagName);
-  const isString = typeof classes === 'string';
-  if (classes || (isString && classes !== '') || (!isString && classes.length > 0)) {
-    const classesArr = isString ? [classes] : classes;
-    elem.classList.add(...classesArr);
-  }
-  if (!isString && classes.length === 0) elem.removeAttribute('class');
-
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      const value = propName === props[propName] ? '' : props[propName];
-      elem.setAttribute(propName, value);
-    });
-  }
-
-  return elem;
-}
-
-let placeholders = null;
-
-export function getTextLabel(key) {
-  return placeholders?.data.find((el) => el.Key === key)?.Text || key;
-}
-
-/**
- * Check if one trust group is checked.
- * @param {String} groupName the one trust croup like: C0002
- */
-export function checkOneTrustGroup(groupName) {
-  const oneTrustCookie = decodeURIComponent(document.cookie.split(';').find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-  return oneTrustCookie.includes(`${groupName}:1`);
-}
-
-export function isEloquaFormAllowed() {
-  return checkOneTrustGroup('C0004');
-}
-
-export function isExternalVideoAllowed() {
-  return checkOneTrustGroup('C0005');
-}
-
 // eslint-disable-next-line import/no-cycle
-// import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
+import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
