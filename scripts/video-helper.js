@@ -224,8 +224,8 @@ export const createVideo = (src, className = '', props = {}) => {
   };
   togglePlayPauseIcon(video.paused);
 
-  const togglePlayPause = (video) => {
-    video[video.paused ? 'play' : 'pause']();
+  const togglePlayPause = (el) => {
+    el[video.paused ? 'play' : 'pause']();
   };
 
   playPauseButton.addEventListener('click', () => {
@@ -381,8 +381,8 @@ export const addMuteControls = (section) => {
     }
   };
 
-  const toggleMute = (video) => {
-    video.muted = !video.muted;
+  const toggleMute = (el) => {
+    el.muted = !el.muted;
   };
 
   controls.addEventListener('click', () => {

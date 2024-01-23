@@ -12,7 +12,6 @@ import {
   toClassName,
   getHref,
   loadBlocks,
-  loadScript,
 } from './lib-franklin.js';
 
 import {
@@ -403,7 +402,7 @@ async function loadModalScript() {
 }
 
 document.addEventListener('open-modal', (event) => {
-  // eslint-disable-next-line import/no-cycle
+  // eslint-disable-next-line import/no-cycle, no-shadow
   loadModalScript().then((modal) => {
     const variantClasses = ['black', 'gray', 'reveal'];
     const modalClasses = [...event.detail.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));

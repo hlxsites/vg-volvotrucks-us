@@ -69,7 +69,7 @@ const createModal = () => {
 
   const handleNewContent = (newContent) => {
     clearModalContent();
-    modalContent.scrollTo(0,0);
+    modalContent.scrollTo(0, 0);
 
     const firstSection = newContent[0];
 
@@ -125,6 +125,7 @@ const createModal = () => {
         modalContent.append(videoOrIframe);
       } else {
         videoOrIframe = createIframe(newContent, { parentEl: modalContent, classes: 'modal-video' });
+        modalBackground.classList.add('modal--video');
       }
 
       if (beforeBanner) {
@@ -152,7 +153,7 @@ const createModal = () => {
     // disable page scrolling
     document.body.classList.add('disable-body-scroll');
     const scrollY = document.documentElement.style.getPropertyValue('--scroll-y');
-    const body = document.body;
+    const { body } = document;
     document.documentElement.style.scrollBehavior = 'auto';
     body.style.position = 'fixed';
     body.style.top = `-${scrollY}`;
@@ -167,17 +168,17 @@ const createModal = () => {
       currentInvokeContext.focus();
     }
     currentInvokeContext = null;
-    modalContent.scrollTo(0,0);
+    modalContent.scrollTo(0, 0);
     modalBackground.classList.add(HIDE_MODAL_CLASS);
     modalBackground.classList.remove('modal--video');
     modalContent.classList.remove('modal-content-fade-in');
     window.removeEventListener('keydown', keyDownAction);
     document.body.classList.remove('disable-body-scroll');
-    const body = document.body;
+    const { body } = document;
     const scrollY = body.style.top;
     body.style.position = '';
     body.style.top = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
     document.documentElement.style.scrollBehavior = '';
     modalContent.querySelector('iframe, video')?.remove();
     modalContent.querySelector('.modal-before-banner')?.remove();

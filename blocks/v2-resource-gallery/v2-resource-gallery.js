@@ -4,10 +4,18 @@ import {
   isVideoLink,
   addVideoShowHandler,
 } from '../../scripts/video-helper.js';
-import { createElement, getTextLabel, unwrapDivs, variantsClassesToBEM } from '../../scripts/common.js';
+import {
+  createElement, getTextLabel, unwrapDivs, variantsClassesToBEM,
+} from '../../scripts/common.js';
 
 const blockName = 'v2-resource-gallery';
 const variantClasses = ['no-expand'];
+
+function toggleListEle(block, ariaValue) {
+  [...block.querySelectorAll(`li[aria-hidden="${ariaValue}"]`)].forEach((li) => {
+    li.setAttribute('aria-hidden', !ariaValue);
+  });
+}
 
 export default function decorate(block) {
   variantsClassesToBEM(block.classList, variantClasses, blockName);
@@ -98,24 +106,18 @@ export default function decorate(block) {
 
     blockHeading.append(viewAllButton);
 
-    function toggleListEle(ariaValue) {
-      [...block.querySelectorAll(`li[aria-hidden="${ariaValue}"]`)].forEach((li) => {
-        li.setAttribute('aria-hidden', !ariaValue);
-      });
-    }
-  
     viewAllButton.addEventListener('click', () => {
       const buttonText = viewAllButton.lastElementChild;
       if (viewAllButton.ariaExpanded === 'true') {
         viewAllButton.ariaExpanded = 'false';
         buttonText.innerText = getTextLabel('view all');
         block.classList.remove(`${blockName}__list--expand`);
-        toggleListEle(false);
+        toggleListEle(block, false);
       } else {
         viewAllButton.ariaExpanded = 'true';
         buttonText.innerText = getTextLabel('view less');
         block.classList.add(`${blockName}__list--expand`);
-        toggleListEle(true);
+        toggleListEle(block, true);
       }
     });
   }
