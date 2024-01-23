@@ -19,6 +19,7 @@
 
 .v2-livestream-embed .cookie-message__title,
 .v2-livestream-embed .cookie-message__text {
+  color: var(--c-white);
   max-width: var(--text-block-max-width);
   margin: 0 auto;
   text-align: center;
