@@ -1,27 +1,22 @@
 :root {
-  --v2-feature-carousel-container-margin: -16px;
-  --v2-feature-carousel-container-padding: 16px;
+  --v2-feature-carousel-container-margin: 8px;
+  --v2-feature-carousel-gap: 8px;
   --v2-feature-carousel-card-padding: 24px;
   --v2-feature-carousel-card-width: 150px;
   --v2-feature-carousel-card-height: 200px;
   --v2-feature-carousel-icon-size: 48px;
   --v2-feature-carousel-svg-size: 24px;
-  --v2-feature-carousel-border-radius: var(--border-radius);
 }
 
-.v2-feature-carousel-container .v2-feature-carousel-wrapper {
-  max-width: 1330px;
+.section.v2-feature-carousel-container .v2-feature-carousel-wrapper {
   width: 100%;
-}
-
-.v2-feature-carousel {
-  margin: 0 var(--v2-feature-carousel-container-margin);
+  padding: 24px 0;
 }
 
 .v2-feature-carousel .v2-feature-carousel__cards-list {
-  padding: 0 var(--v2-feature-carousel-container-padding);
   display: flex;
-  gap: 16px;
+  gap: var(--v2-feature-carousel-gap);
+  scroll-snap-align: start;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   overflow: auto;
@@ -41,10 +36,9 @@
   height: var(--v2-feature-carousel-card-height);
   padding: var(--v2-feature-carousel-card-padding);
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
-  border-radius: var(--v2-feature-carousel-border-radius);
-  scroll-snap-align: center;
+  border-radius: var(--border-radius);
 }
 
 .v2-feature-carousel__card:first-child {
@@ -55,9 +49,19 @@
   margin-right: auto;
 }
 
+
+.v2-feature-carousel__cards-list::before,
+.v2-feature-carousel__cards-list::after {
+  content: '';
+  display: block;
+  flex: 0 0 var(--v2-feature-carousel-container-margin);
+  min-height: 1px;
+}
+
 .v2-feature-carousel__card .icon {
   width: var(--v2-feature-carousel-icon-size);
   height: var( --v2-feature-carousel-icon-size);
+  margin-bottom: auto;
   border: 1px solid;
   color: var(--c-grey-3);
   border-radius: 50%;
@@ -76,20 +80,23 @@
 
 @media screen and (min-width: 744px) {
   :root {
-    --v2-feature-carousel-container-margin: 0 -32px;
-    --v2-feature-carousel-container-padding: 0 32px;
+    --v2-feature-carousel-container-margin: 16px;
+    --v2-feature-carousel-gap: 16px;
   }
 }
 
 @media screen and (min-width: 1200px) {
   :root {
-    --v2-feature-carousel-container-margin: 0;
-    --v2-feature-carousel-container-padding: 0;
+    --v2-feature-carousel-container-margin: 32px;
     --v2-feature-carousel-card-padding: 32px 24px;
     --v2-feature-carousel-card-width: 200px;
     --v2-feature-carousel-card-height: 235px;
     --v2-feature-carousel-icon-size: 64px;
     --v2-feature-carousel-svg-size: 32px;
-    --v2-feature-carousel-border-radius: 10px;
+  }
+
+  .v2-feature-carousel__text {
+    font-size: var(--f-body-2-font-size);
+    line-height: var(--f-body-2-line-height);
   }
 }
