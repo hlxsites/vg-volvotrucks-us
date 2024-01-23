@@ -230,6 +230,10 @@
   border-radius: var(--border-radius);
 }
 
+.redesign-v2 iframe.modal-video {
+  aspect-ratio: 16/9;
+}
+
 @media (min-width: 744px) {
   .redesign-v2 .modal-content:has(.modal-video) {
     margin-top: 48px;
