@@ -1181,6 +1181,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Section Background colors */
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--black-background {
   --media-background: var(--c-grey-900);
   --text-color: var(--c-white);
@@ -1195,6 +1196,7 @@ main.blue-contract .section.section-with-title p {
   padding-top: 80px;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--gray-background {
   --text-color: var(--c-main-black);
   --card-background: var(--c-white);
@@ -1721,6 +1723,7 @@ main.blue-contract .section.section-with-title p {
     padding-right: 32px;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   .redesign-v2 .section div.full-width {
     margin: 0;
   }

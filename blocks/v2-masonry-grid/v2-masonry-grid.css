@@ -24,7 +24,6 @@
 
 .v2-masonry-grid__item {
   position: relative;
-  border-radius: var(--border-radius);
   overflow: hidden;
   background-color: var(--media-background);
   border-radius: var(--border-radius);
