@@ -136,6 +136,7 @@
 .v2-hero__buttons-wrapper {
   display: inline-flex;
   flex-flow: column wrap;
+  align-items: center;
   gap: 24px;
   padding: 24px 0 0;
 }
