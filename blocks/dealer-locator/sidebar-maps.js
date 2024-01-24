@@ -790,43 +790,48 @@ $.fn.getOpenHours = function (pin) {
   
   allTimes.forEach((time, idx) => {
     var { Start: start, End: end } = time;
-    var compareDate = '1/1/2000 '
+    var compareDate = new Date('1/1/2000');
 
-    if (start.toLowerCase() == 'midnight') {
-      start = '12:00 AM';
+    switch (start.toLowerCase()) {
+      case 'midnight':
+      case '24':
+        start = '12:00 AM';
+        break;
+      case 'noon':
+        start = '12:00 PM';
+        break;
     }
 
-    if (end.toLowerCase() == 'midnight') {
-      end = '11:59 PM';
+    switch (end.toLowerCase()) {
+      case 'midnight':
+      case '24':
+        end = '11:59 PM';
+        break;
+      case 'noon':
+        end = '12:00 PM';
+        break;
     }
 
-    if (start.toLowerCase().indexOf('24') > -1) {
-      start = '12:00 AM';
-    }
+    var startDate = new Date(compareDate.getTime());
+    startDate.setHours(...start.split(':').map((val, idx) => idx === 0 ? parseInt(val) : parseInt(val.split(' ')[0])));
+    startDate.setMinutes(start.includes('PM') ? startDate.getMinutes() + 12 * 60 : startDate.getMinutes());
 
-    if (end.toLowerCase().indexOf('24') > -1) {
-      end = '11:59 PM';
-    }
-
-    if (start.toLowerCase() == 'noon') {
-      start = '12:00 PM';
-    }
-
-    if (end.toLowerCase() == 'noon') {
-      end = '12:00 PM';
-    }
+    var endDate = new Date(compareDate.getTime());
+    endDate.setHours(...end.split(':').map((val, idx) => idx === 0 ? parseInt(val) : parseInt(val.split(' ')[0])));
+    endDate.setMinutes(end.includes('PM') ? endDate.getMinutes() + 12 * 60 : endDate.getMinutes());
 
     if (idx === 0) {
       earliestHour = start;
       latestHour = end;
     } else {
-      if (start != '' && new Date (compareDate + start) < new Date (compareDate + earliestHour) || earliestHour === '') {
+      if (start != '' && startDate < new Date (compareDate.getTime() + earliestHour) || earliestHour === '') {
         earliestHour = start;
       }
-      if (end != '' && new Date (compareDate + end) > new Date (compareDate + latestHour)) {
+      if (end != '' && endDate > new Date (compareDate.getTime() + latestHour)) {
         latestHour = end;
       }
     }
+
   });
 
   return { open: earliestHour, close: latestHour }
