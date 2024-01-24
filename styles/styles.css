@@ -24,13 +24,13 @@
 
 @font-face {
   font-family: 'VolvoBroadProDigital Fallback';
-  src: local('Arial');
+  src: local('Arial Narrow');
   font-style: normal;
   font-weight: 400;
-  ascent-override: 120.58%;
-  descent-override: 23.83%;
+  ascent-override: 100%;
+  descent-override: 25%;
   line-gap-override: 0%;
-  size-adjust: 69.25%;
+  size-adjust: 84%;
 }
 
 @font-face {

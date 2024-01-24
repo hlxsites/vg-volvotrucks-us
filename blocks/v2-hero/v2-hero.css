@@ -119,10 +119,12 @@
   font-family: var(--ff-volvo-broadprodigital);
   font-size: 70px;
   line-height: 85%;
-  letter-spacing: 5px;
   margin-bottom: 0;
   text-wrap: balance;
+
+  /* fallback styling */
   text-transform: uppercase;
+  letter-spacing: 5px;
 }
 
 .v2-hero__title + p {
