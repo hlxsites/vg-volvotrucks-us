@@ -824,10 +824,10 @@ $.fn.getOpenHours = function (pin) {
       earliestHour = start;
       latestHour = end;
     } else {
-      if (start != '' && startDate < new Date (compareDate.getTime() + earliestHour) || earliestHour === '') {
+      if (start !== '' && startDate < new Date (compareDate.getTime() + earliestHour) || earliestHour === '') {
         earliestHour = start;
       }
-      if (end != '' && endDate > new Date (compareDate.getTime() + latestHour)) {
+      if (end !== '' && endDate > new Date (compareDate.getTime() + latestHour)) {
         latestHour = end;
       }
     }
