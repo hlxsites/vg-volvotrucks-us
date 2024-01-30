@@ -1540,6 +1540,7 @@ $.fn.setCookie = function (name, value, days) {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
+
 $.fn.getCookie = function (name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
@@ -2476,6 +2477,7 @@ $.fn.setAddress2 = function () {
   // $.fn.filterNearbyPins();
   // $.fn.filterRadius();
 };
+
 $.fn.setAddress = function () {
 
   if ($(window).width() < 992) {
