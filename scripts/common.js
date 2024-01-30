@@ -146,6 +146,7 @@ export async function loadTemplate(doc, templateName) {
  * loads everything that doesn't need to be delayed.
  */
 export async function loadLazy(doc) {
+  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
@@ -162,7 +163,6 @@ export async function loadLazy(doc) {
     loadBlock(subnav);
   }
 
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
