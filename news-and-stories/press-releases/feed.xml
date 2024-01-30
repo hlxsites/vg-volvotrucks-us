@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-01-23T00:00:00.000Z</updated>
+    <updated>2024-01-30T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America Honors 2024-2025 America’s Road Team Captains at the Volvo Trucks Customer Center | Volvo Trucks USA]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-honors-2024-2025-americas-road-team-captains-at-the-volvo-trucks-customer-center/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-honors-2024-2025-americas-road-team-captains-at-the-volvo-trucks-customer-center/"/>
+        <updated>2024-01-30T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Peter Voorhoeve, president of Volvo Trucks North America, expressed admiration for these captains, stating, "In their role as captains, these men and women represent the driving force behind our nation’s economy.]]></content>
+        <published>2024-01-30T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks North America Unveils All-New Volvo VNL Designed to Change Everything | Volvo Trucks USA]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-unveils-all-new-volvo-vnl-designed-to-change-everything/</id>
