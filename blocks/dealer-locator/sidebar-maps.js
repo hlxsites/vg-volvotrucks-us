@@ -2366,40 +2366,6 @@ $.fn.deg2rad = function ($deg) {
   return $deg * (Math.PI / 180);
 };
 
-// Not using this function
-$.fn.getTimezoneDeprecated = function (dealerId) {
-
-  var time = Date.now();
-
-  var dealerLength = $dealers.length;
-  var dealer = null;
-  for (var i = 0; i < dealerLength; i++) {
-
-    if ($dealers[i].IDENTIFIER_VALUE == dealerId) {
-
-      dealer = $dealers[i];
-      break;
-    }
-  }
-
-  if (!dealer.timezone) {
-
-    $.ajax({
-
-      url: "https://maps.googleapis.com/maps/api/timezone/json?location=" + dealer.MAIN_LATITUDE + "," + dealer.MAIN_LONGITUDE + "&timestamp=" + Math.floor(time / 1000) + '&key=' + $key,
-      type: "GET",
-      success: function (data) {
-        dealer.hourOffset = (data.rawOffset + data.dstOffset) / 60 / 60;
-        dealer.timezone = data.timeZoneId;
-        $.fn.isCurrentlyOpen(dealer);
-      }
-    });
-  } else {
-
-    $.fn.isCurrentlyOpen(dealer);
-  }
-};
-
 // Fires when a client types a location manually
 $.fn.setAddress2 = function () {
 
