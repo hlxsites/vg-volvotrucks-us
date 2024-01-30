@@ -146,23 +146,24 @@ export async function loadTemplate(doc, templateName) {
  * loads everything that doesn't need to be delayed.
  */
 export async function loadLazy(doc) {
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
+  loadCSS(`${window.hlx.codeBasePath}/styles/header-font.css`);
   const main = doc.querySelector('main');
   await loadBlocks(main);
-
+  
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
   const header = doc.querySelector('header');
-
+  
   loadHeader(header);
   loadFooter(doc.querySelector('footer'));
-
+  
   const subnav = header?.querySelector('.block.sub-nav');
   if (subnav) {
     loadBlock(subnav);
   }
-
+  
+  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
