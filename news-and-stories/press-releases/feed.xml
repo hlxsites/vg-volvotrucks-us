@@ -2,10 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-01-23T00:00:00.000Z</updated>
+    <updated>2024-02-02T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Celebrates 2023 U.S. and Canada Dealer Groups of the Year | Volvo Trucks USA]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/february/volvo-trucks-celebrates-2023-us-and-canada-dealer-groups-of-the-year/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/february/volvo-trucks-celebrates-2023-us-and-canada-dealer-groups-of-the-year/"/>
+        <updated>2024-02-02T00:00:00.000Z</updated>
+        <content type="html"><![CDATA["We are immensely proud to receive the prestigious title of Volvo 2023 U.S. Dealer Group of the Year. This recognition echoes the enduring partnership we have forged with Volvo Trucks over the years. At TEC Equipment, we are not just truck dealers; we are educators, advocates, and partners in progress,” said David Thompson, founder and chief executive officer, TEC Equipment.]]></content>
+        <published>2024-02-02T00:00:00.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America Honors 2024-2025 America’s Road Team Captains at the Volvo Trucks Customer Center | Volvo Trucks USA]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-honors-2024-2025-americas-road-team-captains-at-the-volvo-trucks-customer-center/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-honors-2024-2025-americas-road-team-captains-at-the-volvo-trucks-customer-center/"/>
+        <updated>2024-01-30T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Peter Voorhoeve, president of Volvo Trucks North America, expressed admiration for these captains, stating, "In their role as captains, these men and women represent the driving force behind our nation’s economy.]]></content>
+        <published>2024-01-30T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks North America Unveils All-New Volvo VNL Designed to Change Everything | Volvo Trucks USA]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-unveils-all-new-volvo-vnl-designed-to-change-everything/</id>
@@ -15,7 +31,7 @@
         <published>2024-01-23T00:00:00.000Z</published>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Volvo Trucks North America Unveils New Heavy-Duty Truck Designed to Change Everything | Volvo Trucks USA]]></title>
+        <title type="html"><![CDATA[Business Focus: Volvo Trucks North America Unveils New Heavy-Duty Truck Designed to Change Everything | Volvo Trucks USA]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-unveils-new-heavy-duty-truck-designed-to-change-everything/</id>
         <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/january/volvo-trucks-north-america-unveils-new-heavy-duty-truck-designed-to-change-everything/"/>
         <updated>2024-01-23T00:00:00.000Z</updated>
@@ -1357,5 +1373,13 @@
         <updated>2015-01-16T00:00:00.000Z</updated>
         <content type="html"><![CDATA[New River Valley Facility Dedication | Volvo Trucks USA]]></content>
         <published>2015-01-16T00:00:00.000Z</published>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America, headquartered in Greensboro, North Carolina, is one of the leading heavy-duty truck manufacturers in North America. Its Uptime Services commitment is delivered by a network of nearly 400 authorized dealers across North America and the 24/7 Volvo Trucks Uptime Center. Every Volvo truck is assembled in the Volvo Trucks New River Valley manufacturing facility in Dublin, Virginia, which meets the internationally recognized ISO 9001 standard for quality, 14001 standard for environmental care and holds a dual ISO 50001/Superior Energy Performance certification at the platinum level, indicating a sustained excellence in energy management. Volvo Trucks North America provides complete transport solutions for its customers, offering a full range of diesel, alternative-fuel and all-electric vehicles, and is part of the Volvo Trucks global organization.]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/disclaimer</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/disclaimer"/>
+        <updated>1970-01-01T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[Volvo Trucks North America, headquartered in Greensboro, North Carolina, is one of the leading heavy-duty truck manufacturers in North America. Its Uptime Services commitment is ...]]></content>
+        <published>1970-01-01T00:00:00.000Z</published>
     </entry>
 </feed>

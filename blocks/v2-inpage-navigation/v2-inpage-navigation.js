@@ -196,11 +196,16 @@ export default async function decorate(block) {
 
   // Listener to toggle the dropdown (open / close)
   document.addEventListener('click', (e) => {
+    const oneTrustButton = document.querySelector('#onetrust-consent-sdk');
+
     // click on selected item we show the menu
     if (e.target.closest(`.${blockName}__selected-item-wrapper`)) {
       dropdownWrapper.classList.add(`${blockName}__dropdown--open`);
       block.parentNode.classList.add(`${blockName}--open`);
       document.body.classList.add('disable-body-scroll');
+      if (oneTrustButton) {
+        oneTrustButton.style.display = 'none';
+      }
     } else if (e.target.closest(`.${blockName}__dropdown-background`) || (e.target.closest(`.${blockName}__items-container`)
         && (e.target.closest(`.${blockName}__items-close`) || e.target.closest(`.${blockName}__item`)))) {
       // Hide menu:
@@ -210,6 +215,9 @@ export default async function decorate(block) {
       dropdownWrapper.classList.remove(`${blockName}__dropdown--open`);
       block.parentNode.classList.remove(`${blockName}--open`);
       document.body.classList.remove('disable-body-scroll');
+      if (oneTrustButton) {
+        oneTrustButton.style.display = '';
+      }
     }
   });
 
