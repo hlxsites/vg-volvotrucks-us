@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-02-02T00:00:00.000Z</updated>
+    <updated>2024-02-06T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America Improves Class-Leading Powertrain Offering with All-New Volvo VNL]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/february/volvo-trucks-north-america-improves-class-leading-powertrain-offering-with-all-new-volvo-vnl/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/february/volvo-trucks-north-america-improves-class-leading-powertrain-offering-with-all-new-volvo-vnl/"/>
+        <updated>2024-02-06T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“Bringing the all-new Volvo VNL to the market has been seven years in the making,” said Peter Voorhoeve, president of Volvo Trucks North America.]]></content>
+        <published>2024-02-06T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Celebrates 2023 U.S. and Canada Dealer Groups of the Year | Volvo Trucks USA]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/february/volvo-trucks-celebrates-2023-us-and-canada-dealer-groups-of-the-year/</id>
