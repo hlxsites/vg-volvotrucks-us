@@ -7,6 +7,7 @@ import {
 import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
+const disableSearch = getMetadata('disable-search');
 
 const desktopMQ = window.matchMedia('(min-width: 1200px)');
 
@@ -99,11 +100,12 @@ const mobileActions = () => {
   const mobileActionsEl = createElement('div', { classes: [`${blockClass}__mobile-actions`] });
   const searchLabel = getTextLabel('Search');
   const openMenuLabel = getTextLabel('Open menu');
+  const searchEl = `<a href="/search-results" aria-label="${searchLabel}" class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link">
+    <span class="icon icon-search-icon" aria-hidden="true"></span>
+  </a>`;
 
   const actions = document.createRange().createContextualFragment(`
-    <a href="#" aria-label="${searchLabel}" class="${blockClass}__search-button ${blockClass}__action-link ${blockClass}__link">
-      <span class="icon icon-search-icon" aria-hidden="true"></span>
-    </a>
+    ${disableSearch ? '' : searchEl}
     <button
       aria-label="${openMenuLabel}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
@@ -338,11 +340,6 @@ export default async function decorate(block) {
 
     setAriaForMenu(false);
   };
-
-  // add actions for search
-  navContent.querySelector(`.${blockClass}__search-button`)?.addEventListener('click', () => {
-    window.location.href = '/search-results';
-  });
 
   // add action for hamburger
   navContent.querySelector(`.${blockClass}__hamburger-menu`)?.addEventListener('click', () => {
