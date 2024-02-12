@@ -1,3 +1,4 @@
+import { getLanguagePath } from '../../scripts/common.js';
 import {
   ffetch,
   createList,
@@ -5,9 +6,12 @@ import {
 } from '../../scripts/lib-ffetch.js';
 import {
   createOptimizedPicture,
+  getMetadata,
   getOrigin,
   toClassName,
 } from '../../scripts/lib-franklin.js';
+
+const locale = getMetadata('locale');
 
 function buildMagazineArticle(entry) {
   const {
@@ -29,7 +33,7 @@ function buildMagazineArticle(entry) {
     ${pictureTag}
     </a>
     <div class="content">
-    <ul><li>${date.toLocaleDateString()}</li>
+    <ul><li>${date.toLocaleDateString(locale)}</li>
     ${(category ? categoryItem.textContent(category) : '')}</ul>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
@@ -65,7 +69,7 @@ function buildLatestMagazineArticle(entry) {
 }
 
 async function getFilterOptions() {
-  const resp = await fetch('/news-and-stories/tags.plain.html');
+  const resp = await fetch(`${getLanguagePath()}news-and-stories/tags.plain.html`);
   const markup = await resp.text();
   const div = document.createElement('div');
   div.innerHTML = markup;
@@ -147,7 +151,7 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
 }
 
 async function getMagazineArticles(limit) {
-  const indexUrl = new URL('/magazine-articles.json', getOrigin());
+  const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
   let articles;
   if (limit) {
     articles = ffetch(indexUrl).limit(limit).all();

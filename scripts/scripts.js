@@ -623,7 +623,7 @@ async function loadEager(doc) {
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
-    const language = getMetadata('language') || 'en';
+    const language = getMetadata('locale') || 'en';
     document.documentElement.lang = language;
     const templateName = getMetadata('template');
     if (templateName) await loadTemplate(doc, templateName);

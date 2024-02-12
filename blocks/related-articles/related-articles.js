@@ -1,3 +1,4 @@
+import { getLanguagePath } from '../../scripts/common.js';
 import {
   ffetch,
   splitTags,
@@ -61,7 +62,7 @@ async function createRelatedtMagazineArticles(mainEl, magazineArticles) {
 }
 
 async function getRelatedMagazineArticles() {
-  const indexUrl = new URL('/magazine-articles.json', getOrigin());
+  const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
   const articles = ffetch(indexUrl).all();
   return articles;
 }

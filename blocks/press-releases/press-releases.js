@@ -1,15 +1,18 @@
+import { getLanguagePath } from '../../scripts/common.js';
 import {
   ffetch,
   createList,
   splitTags,
 } from '../../scripts/lib-ffetch.js';
 import {
-  toClassName,
   createOptimizedPicture,
-  readBlockConfig,
+  getMetadata,
   getOrigin,
+  readBlockConfig,
+  toClassName,
 } from '../../scripts/lib-franklin.js';
 
+const locale = getMetadata('locale');
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];
 
 function createPressReleaseFilterFunction(activeFilters) {
@@ -45,7 +48,7 @@ function createFilter(pressReleases, activeFilters, createDropdown, createFullTe
 }
 
 function getPressReleases(limit, filter) {
-  const indexUrl = new URL('/press-releases.json', getOrigin());
+  const indexUrl = new URL(`${getLanguagePath()}press-releases.json`, getOrigin());
   let pressReleases = ffetch(indexUrl);
   if (filter) pressReleases = pressReleases.filter(filter);
   if (limit) pressReleases = pressReleases.limit(limit);
@@ -68,7 +71,7 @@ function buildPressReleaseArticle(entry) {
     ${pictureTag}
   </a>
   <div>
-    <span class="date">${date.toLocaleDateString('en-US')}</span>
+    <span class="date">${date.toLocaleDateString(locale)}</span>
     <h3><a href="${path}">${title}</a></h3>
     <p>${description}</p>
   </div>`;
