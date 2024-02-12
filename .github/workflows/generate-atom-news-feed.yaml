@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         ref: ${{ github.head_ref }}
         # The bot user https://github.com/hlx-macktrucks-bot is used to commit the changes. The personal access token
@@ -29,9 +29,9 @@ jobs:
       run: |
         git config user.name "GitHubActions"
         git config user.email "<>"
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
     - name: Install dependencies
       working-directory: ./.github/ci
       run: npm install
@@ -39,15 +39,19 @@ jobs:
     - name: Generate Feed
       working-directory: ./.github/ci
       run:  node generate-news-feed.js
+      env:
+        NEWS_ENDPOINT: ${{ vars.NEWS_ENDPOINT }}
+        NEWS_FEED_INFO_ENDPOINT: ${{ vars.NEWS_FEED_INFO_ENDPOINT }}
+        NEWS_TARGET_DIRECTORY: ${{ vars.NEWS_TARGET_DIRECTORY }}
 
     - name: Print Feed
       run:  |
-        ls -la news-and-stories/press-releases/feed.xml
-        head -20 news-and-stories/press-releases/feed.xml
+        ls -la ${{ vars.NEWS_TARGET_FEED }}
+        head -20 ${{ vars.NEWS_TARGET_FEED }}
         
 
     - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        file_pattern: 'news-and-stories/press-releases/feed.xml'
+        file_pattern: ${{ vars.NEWS_TARGET_FEED }}
         commit_message: "Update feed.xml"
