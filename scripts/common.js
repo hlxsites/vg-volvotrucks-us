@@ -24,12 +24,14 @@ function loadFooter(footer) {
   }
 }
 
+export const getLanguagePath = () => {
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  return langCodeMatch ? langCodeMatch[1] : '/';
+};
+
 export async function getPlaceholders() {
-  const language = window.location.pathname.match(/\/fr\//);
-  let url = '/placeholder.json';
-  if (language) {
-    url = `${language[0]}placeholder.json`;
-  }
+  const url = `${getLanguagePath()}placeholder.json`;
   placeholders = await fetch(url).then((resp) => resp.json());
 }
 
@@ -370,10 +372,4 @@ export const getJsonFromUrl = async (route) => {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
-};
-
-export const getLanguagePath = () => {
-  const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  return langCodeMatch ? langCodeMatch[1] : '/';
 };
