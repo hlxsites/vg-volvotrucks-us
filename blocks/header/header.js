@@ -7,7 +7,7 @@ import {
 import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
-const disableSearch = getMetadata('disable-search');
+const disableSearch = getMetadata('disable-search').toLowerCase() === 'true';
 
 const desktopMQ = window.matchMedia('(min-width: 1200px)');
 
