@@ -129,7 +129,7 @@ const loadAccountEngagementTracking = () => {
   const script = document.createElement('script');
   script.type = 'text/javascript';
 
-  script.text = "piAId = '1039333'; piCId = '25825'; piHostname = 'pi.pardot.com'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();";"
+  script.text = "piAId = '1039333'; piCId = '25825'; piHostname = 'pi.pardot.com'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();";
 
   body.append(script);
 };
