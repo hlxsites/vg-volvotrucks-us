@@ -17,12 +17,12 @@ if (isPerformanceAllowed()) {
   loadHotjar();
 }
 
-if (isSocialAllowed()) {
-  loadFacebookPixel();
-}
-
 if (isTargetingAllowed()) {
   loadAccountEngagementTracking();
+}
+
+if (isSocialAllowed()) {
+  loadFacebookPixel();
 }
 
 // add more delayed functionality here
