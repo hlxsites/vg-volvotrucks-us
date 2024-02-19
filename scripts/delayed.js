@@ -1,11 +1,12 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
+import { ACCOUNT_ENGAGEMENT_TRACKING } from './constants.js';
 
 const COOKIES = {
   performance: 'C0002:1',
   social: 'C0005:1',
+  targeting: 'C0004:1',
 };
-
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
@@ -13,6 +14,7 @@ const cookieSetting = decodeURIComponent(document.cookie.split(';')
   .find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
 const isPerformanceAllowed = cookieSetting.includes(COOKIES.performance);
 const isSocialAllowed = cookieSetting.includes(COOKIES.social);
+const isTargetingAllowed = cookieSetting.includes(COOKIES.targeting);
 
 if (isPerformanceAllowed) {
   loadGoogleTagManager();
@@ -23,6 +25,11 @@ if (isSocialAllowed) {
   loadFacebookPixel();
 }
 
+console.log('hol1a')
+if (isTargetingAllowed) {
+  console.log('hola')
+  loadAccountEngagementTracking();
+}
 // add more delayed functionality here
 document.addEventListener('click', (e) => {
   if (e.target.matches('.semitrans')) {
@@ -124,15 +131,14 @@ if (document.querySelector('.studio-widget-autosuggest-results')) {
 }
 
 // Account Engagement Tracking Code
-const loadAccountEngagementTracking = () => {
+async function loadAccountEngagementTracking() {
   const body = document.querySelector('body');
   const script = document.createElement('script');
   script.type = 'text/javascript';
+  
+  const { piAId, piCId, piHostname } = ACCOUNT_ENGAGEMENT_TRACKING;
 
-  script.text = "piAId = '1039333'; piCId = '25825'; piHostname = 'pi.pardot.com'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();";
+  script.text = `piAId = '${piAId}'; piCId = '${piCId}'; piHostname = '${piHostname}'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();`;
 
   body.append(script);
 };
-
-// Still need to check if some cookie consent should be verified before
-loadAccountEngagementTracking();
