@@ -1,20 +1,17 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
-import { ACCOUNT_ENGAGEMENT_TRACKING } from './constants.js';
+import { ACCOUNT_ENGAGEMENT_TRACKING, COOKIES } from './constants.js';
 
-const COOKIES = {
-  performance: 'C0002:1',
-  social: 'C0005:1',
-  targeting: 'C0004:1',
-};
+const { performance, social, targeting } = COOKIES;
+
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
 const cookieSetting = decodeURIComponent(document.cookie.split(';')
   .find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-const isPerformanceAllowed = cookieSetting.includes(COOKIES.performance);
-const isSocialAllowed = cookieSetting.includes(COOKIES.social);
-const isTargetingAllowed = cookieSetting.includes(COOKIES.targeting);
+const isPerformanceAllowed = cookieSetting.includes(performance);
+const isSocialAllowed = cookieSetting.includes(social);
+const isTargetingAllowed = cookieSetting.includes(targeting);
 
 if (isPerformanceAllowed) {
   loadGoogleTagManager();
@@ -25,9 +22,7 @@ if (isSocialAllowed) {
   loadFacebookPixel();
 }
 
-console.log('hol1a')
 if (isTargetingAllowed) {
-  console.log('hola')
   loadAccountEngagementTracking();
 }
 // add more delayed functionality here
