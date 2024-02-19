@@ -1,5 +1,5 @@
 import { hideSidebar } from '../../common/sidebar/sidebar.js';
-import { getTextLabel, isEloquaFormAllowed } from '../../scripts/common.js';
+import { getTextLabel, isTargetingAllowed } from '../../scripts/common.js';
 
 // eslint-disable no-console
 const addForm = async (block) => {
@@ -131,7 +131,7 @@ const addNoCookieMessage = (messageContainer) => {
 };
 
 export default async function decorate(block) {
-  if (!isEloquaFormAllowed()) {
+  if (!isTargetingAllowed()) {
     addNoCookieMessage(block);
 
     return;

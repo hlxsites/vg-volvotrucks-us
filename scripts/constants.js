@@ -9,9 +9,9 @@ export const HOTJAR_ID = 1139895;
 
 // COOKIE Constants
 export const COOKIE_VALUES = {
-  performance: 'C0002:1',
-  social: 'C0005:1',
-  targeting: 'C0004:1',
+  performance: 'C0002',
+  targeting: 'C0004',
+  social: 'C0005',
 };
 
 // ACCOUNT ENGAGEMENT TRACKING Constants

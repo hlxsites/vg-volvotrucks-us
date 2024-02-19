@@ -1,37 +1,32 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
+import { isPerformanceAllowed, isSocialAllowed, isTargetingAllowed } from './common.js.js';
 import { 
   ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS,
-  COOKIE_VALUES,
   HOTJAR_ID,
   DATA_DOMAIN_SCRIPT,
   GTM_ID,
 } from './constants.js';
 
-const { performance, social, targeting } = COOKIE_VALUES;
-
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-const cookieSetting = decodeURIComponent(document.cookie.split(';')
-  .find((cookie) => cookie.trim().startsWith('OptanonConsent=')));
-const isPerformanceAllowed = cookieSetting.includes(performance);
-const isSocialAllowed = cookieSetting.includes(social);
-const isTargetingAllowed = cookieSetting.includes(targeting);
-
-if (isPerformanceAllowed) {
+// COOKIE ACCEPTANCE CHECKING
+if (isPerformanceAllowed()) {
   loadGoogleTagManager();
   loadHotjar();
 }
 
-if (isSocialAllowed) {
+if (isSocialAllowed()) {
   loadFacebookPixel();
 }
 
-if (isTargetingAllowed) {
+if (isTargetingAllowed()) {
   loadAccountEngagementTracking();
 }
+
 // add more delayed functionality here
+
 document.addEventListener('click', (e) => {
   if (e.target.matches('.semitrans')) {
     const trigger = e.target.parentElement.querySelector('.semitrans-trigger');
@@ -44,7 +39,7 @@ document.addEventListener('click', (e) => {
 
 // OneTrust Cookies Consent Notice start for volvotrucks.us
 if (!window.location.pathname.includes('srcdoc')
-  && !['localhost', 'hlx.page'].some((url) => window.location.host.includes(url))) {
+  && !['localhiost', 'hlx.page'].some((url) => window.location.host.includes(url))) {
   // when running on localhost in the block library host is empty but the path is srcdoc
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
   // because the cookie is not persistent. To avoid this annoyance, disable unless on the
