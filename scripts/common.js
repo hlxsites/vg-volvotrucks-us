@@ -9,7 +9,9 @@ import {
 } from './lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
+import { COOKIE_VALUES } from './constants.js';
 
+const { performance, targeting, social } = COOKIE_VALUES;
 let placeholders = null;
 
 /**
@@ -321,12 +323,16 @@ export function checkOneTrustGroup(groupName) {
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
-export function isEloquaFormAllowed() {
-  return checkOneTrustGroup('C0004');
+export function isPerformanceAllowed() {
+  return checkOneTrustGroup(performance);
 }
 
-export function isExternalVideoAllowed() {
-  return checkOneTrustGroup('C0005');
+export function isTargetingAllowed() {
+  return checkOneTrustGroup(targeting);
+}
+
+export function isSocialAllowed() {
+  return checkOneTrustGroup(social);
 }
 
 /*
