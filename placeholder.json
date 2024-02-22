@@ -242,6 +242,30 @@
     {
       "Key": "single video message button deny",
       "Text": "Reject All"
+    },
+    {
+      "Key": "form-subscribe:email-label",
+      "Text": "Enter your email"
+    },
+    {
+      "Key": "form-subscribe:button-submit",
+      "Text": "Submit"
+    },
+    {
+      "Key": "form-subscribe:success-title",
+      "Text": "You’re all set."
+    },
+    {
+      "Key": "form-subscribe:success-text",
+      "Text": "We’ll be sending you all the latest Volvo info"
+    },
+    {
+      "Key": "form-subscribe:error-title",
+      "Text": "Oops, something went wrong."
+    },
+    {
+      "Key": "form-subscribe:error-text",
+      "Text": "Please <a href=\"https://www.volvotrucks.us/about-volvo/contact-us/\">contact us</a>."
     }
   ],
   ":type": "sheet"

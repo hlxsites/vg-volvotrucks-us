@@ -617,16 +617,19 @@ export function decorateMain(main, head) {
  * loads everything needed to get to LCP.
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
 
   const main = doc.querySelector('main');
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    const language = getMetadata('locale') || 'en';
+    document.documentElement.lang = language;
     const templateName = getMetadata('template');
     if (templateName) await loadTemplate(doc, templateName);
     await waitForLCP(LCP_BLOCKS);
+  } else {
+    document.documentElement.lang = 'en';
   }
 
   await getPlaceholders();
