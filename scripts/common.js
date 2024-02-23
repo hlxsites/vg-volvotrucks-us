@@ -150,6 +150,7 @@ export async function loadTemplate(doc, templateName) {
  * loads everything that doesn't need to be delayed.
  */
 export async function loadLazy(doc) {
+  loadCSS(`${window.hlx.codeBasePath}/styles/header-font.css`);
   const main = doc.querySelector('main');
   await loadBlocks(main);
 
