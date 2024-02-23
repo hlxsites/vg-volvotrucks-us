@@ -5,40 +5,33 @@ import { getTextLabel, createElement } from '../../scripts/common.js';
 
 const blockName = 'v2-newsletter';
 
-//* init response handling *
-const successTitle = getTextLabel('Success newsletter title');
-const successText = getTextLabel('Success newsletter text');
-
-async function submissionSuccess() {
-  sampleRUM('form:submit');
+async function handleSubmissionResult({ titleText, messageText, isSuccess }) {
   const form = document.querySelector('form[data-submitting=true]');
-  form.setAttribute('data-submitting', 'false');
   const title = document.querySelector(`.${blockName}__title`);
-  const message = document.createElement('p');
-  message.textContent = successText;
-  title.textContent = successTitle;
+  const message = document.createRange().createContextualFragment(`<p>${messageText}</p>`);
+
+  if (isSuccess) {
+    sampleRUM('form:submit');
+  }
+
+  title.textContent = titleText;
+  form.setAttribute('data-submitting', 'false');
   form.replaceWith(message);
 }
-
-const errorTitle = getTextLabel('Error submission title');
-const errorText = getTextLabel('Error submission text');
-
-async function submissionFailure() {
-  const form = document.querySelector('form[data-submitting=true]');
-  form.setAttribute('data-submitting', 'false');
-  const title = document.querySelector(`.${blockName}__title`);
-  const message = document.createElement('p');
-  message.textContent = errorText;
-  title.textContent = errorTitle;
-  form.replaceWith(message);
-}
-//* end response handling *
 
 window.logResult = function logResult(json) {
   if (json.result === 'success') {
-    submissionSuccess();
+    handleSubmissionResult({
+      titleText: getTextLabel('form-subscribe:success-title'),
+      messageText: getTextLabel('form-subscribe:success-text'),
+      isSuccess: true,
+    });
   } else if (json.result === 'error') {
-    submissionFailure();
+    handleSubmissionResult({
+      titleText: getTextLabel('form-subscribe:error-title'),
+      messageText: getTextLabel('form-subscribe:error-text'),
+      isSuccess: false,
+    });
   }
 };
 

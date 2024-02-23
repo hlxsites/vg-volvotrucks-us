@@ -1,10 +1,10 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-const endpoint = 'https://www.volvotrucks.us/press-releases.json';
-const feedInfoEndpoint = 'https://www.volvotrucks.us/news-and-stories/press-releases/feed-info.json';
-const targetDirectory = '../../news-and-stories/press-releases';
-const targetFile = `${targetDirectory}/feed.xml`;
+const endpoint = process.env.NEWS_ENDPOINT;
+const feedInfoEndpoint = process.env.NEWS_FEED_INFO_ENDPOINT;
+const targetDirectory = process.env.NEWS_TARGET_DIRECTORY;
+const targetFile = `${process.env.NEWS_TARGET_DIRECTORY}/feed.xml`;
 const limit = 1000;
 
 async function main() {

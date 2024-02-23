@@ -1,9 +1,10 @@
 import { ffetch } from '../../scripts/lib-ffetch.js';
-import { createOptimizedPicture, getOrigin } from '../../scripts/lib-franklin.js';
-import { createElement } from '../../scripts/common.js';
+import { createOptimizedPicture, getMetadata, getOrigin } from '../../scripts/lib-franklin.js';
+import { createElement, getLanguagePath } from '../../scripts/common.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
 const blockName = 'v2-stories-carousel';
+const locale = getMetadata('locale');
 
 const updateActiveClass = (elements, targetElement) => {
   elements.forEach((el) => {
@@ -95,7 +96,7 @@ const createArrowControls = (carousel) => {
 };
 
 const getMagazineArticles = async (limit = 5) => {
-  const indexUrl = new URL('/magazine-articles.json', getOrigin());
+  const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
   const articles = ffetch(indexUrl).limit(limit).all();
 
   return articles;
@@ -147,7 +148,7 @@ const buildStoryCard = (entry) => {
         </li>
         <li class="${blockName}-date">
           ${svgCalendar}
-          <time datetime="${date}" pubdate="pubdate">${date.toLocaleDateString()}</time>
+          <time datetime="${date}" pubdate="pubdate">${date.toLocaleDateString(locale)}</time>
         </li>
       </ul>
       <a href="${path}" class="${blockName}-cta button tertiary">

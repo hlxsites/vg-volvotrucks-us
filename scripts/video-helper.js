@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel, isExternalVideoAllowed } from './common.js';
+import { createElement, getTextLabel, isSocialAllowed } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
@@ -13,7 +13,7 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = isExternalVideoAllowed() && preferredType !== 'local';
+  const shouldUseYouTubeLinks = isSocialAllowed() && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 

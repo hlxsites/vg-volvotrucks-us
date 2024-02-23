@@ -9,7 +9,9 @@ import {
 } from './lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
+import { COOKIE_VALUES } from './constants.js';
 
+const { performance, targeting, social } = COOKIE_VALUES;
 let placeholders = null;
 
 /**
@@ -24,12 +26,14 @@ function loadFooter(footer) {
   }
 }
 
+export const getLanguagePath = () => {
+  const { pathname } = new URL(window.location.href);
+  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
+  return langCodeMatch ? langCodeMatch[1] : '/';
+};
+
 export async function getPlaceholders() {
-  const language = window.location.pathname.match(/\/fr\//);
-  let url = '/placeholder.json';
-  if (language) {
-    url = `${language[0]}placeholder.json`;
-  }
+  const url = `${getLanguagePath()}placeholder.json`;
   placeholders = await fetch(url).then((resp) => resp.json());
 }
 
@@ -175,8 +179,8 @@ export async function loadLazy(doc) {
  * the user experience.
  */
 export function loadDelayed() {
-  // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => {
+    // eslint-disable-next-line import/no-cycle
     import('./delayed.js');
   }, 3000);
   // load anything that can be postponed to the latest here
@@ -322,12 +326,16 @@ export function checkOneTrustGroup(groupName) {
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
-export function isEloquaFormAllowed() {
-  return checkOneTrustGroup('C0004');
+export function isPerformanceAllowed() {
+  return checkOneTrustGroup(performance);
 }
 
-export function isExternalVideoAllowed() {
-  return checkOneTrustGroup('C0005');
+export function isTargetingAllowed() {
+  return checkOneTrustGroup(targeting);
+}
+
+export function isSocialAllowed() {
+  return checkOneTrustGroup(social);
 }
 
 /*
@@ -371,10 +379,4 @@ export const getJsonFromUrl = async (route) => {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
-};
-
-export const getLanguagePath = () => {
-  const { pathname } = new URL(window.location.href);
-  const langCodeMatch = pathname.match('^(/[a-z]{2}(-[a-z]{2})?/).*');
-  return langCodeMatch ? langCodeMatch[1] : '/';
 };

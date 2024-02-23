@@ -1,0 +1,118 @@
+name: 'Report 🪲 bug or 🕳️ defect'
+description: Please fill out this form to report a bug or defect.
+labels: [bugfix, Needs Triage]
+projects: ["hlxsites/8"]
+body:
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: >
+        Select whether this is a bug or a defect.
+
+        <details>
+
+        <summary>What’s the difference?</summary>
+
+
+        :hole: **Defects**
+
+        These are issues that are found when testing a functional requirement or change request.
+
+
+        :beetle: **Bugs**
+
+        Bugs are issues that are found when not validating any Change Request or Functional requirement. They can be regressions or simply issues you find while doing Exploratory Testing.
+        </details>
+      options:
+        - Bug
+        - Defect
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Provide a short description of the defect. Include the block name
+        or story in brackets for easier search.
+      placeholder: e.g., [Block Name] Issue description.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Select the priority of the issue.
+      options:
+        - Blocker
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a more detailed description of the issue.
+      placeholder: Detailed issue description here.
+    validations:
+      required: true
+  - type: dropdown
+    id: affected-device-classes
+    attributes:
+      label: Affected Device Classes
+      description: Check all device classes affected by this issue.
+      multiple: true
+      options:
+        - Mobile
+        - Tablet
+        - Desktop
+    validations:
+      required: true
+  - type: textarea
+    id: affected-browsers-devices
+    attributes:
+      label: Affected Browsers/Devices and Versions
+      description: List all browsers and devices affected by this issue and specify
+        their versions.
+      placeholder: e.g., Chrome (v123), Safari (on iOS 17.4)
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Detail the steps to reproduce the bug. Each action should be a
+        separate step.
+      placeholder: |-
+        1. Navigate to…
+        2. Click on…
+        3. Observe the issue.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-results
+    attributes:
+      label: Expected Results
+      description: Describe the correct behavior expected. Include links to
+        specifications if available.
+      placeholder: Expected behavior description.
+    validations:
+      required: true
+  - type: textarea
+    id: actual-results
+    attributes:
+      label: Actual Results
+      description: Describe the defect identified.
+      placeholder: Actual defect description.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Attachment
+      description: You can attach images by clicking this area and drag files in.
+      placeholder: Upload file
+    validations:
+      required: false

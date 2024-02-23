@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { loadScript } from '../../scripts/lib-franklin.js';
-import { createElement, getTextLabel, isExternalVideoAllowed } from '../../scripts/common.js';
+import { createElement, getTextLabel, isSocialAllowed } from '../../scripts/common.js';
 import { hideModal } from '../../common/modal/modal.js';
 
 let player;
@@ -67,7 +67,7 @@ export default function decorate(block) {
     }, 3000);
   };
 
-  if (!isExternalVideoAllowed()) {
+  if (!isSocialAllowed()) {
     const img = block.querySelector('picture img');
     block.innerHTML = '';
 
