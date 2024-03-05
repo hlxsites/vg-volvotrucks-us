@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-03-04T00:00:00.000Z</updated>
+    <updated>2024-03-05T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[How the All-New Volvo VNL Leverages Connectivity to Deliver Intelligent Maintenance and Maximize Customer Uptime]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/how-the-all-new-volvo-vnl-leverages-connectivity-to-deliver-intelligent-maintenance-and-maximize-customer-uptime/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/how-the-all-new-volvo-vnl-leverages-connectivity-to-deliver-intelligent-maintenance-and-maximize-customer-uptime/"/>
+        <updated>2024-03-05T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“Our customers invest in Volvo Trucks because they want the best possible truck for their drivers and operations,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2024-03-05T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo VNR Electric Trucks Purchased to Launch Program Supporting Small Drayage Fleet Operators in SoCal]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/volvo-vnr-electric-trucks-purchased-to-launch-program-supporting-small-drayage-fleet-operators-in-socal/</id>
