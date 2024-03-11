@@ -1,4 +1,4 @@
-name: Search trigger to notify the Connector
+name: Search Connector - Upsert
 
 on: 
   repository_dispatch:
@@ -19,8 +19,10 @@ jobs:
       run: |
         sleep 1s
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$//g')
-        DOMAIN_URL="${{ vars.DOMAIN_URL }}"
-        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?path=$PAGE_PATH&domain_url=$DOMAIN_URL")
-        response=$(curl -s -H "x-api-key: ${{ secrets.API_KEY }}" -X POST "$URI")
+        WEBSITE_NAME="${{ vars.WEBSITE_NAME }}"
+        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}/$WEBSITE_NAME")
+        BODY='{ "paths": [ "'$PAGE_PATH'" ] }'
+        BODY="$(echo "$BODY" | jq -c)"
+        response=$(curl -s -H "x-api-key: ${{ secrets.API_KEY }}" -X POST "$URI" -d "$BODY")
         echo "response: $response"
       shell: bash
