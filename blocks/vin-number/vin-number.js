@@ -62,7 +62,10 @@ const recallStatus = {
 };
 
 function capitalize(text) {
-  return text.toLowerCase().split('').map((char, index) => (index === 0 ? char.toUpperCase() : char)).join('');
+  return text.replace(/\.\s+/g, '.').split('.').map((sentence) => {
+    const line = sentence.toLowerCase();
+    return line.toLowerCase().charAt(0).toUpperCase() + line.slice(1);
+  }).join('.');
 }
 
 function renderRecalls(recallsData) {
@@ -286,7 +289,7 @@ export default async function decorate(block) {
           maxlength="17"
           required
           class="${blockName}__input"
-          pattern="^[1,2,3,4][c,C,N,n,R,r,P,p,V,v][1,2,4,5,C,c,e,E,K,k,V,v][B-C,E-H,J-N,R-T,V-Y,b-c,e-h,j-n,r-t,v-y][A-Za-z0-9]{13}$"
+          pattern="^[1,2,3,4][c,C,N,n,R,r,P,p,V,v][1,2,4,5,9,C,c,e,E,K,k,V,v][B-C,E-H,J-N,R-T,V-Y,b-c,e-h,j-n,r-t,v-y][A-Za-z0-9]{13}$"
         />
         <label for="vin_number" class="${blockName}__label">${getTextLabel('vinlabel')}</label>
       </div>
