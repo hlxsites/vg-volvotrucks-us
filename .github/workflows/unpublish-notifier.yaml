@@ -1,4 +1,4 @@
-name: Search trigger to notify the Connector - delete
+name: Search Connector - Delete
 
 on: 
   repository_dispatch:
@@ -20,8 +20,8 @@ jobs:
       run: |
         sleep 1s
         PAGE_PATH=$(echo "${{ github.event.client_payload.path }}" | sed 's/\.md$//g')
-        DOMAIN_URL="${{ vars.DOMAIN_URL }}"        
-        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}?unique_id=$DOMAIN_URL$PAGE_PATH")
+        WEBSITE_NAME="${{ vars.WEBSITE_NAME }}"        
+        URI=$(echo "${{ vars.CONNECTOR_DOMAIN }}/$WEBSITE_NAME?path=$PAGE_PATH")
         response=$(curl -s -H "x-api-key: ${{ secrets.API_KEY }}" -X DELETE "$URI")
         echo "response: $response"
       shell: bash
