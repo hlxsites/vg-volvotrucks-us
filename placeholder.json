@@ -12,6 +12,38 @@
       "Text": "Change cookie settings"
     },
     {
+      "Key": "Search For",
+      "Text": "Search For"
+    },
+    {
+      "Key": "no results",
+      "Text": "SORRY, YOUR SEARCH FOR $0 RETURNED NO RESULTS!"
+    },
+    {
+      "Key": "refine",
+      "Text": "LET'S REFINE, OR TRY SEARCHING BY DIFFERENT SEARCH KEYWORDS INSTEAD."
+    },
+    {
+      "Key": "Showing results for",
+      "Text": "Showing <strong>$0 - $1</strong> of <strong>$2</strong> results for <strong>\"$3\"</strong>"
+    },
+    {
+      "Key": "Sort By",
+      "Text": "Sort By"
+    },
+    {
+      "Key": "Sort Filter",
+      "Text": "Relevance,Newest Content,Oldest Content"
+    },
+    {
+      "Key": "Previous",
+      "Text": "Previous"
+    },
+    {
+      "Key": "Next",
+      "Text": "Next"
+    },
+    {
       "Key": "No search results",
       "Text": "SORRY, YOUR SEARCH FOR \"{{$0}}\" RETURNED NO RESULTS!"
     },
