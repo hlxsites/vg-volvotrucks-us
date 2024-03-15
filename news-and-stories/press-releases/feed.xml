@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-03-05T00:00:00.000Z</updated>
+    <updated>2024-03-14T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[All-New Volvo VNL Showcased at Truckload Carriers]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/all-new-volvo-vnl-showcased-at-truckload-carriers/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/all-new-volvo-vnl-showcased-at-truckload-carriers/"/>
+        <updated>2024-03-14T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The all-new Volvo VNL was designed to address the dynamic challenges of the North American freight transport sector, and our goal this year is to provide the opportunity for as many industry sectors as possible to experience the new level of customer value provided in this completely reimagined Class 8 truck firsthand,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2024-03-14T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How the All-New Volvo VNL Leverages Connectivity to Deliver Intelligent Maintenance and Maximize Customer Uptime]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/march/how-the-all-new-volvo-vnl-leverages-connectivity-to-deliver-intelligent-maintenance-and-maximize-customer-uptime/</id>
