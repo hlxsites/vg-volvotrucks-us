@@ -1,7 +1,4 @@
-const SEARCH_URLS = {
-  prod: 'https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search',
-  dev: 'https://search-api-dev.aws.43636.vnonprod.com/search',
-};
+import { SEARCH_URLS } from '../../scripts/constants.js';
 
 const isProd = !window.location.host.includes('hlx.page') && !window.location.host.includes('localhost');
 const SEARCH_LINK = !isProd ? SEARCH_URLS.dev : SEARCH_URLS.prod;

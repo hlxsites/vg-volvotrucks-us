@@ -20,3 +20,9 @@ export const ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS = {
   piCId: 25825,
   piHostname: 'pi.pardot.com',
 };
+
+// Search API URLs
+export const SEARCH_URLS = {
+  prod: 'https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search',
+  dev: 'https://search-api-dev.aws.43636.vnonprod.com/search',
+};
