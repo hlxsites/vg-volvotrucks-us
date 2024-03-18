@@ -679,6 +679,15 @@
   position: relative;
 }
 
+.no-result-msg,
+.no-result-msg2 {
+  text-transform: uppercase;
+}
+
+.no-result-msg span {
+  text-transform: initial;
+}
+
 .text-primary {
   color: var(--c-cta-blue-default);
   text-decoration: underline;

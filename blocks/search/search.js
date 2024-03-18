@@ -288,8 +288,8 @@ export default function decorate(block) {
       resultCount = count;
       hasResults = true;
     } else {
-      const noResults = PLACEHOLDERS.noResults.replace('$0', `"${
-        queryTerm.trim() === '' ? ' ' : queryTerm}"`);
+      const noResults = PLACEHOLDERS.noResults.replace('$0', `"<span>${
+        queryTerm.trim() === '' ? ' ' : queryTerm}</span>"`);
       summary.parentElement.classList.add('no-results');
       resultsText = getNoResultsTemplate({ noResults, refine: PLACEHOLDERS.refine });
       hasResults = false;

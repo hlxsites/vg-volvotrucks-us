@@ -17,11 +17,11 @@
     },
     {
       "Key": "no results",
-      "Text": "SORRY, YOUR SEARCH FOR $0 RETURNED NO RESULTS!"
+      "Text": "sorry, your search for $0 returned no results!"
     },
     {
       "Key": "refine",
-      "Text": "LET'S REFINE, OR TRY SEARCHING BY DIFFERENT SEARCH KEYWORDS INSTEAD."
+      "Text": "let's refine, or try searching by different search keywords instead."
     },
     {
       "Key": "Showing results for",
