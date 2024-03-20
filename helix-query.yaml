@@ -149,7 +149,7 @@ indices:
       - '/news-and-stories/tags'
       - '/block-library/**'
     properties:
-      published:
+      lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
       title:
@@ -158,9 +158,12 @@ indices:
       description:
         select: head > meta[name="description"]
         value: attribute(el, "content")
-      template:
-        select: head > meta[name="template"]
+      category:
+        select: head > meta[name="category"]
         value: attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
-        values: attribute(el, "content")   
+        values: attribute(el, "content")
+      text:
+        select: main
+        value: textContent(el)
