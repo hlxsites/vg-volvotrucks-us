@@ -15,6 +15,7 @@ export function selectVideoLink(links, preferredType) {
   const linksList = [...links];
   const shouldUseYouTubeLinks = isSocialAllowed() && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
+  const aemHostedLink = linksList.find((link) => link.getAttribute('href').includes('adobeaemcloud.com/adobe/assets/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
   if (preferredType === 'singleVideo' && youTubeLink) {
@@ -22,6 +23,9 @@ export function selectVideoLink(links, preferredType) {
   }
   if (shouldUseYouTubeLinks && youTubeLink) {
     return youTubeLink;
+  }
+  if (aemHostedLink) {
+    return aemHostedLink;
   }
   return localMediaLink;
 }
