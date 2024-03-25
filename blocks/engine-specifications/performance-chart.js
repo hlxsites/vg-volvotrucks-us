@@ -71,7 +71,7 @@ const generatePositionsX = (start, iterations, space) => {
 };
 // From the values given applies the proportional conversion rate and plots the lines.
 const plotLine = (valuesOnX, typeOfLine, conversionFactor, totalWidth, sectionWidth) => {
-  const plotedLine = valuesOnX.map((e, idx) => {
+  const plottedLine = valuesOnX.map((e, idx) => {
     const decimalCount = 2;
 
     const pureValueX = e;
@@ -90,12 +90,13 @@ const plotLine = (valuesOnX, typeOfLine, conversionFactor, totalWidth, sectionWi
 
     return (Number.isNaN(nextValueY)) ? `C ${valueX} ${valueY} ${valueX} ${valueY} ${valueX} ${valueY}` : `C ${valueX} ${valueY} ${bezierPointX1} ${bezierPointY1} ${bezierPointX2} ${bezierPointY2}`;
   });
-  const point = plotedLine.pop();
+
+  const point = plottedLine.pop();
   const lastValueY = point.split(' ').pop();
   const lastPoint = `C ${totalWidth} ${lastValueY} ${totalWidth} ${lastValueY} ${totalWidth} ${lastValueY}`;
-  plotedLine.push(lastPoint);
+  plottedLine.push(lastPoint);
 
-  return plotedLine;
+  return plottedLine.join(' ');
 };
 // Identifies the width of the device and returns values for the position of the peak points.
 const getDevice = () => {
@@ -156,14 +157,15 @@ const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
 
   return `
     <rect
-      x=${(positionX - (128 / 2))}
-      y=${(positionY - 76 - 18)}
-      width="${128 * device.scale}px"
-      height="${76 * device.scale}px"
-      rx="${8 * device.scale}"
-      ry="${8 * device.scale}"
+      x=${Math.round((positionX - (128 / 2)))}
+      y=${Math.round((positionY - 76 - 18))}
+      width="${Math.round(128 * device.scale)}px"
+      height="${Math.round(76 * device.scale)}px"
+      rx="8"
+      ry="8"
       data-z-index="5"
       opacity="1"
+      stroke="none"
       class="peak-rectangle-${category.toLowerCase()}"
     >
     </rect>
@@ -178,19 +180,19 @@ const getPeakValue = (values, valuesX, conversionFactor, category, device) => {
     </text>
 
     <path 
-      fill="${peakLabel[2]}" 
+      fill="${peakLabel[2]}"
       d="
-        M ${positionX} ${positionY - 6},
-        L ${positionX + 14} ${positionY - 20},
-        L ${positionX - 14} ${positionY - 20},
-        L ${positionX} ${positionY - 6},
+        M ${positionX} ${positionY - 6}
+        L ${positionX + 14} ${positionY - 20}
+        L ${positionX - 14} ${positionY - 20}
+        L ${positionX} ${positionY - 6}
         Z
         "
-      data-z-index="1" 
-      stroke="${peakLabel[2]}" 
-      stroke-width="8" 
-      stroke-linejoin="round" 
-      stroke-linecap="round" 
+      data-z-index="1"
+      stroke="${peakLabel[2]}"
+      stroke-width="8"
+      stroke-linejoin="round"
+      stroke-linecap="round"
       opacity="1"
       style="transform: translate(${device.triangle[0]}px, ${device.triangle[1]}px)"
     ></path>
@@ -225,7 +227,7 @@ const getDisplayableLabels = (valuesX, rpm) => {
       </text>`;
     return (isDisplayable && withinLimits) ? label : null;
   });
-  return labels;
+  return labels.join(' ');
 };
 // Gets data from engine-specifications.js block renders the SVG with all the values.
 const getPerformanceChart = (data) => {
@@ -251,7 +253,7 @@ const getPerformanceChart = (data) => {
       xmlns="http://www.w3.org/2000/svg" 
       width="${totalWidthChart}"
       height="${totalWidthChart * 0.4}"
-      viewBox="0 155 ${totalWidthChart} 10" 
+      viewBox="0 0 ${totalWidthChart} ${totalWidthChart * 0.4}"
       aria-hidden="false" 
       aria-label="Interactive chart"
       class="chart"
@@ -278,10 +280,10 @@ const getPerformanceChart = (data) => {
         <path
           fill="url(#gradientHP)"
           d="
-            M ${valuesOnAxisX[0]} ${400 - (valuesHP[0] * conversionFactorHP)} 
+            M ${valuesOnAxisX[0]} ${400 - (valuesHP[0] * conversionFactorHP)}
             ${plotLine(valuesOnAxisX, valuesHP, conversionFactorHP, totalWidthChart, sectionWidth)}
-            L ${totalWidthChart} 400 
-            L 0 400 
+            L ${totalWidthChart} 400
+            L 0 400
             Z
           "
           data-z-index="0"
@@ -295,11 +297,11 @@ const getPerformanceChart = (data) => {
             M ${valuesOnAxisX[0]} ${400 - (valuesHP[0] * conversionFactorHP)} 
             ${plotLine(valuesOnAxisX, valuesHP, conversionFactorHP, totalWidthChart, sectionWidth)}
           "
-          data-z-index="1" 
-          stroke="${colorLineHP}" 
-          stroke-width="${strokeWidth}" 
-          stroke-linejoin="round" 
-          stroke-linecap="round" 
+          data-z-index="1"
+          stroke="${colorLineHP}"
+          stroke-width="${strokeWidth}"
+          stroke-linejoin="round"
+          stroke-linecap="round"
           opacity="1"
         >
         </path>
@@ -310,13 +312,13 @@ const getPerformanceChart = (data) => {
           aria-hidden="true"
         >
         <!-- FILL -->
-        <path 
+        <path
           fill="url(#gradientTQ)"
           d="
-            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)} 
+            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)}
             ${plotLine(valuesOnAxisX, valuesTQ, conversionFactorTQ, totalWidthChart, sectionWidth)}
-            L ${totalWidthChart} 400 
-            L 0 400 
+            L ${totalWidthChart} 400
+            L 0 400
             Z
           "
           data-z-index="0"
@@ -327,7 +329,7 @@ const getPerformanceChart = (data) => {
         <!-- STROKE -->
         <path fill="none"
           d="
-            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)} 
+            M ${valuesOnAxisX[0]} ${400 - (valuesTQ[0] * conversionFactorTQ)}
             ${plotLine(valuesOnAxisX, valuesTQ, conversionFactorTQ, totalWidthChart, sectionWidth)}
           "
           data-z-index="1" stroke="${colorLineTQ}" stroke-width="${strokeWidth}" stroke-linejoin="round" stroke-linecap="round" opacity="1">
@@ -337,7 +339,7 @@ const getPerformanceChart = (data) => {
 
     <!-- PEAK LABELS -->
     <g 
-      data-z-index="7" 
+      data-z-index="7"
       aria-hidden="true"
       style="transform: translate(${device.translate[0]}px, ${device.translate[1]}px);)"
     >
@@ -355,7 +357,7 @@ const getPerformanceChart = (data) => {
         text-anchor="middle"
       >
         Engine Speed (RPM)
-      </text>  
+      </text>
     </g>
   </svg>
 `;
