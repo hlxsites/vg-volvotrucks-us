@@ -1,5 +1,6 @@
 import { ffetch } from '../../scripts/lib-ffetch.js';
-import { createOptimizedPicture, getMetadata, getOrigin } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, getMetadata } from '../../scripts/aem.js';
+import { getOrigin } from '../../scripts/scripts.js';
 import { createElement, getLanguagePath } from '../../scripts/common.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 

@@ -7,9 +7,11 @@ import {
 import {
   createOptimizedPicture,
   getMetadata,
-  getOrigin,
   toClassName,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
+import {
+  getOrigin,
+} from '../../scripts/scripts.js';
 
 const locale = getMetadata('locale');
 

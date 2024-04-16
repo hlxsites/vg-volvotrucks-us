@@ -106,6 +106,7 @@ ul.v2-stories-carousel-meta {
   align-items: center;
   display: flex;
   gap: 4px;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   justify-items: center;
   margin: 0 8px;
 }

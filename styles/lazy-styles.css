@@ -1,40 +1,5 @@
 /* below the fold CSS goes here */
 
-@font-face {
-  font-family: VolvoNovum;
-  src: url('/fonts/VolvoNovum-Regular.woff2') format('woff2'),
-       url('/fonts/volvonovum-regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: VolvoNovum-Medium;
-  src: url('/fonts/VolvoNovum-Medium.woff2') format('woff2'),
-       url('/fonts/VolvoNovum-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: VolvoBroadProDigital;
-  src: url('/fonts/VolvoBroadProDigital.woff2') format('woff2'),
-       url('/fonts/volvobroadprodigital.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: fontawesome;
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/fontawesome-webfont.woff') format('woff');
-}
-
 body.disable-scroll, body.disable-scroll main {
   overflow: hidden;
 }

@@ -21,7 +21,7 @@
     overflow: scroll hidden;
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none;    
+    scrollbar-width: none;
 }
 
 .block.carousel .items::-webkit-scrollbar {
@@ -100,7 +100,7 @@
     .block.carousel .mobile-controls button::after {
         font-size: 1.6rem;
     }
-    
+
  }
 
  @media screen and (min-width: 768px) {
@@ -165,8 +165,7 @@
 
     .block.carousel.grid-on-desktop .items {
         margin: 0 15px;
-        column-gap: 30px;
-        row-gap: 24px;
+      gap: 24px 30px;
         flex-wrap: wrap;
         justify-content: center;
     }
