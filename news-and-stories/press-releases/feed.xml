@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-04-11T00:00:00.000Z</updated>
+    <updated>2024-04-15T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[All-New Volvo VNL Now Available for Order at Dealers Across North America]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/april/all-new-volvo-vnl-now-available-for-order-at-dealers-across-north-america/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/april/all-new-volvo-vnl-now-available-for-order-at-dealers-across-north-america/"/>
+        <updated>2024-04-15T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The Volvo VNL has long been the flagship model series at Volvo Trucks North America and is the premier long-haul truck in the United States and Canada,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2024-04-15T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[All-New Volvo VNL Showcased in Canada for the First Time at Truck World]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/april/all-new-volvo-vnl-showcased-in-canada-for-the-first-time-at-truck-world/</id>
