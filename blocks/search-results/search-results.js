@@ -1,5 +1,5 @@
 import templates from './templates.js';
-import { loadScript } from '../../scripts/lib-franklin.js';
+import { loadScript } from '../../scripts/aem.js';
 
 // Implementation based on searchtax documentation https://www.searchstax.com/docs/searchstudio/searchstax-studio-searchjs-module/
 export default async function decorate(block) {

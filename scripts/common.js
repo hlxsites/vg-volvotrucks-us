@@ -6,7 +6,7 @@ import {
   loadHeader,
   buildBlock,
   decorateBlock,
-} from './lib-franklin.js';
+} from './aem.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
 import { COOKIE_VALUES } from './constants.js';

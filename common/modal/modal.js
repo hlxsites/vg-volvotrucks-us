@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { createElement, getTextLabel } from '../../scripts/common.js';
-import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
+import { decorateIcons, loadCSS } from '../../scripts/aem.js';
 import { createIframe, isLowResolutionVideoUrl } from '../../scripts/video-helper.js';
 
 const styles$ = new Promise((r) => {

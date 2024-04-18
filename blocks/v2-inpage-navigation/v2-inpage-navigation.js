@@ -1,4 +1,4 @@
-import { decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
+import { decorateIcons, getMetadata } from '../../scripts/aem.js';
 import { createElement, getTextLabel, debounce } from '../../scripts/common.js';
 
 const blockName = 'v2-inpage-navigation';
