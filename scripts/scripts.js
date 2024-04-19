@@ -10,9 +10,9 @@ import {
   createOptimizedPicture,
   getMetadata,
   toClassName,
+  getHref,
   loadBlocks,
-  loadCSS,
-} from './aem.js';
+} from './lib-franklin.js';
 
 import {
   getPlaceholders,
@@ -34,22 +34,6 @@ import {
 
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
-
-/**
- * Returns the true origin of the current page in the browser.
- * If the page is running in a iframe with srcdoc, the ancestor origin is returned.
- * @returns {String} The true origin
- */
-export function getOrigin() {
-  return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
-}
-
-function getHref() {
-  if (window.location.href !== 'about:srcdoc') return window.location.href;
-
-  const urlParams = new URLSearchParams(window.parent.location.search);
-  return `${window.parent.location.origin}${urlParams.get('path')}`;
-}
 
 function getCTAContainer(ctaLink) {
   return ['strong', 'em'].includes(ctaLink.parentElement.localName)
@@ -185,18 +169,6 @@ function buildHeroBlock(main) {
 
     // after all are settled, the new section can be added
     main.prepend(section);
-  }
-}
-
-/**
- * load fonts.css and set a session storage flag
- */
-async function loadFonts() {
-  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
-  try {
-    if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
-  } catch (e) {
-    // do nothing
   }
 }
 
@@ -651,7 +623,6 @@ async function loadEager(doc) {
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
-    document.body.classList.add('appear');
     const language = getMetadata('locale') || 'en';
     document.documentElement.lang = language;
     const templateName = getMetadata('template');
@@ -659,15 +630,6 @@ async function loadEager(doc) {
     await waitForLCP(LCP_BLOCKS);
   } else {
     document.documentElement.lang = 'en';
-  }
-
-  try {
-    /* if desktop (proxy for fast connection) or fonts already loaded, load fonts.css */
-    if (window.innerWidth >= 900 || sessionStorage.getItem('fonts-loaded')) {
-      loadFonts();
-    }
-  } catch (e) {
-    // do nothing
   }
 
   await getPlaceholders();

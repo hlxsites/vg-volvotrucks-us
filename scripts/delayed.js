@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-cycle
-import { loadScript, sampleRUM } from './aem.js';
+import { loadScript, sampleRUM } from './lib-franklin.js';
 import { isPerformanceAllowed, isTargetingAllowed, isSocialAllowed } from './common.js';
-import {
+import { 
   ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS,
   HOTJAR_ID,
   DATA_DOMAIN_SCRIPT,
@@ -131,7 +131,7 @@ async function loadAccountEngagementTracking() {
   const body = document.querySelector('body');
   const script = document.createElement('script');
   script.type = 'text/javascript';
-
+  
   const { piAId, piCId, piHostname } = ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS;
 
   script.text = `piAId = '${piAId}'; piCId = '${piCId}'; piHostname = '${piHostname}'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();`;

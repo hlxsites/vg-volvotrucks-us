@@ -165,7 +165,8 @@
   }
 
   .v2-event-notify__container .event-notify__wrapper {
-    gap: 24px 20px;
+    column-gap: 20px;
+    row-gap: 24px;
   }
 
   .v2-event-notify__container .event-notify__wrapper > * {

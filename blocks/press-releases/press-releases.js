@@ -7,12 +7,10 @@ import {
 import {
   createOptimizedPicture,
   getMetadata,
+  getOrigin,
   readBlockConfig,
   toClassName,
-} from '../../scripts/aem.js';
-import {
-  getOrigin,
-} from '../../scripts/scripts.js';
+} from '../../scripts/lib-franklin.js';
 
 const locale = getMetadata('locale');
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];

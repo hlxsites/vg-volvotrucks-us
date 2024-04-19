@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { loadScript } from '../../scripts/aem.js';
+import { loadScript } from '../../scripts/lib-franklin.js';
 import { createElement, getTextLabel, isSocialAllowed } from '../../scripts/common.js';
 import { hideModal } from '../../common/modal/modal.js';
 

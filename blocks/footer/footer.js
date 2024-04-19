@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons, getMetadata } from '../../scripts/aem.js';
+import { readBlockConfig, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 import { createElement, getLanguagePath, getTextLabel } from '../../scripts/common.js';
 /* eslint-disable no-use-before-define */
 

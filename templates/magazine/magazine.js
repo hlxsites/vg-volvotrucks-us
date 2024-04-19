@@ -2,7 +2,7 @@ import {
   getMetadata,
   decorateIcons,
   createOptimizedPicture,
-} from '../../scripts/aem.js';
+} from '../../scripts/lib-franklin.js';
 import { createElement } from '../../scripts/common.js';
 
 async function buildArticleHero(container) {

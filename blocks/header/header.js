@@ -4,7 +4,7 @@ import {
   getTextLabel,
   getLanguagePath,
 } from '../../scripts/common.js';
-import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/aem.js';
+import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
 
 const blockClass = 'header';
 const disableSearch = getMetadata('disable-search').toLowerCase() === 'true';
