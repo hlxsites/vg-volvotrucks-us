@@ -6,11 +6,9 @@ import {
 import {
   createOptimizedPicture,
   getMetadata,
-  toClassName,
-} from '../../scripts/aem.js';
-import {
   getOrigin,
-} from '../../scripts/scripts.js';
+  toClassName,
+} from '../../scripts/lib-franklin.js';
 
 function buildRelatedMagazineArticle(entry) {
   const {

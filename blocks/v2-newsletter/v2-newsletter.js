@@ -1,6 +1,6 @@
 import {
   loadBlock, sampleRUM,
-} from '../../scripts/aem.js';
+} from '../../scripts/lib-franklin.js';
 import { getTextLabel, createElement } from '../../scripts/common.js';
 
 const blockName = 'v2-newsletter';

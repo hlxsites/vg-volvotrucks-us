@@ -1,4 +1,4 @@
-import { loadScript, sampleRUM } from '../../scripts/aem.js';
+import { loadScript, sampleRUM } from '../../scripts/lib-franklin.js';
 import { getTextLabel } from '../../scripts/common.js';
 
 const successMessage = `<p class='pardot-form__title pardot-form__title--success'>${getTextLabel('Successful submission title')}</p>

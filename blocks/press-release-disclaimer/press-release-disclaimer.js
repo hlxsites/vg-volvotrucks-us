@@ -1,4 +1,4 @@
-import { readBlockConfig } from '../../scripts/aem.js';
+import { readBlockConfig } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
   const config = readBlockConfig(block);

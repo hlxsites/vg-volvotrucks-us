@@ -51,7 +51,8 @@
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--grid-row-gap) var(--grid-col-gap);
+    row-gap: var(--grid-row-gap);
+    column-gap: var(--grid-col-gap);
     grid-template: repeat(calc(var(--grid-col-count) * var(--grid-row-count)), 1fr) / 100%;
 }
 

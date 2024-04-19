@@ -1,4 +1,4 @@
-import { loadCSS } from '../../scripts/aem.js';
+import { loadCSS } from '../../scripts/lib-franklin.js';
 
 const styles$ = new Promise((r) => {
   loadCSS(`${window.hlx.codeBasePath}/common/sidebar/sidebar.css`, r);
