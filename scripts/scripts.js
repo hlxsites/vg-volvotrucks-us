@@ -16,6 +16,7 @@ import {
 
 import {
   getPlaceholders,
+  getTextLabel,
   loadLazy,
   loadDelayed,
   loadTemplate,
@@ -419,6 +420,32 @@ document.addEventListener('open-modal', (event) => {
   });
 });
 
+function handleFetchError(statusCode, mainElement) {
+  const errorType = statusCode === 404 ? '404' : 'unknown';
+  const errorMessage = document.createRange().createContextualFragment(`
+    <div class="section">
+      <div class="inline-message-wrapper">
+        <div class="inline-message block inline-message--error">
+          <span class="icon icon-control-remove" aria-hidden="true"></span>
+          <h2>${getTextLabel(`modal:error-title-${errorType}`)}</h2>
+          <p>${getTextLabel(`modal:error-text-${errorType}`)}</p>
+        </div>
+      </div>
+    </div>
+  `);
+
+  decorateIcons(errorMessage);
+  mainElement.appendChild(errorMessage);
+
+  const modalEvent = new CustomEvent('open-modal', {
+    detail: {
+      content: mainElement.children, // Now this refers to the errorContainer which mimics a section
+      target: document.activeElement, // might consider the previous active element or a default
+    },
+  });
+  document.dispatchEvent(modalEvent, { bubbles: true });
+}
+
 const handleModalLinks = (link) => {
   if (!modal) {
     loadModalScript();
@@ -434,16 +461,16 @@ const handleModalLinks = (link) => {
       // eslint-disable-next-line no-use-before-define
       decorateMain(main, main);
       await loadBlocks(main);
+      const modalEvent = new CustomEvent('open-modal', {
+        detail: {
+          content: main.children,
+          target: event.target,
+        },
+      });
+      document.dispatchEvent(modalEvent, { bubbles: true });
+    } else {
+      handleFetchError(resp.status, main);
     }
-
-    const modalEvent = new CustomEvent('open-modal', {
-      detail: {
-        content: main.children,
-        target: event.target,
-      },
-    });
-
-    document.dispatchEvent(modalEvent, { bubbles: true });
   });
 };
 
@@ -451,7 +478,7 @@ export function decorateLinks(block) {
   [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
-      /* eslint-disable no-use-before-define */
+      // eslint-disable-next-line no-use-before-define
       if (isVideoLink(link)) {
         addVideoShowHandler(link);
         return;
