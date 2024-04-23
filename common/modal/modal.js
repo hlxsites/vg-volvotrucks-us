@@ -3,10 +3,6 @@ import { createElement, getTextLabel } from '../../scripts/common.js';
 import { decorateIcons, loadCSS } from '../../scripts/aem.js';
 import { createIframe, isLowResolutionVideoUrl } from '../../scripts/video-helper.js';
 
-const styles$ = new Promise((r) => {
-  loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);
-});
-
 const HIDE_MODAL_CLASS = 'modal-hidden';
 let currentModalClasses = null;
 let currentInvokeContext = null;
@@ -101,7 +97,7 @@ const createModal = () => {
     document.querySelectorAll('header, footer, main').forEach((el) => {
       el.setAttribute('inert', 'inert');
     });
-    await styles$;
+    await loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`);
     modalBackground.style = '';
     modalBackground.classList.add(...modalClasses);
     currentModalClasses = modalClasses;

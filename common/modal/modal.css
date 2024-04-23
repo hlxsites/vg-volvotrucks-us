@@ -36,8 +36,8 @@
   opacity: 0;
 }
 
-.redesign-v2 .modal-content.modal-content-fade-in,
-.modal-content.modal-content-fade-in {
+.modal-content.modal-content-fade-in,
+.redesign-v2 .modal-content.modal-content-fade-in {
   transform: translateY(0);
 }
 
@@ -145,6 +145,37 @@
   padding: 0;
 }
 
+.inline-message {
+  padding: 16px;
+  display: grid;
+  gap: 8px 16px;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  position: relative;
+}
+
+.inline-message--error {
+  --background-color: var(--c-error-background-red);
+  --border-color: var(--c-error-red);
+}
+
+.inline-message--error .icon {
+  color: var(--c-error-red);
+}
+
+.inline-message h2,
+.inline-message p {
+  margin: 0;
+  grid-column: 2;
+}
+
+.inline-message h2 {
+  font-size: var(--f-body-font-size);
+}
+
 @media (min-width: 768px) {
   :root:not(.redesign-v2) .modal-content {
     margin: 100px auto;
@@ -180,6 +211,7 @@
   .modal-top-bar-content {
     max-width: 1170px;
   }
+
   .modal-top-bar .icon svg {
     width: 32px;
     height: 32px;
@@ -271,15 +303,15 @@
   aspect-ratio: auto;
 }
 
-.redesign-v2 .modal--video .section > div,
-.modal--reveal .section > div {
+.modal--reveal .section > div,
+.redesign-v2 .modal--video .section > div {
   padding-top: 32px;
   padding-bottom: 0;
 }
 
 @media (min-width: 1200px) {
-  .redesign-v2 .modal--video .section > div,
-  .modal--reveal .section > div {
+  .modal--reveal .section > div,
+  .redesign-v2 .modal--video .section > div {
     padding-top: 48px;
   }
 }

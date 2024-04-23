@@ -177,6 +177,7 @@
 
   /* Success / error colors */
   --c-error-red: #bf2012;
+  --c-error-background-red: #f8ddd8;
   --c-success-green: #1a6c31;
   --c-warning-yellow: #ffa000;
 
