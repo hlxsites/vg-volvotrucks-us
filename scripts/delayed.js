@@ -6,23 +6,31 @@ import {
   HOTJAR_ID,
   DATA_DOMAIN_SCRIPT,
   GTM_ID,
+  COOKIE_LOADING_SETTINGS
 } from './constants.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-// COOKIE ACCEPTANCE CHECKING
+// COOKIE ACCEPTANCE AND LOAD CHECKING
+const { 
+  facebookPixel,
+  hotjar,
+  googleTagManager,
+  accountEngagementTracking,
+} = COOKIE_LOADING_SETTINGS;
+
 if (isPerformanceAllowed()) {
-  loadGoogleTagManager();
-  loadHotjar();
+  googleTagManager && loadGoogleTagManager();
+  hotjar && loadHotjar();
 }
 
 if (isTargetingAllowed()) {
-  loadAccountEngagementTracking();
+  accountEngagementTracking && loadAccountEngagementTracking();
 }
 
 if (isSocialAllowed()) {
-  loadFacebookPixel();
+  facebookPixel && loadFacebookPixel();
 }
 
 // add more delayed functionality here
