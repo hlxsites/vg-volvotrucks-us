@@ -819,7 +819,15 @@ $.fn.renderPinDirections = function (markerId) {
     $('.from-directions input').val($origin);
   }
 
-  $destination = markerDetails.MAIN_ADDRESS_LINE_1_TXT + ' ' + markerDetails.MAIN_ADDRESS_LINE_2_TXT + ', ' + markerDetails.MAIN_CITY_NM + ', ' + markerDetails.MAIN_STATE_PROV_CD + ' ' + markerDetails.MAIN_POSTAL_CD;
+  let { 
+    MAIN_ADDRESS_LINE_1_TXT: address1,
+    MAIN_ADDRESS_LINE_2_TXT: address2,
+    MAIN_CITY_NM: mainCity,
+    MAIN_STATE_PROV_CD: mainState,
+    MAIN_POSTAL_CD: postalCd,
+   } = markerDetails;
+
+  $destination = `${address1 || address2} ${mainCity} ${mainState} ${postalCd}`
 
   if ($('.from-directions input').val()) {
     $origin = $('.from-directions input').val();
