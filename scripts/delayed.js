@@ -3,26 +3,24 @@ import { loadScript, sampleRUM } from './lib-franklin.js';
 import { isPerformanceAllowed, isTargetingAllowed, isSocialAllowed } from './common.js';
 import { 
   ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS,
-  HOTJAR_ID,
   DATA_DOMAIN_SCRIPT,
-  GTM_ID,
   COOKIE_LOADING_SETTINGS
 } from './constants.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-// COOKIE ACCEPTANCE AND LOAD CHECKING
+// COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
 const { 
-  facebookPixel,
-  hotjar,
-  googleTagManager,
-  accountEngagementTracking,
+  facebookPixelId = false,
+  hotjarId = false,
+  googleTagManagerId = false,
+  accountEngagementTracking = false,
 } = COOKIE_LOADING_SETTINGS;
 
 if (isPerformanceAllowed()) {
-  googleTagManager && loadGoogleTagManager();
-  hotjar && loadHotjar();
+  googleTagManagerId && loadGoogleTagManager();
+  hotjarId && loadHotjar();
 }
 
 if (isTargetingAllowed()) {
@@ -30,7 +28,7 @@ if (isTargetingAllowed()) {
 }
 
 if (isSocialAllowed()) {
-  facebookPixel && loadFacebookPixel();
+  facebookPixelId && loadFacebookPixel();
 }
 
 // add more delayed functionality here
@@ -87,7 +85,7 @@ async function loadGoogleTagManager() {
   (function (w, d, s, l, i) {
     w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); const f = d.getElementsByTagName(s)[0]; const j = d.createElement(s); const
       dl = l !== 'dataLayer' ? `&l=${l}` : ''; j.async = true; j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`; f.parentNode.insertBefore(j, f);
-  }(window, document, 'script', 'dataLayer', GTM_ID));
+  }(window, document, 'script', 'dataLayer', googleTagManagerId));
 }
 
 async function loadFacebookPixel() {
@@ -108,7 +106,7 @@ async function loadFacebookPixel() {
     'script',
     'https://connect.facebook.net/en_US/fbevents.js',
   ));
-  fbq('init', '620334125252675');
+  fbq('init', facebookPixelId);
   fbq('track', 'PageView');
   /* eslint-disable */
 }
@@ -117,7 +115,7 @@ async function loadFacebookPixel() {
 async function loadHotjar() {
   (function(h,o,t,j,a,r){
     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-    h._hjSettings={hjid:HOTJAR_ID,hjsv:6}; a=o.getElementsByTagName('head')[0];
+    h._hjSettings={hjid:hotjarId,hjsv:6}; a=o.getElementsByTagName('head')[0];
     r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
