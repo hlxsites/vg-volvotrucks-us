@@ -110,7 +110,7 @@
   margin: 0;
 }
 
-.v2-resource-gallery__document-list a.button.standalone-link {
+.v2-resource-gallery__document-list a.standalone-link {
   text-decoration: underline;
   text-underline-offset: 3px;
   align-items: flex-start;

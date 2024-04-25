@@ -69,7 +69,7 @@ export default function decorate(block) {
       const links = item.querySelectorAll('a');
       [...links].forEach((link) => {
         link.classList.add('standalone-link');
-        link.classList.remove('primary');
+        link.classList.remove('button', 'primary');
         const wrapper = link.parentElement;
         wrapper.className = `${blockName}__document-link-wrapper`;
         wrapper.append(wrapper.nextElementSibling);
@@ -125,5 +125,5 @@ export default function decorate(block) {
   block.append(videoWrapper);
   block.append(documentWrapper);
 
-  unwrapDivs(block);
+  unwrapDivs(block, { ignoreDataAlign: true });
 }

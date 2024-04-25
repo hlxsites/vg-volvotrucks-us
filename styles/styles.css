@@ -1228,6 +1228,15 @@ main.blue-contract .section.section-with-title p {
   color: var(--c-cta-blue-active);
 }
 
+.redesign-v2 a.standalone-link:focus {
+  outline: 0;
+}
+
+.redesign-v2 a.standalone-link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary,
 .redesign-v2 a.button.secondary,
@@ -1489,7 +1498,8 @@ main.blue-contract .section.section-with-title p {
   font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.redesign-v2 .button .icon svg {
+.redesign-v2 .button .icon svg,
+.redesign-v2 .standalone-link .icon svg {
   height: 24px;
   width: 24px;
 }
