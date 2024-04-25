@@ -352,7 +352,7 @@ $.fn.loadPins = function () {
   $markers = [];
 
   if (!window.locatorConfig.dataSource) {
-    window.locatorConfig.dataSource = '/simpleprox.ashx?https://as-dealerloc-endpoint-prod-001.azurewebsites.net/Volvo_DealerJSON.ashx';
+    window.locatorConfig.dataSource = '/simpleprox.ashx?https://dealerlocator.volvotrucks.us/Volvo_DealerJson.ashx ';
   }
 
   $.ajax({
