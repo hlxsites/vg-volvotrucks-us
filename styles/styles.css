@@ -313,17 +313,12 @@ html {
 body {
   background-color: var(--c-white);
   color: var(--text-color);
-  display: none;
   font-family: var(--font-family-body);
   font-size: var(--body-font-size-m);
   line-height: 1.5;
   margin: 0;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-}
-
-body.appear {
-  display: unset;
 }
 
 header {
@@ -712,14 +707,6 @@ main .section-with-background > picture:last-of-type img {
 div:where([role="dialog"]) .section:first-child > :first-child,
 main .section:first-child > :first-child {
   margin-top: 0;
-}
-
-/* progressive section appearance */
-div:where([role="dialog"]) .section[data-section-status='loading'],
-main .section[data-section-status='loading'],
-div:where([role="dialog"]) .section[data-section-status='initialized'],
-main .section[data-section-status='initialized'] {
-  display: none;
 }
 
 div:where([role="dialog"]) .section.highlight,
