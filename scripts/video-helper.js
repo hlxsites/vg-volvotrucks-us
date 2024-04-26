@@ -1,28 +1,75 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel, isSocialAllowed } from './common.js';
+import {
+  checkOneTrustGroup,
+  createElement,
+  deepMerge,
+  getTextLabel,
+} from './common.js';
+import {
+  AEM_ASSETS,
+  COOKIE_VALUES,
+} from './constants.js';
 
-/* video helpers */
+const { aemCloudDomain, videoURLRegex } = AEM_ASSETS;
+
+export const videoTypes = {
+  aem: 'aem',
+  youtube: 'youtube',
+  local: 'local',
+  both: 'both',
+};
+
+export const standardVideoConfig = {
+  autoplay: false,
+  muted: false,
+  controls: true,
+  disablePictureInPicture: false,
+  currentTime: 0,
+  playsinline: true,
+};
+
+export const videoConfigs = {};
+
+export const addVideoConfig = (videoId, props = {}) => {
+  if (!videoConfigs[videoId]) {
+    videoConfigs[videoId] = deepMerge({}, standardVideoConfig);
+  }
+  deepMerge(videoConfigs[videoId], props);
+};
+
+export const getVideoConfig = (videoId) => videoConfigs[videoId];
+
 export function isLowResolutionVideoUrl(url) {
   return (typeof url === 'string') && url.split('?')[0].endsWith('.mp4');
 }
 
-export function isVideoLink(link) {
-  const linkString = link.getAttribute('href');
-  return (linkString.includes('youtube.com/embed/') || isLowResolutionVideoUrl(linkString)) && link.closest('.block.embed') === null;
+export function isAEMVideoUrl(url) {
+  return videoURLRegex.test(url);
 }
 
-export function selectVideoLink(links, preferredType) {
-  const linksList = [...links];
-  const shouldUseYouTubeLinks = isSocialAllowed() && preferredType !== 'local';
-  const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
-  const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
+export function isVideoLink(link) {
+  const linkString = link.getAttribute('href');
+  return (linkString.includes('youtube.com/embed/')
+    || videoURLRegex.test(linkString)
+    || isLowResolutionVideoUrl(linkString))
+    && link.closest('.block.embed') === null;
+}
 
-  if (preferredType === 'singleVideo' && youTubeLink) {
-    return youTubeLink;
-  }
-  if (shouldUseYouTubeLinks && youTubeLink) {
-    return youTubeLink;
-  }
+export function selectVideoLink(links, preferredType, videoType = videoTypes.both) {
+  const linksArray = Array.isArray(links) ? links : [...links];
+  const hasConsentForSocialVideos = checkOneTrustGroup(COOKIE_VALUES.social);
+  const isTypeBoth = videoType === videoTypes.both;
+  const prefersYouTube = (hasConsentForSocialVideos && preferredType !== 'local')
+                      || (!isTypeBoth && videoType === videoTypes.youtube);
+
+  const findLinkByCondition = (conditionFn) => linksArray.find((link) => conditionFn(link.getAttribute('href')));
+
+  const aemVideoLink = findLinkByCondition((href) => videoURLRegex.test(href));
+  const youTubeLink = findLinkByCondition((href) => href.includes('youtube.com/embed/'));
+  const localMediaLink = findLinkByCondition((href) => href.split('?')[0].endsWith('.mp4'));
+
+  if (aemVideoLink) return aemVideoLink;
+  if (prefersYouTube && youTubeLink) return youTubeLink;
   return localMediaLink;
 }
 
@@ -156,103 +203,63 @@ export function setPlaybackControls() {
   });
 }
 
-export const createVideo = (src, className = '', props = {}) => {
-  const video = createElement('video', {
-    classes: className,
-  });
-  if (props.muted) {
-    video.muted = props.muted;
-  }
+/**
+ * Creates a video element or an iframe for a video, depending on whether the video is local
+ * or not. Configures the element with specified classes, properties, and source.
+ *
+ * @param {string} src The source URL of the video.
+ * @param {string} [className=''] Optional. CSS class names to apply to the video element or iframe.
+ * @param {Object} [props={}] Optional. Properties and attributes for the video element or iframe,
+ *                            including attributes like 'muted', 'autoplay', 'title'. All properties
+ *                            are applied as attributes.
+ * @param {boolean} [localVideo=true] Optional. Indicates if the video is a local file. If true,
+ *                                    creates a <video> element with a <source> child. If false,
+ *                                    creates an iframe for an external video.
+ * @param {string} [videoId=''] Optional. Identifier for the video, used for external video sources.
+ * @returns {HTMLElement} The created video element (<video> or <iframe>) with specified configs.
+ */
+export const createVideo = (src, className = '', props = {}, localVideo = true, videoId = '') => {
+  let video = '';
 
-  if (props.autoplay) {
-    video.autoplay = props.autoplay;
-  }
+  if (localVideo) {
+    video = createElement('video', {
+      classes: className,
+    });
+    if (props.muted) {
+      video.muted = props.muted;
+    }
 
-  if (props) {
-    Object.keys(props).forEach((propName) => {
-      video.setAttribute(propName, props[propName]);
+    if (props.autoplay) {
+      video.autoplay = props.autoplay;
+    }
+
+    if (props) {
+      Object.keys(props).forEach((propName) => {
+        video.setAttribute(propName, props[propName]);
+      });
+    }
+
+    const source = createElement('source', {
+      props: {
+        src,
+        type: 'video/mp4',
+      },
+    });
+
+    video.appendChild(source);
+  } else {
+    addVideoConfig(videoId, props);
+
+    video = createElement('iframe', {
+      classes: className,
+      props: {
+        allow: 'autoplay; fullscreen',
+        allowfullscreen: true,
+        title: props.title,
+        src,
+      },
     });
   }
-
-  const source = createElement('source', {
-    props: {
-      src, type: 'video/mp4',
-    },
-  });
-
-  // Playback controls - play and pause button
-  const playPauseButton = createElement('button', {
-    props: { type: 'button', class: 'v2-video__playback-button' },
-  });
-
-  const videoControls = document.createRange().createContextualFragment(`
-    <span class="icon icon-pause-video">
-       <svg width="27" height="27" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="36" cy="36" r="30" fill="white"/>
-          <rect x="28.25" y="24.45" width="2.75" height="23.09" fill="#141414"/>
-          <rect x="41" y="24.45" width="2.75" height="23.09" fill="#141414"/>
-       </svg>
-    </span>
-    <span class="icon icon-play-video">
-      <svg width="27" height="27" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="36" cy="36" r="30" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M49.3312 35.9998L29.3312 24.4528L29.3312 47.5468L49.3312 35.9998ZM44.3312 35.9998L31.8312 28.7829L31.8312 43.2167L44.3312 35.9998Z" fill="#141414"/>
-      </svg>
-    </span>`);
-
-  playPauseButton.append(...videoControls.children);
-  video.appendChild(playPauseButton);
-
-  const playIcon = video.querySelector('.icon-play-video');
-  const pauseIcon = video.querySelector('.icon-pause-video');
-
-  const pauseVideoLabel = getTextLabel('Pause video');
-  const playVideoLabel = getTextLabel('Play video');
-
-  playPauseButton.setAttribute('aria-label', pauseVideoLabel);
-
-  const togglePlayPauseIcon = (isPaused) => {
-    if (isPaused) {
-      pauseIcon.style.display = 'none';
-      playIcon.style.display = 'flex';
-      playPauseButton.setAttribute('aria-label', playVideoLabel);
-    } else {
-      pauseIcon.style.display = 'flex';
-      playIcon.style.display = 'none';
-      playPauseButton.setAttribute('aria-label', pauseVideoLabel);
-    }
-  };
-  togglePlayPauseIcon(video.paused);
-
-  const togglePlayPause = (el) => {
-    el[video.paused ? 'play' : 'pause']();
-  };
-
-  playPauseButton.addEventListener('click', () => {
-    togglePlayPause(video);
-  });
-  video.addEventListener('playing', () => {
-    togglePlayPauseIcon(video.paused);
-  });
-  video.addEventListener('pause', () => {
-    togglePlayPauseIcon(video.paused);
-  });
-
-  // If the video is not playing, we’ll try to play again
-  if (props.autoplay) {
-    video.addEventListener('loadedmetadata', () => {
-      setTimeout(() => {
-        if (video.paused) {
-          // eslint-disable-next-line no-console
-          console.warn('Failed to autoplay video, fallback code executed');
-          video.play();
-        }
-      }, 500);
-    }, { once: true });
-  }
-
-  setPlaybackControls();
-  video.appendChild(source);
 
   return video;
 };
@@ -399,3 +406,75 @@ export function loadYouTubeIframeAPI() {
   const firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
+
+const logVideoEvent = (eventName, videoId, timeStamp, blockName = 'video') => {
+  // eslint-disable-next-line no-console
+  console.info(`[${blockName}] ${eventName} for ${videoId} at ${timeStamp}`);
+};
+
+const formatDebugTime = (date) => {
+  const timeOptions = {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  };
+  const formattedTime = date.toLocaleTimeString('en-US', timeOptions);
+  const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+
+  return `${formattedTime}.${milliseconds}`;
+};
+
+export const handleVideoMessage = (event, videoId, blockName = 'video') => {
+  if (!event.origin.endsWith(aemCloudDomain)) return;
+  if (event.data.type === 'embedded-video-player-event') {
+    const timeStamp = formatDebugTime(new Date());
+
+    logVideoEvent(event.data.name, event.data.videoId, timeStamp, blockName);
+
+    if (event.data.name === 'video-config' && event.data.videoId === videoId) {
+      // eslint-disable-next-line no-console
+      console.info('Sending video config:', getVideoConfig(videoId), timeStamp);
+      event.source.postMessage(JSON.stringify(getVideoConfig(videoId)), '*');
+    }
+
+    // TODO: handle events when needed in a block
+    // switch (event.data.name) {
+    //   case 'video-playing':
+    //   case 'video-play':
+    //   case 'video-ended':
+    //   case 'video-loadedmetadata':
+    //     logVideoEvent(event.data.name, event.data.videoId, timeStamp, blockName);
+    //     break;
+    //   default:
+    //     break;
+    // }
+  }
+};
+
+class VideoEventManager {
+  constructor() {
+    this.registrations = [];
+    window.addEventListener('message', this.handleMessage.bind(this));
+  }
+
+  register(videoId, blockName, callback) {
+    this.registrations.push({ videoId, blockName, callback });
+  }
+
+  unregister(videoId, blockName) {
+    this.registrations = this.registrations.filter(
+      (reg) => reg.videoId !== videoId || reg.blockName !== blockName,
+    );
+  }
+
+  handleMessage(event) {
+    this.registrations.forEach(({ videoId, blockName, callback }) => {
+      if (event.data.type === 'embedded-video-player-event' && event.data.videoId === videoId) {
+        callback(event, videoId, blockName);
+      }
+    });
+  }
+}
+
+export { VideoEventManager };

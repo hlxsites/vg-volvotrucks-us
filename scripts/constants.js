@@ -26,3 +26,11 @@ export const SEARCH_URLS = {
   prod: 'https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search',
   dev: 'https://search-api-dev.aws.43636.vnonprod.com/search',
 };
+
+// videoURLRegex: verify if a given string follows a specific pattern indicating it is a video URL
+// videoIdRegex: extract the video ID from the URL
+export const AEM_ASSETS = {
+  aemCloudDomain: '.adobeaemcloud.com',
+  videoURLRegex: /\/assets\/urn:aaid:aem:[\w-]+\/play/,
+  videoIdRegex: /urn:aaid:aem:[0-9a-fA-F-]+/,
+};
