@@ -1,0 +1,10 @@
+.v2-embed {
+  --video-aspect-ratio: 16/9;
+}
+
+.v2-embed__frame {
+  width: 100%;
+  border: 0;
+  aspect-ratio: var(--video-aspect-ratio);
+  display: block;
+}
