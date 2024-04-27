@@ -16,6 +16,7 @@ import {
 
 import {
   getPlaceholders,
+  getConstantValues,
   loadLazy,
   loadDelayed,
   loadTemplate,
@@ -633,6 +634,7 @@ async function loadEager(doc) {
   }
 
   await getPlaceholders();
+  await getConstantValues();
 }
 
 async function loadPage() {

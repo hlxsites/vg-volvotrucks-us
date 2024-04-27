@@ -9,10 +9,9 @@ import {
 } from './lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
-import { COOKIE_VALUES } from './constants.js';
 
-const { performance, targeting, social } = COOKIE_VALUES;
 let placeholders = null;
+let constants = null;
 
 /**
  * loads a block named 'footer' into footer
@@ -39,6 +38,16 @@ export async function getPlaceholders() {
 
 export function getTextLabel(key) {
   return placeholders?.data.find((el) => el.Key === key)?.Text || key;
+}
+
+export async function getConstantValues() {
+  const url = `${getLanguagePath()}drafts/shomps/constants.json`;
+  constants = await fetch(url).then((resp) => resp.json());
+  return constants;
+}
+
+export async function getConstants() {
+  return constants
 }
 
 /**
@@ -326,16 +335,8 @@ export function checkOneTrustGroup(groupName) {
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
-export function isPerformanceAllowed() {
-  return checkOneTrustGroup(performance);
-}
-
-export function isTargetingAllowed() {
-  return checkOneTrustGroup(targeting);
-}
-
-export function isSocialAllowed() {
-  return checkOneTrustGroup(social);
+export function isCookieAllowed(cookieType) {
+  return checkOneTrustGroup(cookieType);
 }
 
 /*

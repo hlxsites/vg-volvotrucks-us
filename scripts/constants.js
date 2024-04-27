@@ -1,8 +1,22 @@
+import { getConstants } from "./common.js";
+const { searchUrls, cookieValues } = await getConstants();
+
+const formatValues = (values) => {
+  let obj = {};
+  values.forEach(({name, value}) => {
+    obj[name] = value;
+  });
+  return obj;
+}
+
+export const COOKIE_CONFIGS = formatValues(cookieValues.data);
+export const SEARCH_URLS = formatValues(searchUrls.data);
+
 // Search API URLs
-export const SEARCH_URLS = {
-  prod: 'https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search',
-  dev: 'https://search-api-dev.aws.43636.vnonprod.com/search',
-};
+// export const SEARCH_URLS = {
+//   prod: 'https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search',
+//   dev: 'https://search-api-dev.aws.43636.vnonprod.com/search',
+// };
 
 // COOKIE SETTINGS
 // ONE TRUST COOKIE CONSENT

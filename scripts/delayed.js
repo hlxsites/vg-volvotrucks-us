@@ -1,33 +1,37 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
-import { isPerformanceAllowed, isTargetingAllowed, isSocialAllowed } from './common.js';
-import { 
-  ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS,
-  DATA_DOMAIN_SCRIPT,
-  COOKIE_LOADING_SETTINGS
-} from './constants.js';
+import { isCookieAllowed } from './common.js';
+import { COOKIE_CONFIGS } from './constants.js';
+
+// COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
+const { 
+  PERFORMANCE_COOKIE = false,
+  TARGETING_COOKIE = false,
+  SOCIAL_COOKIE = false,
+  FACEBOOK_PIXEL_ID = false,
+  HOTJAR_ID = false,
+  GTM_ID = false,
+  DATA_DOMAIN_SCRIPT = false,
+  ACC_ENG_TRACKING = false,
+} = COOKIE_CONFIGS;
+
+console.log(ACC_ENG_TRACKING.split(','))
+console.log(JSON.parse(ACC_ENG_TRACKING))
+
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-// COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
-const { 
-  facebookPixelId = false,
-  hotjarId = false,
-  googleTagManagerId = false,
-  accountEngagementTracking = false,
-} = COOKIE_LOADING_SETTINGS;
-
-if (isPerformanceAllowed()) {
+if (isCookieAllowed(PERFORMANCE_COOKIE)) {
   googleTagManagerId && loadGoogleTagManager();
   hotjarId && loadHotjar();
 }
 
-if (isTargetingAllowed()) {
+if (isCookieAllowed(TARGETING_COOKIE)) {
   accountEngagementTracking && loadAccountEngagementTracking();
 }
 
-if (isSocialAllowed()) {
+if (isCookieAllowed(SOCIAL_COOKIE)) {
   facebookPixelId && loadFacebookPixel();
 }
 
@@ -85,7 +89,7 @@ async function loadGoogleTagManager() {
   (function (w, d, s, l, i) {
     w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); const f = d.getElementsByTagName(s)[0]; const j = d.createElement(s); const
       dl = l !== 'dataLayer' ? `&l=${l}` : ''; j.async = true; j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`; f.parentNode.insertBefore(j, f);
-  }(window, document, 'script', 'dataLayer', googleTagManagerId));
+  }(window, document, 'script', 'dataLayer', GTM_ID));
 }
 
 async function loadFacebookPixel() {
@@ -106,7 +110,7 @@ async function loadFacebookPixel() {
     'script',
     'https://connect.facebook.net/en_US/fbevents.js',
   ));
-  fbq('init', facebookPixelId);
+  fbq('init', FACEBOOK_PIXEL_ID);
   fbq('track', 'PageView');
   /* eslint-disable */
 }
@@ -115,7 +119,7 @@ async function loadFacebookPixel() {
 async function loadHotjar() {
   (function(h,o,t,j,a,r){
     h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-    h._hjSettings={hjid:hotjarId,hjsv:6}; a=o.getElementsByTagName('head')[0];
+    h._hjSettings={hjid:HOTJAR_ID,hjsv:6}; a=o.getElementsByTagName('head')[0];
     r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
