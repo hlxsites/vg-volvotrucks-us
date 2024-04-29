@@ -20,6 +20,12 @@
   align-self: flex-start;
 }
 
+.v2-resource-gallery__button .icon,
+.v2-resource-gallery__button .icon svg {
+  width: 24px;
+  height: 24px;
+}
+
 .v2-resource-gallery__button .icon-minus {
   display: none;
 }
