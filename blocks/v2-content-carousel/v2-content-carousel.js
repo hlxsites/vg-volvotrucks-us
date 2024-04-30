@@ -1,5 +1,4 @@
-import { createElement, adjustPretitle } from '../../scripts/common.js';
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { createElement, decorateIcons, adjustPretitle } from '../../scripts/common.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
 const blockName = 'v2-content-carousel';

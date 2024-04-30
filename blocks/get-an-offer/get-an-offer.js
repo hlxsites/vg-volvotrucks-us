@@ -1,7 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 import {
-  decorateSections, decorateBlocks, loadBlocks, decorateButtons, decorateIcons, loadCSS,
+  decorateSections,
+  decorateBlocks,
+  loadBlocks,
+  decorateButtons,
+  loadCSS,
 } from '../../scripts/lib-franklin.js';
+import {
+  decorateIcons,
+} from '../../scripts/common.js';
 
 export async function showOffer(a) {
   const { href, title } = a;

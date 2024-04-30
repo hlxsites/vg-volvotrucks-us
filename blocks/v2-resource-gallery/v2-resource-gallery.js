@@ -1,4 +1,3 @@
-import { decorateIcons } from '../../scripts/lib-franklin.js';
 import {
   wrapImageWithVideoLink,
   selectVideoLink,
@@ -6,7 +5,11 @@ import {
   addVideoShowHandler,
 } from '../../scripts/video-helper.js';
 import {
-  createElement, getTextLabel, unwrapDivs, variantsClassesToBEM,
+  createElement,
+  decorateIcons,
+  getTextLabel,
+  unwrapDivs,
+  variantsClassesToBEM,
 } from '../../scripts/common.js';
 
 const blockName = 'v2-resource-gallery';

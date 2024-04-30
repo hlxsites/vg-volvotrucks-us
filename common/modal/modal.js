@@ -1,7 +1,14 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel } from '../../scripts/common.js';
-import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
-import { createIframe, isLowResolutionVideoUrl } from '../../scripts/video-helper.js';
+import {
+  createElement,
+  decorateIcons,
+  getTextLabel,
+} from '../../scripts/common.js';
+import { loadCSS } from '../../scripts/lib-franklin.js';
+import {
+  createIframe,
+  isLowResolutionVideoUrl,
+} from '../../scripts/video-helper.js';
 
 const styles$ = new Promise((r) => {
   loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);

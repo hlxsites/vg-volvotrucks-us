@@ -1,7 +1,6 @@
 import {
   buildBlock,
   decorateButtons,
-  decorateIcons,
   decorateSections,
   decorateBlocks,
   decorateBlock,
@@ -15,6 +14,7 @@ import {
 } from './lib-franklin.js';
 
 import {
+  decorateIcons,
   getPlaceholders,
   loadLazy,
   loadDelayed,
