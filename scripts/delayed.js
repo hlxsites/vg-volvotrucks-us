@@ -15,9 +15,21 @@ const {
   ACC_ENG_TRACKING = false,
 } = COOKIE_CONFIGS;
 
-console.log(ACC_ENG_TRACKING.split(','))
-console.log(JSON.parse(ACC_ENG_TRACKING))
 
+const extractValues = (data) => {
+  const test = Object.values(data)
+  let obj = {};
+  test.forEach((value) => {
+    const split = value.split(':');
+    obj[split[0]] = split[1].trim();
+  });
+  return obj;
+}
+
+const parsedData = JSON.parse(ACC_ENG_TRACKING);
+const splitData = extractValues(parsedData);
+
+const { piAId, piCId, piHostname } = splitData;
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
@@ -142,8 +154,6 @@ async function loadAccountEngagementTracking() {
   const script = document.createElement('script');
   script.type = 'text/javascript';
   
-  const { piAId, piCId, piHostname } = ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS;
-
   script.text = `piAId = '${piAId}'; piCId = '${piCId}'; piHostname = '${piHostname}'; (function() { function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); } if(window.attachEvent) { window.attachEvent('onload', async_load); } else { window.addEventListener('load', async_load, false); } })();`;
 
   body.append(script);

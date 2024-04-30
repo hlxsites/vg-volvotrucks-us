@@ -11,9 +11,16 @@ export function isVideoLink(link) {
   return (linkString.includes('youtube.com/embed/') || isLowResolutionVideoUrl(linkString)) && link.closest('.block.embed') === null;
 }
 
-export function selectVideoLink(links, preferredType) {
+export async function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-  const shouldUseYouTubeLinks = isCookieAllowed() && preferredType !== 'local';
+
+  let consent;
+  (async () => {
+    const { COOKIE_CONFIGS } = await import ('./constants.js');
+    consent = isCookieAllowed(COOKIE_CONFIGS.SOCIAL_COOKIE)
+  })();
+
+  const shouldUseYouTubeLinks = consent && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
