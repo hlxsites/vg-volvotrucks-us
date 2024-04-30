@@ -1,0 +1,113 @@
+name: 'File technical debt ⚓️'
+description: Please fill out this form to file technical debt.
+labels: ["Technical debt, Triage"]
+projects: ["hlxsites/8"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Provide a short description and include a block name or story in brackets for easier search.
+      placeholder: e.g., [Block Name] Issue description.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Select the priority of the issue.
+      options:
+        - Blocker
+        - Critical
+        - High
+        - Medium
+        - Low
+      default: 3
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide a more detailed description of the issue.
+      placeholder: Detailed issue description here.
+    validations:
+      required: true
+  - type: dropdown
+    id: value
+    attributes:
+      label: Value creation
+      description: Check all possible outcomes that apply.
+      multiple: true
+      options:
+        - Performance improvement
+        - Maintainability & scalability
+        - Compliance & standards
+        - DX improvement
+        - UX improvement
+        - EX improvement
+    validations:
+      required: true
+  - type: dropdown
+    id: cost-of-fixing
+    attributes:
+      label: Cost of fixing
+      description: >
+        Categorize the cost of fixing technical debt items, considering both immediate and long-term perspectives
+
+        <details>
+
+        <summary>Details of perspectives</summary>
+
+
+        **Low Cost**
+
+          - Immediate: Requires minimal effort, such as minor code refactoring or updating documentation. Can often be addressed by a single developer in a few hours or less.
+          - Long-Term: Neglecting these might slightly degrade code quality over time but won't likely cause significant issues in the short term.
+
+        **Medium Cost**
+
+          - Immediate: Involves moderate effort, such as optimizing existing algorithms, implementing better error handling, or updating several dependencies. May require a few days of work and potentially a small team to ensure thorough testing and integration.
+          - Long-Term: If left unaddressed, could lead to moderate performance issues, hinder scalability, or increase maintenance time and costs.
+
+        **High Cost**
+
+          - Immediate: Demands substantial effort, such as rewriting a significant portion of the codebase, migrating to a new framework, or addressing complex security vulnerabilities. This could involve multiple team members over weeks or months, with considerable testing and validation phases.
+          - Long-Term: Ignoring these issues can lead to severe performance bottlenecks, security breaches, legal compliance issues, or major disruptions in user experience, potentially costing much more in damage repair, lost customers, or legal penalties.
+
+        **Variable Cost**
+
+          - Immediate: The cost is dependent on the chosen approach, such as deciding between patching a system for a temporary fix versus investing in a more comprehensive solution that may take longer initially but provides greater benefits in the long run.
+          - Long-Term: A strategic decision to invest more upfront can significantly reduce future costs related to maintenance, scalability, and performance optimization.
+        </details>
+      options:
+        - Low cost
+        - Medium cost
+        - High cost
+        - Variable cost
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: technical-complexity
+    attributes:
+      label: Technical complexity
+      description: The level of technical challenge involved in fixing the debt.
+      options:
+        - XL
+        - L
+        - M
+        - S
+        - XS
+        - Unknown
+      default: 3
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Links to relevant examples, discussions, PRs, or documentation that provide more context.
+      placeholder: 
+    validations:
+      required: true

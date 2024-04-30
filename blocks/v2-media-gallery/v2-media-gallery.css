@@ -87,13 +87,16 @@
 }
 
 .v2-media-gallery__figure picture {
+  aspect-ratio: 4/3;
+  display: block;
   background-color: var(--media-background);
   border-radius: var(--border-radius);
 }
 
 .v2-media-gallery__image {
-  aspect-ratio: 4/3;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: var(--border-radius);
 }
 
