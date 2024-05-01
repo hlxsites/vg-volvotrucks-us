@@ -16,8 +16,8 @@ export async function selectVideoLink(links, preferredType) {
 
   let consent;
   (async () => {
-    const { COOKIE_CONFIGS } = await import ('./constants.js');
-    consent = isCookieAllowed(COOKIE_CONFIGS.SOCIAL_COOKIE)
+    const { COOKIE_CONFIGS } = await import('./constants.js');
+    consent = await isCookieAllowed(COOKIE_CONFIGS.SOCIAL_COOKIE);
   })();
 
   const shouldUseYouTubeLinks = consent && preferredType !== 'local';

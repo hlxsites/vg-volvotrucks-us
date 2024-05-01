@@ -31,6 +31,16 @@ export const getLanguagePath = () => {
   return langCodeMatch ? langCodeMatch[1] : '/';
 };
 
+export async function getConstantValues() {
+  const url = `${getLanguagePath()}drafts/shomps/constants.json`;
+  constants = await fetch(url).then((resp) => resp.json());
+  return constants;
+}
+
+export function getConstants() {
+  return constants;
+}
+
 export async function getPlaceholders() {
   const url = `${getLanguagePath()}placeholder.json`;
   placeholders = await fetch(url).then((resp) => resp.json());
@@ -38,16 +48,6 @@ export async function getPlaceholders() {
 
 export function getTextLabel(key) {
   return placeholders?.data.find((el) => el.Key === key)?.Text || key;
-}
-
-export async function getConstantValues() {
-  const url = `${getLanguagePath()}drafts/shomps/constants.json`;
-  constants = await fetch(url).then((resp) => resp.json());
-  return constants;
-}
-
-export async function getConstants() {
-  return constants
 }
 
 /**

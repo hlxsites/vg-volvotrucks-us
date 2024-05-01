@@ -15,8 +15,8 @@ import {
 } from './lib-franklin.js';
 
 import {
-  getPlaceholders,
   getConstantValues,
+  getPlaceholders,
   loadLazy,
   loadDelayed,
   loadTemplate,
@@ -618,6 +618,7 @@ export function decorateMain(main, head) {
  * loads everything needed to get to LCP.
  */
 async function loadEager(doc) {
+  await getConstantValues();
   decorateTemplateAndTheme();
 
   const main = doc.querySelector('main');
@@ -634,7 +635,6 @@ async function loadEager(doc) {
   }
 
   await getPlaceholders();
-  await getConstantValues();
 }
 
 async function loadPage() {

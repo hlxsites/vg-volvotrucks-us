@@ -1,12 +1,12 @@
-import { getConstants } from "./common.js";
+import { getConstants } from './common.js';
 
 const { searchUrls, cookieValues } = await getConstants();
 
 const formatValues = (values) => {
-  let obj = {};
-  values.forEach(({name, value}) => obj[name] = value);
+  const obj = {};
+  values.forEach(({ name, value }) => obj[name] = value);
   return obj;
-}
+};
 
 // This data comes from the sharepoint 'constants.xlsx' file
 export const COOKIE_CONFIGS = formatValues(cookieValues.data);
