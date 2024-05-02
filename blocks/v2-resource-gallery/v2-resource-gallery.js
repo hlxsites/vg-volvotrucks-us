@@ -1,3 +1,4 @@
+import { decorateIcons } from '../../scripts/lib-franklin.js';
 import {
   wrapImageWithVideoLink,
   selectVideoLink,
@@ -91,19 +92,12 @@ export default function decorate(block) {
       props: { 'aria-expanded': false },
     });
     viewAllButton.innerHTML = `
-      <span class="icon-plus">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 3.5C12.5 3.22386 12.2761 3 12 3C11.7239 3 11.5 3.22386 11.5 3.5V11.5H3.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H11.5V20.5C11.5 20.7761 11.7239 21 12 21C12.2761 21 12.5 20.7761 12.5 20.5V12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H12.5V3.5Z" fill="var(--text-color)"/>
-        </svg>
-      </span>
-      <span class="icon-minus">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 11.5C3.22386 11.5 3 11.7239 3 12C3 12.2761 3.22386 12.5 3.5 12.5H20.5C20.7761 12.5 21 12.2761 21 12C21 11.7239 20.7761 11.5 20.5 11.5H3.5Z" fill="var(--text-color)"/>
-        </svg>
-      </span>
-      <span class="${blockName}__button-text"> ${getTextLabel('view all')} </span>
+      <span class="icon icon-plus"></span>
+      <span class="icon icon-minus"></span>
+      <span class="${blockName}__button-text">${getTextLabel('view all')}</span>
     `;
 
+    decorateIcons(viewAllButton);
     blockHeading.append(viewAllButton);
 
     viewAllButton.addEventListener('click', () => {
