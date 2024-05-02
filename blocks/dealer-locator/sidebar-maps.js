@@ -302,7 +302,7 @@ const colorGrey4 = getComputedStyle(document.documentElement).getPropertyValue('
             break;
 
           case "volvo":
-            window.locatorConfig.dataSource = "https://www.macktrucks.com/simpleprox.ashx?https://as-dealerloc-endpoint-prod-001.azurewebsites.net/Volvo_DealerJSON.ashx ";
+            window.locatorConfig.dataSource = "https://www.macktrucks.com/simpleprox.ashx?https://as-dealerloc-endpoint-prod-001.azurewebsites.net/Volvo_DealerJSON.ashx";
             break;
 
           case "dual":
