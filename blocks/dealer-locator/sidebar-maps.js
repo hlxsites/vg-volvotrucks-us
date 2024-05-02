@@ -920,7 +920,14 @@ $.fn.renderPinDetails = async function (markerId) {
 
   }
   templateClone.find('.detail-website a').attr('href', $.fn.formatWebAddress(markerDetails.WEB_ADDRESS));
-  templateClone.find('.detail-email').html('<a href="mailto:' + markerDetails.EMAIL_ADDRESS.toLowerCase() + '">' + '<img src="/blocks/dealer-locator/images/Mail-2.png" />' + "Email" + '</a>');
+
+  if (markerDetails.EMAIL_ADDRESS) {
+    templateClone.find('.detail-email').html('<a href="mailto:' + markerDetails.EMAIL_ADDRESS.toLowerCase() + '">' + '<img src="/blocks/dealer-locator/images/Mail-2.png" />' + "Email" + '</a>');
+  } else {
+    templateClone.find('.detail-email').html('<a>' + '<img src="/blocks/dealer-locator/images/Mail-2.png" />' + "Email" + '</a>');
+    templateClone.find('.detail-email').css({'pointer-events':'none','cursor':'default','opacity':'0.5'});
+  }
+
   templateClone.find('#phone div').html('<a href="tel:' + markerDetails.REG_PHONE_NUMBER + '">' + $.fn.formatPhoneNumber(markerDetails.REG_PHONE_NUMBER) + '</a>');
   templateClone.find('#directions').attr('data-id', markerDetails.IDENTIFIER_VALUE);
   templateClone.find('#clipboard-address').attr('data-clipboard', markerDetails.MAIN_ADDRESS_LINE_1_TXT + ' ' + markerDetails.MAIN_ADDRESS_LINE_2_TXT + ' ' + markerDetails.MAIN_CITY_NM + ', ' + markerDetails.MAIN_STATE_PROV_CD + ' ' + markerDetails.MAIN_POSTAL_CD);
