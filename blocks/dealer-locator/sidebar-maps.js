@@ -907,8 +907,14 @@ $.fn.renderPinDetails = async function (markerId) {
   }
   templateClone.find('#title').text($.fn.camelCase(markerDetails.COMPANY_DBA_NAME));
   templateClone.find('#title2').text($.fn.camelCase(markerDetails.COMPANY_DBA_NAME));
-  templateClone.find('#address1 div').text(markerDetails.MAIN_ADDRESS_LINE_1_TXT);
-  templateClone.find('#address2 div').text(markerDetails.MAIN_ADDRESS_LINE_2_TXT);
+
+  if (!markerDetails.MAIN_ADDRESS_LINE_1_TXT) {
+    templateClone.find('#address1 div').text(markerDetails.MAIN_ADDRESS_LINE_2_TXT);
+  } else {
+    templateClone.find('#address1 div').text(markerDetails.MAIN_ADDRESS_LINE_1_TXT);
+    templateClone.find('#address2 div').text(markerDetails.MAIN_ADDRESS_LINE_2_TXT);
+  }
+
   templateClone.find('#city-state-zip div').text(markerDetails.MAIN_CITY_NM + ', ' + markerDetails.MAIN_STATE_PROV_CD + ' ' + markerDetails.MAIN_POSTAL_CD);
   if (markerDetails.WEB_ADDRESS) {
     templateClone.find('#website').html('<a href="' + $.fn.formatWebAddress(markerDetails.WEB_ADDRESS) + '" target="_blank">' + $.fn.formatWebAddress(markerDetails.WEB_ADDRESS) + '</a>');
