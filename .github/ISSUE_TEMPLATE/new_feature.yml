@@ -1,0 +1,98 @@
+name: 'New feature ✨'
+description: Functional or non-functional requirements
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Naming convention:
+
+        - For functional requirements: FR: [block name] - &lt;issue description&gt;
+
+        - For non-functional requirements: NFR: &lt;issue description&gt;
+  - type: textarea
+    id: description
+    attributes:
+      label: Context/Description
+      description: >-
+        This section contains information from the business like:
+        
+        - Business needs
+
+        - User Stories
+
+        - Design
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: >
+        <details>
+
+        <summary>Examples</summary>
+
+
+        User AC:
+
+        - Users can see in some flyout additional teaser areas (including titles) on top or below the navigation list
+
+        - In the teaser areas 1-n teasers are visible
+
+        - To meet a11y criteria, do not forget about alt text for teaser image
+
+
+        Editor AC:
+
+        - The current situation needs to be the default
+
+        - Teasers including section title can be added on specific flyouts, on top or below the navigation list
+
+        - New configurations should only be available in Mack Trucks
+
+
+        Non-functional AC:
+
+        - Performance
+
+        - Accessibility
+
+        - href in sitemap
+        </details>
+      value: |+
+        **User AC:**
+
+
+        **Editor AC:**
+
+
+        **Non-functional AC:**
+
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: >-
+        List of things that are not in scope. For instance when a ticket is
+        split or a certain function is deprioritized.
+  - type: textarea
+    id: note
+    attributes:
+      label: Note
+      description: Some additional information that can help the implementation or testing.
+  - type: textarea
+    id: technical-details
+    attributes:
+      label: Technical details
+      description: >-
+        In case a certain technical direction is chosen it can be added here.
+        Can happen as follow up of a spike for instance.
+  - type: textarea
+    attributes:
+      label: Attachment / link to Figma
+      description: You can attach images by clicking this area and drag files in, or add a URL.
+      placeholder: Upload file or paste URL
+    validations:
+      required: false
