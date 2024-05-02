@@ -916,18 +916,15 @@ $.fn.renderPinDetails = async function (markerId) {
   }
 
   templateClone.find('#city-state-zip div').text(markerDetails.MAIN_CITY_NM + ', ' + markerDetails.MAIN_STATE_PROV_CD + ' ' + markerDetails.MAIN_POSTAL_CD);
+
   if (markerDetails.WEB_ADDRESS) {
-    templateClone.find('#website').html('<a href="' + $.fn.formatWebAddress(markerDetails.WEB_ADDRESS) + '" target="_blank">' + $.fn.formatWebAddress(markerDetails.WEB_ADDRESS) + '</a>');
+    templateClone.find('.detail-website a').attr('href', $.fn.formatWebAddress(markerDetails.WEB_ADDRESS));
   } else {
-    templateClone.find('#website .controls').css('display', 'none');
+    templateClone.find('.detail-website a').css({'pointer-events':'none','cursor':'default','opacity':'0.5'});
   }
+
   if (markerDetails.EMAIL_ADDRESS) {
     templateClone.find('#email').html('<a href="mailto:' + markerDetails.EMAIL_ADDRESS.toLowerCase() + '">' + '<img src="/blocks/dealer-locator/images/Mail.png" />' + markerDetails.EMAIL_ADDRESS.toLowerCase() + '</a>');
-
-  }
-  templateClone.find('.detail-website a').attr('href', $.fn.formatWebAddress(markerDetails.WEB_ADDRESS));
-
-  if (markerDetails.EMAIL_ADDRESS) {
     templateClone.find('.detail-email').html('<a href="mailto:' + markerDetails.EMAIL_ADDRESS.toLowerCase() + '">' + '<img src="/blocks/dealer-locator/images/Mail-2.png" />' + "Email" + '</a>');
   } else {
     templateClone.find('.detail-email').html('<a>' + '<img src="/blocks/dealer-locator/images/Mail-2.png" />' + "Email" + '</a>');
@@ -938,8 +935,6 @@ $.fn.renderPinDetails = async function (markerId) {
   templateClone.find('#directions').attr('data-id', markerDetails.IDENTIFIER_VALUE);
   templateClone.find('#clipboard-address').attr('data-clipboard', markerDetails.MAIN_ADDRESS_LINE_1_TXT + ' ' + markerDetails.MAIN_ADDRESS_LINE_2_TXT + ' ' + markerDetails.MAIN_CITY_NM + ', ' + markerDetails.MAIN_STATE_PROV_CD + ' ' + markerDetails.MAIN_POSTAL_CD);
   templateClone.find('#open-website').attr('onclick', "window.open('" + $.fn.formatWebAddress(markerDetails.WEB_ADDRESS) + "', '_blank')");
-  //templateClone.find('.detail-share a').attr("href",window.location.href.split('?')[0] + '?view=' + markerDetails.IDENTIFIER_VALUE);
-  // templateClone.find('.detail-share').val(window.location.href.split('?')[0] + '?view=' + markerDetails.IDENTIFIER_VALUE);
   templateClone.find('#share-link').val(window.location.href.split('?')[0] + '?view=' + markerDetails.IDENTIFIER_VALUE);
   templateClone.find('.detail-call').html('<a href="tel:' + markerDetails.REG_PHONE_NUMBER + '">' + '<img src="/blocks/dealer-locator/images/Phone-2.png" />' + "Call" + '</a>');
   templateClone.find('#head-marker').attr('src', $viewingPin.icon.url);
@@ -1602,7 +1597,6 @@ $.fn.sortedPins = function () {
 };
 
 $.fn.showPin = function (pin) {
-
   if ($isAsist) {
     return true;
   }
@@ -1665,7 +1659,6 @@ $.fn.showPin = function (pin) {
         break;
     }
   }
-
   return condition;
 };
 
