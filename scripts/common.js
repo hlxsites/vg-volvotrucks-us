@@ -9,7 +9,6 @@ import {
 } from './lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
-// import { COOKIE_CONFIGS } from './scripts.js';
 
 let placeholders = null;
 
