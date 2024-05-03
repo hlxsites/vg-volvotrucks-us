@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './lib-franklin.js';
-import { COOKIE_CONFIGS } from './constants.js';
-import { isCookieAllowed } from './common.js';
+import { 
+  isPerformanceAllowed,
+  isTargetingAllowed,
+  isSocialAllowed,
+  COOKIE_CONFIGS } from './common.js';
 
 // COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
 const { 
-  PERFORMANCE_COOKIE = false,
-  TARGETING_COOKIE = false,
-  SOCIAL_COOKIE = false,
   FACEBOOK_PIXEL_ID = false,
   HOTJAR_ID = false,
   GTM_ID = false,
@@ -15,11 +15,10 @@ const {
   ACC_ENG_TRACKING = false,
 } = COOKIE_CONFIGS;
 
-
 const extractValues = (data) => {
-  const test = Object.values(data)
+  const values = Object.values(data)
   let obj = {};
-  test.forEach((value) => {
+  values.forEach((value) => {
     const split = value.split(':');
     obj[split[0]] = split[1].trim();
   });
@@ -34,16 +33,16 @@ const { piAId, piCId, piHostname } = splitData;
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-if (isCookieAllowed(PERFORMANCE_COOKIE)) {
+if (isPerformanceAllowed()) {
   googleTagManagerId && loadGoogleTagManager();
   hotjarId && loadHotjar();
 }
 
-if (isCookieAllowed(TARGETING_COOKIE)) {
+if (isTargetingAllowed()) {
   accountEngagementTracking && loadAccountEngagementTracking();
 }
 
-if (isCookieAllowed(SOCIAL_COOKIE)) {
+if (isSocialAllowed()) {
   facebookPixelId && loadFacebookPixel();
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { loadScript } from '../../scripts/lib-franklin.js';
-import { createElement, getTextLabel, isCookieAllowed } from '../../scripts/common.js';
+import { createElement, getTextLabel, isSocialAllowed } from '../../scripts/common.js';
 import { hideModal } from '../../common/modal/modal.js';
 
 let player;
@@ -67,13 +67,7 @@ export default function decorate(block) {
     }, 3000);
   };
 
-  let consent;
-  (async () => {
-    const { COOKIE_CONFIGS } = await import('../../scripts/constants.js');
-    consent = await isCookieAllowed(COOKIE_CONFIGS.SOCIAL_COOKIE);
-  })();
-
-  if (!consent) {
+  if (!isSocialAllowed()) {
     const img = block.querySelector('picture img');
     block.innerHTML = '';
 

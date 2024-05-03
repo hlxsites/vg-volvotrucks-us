@@ -1,5 +1,5 @@
 import { hideSidebar } from '../../common/sidebar/sidebar.js';
-import { getTextLabel, isCookieAllowed } from '../../scripts/common.js';
+import { getTextLabel, isTargetingAllowed } from '../../scripts/common.js';
 
 // eslint-disable no-console
 const addForm = async (block) => {
@@ -131,13 +131,7 @@ const addNoCookieMessage = (messageContainer) => {
 };
 
 export default async function decorate(block) {
-  let consent;
-  (async () => {
-    const { COOKIE_CONFIGS } = await import('../../scripts/constants.js');
-    consent = await isCookieAllowed(COOKIE_CONFIGS.TARGETING_COOKIE);
-  })();
-
-  if (!consent) {
+  if (!isTargetingAllowed()) {
     addNoCookieMessage(block);
 
     return;

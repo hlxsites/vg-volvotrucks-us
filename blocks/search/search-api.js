@@ -1,7 +1,8 @@
-import { SEARCH_URLS } from '../../scripts/constants.js';
+import { SEARCH_URLS } from '../../scripts/common.js';
 
+const { SEARCH_URL_DEV, SEARCH_URL_PROD } = SEARCH_URLS;
 const isProd = !window.location.host.includes('hlx.page') && !window.location.host.includes('localhost');
-const SEARCH_LINK = !isProd ? SEARCH_URLS.dev : SEARCH_URLS.prod;
+const SEARCH_LINK = !isProd ? SEARCH_URL_DEV : SEARCH_URL_PROD;
 
 export async function fetchData(queryObj) {
   const response = await fetch(

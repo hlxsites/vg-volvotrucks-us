@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel, isCookieAllowed } from './common.js';
+import { createElement, getTextLabel, isSocialAllowed } from './common.js';
 
 /* video helpers */
 export function isLowResolutionVideoUrl(url) {
@@ -13,14 +13,7 @@ export function isVideoLink(link) {
 
 export async function selectVideoLink(links, preferredType) {
   const linksList = [...links];
-
-  let consent;
-  (async () => {
-    const { COOKIE_CONFIGS } = await import('./constants.js');
-    consent = await isCookieAllowed(COOKIE_CONFIGS.SOCIAL_COOKIE);
-  })();
-
-  const shouldUseYouTubeLinks = consent && preferredType !== 'local';
+  const shouldUseYouTubeLinks = isSocialAllowed() && preferredType !== 'local';
   const youTubeLink = linksList.find((link) => link.getAttribute('href').includes('youtube.com/embed/'));
   const localMediaLink = linksList.find((link) => link.getAttribute('href').split('?')[0].endsWith('.mp4'));
 
