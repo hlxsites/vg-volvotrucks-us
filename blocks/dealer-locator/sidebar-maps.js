@@ -1692,7 +1692,13 @@ $.fn.tmpPins = function (tmpPinList) {
     templateClone.find('.heading p').text($.fn.camelCase(pin.COMPANY_DBA_NAME));
     templateClone.find('.hours').text(isOpenHtml);
     templateClone.find('.distance').text(pin.distance.toFixed(2) + ' mi');
-    templateClone.find('.address').text(pin.MAIN_ADDRESS_LINE_1_TXT);
+
+    if (!pin.MAIN_ADDRESS_LINE_1_TXT) {
+      templateClone.find('.address').text(pin.MAIN_ADDRESS_LINE_2_TXT);
+    } else {
+      templateClone.find('.address').text(pin.MAIN_ADDRESS_LINE_1_TXT);
+    }
+    
     templateClone.find('.city').text(pin.MAIN_CITY_NM + ', ' + pin.MAIN_STATE_PROV_CD + ' ' + pin.MAIN_POSTAL_CD);
     templateClone.find('.phone').text($.fn.formatPhoneNumber(pin.REG_PHONE_NUMBER));
     templateClone.find('.website a').text('Dealer Site');
