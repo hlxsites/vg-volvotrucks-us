@@ -399,8 +399,12 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .nearby-pins article.teaser .marker-main {
-    min-width: 25%;
+    width: 20%;
     text-align: center;
+}
+
+.dealer-locator .nearby-pins article.teaser .dealerPanelContainer {
+    width: 80% !important; 
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-top {
@@ -2462,10 +2466,6 @@ main .section.dealer-locator-container > div {
 
     .sidebar .panel-card:hover {
         background-color: unset!important
-    }
-
-    .sidebar .dealerPanelContainer {
-        width: 100%!important
     }
 
     .sidebar .sidebar-content {
