@@ -104,7 +104,7 @@ export function createLowResolutionBanner() {
   return banner;
 }
 
-export function showVideoModal(linkUrl) {
+export function showVideoModal(linkUrl, modalClasses) {
   // eslint-disable-next-line import/no-cycle
   import('../common/modal/modal.js').then((modal) => {
     let beforeBanner = null;
@@ -113,7 +113,7 @@ export function showVideoModal(linkUrl) {
       beforeBanner = createLowResolutionBanner();
     }
 
-    modal.showModal(linkUrl, { beforeBanner });
+    modal.showModal(linkUrl, { beforeBanner, modalClasses });
   });
 }
 
@@ -123,7 +123,18 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    showVideoModal(link.getAttribute('href'));
+    const variantClasses = ['black', 'gray', 'reveal'];
+    const modalClasses = [...event.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
+    // changing the modal variants classes to BEM naming
+    variantClasses.forEach((variant) => {
+      const index = modalClasses.findIndex((el) => el === `modal-${variant}`);
+
+      if (index >= 0) {
+        modalClasses[index] = modalClasses[index].replace('modal-', 'modal--');
+      }
+    });
+
+    showVideoModal(link.getAttribute('href'), modalClasses);
   });
 }
 
