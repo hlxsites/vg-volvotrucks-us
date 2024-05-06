@@ -36,8 +36,8 @@
   opacity: 0;
 }
 
-.redesign-v2 .modal-content.modal-content-fade-in,
-.modal-content.modal-content-fade-in {
+.modal-content.modal-content-fade-in,
+.redesign-v2 .modal-content.modal-content-fade-in {
   transform: translateY(0);
 }
 
@@ -123,6 +123,9 @@
   width: 100%;
   height: 100%;
   position: absolute;
+  background-color: var(--media-background);
+  aspect-ratio: var(--video-aspect-ratio, 16/9);
+  border: 0;
 }
 
 .modal-before-banner {
@@ -180,6 +183,7 @@
   .modal-top-bar-content {
     max-width: 1170px;
   }
+
   .modal-top-bar .icon svg {
     width: 32px;
     height: 32px;
@@ -271,15 +275,15 @@
   aspect-ratio: auto;
 }
 
-.redesign-v2 .modal--video .section > div,
-.modal--reveal .section > div {
+.modal--reveal .section > div,
+.redesign-v2 .modal--video .section > div {
   padding-top: 32px;
   padding-bottom: 0;
 }
 
 @media (min-width: 1200px) {
-  .redesign-v2 .modal--video .section > div,
-  .modal--reveal .section > div {
+  .modal--reveal .section > div,
+  .redesign-v2 .modal--video .section > div {
     padding-top: 48px;
   }
 }
