@@ -1173,17 +1173,10 @@ $.fn.renderPinDetails = async function (markerId) {
 
 
   if (!hasPartsHours && !hasServiceHours && !hasLeasingHours && !hasSalesHours) {
-    isOpenHtml = "Call";
+    isOpenHtml = "Closed";
   }
 
-  templateClone.find('#hours div').html(isOpenHtml + ' <span class="toggle-arrow"></span>');
-
-  if ($.isEmptyObject(hours)) {
-    templateClone.find('.toggle-arrow').css('display', 'none');
-  }
-
-
-  // $.fn.isOpen(markerDetails);
+  templateClone.find('#hours div').html(isOpenHtml);
 
   $map.panTo(marker.position);
 
