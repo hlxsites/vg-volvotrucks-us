@@ -316,8 +316,7 @@ export const slugify = (text) => (
 );
 
 async function getConstantValues() {
-  // this path should be changed before merge
-  const url = '/drafts/shomps/constants.json';
+  const url = '/constants.json';
   const constants = await fetch(url).then((resp) => resp.json());
   return constants;
 }
