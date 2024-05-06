@@ -398,6 +398,11 @@ main .section.dealer-locator-container > div {
     justify-content: center
 }
 
+.dealer-locator .nearby-pins article.teaser .marker-main {
+    min-width: 25%;
+    text-align: center;
+}
+
 .dealer-locator .nearby-pins article.teaser .teaser-top {
     cursor: pointer
 }
@@ -422,7 +427,8 @@ main .section.dealer-locator-container > div {
     font-size: 14px;
     display: block;
     font-weight: 700;
-    margin: 10px 0 0
+    margin: 10px 0 0;
+    max-width: 75%;
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-top .heading div.distance {
@@ -452,8 +458,12 @@ main .section.dealer-locator-container > div {
     font-size: 10px;
     color: #000;
     font-weight: 700;
-    margin-top: 10px
+    margin-top: 10px;
 }
+
+/* .dealer-locator .nearby-pins article.teaser .teaser-top .left .address {
+    white-space: nowrap;
+} */
 
 .dealer-locator .nearby-pins article.teaser .teaser-bottom {
     display: flex;
@@ -981,7 +991,8 @@ main .section.dealer-locator-container > div {
     float: right;
     padding-top: 10px;
     padding-right: 5px;
-    background: 0 0
+    background: 0 0;
+    position: absolute;
 }
 
 .dealer-locator .go-back button {
@@ -1093,7 +1104,8 @@ main .section.dealer-locator-container > div {
     position: relative;
     font-size: 18px;
     margin-top: 15px;
-    padding-left: 10px
+    padding-left: 10px;
+    max-width: 70%;
 }
 
 .dealer-locator .sidebar .sidebar-content .pin-header #set-dealer {
@@ -1527,7 +1539,8 @@ main .section.dealer-locator-container > div {
     font-weight: 700
 }
 
-.dealer-locator .sidebar .sidebar-content ul.pin-details>li #address1,.dealer-locator .sidebar .sidebar-content ul.pin-details>li #city-state-zip {
+.dealer-locator .sidebar .sidebar-content ul.pin-details>li #address1,.dealer-locator .sidebar .sidebar-content ul.pin-details>li #city-state-zip,
+.dealer-locator .sidebar .sidebar-content ul.pin-details>li #address2,.dealer-locator .sidebar .sidebar-content ul.pin-details>li #city-state-zip {
     margin-left: 35px
 }
 
@@ -1569,11 +1582,17 @@ main .section.dealer-locator-container > div {
     content: "\f017"
 }
 
-.dealer-locator .sidebar .sidebar-content ul.pin-details>li:not(.accordion-panel):hover {
+.dealer-locator .sidebar .sidebar-content ul.pin-details>li:not(.accordion-panel):not(.noDataClass):hover {
     background-color: rgb(0 0 0 / 3%)
 }
 
-.dealer-locator .sidebar .sidebar-content ul.pin-details>li:not(.accordion-panel):hover .controls {
+.dealer-locator .sidebar .sidebar-content li.noDataClass {
+    background-color: none;
+    pointer-events: none;
+    cursor: unset;
+}
+
+.dealer-locator .sidebar .sidebar-content ul.pin-details>li:not(.accordion-panel):not(.noDataClass):hover .controls {
     display: block
 }
 
@@ -1706,7 +1725,7 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .sidebar .panel-header .search-container {
     position: absolute;
-    right: 90px;
+    right: 45px;
     display: block;
     top: 0
 }
@@ -1746,7 +1765,7 @@ main .section.dealer-locator-container > div {
 .dealer-locator .sidebar .panel-header .filter-container {
     position: absolute;
     right: 30px;
-    display: block;
+    display: none;
     top: 0
 }
 
