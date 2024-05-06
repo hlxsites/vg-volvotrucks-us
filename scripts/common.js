@@ -317,7 +317,7 @@ export const slugify = (text) => (
 
 async function getConstantValues() {
   // this path should be changed before merge
-  const url = 'drafts/shomps/constants.json';
+  const url = '/drafts/shomps/constants.json';
   const constants = await fetch(url).then((resp) => resp.json());
   return constants;
 }
@@ -403,4 +403,18 @@ export const getJsonFromUrl = async (route) => {
     console.error('getJsonFromUrl:', { error });
   }
   return null;
+};
+
+export const deepMerge = (target, source) => {
+  Object.keys(source).forEach((key) => {
+    if (source[key] && typeof source[key] === 'object') {
+      if (!target[key]) {
+        target[key] = {};
+      }
+      deepMerge(target[key], source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  });
+  return target;
 };
