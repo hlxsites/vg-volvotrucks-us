@@ -195,6 +195,9 @@
   --easing-exit: cubic-bezier(0.2, 0, 1, 1);
   --easing-standard: cubic-bezier(0.2, 0, 0.1, 1);
 
+  /* Global video */
+  --video-aspect-ratio: 16/9;
+
   /*
     OLD styles
     we need to remove / update once they are not used in the styles
@@ -1228,6 +1231,15 @@ main.blue-contract .section.section-with-title p {
   color: var(--c-cta-blue-active);
 }
 
+.redesign-v2 a.standalone-link:focus {
+  outline: 0;
+}
+
+.redesign-v2 a.standalone-link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary,
 .redesign-v2 a.button.secondary,
@@ -1489,7 +1501,8 @@ main.blue-contract .section.section-with-title p {
   font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.redesign-v2 .button .icon svg {
+.redesign-v2 .button .icon svg,
+.redesign-v2 .standalone-link .icon svg {
   height: 24px;
   width: 24px;
 }
@@ -1605,6 +1618,13 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Global video block styles */
+.video-iframe {
+  width: 100%;
+  border: 0;
+  aspect-ratio: var(--video-aspect-ratio);
+  display: block;
+}
+
 .v2-video__playback-button,
 .v2-video__mute-controls {
   position: absolute;
