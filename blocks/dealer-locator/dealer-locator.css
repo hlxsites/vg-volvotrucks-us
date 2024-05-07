@@ -465,10 +465,6 @@ main .section.dealer-locator-container > div {
     margin-top: 10px;
 }
 
-/* .dealer-locator .nearby-pins article.teaser .teaser-top .left .address {
-    white-space: nowrap;
-} */
-
 .dealer-locator .nearby-pins article.teaser .teaser-bottom {
     display: flex;
     -webkit-box-pack: justify;
