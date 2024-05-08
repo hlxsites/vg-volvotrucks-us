@@ -590,11 +590,11 @@ const decorateButtons = (element) => {
   element.querySelectorAll('a').forEach((a) => {
     if (shouldDecorateLink(a)) {
       const up = a.parentElement;
-      const twoup = up.parentElement;
-      const buttonClass = getButtonClass(up, twoup);
+      const twoUp = up.parentElement;
+      const buttonClass = getButtonClass(up, twoUp);
       a.className = `button ${buttonClass}`;
       addClassToContainer(up);
-      addClassToContainer(twoup);
+      addClassToContainer(twoUp);
     }
   });
 };
@@ -604,10 +604,10 @@ const shouldDecorateLink = (a) => {
   return a.href !== a.textContent && !a.querySelector('img');
 };
 
-const getButtonClass = (up, twoup) => {
-  if ((up.tagName === 'EM' && twoup.tagName === 'STRONG') || (up.tagName === 'STRONG' && twoup.tagName === 'EM')) {
+const getButtonClass = (up, twoUp) => {
+  if ((up.tagName === 'EM' && twoUp.tagName === 'STRONG') || (up.tagName === 'STRONG' && twoUp.tagName === 'EM')) {
     reparentChildren(up);
-    reparentChildren(twoup);
+    reparentChildren(twoUp);
     return 'marketing';
   }
 
