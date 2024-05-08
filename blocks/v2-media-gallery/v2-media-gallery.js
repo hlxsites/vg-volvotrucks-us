@@ -36,9 +36,6 @@ export default function decorate(block) {
   });
 
   block.querySelectorAll('.button').forEach((el) => {
-    el.classList.add('tertiary', `${blockName}__link`);
-    el.classList.remove('primary', 'secondary');
-
     el.closest('.button-container')?.replaceWith(el);
   });
 

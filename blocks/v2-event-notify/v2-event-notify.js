@@ -63,8 +63,6 @@ const onSuccess = async (calendarEventData) => {
 
   block.innerHTML = '';
   const buttonWrapper = createElement('div', { classes: `${blockName}__button-wrapper` });
-  addToEventButton.classList.remove('secondary');
-  addToEventButton.classList.add('primary');
   addToEventButton.addEventListener('click', () => {
     const icsFileContent = generateICS(calendarEventData);
     downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);

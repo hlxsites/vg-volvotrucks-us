@@ -62,12 +62,7 @@ export default async function decorate(block) {
 
   const buttonsWrapper = createElement('div', { classes: `${blockName}__buttons-wrapper` });
   const ctaButtons = content.querySelectorAll('.button-container > a');
-  [...ctaButtons].forEach((b, i) => {
-    if (i > 0) { // change next buttons to be secondary
-      b.classList.add('secondary');
-      b.classList.remove('primary');
-    }
-
+  [...ctaButtons].forEach((b) => {
     if (block.classList.contains(`${blockName}--dark`)) {
       b.classList.add('dark');
     }

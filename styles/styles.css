@@ -1246,8 +1246,8 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 button.secondary,
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary,
-.redesign-v2 a.button.marketing-cta,
-.redesign-v2 button.marketing-cta {
+.redesign-v2 a.button.marketing,
+.redesign-v2 button.marketing {
   border: 1px solid transparent;
   align-items: center;
   border-radius: 4px;
@@ -1394,41 +1394,41 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--c-grey-200);
 }
 
-.redesign-v2 a.button.marketing-cta,
-.redesign-v2 button.marketing-cta {
+.redesign-v2 a.button.marketing,
+.redesign-v2 button.marketing {
   background-color: var(--c-cta-blue-default);
   color: var(--c-white);
 }
 
-.redesign-v2 a.button.marketing-cta:hover,
-.redesign-v2 button.marketing-cta:hover {
+.redesign-v2 a.button.marketing:hover,
+.redesign-v2 button.marketing:hover {
   background-color: var(--c-cta-blue-hover);
 }
 
-.redesign-v2 a.button.marketing-cta:active,
-.redesign-v2 button.marketing-cta:active {
+.redesign-v2 a.button.marketing:active,
+.redesign-v2 button.marketing:active {
   background-color: var(--c-cta-blue-active);
 }
 
-.redesign-v2 .section--black-background a.button.marketing-cta,
-.redesign-v2 .section--black-background button.marketing-cta,
-.redesign-v2 a.button.marketing-cta.dark,
-.redesign-v2 button.marketing-cta.dark {
+.redesign-v2 .section--black-background a.button.marketing,
+.redesign-v2 .section--black-background button.marketing,
+.redesign-v2 a.button.marketing.dark,
+.redesign-v2 button.marketing.dark {
   background-color: #44a1ff;
   color: var(--c-main-black);
 }
 
-.redesign-v2 .section--black-background a.button.marketing-cta:hover,
-.redesign-v2 .section--black-background button.marketing-cta:hover,
-.redesign-v2 a.button.marketing-cta.dark:hover,
-.redesign-v2 button.marketing-cta.dark:hover {
+.redesign-v2 .section--black-background a.button.marketing:hover,
+.redesign-v2 .section--black-background button.marketing:hover,
+.redesign-v2 a.button.marketing.dark:hover,
+.redesign-v2 button.marketing.dark:hover {
   background-color: #76baff;
 }
 
-.redesign-v2 .section--black-background a.button.marketing-cta:active,
-.redesign-v2 .section--black-background button.marketing-cta:active,
-.redesign-v2 a.button.marketing-cta.dark:active,
-.redesign-v2 button.marketing-cta.dark:active {
+.redesign-v2 .section--black-background a.button.marketing:active,
+.redesign-v2 .section--black-background button.marketing:active,
+.redesign-v2 a.button.marketing.dark:active,
+.redesign-v2 button.marketing.dark:active {
   background-color: #1f78d1;
 }
 

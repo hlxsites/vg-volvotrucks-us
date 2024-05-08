@@ -1,6 +1,5 @@
 import {
   buildBlock,
-  decorateButtons,
   decorateIcons,
   decorateSections,
   decorateBlocks,
@@ -581,6 +580,54 @@ function buildInpageNavigationBlock(main) {
     decorateBlock(section.querySelector(`.${inapgeClassName}`));
   }
 }
+
+/**
+ * Applies button styling to anchor tags within a specified element, decorating them as button-like if they meet certain criteria.
+ * @param {Element} element - The container element within which to search and style anchor tags.
+ */
+const decorateButtons = (element) => {
+  element.querySelectorAll('a').forEach(a => {
+    if (shouldDecorateLink(a)) {
+      const up = a.parentElement;
+      const twoup = up.parentElement;
+      const buttonClass = getButtonClass(up, twoup);
+      a.className = `button ${buttonClass}`;
+      addClassToContainer(up);
+      addClassToContainer(twoup);
+    }
+  });
+};
+
+const shouldDecorateLink = (a) => {
+  a.title = a.title || a.textContent;
+  return a.href !== a.textContent && !a.querySelector('img');
+};
+
+const getButtonClass = (up, twoup) => {
+  if ((up.tagName === 'EM' && twoup.tagName === 'STRONG') || (up.tagName === 'STRONG' && twoup.tagName === 'EM')) {
+    reparentChildren(up);
+    reparentChildren(twoup);
+    return 'marketing';
+  } else if (up.tagName === 'STRONG' || up.tagName === 'EM') {
+    reparentChildren(up);
+    return up.tagName === 'STRONG' ? 'primary' : 'secondary';
+  }
+  return 'tertiary';
+};
+
+const reparentChildren = (element) => {
+  const parent = element.parentNode;
+  while (element.firstChild) {
+    parent.insertBefore(element.firstChild, element);
+  }
+  element.remove();
+};
+
+const addClassToContainer = (element) => {
+  if (element.childNodes.length === 1 && ['P', 'DIV', 'LI'].includes(element.tagName)) {
+    element.classList.add('button-container');
+  }
+};
 
 /**
  * Decorates the main element.
