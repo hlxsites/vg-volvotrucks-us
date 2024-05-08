@@ -399,12 +399,11 @@ main .section.dealer-locator-container > div {
 }
 
 .dealer-locator .nearby-pins article.teaser .marker-main {
-    width: 20%;
-    text-align: center;
+    width: 15%;
 }
 
 .dealer-locator .nearby-pins article.teaser .dealerPanelContainer {
-    width: 80% !important; 
+    width: 70% !important; 
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-top {
