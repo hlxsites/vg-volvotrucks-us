@@ -239,10 +239,6 @@ export default function decorate(block) {
     const buttonContainer = createElement('div', { classes: `${blockName}__buttons-container` });
     const buttons = tabContent.querySelectorAll('.button-container');
 
-    buttons.forEach((bt) => {
-      const buttonLink = bt.firstElementChild;
-    });
-
     if (buttons.length) {
       const parentButtonContainer = buttons[0].parentNode;
       buttonContainer.append(...buttons);
