@@ -927,7 +927,7 @@ $.fn.renderPinDetails = async function (markerId) {
     templateClone.find('.detail-website a').attr('href', $.fn.formatWebAddress(markerDetails.WEB_ADDRESS));
     templateClone.find('#website').text(markerDetails.WEB_ADDRESS).css('text-transform','lowercase');
   } else {
-    templateClone.find('.detail-website a').css({'pointer-events':'none','cursor':'default','opacity':'0.5'});
+    templateClone.find('.detail-website').css({'pointer-events':'none','cursor':'default','opacity':'0.5'});
     templateClone.find('#website').css({'pointer-events':'none','cursor':'default','opacity':'0.5'});
     templateClone.find('#website').parent().addClass('noDataClass');
   }
