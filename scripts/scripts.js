@@ -582,11 +582,12 @@ function buildInpageNavigationBlock(main) {
 }
 
 /**
- * Applies button styling to anchor tags within a specified element, decorating them as button-like if they meet certain criteria.
+ * Applies button styling to anchor tags within a specified element,
+ * decorating them as button-like if they meet certain criteria.
  * @param {Element} element - The container element within which to search and style anchor tags.
  */
 const decorateButtons = (element) => {
-  element.querySelectorAll('a').forEach(a => {
+  element.querySelectorAll('a').forEach((a) => {
     if (shouldDecorateLink(a)) {
       const up = a.parentElement;
       const twoup = up.parentElement;
@@ -608,10 +609,13 @@ const getButtonClass = (up, twoup) => {
     reparentChildren(up);
     reparentChildren(twoup);
     return 'marketing';
-  } else if (up.tagName === 'STRONG' || up.tagName === 'EM') {
+  }
+
+  if (up.tagName === 'STRONG' || up.tagName === 'EM') {
     reparentChildren(up);
     return up.tagName === 'STRONG' ? 'primary' : 'secondary';
   }
+
   return 'tertiary';
 };
 
