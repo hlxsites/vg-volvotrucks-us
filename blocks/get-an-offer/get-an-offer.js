@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import {
-  decorateSections, decorateBlocks, loadBlocks, decorateButtons, decorateIcons, loadCSS,
+  decorateSections, decorateBlocks, loadBlocks, decorateIcons, loadCSS,
 } from '../../scripts/lib-franklin.js';
 import decorateButtons from '../../scripts/scripts.js';
 
