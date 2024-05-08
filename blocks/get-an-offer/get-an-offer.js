@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import {
   decorateSections, decorateBlocks, loadBlocks, decorateButtons, decorateIcons, loadCSS,
-} from '../../scripts/scripts.js';
+} from '../../scripts/lib-franklin.js';
+import decorateButtons from '../../scripts/scripts.js';
 
 export async function showOffer(a) {
   const { href, title } = a;
