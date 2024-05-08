@@ -839,7 +839,7 @@ main .section.dealer-locator-container > div {
 
     .dealer-locator .mobile-main-header .panel-header .search-container {
         position: absolute;
-        right: 90px;
+        right: 45px;
         display: block;
         top: -8px
     }
@@ -879,7 +879,7 @@ main .section.dealer-locator-container > div {
     .dealer-locator .mobile-main-header .panel-header .filter-container {
         position: absolute;
         right: 30px;
-        display: block;
+        display: none;
         top: -8px
     }
 
