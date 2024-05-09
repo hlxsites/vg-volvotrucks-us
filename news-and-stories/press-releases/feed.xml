@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-05-06T00:00:00.000Z</updated>
+    <updated>2024-05-09T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Showcases Next-Generation Technology and Solutions at ACT Expo 2024, Setting New Standards in Transportation Innovation]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/may/volvo-trucks-showcases-next-generation-technology-and-solutions-at-act-expo-2024-setting-new-standards-in-transportation-innovation/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/may/volvo-trucks-showcases-next-generation-technology-and-solutions-at-act-expo-2024-setting-new-standards-in-transportation-innovation/"/>
+        <updated>2024-05-09T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The tremendous growth of ACT Expo in the last several years is a testament to the investment that is being made at every level to develop and deploy advanced vehicle technologies and clean fuels. Our presence this year will display how we are approaching the future from every direction.”]]></content>
+        <published>2024-05-09T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[4 Gen Logistics Advances Sustainable Goods Movement with 41 Volvo VNR Electric Trucks]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/may/4-gen-logistics-advances-sustainable-goods-movement-with-41-volvo-vnr-electric-trucks/</id>
