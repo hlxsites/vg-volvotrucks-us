@@ -70,7 +70,7 @@ export default function decorate(block) {
       const links = item.querySelectorAll('a');
       [...links].forEach((link) => {
         link.classList.add('standalone-link');
-        link.classList.remove('button', 'primary');
+        link.classList.remove('button', 'tertiary');
         const wrapper = link.parentElement;
         wrapper.className = `${blockName}__document-link-wrapper`;
         wrapper.append(wrapper.nextElementSibling);
