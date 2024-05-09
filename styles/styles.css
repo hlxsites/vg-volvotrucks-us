@@ -1318,7 +1318,7 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--button-secondary-bg-active);
 }
 
-/* Tertiary button specific styles */
+/* Tertiary button styles */
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
   padding: 8px 0;
