@@ -174,6 +174,9 @@ export default async function decorate(block) {
         downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);
       });
 
+      const link = policyEl.querySelector('a');
+      link.removeAttribute('class');
+
       observer.disconnect();
       formContainerEl.setAttribute('data-initialized', 'true');
     });
