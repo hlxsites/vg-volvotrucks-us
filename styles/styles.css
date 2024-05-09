@@ -1102,6 +1102,22 @@ main.blue-contract .section.section-with-title p {
   --text-subtle: var(--c-grey-4);
   --background-color: var(--c-white);
   --background-gradient: rgb(255 255 255 / 100%);
+  --button-primary-color: var(--c-white);
+  --button-primary-bg: var(--c-main-black);
+  --button-primary-bg-hover: var(--c-grey-700);
+  --button-primary-bg-active: var(--c-grey-900);
+  --button-secondary-color: var(--c-main-black);
+  --button-secondary-bg: transparent;
+  --button-secondary-bg-hover: var(--c-grey-50);
+  --button-secondary-bg-active: var(--c-grey-100);
+  --button-secondary-border: var(--c-main-black);
+  --button-tertiary-color: var(--text-color);
+  --button-tertiary-bg-hover: var(--c-grey-50);
+  --button-tertiary-bg-active: var(--c-grey-100);
+  --button-marketing-color: var(--c-white);
+  --button-marketing-bg: var(--c-cta-blue-default);
+  --button-marketing-bg-hover: var(--c-cta-blue-hover);
+  --button-marketing-bg-active: var(--c-cta-blue-active);
 
   font-size: 16px;
   scroll-behavior: smooth;
@@ -1240,50 +1256,33 @@ main.blue-contract .section.section-with-title p {
   outline-offset: 2px;
 }
 
-/* Custom properties for button colors and backgrounds */
-.redesign-v2 .button {
-  --button-primary-color: var(--c-white);
-  --button-primary-bg: var(--c-main-black);
-  --button-primary-bg-hover: var(--c-grey-700);
-  --button-primary-bg-active: var(--c-grey-900);
-  --button-secondary-color: var(--c-main-black);
-  --button-secondary-bg: transparent;
-  --button-secondary-bg-hover: var(--c-grey-50);
-  --button-secondary-bg-active: var(--c-grey-100);
-  --button-secondary-border: var(--c-main-black);
-  --button-tertiary-color: var(--text-color);
-  --button-tertiary-bg-hover: var(--c-grey-50);
-  --button-tertiary-bg-active: var(--c-grey-100);
-  --button-marketing-color: var(--c-white);
-  --button-marketing-bg: var(--c-cta-blue-default);
-  --button-marketing-bg-hover: var(--c-cta-blue-hover);
-  --button-marketing-bg-active: var(--c-cta-blue-active);
-}
-
-/* Base styles for all buttons */
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 a.button,
-.redesign-v2 button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.redesign-v2 a.button.primary,
+.redesign-v2 button.primary,
+.redesign-v2 a.button.secondary,
+.redesign-v2 button.secondary,
+.redesign-v2 a.button.tertiary,
+.redesign-v2 button.tertiary,
+.redesign-v2 a.button.marketing,
+.redesign-v2 button.marketing {
   border: 1px solid transparent;
+  align-items: center;
   border-radius: 4px;
-  padding: 0 32px;
-  font-size: 14px;
+  display: inline-flex;
   font-family: var(--font-family-body);
-  text-transform: uppercase;
+  font-size: 14px;
+  gap: 8px;
+  justify-content: center;
   letter-spacing: 1.25px;
   line-height: 1.4;
   max-width: 21.5em;
   height: 48px;
+  padding: 0 32px;
   text-align: left;
-  white-space: normal;
+  text-transform: uppercase;
   transition: all var(--duration-small) var(--easing-standard);
+  white-space: normal;
 }
 
-/* Primary button styles */
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary {
   background-color: var(--button-primary-bg);
@@ -1300,12 +1299,35 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--button-primary-bg-active);
 }
 
-/* Secondary button styles */
+.redesign-v2 .section--black-background a.button.primary,
+.redesign-v2 .section--black-background button.primary,
+.redesign-v2 a.button.primary.dark,
+.redesign-v2 button.primary.dark {
+  --button-primary-bg: var(--c-white);
+  --button-primary-color: var(--c-main-black);
+}
+
+.redesign-v2 .section--black-background a.button.primary:hover,
+.redesign-v2 .section--black-background button.primary:hover,
+.redesign-v2 a.button.primary.dark:hover,
+.redesign-v2 button.primary.dark:hover {
+  --button-primary-bg: var(--c-grey-200);
+
+  border-color: transparent;
+}
+
+.redesign-v2 .section--black-background a.button.primary:active,
+.redesign-v2 .section--black-background button.primary:active,
+.redesign-v2 a.button.primary.dark:active,
+.redesign-v2 button.primary.dark:active {
+  background-color: var(--c-grey-400);
+}
+
 .redesign-v2 a.button.secondary,
 .redesign-v2 button.secondary {
   border-color: var(--button-secondary-border);
-  background-color: var(--button-secondary-bg);
   color: var(--button-secondary-color);
+  background-color: var(--button-secondary-bg);
 }
 
 .redesign-v2 a.button.secondary:hover,
@@ -1318,7 +1340,28 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--button-secondary-bg-active);
 }
 
-/* Tertiary button styles */
+.redesign-v2 .section--black-background a.button.secondary,
+.redesign-v2 .section--black-background button.secondary,
+.redesign-v2 a.button.secondary.dark,
+.redesign-v2 button.secondary.dark {
+  --button-secondary-border: var(--c-white);
+  --button-secondary-color: var(--c-white);
+}
+
+.redesign-v2 .section--black-background a.button.secondary:hover,
+.redesign-v2 .section--black-background button.secondary:hover,
+.redesign-v2 a.button.secondary.dark:hover,
+.redesign-v2 button.secondary.dark:hover {
+  --button-secondary-bg-hover: var(--c-grey-900);
+}
+
+.redesign-v2 .section--black-background a.button.secondary:active,
+.redesign-v2 .section--black-background button.secondary:active,
+.redesign-v2 a.button.secondary.dark:active,
+.redesign-v2 button.secondary.dark:active {
+  --button-secondary-border: var(--c-grey-800);
+}
+
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
   padding: 8px 0;
@@ -1328,13 +1371,44 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.tertiary:hover,
 .redesign-v2 button.tertiary:hover {
-  background-color: var(--button-tertiary-bg-hover);
   text-decoration: underline;
+  background-color: var(--button-tertiary-bg-hover);
 }
 
 .redesign-v2 a.button.tertiary:active,
 .redesign-v2 button.tertiary:active {
   background-color: var(--button-tertiary-bg-active);
+}
+
+.redesign-v2 .section--black-background a.button.tertiary,
+.redesign-v2 .section--black-background button.tertiary,
+.redesign-v2 a.button.tertiary.dark,
+.redesign-v2 button.tertiary.dark {
+  --button-tertiary-color: var(--c-white);
+}
+
+.redesign-v2 .section--black-background a.button.tertiary:hover,
+.redesign-v2 .section--black-background button.tertiary:hover,
+.redesign-v2 a.button.tertiary.dark:hover,
+.redesign-v2 button.tertiary.dark:hover {
+  --button-tertiary-bg-hover: var(--c-grey-900);
+}
+
+.redesign-v2 .section--black-background a.button.tertiary:active,
+.redesign-v2 .section--black-background button.tertiary:active,
+.redesign-v2 a.button.tertiary.dark:active,
+.redesign-v2 button.tertiary.dark:active {
+  --button-tertiary-bg-active: var(--c-grey-800);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:hover,
+.redesign-v2 .section--gray-background button.tertiary:hover {
+  --button-tertiary-bg-hover: var(--c-grey-100);
+}
+
+.redesign-v2 .section--gray-background a.button.tertiary:active,
+.redesign-v2 .section--gray-background button.tertiary:active {
+  --button-tertiary-bg-active: var(--c-grey-200);
 }
 
 /* Marketing button styles */
@@ -1354,22 +1428,25 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--button-marketing-bg-active);
 }
 
-/* Styles for buttons on black backgrounds */
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 .section--black-background a.button,
-.redesign-v2 .section--black-background button {
-  --button-primary-bg: var(--c-white);
-  --button-primary-color: var(--c-main-black);
-  --button-primary-bg-hover: var(--c-grey-200);
-  --button-primary-bg-active: var(--c-grey-400);
-  --button-secondary-color: var(--c-white);
-  --button-secondary-bg-hover: var(--c-grey-900);
-  --button-secondary-bg-active: var(--c-grey-800);
-  --button-tertiary-color: var(--c-white);
-  --button-tertiary-bg-hover: var(--c-grey-900);
-  --button-tertiary-bg-active: var(--c-grey-800);
+.redesign-v2 .section--black-background a.button.marketing,
+.redesign-v2 .section--black-background button.marketing,
+.redesign-v2 a.button.marketing.dark,
+.redesign-v2 button.marketing.dark {
   --button-marketing-bg: var(--c-cta-blue-default);
-  --button-marketing-bg-hover: #76baff;
+  --button-marketing-color: var(--c-main-black);
+}
+
+.redesign-v2 .section--black-background a.button.marketing:hover,
+.redesign-v2 .section--black-background button.marketing:hover,
+.redesign-v2 a.button.marketing.dark:hover,
+.redesign-v2 button.marketing.dark:hover {
+  --button-marketing-b-hover: #76baff;
+}
+
+.redesign-v2 .section--black-background a.button.marketing:active,
+.redesign-v2 .section--black-background button.marketing:active,
+.redesign-v2 a.button.marketing.dark:active,
+.redesign-v2 button.marketing.dark:active {
   --button-marketing-bg-active: #1f78d1;
 }
 
