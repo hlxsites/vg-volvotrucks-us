@@ -1246,17 +1246,14 @@ main.blue-contract .section.section-with-title p {
   --button-primary-bg: var(--c-main-black);
   --button-primary-bg-hover: var(--c-grey-700);
   --button-primary-bg-active: var(--c-grey-900);
-
   --button-secondary-color: var(--c-main-black);
   --button-secondary-bg: transparent;
   --button-secondary-bg-hover: var(--c-grey-50);
   --button-secondary-bg-active: var(--c-grey-100);
   --button-secondary-border: var(--c-main-black);
-
   --button-tertiary-color: var(--text-color);
   --button-tertiary-bg-hover: var(--c-grey-50);
   --button-tertiary-bg-active: var(--c-grey-100);
-
   --button-marketing-color: var(--c-white);
   --button-marketing-bg: var(--c-cta-blue-default);
   --button-marketing-bg-hover: var(--c-cta-blue-hover);
@@ -1264,6 +1261,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Base styles for all buttons */
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 a.button,
 .redesign-v2 button {
   display: inline-flex;
@@ -1357,6 +1355,7 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Styles for buttons on black backgrounds */
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--black-background a.button,
 .redesign-v2 .section--black-background button {
   --button-primary-bg: var(--c-white);
