@@ -230,7 +230,8 @@ export default async function decorate(block) {
                     SHARE
                 </a>
 
-                <input type="text" id="share-link" value="" onclick="this.select();"/>
+                <div class="accordion-panel">
+                    <input type="text" id="share-link" value="" onclick="this.select();"/>
                 </div>
             </div>
             <div class="detail-email">
