@@ -1186,7 +1186,8 @@ main .section.dealer-locator-container > div {
 
 .dealer-locator .sidebar .sidebar-content .pin-header .dealer-deatils-header a:hover {
     color: #5BA1F8;
-    text-decoration: underline
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .dealer-locator .sidebar .sidebar-content .pin-header .dealer-deatils-header .detail-website {

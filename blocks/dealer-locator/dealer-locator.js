@@ -225,10 +225,12 @@ export default async function decorate(block) {
             </div>
             <div class="detail-share">
 
-                <button type="button" class="accordion"><img
-                        src="/blocks/dealer-locator/images/Share-2.png"/><span>SHARE</span></button>
-                <div class="accordion-panel">
-                    <input type="text" id="share-link" value="" onclick="this.select();"/>
+                <a id="share" >
+                    <img src="/blocks/dealer-locator/images/Share-2.png"/>
+                    SHARE
+                </a>
+
+                <input type="text" id="share-link" value="" onclick="this.select();"/>
                 </div>
             </div>
             <div class="detail-email">
