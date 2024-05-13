@@ -163,6 +163,7 @@ export async function loadLazy(doc) {
   const subnav = header?.querySelector('.block.sub-nav');
   if (subnav) {
     loadBlock(subnav);
+    header.appendChild(subnav);
   }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
