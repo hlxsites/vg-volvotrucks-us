@@ -162,6 +162,7 @@ export async function loadLazy(doc) {
 
   const subnav = header?.querySelector('.block.sub-nav');
   if (subnav) {
+    header.appendChild(subnav);
     loadBlock(subnav);
   }
 
