@@ -58,6 +58,7 @@
 
 .header__logo-image.icon svg {
   width: 100%;
+  height: 19px;
 }
 
 .header__link:any-link {
