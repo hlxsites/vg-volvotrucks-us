@@ -1376,6 +1376,7 @@ main.blue-contract .section.section-with-title p {
 .redesign-v2 .section--gray-background  a.button,
 .redesign-v2 .section--gray-background  button {
   --button-tertiary-bg-hover: var(--c-grey-100);
+  --button-tertiary-bg-active: var(--c-grey-200);
 }
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
