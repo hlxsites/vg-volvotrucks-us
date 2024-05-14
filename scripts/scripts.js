@@ -581,22 +581,12 @@ function buildInpageNavigationBlock(main) {
   }
 }
 
-/**
- * Applies button styling to anchor tags within a specified element,
- * decorating them as button-like if they meet certain criteria.
- * @param {Element} element - The container element within which to search and style anchor tags.
- */
-const decorateButtons = (element) => {
-  element.querySelectorAll('a').forEach((a) => {
-    if (shouldDecorateLink(a)) {
-      const up = a.parentElement;
-      const twoUp = up.parentElement;
-      const buttonClass = getButtonClass(up, twoUp);
-      a.className = `button ${buttonClass}`;
-      addClassToContainer(up);
-      addClassToContainer(twoUp);
-    }
-  });
+const reparentChildren = (element) => {
+  const parent = element.parentNode;
+  while (element.firstChild) {
+    parent.insertBefore(element.firstChild, element);
+  }
+  element.remove();
 };
 
 const shouldDecorateLink = (a) => {
@@ -619,18 +609,28 @@ const getButtonClass = (up, twoUp) => {
   return 'tertiary';
 };
 
-const reparentChildren = (element) => {
-  const parent = element.parentNode;
-  while (element.firstChild) {
-    parent.insertBefore(element.firstChild, element);
-  }
-  element.remove();
-};
-
 const addClassToContainer = (element) => {
   if (element.childNodes.length === 1 && ['P', 'DIV', 'LI'].includes(element.tagName)) {
     element.classList.add('button-container');
   }
+};
+
+/**
+ * Applies button styling to anchor tags within a specified element,
+ * decorating them as button-like if they meet certain criteria.
+ * @param {Element} element - The container element within which to search and style anchor tags.
+ */
+const decorateButtons = (element) => {
+  element.querySelectorAll('a').forEach((a) => {
+    if (shouldDecorateLink(a)) {
+      const up = a.parentElement;
+      const twoUp = up.parentElement;
+      const buttonClass = getButtonClass(up, twoUp);
+      a.className = `button ${buttonClass}`;
+      addClassToContainer(up);
+      addClassToContainer(twoUp);
+    }
+  });
 };
 
 /**
