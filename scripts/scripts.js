@@ -195,6 +195,7 @@ function buildAutoBlocks(main, head) {
     console.error('Auto Blocking failed', error);
   }
 }
+
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = createElement('div', { classes: ['section', 'tabbed-container'] });
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');

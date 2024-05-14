@@ -2,6 +2,7 @@
 import { createElement, getTextLabel } from '../../scripts/common.js';
 import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
 import {
+  AEM_ASSETS,
   createIframe,
   createVideo,
   handleVideoMessage,
@@ -9,7 +10,6 @@ import {
   isLowResolutionVideoUrl,
   VideoEventManager,
 } from '../../scripts/video-helper.js';
-import { AEM_ASSETS } from '../../scripts/constants.js';
 
 const { videoIdRegex } = AEM_ASSETS;
 const videoEventManager = new VideoEventManager();
