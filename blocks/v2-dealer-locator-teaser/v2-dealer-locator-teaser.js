@@ -68,9 +68,4 @@ export default async function decorate(block) {
   contentElWrapper.classList.add('v2-dlt__content-wrapper');
   const contentEl = block.querySelector(':scope > div > div');
   contentEl.classList.add('v2-dlt__content');
-  const buttons = block.querySelectorAll('.button-container > a');
-  [...buttons].forEach((button) => {
-    button.classList.remove('primary');
-    button.classList.add('v2-dlt__button', 'tertiary');
-  });
 }

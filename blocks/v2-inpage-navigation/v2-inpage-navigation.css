@@ -185,7 +185,7 @@ then we change it for the next section item in main */
 
 /* END Customization when dropdown is open */
 
-.redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+.redesign-v2 a.button.v2-inpage-navigation__marketing:any-link {
   height: auto;
   padding: 10px 20px;
   line-height: var(--f-button-line-height);
@@ -292,7 +292,7 @@ then we change it for the next section item in main */
     background-color: var(--c-main-black);
   }
 
-  .redesign-v2 a.button.v2-inpage-navigation__cta:any-link {
+  .redesign-v2 a.button.v2-inpage-navigation__marketing:any-link {
     padding: 10px 20px;
   }
 }

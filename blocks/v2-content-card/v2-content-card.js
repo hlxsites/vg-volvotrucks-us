@@ -74,12 +74,6 @@ export default async function decorate(block) {
     li.append(section);
   });
 
-  const buttons = ul.querySelectorAll('.button-container > a');
-  [...buttons].forEach((button) => {
-    button.classList.remove('primary');
-    button.classList.add('tertiary');
-  });
-
   // remove empty tags
   removeEmptyTags(ul);
 }
