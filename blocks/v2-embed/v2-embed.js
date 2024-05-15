@@ -1,12 +1,10 @@
 import {
   addVideoConfig,
+  AEM_ASSETS,
   createVideo,
   handleVideoMessage,
   VideoEventManager,
 } from '../../scripts/video-helper.js';
-import {
-  AEM_ASSETS,
-} from '../../scripts/constants.js';
 
 const blockName = 'v2-embed';
 const videoEventManager = new VideoEventManager();
