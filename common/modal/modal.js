@@ -1,6 +1,10 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel } from '../../scripts/common.js';
-import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
+import {
+  createElement,
+  decorateIcons,
+  getTextLabel,
+} from '../../scripts/common.js';
+import { loadCSS } from '../../scripts/lib-franklin.js';
 import {
   createIframe,
   createVideo,
