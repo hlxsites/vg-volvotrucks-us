@@ -9,9 +9,7 @@ import {
 } from './lib-franklin.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
-import { COOKIE_VALUES } from './constants.js';
 
-const { performance, targeting, social } = COOKIE_VALUES;
 let placeholders = null;
 
 /**
@@ -384,6 +382,25 @@ export const slugify = (text) => (
     .replace(/--+/g, '-')
 );
 
+async function getConstantValues() {
+  const url = '/constants.json';
+  const constants = await fetch(url).then((resp) => resp.json());
+  return constants;
+}
+
+const formatValues = (values) => {
+  const obj = {};
+  /* eslint-disable-next-line */
+  values.forEach(({ name, value }) => obj[name] = value);
+  return obj;
+};
+
+const { searchUrls, cookieValues } = await getConstantValues();
+
+// This data comes from the sharepoint 'constants.xlsx' file
+export const COOKIE_CONFIGS = formatValues(cookieValues.data);
+export const SEARCH_URLS = formatValues(searchUrls.data);
+
 /**
  * Check if one trust group is checked.
  * @param {String} groupName the one trust croup like: C0002
@@ -393,16 +410,22 @@ export function checkOneTrustGroup(groupName) {
   return oneTrustCookie.includes(`${groupName}:1`);
 }
 
+const {
+  PERFORMANCE_COOKIE = false,
+  TARGETING_COOKIE = false,
+  SOCIAL_COOKIE = false,
+} = COOKIE_CONFIGS;
+
 export function isPerformanceAllowed() {
-  return checkOneTrustGroup(performance);
+  return checkOneTrustGroup(PERFORMANCE_COOKIE);
 }
 
 export function isTargetingAllowed() {
-  return checkOneTrustGroup(targeting);
+  return checkOneTrustGroup(TARGETING_COOKIE);
 }
 
 export function isSocialAllowed() {
-  return checkOneTrustGroup(social);
+  return checkOneTrustGroup(SOCIAL_COOKIE);
 }
 
 /*

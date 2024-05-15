@@ -1,14 +1,18 @@
 // eslint-disable-next-line import/no-cycle
 import {
-  checkOneTrustGroup,
+  isSocialAllowed,
   createElement,
   deepMerge,
   getTextLabel,
 } from './common.js';
-import {
-  AEM_ASSETS,
-  COOKIE_VALUES,
-} from './constants.js';
+
+// videoURLRegex: verify if a given string follows a specific pattern indicating it is a video URL
+// videoIdRegex: extract the video ID from the URL
+export const AEM_ASSETS = {
+  aemCloudDomain: '.adobeaemcloud.com',
+  videoURLRegex: /\/assets\/urn:aaid:aem:[\w-]+\/play/,
+  videoIdRegex: /urn:aaid:aem:[0-9a-fA-F-]+/,
+};
 
 const { aemCloudDomain, videoURLRegex } = AEM_ASSETS;
 
@@ -57,7 +61,7 @@ export function isVideoLink(link) {
 
 export function selectVideoLink(links, preferredType, videoType = videoTypes.both) {
   const linksArray = Array.isArray(links) ? links : [...links];
-  const hasConsentForSocialVideos = checkOneTrustGroup(COOKIE_VALUES.social);
+  const hasConsentForSocialVideos = isSocialAllowed();
   const isTypeBoth = videoType === videoTypes.both;
   const prefersYouTube = (hasConsentForSocialVideos && preferredType !== 'local')
                       || (!isTypeBoth && videoType === videoTypes.youtube);
