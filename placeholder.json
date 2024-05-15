@@ -298,6 +298,22 @@
     {
       "Key": "form-subscribe:error-text",
       "Text": "Please <a href=\"https://www.volvotrucks.us/about-volvo/contact-us/\">contact us</a>."
+    },
+    {
+      "Key": "modal:error-title-unknown",
+      "Text": "Oops, something went wrong."
+    },
+    {
+      "Key": "modal:error-text-unknown",
+      "Text": "Something went wrong. Please try again."
+    },
+    {
+      "Key": "modal:error-title-404",
+      "Text": "Oops, something went wrong."
+    },
+    {
+      "Key": "modal:error-text-404",
+      "Text": "Requested content not found."
     }
   ],
   ":type": "sheet"

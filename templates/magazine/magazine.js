@@ -20,13 +20,13 @@ async function buildArticleHero(container) {
   const content = createElement('div', { classes: 'content' });
   const topDetails = createElement('div', { classes: ['top-details', 'hide-desktop'] });
   content.append(topDetails);
-  const calendarIcon = createElement('span', { classes: ['icon', 'icon-fa-calendar'] });
+  const calendarIcon = createElement('i', { classes: ['fa', 'fa-calendar'] });
   topDetails.append(calendarIcon);
   const pubDateSpan = createElement('span', { classes: 'date' });
   pubDateSpan.innerHTML = pubdate;
   topDetails.append(pubDateSpan);
 
-  const timeIcon = createElement('span', { classes: ['icon', 'icon-fa-clock-o'] });
+  const timeIcon = createElement('i', { classes: ['fa', 'fa-clock-o'] });
   topDetails.append(timeIcon);
   const timeSpan = createElement('span', { classes: 'time' });
   timeSpan.innerHTML = readtime;
@@ -38,7 +38,7 @@ async function buildArticleHero(container) {
   const details = createElement('div', { classes: 'details' });
   content.append(details);
 
-  const userIcon = createElement('span', { classes: ['icon', 'icon-fa-user'] });
+  const userIcon = createElement('i', { classes: ['fa', 'fa-user'] });
   details.append(userIcon);
   const authorSpan = createElement('span', { classes: 'author' });
   authorSpan.innerHTML = author;
@@ -99,7 +99,7 @@ export default async function decorate(doc) {
   shareSidebar.append(shareHeading);
   const shareList = createElement('div', { classes: 'share-icons' });
   shareItems.forEach((share) => {
-    const icon = createElement('span', { classes: ['icon', `icon-fa-${share[0]}`] });
+    const icon = createElement('i', { classes: ['fa', `fa-${share[0]}`] });
     const shareItem = createElement('button', share[0], { title: share[1], type: 'button' });
     shareItem.addEventListener('click', () => {
       window.open(`${share[2]}${window.location.href}`, '_blank');
@@ -114,7 +114,7 @@ export default async function decorate(doc) {
   const subscribeSidebar = createElement('div', { classes: 'subscribe' });
   const button = createElement('a', { classes: 'cta', props: { href: '#form59' } });
   button.textContent = 'Subscribe';
-  const arrowIcon = createElement('span', { classes: ['icon', 'icon-fa-angle-right'] });
+  const arrowIcon = createElement('i', { classes: ['fa', 'fa-angle-right'] });
   button.append(arrowIcon);
   subscribeSidebar.append(button);
   sidebarSection.append(subscribeSidebar);

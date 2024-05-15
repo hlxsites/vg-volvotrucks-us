@@ -34,9 +34,6 @@ class VideoComponent {
     videoEventManager.unregister(this.videoId, this.blockName);
   }
 }
-const styles$ = new Promise((r) => {
-  loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);
-});
 
 const HIDE_MODAL_CLASS = 'modal-hidden';
 let currentModalClasses = null;
@@ -132,7 +129,7 @@ const createModal = () => {
     document.querySelectorAll('header, footer, main').forEach((el) => {
       el.setAttribute('inert', 'inert');
     });
-    await styles$;
+    await loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`);
     modalBackground.style = '';
     modalBackground.classList.add(...modalClasses);
     currentModalClasses = modalClasses;

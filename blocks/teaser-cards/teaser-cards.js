@@ -36,11 +36,6 @@ export default function decorate(block) {
     // give cta's link(s) a specific class name
     const ctaLinks = elem.querySelectorAll('.button-container a.button');
     ctaLinks.forEach((cta) => {
-      // enforce secondary for ctas not in cta-list and only for multi column teaser cards
-      if (!cta.closest('.cta-list') && cols > 1) {
-        cta.classList.remove('primary');
-        cta.classList.add('secondary');
-      }
       cta.classList.add('cta');
     });
   }));

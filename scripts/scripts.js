@@ -1,6 +1,5 @@
 import {
   buildBlock,
-  decorateButtons,
   decorateSections,
   decorateBlocks,
   decorateBlock,
@@ -16,6 +15,7 @@ import {
 import {
   decorateIcons,
   getPlaceholders,
+  getTextLabel,
   loadLazy,
   loadDelayed,
   loadTemplate,
@@ -419,6 +419,32 @@ document.addEventListener('open-modal', (event) => {
   });
 });
 
+function handleFetchError(statusCode, mainElement) {
+  const errorType = statusCode === 404 ? '404' : 'unknown';
+  const errorMessage = document.createRange().createContextualFragment(`
+    <div class="section">
+      <div class="inline-message-wrapper">
+        <div class="inline-message block inline-message--error">
+          <span class="icon icon-control-remove" aria-hidden="true"></span>
+          <h2>${getTextLabel(`modal:error-title-${errorType}`)}</h2>
+          <p>${getTextLabel(`modal:error-text-${errorType}`)}</p>
+        </div>
+      </div>
+    </div>
+  `);
+
+  decorateIcons(errorMessage);
+  mainElement.appendChild(errorMessage);
+
+  const modalEvent = new CustomEvent('open-modal', {
+    detail: {
+      content: mainElement.children, // Now this refers to the errorContainer which mimics a section
+      target: document.activeElement, // might consider the previous active element or a default
+    },
+  });
+  document.dispatchEvent(modalEvent, { bubbles: true });
+}
+
 const handleModalLinks = (link) => {
   if (!modal) {
     loadModalScript();
@@ -434,16 +460,16 @@ const handleModalLinks = (link) => {
       // eslint-disable-next-line no-use-before-define
       decorateMain(main, main);
       await loadBlocks(main);
+      const modalEvent = new CustomEvent('open-modal', {
+        detail: {
+          content: main.children,
+          target: event.target,
+        },
+      });
+      document.dispatchEvent(modalEvent, { bubbles: true });
+    } else {
+      handleFetchError(resp.status, main);
     }
-
-    const modalEvent = new CustomEvent('open-modal', {
-      detail: {
-        content: main.children,
-        target: event.target,
-      },
-    });
-
-    document.dispatchEvent(modalEvent, { bubbles: true });
   });
 };
 
@@ -451,7 +477,7 @@ export function decorateLinks(block) {
   [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
-      /* eslint-disable no-use-before-define */
+      // eslint-disable-next-line no-use-before-define
       if (isVideoLink(link)) {
         addVideoShowHandler(link);
         return;
@@ -581,6 +607,58 @@ function buildInpageNavigationBlock(main) {
     decorateBlock(section.querySelector(`.${inapgeClassName}`));
   }
 }
+
+const reparentChildren = (element) => {
+  const parent = element.parentNode;
+  while (element.firstChild) {
+    parent.insertBefore(element.firstChild, element);
+  }
+  element.remove();
+};
+
+const shouldDecorateLink = (a) => {
+  a.title = a.title || a.textContent;
+  return a.href !== a.textContent && !a.querySelector('img');
+};
+
+const getButtonClass = (up, twoUp) => {
+  if ((up.tagName === 'EM' && twoUp.tagName === 'STRONG') || (up.tagName === 'STRONG' && twoUp.tagName === 'EM')) {
+    reparentChildren(up);
+    reparentChildren(twoUp);
+    return 'marketing';
+  }
+
+  if (up.tagName === 'STRONG' || up.tagName === 'EM') {
+    reparentChildren(up);
+    return up.tagName === 'STRONG' ? 'primary' : 'secondary';
+  }
+
+  return 'tertiary';
+};
+
+const addClassToContainer = (element) => {
+  if (element.childNodes.length === 1 && ['P', 'DIV', 'LI'].includes(element.tagName)) {
+    element.classList.add('button-container');
+  }
+};
+
+/**
+ * Applies button styling to anchor tags within a specified element,
+ * decorating them as button-like if they meet certain criteria.
+ * @param {Element} element - The container element within which to search and style anchor tags.
+ */
+const decorateButtons = (element) => {
+  element.querySelectorAll('a').forEach((a) => {
+    if (shouldDecorateLink(a)) {
+      const up = a.parentElement;
+      const twoUp = up.parentElement;
+      const buttonClass = getButtonClass(up, twoUp);
+      a.className = `button ${buttonClass}`;
+      addClassToContainer(up);
+      addClassToContainer(twoUp);
+    }
+  });
+};
 
 /**
  * Decorates the main element.

@@ -3,12 +3,12 @@ import {
   decorateSections,
   decorateBlocks,
   loadBlocks,
-  decorateButtons,
   loadCSS,
 } from '../../scripts/lib-franklin.js';
 import {
   decorateIcons,
 } from '../../scripts/common.js';
+import decorateButtons from '../../scripts/scripts.js';
 
 export async function showOffer(a) {
   const { href, title } = a;

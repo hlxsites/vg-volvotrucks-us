@@ -148,6 +148,37 @@
   padding: 0;
 }
 
+.inline-message {
+  padding: 16px;
+  display: grid;
+  gap: 8px 16px;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  position: relative;
+}
+
+.inline-message--error {
+  --background-color: var(--c-error-background-red);
+  --border-color: var(--c-error-red);
+}
+
+.inline-message--error .icon {
+  color: var(--c-error-red);
+}
+
+.inline-message h2,
+.inline-message p {
+  margin: 0;
+  grid-column: 2;
+}
+
+.inline-message h2 {
+  font-size: var(--f-body-font-size);
+}
+
 @media (min-width: 768px) {
   :root:not(.redesign-v2) .modal-content {
     margin: 100px auto;

@@ -8,12 +8,6 @@ export default function decorate(block) {
   const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
   [...headings].forEach((heading) => heading.classList.add(`${blockName}__title`));
 
-  const buttons = content.querySelectorAll('.button-container > a');
-  [...buttons].forEach((button) => {
-    button.classList.remove('primary');
-    button.classList.add('tertiary');
-  });
-
   // Unwrap <div> tags
   unwrapDivs(block);
 }
