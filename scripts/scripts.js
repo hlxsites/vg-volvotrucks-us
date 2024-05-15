@@ -543,9 +543,9 @@ const createInpageNavigation = (main) => {
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const title = section.dataset.inpage;
     if (title) {
-      const countDuplcated = tabItemsObj.filter((item) => item.title === title)?.length || 0;
+      const countDuplicated = tabItemsObj.filter((item) => item.title === title)?.length || 0;
       const order = parseFloat(section.dataset.inpageOrder);
-      const anchorID = (countDuplcated > 0) ? slugify(`${section.dataset.inpage}-${countDuplcated}`) : slugify(section.dataset.inpage);
+      const anchorID = (countDuplicated > 0) ? slugify(`${section.dataset.inpage}-${countDuplicated}`) : slugify(section.dataset.inpage);
       const obj = {
         title,
         id: anchorID,
@@ -583,14 +583,14 @@ const createInpageNavigation = (main) => {
     subnavLink.textContent = item.title;
 
     subnavItem.append(subnavLink);
-    navItems.push(subnavItem);
+    navItems.push(subnavLink);
   });
 
   return navItems;
 };
 
 function buildInpageNavigationBlock(main) {
-  const inapgeClassName = 'v2-inpage-navigation';
+  const inpageClassName = 'v2-inpage-navigation';
 
   const items = createInpageNavigation(main);
 
@@ -601,10 +601,10 @@ function buildInpageNavigationBlock(main) {
       overflow: 'hidden',
     });
 
-    section.append(buildBlock(inapgeClassName, { elems: items }));
+    section.append(buildBlock(inpageClassName, { elems: items }));
     main.prepend(section);
 
-    decorateBlock(section.querySelector(`.${inapgeClassName}`));
+    decorateBlock(section.querySelector(`.${inpageClassName}`));
   }
 }
 
