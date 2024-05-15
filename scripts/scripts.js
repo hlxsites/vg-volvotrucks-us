@@ -8,12 +8,12 @@ import {
   createOptimizedPicture,
   getMetadata,
   toClassName,
-  getHref,
   loadBlocks,
-} from './lib-franklin.js';
+} from './aem.js';
 
 import {
   decorateIcons,
+  getHref,
   getPlaceholders,
   getTextLabel,
   loadLazy,
@@ -701,6 +701,7 @@ async function loadEager(doc) {
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    document.body.classList.add('appear');
     const language = getMetadata('locale') || 'en';
     document.documentElement.lang = language;
     const templateName = getMetadata('template');

@@ -4,7 +4,7 @@ import {
   decorateBlocks,
   loadBlocks,
   loadCSS,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 import {
   decorateIcons,
 } from '../../scripts/common.js';

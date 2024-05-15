@@ -6,7 +6,7 @@ import {
   loadHeader,
   buildBlock,
   decorateBlock,
-} from './lib-franklin.js';
+} from './aem.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
 import { COOKIE_VALUES } from './constants.js';
@@ -24,6 +24,22 @@ function loadFooter(footer) {
     decorateBlock(footerBlock);
     loadBlock(footerBlock);
   }
+}
+
+/**
+ * Returns the true origin of the current page in the browser.
+ * If the page is running in a iframe with srcdoc, the ancestor origin is returned.
+ * @returns {String} The true origin
+ */
+export function getOrigin() {
+  return window.location.href === 'about:srcdoc' ? window.parent.location.origin : window.location.origin;
+}
+
+export function getHref() {
+  if (window.location.href !== 'about:srcdoc') return window.location.href;
+
+  const urlParams = new URLSearchParams(window.parent.location.search);
+  return `${window.parent.location.origin}${urlParams.get('path')}`;
 }
 
 export const getLanguagePath = () => {

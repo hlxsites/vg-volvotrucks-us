@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { loadScript, sampleRUM } from './lib-franklin.js';
+import { loadScript, sampleRUM } from './aem.js';
 import { isPerformanceAllowed, isTargetingAllowed, isSocialAllowed } from './common.js';
 import { 
   ACCOUNT_ENGAGEMENT_TRACKING_CONSTANTS,

@@ -1,7 +1,7 @@
 import {
   getMetadata,
   createOptimizedPicture,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 import {
   createElement,
   decorateIcons,

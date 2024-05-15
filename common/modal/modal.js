@@ -4,7 +4,7 @@ import {
   decorateIcons,
   getTextLabel,
 } from '../../scripts/common.js';
-import { loadCSS } from '../../scripts/lib-franklin.js';
+import { loadCSS } from '../../scripts/aem.js';
 import {
   createIframe,
   createVideo,
