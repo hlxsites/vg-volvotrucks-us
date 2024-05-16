@@ -437,7 +437,7 @@ main .section.dealer-locator-container > div {
     display: block;
     font-weight: 700;
     margin: 10px 0 0;
-    max-width: 75%;
+    max-width: 230px;
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-top .heading div.distance {
@@ -468,6 +468,7 @@ main .section.dealer-locator-container > div {
     color: #000;
     font-weight: 700;
     margin-top: 10px;
+    max-width: 320px;
 }
 
 .dealer-locator .nearby-pins article.teaser .teaser-bottom {
@@ -534,7 +535,15 @@ main .section.dealer-locator-container > div {
 
 @media (max-width: 992px) {
     .dealer-locator .nearby-pins article.teaser .teaser-bottom .left .website:hover,.dealer-locator .nearby-pins article.teaser .teaser-bottom .right .website:hover {
-        background:0 0
+        background:0 0;
+    }
+
+    .dealer-locator .nearby-pins article.teaser .teaser-top .left {
+        max-width: unset;
+    }
+
+    .dealer-locator .nearby-pins article.teaser .teaser-top .heading p {
+        max-width: unset;
     }
 }
 
@@ -606,7 +615,8 @@ main .section.dealer-locator-container > div {
     font-size: 14px;
     display: block;
     font-weight: 700;
-    margin: 10px 0 0
+    margin: 10px 0 0;
+    max-width: 230px;
 }
 
 .dealer-locator .nearby-select article.teaser .teaser-top .heading div {
