@@ -205,6 +205,8 @@
   */
 
   /* Global colors */
+  --button-primary-color: var(--text-color);
+  --button-primary-bg: var(--c-white);
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
   --text-color: var(--c-grey-4);
@@ -527,20 +529,14 @@ button.primary {
   max-width: 100%;
   display: inline-block;
   padding: var(--btn-padding);
-  color: var(--text-color);
-  background-color: var(--c-white);
+  color: var(--button-primary-color);
+  background-color: var(--button-primary-bg);
   border: 2px solid var(--text-color);
 }
 
 a.button.primary.dark {
-  background-color: var(--text-color);
-  color: var(--c-white);
-}
-
-a.button.primary.dark:hover {
-  background-color: var(--text-color);
-  border-color: var(--text-color);
-  color: var(--c-white);
+  --button-primary-color: var(--c-white);
+  --button-primary-bg: var(--text-color);
 }
 
 button,
@@ -1107,7 +1103,7 @@ main.blue-contract .section.section-with-title p {
   --button-primary-bg: var(--c-main-black);
   --button-primary-bg-hover: var(--c-grey-700);
   --button-primary-bg-active: var(--c-grey-900);
-  --button-secondary-color: var(--c-text-color);
+  --button-secondary-color: var(--text-color);
   --button-secondary-bg: transparent;
   --button-secondary-bg-hover: var(--c-grey-50);
   --button-secondary-bg-active: var(--c-grey-100);
@@ -1376,6 +1372,8 @@ main.blue-contract .section.section-with-title p {
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--gray-background  a.button,
 .redesign-v2 .section--gray-background  button {
+  --button-secondary-bg-hover: var(--c-grey-100);
+  --button-secondary-bg-active: var(--c-grey-200);
   --button-tertiary-bg-hover: var(--c-grey-100);
   --button-tertiary-bg-active: var(--c-grey-200);
 }
