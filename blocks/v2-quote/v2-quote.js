@@ -1,26 +1,26 @@
-import { removeEmptyTags, unwrapDivs } from '../../scripts/common.js';
+import {
+  createElement,
+  removeEmptyTags,
+  variantsClassesToBEM,
+  unwrapDivs,
+} from '../../scripts/common.js';
+
+const blockName = 'v2-quote';
+const variantClasses = ['no-background'];
 
 export default function decorate(block) {
-  const blockName = 'v2-quote';
-  const blockquotes = [...block.querySelectorAll('blockquote')];
-  const pSiblingsOfBlockquote = block.querySelectorAll('blockquote + p');
+  variantsClassesToBEM(block.classList, variantClasses, blockName);
+
+  const quote = block.querySelector(':scope > div:nth-child(1) > div');
+  const bq = createElement('blockquote', { classes: [`${blockName}__quote-text`] });
+  bq.innerHTML = quote.innerHTML;
+  quote.parentNode.replaceChild(bq, quote);
+
+  const source = block.querySelector(':scope > div:nth-child(2) > div > p');
+  if (source) {
+    source.classList.add(`${blockName}__quote-source`);
+  }
 
   unwrapDivs(block, { ignoreDataAlign: true });
-
-  blockquotes.forEach((bq) => {
-    const em = bq.querySelector('em');
-
-    // remove em tags
-    if (em) {
-      em.outerHTML = em.innerHTML;
-    }
-
-    bq.classList.add(`${blockName}__quote-text`);
-  });
-
-  pSiblingsOfBlockquote.forEach((p) => {
-    p.classList.add(`${blockName}__quote-source`);
-  });
-
   removeEmptyTags(block);
 }

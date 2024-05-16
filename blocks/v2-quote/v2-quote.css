@@ -4,13 +4,22 @@
 }
 
 .v2-quote {
-  padding: 48px 0;
+  --quote-padding: 48px;
+  --quote-gap: 8px;
+
+  padding: var(--quote-padding) 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--quote-gap);
   background: var(--card-background);
   color: var(--card-text);
   text-align: center;
+}
+
+.v2-quote--no-background {
+  padding: 0;
+  background: transparent;
+  color: var(--text-color);
 }
 
 .v2-quote blockquote,
@@ -40,9 +49,26 @@
   letter-spacing: var(--f-subtitle-1-letter-spacing);
 }
 
+.v2-quote--no-background .v2-quote__quote-text,
+.v2-quote--no-background .v2-quote__quote-source {
+  margin: 0 auto;
+  max-width: none;
+}
+
+.v2-quote--no-background .v2-quote__quote-text p {
+  font-size: var(--f-heading-4-font-size);
+  line-height: var(--f-heading-4-line-height);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+}
+
+.v2-quote--no-background .v2-quote__quote-text + p {
+  font: var(--f-body-font-size) / var(--f-body-line-height) var(--font-family-body);
+  letter-spacing: var(--f-body-letter-spacing);
+}
+
 @media screen and (min-width: 744px) {
   .v2-quote {
-    gap: 16px;
+    --quote-gap: 16px;
   }
 
   .v2-quote__quote-text p {
@@ -56,11 +82,23 @@
     line-height: var(--f-heading-6-line-height);
     letter-spacing: var(--f-heading-6-letter-spacing);
   }
+
+  .v2-quote--no-background .v2-quote__quote-text p {
+    font-size: var(--f-heading-3-font-size);
+    line-height: var(--f-heading-3-line-height);
+    letter-spacing: var(--f-heading-3-letter-spacing);
+  }
+
+  .v2-quote--no-background .v2-quote__quote-text + p {
+    font-size: var(--f-body-2-font-size);
+    line-height: var(--f-body-2-line-height);
+    letter-spacing: var(--f-body-2-letter-spacing);
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .v2-quote {
-    padding: 200px 0;
-    gap: 24px;
+    --quote-padding: 200px;
+    --quote-gap: 24px;
   }
 }
