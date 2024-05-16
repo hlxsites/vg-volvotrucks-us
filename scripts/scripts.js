@@ -261,6 +261,11 @@ function buildTabbedBlock(main) {
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
+  async function triggerLoad() {
+    await loadBlocks(main);
+  }
+
+  triggerLoad();
 }
 
 function createTruckLineupSection(tabItems) {
