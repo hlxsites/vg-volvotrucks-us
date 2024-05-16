@@ -14,7 +14,7 @@
 import {
   readBlockConfig,
   toClassName,
-} from './lib-franklin.js';
+} from './aem.js';
 
 async function* request(url, context) {
   const { chunks, sheet, fetch } = context;

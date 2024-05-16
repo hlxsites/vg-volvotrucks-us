@@ -1,7 +1,5 @@
 import {
   buildBlock,
-  decorateButtons,
-  decorateIcons,
   decorateSections,
   decorateBlocks,
   decorateBlock,
@@ -10,12 +8,14 @@ import {
   createOptimizedPicture,
   getMetadata,
   toClassName,
-  getHref,
   loadBlocks,
-} from './lib-franklin.js';
+} from './aem.js';
 
 import {
+  decorateIcons,
+  getHref,
   getPlaceholders,
+  getTextLabel,
   loadLazy,
   loadDelayed,
   loadTemplate,
@@ -195,6 +195,7 @@ function buildAutoBlocks(main, head) {
     console.error('Auto Blocking failed', error);
   }
 }
+
 function createTabbedSection(tabItems, tabType, { fullWidth }) {
   const tabSection = createElement('div', { classes: ['section', 'tabbed-container'] });
   if (fullWidth) tabSection.classList.add('tabbed-container-full-width');
@@ -260,6 +261,11 @@ function buildTabbedBlock(main) {
     main.append(tabbedCarouselSection);
     decorateBlock(tabbedCarouselSection.querySelector('.tabbed-carousel, .tabbed-accordion'));
   }
+  async function triggerLoad() {
+    await loadBlocks(main);
+  }
+
+  triggerLoad();
 }
 
 function createTruckLineupSection(tabItems) {
@@ -419,6 +425,32 @@ document.addEventListener('open-modal', (event) => {
   });
 });
 
+function handleFetchError(statusCode, mainElement) {
+  const errorType = statusCode === 404 ? '404' : 'unknown';
+  const errorMessage = document.createRange().createContextualFragment(`
+    <div class="section">
+      <div class="inline-message-wrapper">
+        <div class="inline-message block inline-message--error">
+          <span class="icon icon-control-remove" aria-hidden="true"></span>
+          <h2>${getTextLabel(`modal:error-title-${errorType}`)}</h2>
+          <p>${getTextLabel(`modal:error-text-${errorType}`)}</p>
+        </div>
+      </div>
+    </div>
+  `);
+
+  decorateIcons(errorMessage);
+  mainElement.appendChild(errorMessage);
+
+  const modalEvent = new CustomEvent('open-modal', {
+    detail: {
+      content: mainElement.children, // Now this refers to the errorContainer which mimics a section
+      target: document.activeElement, // might consider the previous active element or a default
+    },
+  });
+  document.dispatchEvent(modalEvent, { bubbles: true });
+}
+
 const handleModalLinks = (link) => {
   if (!modal) {
     loadModalScript();
@@ -434,16 +466,16 @@ const handleModalLinks = (link) => {
       // eslint-disable-next-line no-use-before-define
       decorateMain(main, main);
       await loadBlocks(main);
+      const modalEvent = new CustomEvent('open-modal', {
+        detail: {
+          content: main.children,
+          target: event.target,
+        },
+      });
+      document.dispatchEvent(modalEvent, { bubbles: true });
+    } else {
+      handleFetchError(resp.status, main);
     }
-
-    const modalEvent = new CustomEvent('open-modal', {
-      detail: {
-        content: main.children,
-        target: event.target,
-      },
-    });
-
-    document.dispatchEvent(modalEvent, { bubbles: true });
   });
 };
 
@@ -451,7 +483,7 @@ export function decorateLinks(block) {
   [...block.querySelectorAll('a')]
     .filter(({ href }) => !!href)
     .forEach((link) => {
-      /* eslint-disable no-use-before-define */
+      // eslint-disable-next-line no-use-before-define
       if (isVideoLink(link)) {
         addVideoShowHandler(link);
         return;
@@ -517,9 +549,9 @@ const createInpageNavigation = (main) => {
   [...main.querySelectorAll(':scope > div')].forEach((section) => {
     const title = section.dataset.inpage;
     if (title) {
-      const countDuplcated = tabItemsObj.filter((item) => item.title === title)?.length || 0;
+      const countDuplicated = tabItemsObj.filter((item) => item.title === title)?.length || 0;
       const order = parseFloat(section.dataset.inpageOrder);
-      const anchorID = (countDuplcated > 0) ? slugify(`${section.dataset.inpage}-${countDuplcated}`) : slugify(section.dataset.inpage);
+      const anchorID = (countDuplicated > 0) ? slugify(`${section.dataset.inpage}-${countDuplicated}`) : slugify(section.dataset.inpage);
       const obj = {
         title,
         id: anchorID,
@@ -557,14 +589,14 @@ const createInpageNavigation = (main) => {
     subnavLink.textContent = item.title;
 
     subnavItem.append(subnavLink);
-    navItems.push(subnavItem);
+    navItems.push(subnavLink);
   });
 
   return navItems;
 };
 
 function buildInpageNavigationBlock(main) {
-  const inapgeClassName = 'v2-inpage-navigation';
+  const inpageClassName = 'v2-inpage-navigation';
 
   const items = createInpageNavigation(main);
 
@@ -575,12 +607,64 @@ function buildInpageNavigationBlock(main) {
       overflow: 'hidden',
     });
 
-    section.append(buildBlock(inapgeClassName, { elems: items }));
+    section.append(buildBlock(inpageClassName, { elems: items }));
     main.prepend(section);
 
-    decorateBlock(section.querySelector(`.${inapgeClassName}`));
+    decorateBlock(section.querySelector(`.${inpageClassName}`));
   }
 }
+
+const reparentChildren = (element) => {
+  const parent = element.parentNode;
+  while (element.firstChild) {
+    parent.insertBefore(element.firstChild, element);
+  }
+  element.remove();
+};
+
+const shouldDecorateLink = (a) => {
+  a.title = a.title || a.textContent;
+  return a.href !== a.textContent && !a.querySelector('img');
+};
+
+const getButtonClass = (up, twoUp) => {
+  if ((up.tagName === 'EM' && twoUp.tagName === 'STRONG') || (up.tagName === 'STRONG' && twoUp.tagName === 'EM')) {
+    reparentChildren(up);
+    reparentChildren(twoUp);
+    return 'marketing';
+  }
+
+  if (up.tagName === 'STRONG' || up.tagName === 'EM') {
+    reparentChildren(up);
+    return up.tagName === 'STRONG' ? 'primary' : 'secondary';
+  }
+
+  return 'tertiary';
+};
+
+const addClassToContainer = (element) => {
+  if (element.childNodes.length === 1 && ['P', 'DIV', 'LI'].includes(element.tagName)) {
+    element.classList.add('button-container');
+  }
+};
+
+/**
+ * Applies button styling to anchor tags within a specified element,
+ * decorating them as button-like if they meet certain criteria.
+ * @param {Element} element - The container element within which to search and style anchor tags.
+ */
+const decorateButtons = (element) => {
+  element.querySelectorAll('a').forEach((a) => {
+    if (shouldDecorateLink(a)) {
+      const up = a.parentElement;
+      const twoUp = up.parentElement;
+      const buttonClass = getButtonClass(up, twoUp);
+      a.className = `button ${buttonClass}`;
+      addClassToContainer(up);
+      addClassToContainer(twoUp);
+    }
+  });
+};
 
 /**
  * Decorates the main element.
@@ -623,6 +707,7 @@ async function loadEager(doc) {
   const { head } = doc;
   if (main) {
     decorateMain(main, head);
+    document.body.classList.add('appear');
     const language = getMetadata('locale') || 'en';
     document.documentElement.lang = language;
     const templateName = getMetadata('template');

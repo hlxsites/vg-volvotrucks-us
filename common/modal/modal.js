@@ -1,7 +1,12 @@
 // eslint-disable-next-line import/no-cycle
-import { createElement, getTextLabel } from '../../scripts/common.js';
-import { decorateIcons, loadCSS } from '../../scripts/lib-franklin.js';
 import {
+  createElement,
+  decorateIcons,
+  getTextLabel,
+} from '../../scripts/common.js';
+import { loadCSS } from '../../scripts/aem.js';
+import {
+  AEM_ASSETS,
   createIframe,
   createVideo,
   handleVideoMessage,
@@ -9,7 +14,6 @@ import {
   isLowResolutionVideoUrl,
   VideoEventManager,
 } from '../../scripts/video-helper.js';
-import { AEM_ASSETS } from '../../scripts/constants.js';
 
 const { videoIdRegex } = AEM_ASSETS;
 const videoEventManager = new VideoEventManager();
@@ -30,9 +34,6 @@ class VideoComponent {
     videoEventManager.unregister(this.videoId, this.blockName);
   }
 }
-const styles$ = new Promise((r) => {
-  loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`, r);
-});
 
 const HIDE_MODAL_CLASS = 'modal-hidden';
 let currentModalClasses = null;
@@ -128,7 +129,7 @@ const createModal = () => {
     document.querySelectorAll('header, footer, main').forEach((el) => {
       el.setAttribute('inert', 'inert');
     });
-    await styles$;
+    await loadCSS(`${window.hlx.codeBasePath}/common/modal/modal.css`);
     modalBackground.style = '';
     modalBackground.classList.add(...modalClasses);
     currentModalClasses = modalClasses;

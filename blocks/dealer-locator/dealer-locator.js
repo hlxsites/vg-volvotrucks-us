@@ -1,4 +1,4 @@
-import { loadScript } from '../../scripts/lib-franklin.js';
+import { loadScript } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
   const datasource = block.textContent.trim();

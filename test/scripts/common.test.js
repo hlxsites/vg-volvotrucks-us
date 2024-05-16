@@ -17,7 +17,7 @@ document.head.innerHTML = await readFile({ path: './head.html' });
 describe('createElement', () => {
   before(async () => {
     commonScript = await import('../../scripts/common.js');
-    lib = await import('../../scripts/lib-franklin.js');
+    lib = await import('../../scripts/aem.js');
 
     document.body.innerHTML = await readFile({ path: './body.html' });
   });

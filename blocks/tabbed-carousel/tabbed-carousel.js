@@ -51,6 +51,14 @@ export default function decorate(block) {
   const tabContainer = block.querySelector(':scope > div');
   tabContainer.classList.add('tab-container');
   const tabItems = block.querySelectorAll(':scope > div > div');
+
+  tabItems.forEach((tabItem) => {
+    const firstChildParagraph = tabItem.querySelector(':scope > p');
+    if (firstChildParagraph) {
+      tabItem.innerHTML = firstChildParagraph.innerHTML;
+    }
+  });
+
   const tabNavigation = buildTabNavigation(tabItems, (nav, tabItem, index) => {
     tabContainer.scrollTo({
       top: 0,

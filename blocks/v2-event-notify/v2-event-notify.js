@@ -1,6 +1,6 @@
 import {
   loadBlock, sampleRUM,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 import {
   createElement,
 } from '../../scripts/common.js';
@@ -63,8 +63,6 @@ const onSuccess = async (calendarEventData) => {
 
   block.innerHTML = '';
   const buttonWrapper = createElement('div', { classes: `${blockName}__button-wrapper` });
-  addToEventButton.classList.remove('secondary');
-  addToEventButton.classList.add('primary');
   addToEventButton.addEventListener('click', () => {
     const icsFileContent = generateICS(calendarEventData);
     downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);
@@ -175,6 +173,9 @@ export default async function decorate(block) {
         const icsFileContent = generateICS(calendarEventData);
         downloadICSFile(icsFileContent, `${calendarEventData.fileName}.ics`);
       });
+
+      const link = policyEl.querySelector('a');
+      link.removeAttribute('class');
 
       observer.disconnect();
       formContainerEl.setAttribute('data-initialized', 'true');

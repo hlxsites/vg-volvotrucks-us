@@ -1,4 +1,7 @@
-import { getLanguagePath } from '../../scripts/common.js';
+import {
+  getLanguagePath,
+  getOrigin,
+} from '../../scripts/common.js';
 import {
   ffetch,
   createList,
@@ -7,10 +10,9 @@ import {
 import {
   createOptimizedPicture,
   getMetadata,
-  getOrigin,
   readBlockConfig,
   toClassName,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 
 const locale = getMetadata('locale');
 const stopWords = ['a', 'an', 'the', 'and', 'to', 'for', 'i', 'of', 'on', 'into'];

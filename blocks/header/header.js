@@ -1,10 +1,11 @@
 import {
   createElement,
+  decorateIcons,
   generateId,
   getTextLabel,
   getLanguagePath,
 } from '../../scripts/common.js';
-import { createOptimizedPicture, decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, getMetadata } from '../../scripts/aem.js';
 
 const blockClass = 'header';
 const disableSearch = getMetadata('disable-search').toLowerCase() === 'true';
