@@ -1,6 +1,13 @@
 import { ffetch } from '../../scripts/lib-ffetch.js';
-import { createOptimizedPicture, getMetadata, getOrigin } from '../../scripts/lib-franklin.js';
-import { createElement, getLanguagePath } from '../../scripts/common.js';
+import {
+  createOptimizedPicture,
+  getMetadata,
+} from '../../scripts/aem.js';
+import {
+  createElement,
+  getLanguagePath,
+  getOrigin,
+} from '../../scripts/common.js';
 import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
 const blockName = 'v2-stories-carousel';

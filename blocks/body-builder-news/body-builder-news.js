@@ -1,6 +1,9 @@
 import {
-  createOptimizedPicture, getMetadata, getOrigin, readBlockConfig,
-} from '../../scripts/lib-franklin.js';
+  createOptimizedPicture,
+  getMetadata,
+  readBlockConfig,
+} from '../../scripts/aem.js';
+import { getOrigin } from '../../scripts/common.js';
 import { ffetch } from '../../scripts/lib-ffetch.js';
 
 const locale = getMetadata('locale');
