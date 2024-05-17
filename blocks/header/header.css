@@ -475,7 +475,7 @@
     display: flex;
     flex-wrap: wrap;
     max-height: 465px;
-    overflow: scroll;
+    overflow-y: auto;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -513,7 +513,7 @@
     flex-wrap: wrap;
     gap: 32px;
     max-height: 465px;
-    overflow: scroll;
+    overflow-y: auto;
   }
 }
 
