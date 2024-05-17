@@ -7,9 +7,6 @@
 
   /* reassigning, as this property is used elsewhere with different values in non-v2 pages */
   --wrapper-width: 1170px;
-
-  /* max height set for both trucks and powertrain dropdown in header. The rest overflows in scroll */ 
-  --max-accordion-height: 465px;
 }
 
 @media (prefers-reduced-motion) {
@@ -477,7 +474,7 @@
     gap: 24px 16px;
     display: flex;
     flex-wrap: wrap;
-    max-height: var(--max-accordion-height);
+    max-height: 465px;
     overflow: scroll;
   }
 
@@ -515,7 +512,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 32px;
-    max-height: var(--max-accordion-height);
+    max-height: 465px;
     overflow: scroll;
   }
 }
