@@ -478,6 +478,10 @@
     overflow: scroll;
   }
 
+  .header .header__category-items::-webkit-scrollbar-button {
+    display: none;
+  }
+
   /* stylelint-disable-next-line no-descending-specificity */
   .header__category-item picture + .header__link {
     margin-top: 8px;
