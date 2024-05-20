@@ -197,5 +197,41 @@ async function loadTiktokPixel() {
       a.parentNode.insertBefore(o,a)};
       ttq.load(TIKTOK_PIXEL_ID);
       ttq.page();
+
+      // Identifying the user with hashed details
+      ttq.identify({
+        "email": "<hashed_email_address>", // string. The email of the customer if available. It must be hashed with SHA-256 on the client side.
+        "phone_number": "<hashed_phone_number>", // string. The phone number of the customer if available. It must be hashed with SHA-256 on the client side.
+        "external_id": "<hashed_external_id>" // string. A unique ID from the advertiser such as user or external cookie IDs. It must be hashed with SHA256 on the client side.
+      });
+
+      // Tracking various user interactions
+      ttq.track('SubmitForm', {
+        "value": "<content_value>", // number. Value of the order or items sold. Example: 100.
+        "currency": "<content_currency>", // string. The 4217 currency code. Example: "USD".
+        "contents": [
+            {
+                "content_id": "<content_identifier>", // string. ID of the product. Example: "1077218".
+                "content_type": "<content_type>", // string. Either product or product_group.
+                "content_name": "<content_name>" // string. The name of the page or product. Example: "shirt".
+            }
+        ]
+      });
+
+      ttq.track('ClickButton', {
+        "value": "<content_value>", // number. Value of the order or items sold. Example: 100.
+        "currency": "<content_currency>", // string. The 4217 currency code. Example: "USD".
+        "contents": [
+            {
+                "content_id": "<content_identifier>", // string. ID of the product. Example: "1077218".
+                "content_type": "<content_type>", // string. Either product or product_group.
+                "content_name": "<content_name>" // string. The name of the page or product. Example: "shirt".
+            }
+        ]
+      });
+
+      // Repeat similar structure for 'Download', 'CompletePayment', 'Contact', 'CompleteRegistration',
+      // 'ViewContent', 'AddToCart', 'PlaceAnOrder', 'AddPaymentInfo', 'InitiateCheckout', 'Search', 
+      // 'AddToWishlist', 'Subscribe', and 'Pageview' events with appropriate parameters and comments.
    }(window, document, 'ttq');
 }
