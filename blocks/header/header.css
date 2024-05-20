@@ -476,6 +476,7 @@
     flex-wrap: wrap;
     max-height: 465px;
     overflow-y: auto;
+    scrollbar-width: thin;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -514,6 +515,7 @@
     gap: 32px;
     max-height: 465px;
     overflow-y: auto;
+    scrollbar-width: thin;
   }
 }
 
