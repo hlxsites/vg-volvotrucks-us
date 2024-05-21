@@ -103,10 +103,9 @@ ul.v2-stories-carousel-meta {
 }
 
 .v2-stories-carousel-meta li {
-  align-items: center;
+  place-items: center center;
   display: flex;
   gap: 4px;
-  justify-items: center;
   margin: 0 8px;
 }
 

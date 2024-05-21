@@ -1,4 +1,4 @@
-import { loadCSS, loadScript } from '../../scripts/lib-franklin.js';
+import { loadCSS, loadScript } from '../../scripts/aem.js';
 import { getTextLabel } from '../../scripts/common.js';
 
 // based on: https://developers.google.com/speed/webp/faq

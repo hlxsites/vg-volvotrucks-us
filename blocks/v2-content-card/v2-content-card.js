@@ -1,8 +1,15 @@
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  adjustPretitle, createElement, removeEmptyTags, variantsClassesToBEM,
+  adjustPretitle,
+  createElement,
+  removeEmptyTags,
+  variantsClassesToBEM,
 } from '../../scripts/common.js';
-import { createVideo, getDynamicVideoHeight, isVideoLink } from '../../scripts/video-helper.js';
+import {
+  createVideo,
+  getDynamicVideoHeight,
+  isVideoLink,
+} from '../../scripts/video-helper.js';
 
 const variantClasses = ['images-grid', 'images-grid-masonry', 'editorial'];
 
@@ -72,12 +79,6 @@ export default async function decorate(block) {
     li.innerHTML = '';
     section.append(container);
     li.append(section);
-  });
-
-  const buttons = ul.querySelectorAll('.button-container > a');
-  [...buttons].forEach((button) => {
-    button.classList.remove('primary');
-    button.classList.add('tertiary');
   });
 
   // remove empty tags

@@ -192,6 +192,13 @@ export default function decorate(block) {
 
   const tabItems = block.querySelectorAll(':scope > div > div');
 
+  tabItems.forEach((tabItem) => {
+    const firstChildParagraph = tabItem.querySelector(':scope > p');
+    if (firstChildParagraph) {
+      tabItem.innerHTML = firstChildParagraph.innerHTML;
+    }
+  });
+
   const imagesWrapper = createElement('div', { classes: `${blockName}__slider-wrapper` });
   const imagesContainer = createElement('div', { classes: `${blockName}__images-container` });
   descriptionContainer.parentNode.prepend(imagesWrapper);
@@ -238,15 +245,6 @@ export default function decorate(block) {
     // Wrap links in container
     const buttonContainer = createElement('div', { classes: `${blockName}__buttons-container` });
     const buttons = tabContent.querySelectorAll('.button-container');
-
-    buttons.forEach((bt, i) => {
-      const buttonLink = bt.firstElementChild;
-
-      if (i > 0) {
-        buttonLink.classList.remove('primary');
-        buttonLink.classList.add('secondary');
-      }
-    });
 
     if (buttons.length) {
       const parentButtonContainer = buttons[0].parentNode;

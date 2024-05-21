@@ -1,10 +1,11 @@
 // eslint-disable-next-line import/no-cycle
-import { loadScript, sampleRUM } from './lib-franklin.js';
+import { loadScript, sampleRUM } from './aem.js';
 import { 
   isPerformanceAllowed,
   isTargetingAllowed,
   isSocialAllowed,
-  COOKIE_CONFIGS } from './common.js';
+  COOKIE_CONFIGS,
+} from './common.js';
 
 // COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
 const { 

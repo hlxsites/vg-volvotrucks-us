@@ -12,7 +12,7 @@ document.head.innerHTML = await readFile({ path: './head.html' });
 
 describe('Utils methods', () => {
   before(async () => {
-    blockUtils = await import('../../scripts/lib-franklin.js');
+    blockUtils = await import('../../scripts/aem.js');
     document.body.innerHTML = await readFile({ path: './body.html' });
   });
 
@@ -24,27 +24,6 @@ describe('Utils methods', () => {
   it('Extracts metadata', async () => {
     expect(blockUtils.getMetadata('description')).to.equal('Lorem ipsum dolor sit amet.');
     expect(blockUtils.getMetadata('og:title')).to.equal('Foo');
-  });
-
-  it('Loads CSS', async () => {
-    // loads a css file and calls callback
-    const load = await new Promise((resolve) => {
-      blockUtils.loadCSS('/test/scripts/test.css', (e) => resolve(e));
-    });
-    expect(load).to.equal('load');
-    expect(getComputedStyle(document.body).color).to.equal('rgb(255, 0, 0)');
-
-    // does nothing if css already loaded
-    const noop = await new Promise((resolve) => {
-      blockUtils.loadCSS('/test/scripts/test.css', (e) => resolve(e));
-    });
-    expect(noop).to.equal('noop');
-
-    // calls callback in case of error
-    const error = await new Promise((resolve) => {
-      blockUtils.loadCSS('/test/scripts/nope.css', (e) => resolve(e));
-    });
-    expect(error).to.equal('error');
   });
 
   it('Collects RUM data', async () => {
@@ -74,13 +53,6 @@ describe('Utils methods', () => {
     expect($picture.querySelector(':scope source[type="image/webp"]')).to.exist; // webp
     expect($picture.querySelector(':scope source:not([type="image/webp"])')).to.exist; // fallback
     expect($picture.querySelector(':scope img').src).to.include('format=png&optimize=medium'); // default
-  });
-
-  it('Normalizes headings', async () => {
-    const numHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6').length;
-    blockUtils.normalizeHeadings(document.querySelector('main'), ['h1', 'h2', 'h3']);
-    expect(document.querySelectorAll('h1, h2, h3, h4, h5, h6').length).to.equal(numHeadings);
-    expect(document.querySelectorAll('h4, h5, h6').length).to.equal(0);
   });
 });
 
