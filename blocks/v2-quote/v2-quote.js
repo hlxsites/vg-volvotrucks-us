@@ -6,7 +6,7 @@ import {
 } from '../../scripts/common.js';
 
 const blockName = 'v2-quote';
-const variantClasses = ['no-background'];
+const variantClasses = ['with-background'];
 
 export default function decorate(block) {
   variantsClassesToBEM(block.classList, variantClasses, blockName);
