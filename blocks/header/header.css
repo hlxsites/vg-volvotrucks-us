@@ -388,10 +388,7 @@
     min-width: 180px;
     gap: 48px;
     overflow-y: scroll;
-  }
-
-  .header__accordion-content-wrapper .header__accordion-content-wrapper--with-images::-webkit-scrollbar {
-    display: none;
+    scrollbar-width: thin;
   }
 
   .header__main-nav-item > .header__accordion-container > .header__accordion-content-wrapper {
