@@ -372,7 +372,7 @@
     top: var(--nav-height);
     transition: unset;
     overflow-y: auto;
-    max-height: calc(100vh - 5 * var(--nav-height));
+    max-height: calc(100vh - 2 * var(--nav-height));
     display: none;
   }
 
