@@ -45,7 +45,6 @@ if (isTargetingAllowed()) {
 }
 
 if (isSocialAllowed()) {
-  console.log('socialallow');
   FACEBOOK_PIXEL_ID && loadFacebookPixel();
   TIKTOK_PIXEL_ID && loadTiktokPixel();
 }
@@ -64,7 +63,9 @@ document.addEventListener('click', (e) => {
 
 // OneTrust Cookies Consent Notice start for volvotrucks.us
 if (!window.location.pathname.includes('srcdoc')
-  && !['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
+  && !['aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
+  // && !['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
+  // when running on localhost in the block library host is empty but the path is srcdoc
   // when running on localhost in the block library host is empty but the path is srcdoc
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
   // because the cookie is not persistent. To avoid this annoyance, disable unless on the
@@ -161,7 +162,6 @@ async function loadAccountEngagementTracking() {
 
   body.append(script);
 };
-console.log('cargo');
 
 // TikTok Code
 async function loadTiktokPixel() {
@@ -193,7 +193,6 @@ async function loadTiktokPixel() {
       var o = document.createElement("script");
       o.type="text/javascript", o.async = !0, o.src = i+"?sdkid="+e+"&lib="+t;
       var a = document.getElementsByTagName("script")[0];
-      console.log(a);
       a.parentNode.insertBefore(o,a)};
       ttq.load(TIKTOK_PIXEL_ID);
       ttq.page();
