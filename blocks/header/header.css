@@ -388,7 +388,6 @@
     min-width: 180px;
     gap: 48px;
     overflow-y: scroll;
-    scrollbar-width: thin;
     padding-bottom: 24px;
   }
 
@@ -397,8 +396,8 @@
   }
 
   .header__accordion-content-wrapper::-webkit-scrollbar-button,
-  .header__accordion-content-wrapper .header__accordion-content-wrapper::-webkit-scrollbar-button,
-  .header__accordion-content-wrapper .header__accordion-content-wrapper::-webkit-scrollbar {
+  .header__main-nav-item > .header__accordion-container > .header__accordion-content-wrapper::-webkit-scrollbar-button,
+  .header__main-nav-item > .header__accordion-container > .header__accordion-content-wrapper::-webkit-scrollbar {
     display: none;
   }
 
