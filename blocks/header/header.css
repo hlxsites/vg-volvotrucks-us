@@ -398,7 +398,7 @@
     padding-bottom: 24px;
   }
 
-  .header__accordion-content-wrapper .header__accordion-content-wrapper--with-images::-webkit-scrollbar {
+  .header__accordion-content-wrapper.header__accordion-content-wrapper--with-images::-webkit-scrollbar {
     display: none;
   }
 
