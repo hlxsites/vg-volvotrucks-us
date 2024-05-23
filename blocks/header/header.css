@@ -396,8 +396,14 @@
     padding: 32px 64px 48px;
   }
 
+  .header__accordion-content-wrapper::-webkit-scrollbar-button,
+  .header__accordion-content-wrapper .header__accordion-content-wrapper::-webkit-scrollbar-button,
   .header__accordion-content-wrapper .header__accordion-content-wrapper::-webkit-scrollbar {
     display: none;
+  }
+
+  .header__accordion-content-wrapper::-webkit-scrollbar-thumb {
+    display: block;
   }
 
   .header__main-nav-link.header__link:any-link {
