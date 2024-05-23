@@ -400,14 +400,8 @@
     scrollbar-width: none;
   }
 
-  .header__accordion-content-wrapper::-webkit-scrollbar-button,
-  .header__accordion-content-wrapper.inner-accordion::-webkit-scrollbar-button,
   .header__accordion-content-wrapper.inner-accordion::-webkit-scrollbar {
     display: none;
-  }
-
-  .header__accordion-content-wrapper::-webkit-scrollbar-thumb {
-    display: block;
   }
 
   .header__main-nav-link.header__link:any-link {
