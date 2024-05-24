@@ -46,7 +46,6 @@
   .v2-inpage-navigation-wrapper + .v2-hero-container .v2-hero__content-wrapper {
     min-height: calc(100svh - (var(--nav-height) + var(--inpage-navigation-height) - 2px));
   }
-
 }
 
 .section.v2-hero-container {
@@ -61,7 +60,8 @@
   width: 100%;
 }
 
-.v2-hero--background-right .v2-hero__image, .v2-hero--background-right .v2-hero__video {
+.v2-hero--background-right .v2-hero__image,
+.v2-hero--background-right .v2-hero__video {
   object-position: center right;
 }
 
@@ -162,7 +162,7 @@
   animation: scroll-move 3s infinite;
   background-color: var(--c-white);
   border-radius: 50%;
-  content: '';
+  content: "";
   height: var(--scroll-dot-width);
   left: calc(50% - (var(--scroll-dot-width) / 2));
   position: absolute;
@@ -178,7 +178,8 @@
   padding: 24px 0;
 }
 
-.v2-hero--centered .v2-hero__countdown, .v2-hero--center-bottom .v2-hero__countdown {
+.v2-hero--centered .v2-hero__countdown,
+.v2-hero--center-bottom .v2-hero__countdown {
   justify-content: center;
 }
 
@@ -200,7 +201,7 @@
 .v2-hero__countdown-number {
   font: 400 var(--f-heading-3-5-font-size) / var(--f-heading-3-5-line-height) var(--ff-volvo-novum-medium);
   letter-spacing: 0.25px;
-  font-feature-settings: 'tnum';
+  font-feature-settings: "tnum";
 }
 
 .v2-hero__countdown-label {
@@ -210,7 +211,6 @@
 }
 
 /* END - Countdown  */
-
 
 @media (min-width: 744px) {
   .v2-hero {

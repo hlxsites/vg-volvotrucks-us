@@ -6,7 +6,7 @@ import {
   createElement, getTextLabel, removeEmptyTags, variantsClassesToBEM,
 } from '../../scripts/common.js';
 
-const variantClasses = ['centered', 'left-center', 'center-bottom', 'dark', 'background-right'];
+const variantClasses = ['centered', 'left-center', 'center-bottom', 'dark', 'background-right', 'compact'];
 let intervalId = null;
 const blockName = 'v2-hero';
 
@@ -49,6 +49,7 @@ export default async function decorate(block) {
   // add Hero variant classnames
   variantsClassesToBEM(block.classList, variantClasses, blockName);
 
+  const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
   const link = block.querySelector('a');
   const isVideo = link ? isVideoLink(link) : false;
@@ -139,8 +140,10 @@ export default async function decorate(block) {
   });
   content.appendChild(buttonsWrapper);
 
-  const scrollIcon = createElement('div', { classes: `${blockName}__scroll-icon` });
-  block.append(scrollIcon);
+  if (!isCompact) {
+    const scrollIcon = createElement('div', { classes: `${blockName}__scroll-icon` });
+    block.append(scrollIcon);
+  }
 
   removeEmptyTags(content);
 
