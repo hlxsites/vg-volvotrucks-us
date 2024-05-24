@@ -147,6 +147,23 @@
   width: max-content;
 }
 
+.v2-hero--compact .v2-hero__content-wrapper {
+  --v2-hero-compact-padding: 24px;
+
+  padding-block: var(--v2-hero-compact-padding);
+}
+
+.v2-hero--compact,
+.v2-hero--compact .v2-hero__content-wrapper {
+  min-height: fit-content;
+}
+
+.v2-hero--compact .v2-hero__title {
+  --hero-magazine-font-size: 70px;
+
+  font-size: var(--hero-magazine-font-size) !important;
+}
+
 /* Scroll icon */
 .v2-hero__scroll-icon {
   border-radius: 20px;
@@ -242,5 +259,13 @@
     font-size: 100px;
     line-height: 85%;
     letter-spacing: 7px;
+  }
+
+  .v2-hero--compact .v2-hero__content-wrapper {
+    --v2-hero-compact-padding: 80px;
+  }
+
+  .v2-hero--compact .v2-hero__title {
+    --hero-magazine-font-size: 100px;
   }
 }

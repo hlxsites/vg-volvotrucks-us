@@ -126,7 +126,13 @@ export default async function decorate(block) {
 
   // render all paragraph as H6 with the class
   const paragraphs = [...content.querySelectorAll('p')];
+  const ctaLinks = content.querySelectorAll('p > a');
   paragraphs.forEach((paragraph) => paragraph.classList.add('h6'));
+  // if a missing cta link has missing the button container class, add it and remove the h6 class
+  ctaLinks.forEach((ctaLink) => {
+    ctaLink.parentElement.classList.remove('h6');
+    ctaLink.parentElement.classList.add('button-container');
+  });
 
   const buttonsWrapper = createElement('div', { classes: `${blockName}__buttons-wrapper` });
   const ctaButtons = content.querySelectorAll('.button-container > a');
