@@ -658,10 +658,12 @@ const decorateButtons = (element) => {
     if (shouldDecorateLink(a)) {
       const up = a.parentElement;
       const twoUp = up.parentElement;
+      const threeUp = twoUp.parentElement;
       const buttonClass = getButtonClass(up, twoUp);
       a.className = `button ${buttonClass}`;
       addClassToContainer(up);
       addClassToContainer(twoUp);
+      addClassToContainer(threeUp);
     }
   });
 };
