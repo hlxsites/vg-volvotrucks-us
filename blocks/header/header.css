@@ -383,14 +383,25 @@
     justify-content: space-between;
   }
 
-  .header__accordion-content-wrapper {
+  .header__accordion-content-wrapper:not(.inner-accordion) {
     display: flex;
     min-width: 180px;
     gap: 48px;
+    overflow-y: auto;
+    scrollbar-width: thin;
   }
 
   .header__main-nav-item > .header__accordion-container > .header__accordion-content-wrapper {
     padding: 32px 64px 48px;
+  }
+
+  .header__accordion-content-wrapper.inner-accordion {
+    padding-bottom: 24px;
+    scrollbar-width: none;
+  }
+
+  .header__accordion-content-wrapper.inner-accordion::-webkit-scrollbar {
+    display: none;
   }
 
   .header__main-nav-link.header__link:any-link {
