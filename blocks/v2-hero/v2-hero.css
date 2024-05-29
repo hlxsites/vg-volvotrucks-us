@@ -97,6 +97,10 @@
   background-color: var(--c-grey-4);
 }
 
+.v2-hero--background-transparent {
+  background-color: transparent;
+}
+
 .v2-hero--dark .v2-hero__content-wrapper {
   background: linear-gradient(180deg, rgb(0 0 0 / 40%) 0%, rgb(0 0 0 / 0%) 100%);
   color: var(--c-white);
