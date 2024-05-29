@@ -214,6 +214,13 @@ const buildMenuContent = (menuData, navEl) => {
 
       // disabling scroll when menu is open
       document.body.classList[isExpanded ? 'add' : 'remove']('disable-scroll');
+      document.querySelectorAll('footer, main').forEach((elmt) => {
+        if (isExpanded) {
+          elmt.setAttribute('inert', 'inert');
+        } else {
+          elmt.removeAttribute('inert');
+        }
+      });
     };
     // creating overview link - visible only on mobile
     createOverviewLink(tabName, accordionContentWrapper);
@@ -238,7 +245,7 @@ const buildMenuContent = (menuData, navEl) => {
         <div class="${blockClass}__menu-content ${extraClasses}">
           ${title.outerHTML}
           <div class="${blockClass}__category-content ${blockClass}__accordion-container">
-            <div class="${blockClass}__accordion-content-wrapper">
+            <div class="${blockClass}__accordion-content-wrapper inner-accordion">
               ${list.outerHTML}
             </div>
           </div>
@@ -338,7 +345,7 @@ export default async function decorate(block) {
       el.querySelector(':scope [aria-expanded="true"]').setAttribute('aria-expanded', false);
     });
     document.body.classList.remove('disable-scroll');
-
+    document.querySelectorAll('footer, main').forEach((el) => el.removeAttribute('inert'));
     setAriaForMenu(false);
   };
 
