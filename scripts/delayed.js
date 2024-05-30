@@ -202,8 +202,7 @@ async function loadTiktokPixel() {
         "external_id": "<hashed_external_id>" // string. A unique ID from the advertiser such as user or external cookie IDs. It must be hashed with SHA256 on the client side.
       });
 
-      // Tracking various user interactions
-      ttq.track('SubmitForm', {
+      const trackingObject = {
         "value": "<content_value>", // number. Value of the order or items sold. Example: 100.
         "currency": "<content_currency>", // string. The 4217 currency code. Example: "USD".
         "contents": [
@@ -213,19 +212,11 @@ async function loadTiktokPixel() {
                 "content_name": "<content_name>" // string. The name of the page or product. Example: "shirt".
             }
         ]
-      });
+      };
 
-      ttq.track('ClickButton', {
-        "value": "<content_value>", // number. Value of the order or items sold. Example: 100.
-        "currency": "<content_currency>", // string. The 4217 currency code. Example: "USD".
-        "contents": [
-            {
-                "content_id": "<content_identifier>", // string. ID of the product. Example: "1077218".
-                "content_type": "<content_type>", // string. Either product or product_group.
-                "content_name": "<content_name>" // string. The name of the page or product. Example: "shirt".
-            }
-        ]
-      });
+      // Tracking various user interactions
+      ttq.track('SubmitForm', trackingObject);
+      ttq.track('ClickButton', trackingObject);
 
       // Repeat similar structure for 'Download', 'CompletePayment', 'Contact', 'CompleteRegistration',
       // 'ViewContent', 'AddToCart', 'PlaceAnOrder', 'AddPaymentInfo', 'InitiateCheckout', 'Search', 
