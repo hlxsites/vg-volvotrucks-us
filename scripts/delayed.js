@@ -63,8 +63,7 @@ document.addEventListener('click', (e) => {
 
 // OneTrust Cookies Consent Notice start for volvotrucks.us
 if (!window.location.pathname.includes('srcdoc')
-  && !['aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
-  // && !['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
+  && !['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'].some((url) => window.location.host.includes(url))) {
   // when running on localhost in the block library host is empty but the path is srcdoc
   // when running on localhost in the block library host is empty but the path is srcdoc
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
