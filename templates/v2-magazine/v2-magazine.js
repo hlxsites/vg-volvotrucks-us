@@ -9,8 +9,8 @@ const buildArticleHero = (doc) => {
   let title = getMetadata('og:title');
   if (title.includes('|')) [title] = title.split(' |');
   const author = getMetadata('author');
-  const pubdate = getMetadata('publish-date');
-  const readtime = getMetadata('readingtime');
+  const pubDate = getMetadata('publish-date');
+  const readTime = getMetadata('readingtime');
   const headPic = getMetadata('og:image');
   const headAlt = getMetadata('og:image:alt');
   const tags = getMetadata('article:tag').split(',');
@@ -31,10 +31,10 @@ const buildArticleHero = (doc) => {
   authorSpan.innerText = author;
   textContainer.append(authorSpan);
   const pubDateSpan = createElement('span', { classes: `${articleHero}--pubdate` });
-  pubDateSpan.innerText = pubdate;
+  pubDateSpan.innerText = pubDate;
   textContainer.append(pubDateSpan);
   const readTimeSpan = createElement('span', { classes: `${articleHero}--readtime` });
-  readTimeSpan.innerText = `${readtime} ${getTextLabel('readTime')}`;
+  readTimeSpan.innerText = `${readTime} ${getTextLabel('readTime')}`;
   textContainer.append(readTimeSpan);
 
   // Title

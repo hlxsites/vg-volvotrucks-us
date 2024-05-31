@@ -44,14 +44,14 @@
   margin: 0;
 }
 
-.v2-magazine__article-hero--topics {
+.v2-magazine__article-hero--tags {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 16px 8px;
 }
 
-.v2-magazine__article-hero--topic {
+.v2-magazine__article-hero--tag {
   height: 32px;
   padding: 10px 20px;
   border-radius: 99px;
