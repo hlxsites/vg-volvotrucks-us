@@ -52,9 +52,12 @@
 }
 
 .v2-magazine__article-hero--topic {
+  height: 32px;
   padding: 10px 20px;
   border-radius: 99px;
   outline: 1px solid var(--button-primary-bg);
+  font-size: 14px;
+  line-height: 1;
 }
 
 @media (min-width: 744px) {
