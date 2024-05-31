@@ -6,8 +6,8 @@ const articleHero = `${templateName}__article-hero`;
 
 const buildArticleHero = (doc) => {
   const main = doc.querySelector('main');
-  const titleRaw = getMetadata('og:title');
-  const title = titleRaw.includes('|') ? titleRaw.split('|')[0] : titleRaw;
+  let title = getMetadata('og:title');
+  if (title.includes('|')) [title] = title.split(' |');
   const author = getMetadata('author');
   const pubdate = getMetadata('publish-date');
   const readtime = getMetadata('readingtime');
