@@ -13,7 +13,7 @@ const buildArticleHero = (doc) => {
   const readtime = getMetadata('readingtime');
   const headPic = getMetadata('og:image');
   const headAlt = getMetadata('og:image:alt');
-  const topics = getMetadata('article:tag').split(',');
+  const tags = getMetadata('article:tag').split(',');
 
   // Hero container
   const heroContainer = createElement('div', { classes: `${articleHero}--container` });
@@ -22,7 +22,7 @@ const buildArticleHero = (doc) => {
   const imgContainer = createElement('div', { classes: `${articleHero}--img-container` });
   const headImg = createOptimizedPicture(headPic, headAlt);
 
-  // Text items container -> text, title and topics
+  // Text items container -> text, title and tags
   const textItemsContainer = createElement('div', { classes: `${articleHero}--text-items-container` });
 
   // Text row with author | date | read time
@@ -45,16 +45,16 @@ const buildArticleHero = (doc) => {
   // Add text items container to the hero container
   textItemsContainer.append(textContainer, heroTitle);
 
-  // Topic list, if any, is added to the hero container
-  if (topics.length) {
-    const topicList = createElement('ul', { classes: `${articleHero}--topics` });
-    topics.forEach((topic) => {
-      const topicLi = createElement('li', { classes: `${articleHero}--topic` });
-      topicLi.innerText = topic;
-      topicList.append(topicLi);
+  // Tag list, if any, is added to the hero container
+  if (tags.length) {
+    const tagList = createElement('ul', { classes: `${articleHero}--tags` });
+    tags.forEach((tag) => {
+      const tagLi = createElement('li', { classes: `${articleHero}--tag` });
+      tagLi.innerText = tag;
+      tagList.append(tagLi);
     });
 
-    textItemsContainer.append(topicList);
+    textItemsContainer.append(tagList);
   }
 
   // Add elements to the hero container
