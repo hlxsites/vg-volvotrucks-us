@@ -36,7 +36,7 @@
 
 .v2-magazine__article-hero--pubdate,
 .v2-magazine__article-hero--readtime {
-  color: var(--c-grey-4);
+  color: var(--text-subtle);
 }
 
 .v2-magazine__article-hero--title {
