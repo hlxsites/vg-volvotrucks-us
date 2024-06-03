@@ -24,7 +24,7 @@
 }
 
 .v2-magazine .v2-magazine__article-hero--img-container img {
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   object-fit: cover;
   aspect-ratio: var(--hero-image-aspect-ratio);
 }
