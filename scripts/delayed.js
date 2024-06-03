@@ -14,6 +14,7 @@ const {
   GTM_ID = false,
   DATA_DOMAIN_SCRIPT = false,
   ACC_ENG_TRACKING = false,
+  TIKTOK_PIXEL_ID = false,
 } = COOKIE_CONFIGS;
 
 const extractValues = (data) => {
@@ -45,6 +46,7 @@ if (isTargetingAllowed()) {
 
 if (isSocialAllowed()) {
   FACEBOOK_PIXEL_ID && loadFacebookPixel();
+  TIKTOK_PIXEL_ID && loadTiktokPixel();
 }
 
 // add more delayed functionality here
@@ -158,3 +160,66 @@ async function loadAccountEngagementTracking() {
 
   body.append(script);
 };
+
+// TikTok Code
+async function loadTiktokPixel() {
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;
+    var ttq=w[t]=w[t]||[];
+    ttq.methods=[
+    "page",
+    "track",
+    "identify",
+    "instances",
+    "debug",
+    "on",
+    "off",
+    "once",
+    "ready",
+    "alias",
+    "group",
+    "enableCookie",
+    "disableCookie",
+    ],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0; i<ttq.methods.length; i++) ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance = function(t) {
+      for(var e=ttq._i[t]||[],n=0; n<ttq.methods.length; n++) ttq.setAndDefer(e,ttq.methods[n]);
+      return e
+    }, ttq.load = function(e,n) {
+      var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+      ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = i, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {};
+      var o = document.createElement("script");
+      o.type="text/javascript", o.async = !0, o.src = i+"?sdkid="+e+"&lib="+t;
+      var a = document.getElementsByTagName("script")[0];
+      a.parentNode.insertBefore(o,a)};
+      ttq.load(TIKTOK_PIXEL_ID);
+      ttq.page();
+
+      // Identifying the user with hashed details
+      ttq.identify({
+        "email": "<hashed_email_address>", // string. The email of the customer if available. It must be hashed with SHA-256 on the client side.
+        "phone_number": "<hashed_phone_number>", // string. The phone number of the customer if available. It must be hashed with SHA-256 on the client side.
+        "external_id": "<hashed_external_id>" // string. A unique ID from the advertiser such as user or external cookie IDs. It must be hashed with SHA256 on the client side.
+      });
+
+      const trackingObject = {
+        "value": "<content_value>", // number. Value of the order or items sold. Example: 100.
+        "currency": "<content_currency>", // string. The 4217 currency code. Example: "USD".
+        "contents": [
+            {
+                "content_id": "<content_identifier>", // string. ID of the product. Example: "1077218".
+                "content_type": "<content_type>", // string. Either product or product_group.
+                "content_name": "<content_name>" // string. The name of the page or product. Example: "shirt".
+            }
+        ]
+      };
+
+      // Tracking various user interactions
+      ttq.track('SubmitForm', trackingObject);
+      ttq.track('ClickButton', trackingObject);
+
+      // Repeat similar structure for 'Download', 'CompletePayment', 'Contact', 'CompleteRegistration',
+      // 'ViewContent', 'AddToCart', 'PlaceAnOrder', 'AddPaymentInfo', 'InitiateCheckout', 'Search', 
+      // 'AddToWishlist', 'Subscribe', and 'Pageview' events with appropriate parameters and comments.
+   }(window, document, 'ttq');
+}
