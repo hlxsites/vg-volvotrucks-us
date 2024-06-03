@@ -37,13 +37,19 @@ const buildArticleHero = (doc) => {
   // Text row with author | date | read time
   const textContainer = createElement('div', { classes: `${articleHero}--text-container` });
   const authorSpan = createElement('span', { classes: `${articleHero}--author` });
-  const pubDateSpan = createElement('span', { classes: `${articleHero}--pubdate` });
+  const pubDateEl = createElement('date', {
+    classes: `${articleHero}--pubdate`,
+    props: {
+      datetime: new Date(pubDate).toISOString(),
+      itemprop: 'datePublished',
+    },
+  });
   const readTimeSpan = createElement('span', { classes: `${articleHero}--readtime` });
   authorSpan.innerText = author;
   pubDate = new Intl.DateTimeFormat(locale, formatDateOptions).format(new Date(pubDate));
-  pubDateSpan.innerText = pubDate;
+  pubDateEl.innerText = pubDate;
   readTimeSpan.innerText = `${readTime} ${getTextLabel('readTime')}`;
-  textContainer.append(authorSpan, pubDateSpan, readTimeSpan);
+  textContainer.append(authorSpan, pubDateEl, readTimeSpan);
 
   // Title
   const heroTitle = createElement('h2', { classes: `${articleHero}--title` });
