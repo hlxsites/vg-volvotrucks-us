@@ -78,6 +78,8 @@ const buildArticleHero = (doc) => {
   heroContainer.append(imgContainer, textItemsContainer);
 
   // Add Hero to the main container
+  main.setAttribute('itemscope', '');
+  main.setAttribute('itemtype', 'https://schema.org/Article');
   main.prepend(heroContainer);
 };
 
