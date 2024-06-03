@@ -36,7 +36,10 @@ const buildArticleHero = (doc) => {
 
   // Text row with author | date | read time
   const textContainer = createElement('div', { classes: `${articleHero}--text-container` });
-  const authorSpan = createElement('span', { classes: `${articleHero}--author` });
+  const authorSpan = createElement('span', {
+    classes: `${articleHero}--author`,
+    props: { itemprop: 'author' },
+  });
   const pubDateEl = createElement('date', {
     classes: `${articleHero}--pubdate`,
     props: {
