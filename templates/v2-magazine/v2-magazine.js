@@ -1,5 +1,11 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
-import { createElement, getTextLabel, getPlaceholders } from '../../scripts/common.js';
+import {
+  createElement,
+  getTextLabel,
+  getPlaceholders,
+  extractObjectFromArray,
+  MAGAZINE_CONFIGS,
+} from '../../scripts/common.js';
 
 const templateName = 'v2-magazine';
 const articleHero = `${templateName}__article-hero`;
@@ -9,7 +15,10 @@ const buildArticleHero = (doc) => {
   let title = getMetadata('og:title');
   if (title.includes('|')) [title] = title.split(' |');
   const author = getMetadata('author');
-  const pubDate = getMetadata('publish-date');
+  let pubDate = getMetadata('publish-date');
+  const { DATE_LANGUAGE, DATE_OPTIONS } = MAGAZINE_CONFIGS;
+  const locale = getMetadata('locale') || DATE_LANGUAGE;
+  const formatDateOptions = extractObjectFromArray(JSON.parse(DATE_OPTIONS));
   const readTime = getMetadata('readingtime');
   const headPic = getMetadata('og:image');
   const headAlt = getMetadata('og:image:alt');
@@ -31,6 +40,7 @@ const buildArticleHero = (doc) => {
   authorSpan.innerText = author;
   textContainer.append(authorSpan);
   const pubDateSpan = createElement('span', { classes: `${articleHero}--pubdate` });
+  pubDate = new Intl.DateTimeFormat(locale, formatDateOptions).format(new Date(pubDate));
   pubDateSpan.innerText = pubDate;
   textContainer.append(pubDateSpan);
   const readTimeSpan = createElement('span', { classes: `${articleHero}--readtime` });
