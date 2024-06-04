@@ -8,7 +8,7 @@ import {
 } from '../../scripts/common.js';
 
 const templateName = 'v2-magazine';
-const articleHero = `${templateName}__article-hero`;
+const articleHero = `${templateName}-article-hero`;
 
 const buildArticleHero = (doc) => {
   const main = doc.querySelector('main');
@@ -25,29 +25,29 @@ const buildArticleHero = (doc) => {
   const tags = getMetadata('article:tag').split(',');
 
   // Hero container
-  const heroContainer = createElement('div', { classes: `${articleHero}--container` });
+  const heroContainer = createElement('div', { classes: `${articleHero}__container` });
 
   // Image
-  const imgContainer = createElement('div', { classes: `${articleHero}--img-container` });
+  const imgContainer = createElement('div', { classes: `${articleHero}__img-container` });
   const headImg = createOptimizedPicture(headPic, headAlt);
 
   // Text items container -> text, title and tags
-  const textItemsContainer = createElement('div', { classes: `${articleHero}--text-items-container` });
+  const textItemsContainer = createElement('div', { classes: `${articleHero}__text-items-container` });
 
   // Text row with author | date | read time
-  const textContainer = createElement('div', { classes: `${articleHero}--text-container` });
+  const textContainer = createElement('div', { classes: `${articleHero}__text-container` });
   const authorSpan = createElement('span', {
     classes: `${articleHero}--author`,
     props: { itemprop: 'author' },
   });
   const pubDateEl = createElement('date', {
-    classes: `${articleHero}--pubdate`,
+    classes: `${articleHero}__pubdate`,
     props: {
       datetime: new Date(pubDate).toISOString(),
       itemprop: 'datePublished',
     },
   });
-  const readTimeSpan = createElement('span', { classes: `${articleHero}--readtime` });
+  const readTimeSpan = createElement('span', { classes: `${articleHero}__readtime` });
   authorSpan.innerText = author;
   pubDate = new Intl.DateTimeFormat(locale, formatDateOptions).format(new Date(pubDate));
   pubDateEl.innerText = pubDate;
@@ -55,7 +55,7 @@ const buildArticleHero = (doc) => {
   textContainer.append(authorSpan, pubDateEl, readTimeSpan);
 
   // Title
-  const heroTitle = createElement('h2', { classes: `${articleHero}--title` });
+  const heroTitle = createElement('h2', { classes: `${articleHero}__title` });
   heroTitle.innerText = title;
   imgContainer.append(headImg);
 
@@ -64,9 +64,9 @@ const buildArticleHero = (doc) => {
 
   // Tag list, if any, is added to the textItems container
   if (tags.length) {
-    const tagList = createElement('ul', { classes: `${articleHero}--tags` });
+    const tagList = createElement('ul', { classes: `${articleHero}__tags` });
     tags.forEach((tag) => {
-      const tagLi = createElement('li', { classes: `${articleHero}--tag` });
+      const tagLi = createElement('li', { classes: `${articleHero}__tag` });
       tagLi.innerText = tag.trim();
       tagList.append(tagLi);
     });
