@@ -67,7 +67,7 @@ const buildArticleHero = (doc) => {
     const tagList = createElement('ul', { classes: `${articleHero}--tags` });
     tags.forEach((tag) => {
       const tagLi = createElement('li', { classes: `${articleHero}--tag` });
-      tagLi.innerText = tag;
+      tagLi.innerText = tag.trim();
       tagList.append(tagLi);
     });
 
