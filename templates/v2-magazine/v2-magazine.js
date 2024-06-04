@@ -27,14 +27,13 @@ const buildArticleHero = (doc) => {
   // Hero container
   const heroContainer = createElement('div', { classes: `${articleHero}__container` });
 
+  // Title
+  const heroTitle = createElement('h1', { classes: `${articleHero}__title` });
+
   // Image
-  const imgContainer = createElement('div', { classes: `${articleHero}__img-container` });
   const headImg = createOptimizedPicture(headPic, headAlt);
 
-  // Text items container -> text, title and tags
-  const textItemsContainer = createElement('div', { classes: `${articleHero}__text-items-container` });
-
-  // Text row with author | date | read time
+  // Metadata Text row with author | date | read time
   const textContainer = createElement('div', { classes: `${articleHero}__text-container` });
   const authorSpan = createElement('span', {
     classes: `${articleHero}--author`,
@@ -48,21 +47,19 @@ const buildArticleHero = (doc) => {
     },
   });
   const readTimeSpan = createElement('span', { classes: `${articleHero}__readtime` });
+
+  heroTitle.innerText = title;
+  headImg.classList.add(`${articleHero}__img-container`);
   authorSpan.innerText = author;
   pubDate = new Intl.DateTimeFormat(locale, formatDateOptions).format(new Date(pubDate));
   pubDateEl.innerText = pubDate;
   readTimeSpan.innerText = `${readTime} ${getTextLabel('readTime')}`;
   textContainer.append(authorSpan, pubDateEl, readTimeSpan);
 
-  // Title
-  const heroTitle = createElement('h2', { classes: `${articleHero}__title` });
-  heroTitle.innerText = title;
-  imgContainer.append(headImg);
+  // Add items to the Hero container
+  heroContainer.append(heroTitle, headImg, textContainer);
 
-  // Add text items to the textItems container
-  textItemsContainer.append(textContainer, heroTitle);
-
-  // Tag list, if any, is added to the textItems container
+  // Tag list, if any, is added to the Hero container
   if (tags.length) {
     const tagList = createElement('ul', { classes: `${articleHero}__tags` });
     tags.forEach((tag) => {
@@ -71,11 +68,8 @@ const buildArticleHero = (doc) => {
       tagList.append(tagLi);
     });
 
-    textItemsContainer.append(tagList);
+    heroContainer.append(tagList);
   }
-
-  // Add elements to the hero container
-  heroContainer.append(imgContainer, textItemsContainer);
 
   // Add Hero to the main container
   main.setAttribute('itemscope', '');

@@ -1,8 +1,7 @@
 .v2-magazine {
   --hero-heading-padding: 0 16px 16px;
-  --hero-heading-container-gap: 24px;
   --hero-heading-items-gap: 16px;
-  --hero-heading-font-size: 32px;
+  --hero-heading-font-size: var(--f-heading-4-font-size);
   --hero-image-aspect-ratio: 7 / 5;
 }
 
@@ -11,27 +10,34 @@
 }
 
 .v2-magazine-article-hero__container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--hero-heading-container-gap);
   padding: var(--hero-heading-padding);
-}
-
-.v2-magazine-article-hero__text-items-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: var(--hero-heading-items-gap);
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "image   "
+    "metadata"
+    "title   "
+    "tags    ";
 }
 
-.v2-magazine .v2-magazine-article-hero__img-container img {
+.v2-magazine-article-hero__img-container {
+  grid-area: image;
+  aspect-ratio: var(--hero-image-aspect-ratio);
+}
+
+.v2-magazine-article-hero__img-container img {
   border-radius: var(--border-radius);
   object-fit: cover;
-  aspect-ratio: var(--hero-image-aspect-ratio);
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8px;
 }
 
 .v2-magazine-article-hero__text-container {
   display: flex;
   gap: 16px;
+  grid-area: metadata;
 }
 
 .v2-magazine-article-hero__pubdate,
@@ -41,7 +47,9 @@
 
 .v2-magazine-article-hero__title {
   font-size: var(--hero-heading-font-size);
+  text-wrap: balance;
   margin: 0;
+  grid-area: title;
 }
 
 .v2-magazine-article-hero__tags {
@@ -49,6 +57,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px 8px;
+  grid-area: tags;
 }
 
 .v2-magazine-article-hero__tag {
@@ -69,25 +78,29 @@
 @media (min-width: 1200px) {
   .v2-magazine {
     --hero-heading-padding: 0;
-    --hero-heading-container-gap: 48px;
-    --hero-heading-items-gap: 24px;
-    --hero-heading-font-size: 48px;
+    --hero-heading-items-gap: 24px 48px;
+    --hero-heading-font-size: var(--f-heading-3-font-size);
     --hero-image-aspect-ratio: 1.16 / 1;
   }
 
   .v2-magazine-article-hero__container {
-    grid-template-columns: 1fr 2fr;
-    grid-template-areas: "text image";
+    grid-template:
+      "metadata image" 1fr
+      "title    image" max-content
+      "tags     image" 1fr / 1fr 2fr;
     max-width: var(--wrapper-width);
     margin: 0 auto;
   }
 
-  .v2-magazine-article-hero__img-container {
-    grid-area: image;
+  .v2-magazine-article-hero__text-container {
+    align-items: flex-end;
   }
 
-  .v2-magazine-article-hero__text-items-container {
-    grid-area: text;
-    justify-content: center;
+  .v2-magazine-article-hero__tags {
+    align-content: flex-start;
+  }
+
+  .v2-magazine-article-hero__img-container img {
+    margin-bottom: 0;
   }
 }
