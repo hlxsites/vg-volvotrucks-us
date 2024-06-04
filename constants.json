@@ -24,6 +24,10 @@
                 "value": "C0002"
             },
             {
+                "name": "FUNCTIONAL_COOKIE",
+                "value": "C0003"
+            },
+            {
                 "name": "TARGETING_COOKIE",
                 "value": "C0004"
             },
@@ -50,6 +54,10 @@
             {
                 "name": "ACC_ENG_TRACKING",
                 "value": "[\"piAId: 1039333\",\"piCId: 25825\",\"piHostname: pi.pardot.com\"]"
+            },
+            {
+                "name": "TIKTOK_PIXEL_ID",
+                "value": "COGKTO3C77U0VOQQGM8G"
             }
         ]
     },

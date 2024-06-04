@@ -4,8 +4,10 @@ import {
 } from '../../scripts/common.js';
 import {
   ffetch,
-  splitTags,
 } from '../../scripts/lib-ffetch.js';
+import {
+  splitTags,
+} from '../../scripts/magazine-press.js';
 import {
   createOptimizedPicture,
   getMetadata,

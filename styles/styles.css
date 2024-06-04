@@ -444,7 +444,7 @@ h6 {
 
 h1#press-releases,
 h1#social-feeds,
-h1#volvo-trucks-magazine {
+:root:where(:not(.redesign-v2)) h1#volvo-trucks-magazine {
   font-family: var(--ff-volvo-broadprodigital);
   font-size: 60px;
 }
