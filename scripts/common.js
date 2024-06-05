@@ -404,6 +404,12 @@ async function getConstantValues() {
   return constants;
 }
 
+/**
+ * Transforms an array of strings in the format 'key: value' into an object.
+ * @param {string[]} data - Array of strings in the format 'key: value'.
+ * @returns {Object} - Object with keys and values.
+ * @throws {TypeError} - If an item in the array is not in the format 'key: value'.
+*/
 export const extractObjectFromArray = (data) => {
   const obj = {};
   // eslint-disable-next-line no-restricted-syntax
