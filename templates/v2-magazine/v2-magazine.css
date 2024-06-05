@@ -24,6 +24,7 @@
 .v2-magazine-article-hero__img-container {
   grid-area: image;
   aspect-ratio: var(--hero-image-aspect-ratio);
+  background-color: var(--media-background);
 }
 
 .v2-magazine-article-hero__img-container img {
