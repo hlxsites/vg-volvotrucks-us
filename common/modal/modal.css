@@ -293,27 +293,18 @@
   }
 }
 
-.redesign-v2 .modal--video,
-.modal--reveal {
+.redesign-v2 .modal--video {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.modal--reveal .modal-content {
-  height: auto;
-  aspect-ratio: auto;
-}
-
-.modal--reveal .section > div,
 .redesign-v2 .modal--video .section > div {
   padding-top: 32px;
   padding-bottom: 0;
 }
 
 @media (min-width: 1200px) {
-  .modal--reveal .section > div,
   .redesign-v2 .modal--video .section > div {
     padding-top: 48px;
   }

@@ -127,7 +127,7 @@ export function addVideoShowHandler(link) {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    const variantClasses = ['black', 'gray', 'reveal'];
+    const variantClasses = ['black', 'gray'];
     const modalClasses = [...event.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
     // changing the modal variants classes to BEM naming
     variantClasses.forEach((variant) => {

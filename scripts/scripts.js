@@ -410,7 +410,7 @@ async function loadModalScript() {
 document.addEventListener('open-modal', (event) => {
   // eslint-disable-next-line import/no-cycle, no-shadow
   loadModalScript().then((modal) => {
-    const variantClasses = ['black', 'gray', 'reveal'];
+    const variantClasses = ['black', 'gray'];
     const modalClasses = [...event.detail.target.closest('.section').classList].filter((el) => el.startsWith('modal-'));
     // changing the modal variants classes to BEM naming
     variantClasses.forEach((variant) => {
