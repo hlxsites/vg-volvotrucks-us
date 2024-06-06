@@ -60,7 +60,7 @@ const buildArticleHero = (doc) => {
   heroContainer.append(heroTitle, headImg, textContainer);
 
   // Tag list, if any, is added to the Hero container
-  if (tags.length) {
+  if (tags.length > 0 && tags[0] !== '') {
     const tagList = createElement('ul', { classes: `${articleHero}__tags` });
     tags.forEach((tag) => {
       const tagLi = createElement('li', { classes: `${articleHero}__tag` });
