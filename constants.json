@@ -62,9 +62,9 @@
     ]
   },
   "magazineConfig": {
-    "total": 2,
+    "total": 3,
     "offset": 0,
-    "limit": 2,
+    "limit": 3,
     "data": [
       {
         "name": "DATE_LANGUAGE",
@@ -72,7 +72,11 @@
       },
       {
         "name": "DATE_OPTIONS",
-        "value": "[\"month: long\",\"day: numeric\",\"year: numeric\"]"
+        "value": "[\"month: short\",\"day: numeric\",\"year: numeric\"]"
+      },
+      {
+        "name": "DATE_OPTIONS_MOBILE",
+        "value": "[\"month: 2-digit\",\"day: 2-digit\",\"year: numeric\"]"
       }
     ]
   },

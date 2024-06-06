@@ -9,6 +9,7 @@ import {
 
 const templateName = 'v2-magazine';
 const articleHero = `${templateName}-article-hero`;
+const MQ = window.matchMedia('(width < 1200px)');
 
 const buildArticleHero = (doc) => {
   const main = doc.querySelector('main');
@@ -16,9 +17,11 @@ const buildArticleHero = (doc) => {
   if (title.includes('|')) [title] = title.split(' |');
   const author = getMetadata('author');
   let pubDate = getMetadata('publish-date');
-  const { DATE_LANGUAGE, DATE_OPTIONS } = MAGAZINE_CONFIGS;
+  const { DATE_LANGUAGE, DATE_OPTIONS, DATE_OPTIONS_MOBILE } = MAGAZINE_CONFIGS;
   const locale = getMetadata('locale') || DATE_LANGUAGE;
-  const formatDateOptions = extractObjectFromArray(JSON.parse(DATE_OPTIONS));
+  const mobileDateOptions = extractObjectFromArray(JSON.parse(DATE_OPTIONS_MOBILE));
+  const desktopDateOptions = extractObjectFromArray(JSON.parse(DATE_OPTIONS));
+  const formatDateOptions = MQ.matches ? mobileDateOptions : desktopDateOptions;
   const readTime = getMetadata('readingtime');
   const headPic = getMetadata('og:image');
   const headAlt = getMetadata('og:image:alt');
@@ -53,7 +56,7 @@ const buildArticleHero = (doc) => {
   authorSpan.innerText = author;
   pubDate = new Intl.DateTimeFormat(locale, formatDateOptions).format(new Date(pubDate));
   pubDateEl.innerText = pubDate;
-  readTimeSpan.innerText = `${readTime} ${getTextLabel('readTime')}`;
+  readTimeSpan.innerText = `${readTime.split(' ').join('')} ${getTextLabel('readTime')}`;
   textContainer.append(authorSpan, pubDateEl, readTimeSpan);
 
   // Add items to the Hero container
@@ -70,6 +73,15 @@ const buildArticleHero = (doc) => {
 
     heroContainer.append(tagList);
   }
+
+  // Resize Observer to update date format based on screen width dynamically
+  const resizeObserver = new ResizeObserver((entries) => {
+    entries.forEach(() => {
+      const dateOptions = MQ.matches ? mobileDateOptions : desktopDateOptions;
+      pubDateEl.innerText = new Intl.DateTimeFormat(locale, dateOptions).format(new Date(pubDate));
+    });
+  });
+  resizeObserver.observe(main);
 
   // Add Hero to the main container
   main.setAttribute('itemscope', '');
