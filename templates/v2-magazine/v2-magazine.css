@@ -26,6 +26,7 @@
   aspect-ratio: var(--hero-image-aspect-ratio);
   background-color: var(--media-background);
   border-radius: var(--border-radius);
+  margin-bottom: 8px;
 }
 
 .v2-magazine-article-hero__img-container img {
@@ -33,7 +34,6 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
-  margin-bottom: 8px;
 }
 
 .v2-magazine-article-hero__metadata-container {
@@ -102,7 +102,7 @@
     align-content: flex-start;
   }
 
-  .v2-magazine-article-hero__img-container img {
+  .v2-magazine-article-hero__img-container {
     margin-bottom: 0;
   }
 }
