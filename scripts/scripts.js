@@ -624,8 +624,7 @@ const reparentChildren = (element) => {
 
 const shouldDecorateLink = (a) => {
   a.title = a.title || a.textContent;
-  const up = a.parentElement;
-  return a.href !== a.textContent && !a.querySelector('img') && ['P', 'DIV', 'LI'].includes(up.tagName) && up.childNodes.length === 1;
+  return a.href !== a.textContent && !a.querySelector('img');
 };
 
 const getButtonClass = (up, twoUp) => {
@@ -657,11 +656,19 @@ const addClassToContainer = (element) => {
 const decorateButtons = (element) => {
   element.querySelectorAll('a').forEach((a) => {
     if (shouldDecorateLink(a)) {
-      const up = a.parentElement;
+      let up = a.parentElement;
       const twoUp = up.parentElement;
       const threeUp = twoUp.parentElement;
       const buttonClass = getButtonClass(up, twoUp);
-      a.className = `button ${buttonClass}`;
+
+      // Redefine the up element after calling reparentChildren
+      up = a.parentElement;
+      if (['P', 'DIV', 'LI'].includes(up.tagName)) {
+        a.className = `button ${buttonClass}`;
+      } else {
+        a.className = buttonClass;
+      }
+
       addClassToContainer(up);
       addClassToContainer(twoUp);
       addClassToContainer(threeUp);
