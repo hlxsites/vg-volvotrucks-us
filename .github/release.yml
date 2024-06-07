@@ -13,7 +13,7 @@ changelog:
         - NFR
     - title: Bugfixes
       labels:
-        - bugfix
+        - Bugfix
     - title: Known issues
       labels:
         - wontfix
