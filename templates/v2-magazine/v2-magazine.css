@@ -36,7 +36,7 @@
   margin-bottom: 8px;
 }
 
-.v2-magazine-article-hero__text-container {
+.v2-magazine-article-hero__metadata-container {
   display: flex;
   gap: 16px;
   grid-area: metadata;
@@ -94,7 +94,7 @@
     margin: 0 auto;
   }
 
-  .v2-magazine-article-hero__text-container {
+  .v2-magazine-article-hero__metadata-container {
     align-items: flex-end;
   }
 
