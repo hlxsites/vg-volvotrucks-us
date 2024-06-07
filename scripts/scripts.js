@@ -624,7 +624,8 @@ const reparentChildren = (element) => {
 
 const shouldDecorateLink = (a) => {
   a.title = a.title || a.textContent;
-  return a.href !== a.textContent && !a.querySelector('img');
+  const up = a.parentElement;
+  return a.href !== a.textContent && !a.querySelector('img') && ['P', 'DIV', 'LI'].includes(up.tagName) && up.childNodes.length === 1;
 };
 
 const getButtonClass = (up, twoUp) => {
