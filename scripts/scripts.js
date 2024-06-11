@@ -661,7 +661,6 @@ const decorateButtons = (element) => {
       const threeUp = twoUp.parentElement;
       const buttonClass = getButtonClass(up, twoUp);
 
-      // Redefine the up element after calling reparentChildren
       up = a.parentElement;
       if (['P', 'DIV', 'LI'].includes(up.tagName)) {
         a.className = `button ${buttonClass}`;
@@ -672,6 +671,10 @@ const decorateButtons = (element) => {
       addClassToContainer(up);
       addClassToContainer(twoUp);
       addClassToContainer(threeUp);
+
+      if (![up, twoUp, threeUp].some(el => el.classList.contains('button-container'))) {
+        a.className = '';
+      }
     }
   });
 };
