@@ -672,7 +672,7 @@ const decorateButtons = (element) => {
       addClassToContainer(twoUp);
       addClassToContainer(threeUp);
 
-      if (![up, twoUp, threeUp].some(el => el.classList.contains('button-container'))) {
+      if (![up, twoUp, threeUp].some((el) => el.classList.contains('button-container'))) {
         a.className = '';
       }
     }
