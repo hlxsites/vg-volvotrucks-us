@@ -187,6 +187,7 @@
   --border-hover: var(--c-cta-blue-hover);
   --border-active: var(--c-cta-blue-active);
   --border-focus: var(--c-cta-blue-hover);
+  --navigation-line-active-color: var(--c-main-black);
 
   /* Motions */
   --duration-small: 160ms;
@@ -1208,6 +1209,7 @@ main.blue-contract .section.section-with-title p {
   --text-subtle: var(--c-grey-2);
   --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
+  --navigation-line-active-color: var(--c-white);
 
   color: var(--text-color);
   padding-top: 80px;
