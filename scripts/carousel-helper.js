@@ -1,5 +1,15 @@
 import { createElement } from './common.js';
+import { smoothScrollHorizontal } from './motion-helper.js';
 
+/**
+ * Listens to scroll events and triggers a function when elements intersect with the viewport
+ *
+ * @param {HTMLElement} carousel - The carousel container element.
+ * @param {HTMLElement[]} elements - The elements to observe for intersection.
+ * @param {HTMLElement} navigation - The navigation element.
+ * @param {Function} updateFn - Function to be called when an element intersects with the viewport
+ * @param {number} [threshold=1] - The threshold at which to trigger the update function.
+ */
 export const listenScroll = (carousel, elements, navigation, updateFn, threshold = 1) => {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -17,19 +27,64 @@ export const listenScroll = (carousel, elements, navigation, updateFn, threshold
   });
 };
 
-export const setCarouselPosition = (carousel, index) => {
+/**
+ * Sets the position of the carousel to the specified index.
+ *
+ * @param {HTMLElement} carousel - The carousel element.
+ * @param {number} index - The index to set the carousel position to.
+ * @param {boolean} [smoothScroll=true] - Whether to use smooth scrolling or not. Default is true.
+ * @param {number} [scrollDuration=1200] - The duration of the scroll animation. Default is 1200ms.
+ */
+export const setCarouselPosition = (
+  carousel,
+  index,
+  smoothScroll = true,
+  scrollDuration = 1200,
+) => {
   const firstEl = carousel.firstElementChild;
   const scrollOffset = firstEl.getBoundingClientRect().width;
-  const style = window.getComputedStyle(firstEl);
-  const marginleft = parseFloat(style.marginLeft);
+  const targetX = index * scrollOffset;
 
-  carousel.scrollTo({
-    left: index * scrollOffset + marginleft,
-    behavior: 'smooth',
-  });
+  if (smoothScroll) {
+    smoothScrollHorizontal(carousel, targetX, scrollDuration);
+  } else {
+    const style = window.getComputedStyle(firstEl);
+    const marginLeft = parseFloat(style.marginLeft);
+
+    carousel.scrollTo({
+      left: targetX + marginLeft,
+      behavior: 'instant',
+    });
+  }
 };
 
+/**
+ * Moves the navigation line to the active tab by manipulating CSS custom properties.
+ *
+ * @param {HTMLElement} activeTab - The active tab element.
+ * @param {HTMLElement} tabNavigation - The tab navigation element.
+ */
+export const moveNavigationLine = (activeTab, tabNavigation) => {
+  const { x: navigationX } = tabNavigation.getBoundingClientRect();
+  const { x, width } = activeTab.getBoundingClientRect();
+  tabNavigation.style.setProperty('--navigation-line-width', `${width}`);
+  tabNavigation.style.setProperty('--navigation-line-left', `${x + tabNavigation.scrollLeft - navigationX}px`);
+};
+
+/**
+ * Creates arrow controls for a carousel.
+ *
+ * @param {HTMLElement} carousel - The carousel element.
+ * @param {string} scrollSelector - The selector for the scrollable items within the carousel.
+ * @param {string[]} controlClasses - The classes to apply to the arrow controls.
+ * @param {DocumentFragment} arrowFragment - The arrow controls as a document fragment.
+ */
 export const createArrowControls = (carousel, scrollSelector, controlClasses, arrowFragment) => {
+  /**
+   * Navigates the carousel in the specified direction.
+   *
+   * @param {string} direction - The direction to navigate ('left' or 'right').
+   */
   function navigate(direction) {
     const activeItem = carousel.querySelector(scrollSelector);
     let index = [...activeItem.parentNode.children].indexOf(activeItem);

@@ -1,12 +1,12 @@
-.v2-tabbed-carousel-container {
-  /* Full width in mobile */
-  --v2-space-small: 0;
-
-  /* Block colors */
-  --navigation-padding: 10px 32px;
+.v2-tabbed-carousel {
+  --navigation-container-margin: 16px;
+  --navigation-padding: 10px 0;
   --navigation-line-position: 8px;
   --navigation-line-height: 2px;
 
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   color: var(--text-color);
 }
 
@@ -76,17 +76,35 @@
   margin-top: 0;
 }
 
-.v2-tabbed-carousel--column .v2-tabbed-carousel__item {
+.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__items {
+  overflow: hidden;
+  scroll-behavior: unset;
+  scroll-snap-type: unset;
+}
+
+.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__item {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0s;
+}
+
+.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__item.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1200ms var(--easing-standard);
+}
+
+.v2-tabbed-carousel--columns .v2-tabbed-carousel__item {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
-.v2-tabbed-carousel--column .v2-tabbed-carousel__item > * {
+.v2-tabbed-carousel--columns .v2-tabbed-carousel__item > * {
   flex: 1 1 100%;
 }
 
-.v2-tabbed-carousel--column .v2-tabbed-carousel__item img {
+.v2-tabbed-carousel--columns .v2-tabbed-carousel__item img {
   aspect-ratio: unset;
 }
 
@@ -96,15 +114,15 @@
 
 .v2-tabbed-carousel__content > ul:not(.cta-list) {
   list-style-type: disc;
+  padding-left: 24px;
 }
 
-/* Navigation */
 ul.v2-tabbed-carousel__navigation {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
   list-style: none;
-  margin: 24px 0;
+  gap: 16px;
+  margin: 0 calc(var(--navigation-container-margin) * -1);
   overflow: auto;
   scrollbar-width: none;
   padding: var(--navigation-padding);
@@ -115,20 +133,30 @@ ul.v2-tabbed-carousel__navigation {
   display: none;
 }
 
-.v2-tabbed-carousel__navigation-line {
-  background: var(--navigation-line-active-color);
-  height: var(--navigation-line-height);
-  left: 0;
+.v2-tabbed-carousel__navigation-item:first-child::before {
+  content: '';
   margin: 0;
+  width: 1px;
+  height: var(--navigation-line-height);
   position: absolute;
-  transition: all var(--duration-small) var(--easing-standard);
-  width: 0;
   bottom: var(--navigation-line-position);
+  left: 0;
+  scale: var(--navigation-line-width) 1;
+  transform-origin: 0 0;
+  translate: var(--navigation-line-left);
+  background: var(--navigation-line-active-color);
+  transition:
+    scale var(--duration-medium) var(--easing-standard),
+    translate var(--duration-small) var(--easing-standard);
 }
 
-.v2-tabbed-carousel__navigation-item {
-  position: relative;
-  margin: 0 16px;
+.v2-tabbed-carousel__navigation::before,
+.v2-tabbed-carousel__navigation::after {
+  content: '';
+  margin: auto;
+  display: block;
+  flex: 0 0 1px;
+  min-height: 1px; /* In this case, Safari doesn't render element properly without height */
 }
 
 .v2-tabbed-carousel__navigation button {
@@ -197,12 +225,20 @@ ul.v2-tabbed-carousel__navigation {
 }
 
 @media (min-width: 744px) {
-  .v2-tabbed-carousel--column .v2-tabbed-carousel__item {
+  .v2-tabbed-carousel {
+    --navigation-container-margin: 32px;
+  }
+
+  .v2-tabbed-carousel--columns .v2-tabbed-carousel__item {
     flex-direction: row;
   }
 
-  .v2-tabbed-carousel--column .v2-tabbed-carousel__figure {
+  .v2-tabbed-carousel--columns .v2-tabbed-carousel__figure {
     flex-basis: 40%;
+  }
+
+  .v2-tabbed-carousel--columns.v2-tabbed-carousel--media-right .v2-tabbed-carousel__item {
+    flex-direction: row-reverse;
   }
 }
 
@@ -226,13 +262,13 @@ ul.v2-tabbed-carousel__navigation {
 }
 
 @media (min-width: 1200px) {
-  .v2-tabbed-carousel__figure {
-    position: relative;
+  .v2-tabbed-carousel {
+    --navigation-container-margin: 0px;
+    --navigation-padding: 10px 0;
   }
 
-  .v2-tabbed-carousel-container {
-    --navigation-padding: 10px 32px;
-    --navigation-line-top: 37px;
+  .v2-tabbed-carousel__figure {
+    position: relative;
   }
 
   .v2-tabbed-carousel__heading-wrapper {
@@ -246,32 +282,7 @@ ul.v2-tabbed-carousel__navigation {
     line-height: var(--body-1-line-height);
   }
 
-  .v2-tabbed-carousel--column .v2-tabbed-carousel__item > * {
+  .v2-tabbed-carousel--columns .v2-tabbed-carousel__item > * {
     flex-basis: 50%;
   }
 }
-
-/* fade-in variant css starts here */
-.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__container {
-  overflow: hidden;
-}
-
-.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__items {
-  overflow: unset;
-  scroll-behavior: unset;
-  scroll-snap-type: unset;
-}
-
-.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__item {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0s;
-}
-
-.v2-tabbed-carousel--fade-in .v2-tabbed-carousel__item.active {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 1200ms ease-out;
-}
-
-/* fade-in variant css ends here */
