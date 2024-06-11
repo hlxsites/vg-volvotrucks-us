@@ -78,11 +78,24 @@
 
 .v2-tabbed-carousel--column .v2-tabbed-carousel__item {
   display: flex;
+  flex-direction: column;
   gap: 32px;
 }
 
 .v2-tabbed-carousel--column .v2-tabbed-carousel__item > * {
-  flex: 0 1 50%;
+  flex: 1 1 100%;
+}
+
+.v2-tabbed-carousel--column .v2-tabbed-carousel__item img {
+  aspect-ratio: unset;
+}
+
+.v2-tabbed-carousel__content {
+  max-width: var(--text-block-max-width);
+}
+
+.v2-tabbed-carousel__content > ul:not(.cta-list) {
+  list-style-type: disc;
 }
 
 /* Navigation */
@@ -155,6 +168,10 @@ ul.v2-tabbed-carousel__navigation {
   outline-offset: 5px;
 }
 
+:root:not(.redesign-v2) .v2-tabbed-carousel__navigation button {
+  font-size: 16px;
+}
+
 /* heading styles for tabbed carousel, which is optional */
 
 .v2-tabbed-carousel__heading-wrapper {
@@ -179,6 +196,35 @@ ul.v2-tabbed-carousel__navigation {
   font: var(--body-2-font-size)/var(--body-2-line-height) var(--font-family-body);
 }
 
+@media (min-width: 744px) {
+  .v2-tabbed-carousel--column .v2-tabbed-carousel__item {
+    flex-direction: row;
+  }
+
+  .v2-tabbed-carousel--column .v2-tabbed-carousel__figure {
+    flex-basis: 40%;
+  }
+}
+
+@media (min-width: 900px) {
+  :root:not(.redesign-v2) ul.cta-list {
+      justify-content: unset;
+  }
+
+  :root:not(.redesign-v2) ul.cta-list li {
+      flex: 1 0 auto;
+      min-width: 242px;
+      padding-left: 0;
+      text-align: left;
+  }
+
+  :root:not(.redesign-v2) ul.cta-list.inline li {
+      min-width: unset;
+      flex: 0;
+      padding-right: 10px;
+  }
+}
+
 @media (min-width: 1200px) {
   .v2-tabbed-carousel__figure {
     position: relative;
@@ -199,23 +245,11 @@ ul.v2-tabbed-carousel__navigation {
     letter-spacing: 0.16px;
     line-height: var(--body-1-line-height);
   }
-}
 
-/* small-tabs variant css starts here */
-.v2-tabbed-carousel--small-tabs .v2-tabbed-carousel__navigation-item button {
-  max-width: 80px;
-  min-width: 100%;
-  padding: 20px 20px 10px;
-  text-wrap: balance;
-}
-
-@media (min-width: 1200px) {
-  .v2-tabbed-carousel--small-tabs .v2-tabbed-carousel__navigation-item button {
-    max-width: 116px;
+  .v2-tabbed-carousel--column .v2-tabbed-carousel__item > * {
+    flex-basis: 50%;
   }
 }
-
-/* small-tabs variant css ends here */
 
 /* fade-in variant css starts here */
 .v2-tabbed-carousel--fade-in .v2-tabbed-carousel__container {
