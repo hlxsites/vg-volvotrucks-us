@@ -44,7 +44,6 @@ export default function decorate(block) {
   function buildTabNavigation(buttonContent, index) {
     const listItem = createElement('li', { classes: `${blockName}__navigation-item` });
     const button = createElement('button');
-    // const moveCarousel = () => setCarouselPosition(carouselItems, index - 1, smoothScroll);
     const moveCarousel = () => {
       if (carouselItems.classList.contains('is-animating')) return;
       setCarouselPosition(carouselItems, index - 1, smoothScroll);
@@ -107,15 +106,14 @@ export default function decorate(block) {
       tabItem.innerHTML = '';
     } else {
       const carouselTitle = tabItem.querySelector('h2');
-      carouselTitle?.classList.add(`${blockName}__title`);
       const carouselText = tabItem.querySelector('p');
+      carouselTitle?.classList.add(`${blockName}__title`);
       carouselText?.classList.add(`${blockName}__text`);
       tabItem.classList.add(`${blockName}__heading-wrapper`);
     }
   });
 
-  block.append(tabNavigation);
-  block.append(carouselItems);
+  block.append(tabNavigation, carouselItems);
 
   // update the button indicator on scroll
   const elements = carouselItems.querySelectorAll(':scope > *');
