@@ -198,7 +198,7 @@ ul.v2-tabbed-carousel__navigation {
 }
 
 :root:not(.redesign-v2) .v2-tabbed-carousel__navigation button {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* heading styles for tabbed carousel, which is optional */
