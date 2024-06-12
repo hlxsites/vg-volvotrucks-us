@@ -80,7 +80,7 @@
 }
 
 .v2-media-gallery__figure {
-  margin: 0 0 8px;
+  margin: 4px;
 }
 
 .v2-media-gallery__figure picture {
@@ -88,7 +88,7 @@
   display: block;
   background-color: var(--media-background);
   border-radius: var(--border-radius);
-  margin: 4px;
+  margin-bottom: 8px;
 }
 
 .v2-media-gallery__image {
