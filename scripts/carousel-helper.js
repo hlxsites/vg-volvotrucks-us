@@ -41,9 +41,12 @@ export const setCarouselPosition = (
   smoothScroll = true,
   scrollDuration = 960,
 ) => {
+  const carouselStyle = window.getComputedStyle(carousel);
+  const gap = parseFloat(carouselStyle.columnGap || 0);
   const firstEl = carousel.firstElementChild;
-  const scrollOffset = firstEl.getBoundingClientRect().width;
-  const targetX = index * scrollOffset;
+  const elementWidth = firstEl.getBoundingClientRect().width;
+  const totalWidth = elementWidth + gap;
+  const targetX = index * totalWidth;
 
   if (smoothScroll) {
     smoothScrollHorizontal(carousel, targetX, scrollDuration);
