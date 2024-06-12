@@ -33,13 +33,13 @@ export const listenScroll = (carousel, elements, navigation, updateFn, threshold
  * @param {HTMLElement} carousel - The carousel element.
  * @param {number} index - The index to set the carousel position to.
  * @param {boolean} [smoothScroll=true] - Whether to use smooth scrolling or not. Default is true.
- * @param {number} [scrollDuration=1200] - The duration of the scroll animation. Default is 1200ms.
+ * @param {number} [scrollDuration=960] - The duration of the scroll animation. Default is 960ms.
  */
 export const setCarouselPosition = (
   carousel,
   index,
   smoothScroll = true,
-  scrollDuration = 1200,
+  scrollDuration = 960,
 ) => {
   const firstEl = carousel.firstElementChild;
   const scrollOffset = firstEl.getBoundingClientRect().width;

@@ -44,7 +44,11 @@ export default function decorate(block) {
   function buildTabNavigation(buttonContent, index) {
     const listItem = createElement('li', { classes: `${blockName}__navigation-item` });
     const button = createElement('button');
-    const moveCarousel = () => setCarouselPosition(carouselItems, index - 1, smoothScroll);
+    // const moveCarousel = () => setCarouselPosition(carouselItems, index - 1, smoothScroll);
+    const moveCarousel = () => {
+      if (carouselItems.classList.contains('is-animating')) return;
+      setCarouselPosition(carouselItems, index - 1, smoothScroll);
+    };
     button.addEventListener('click', moveCarousel);
     button.addEventListener('mouseover', (e) => {
       clearTimeout(timeout);
