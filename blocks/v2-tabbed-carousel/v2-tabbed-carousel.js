@@ -46,7 +46,7 @@ export default function decorate(block) {
     const button = createElement('button');
     const moveCarousel = () => {
       if (carouselItems.classList.contains('is-animating')) return;
-      setCarouselPosition(carouselItems, index - 1, smoothScroll);
+      setCarouselPosition(carouselItems, index, smoothScroll);
     };
     button.addEventListener('click', moveCarousel);
     button.addEventListener('mouseover', (e) => {
@@ -104,12 +104,6 @@ export default function decorate(block) {
       tabNavigation.append(navItem);
       tabTitle.remove();
       tabItem.innerHTML = '';
-    } else {
-      const carouselTitle = tabItem.querySelector('h2');
-      const carouselText = tabItem.querySelector('p');
-      carouselTitle?.classList.add(`${blockName}__title`);
-      carouselText?.classList.add(`${blockName}__text`);
-      tabItem.classList.add(`${blockName}__heading-wrapper`);
     }
   });
 
