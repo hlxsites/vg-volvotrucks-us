@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-05-20T00:00:00.000Z</updated>
+    <updated>2024-06-12T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks Celebrates First Order of 50 All-New Volvo VNLs by Legend Transportation]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/june/volvo-trucks-celebrates-first-order-of-50-all-new-volvo-vnls-by-legend-transportation/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/june/volvo-trucks-celebrates-first-order-of-50-all-new-volvo-vnls-by-legend-transportation/"/>
+        <updated>2024-06-12T00:00:00.000Z</updated>
+        <content type="html"><![CDATA[“The all-new Volvo VNL is setting the new industry standard, and we are extremely excited that a top customer has placed such a significant order as soon as the order books opened. Legend’s early adoption is a testament to the immense customer value offered by the all-new Volvo VNL and what it will mean for safety, fuel efficiency, connectivity, and driver productivity,” said Peter Voorhoeve, president, Volvo Trucks North America.]]></content>
+        <published>2024-06-12T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks North America and Volvo Financial Services Launch Volvo on Demand to Accelerate Battery-Electric Vehicle Adoption]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/may/volvo-trucks-north-america-and-volvo-financial-services-launch-volvo-on-demand-to-accelerate-battery-electric-vehicle-adoption/</id>
