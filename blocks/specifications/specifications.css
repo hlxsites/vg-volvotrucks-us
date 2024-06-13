@@ -92,7 +92,12 @@
     color: unset;
     text-align: unset;
     font-size: 16px;
+    white-space: normal;
     width: 100%;
+}
+
+.block.specifications .rowgroup-header p {
+    margin: 0;
 }
 
 .block.specifications .rowgroup-header:hover {

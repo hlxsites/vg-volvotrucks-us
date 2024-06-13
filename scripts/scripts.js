@@ -656,14 +656,25 @@ const addClassToContainer = (element) => {
 const decorateButtons = (element) => {
   element.querySelectorAll('a').forEach((a) => {
     if (shouldDecorateLink(a)) {
-      const up = a.parentElement;
+      let up = a.parentElement;
       const twoUp = up.parentElement;
       const threeUp = twoUp.parentElement;
       const buttonClass = getButtonClass(up, twoUp);
-      a.className = `button ${buttonClass}`;
+
+      up = a.parentElement;
+      if (['P', 'DIV', 'LI'].includes(up.tagName)) {
+        a.className = `button ${buttonClass}`;
+      } else {
+        a.className = buttonClass;
+      }
+
       addClassToContainer(up);
       addClassToContainer(twoUp);
       addClassToContainer(threeUp);
+
+      if (![up, twoUp, threeUp].some((el) => el.classList.contains('button-container'))) {
+        a.className = '';
+      }
     }
   });
 };
