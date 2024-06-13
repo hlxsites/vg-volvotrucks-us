@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-cycle
 import { loadScript, sampleRUM } from './aem.js';
-import { 
+import {
   isPerformanceAllowed,
   isTargetingAllowed,
   isSocialAllowed,
+  extractObjectFromArray,
   COOKIE_CONFIGS,
 } from './common.js';
 
@@ -17,18 +18,8 @@ const {
   TIKTOK_PIXEL_ID = false,
 } = COOKIE_CONFIGS;
 
-const extractValues = (data) => {
-  const values = Object.values(data)
-  let obj = {};
-  values.forEach((value) => {
-    const split = value.split(':');
-    obj[split[0]] = split[1].trim();
-  });
-  return obj;
-}
-
 const parsedData = JSON.parse(ACC_ENG_TRACKING);
-const splitData = extractValues(parsedData);
+const splitData = extractObjectFromArray(parsedData);
 
 const { piAId, piCId, piHostname } = splitData;
 

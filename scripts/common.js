@@ -404,6 +404,30 @@ async function getConstantValues() {
   return constants;
 }
 
+/**
+ * Transforms an array of strings in the format 'key: value' into an object.
+ * @param {string[]} data - Array of strings in the format 'key: value'.
+ * @returns {Object} - Object with keys and values.
+ * @throws {TypeError} - If an item in the array is not in the format 'key: value'.
+*/
+export const extractObjectFromArray = (data) => {
+  const obj = {};
+  // eslint-disable-next-line no-restricted-syntax
+  for (const item of data) {
+    try {
+      if (typeof item !== 'string' || !item.includes(':')) {
+        throw new TypeError(`Invalid input: "${item}". Expected a string: "key: value".`);
+      }
+      const [key, value] = item.split(':', 2);
+      obj[key.trim()] = value.trim();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn(`Error with item: "${item}"`, error);
+    }
+  }
+  return obj;
+};
+
 const formatValues = (values) => {
   const obj = {};
   /* eslint-disable-next-line */
@@ -411,11 +435,12 @@ const formatValues = (values) => {
   return obj;
 };
 
-const { searchUrls, cookieValues } = await getConstantValues();
+const { searchUrls, cookieValues, magazineConfig } = await getConstantValues();
 
 // This data comes from the sharepoint 'constants.xlsx' file
 export const COOKIE_CONFIGS = formatValues(cookieValues.data);
 export const SEARCH_URLS = formatValues(searchUrls.data);
+export const MAGAZINE_CONFIGS = formatValues(magazineConfig.data);
 
 /**
  * Check if one trust group is checked.
