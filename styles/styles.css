@@ -56,10 +56,12 @@
   --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
+
+  /* Sizings */
   --border-radius: 8px;
   --section-padding: 40px 0;
   --section-div-padding: 24px 16px;
-  --background-color: var(--c-white);
+  --carousel-gap: 8px;
 
   /* Form styles */
   --input-padding: 16px;
@@ -182,11 +184,13 @@
   --c-warning-yellow: #ffa000;
 
   /* Global colors */
+  --background-color: var(--c-white);
   --border-subtle: var(--c-grey-200);
   --border-strong: var(--c-grey-400);
   --border-hover: var(--c-cta-blue-hover);
   --border-active: var(--c-cta-blue-active);
   --border-focus: var(--c-cta-blue-hover);
+  --navigation-line-active-color: var(--c-main-black);
 
   /* Motions */
   --duration-small: 160ms;
@@ -1208,6 +1212,7 @@ main.blue-contract .section.section-with-title p {
   --text-subtle: var(--c-grey-2);
   --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
+  --navigation-line-active-color: var(--c-white);
 
   color: var(--text-color);
   padding-top: 80px;
@@ -1634,6 +1639,10 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media (min-width: 744px) {
+  :root {
+    --carousel-gap: 20px;
+  }
+
   :root.redesign-v2 {
     --section-padding: 40px 0 56px;
     --section-div-padding: 24px 32px;
