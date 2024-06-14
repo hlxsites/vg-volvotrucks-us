@@ -11,9 +11,9 @@
  */
 // copied from https://github.com/adobe/express-website/tree/main/tools/fgrep-attr
 
-import FGREP_VALUES from './fgrep-config.js';
+import TOOLS_VALUES from '../sidekick/tools-config.js';
 
-const { GIT_OWNER, GIT_REPO, GLOBAL_SITEMAP_URL } = FGREP_VALUES;
+const { GIT_OWNER, GIT_REPO, GLOBAL_SITEMAP_URL } = TOOLS_VALUES;
 
 let sitemapURLs = [];
 let totalSize = 0;

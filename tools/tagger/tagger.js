@@ -1,3 +1,7 @@
+import TOOLS_VALUES from '../sidekick/tools-config.js';
+
+const { TAGS_URL } = TOOLS_VALUES;
+
 function renderItems(items, catId) {
   let html = '';
   items.forEach((tag) => {
@@ -26,7 +30,7 @@ function initTaxonomy(taxonomy) {
 }
 
 async function getTaxonomy() {
-  const resp = await fetch('/news-and-stories/tags.plain.html');
+  const resp = await fetch(TAGS_URL);
   const markup = await resp.text();
   const div = document.createElement('div');
   div.innerHTML = markup;

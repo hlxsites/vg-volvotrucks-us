@@ -12,8 +12,8 @@ const formatValues = (values) => {
 };
 
 const {
-  fgrep,
+  tools,
 } = await getConstantValues();
 
-const FGREP_VALUES = formatValues(fgrep.data);
-export default FGREP_VALUES;
+const TOOLS_VALUES = formatValues(tools.data);
+export default TOOLS_VALUES;
