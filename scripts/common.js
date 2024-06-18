@@ -439,13 +439,8 @@ export const extractObjectFromArray = (data) => {
 
 const formatValues = (values) => {
   const obj = {};
-  if (values) {
-    /* eslint-disable-next-line */
-    values.forEach(({ name, value }) => obj[name] = value);
-  } else {
-    // eslint-disable-next-line no-console
-    console.error('Error with constants file', values);
-  }
+  /* eslint-disable-next-line */
+  if (values) values.forEach(({ name, value }) => obj[name] = value);
   return obj;
 };
 
@@ -453,12 +448,16 @@ const {
   searchUrls,
   cookieValues,
   magazineConfig,
+  headerConfig,
+  truckConfiguratorUrls,
 } = await getConstantValues();
 
 // This data comes from the sharepoint 'constants.xlsx' file
-export const COOKIE_CONFIGS = formatValues(cookieValues?.data);
 export const SEARCH_URLS = formatValues(searchUrls?.data);
+export const COOKIE_CONFIGS = formatValues(cookieValues?.data);
 export const MAGAZINE_CONFIGS = formatValues(magazineConfig?.data);
+export const HEADER_CONFIGS = formatValues(headerConfig?.data);
+export const TRUCK_CONFIGURATOR_URLS = formatValues(truckConfiguratorUrls?.data);
 
 /**
  * Check if one trust group is checked.
