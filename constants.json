@@ -1,0 +1,130 @@
+{
+  "searchUrls": {
+    "total": 2,
+    "offset": 0,
+    "limit": 2,
+    "data": [
+      {
+        "name": "SEARCH_URL_PROD",
+        "value": "https://kb3ko4nzt2.execute-api.eu-west-1.amazonaws.com/prod/search"
+      },
+      {
+        "name": "SEARCH_URL_DEV",
+        "value": "https://search-api-dev.aws.43636.vnonprod.com/search"
+      }
+    ]
+  },
+  "cookieValues": {
+    "total": 10,
+    "offset": 0,
+    "limit": 10,
+    "data": [
+      {
+        "name": "PERFORMANCE_COOKIE",
+        "value": "C0002"
+      },
+      {
+        "name": "FUNCTIONAL_COOKIE",
+        "value": "C0003"
+      },
+      {
+        "name": "TARGETING_COOKIE",
+        "value": "C0004"
+      },
+      {
+        "name": "SOCIAL_COOKIE",
+        "value": "C0005"
+      },
+      {
+        "name": "FACEBOOK_PIXEL_ID",
+        "value": "620334125252675"
+      },
+      {
+        "name": "HOTJAR_ID",
+        "value": "1139895"
+      },
+      {
+        "name": "GTM_ID",
+        "value": "GTM-KP9KZWR"
+      },
+      {
+        "name": "DATA_DOMAIN_SCRIPT",
+        "value": "e8ffed56-4bb1-43fd-9b41-bc4385267ec8"
+      },
+      {
+        "name": "ACC_ENG_TRACKING",
+        "value": "[\"piAId: 1039333\",\"piCId: 25825\",\"piHostname: pi.pardot.com\"]"
+      },
+      {
+        "name": "TIKTOK_PIXEL_ID",
+        "value": "COGKTO3C77U0VOQQGM8G"
+      }
+    ]
+  },
+  "headerConfig": {
+    "total": 2,
+    "offset": 0,
+    "limit": 2,
+    "data": [
+      {
+        "name": "SEARCH_DISABLED",
+        "value": "false"
+      },
+      {
+        "name": "LOGIN_DISABLED",
+        "value": "false"
+      }
+    ]
+  },
+  "tools": {
+    "total": 4,
+    "offset": 0,
+    "limit": 4,
+    "data": [
+      {
+        "name": "GIT_OWNER",
+        "value": "hlxsites"
+      },
+      {
+        "name": "GIT_REPO",
+        "value": "vg-volvotrucks-ca"
+      },
+      {
+        "name": "GLOBAL_SITEMAP_URL",
+        "value": "/sitemap.xml"
+      },
+      {
+        "name": "TAGS_URL",
+        "value": "/news-and-stories/tags.plain.html"
+      }
+    ]
+  },
+  "magazineConfig": {
+    "total": 3,
+    "offset": 0,
+    "limit": 3,
+    "data": [
+      {
+        "name": "DATE_LANGUAGE",
+        "value": "en-US"
+      },
+      {
+        "name": "DATE_OPTIONS",
+        "value": "[\"month: short\",\"day: numeric\",\"year: numeric\"]"
+      },
+      {
+        "name": "DATE_OPTIONS_MOBILE",
+        "value": "[\"month: 2-digit\",\"day: 2-digit\",\"year: numeric\"]"
+      }
+    ]
+  },
+  ":version": 3,
+  ":names": [
+    "searchUrls",
+    "cookieValues",
+    "headerConfig",
+    "tools",
+    "magazineConfig"
+  ],
+  ":type": "multi-sheet"
+}

@@ -75,13 +75,17 @@
 }
 
 .v2-content-carousel__figure picture {
+  aspect-ratio: 574/474;
+  display: block;
   background-color: var(--media-background);
   border-radius: var(--border-radius);
 }
 
 .v2-content-carousel__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: var(--border-radius);
-  aspect-ratio: 574/474;
 }
 
 .v2-content-carousel__figure-text {
@@ -121,15 +125,13 @@ ul.v2-content-carousel__arrowcontrols {
   border-radius: 4px;
 }
 
-.v2-content-carousel__button .icon-arrow-left svg,
-.v2-content-carousel__button .icon-arrow-right svg {
+.v2-content-carousel__button .icon svg {
   width: 48px;
   height: 48px;
 }
 
-.v2-content-carousel__button:disabled .icon-arrow-right svg path,
-.v2-content-carousel__button:disabled .icon-arrow-left svg path {
-  fill: var(--c-grey-2)
+.v2-content-carousel__button:disabled .icon svg {
+  color: var(--c-grey-2);
 }
 
 @media screen and (min-width: 744px) {

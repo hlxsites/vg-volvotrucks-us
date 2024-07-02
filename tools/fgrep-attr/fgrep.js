@@ -11,9 +11,9 @@
  */
 // copied from https://github.com/adobe/express-website/tree/main/tools/fgrep-attr
 
-const gitowner = 'hlxsites';
-const gitrepo = 'vg-volvotrucks-us';
-const globalSitemapURL = '/sitemap.xml';
+import TOOLS_VALUES from '../sidekick/tools-config.js';
+
+const { GIT_OWNER, GIT_REPO, GLOBAL_SITEMAP_URL } = TOOLS_VALUES;
 
 let sitemapURLs = [];
 let totalSize = 0;
@@ -103,7 +103,7 @@ async function fgrep(pathname, pattern) {
 
 async function edit(path, y) {
   try {
-    const statusRes = await fetch(`https://admin.hlx.page/status/${gitowner}/${gitrepo}/main${path}?editUrl=auto`);
+    const statusRes = await fetch(`https://admin.hlx.page/status/${GIT_OWNER}/${GIT_REPO}/main${path}?editUrl=auto`);
     const status = await statusRes.json();
     const editUrl = status.edit && status.edit.url;
     if (y) {
@@ -187,7 +187,7 @@ export async function run() {
   endTime = new Date();
   document.getElementById('results').textContent = '';
 
-  await loadSitemap(globalSitemapURL);
+  await loadSitemap(GLOBAL_SITEMAP_URL);
   const resultDisplay = document.body;
   const sitemap = sitemapURLs;
   let pattern = document.getElementById('input').value;

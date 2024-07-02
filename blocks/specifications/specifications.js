@@ -107,11 +107,12 @@ export default async function decorate(block) {
   for (let i = firstRowIndex, rowgroup = null; i < rows.length; i += 1) {
     const row = rows[i];
     const cells = row.children;
-    const firstChild = cells[0].firstElementChild;
+    const firstChild = (cells[0].firstElementChild && cells[0].firstElementChild.firstElementChild)
+      || cells[0].firstElementChild;
+    const isWrappedByStrong = (cells[0].children.length === 1 && firstChild && firstChild.tagName === 'STRONG');
+    const isHeader = (cells.length === 1 && (!singleColumn || isWrappedByStrong));
 
-    if (cells.length === 1
-      && (!singleColumn
-        || (cells[0].children.length === 1 && firstChild && firstChild.tagName === 'STRONG'))) {
+    if (isHeader) {
       const button = document.createElement('button');
       button.className = 'rowgroup-header';
       button.type = 'button';

@@ -1,14 +1,18 @@
-import { getLanguagePath } from '../../scripts/common.js';
+import {
+  getLanguagePath,
+  getOrigin,
+} from '../../scripts/common.js';
 import {
   ffetch,
-  splitTags,
 } from '../../scripts/lib-ffetch.js';
+import {
+  splitTags,
+} from '../../scripts/magazine-press.js';
 import {
   createOptimizedPicture,
   getMetadata,
-  getOrigin,
   toClassName,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 
 function buildRelatedMagazineArticle(entry) {
   const {

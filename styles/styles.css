@@ -1,3 +1,4 @@
+/* stylelint-disable string-quotes */
 /* stylelint-disable number-max-precision */
 
 /*
@@ -46,22 +47,21 @@
 
 :root {
   /* fonts */
-  --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback',
-    sans-serif;
+  --ff-volvo-novum-medium: 'VolvoNovum-Medium', 'VolvoNovum-Medium Fallback', sans-serif;
   --ff-volvo-novum: 'VolvoNovum', 'VolvoNovum Fallback', sans-serif;
-  --ff-volvo-broadprodigital: 'VolvoBroadProDigital',
-    'VolvoBroadProDigital Fallback', sans-serif;
+  --ff-volvo-broadprodigital: 'VolvoBroadProDigital', 'VolvoBroadProDigital Fallback', sans-serif;
   --ff-fontawesome: 'fontawesome', 'fontawesome Fallback';
   --font-family-body: var(--ff-volvo-novum);
   --font-family-heading: var(--ff-volvo-novum-medium);
-  --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono',
-    monospace;
+  --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
+
+  /* Sizings */
   --border-radius: 8px;
   --section-padding: 40px 0;
   --section-div-padding: 24px 16px;
-  --background-color: var(--c-white);
+  --carousel-gap: 8px;
 
   /* Form styles */
   --input-padding: 16px;
@@ -178,16 +178,19 @@
   --c-main-black: #141414;
 
   /* Success / error colors */
-  --c-error-red: #BF2012;
-  --c-success-green: #1A6C31;
-  --c-warning-yellow: #FFA000;
+  --c-error-red: #bf2012;
+  --c-error-background-red: #f8ddd8;
+  --c-success-green: #1a6c31;
+  --c-warning-yellow: #ffa000;
 
   /* Global colors */
+  --background-color: var(--c-white);
   --border-subtle: var(--c-grey-200);
   --border-strong: var(--c-grey-400);
-  --border-hover: #2b8ede;
-  --border-active: #004FBC;
-  --border-focus: #2b8ede;
+  --border-hover: var(--c-cta-blue-hover);
+  --border-active: var(--c-cta-blue-active);
+  --border-focus: var(--c-cta-blue-hover);
+  --navigation-line-active-color: var(--c-main-black);
 
   /* Motions */
   --duration-small: 160ms;
@@ -197,12 +200,17 @@
   --easing-exit: cubic-bezier(0.2, 0, 1, 1);
   --easing-standard: cubic-bezier(0.2, 0, 0.1, 1);
 
+  /* Global video */
+  --video-aspect-ratio: 16/9;
+
   /*
     OLD styles
     we need to remove / update once they are not used in the styles
   */
 
   /* Global colors */
+  --button-primary-color: var(--text-color);
+  --button-primary-bg: var(--c-white);
   --volvo-text-gray: var(--c-grey-4);
   --volvo-text-light-gray: var(--c-grey-2);
   --text-color: var(--c-grey-4);
@@ -292,7 +300,7 @@
   --z-index-header: 1050;
 
   /* In page navigation */
-  --inpage-navigation-height: 0px;
+  --inpage-navigation-height: 0;
 
   /* Zindex inpage navigation */
   --z-index-inpage-nav: 1049;
@@ -440,7 +448,7 @@ h6 {
 
 h1#press-releases,
 h1#social-feeds,
-h1#volvo-trucks-magazine {
+:root:where(:not(.redesign-v2)) h1#volvo-trucks-magazine {
   font-family: var(--ff-volvo-broadprodigital);
   font-size: 60px;
 }
@@ -525,20 +533,14 @@ button.primary {
   max-width: 100%;
   display: inline-block;
   padding: var(--btn-padding);
-  color: var(--text-color);
-  background-color: var(--c-white);
+  color: var(--button-primary-color);
+  background-color: var(--button-primary-bg);
   border: 2px solid var(--text-color);
 }
 
 a.button.primary.dark {
-  background-color: var(--text-color);
-  color: var(--c-white);
-}
-
-a.button.primary.dark:hover {
-  background-color: var(--text-color);
-  border-color: var(--text-color);
-  color: var(--c-white);
+  --button-primary-color: var(--c-white);
+  --button-primary-bg: var(--text-color);
 }
 
 button,
@@ -563,6 +565,7 @@ button.primary:hover {
   color: var(--text-color);
 }
 
+/* stylelint-disable-next-line selector-list-comma-newline-after */
 input[type='text'], select, textarea {
   display: block;
   padding: 10px 40px 10px 15px;
@@ -1100,6 +1103,22 @@ main.blue-contract .section.section-with-title p {
   --text-subtle: var(--c-grey-4);
   --background-color: var(--c-white);
   --background-gradient: rgb(255 255 255 / 100%);
+  --button-primary-color: var(--c-white);
+  --button-primary-bg: var(--c-main-black);
+  --button-primary-bg-hover: var(--c-grey-700);
+  --button-primary-bg-active: var(--c-grey-900);
+  --button-secondary-color: var(--text-color);
+  --button-secondary-bg: transparent;
+  --button-secondary-bg-hover: var(--c-grey-50);
+  --button-secondary-bg-active: var(--c-grey-100);
+  --button-secondary-border: var(--c-main-black);
+  --button-tertiary-color: var(--text-color);
+  --button-tertiary-bg-hover: var(--c-grey-50);
+  --button-tertiary-bg-active: var(--c-grey-100);
+  --button-marketing-color: var(--c-white);
+  --button-marketing-bg: var(--c-cta-blue-default);
+  --button-marketing-bg-hover: var(--c-cta-blue-hover);
+  --button-marketing-bg-active: var(--c-cta-blue-active);
 
   font-size: 16px;
   scroll-behavior: smooth;
@@ -1138,8 +1157,8 @@ main.blue-contract .section.section-with-title p {
 }
 
 .redesign-v2 .section:first-child,
-.redesign-v2 .section:not(.section--black-background, .section--gray-background)
-  + .section:not(.section--black-background, .section--gray-background) {
+.redesign-v2 .section:not(.section--black-background,
+.section--gray-background) + .section:not(.section--black-background, .section--gray-background) {
   padding-top: 0;
 }
 
@@ -1169,8 +1188,10 @@ main.blue-contract .section.section-with-title p {
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .modal-content .section--black-background,
 .redesign-v2 .modal-content .section--gray-background,
-.redesign-v2 .modal-content .section--black-background + .section:not(.section--black-background, .section--gray-background),
-.redesign-v2 .modal-content .section--gray-background + .section:not(.section--black-background, .section--gray-background),
+.redesign-v2 .modal-content .section--black-background + .section:not(.section--black-background,
+.section--gray-background),
+.redesign-v2 .modal-content .section--gray-background + .section:not(.section--black-background,
+.section--gray-background),
 .redesign-v2 .modal-content .section div.full-width + div {
   padding-top: var(--section-div-padding-vertical);
 }
@@ -1187,10 +1208,11 @@ main.blue-contract .section.section-with-title p {
   --text-color: var(--c-white);
   --card-background: var(--c-grey-900);
   --card-text: var(--c-white);
-  --c-cta-blue-default: #44A1FF;
+  --c-cta-blue-default: #44a1ff;
   --text-subtle: var(--c-grey-2);
   --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
+  --navigation-line-active-color: var(--c-white);
 
   color: var(--text-color);
   padding-top: 80px;
@@ -1227,14 +1249,23 @@ main.blue-contract .section.section-with-title p {
   color: var(--c-cta-blue-active);
 }
 
+.redesign-v2 a.standalone-link:focus {
+  outline: 0;
+}
+
+.redesign-v2 a.standalone-link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary,
 .redesign-v2 a.button.secondary,
 .redesign-v2 button.secondary,
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary,
-.redesign-v2 a.button.marketing-cta,
-.redesign-v2 button.marketing-cta {
+.redesign-v2 a.button.marketing,
+.redesign-v2 button.marketing {
   border: 1px solid transparent;
   align-items: center;
   border-radius: 4px;
@@ -1256,167 +1287,100 @@ main.blue-contract .section.section-with-title p {
 
 .redesign-v2 a.button.primary,
 .redesign-v2 button.primary {
-  background-color: var(--c-main-black);
-  color: var(--c-white);
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
 }
 
 .redesign-v2 a.button.primary:hover,
 .redesign-v2 button.primary:hover {
-  background-color: var(--c-grey-700);
+  background-color: var(--button-primary-bg-hover);
 }
 
 .redesign-v2 a.button.primary:active,
 .redesign-v2 button.primary:active {
-  background-color: var(--c-grey-900);
-}
-
-.redesign-v2 .section--black-background a.button.primary,
-.redesign-v2 .section--black-background button.primary,
-.redesign-v2 a.button.primary.dark,
-.redesign-v2 button.primary.dark {
-  background-color: var(--c-white);
-  color: var(--c-main-black);
-}
-
-.redesign-v2 .section--black-background a.button.primary:hover,
-.redesign-v2 .section--black-background button.primary:hover,
-.redesign-v2 a.button.primary.dark:hover,
-.redesign-v2 button.primary.dark:hover {
-  background-color: var(--c-grey-200);
-  border-color: transparent;
-}
-
-.redesign-v2 .section--black-background a.button.primary:active,
-.redesign-v2 .section--black-background button.primary:active,
-.redesign-v2 a.button.primary.dark:active,
-.redesign-v2 button.primary.dark:active {
-  background-color: var(--c-grey-400);
+  background-color: var(--button-primary-bg-active);
 }
 
 .redesign-v2 a.button.secondary,
 .redesign-v2 button.secondary {
-  border-color: var(--c-main-black);
-  color: var(--c-main-black);
-  background-color: transparent;
+  color: var(--button-secondary-color);
+  background-color: var(--button-secondary-bg);
+  border-color: var(--button-secondary-border);
 }
 
 .redesign-v2 a.button.secondary:hover,
 .redesign-v2 button.secondary:hover {
-  background-color: var(--c-grey-50);
+  background-color: var(--button-secondary-bg-hover);
 }
 
 .redesign-v2 a.button.secondary:active,
 .redesign-v2 button.secondary:active {
-  background-color: var(--c-grey-100);
-}
-
-.redesign-v2 .section--black-background a.button.secondary,
-.redesign-v2 .section--black-background button.secondary,
-.redesign-v2 a.button.secondary.dark,
-.redesign-v2 button.secondary.dark {
-  border: 1px solid var(--c-white);
-  color: var(--c-white);
-}
-
-.redesign-v2 .section--black-background a.button.secondary:hover,
-.redesign-v2 .section--black-background button.secondary:hover,
-.redesign-v2 a.button.secondary.dark:hover,
-.redesign-v2 button.secondary.dark:hover {
-  background-color: var(--c-grey-900);
-}
-
-.redesign-v2 .section--black-background a.button.secondary:active,
-.redesign-v2 .section--black-background button.secondary:active,
-.redesign-v2 a.button.secondary.dark:active,
-.redesign-v2 button.secondary.dark:active {
-  background-color: var(--c-grey-800);
+  background-color: var(--button-secondary-bg-active);
 }
 
 .redesign-v2 a.button.tertiary,
 .redesign-v2 button.tertiary {
+  color: var(--button-tertiary-color);
   padding: 8px 0;
   height: 40px;
-  color: var(--text-color);
 }
 
 .redesign-v2 a.button.tertiary:hover,
 .redesign-v2 button.tertiary:hover {
+  background-color: var(--button-tertiary-bg-hover);
   text-decoration: underline;
-  background-color: var(--c-grey-50);
 }
 
 .redesign-v2 a.button.tertiary:active,
 .redesign-v2 button.tertiary:active {
-  background-color: var(--c-grey-100);
+  background-color: var(--button-tertiary-bg-active);
 }
 
-.redesign-v2 .section--black-background a.button.tertiary,
-.redesign-v2 .section--black-background button.tertiary,
-.redesign-v2 a.button.tertiary.dark,
-.redesign-v2 button.tertiary.dark {
-  color: var(--c-white);
+.redesign-v2 a.button.marketing,
+.redesign-v2 button.marketing {
+  background-color: var(--button-marketing-bg);
+  color: var(--button-marketing-color);
 }
 
-.redesign-v2 .section--black-background a.button.tertiary:hover,
-.redesign-v2 .section--black-background button.tertiary:hover,
-.redesign-v2 a.button.tertiary.dark:hover,
-.redesign-v2 button.tertiary.dark:hover {
-  background-color: var(--c-grey-900);
+.redesign-v2 a.button.marketing:hover,
+.redesign-v2 button.marketing:hover {
+  background-color: var(--button-marketing-bg-hover);
 }
 
-.redesign-v2 .section--black-background a.button.tertiary:active,
-.redesign-v2 .section--black-background button.tertiary:active,
-.redesign-v2 a.button.tertiary.dark:active,
-.redesign-v2 button.tertiary.dark:active {
-  background-color: var(--c-grey-800);
+.redesign-v2 a.button.marketing:active,
+.redesign-v2 button.marketing:active {
+  background-color: var(--button-marketing-bg-active);
 }
 
-.redesign-v2 .section--gray-background a.button.tertiary:hover,
-.redesign-v2 .section--gray-background button.tertiary:hover {
-  background-color: var(--c-grey-100);
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section--black-background  a.button,
+.redesign-v2 .section--black-background  button,
+.redesign-v2 a.button.dark,
+.redesign-v2 button.dark {
+  --button-primary-color: var(--c-main-black);
+  --button-primary-bg: var(--c-white);
+  --button-primary-bg-hover: var(--c-grey-200);
+  --button-primary-bg-active: var(--c-grey-400);
+  --button-secondary-color: var(--c-white);
+  --button-secondary-bg-hover: var(--c-grey-900);
+  --button-secondary-bg-active: var(--c-grey-800);
+  --button-secondary-border: var(--c-white);
+  --button-tertiary-color: var(--c-white);
+  --button-tertiary-bg-hover: var(--c-grey-900);
+  --button-tertiary-bg-active: var(--c-grey-800);
+  --button-marketing-color: var(--c-main-black);
+  --button-marketing-bg: var(--c-cta-blue-default);
+  --button-marketing-bg-hover: #76baff;
+  --button-marketing-bg-active: #1f78d1;
 }
 
-.redesign-v2 .section--gray-background a.button.tertiary:active,
-.redesign-v2 .section--gray-background button.tertiary:active {
-  background-color: var(--c-grey-200);
-}
-
-.redesign-v2 a.button.marketing-cta,
-.redesign-v2 button.marketing-cta {
-  background-color: var(--c-cta-blue-default);
-  color: var(--c-white);
-}
-
-.redesign-v2 a.button.marketing-cta:hover,
-.redesign-v2 button.marketing-cta:hover {
-  background-color: var(--c-cta-blue-hover);
-}
-
-.redesign-v2 a.button.marketing-cta:active,
-.redesign-v2 button.marketing-cta:active {
-  background-color: var(--c-cta-blue-active);
-}
-
-.redesign-v2 .section--black-background a.button.marketing-cta,
-.redesign-v2 .section--black-background button.marketing-cta,
-.redesign-v2 a.button.marketing-cta.dark,
-.redesign-v2 button.marketing-cta.dark {
-  background-color: #44a1ff;
-  color: var(--c-main-black);
-}
-
-.redesign-v2 .section--black-background a.button.marketing-cta:hover,
-.redesign-v2 .section--black-background button.marketing-cta:hover,
-.redesign-v2 a.button.marketing-cta.dark:hover,
-.redesign-v2 button.marketing-cta.dark:hover {
-  background-color: #76baff;
-}
-
-.redesign-v2 .section--black-background a.button.marketing-cta:active,
-.redesign-v2 .section--black-background button.marketing-cta:active,
-.redesign-v2 a.button.marketing-cta.dark:active,
-.redesign-v2 button.marketing-cta.dark:active {
-  background-color: #1f78d1;
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .section--gray-background  a.button,
+.redesign-v2 .section--gray-background  button {
+  --button-secondary-bg-hover: var(--c-grey-100);
+  --button-secondary-bg-active: var(--c-grey-200);
+  --button-tertiary-bg-hover: var(--c-grey-100);
+  --button-tertiary-bg-active: var(--c-grey-200);
 }
 
 .redesign-v2 :is(h1, h2, h3, h4, h5, h6) a:any-link::after,
@@ -1488,7 +1452,8 @@ main.blue-contract .section.section-with-title p {
   font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.redesign-v2 .button .icon svg {
+.redesign-v2 .button .icon svg,
+.redesign-v2 .standalone-link .icon svg {
   height: 24px;
   width: 24px;
 }
@@ -1604,8 +1569,15 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* Global video block styles */
+.video-iframe {
+  width: 100%;
+  border: 0;
+  aspect-ratio: var(--video-aspect-ratio);
+  display: block;
+}
+
 .v2-video__playback-button,
-.v2-video__mute-controls{
+.v2-video__mute-controls {
   position: absolute;
   top: 18px;
   right: 18px;
@@ -1617,36 +1589,36 @@ main.blue-contract .section.section-with-title p {
   padding: 0;
 }
 
-.v2-video__mute-controls{
+.v2-video__mute-controls {
   top: 70px;
 }
 
 .v2-video__playback-button .icon-play-video,
-.v2-video__mute-controls .icon-mute{
+.v2-video__mute-controls .icon-mute {
   display: none;
   justify-content: center;
 }
 
 .v2-video__playback-button .icon-pause-video,
-.v2-video__mute-controls .icon-unmute{
+.v2-video__mute-controls .icon-unmute {
   display: flex;
   justify-content: center;
 }
 
 .v2-video__playback-button:hover svg circle,
-.v2-video__mute-controls:hover svg circle{
+.v2-video__mute-controls:hover svg circle {
   fill: var(--c-grey-50);
 }
 
 .v2-video__playback-button .icon,
-.v2-video__mute-controls .icon{
-    height: 100%;
-    align-items: center;
+.v2-video__mute-controls .icon {
+  height: 100%;
+  align-items: center;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .v2-video__playback-button .icon svg,
-.v2-video__mute-controls .icon svg{
+.v2-video__mute-controls .icon svg {
   width: 32px;
   height: 32px;
 }
@@ -1661,12 +1633,16 @@ main.blue-contract .section.section-with-title p {
 
 @media (max-width: 744px) {
   .v2-content-card__item .v2-video__playback-button,
-  .v2-content-card__item .v2-video__mute-controls{
+  .v2-content-card__item .v2-video__mute-controls {
     top: 18px !important;
   }
 }
 
 @media (min-width: 744px) {
+  :root {
+    --carousel-gap: 20px;
+  }
+
   :root.redesign-v2 {
     --section-padding: 40px 0 56px;
     --section-div-padding: 24px 32px;
@@ -1684,16 +1660,15 @@ main.blue-contract .section.section-with-title p {
   }
 
   .v2-video__playback-button,
-  .v2-video__mute-controls{
+  .v2-video__mute-controls {
     bottom: 18px;
     top: initial;
-  } 
-  
-  .v2-video__mute-controls{
+  }
+
+  .v2-video__mute-controls {
     bottom: 70px;
   }
 }
-
 
 @media (min-width: 1200px) {
   :root {

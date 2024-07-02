@@ -6,7 +6,15 @@ import {
   createElement, getTextLabel, removeEmptyTags, variantsClassesToBEM,
 } from '../../scripts/common.js';
 
-const variantClasses = ['centered', 'left-center', 'center-bottom', 'dark', 'background-right'];
+const variantClasses = [
+  'centered',
+  'left-center',
+  'center-bottom',
+  'dark',
+  'background-right',
+  'compact',
+  'background-transparent',
+];
 let intervalId = null;
 const blockName = 'v2-hero';
 
@@ -49,6 +57,7 @@ export default async function decorate(block) {
   // add Hero variant classnames
   variantsClassesToBEM(block.classList, variantClasses, blockName);
 
+  const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
   const link = block.querySelector('a');
   const isVideo = link ? isVideoLink(link) : false;
@@ -129,12 +138,7 @@ export default async function decorate(block) {
 
   const buttonsWrapper = createElement('div', { classes: `${blockName}__buttons-wrapper` });
   const ctaButtons = content.querySelectorAll('.button-container > a');
-  [...ctaButtons].forEach((b, i) => {
-    if (i > 0) { // change next buttons to be secondary
-      b.classList.add('secondary');
-      b.classList.remove('primary');
-    }
-
+  [...ctaButtons].forEach((b) => {
     if (block.classList.contains(`${blockName}--dark`)) {
       b.classList.add('dark');
     }
@@ -144,8 +148,10 @@ export default async function decorate(block) {
   });
   content.appendChild(buttonsWrapper);
 
-  const scrollIcon = createElement('div', { classes: `${blockName}__scroll-icon` });
-  block.append(scrollIcon);
+  if (!isCompact) {
+    const scrollIcon = createElement('div', { classes: `${blockName}__scroll-icon` });
+    block.append(scrollIcon);
+  }
 
   removeEmptyTags(content);
 

@@ -1,4 +1,4 @@
-import { loadScript } from '../../scripts/lib-franklin.js';
+import { loadScript } from '../../scripts/aem.js';
 import { createElement } from '../../scripts/common.js';
 
 // cache contains the form element that should be reused

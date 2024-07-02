@@ -165,8 +165,7 @@
 
     .block.carousel.grid-on-desktop .items {
         margin: 0 15px;
-        column-gap: 30px;
-        row-gap: 24px;
+        gap: 24px 30px;
         flex-wrap: wrap;
         justify-content: center;
     }

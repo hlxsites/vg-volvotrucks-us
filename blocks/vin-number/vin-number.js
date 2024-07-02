@@ -61,10 +61,6 @@ const recallStatus = {
   12: 'recall-incomplete-no-remedy',
 };
 
-function capitalize(text) {
-  return text.toLowerCase().split('').map((char, index) => (index === 0 ? char.toUpperCase() : char)).join('');
-}
-
 function renderRecalls(recallsData) {
   const resultTextEle = document.querySelector(`.${blockName}__results-text`);
   let resultContent = getTextLabel('result text').replace(/\${count}/, recallsData.number_of_recalls).replace(/\${vin}/, recallsData.vin);
@@ -118,7 +114,7 @@ function renderRecalls(recallsData) {
       valueDisplayList.forEach((item) => {
         if (recall[item.key]) {
           const recallClass = item.key === 'mfr_recall_status' ? `${blockName}__${recall.mfr_recall_status.replace(/_/g, '-').toLowerCase()}` : '';
-          let itemValue = item.class ? capitalize(recall[item.key]) : recall[item.key];
+          let itemValue = recall[item.key];
           if (recallClass) {
             itemValue = getTextLabel(recall[item.key]);
           } else if (item.key === 'recall_date' && isFrench) {
@@ -286,7 +282,7 @@ export default async function decorate(block) {
           maxlength="17"
           required
           class="${blockName}__input"
-          pattern="^[1,2,3,4][c,C,N,n,R,r,P,p,V,v][1,2,4,5,C,c,e,E,K,k,V,v][B-C,E-H,J-N,R-T,V-Y,b-c,e-h,j-n,r-t,v-y][A-Za-z0-9]{13}$"
+          pattern="^[1,2,3,4][c,C,N,n,R,r,P,p,V,v][1,2,4,5,9,C,c,e,E,K,k,V,v][B-C,E-H,J-N,R-T,V-Y,b-c,e-h,j-n,r-t,v-y][A-Za-z0-9]{13}$"
         />
         <label for="vin_number" class="${blockName}__label">${getTextLabel('vinlabel')}</label>
       </div>

@@ -12,7 +12,7 @@
       "id": "library",
       "title": "Library",
       "environments": [ "edit" ],
-      "url": "https://main--vg-volvotrucks-us--hlxsites.hlx.live/tools/sidekick/library.html",
+      "url": "/tools/sidekick/library.html",
       "includePaths": [ "**.docx**" ]
     },
     {

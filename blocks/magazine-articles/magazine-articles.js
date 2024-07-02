@@ -1,15 +1,19 @@
-import { getLanguagePath } from '../../scripts/common.js';
+import {
+  getLanguagePath,
+  getOrigin,
+} from '../../scripts/common.js';
 import {
   ffetch,
+} from '../../scripts/lib-ffetch.js';
+import {
   createList,
   splitTags,
-} from '../../scripts/lib-ffetch.js';
+} from '../../scripts/magazine-press.js';
 import {
   createOptimizedPicture,
   getMetadata,
-  getOrigin,
   toClassName,
-} from '../../scripts/lib-franklin.js';
+} from '../../scripts/aem.js';
 
 const locale = getMetadata('locale');
 

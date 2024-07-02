@@ -1,6 +1,6 @@
-name: 'Report 🪲 bug or 🕳️ defect'
+name: 'Report 🐛 bug or 🕳️ defect'
 description: Please fill out this form to report a bug or defect.
-labels: [bugfix, Needs Triage]
+labels: ["Bugfix, Triage"]
 projects: ["hlxsites/8"]
 body:
   - type: dropdown
@@ -20,7 +20,7 @@ body:
         These are issues that are found when testing a functional requirement or change request.
 
 
-        :beetle: **Bugs**
+        :bug: **Bugs**
 
         Bugs are issues that are found when not validating any Change Request or Functional requirement. They can be regressions or simply issues you find while doing Exploratory Testing.
         </details>

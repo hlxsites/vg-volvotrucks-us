@@ -1,5 +1,10 @@
-import { decorateIcons, getMetadata } from '../../scripts/lib-franklin.js';
-import { createElement, getTextLabel, debounce } from '../../scripts/common.js';
+import { getMetadata } from '../../scripts/aem.js';
+import {
+  createElement,
+  decorateIcons,
+  getTextLabel,
+  debounce,
+} from '../../scripts/common.js';
 
 const blockName = 'v2-inpage-navigation';
 
@@ -28,7 +33,7 @@ const inpageNavigationButton = () => {
     const title = getMetadata('inpage-button');
     const url = getMetadata('inpage-link');
     const link = createElement('a', {
-      classes: ['button', 'marketing-cta', `${blockName}__cta`],
+      classes: ['button', 'marketing', `${blockName}__marketing`],
       props: {
         href: url,
         title,
@@ -123,7 +128,7 @@ export default async function decorate(block) {
 
   const wrapper = block.querySelector(':scope > div');
   wrapper.classList.add(`${blockName}__wrapper`);
-  const itemsWrapper = block.querySelector(':scope > div > div');
+  const itemsWrapper = block.querySelector(':scope > div > div > p');
 
   const dropdownBackground = createElement('div', { classes: `${blockName}__dropdown-background` });
   const dropdownWrapper = createElement('div', { classes: `${blockName}__dropdown` });
@@ -158,7 +163,7 @@ export default async function decorate(block) {
     }
     const listItem = createElement('li', { classes });
 
-    listItem.innerHTML = item.innerHTML;
+    listItem.innerHTML = item.outerHTML;
     list.appendChild(listItem);
   });
 
