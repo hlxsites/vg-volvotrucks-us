@@ -203,7 +203,7 @@ main .section .engine-specifications-wrapper {
 }
 
 /* Media queries */
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .engine-specifications-wrapper {
     margin-right: 0 !important;
   }
@@ -288,7 +288,7 @@ main .section .engine-specifications-wrapper {
   }
 }
 
-@media (min-width: 1440px){
+@media (min-width: 1440px) {
   .engine-specifications-container {
     width: 100vw;
     margin: 0;
@@ -365,9 +365,6 @@ main .section .engine-specifications-wrapper {
   font-size: var(--f-heading-3-font-size);
   font-family: var(--ff-volvo-novum-medium);
   font-weight: normal;
-
-  /* line-height: 125%; */
-  /* letter-spacing: 0.25px; */
   line-height: var(--f-heading-3-line-height);
   letter-spacing: var(--f-heading-3-letter-spacing);
 }
@@ -384,6 +381,15 @@ main .section .engine-specifications-wrapper {
   font-weight: normal;
 }
 
+.redesign-v2 .engine-specifications .rating-item h5,
+.redesign-v2 .engine-specifications .power-item h5,
+.redesign-v2 .engine-specifications .torque-item h5,
+.redesign-v2 .engine-specifications .item-content {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: var(--f-body-font-size);
+}
+
 .redesign-v2 .engine-specifications .rating-list .rating-item h5,
 .redesign-v2 .engine-specifications .rating-list .power-item h5,
 .redesign-v2 .engine-specifications .rating-list .torque-item h5,
@@ -394,15 +400,6 @@ main .section .engine-specifications-wrapper {
   letter-spacing: var(--f-button-letter-spacing);
   line-height: 100%;
   text-transform: uppercase;
-}
-
-.redesign-v2 .engine-specifications .rating-item h5,
-.redesign-v2 .engine-specifications .power-item h5,
-.redesign-v2 .engine-specifications .torque-item h5,
-.redesign-v2 .engine-specifications .item-content {
-  margin: 0;
-  color: var(--text-subtle);
-  font-size: var(--f-body-font-size);
 }
 
 .redesign-v2 .performance .engine-rating .rating-title {
@@ -435,16 +432,10 @@ main .section .engine-specifications-wrapper {
 
 .redesign-v2 .chart-label-numbers {
   font-size: calc(var(--f-body-font-size) * 0.75 * var(--scale-factor));
-
-  /* line-height: 125%; */
-  /* letter-spacing: 0.4px; */
 }
 
 .redesign-v2 .chart-label-text {
   font-size: calc(var(--f-body-font-size) * var(--scale-factor));
-
-  /* line-height: 130%; */
-  /* letter-spacing: 0.5px; */
   fill: var(--text-subtle);
 }
 
@@ -455,11 +446,7 @@ main .section .engine-specifications-wrapper {
 
 .redesign-v2 .peak-text,
 .redesign-v2 .peak-value {
-  /* font-family: var(--ff-volvo-novum-medium); */
-
   font-weight: normal;
-
-  /* line-height: 125%; */
 }
 
 .redesign-v2 .peak-value {
