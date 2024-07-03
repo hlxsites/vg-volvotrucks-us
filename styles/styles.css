@@ -1164,36 +1164,13 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section > div {
-  padding: var(--section-div-padding);
+  padding: var(--section-div-padding); 
   margin: auto;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 .modal-content {
-  --section-padding: 0;
-  --section-div-padding-horizontal: 16px;
-  --section-div-padding-vertical: 64px;
-  --section-div-padding: 0 var(--section-div-padding-horizontal) var(--section-div-padding-vertical);
 }
 
 .redesign-v2 .section div.full-width {
   padding: 0;
   width: 100%;
-}
-
-.redesign-v2 .modal-content .section div.full-width {
-  margin: -24px 0;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 .modal-content .section--black-background,
-.redesign-v2 .modal-content .section--gray-background,
-.redesign-v2 .modal-content .section--black-background + .section:not(.section--black-background,
-.section--gray-background),
-.redesign-v2 .modal-content .section--gray-background + .section:not(.section--black-background,
-.section--gray-background),
-.redesign-v2 .modal-content .section div.full-width + div {
-  padding-top: var(--section-div-padding-vertical);
 }
 
 :root.redesign-v2 .section .expanded-width {
@@ -1649,16 +1626,6 @@ main.blue-contract .section.section-with-title p {
     --text-block-max-width: 506px;
   }
 
-  .redesign-v2 .modal-content {
-    --section-padding: 0;
-    --section-div-padding-horizontal: 32px;
-    --section-div-padding-vertical: 80px;
-  }
-
-  .redesign-v2 .modal-content .section div.full-width {
-    margin: -40px 0 -16px;
-  }
-
   .v2-video__playback-button,
   .v2-video__mute-controls {
     bottom: 18px;
@@ -1681,16 +1648,6 @@ main.blue-contract .section.section-with-title p {
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
     --text-block-max-width: 694px;
-  }
-
-  .redesign-v2 .modal-content {
-    --section-padding: 0;
-    --section-div-padding-horizontal: 0;
-    --section-div-padding-vertical: 128px;
-  }
-
-  .redesign-v2 .modal-content .section div.full-width {
-    margin: -80px 0 -48px;
   }
 
   :root.redesign-v2 .section .expanded-width {
