@@ -1160,7 +1160,7 @@ main.blue-contract .section.section-with-title p {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section > div {
-  padding: var(--section-div-padding); 
+  padding: var(--section-div-padding);
   margin: auto;
 }
 
