@@ -414,6 +414,7 @@ main .section .engine-specifications-wrapper {
   font-size: var(--f-body-font-size);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .performance a,
 .redesign-v2 .performance a:visited {
   text-decoration: none;
