@@ -390,13 +390,22 @@ main .section .engine-specifications-wrapper {
   font-size: var(--f-body-font-size);
 }
 
+.redesign-v2 .engine-specifications .rating-list .rating-item h5 {
+  font-size: 0.7rem;
+}
+
+.redesign-v2 .engine-specifications .rating-list .power-item h5,
+.redesign-v2 .engine-specifications .rating-list .torque-item h5,
+.redesign-v2 .engine-specifications .rating-list .item-content {
+  font-size: var(--f-body-font-size);
+}
+
 .redesign-v2 .engine-specifications .rating-list .rating-item h5,
 .redesign-v2 .engine-specifications .rating-list .power-item h5,
 .redesign-v2 .engine-specifications .rating-list .torque-item h5,
 .redesign-v2 .engine-specifications .rating-list .item-content {
   border-radius: 1px;
   color: var(--text-subtle);
-  font-size: var(--f-body-font-size);
   letter-spacing: var(--f-button-letter-spacing);
   line-height: 100%;
   text-transform: uppercase;
@@ -465,6 +474,12 @@ main .section .engine-specifications-wrapper {
   margin: 0 auto;
   width: auto;
   max-width: var(--wrapper-width);
+}
+
+@media screen and (min-width: 450px) {
+  .redesign-v2 .engine-specifications .rating-list .rating-item h5 {
+    font-size: var(--f-body-font-size);
+  }
 }
 
 @media screen and (min-width: 744px) {
