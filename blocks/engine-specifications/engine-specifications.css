@@ -3,7 +3,7 @@ main .engine-specifications-container {
 }
 
 .engine-specifications.engine {
-  color: #141414;
+  color: var(--c-main-black);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,7 @@ main .section .engine-specifications-wrapper {
 
 .performance .performance-title {
   font-size: var(--heading-font-size-l);
-  color: #141414;
+  color: var(--c-main-black);
   margin: 0;
   padding-bottom: 8px;
   text-align: center;
@@ -120,8 +120,8 @@ main .section .engine-specifications-wrapper {
 }
 
 .performance .engine-rating .rating-item[data-active] a {
-  color: #141414;
-  border-bottom: 2px solid #141414;
+  color: var(--c-main-black);
+  border-bottom: 2px solid var(--c-main-black);
 }
 
 .performance-chart-list {
@@ -175,14 +175,14 @@ main .section .engine-specifications-wrapper {
 
 .peak-rectangle-hp,
 .peak-triangle-hp {
-  fill: #78B833;
-  stroke: #78B833;
+  fill: var(--c-leaf-4);
+  stroke: var(--c-leaf-4);
 }
 
 .peak-rectangle-tq,
 .peak-triangle-tq {
-  fill: #004FBC;
-  stroke: #004FBC;
+  fill: var(--c-cta-blue-default);
+  stroke: var(--c-cta-blue-default);
 }
 
 .peak-text,
@@ -203,7 +203,7 @@ main .section .engine-specifications-wrapper {
 }
 
 /* Media queries */
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .engine-specifications-wrapper {
     margin-right: 0 !important;
   }
@@ -215,7 +215,7 @@ main .section .engine-specifications-wrapper {
     padding: 0 32px;
   }
 
-  .engine-specifications .item-list li {
+  .engine-specifications .item-wrapper {
     width: 50%;
     padding-right: 5px;
   }
@@ -288,7 +288,7 @@ main .section .engine-specifications-wrapper {
   }
 }
 
-@media (min-width: 1440px){
+@media (min-width: 1440px) {
   .engine-specifications-container {
     width: 100vw;
     margin: 0;
@@ -319,5 +319,214 @@ main .section .engine-specifications-wrapper {
 
   .engine-specifications .item-list li {
     width: 25%;
+  }
+}
+
+.redesign-v2 {
+  --v2-card-padding: 24px;
+}
+
+.redesign-v2 .performance-chart-list,
+.redesign-v2 .engine-specifications-container,
+.redesign-v2 main .section .engine-specifications-wrapper {
+  width: auto;
+}
+
+.redesign-v2 main .section .engine-specifications-wrapper {
+  padding: var(--section-div-padding);
+}
+
+.redesign-v2 .engine-specifications .item-list {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.redesign-v2 .engine-specifications .item-wrapper {
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+
+.redesign-v2 .engine-specifications .engine-title {
+  font-size: var(--f-heading-4-font-size);
+}
+
+.redesign-v2 .performance {
+  background-color: transparent;
+  width: auto;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.redesign-v2 .performance .performance-title {
+  font-size: var(--f-heading-3-font-size);
+  font-family: var(--ff-volvo-novum-medium);
+  font-weight: normal;
+  line-height: var(--f-heading-3-line-height);
+  letter-spacing: var(--f-heading-3-letter-spacing);
+}
+
+
+.redesign-v2 .engine-specifications .rating-title,
+.redesign-v2 .engine-specifications .power-title,
+.redesign-v2 .engine-specifications .torque-title,
+.redesign-v2 .engine-specifications .item-title {
+  color: var(--card-text);
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-subtitle-1-font-size);
+  line-height: var(--f-subtitle-1-line-height);
+  font-weight: normal;
+}
+
+.redesign-v2 .engine-specifications .rating-item h5,
+.redesign-v2 .engine-specifications .power-item h5,
+.redesign-v2 .engine-specifications .torque-item h5,
+.redesign-v2 .engine-specifications .item-content {
+  margin: 0;
+  color: var(--text-subtle);
+  font-size: var(--f-body-font-size);
+}
+
+.redesign-v2 .engine-specifications .rating-list .rating-item h5 {
+  font-size: 0.7rem;
+}
+
+.redesign-v2 .engine-specifications .rating-list .power-item h5,
+.redesign-v2 .engine-specifications .rating-list .torque-item h5,
+.redesign-v2 .engine-specifications .rating-list .item-content {
+  font-size: var(--f-body-font-size);
+}
+
+.redesign-v2 .engine-specifications .rating-list .rating-item h5,
+.redesign-v2 .engine-specifications .rating-list .power-item h5,
+.redesign-v2 .engine-specifications .rating-list .torque-item h5,
+.redesign-v2 .engine-specifications .rating-list .item-content {
+  border-radius: 1px;
+  color: var(--text-subtle);
+  letter-spacing: var(--f-button-letter-spacing);
+  line-height: 100%;
+  text-transform: uppercase;
+}
+
+.redesign-v2 .performance .engine-rating .rating-title {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-6-font-size);
+  letter-spacing: var(--f-heading-6-letter-spacing);
+  color: var(--text-subtle);
+  font-weight: normal;
+}
+
+.redesign-v2 .performance .rating-item {
+  font-size: var(--f-body-font-size);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .performance a,
+.redesign-v2 .performance a:visited {
+  text-decoration: none;
+  cursor: pointer;
+  padding-bottom: 12px;
+}
+
+.redesign-v2 .performance .engine-rating .rating-item a:hover {
+  color: var(--c-grey-4);
+  border-bottom-color: var(--c-main-black);
+}
+
+.redesign-v2 .performance .engine-rating .rating-item[data-active] a:hover {
+  color: var(--c-main-black);
+}
+
+.redesign-v2 .chart-label-numbers {
+  font-size: calc(var(--f-body-font-size) * 0.75 * var(--scale-factor));
+}
+
+.redesign-v2 .chart-label-text {
+  font-size: calc(var(--f-body-font-size) * var(--scale-factor));
+  fill: var(--text-subtle);
+}
+
+.redesign-v2 .peak-rectangle-hp,
+.redesign-v2 .peak-rectangle-tq {
+  stroke: none;
+}
+
+.redesign-v2 .peak-text,
+.redesign-v2 .peak-value {
+  font-weight: normal;
+}
+
+.redesign-v2 .peak-value {
+  font-size: calc(15px * var(--scale-factor));
+}
+
+.redesign-v2 .peak-text {
+  font-size: calc(var(--f-body-font-size) * 0.65 * var(--scale-factor));
+}
+
+.redesign-v2 .engine-specifications.engine {
+  padding: var(--v2-card-padding);
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  margin: 0 auto;
+  width: auto;
+  max-width: var(--wrapper-width);
+}
+
+@media screen and (min-width: 450px) {
+  .redesign-v2 .engine-specifications .rating-list .rating-item h5 {
+    font-size: var(--f-body-font-size);
+  }
+}
+
+@media screen and (min-width: 744px) {
+  .redesign-v2 {
+    --v2-card-padding: 24px 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .redesign-v2 {
+    --v2-card-padding: 32px 48px;
+  }
+
+  .redesign-v2 .performance-chart {
+    padding: 0;
+  }
+
+  .redesign-v2 .performance-chart::before,
+  .redesign-v2 .performance-chart::after {
+    width: 180px;
+  }
+
+  .redesign-v2 .performance-chart::before {
+    left: 0;
+  }
+
+  .redesign-v2 .performance-chart::after {
+    right: 0;
+  }
+}
+
+@media (min-width: 1440px){
+  .redesign-v2 main .section .engine-specifications-wrapper {
+    padding: var(--section-div-padding);
+    margin: auto;
+    background-color: transparent;
+  }
+
+  .redesign-v2 .engine-specifications.engine {
+    padding: 24px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    margin: 0 auto;
+    width: var(--wrapper-width);
+  }
+
+  .redesign-v2 .engine-specifications .engine-title {
+    margin-top: 0;
   }
 }
