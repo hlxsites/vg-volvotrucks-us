@@ -27,7 +27,7 @@
       "environments": [
         "edit"
       ],
-      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html",
+      "url": "https://experience.adobe.com/solutions/CQ-assets-selectors/static-assets/resources/franklin/asset-selector.html?extConfigUrl=https://helix-asset-selector-configs.netlify.app/config.json",
       "isPalette": true,
       "includePaths": [
         "**.docx**"
