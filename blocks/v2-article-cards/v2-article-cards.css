@@ -37,8 +37,6 @@
   flex-direction: column;
   padding: var(--v2-article-cards-padding);
   gap: var(--v2-article-cards-text-gutter);
-  border-radius: 0 0 var(--v2-article-cards-border-radius)
-    var(--v2-article-cards-border-radius);
 }
 
 .v2-article-cards__texts-wrapper * {
@@ -128,8 +126,6 @@
   .v2-article-cards--1-articles .v2-article-cards__texts-wrapper {
     width: calc(var(--wrapper-width) * 0.45);
     justify-content: center;
-    border-radius: var(--v2-article-cards-border-radius) 0 0
-      var(--v2-article-cards-border-radius);
   }
 
   .v2-article-cards--2-articles .v2-article-cards__article {
@@ -152,7 +148,5 @@
   .v2-article-cards--1-articles .v2-article-cards__texts-wrapper {
     width: calc(var(--wrapper-width) * 0.3);
     justify-content: center;
-    border-radius: var(--v2-article-cards-border-radius) 0 0
-      var(--v2-article-cards-border-radius);
   }
 }
