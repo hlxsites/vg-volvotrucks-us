@@ -14,6 +14,7 @@
 }
 
 .v2-article-cards__article {
+  background-color: var(--card-background);
   list-style: none;
   border-radius: var(--v2-article-cards-border-radius);
 }
@@ -34,7 +35,6 @@
 .v2-article-cards__texts-wrapper {
   display: flex;
   flex-direction: column;
-  background-color: var(--card-background);
   padding: var(--v2-article-cards-padding);
   gap: var(--v2-article-cards-text-gutter);
   border-radius: 0 0 var(--v2-article-cards-border-radius)

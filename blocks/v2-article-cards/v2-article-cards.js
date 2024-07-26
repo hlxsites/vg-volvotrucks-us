@@ -47,7 +47,7 @@ const createCard = (article) => {
   } else {
     const newButton = createElement('a', { classes: `${blockName}__card-button` });
     newButton.href = path;
-    newButton.textContent = getTextLabel('readMore');
+    newButton.textContent = getTextLabel('readMoreBtn');
     textWrapper.appendChild(newButton);
   }
   card.appendChild(cardContent);
