@@ -68,8 +68,6 @@
 
   .v2-article-cards__texts-wrapper {
     --v2-article-cards-padding: 24px;
-
-    min-height: 200px;
   }
 
   .v2-article-cards__card-date {
