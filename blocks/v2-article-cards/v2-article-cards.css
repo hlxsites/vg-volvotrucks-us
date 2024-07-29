@@ -22,7 +22,6 @@
 .v2-article-cards__image-wrapper {
   display: block;
   aspect-ratio: 4 / 3;
-  object-fit: cover;
 }
 
 .v2-article-cards__image-wrapper img {

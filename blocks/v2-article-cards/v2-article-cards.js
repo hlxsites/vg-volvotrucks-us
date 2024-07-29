@@ -11,6 +11,7 @@ import {
 } from '../../scripts/aem.js';
 
 const blockName = 'v2-article-cards';
+const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
 
 const createCard = (article) => {
   const {
@@ -45,8 +46,7 @@ const createCard = (article) => {
     button.classList.add(`${blockName}__card-button`);
     textWrapper.appendChild(button);
   } else {
-    const newButton = createElement('a', { classes: `${blockName}__card-button` });
-    newButton.href = path;
+    const newButton = createElement('a', { classes: `${blockName}__card-button`, props: { href: path } });
     newButton.textContent = getTextLabel('readMoreBtn');
     textWrapper.appendChild(newButton);
   }
@@ -65,7 +65,6 @@ const createArticleCards = (block, articles, amount = null) => {
 };
 
 export default async function decorate(block) {
-  const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
   const allArticles = await getJsonFromUrl(indexUrl);
   const amountOfLinks = block.children.length;
 
@@ -74,9 +73,9 @@ export default async function decorate(block) {
   if (amountOfLinks !== 0) {
     const buttons = block.querySelectorAll('.button-container');
     buttons.forEach((a) => {
-      const link = a.querySelector('a').href;
+      const link = a.querySelector('a')?.href;
       [...allArticles.data].forEach((el) => {
-        if (link.includes(el.path)) {
+        if (link?.includes(el.path)) {
           el.button = a;
           selectedArticles.push(el);
         }
