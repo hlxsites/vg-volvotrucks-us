@@ -54,6 +54,20 @@
   padding: 8px 12px 8px 0;
 }
 
+.v2-article-cards--all-articles .v2-article-cards__texts-wrapper .v2-article-cards__card-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.v2-article-cards--all-articles .v2-article-cards__texts-wrapper .v2-article-cards__card-button::after {
+  content: url('../../icons/arrow-right.svg');
+  height: 24px;
+  width: 24px;
+}
+
 @media screen and (min-width: 744px) {
   .v2-article-cards__article-list {
     --v2-article-cards-gutter: 20px;

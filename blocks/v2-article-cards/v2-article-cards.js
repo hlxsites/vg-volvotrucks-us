@@ -46,8 +46,13 @@ const createCard = (article) => {
     button.classList.add(`${blockName}__card-button`);
     textWrapper.appendChild(button);
   } else {
-    const newButton = createElement('a', { classes: `${blockName}__card-button`, props: { href: path } });
-    newButton.textContent = getTextLabel('readMoreBtn');
+    const newButton = document.createRange().createContextualFragment(`
+      <div class="button-container ${blockName}__card-button">
+        <a href="${path}" class="button tertiary">
+            ${getTextLabel('readMoreBtn')}
+        </a>
+      </div>
+    `);
     textWrapper.appendChild(newButton);
   }
   card.appendChild(cardContent);
@@ -61,12 +66,26 @@ const createArticleCards = (block, articles, amount = null) => {
     articleList.append(card);
   });
   block.append(articleList);
-  if (amount) articleList.classList.add(`${blockName}--${amount}-articles`);
+  if (amount) {
+    articleList.classList.add(`${blockName}--${amount}-articles`);
+  } else {
+    articleList.classList.add(`${blockName}--all-articles`);
+  }
 };
 
 export default async function decorate(block) {
   const allArticles = await getJsonFromUrl(indexUrl);
   const amountOfLinks = block.children.length;
+  const blockClassList = [...block.classList];
+
+  // Get the limit set in the block
+  let limitAmount = null;
+  blockClassList.forEach((el) => {
+    if (el.includes('limit')) {
+      const limit = el.split('-');
+      limitAmount = Number(limit[limit.length - 1]);
+    }
+  });
 
   const selectedArticles = [];
 
@@ -86,9 +105,16 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
-    // TODO here goes the logic to build the full article list
     const sortedArticles = allArticles.data.sort((a, b) => a.date > b.date);
-    createArticleCards(block, sortedArticles);
+    // After sorting aticles by date, set the chunks of the array for future pagination
+    const chunkedArticles = sortedArticles.reduce((resultArray, item, index) => {
+      const chunkIndex = Math.floor(index / limitAmount);
+      if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
+      resultArray[chunkIndex].push(item);
+      return resultArray;
+    }, []);
+    // Create articles
+    createArticleCards(block, chunkedArticles[0]);
   }
   unwrapDivs(block);
 }
