@@ -2,10 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.volvotrucks.us/news-and-stories/press-releases/</id>
     <title>Volvo Trucks USA Press Releases</title>
-    <updated>2024-07-10T00:00:00.000Z</updated>
+    <updated>2024-07-18T00:00:00.000Z</updated>
     <generator>AEM News feed generator (GitHub action)</generator>
     <link rel="alternate" href="https://www.volvotrucks.us/news-and-stories/press-releases/"/>
     <subtitle>Volvo Trucks USA Press Releases</subtitle>
+    <entry>
+        <title type="html"><![CDATA[Volvo Trucks North America Announces Availability of CARB 2024 Omnibus Compliant Heavy-Duty Engine]]></title>
+        <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/july/volvo-trucks-north-america-announces-availability-of-carb-2024-omnibus-compliant-heavy-duty-engine/</id>
+        <link href="https://www.volvotrucks.us/news-and-stories/press-releases/2024/july/volvo-trucks-north-america-announces-availability-of-carb-2024-omnibus-compliant-heavy-duty-engine/"/>
+        <updated>2024-07-18T00:00:00.000Z</updated>
+        <content type="html"><![CDATA["To help our customers successfully navigate the complexities of the evolving regulatory landscape Volvo has developed an engine that meet CARB’s new requirements. Volvo also offers information sessions to help our customers stay up-to-date and empower them to make informed decisions for their businesses,” said Johan Agebrand, director of product marketing, Volvo Trucks North America.]]></content>
+        <published>2024-07-18T00:00:00.000Z</published>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Volvo Trucks Celebrates First Order of the All-New Volvo VNL in Canada by Tobler and Sons Inc.]]></title>
         <id>https://www.volvotrucks.us/news-and-stories/press-releases/2024/july/volvo-trucks-celebrates-first-order-of-the-all-new-volvo-vnl-in-canada-by-tobler-and-sons-inc/</id>
