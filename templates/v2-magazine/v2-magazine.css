@@ -71,6 +71,30 @@
   line-height: 1;
 }
 
+/* v2-magazine-article */
+.v2-magazine .v2-magazine-article h4 {
+  font-family: var(--ff-volvo-novum-medium);
+  font-size: var(--f-heading-4-font-size-mobile);
+  font-weight: var(--f-heading-4-font-weight);
+  line-height: var(--f-heading-4-line-height);
+  letter-spacing: var(--f-heading-4-letter-spacing);
+  margin-bottom: 16px;
+  margin-top: 40px;
+}
+
+.v2-magazine .v2-magazine-article .section {
+  padding-top: 24px;
+}
+
+.v2-magazine .v2-magazine-article .v2-text-wrapper {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.v2-magazine .v2-magazine-article p {
+  margin-top: 0;
+}
+
 @media (min-width: 744px) {
   .v2-magazine {
     --hero-image-aspect-ratio: 4 / 3;
@@ -104,5 +128,10 @@
 
   .v2-magazine-article-hero__img-container {
     margin-bottom: 0;
+  }
+
+  .v2-magazine .v2-magazine-article h4 {
+    font-size: var(--f-heading-4-font-size);
+    margin-top: 72px;
   }
 }

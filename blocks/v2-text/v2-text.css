@@ -38,11 +38,23 @@
   margin: 0;
 }
 
+/* heading-3-5 variant */
+.v2-text--heading-3-5 .v2-text__row {
+  text-align: left;
+}
+
+.v2-text--heading-3-5 .v2-text__title {
+  font-family: var(--ff-volvo-novum);
+  font-size: var(--f-heading-3-5-font-size-mobile);
+  font-weight: var(--f-heading-3-5-font-weight);
+  line-height: var(--f-heading-3-5-line-height);
+}
+
 @media screen and (min-width: 1200px) {
-  .v2-text:not(.v2-text--double) {
+  .v2-text:not(.v2-text--double, .v2-text--heading-3-5) {
     max-width: 694px;
     margin: auto;
-  }
+  }  
 
   .v2-text__title,
   .v2-text__sub-title {
@@ -54,5 +66,12 @@
     --v2-text-row-gap: 48px;
 
     flex-flow: row;
+  }
+
+  /* heading-3-5 variant */
+  .v2-text--heading-3-5 .v2-text__title {
+    font-size: var(--f-heading-3-5-font-size);
+    margin-bottom: 24px;
+    margin-top: 56px;
   }
 }
