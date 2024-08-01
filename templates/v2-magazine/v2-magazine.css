@@ -109,6 +109,12 @@
     --hero-image-aspect-ratio: 1.16 / 1;
   }
 
+  .v2-magazine .v2-magazine-article p {
+    font-size: var(--f-body-font-size-desktop);
+    letter-spacing: var(--f-body-letter-spacing-desktop);
+    line-height: var(--f-body-line-height-desktop);
+  }
+
   .v2-magazine-article-hero__container {
     grid-template:
       "metadata image" 1fr

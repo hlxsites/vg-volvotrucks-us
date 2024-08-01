@@ -125,6 +125,11 @@
   --f-body-letter-spacing: 0.03125rem;
   --f-body-line-height: 130%;
 
+  /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.031rem, 144% */
+  --f-body-font-size-desktop: 1.125rem; /* 18px */
+  --f-body-letter-spacing-desktop: 0.03125rem;
+  --f-body-line-height-desktop: 144%;
+
   /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
   --f-body-2-font-size: 1.125rem; /* 18px */
   --f-body-2-letter-spacing: 0.03125rem; /* 5px */
