@@ -2,8 +2,8 @@
 Franklin site redesign for volvotrucks.us
 
 ## Environments
-- Preview: https://main--volvotrucks-na--volvogroup.aem.page/
-- Live: https://main--volvotrucks-na--volvogroup.aem.live/
+- Preview: https://main--volvotrucks-us--volvogroup.aem.page/
+- Live: https://main--volvotrucks-us--volvogroup.aem.live/
 
 ## Installation
 

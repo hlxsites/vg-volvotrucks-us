@@ -1,8 +1,8 @@
 {
-  "name": "@adobe/aem-boilerplate",
+  "name": "volvotrucks-na",
   "private": true,
   "version": "18.0.0",
-  "description": "Starter project for Adobe Helix",
+  "description": "Volvo Trucks North America",
   "scripts": {
     "dev": "npx @adobe/helix-cli up",
     "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
@@ -18,17 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adobe/helix-project-boilerplate.git"
+    "url": "git+https://github.com/aemsites/volvotrucks-na"
   },
   "author": "Adobe",
-  "license": "Apache License 2.0",
-  "bugs": {
-    "url": "https://github.com/adobe/helix-project-boilerplate/issues"
-  },
+  "license": "UNLICENSED",
   "homepage": "https://github.com/adobe/helix-project-boilerplate#readme",
   "devDependencies": {
-    "@babel/core": "7.24.5",
-    "@babel/eslint-parser": "7.24.5",
+    "@babel/core": "7.25.2",
+    "@babel/eslint-parser": "7.25.1",
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@web/test-runner": "0.18.2",
     "@web/test-runner-commands": "0.9.0",
@@ -37,9 +34,9 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.29.1",
     "husky": "^8.0.3",
-    "lint-staged": "^15.2.2",
+    "lint-staged": "^15.2.7",
     "sinon": "17.0.1",
-    "stylelint": "16.5.0",
-    "stylelint-config-standard": "36.0.0"
+    "stylelint": "16.8.1",
+    "stylelint-config-standard": "36.0.1"
   }
 }
