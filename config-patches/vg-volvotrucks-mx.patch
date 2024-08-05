@@ -1,0 +1,87 @@
+ .github/pull_request_template.md | 4 ++--
+ README.md                        | 8 ++++----
+ fstab.yaml                       | 2 +-
+ helix-sitemap.yaml               | 4 ++--
+ robots.txt                       | 2 +-
+ tools/sidekick/config.json       | 6 ------
+ 6 files changed, 10 insertions(+), 16 deletions(-)
+
+diff --git a/.github/pull_request_template.md b/.github/pull_request_template.md
+index d717154..318be3f 100644
+--- a/.github/pull_request_template.md
++++ b/.github/pull_request_template.md
+@@ -1,5 +1,5 @@
+ Fix #<gh-issue-id>
+ 
+ Test URLs:
+-- Before: https://main--vg-volvotrucks-us--hlxsites.aem.page/
+-- After: https://<branch>--vg-volvotrucks-us--hlxsites.aem.page/
++- Before: https://main--vg-volvotrucks-mx--hlxsites.aem.page/
++- After: https://<branch>--vg-volvotrucks-mx--hlxsites.aem.page/
+diff --git a/README.md b/README.md
+index f35bce0..3d2fa72 100644
+--- a/README.md
++++ b/README.md
+@@ -1,9 +1,9 @@
+-# Volvo Trucks US
+-Franklin site redesign for volvotrucks.us
++# Volvo Trucks MX
++Franklin site redesign for volvotrucks.mx
+ 
+ ## Environments
+-- Preview: https://main--vg-volvotrucks-us--hlxsites.hlx.page/
+-- Live: https://main--vg-volvotrucks-us--hlxsites.hlx.live/
++- Preview: https://main--vg-volvotrucks-mx--hlxsites.aem.page/
++- Live: https://main--vg-volvotrucks-mx--hlxsites.aem.live/
+ 
+ ## Installation
+ 
+diff --git a/fstab.yaml b/fstab.yaml
+index 2f99f23..503c25a 100644
+--- a/fstab.yaml
++++ b/fstab.yaml
+@@ -1,2 +1,2 @@
+ mountpoints:
+-  /: https://adobe.sharepoint.com/sites/HelixProjects/Shared%20Documents/sites/VolvoGroup/vg-volvotrucks-us
++  /: https://adobe.sharepoint.com/sites/HelixProjects/Shared%20Documents/sites/VolvoGroup/vg-volvotrucks-mx
+diff --git a/helix-sitemap.yaml b/helix-sitemap.yaml
+index 4d9e7f5..85edcfe 100644
+--- a/helix-sitemap.yaml
++++ b/helix-sitemap.yaml
+@@ -1,5 +1,5 @@
+ sitemaps:
+   allindex:
+-    origin: https://www.volvotrucks.us
++    origin: https://www.volvotrucks.mx
+     source: /query-index.json
+-    destination: /sitemap.xml
+\ No newline at end of file
++    destination: /sitemap.xml
+diff --git a/robots.txt b/robots.txt
+index 3aefa67..4f8d5be 100644
+--- a/robots.txt
++++ b/robots.txt
+@@ -1,4 +1,4 @@
+ User-agent: *
+ Disallow:
+ 
+-Sitemap: https://www.volvotrucks.us/sitemap.xml
+\ No newline at end of file
++Sitemap: https://www.volvotrucks.mx/sitemap.xml
+diff --git a/tools/sidekick/config.json b/tools/sidekick/config.json
+index 237781e..c102055 100644
+--- a/tools/sidekick/config.json
++++ b/tools/sidekick/config.json
+@@ -2,12 +2,6 @@
+   "project": "Volvo Trucks",
+   "host": "www.volvotrucks.us",
+   "plugins": [
+-    {
+-      "id": "tagger",
+-      "title": "Tagger",
+-      "environments": [ "edit" ],
+-      "url": "/tools/tagger/index.html"
+-    },
+     {
+       "id": "library",
+       "title": "Library",

@@ -76,6 +76,44 @@
       }
     ]
   },
+  "headerConfig": {
+    "total": 2,
+    "offset": 0,
+    "limit": 2,
+    "data": [
+      {
+        "name": "SEARCH_DISABLED",
+        "value": "false"
+      },
+      {
+        "name": "LOGIN_DISABLED",
+        "value": "false"
+      }
+    ]
+  },
+  "tools": {
+    "total": 4,
+    "offset": 0,
+    "limit": 4,
+    "data": [
+      {
+        "name": "GIT_OWNER",
+        "value": "hlxsites"
+      },
+      {
+        "name": "GIT_REPO",
+        "value": "vg-volvotrucks-ca"
+      },
+      {
+        "name": "GLOBAL_SITEMAP_URL",
+        "value": "/sitemap.xml"
+      },
+      {
+        "name": "TAGS_URL",
+        "value": "/news-and-stories/tags.plain.html"
+      }
+    ]
+  },
   "magazineConfig": {
     "total": 3,
     "offset": 0,
@@ -97,9 +135,11 @@
   },
   ":version": 3,
   ":names": [
-      "searchUrls",
-      "cookieValues",
-      "magazineConfig"
-    ],
+    "searchUrls",
+    "cookieValues",
+    "headerConfig",
+    "tools",
+    "magazineConfig"
+  ],
   ":type": "multi-sheet"
 }

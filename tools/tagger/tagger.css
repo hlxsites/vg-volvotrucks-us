@@ -1,5 +1,13 @@
+/* stylelint-disable no-descending-specificity */
+helix-sidekick {
+  display: none;
+}
+
 main {
   font-family: system-ui, Arial;
+  padding: 20px;
+  font-size: 1.3rem;
+  line-height: 1.2em;
 }
 
 main .intro {
@@ -16,7 +24,7 @@ main input {
 }
 
 main .filter {
-  padding: 20px 10px 20px 10px;
+  padding: 20px 10px;
 }
 
 main #selected {
@@ -38,20 +46,13 @@ main #selected button {
 #results > .category {
   user-select: none;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
 }
 
 main > div > span,
 main > div > div > span {
   white-space: nowrap;
   margin: 6px 4px;
-}
-
-main {
-  padding: 20px;
-  font-size: 1.3rem;
-  line-height: 1.2em;
 }
 
 span.tag {
@@ -66,7 +67,7 @@ span.tag {
 }
 
 .selected span.tag {
-  background-color: #888888;
+  background-color: #888;
   color: lightgrey;
 }
 
@@ -81,6 +82,7 @@ span.tag {
 .tag.cat-2 {
   background-color: #12805c;
 }
+
 .tag.cat-3 {
   background-color: #d2b200;
 }
@@ -94,7 +96,7 @@ span.path {
   cursor: pointer;
   border-radius: 10px;
   border: 1px dashed black;
-  padding: 4px 10px 2px 10px;
+  padding: 4px 10px 2px;
   font-size: 12px;
 }
 

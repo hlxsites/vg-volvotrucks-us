@@ -56,10 +56,12 @@
   --font-family-fixed: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* REDESIGN */
+
+  /* Sizings */
   --border-radius: 8px;
   --section-padding: 40px 0;
   --section-div-padding: 24px 16px;
-  --background-color: var(--c-white);
+  --carousel-gap: 8px;
 
   /* Form styles */
   --input-padding: 16px;
@@ -85,12 +87,16 @@
   --f-heading-3-line-height: 110%;
 
   /* Section Header/Heading 3.5 */
+  --f-heading-3-5-font-size-mobile: 1.5rem; /* 24px */
   --f-heading-3-5-font-size: 2rem;
+  --f-heading-3-5-font-weight: 300;
   --f-heading-3-5-letter-spacing: 0;
   --f-heading-3-5-line-height: 125%;
 
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
+  --f-heading-4-font-size-mobile: 1.5rem; /* 24px */
   --f-heading-4-font-size: 2rem; /* 32px */
+  --f-heading-4-font-weight: 500;
   --f-heading-4-letter-spacing: 0.015625rem;
   --f-heading-4-line-height: 125%;
 
@@ -118,6 +124,11 @@
   --f-body-font-size: 1rem; /* 16px */
   --f-body-letter-spacing: 0.03125rem;
   --f-body-line-height: 130%;
+
+  /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.031rem, 144% */
+  --f-body-font-size-desktop: 1.125rem; /* 18px */
+  --f-body-letter-spacing-desktop: 0.03125rem;
+  --f-body-line-height-desktop: 144%;
 
   /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
   --f-body-2-font-size: 1.125rem; /* 18px */
@@ -182,11 +193,13 @@
   --c-warning-yellow: #ffa000;
 
   /* Global colors */
+  --background-color: var(--c-white);
   --border-subtle: var(--c-grey-200);
   --border-strong: var(--c-grey-400);
   --border-hover: var(--c-cta-blue-hover);
   --border-active: var(--c-cta-blue-active);
   --border-focus: var(--c-cta-blue-hover);
+  --navigation-line-active-color: var(--c-main-black);
 
   /* Motions */
   --duration-small: 160ms;
@@ -1164,32 +1177,9 @@ main.blue-contract .section.section-with-title p {
   margin: auto;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 .modal-content {
-  --section-padding: 0;
-  --section-div-padding-horizontal: 16px;
-  --section-div-padding-vertical: 64px;
-  --section-div-padding: 0 var(--section-div-padding-horizontal) var(--section-div-padding-vertical);
-}
-
 .redesign-v2 .section div.full-width {
   padding: 0;
   width: 100%;
-}
-
-.redesign-v2 .modal-content .section div.full-width {
-  margin: -24px 0;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-.redesign-v2 .modal-content .section--black-background,
-.redesign-v2 .modal-content .section--gray-background,
-.redesign-v2 .modal-content .section--black-background + .section:not(.section--black-background,
-.section--gray-background),
-.redesign-v2 .modal-content .section--gray-background + .section:not(.section--black-background,
-.section--gray-background),
-.redesign-v2 .modal-content .section div.full-width + div {
-  padding-top: var(--section-div-padding-vertical);
 }
 
 :root.redesign-v2 .section .expanded-width {
@@ -1208,6 +1198,7 @@ main.blue-contract .section.section-with-title p {
   --text-subtle: var(--c-grey-2);
   --background-color: var(--c-main-black);
   --background-gradient: rgb(20 20 20 / 100%);
+  --navigation-line-active-color: var(--c-white);
 
   color: var(--text-color);
   padding-top: 80px;
@@ -1634,20 +1625,14 @@ main.blue-contract .section.section-with-title p {
 }
 
 @media (min-width: 744px) {
+  :root {
+    --carousel-gap: 20px;
+  }
+
   :root.redesign-v2 {
     --section-padding: 40px 0 56px;
     --section-div-padding: 24px 32px;
     --text-block-max-width: 506px;
-  }
-
-  .redesign-v2 .modal-content {
-    --section-padding: 0;
-    --section-div-padding-horizontal: 32px;
-    --section-div-padding-vertical: 80px;
-  }
-
-  .redesign-v2 .modal-content .section div.full-width {
-    margin: -40px 0 -16px;
   }
 
   .v2-video__playback-button,
@@ -1672,16 +1657,6 @@ main.blue-contract .section.section-with-title p {
     --section-padding: 56px 0 136px;
     --section-div-padding: 24px 0;
     --text-block-max-width: 694px;
-  }
-
-  .redesign-v2 .modal-content {
-    --section-padding: 0;
-    --section-div-padding-horizontal: 0;
-    --section-div-padding-vertical: 128px;
-  }
-
-  .redesign-v2 .modal-content .section div.full-width {
-    margin: -80px 0 -48px;
   }
 
   :root.redesign-v2 .section .expanded-width {
