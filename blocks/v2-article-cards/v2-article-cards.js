@@ -23,30 +23,30 @@ const createCard = (article) => {
   } = article;
 
   const shortTitle = title.split('|')[0];
-  const card = createElement('article', { classes: `${blockName}__article` });
+  const card = createElement('a', { classes: `${blockName}__article-card`, props: { href: path } });
   const picture = createOptimizedPicture(image, shortTitle, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
   const cardContent = document.createRange().createContextualFragment(`
-          <a href="${path}" class="${blockName}__image-wrapper">
-              ${pictureTag}
-          </a>
-          <div class="${blockName}__texts-wrapper">
-              <p class="${blockName}__card-date">
-                  ${date.toLocaleDateString()}
-              </p>
-              <h4 class="${blockName}__card-heading">
-                  ${shortTitle}
-              </h4>
-          </div>
-        `);
+    <div class="${blockName}__image-wrapper">
+        ${pictureTag}
+    </div>
+    <div class="${blockName}__texts-wrapper">
+        <p class="${blockName}__card-date">
+            ${date.toLocaleDateString()}
+        </p>
+        <h4 class="${blockName}__card-heading">
+            ${shortTitle}
+        </h4>
+    </div>
+  `);
   const textWrapper = cardContent.querySelector(`.${blockName}__texts-wrapper`);
 
   if (button) {
     button.classList.add(`${blockName}__card-button`);
     textWrapper.appendChild(button);
   } else {
-    const newButton = createElement('a', { classes: `${blockName}__card-button`, props: { href: path } });
+    const newButton = createElement('a', { classes: `${blockName}__card-button` });
     newButton.textContent = getTextLabel('readMoreBtn');
     textWrapper.appendChild(newButton);
   }
@@ -61,7 +61,11 @@ const createArticleCards = (block, articles, amount = null) => {
     articleList.append(card);
   });
   block.append(articleList);
-  if (amount) articleList.classList.add(`${blockName}--${amount}-articles`);
+  if (amount) {
+    articleList.classList.add(`${blockName}--${amount}-articles`);
+  } else {
+    articleList.classList.add(`${blockName}--dynamic-articles`);
+  }
 };
 
 export default async function decorate(block) {
