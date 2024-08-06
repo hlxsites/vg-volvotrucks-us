@@ -322,6 +322,10 @@
     {
       "Key": "readTime",
       "Text": "read"
+    },
+    {
+      "Key": "readMoreBtn",
+      "Text": "Read More"
     }
   ],
   ":type": "sheet"
