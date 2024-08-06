@@ -1329,9 +1329,8 @@ main.blue-contract .section.section-with-title p {
   background-color: var(--button-marketing-bg-active);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--black-background  a.button,
-.redesign-v2 .section--black-background  button,
+.redesign-v2 .section--black-background  button, /* stylelint-disable-line no-descending-specificity */
 .redesign-v2 a.button.dark,
 .redesign-v2 button.dark {
   --button-primary-color: var(--c-main-black);
@@ -1351,9 +1350,8 @@ main.blue-contract .section.section-with-title p {
   --button-marketing-bg-active: #1f78d1;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .section--gray-background  a.button,
-.redesign-v2 .section--gray-background  button {
+.redesign-v2 .section--gray-background  button { /* stylelint-disable-line no-descending-specificity */
   --button-secondary-bg-hover: var(--c-grey-100);
   --button-secondary-bg-active: var(--c-grey-200);
   --button-tertiary-bg-hover: var(--c-grey-100);
@@ -1593,9 +1591,8 @@ main.blue-contract .section.section-with-title p {
   align-items: center;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.v2-video__playback-button .icon svg,
-.v2-video__mute-controls .icon svg {
+.v2-video__playback-button .icon svg, /* stylelint-disable-line no-descending-specificity */
+.v2-video__mute-controls .icon svg { /* stylelint-disable-line no-descending-specificity */
   width: 32px;
   height: 32px;
 }
