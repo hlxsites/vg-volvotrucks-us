@@ -1,5 +1,5 @@
 Fix #<gh-issue-id>
 
 Test URLs:
-- Before: https://main--vg-volvotrucks-us--hlxsites.aem.page/
-- After: https://<branch>--vg-volvotrucks-us--hlxsites.aem.page/
+- Before: https://main--volvotrucks-us--volvogroup.aem.page/
+- After: https://<branch>--volvotrucks-us--volvogroup.aem.page/

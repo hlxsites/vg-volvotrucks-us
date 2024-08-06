@@ -1,9 +1,11 @@
-# Volvo Trucks US
-Franklin site redesign for volvotrucks.us
+# Volvo Trucks
+Helix for Volvo Trucks North America
+www.volvotrucks.us
 
 ## Environments
-- Preview: https://main--vg-volvotrucks-us--hlxsites.hlx.page/
-- Live: https://main--vg-volvotrucks-us--hlxsites.hlx.live/
+### www.volvotrucks.us
+- Preview: https://main--volvotrucks-us--volvogroup.aem.page/
+- Live: https://main--volvotrucks-us--volvogroup.aem.live/
 
 ## Installation
 
