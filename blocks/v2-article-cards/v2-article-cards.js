@@ -105,6 +105,16 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
+    // Remove from the list articles that may appear in previous blocks
+    const existingArticles = document.querySelectorAll(`h4.${blockName}__card-heading`);
+    existingArticles.forEach((article) => {
+      const articleTitle = article.textContent.trim();
+      allArticles.data.forEach((art) => {
+        const title = art.title.split('|')[0].trim();
+        if (title === articleTitle) allArticles.data.splice(allArticles.data.indexOf(art), 1);
+      });
+    });
+
     const sortedArticles = allArticles.data.sort((a, b) => a.date > b.date);
     // After sorting aticles by date, set the chunks of the array for future pagination
     const chunkedArticles = sortedArticles.reduce((resultArray, item, index) => {
@@ -113,7 +123,8 @@ export default async function decorate(block) {
       resultArray[chunkIndex].push(item);
       return resultArray;
     }, []);
-    // Create articles
+
+    // Create articles from first chunk
     createArticleCards(block, chunkedArticles[0]);
   }
   unwrapDivs(block);
