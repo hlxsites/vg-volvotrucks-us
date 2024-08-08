@@ -109,7 +109,6 @@ async function fetchBlogPosts(endpointUrl) {
   let offset = 0;
   const allPosts = [];
 
-  console.log('endpointUrl: ', endpointUrl);
   while (true) {
     const api = new URL(endpointUrl);
 
