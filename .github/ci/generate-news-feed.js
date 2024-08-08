@@ -63,16 +63,17 @@ async function createFeed(feedItem) {
     if (feedMetadata) {
       const targetFile = `${feedItem.targetDirectory}/${feedItem.targetFileName}`;
       const newestPost = allPosts.sort((a, b) => b.publishDate - a.publishDate)[0];
+      const newestPostDate = newestPost ? new Date(newestPost.publishDate * 1000) : new Date();
       const feedConfig = {
         title: feedMetadata.title,
         description: feedMetadata.description,
         id: feedMetadata.link,
         link: feedMetadata.link,
-        updated: newestPost,
+        updated: newestPostDate,
         language: feedItem.language,
       };
       const feed = new Feed(feedConfig);
-    
+
       allPosts.forEach((post) => {
         const link = feedMetadata["site-root"] + post.path;
         const feedItemConfig = {
@@ -86,7 +87,7 @@ async function createFeed(feedItem) {
 
         feed.addItem(feedItemConfig);
       });
-    
+
       if (!fs.existsSync(feedItem.targetDirectory)) {
         console.log('Target directory created');
         fs.mkdirSync(feedItem.targetDirectory);
