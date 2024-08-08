@@ -3,6 +3,10 @@
   "private": true,
   "version": "18.0.0",
   "description": "Volvo Trucks North America",
+  "engines": {
+    "node": ">=v20.15.1 <23",
+    "npm": ">=10.7.0"
+  },
   "scripts": {
     "dev": "npx @adobe/helix-cli up",
     "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
