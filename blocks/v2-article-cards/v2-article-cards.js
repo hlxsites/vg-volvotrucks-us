@@ -76,12 +76,10 @@ const createArticleCards = (block, articles, amount = null) => {
 // Remove from the list articles that may appear in previous blocks
 const removeArtsInPage = (articles) => {
   const existingArticles = document.querySelectorAll(`h4.${blockName}__card-heading`);
-  existingArticles.forEach((article) => {
-    const articleTitle = article.textContent.trim();
-    articles.data.forEach((art) => {
-      const title = art.title.split('|')[0].trim();
-      if (title === articleTitle) articles.data.splice(articles.data.indexOf(art), 1);
-    });
+  const articleTitles = Array.from(existingArticles).map((article) => article.textContent.trim());
+  articles.data = articles.data.filter((art) => {
+    const title = art.title.split('|')[0].trim();
+    return !articleTitles.includes(title);
   });
   return articles;
 };
