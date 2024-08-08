@@ -13,6 +13,7 @@ import fs from 'fs';
 
 /**
  * @type {FeedConfig[]}
+ * @todo Get this from a SharePoint configuration
  */
 const feedList = [
   {
