@@ -73,6 +73,19 @@ const createArticleCards = (block, articles, amount = null) => {
   }
 };
 
+// Remove from the list articles that may appear in previous blocks
+const removeArtsInPage = (articles) => {
+  const existingArticles = document.querySelectorAll(`h4.${blockName}__card-heading`);
+  existingArticles.forEach((article) => {
+    const articleTitle = article.textContent.trim();
+    articles.data.forEach((art) => {
+      const title = art.title.split('|')[0].trim();
+      if (title === articleTitle) articles.data.splice(articles.data.indexOf(art), 1);
+    });
+  });
+  return articles;
+};
+
 export default async function decorate(block) {
   const allArticles = await getJsonFromUrl(indexUrl);
   const amountOfLinks = block.children.length;
@@ -105,17 +118,8 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
-    // Remove from the list articles that may appear in previous blocks
-    const existingArticles = document.querySelectorAll(`h4.${blockName}__card-heading`);
-    existingArticles.forEach((article) => {
-      const articleTitle = article.textContent.trim();
-      allArticles.data.forEach((art) => {
-        const title = art.title.split('|')[0].trim();
-        if (title === articleTitle) allArticles.data.splice(allArticles.data.indexOf(art), 1);
-      });
-    });
-
-    const sortedArticles = allArticles.data.sort((a, b) => a.date > b.date);
+    const uniqueArticles = removeArtsInPage(allArticles);
+    const sortedArticles = uniqueArticles.data.sort((a, b) => a.date > b.date);
     // After sorting aticles by date, set the chunks of the array for future pagination
     const chunkedArticles = sortedArticles.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / limitAmount);
