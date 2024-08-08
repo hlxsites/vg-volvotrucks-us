@@ -1,12 +1,13 @@
 Fix #<gh-issue-id>
 
-## Test URLs:
+URL for testing:
+- https://691-new-volvo--volvotrucks-na--aemsites.hlx.page/
+
+Other test URLs:
 - Before: https://main--volvotrucks-us--volvogroup.aem.page/
-- After: https://<branch>--volvotrucks-us--volvogroup.aem.page/
 
+Other markets:
 
-### Other markets:
-
-#### Canada:
+Canada:
 - Before: https://main--volvotrucks-ca--volvogroup.aem.page/
 - After: https://<branch>--volvotrucks-ca--volvogroup.aem.page/
