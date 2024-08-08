@@ -10,10 +10,30 @@ import fs from 'fs';
  * @property {string} language
  */
 
+/**
+ * @typedef {Object} FeedMetadata
+ * @property {string} title
+ * @property {string} 'site-root'
+ * @property {string} link
+ * @property {string} language
+ * @property {string} description
+ */
+
+/**
+ * @typedef {Object} Post
+ * @property {string} path
+ * @property {string} image
+ * @property {string} description
+ * @property {string} lastModified
+ * @property {string} publishDate
+ * @property {string} tags
+ * @property {string} content
+ * @property {string} publishDate
+ */
 
 /**
  * @type {FeedConfig[]}
- * @todo Get this from a SharePoint configuration
+ * @todo Get these from a SharePoint configuration, maybe the feedSource sheet
  */
 const feedList = [
   {
@@ -24,7 +44,7 @@ const feedList = [
     siteRoot: 'https://www.volvotrucks.us',
     language:	'en-US',
   },
-]
+];
 
 const limit = 1000;
 
@@ -33,30 +53,16 @@ const limit = 1000;
  * @return {Promise<void>}
  */
 async function createFeed(feedItem) {
-  let allPosts;
-
-  try {
-    allPosts = await fetchBlogPosts(feedItem.postsSource);
-  } catch (error) {
-    console.error('Error fetching Blog posts');
-  }
+  const allPosts = await fetchBlogPosts(feedItem.postsSource);
 
   if (allPosts) {
-    console.log(`found ${allPosts.length} posts`);
+    console.log(`Found ${allPosts.length} posts`);
 
-    let feedMetadata;
-  
-    try {
-      feedMetadata = await fetchBlogMetadata(feedItem.feedSource);
-    } catch (error) {
-      console.error('Error fetching Blog posts metadata');
-    }
+    const feedMetadata = await fetchBlogMetadata(feedItem.feedSource);
 
     if (feedMetadata) {
       const targetFile = `${feedItem.targetDirectory}/${feedItem.targetFileName}`;
-      const newestPost = allPosts
-        .map((post) => new Date(post.publishDate * 1000))
-        .reduce((maxDate, date) => (date > maxDate ? date : maxDate), new Date(0));
+      const newestPost = allPosts.sort((a, b) => b.publishDate - a.publishDate)[0];
       const feedConfig = {
         title: feedMetadata.title,
         description: feedMetadata.description,
@@ -82,30 +88,43 @@ async function createFeed(feedItem) {
       });
     
       if (!fs.existsSync(feedItem.targetDirectory)) {
+        console.log('Target directory created');
         fs.mkdirSync(feedItem.targetDirectory);
       }
       fs.writeFileSync(targetFile, feed.atom1());
-      console.log('wrote file to ', targetFile);
+      console.log('Wrote file to ', targetFile);
     }
   }
 }
 
+/**
+ * Returns a list of properties listed in the block
+ * 
+ * @async
+ * @param {string} endpointUrl blog metadata endpoint
+ * @returns {Array<Post>} the json data object
+*/
 async function fetchBlogPosts(endpointUrl) {
   let offset = 0;
   const allPosts = [];
 
   while (true) {
     const api = new URL(endpointUrl);
+
     api.searchParams.append('offset', JSON.stringify(offset));
     api.searchParams.append('limit', limit);
-    const response = await fetch(api, {});
-    const result = await response.json();
 
-    allPosts.push(...result.data);
+    const result = await getJsonFromUrl(api);
 
-    if (result.offset + result.limit < result.total) {
-      // there are more pages
-      offset = result.offset + result.limit;
+    if (result) {
+      allPosts.push(...result.data);
+  
+      if (result.offset + result.limit < result.total) {
+        // there are more pages
+        offset = result.offset + result.limit;
+      } else {
+        break;
+      }
     } else {
       break;
     }
@@ -113,14 +132,46 @@ async function fetchBlogPosts(endpointUrl) {
   return allPosts;
 }
 
+/**
+ * Returns the Blog Metadata
+ * 
+ * @async
+ * @param {string} endpointUrl blog metadata endpoint
+ * @returns {FeedMetadata} The first feed configuration
+ * @todo This in the future should return all of the configurations for all markets/feeds
+*/
 async function fetchBlogMetadata(endpointUrl) {
-  const infoResponse = await fetch(endpointUrl);
-  const feedInfoResult = await infoResponse.json();
+  const feedInfoResult = await getJsonFromUrl(endpointUrl);
+
+  if (!feedInfoResult) {
+    return null;
+  }
+
   return feedInfoResult.data[0];
 }
 
-for (const feedItem of feedList) {
-  createFeed(feedItem)
-    .catch((e) => console.error(e));
+/**
+ * Returns a list of properties listed in the block
+ * @param {string} route get the Json data from the route
+ * @returns {Object} the json data object
+*/
+async function getJsonFromUrl(route) {
+  try {
+    const response = await fetch(route);
+    if (!response.ok) return null;
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error('getJsonFromUrl:', { error });
+  }
+  return null;
+};
 
+const Init = () => {
+  for (const feedItem of feedList) {
+    createFeed(feedItem)
+      .catch((e) => console.error(e));
+  }
 }
+
+Init();
