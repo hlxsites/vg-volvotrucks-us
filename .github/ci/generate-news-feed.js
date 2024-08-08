@@ -1,17 +1,41 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-const endpoint = process.env.NEWS_ENDPOINT;
-const feedInfoEndpoint = process.env.NEWS_FEED_INFO_ENDPOINT;
-const targetDirectory = process.env.NEWS_TARGET_DIRECTORY;
-const targetFile = `${process.env.NEWS_TARGET_DIRECTORY}/feed.xml`;
+/**
+ * @typedef {Object} FeedConfig
+ * @property {string} link
+ * @property {string} siteRoot
+ * @property {string} targetFile
+ * @property {string} source
+ * @property {string} language
+ */
+
+
+/**
+ * @type {FeedConfig[]}
+ */
+const feedList = [
+  {
+    targetDirectory: '../../news-and-stories/press-releases',
+    targetFileName: 'feed.xml',
+    feedSource: 'https://www.volvotrucks.us/news-and-stories/press-releases/feed-info.json',
+    postsSource: 'https://www.volvotrucks.us/press-releases.json',
+    siteRoot: 'https://www.volvotrucks.us',
+    language:	'en-US',
+  },
+]
+
 const limit = 1000;
 
-async function main() {
+/**
+ * @param feed {FeedConfig}
+ * @return {Promise<void>}
+ */
+async function createFeed(feedItem) {
   let allPosts;
 
   try {
-    allPosts = await fetchBlogPosts();
+    allPosts = await fetchBlogPosts(feedItem.postsSource);
   } catch (error) {
     console.error('Error fetching Blog posts');
   }
@@ -22,40 +46,42 @@ async function main() {
     let feedMetadata;
   
     try {
-      feedMetadata = await fetchBlogMetadata();
+      feedMetadata = await fetchBlogMetadata(feedItem.feedSource);
     } catch (error) {
       console.error('Error fetching Blog posts metadata');
     }
 
     if (feedMetadata) {
+      const targetFile = `${feedItem.targetDirectory}/${feedItem.targetFileName}`;
       const newestPost = allPosts
         .map((post) => new Date(post.publishDate * 1000))
         .reduce((maxDate, date) => (date > maxDate ? date : maxDate), new Date(0));
-    
-      const feed = new Feed({
+      const feedConfig = {
         title: feedMetadata.title,
         description: feedMetadata.description,
         id: feedMetadata.link,
         link: feedMetadata.link,
         updated: newestPost,
-        generator: 'AEM News feed generator (GitHub action)',
-        language: feedMetadata.lang,
-      });
+        language: feedItem.language,
+      };
+      const feed = new Feed(feedConfig);
     
       allPosts.forEach((post) => {
         const link = feedMetadata["site-root"] + post.path;
-        feed.addItem({
+        const feedItemConfig = {
           title: post.title,
           id: link,
           link,
           content: post.description,
           date: new Date(post.publishDate * 1000),
           published: new Date(post.publishDate * 1000),
-        });
+        };
+
+        feed.addItem(feedItemConfig);
       });
     
-      if (!fs.existsSync(targetDirectory)) {
-        fs.mkdirSync(targetDirectory);
+      if (!fs.existsSync(feedItem.targetDirectory)) {
+        fs.mkdirSync(feedItem.targetDirectory);
       }
       fs.writeFileSync(targetFile, feed.atom1());
       console.log('wrote file to ', targetFile);
@@ -63,12 +89,12 @@ async function main() {
   }
 }
 
-async function fetchBlogPosts() {
+async function fetchBlogPosts(endpointUrl) {
   let offset = 0;
   const allPosts = [];
 
   while (true) {
-    const api = new URL(endpoint);
+    const api = new URL(endpointUrl);
     api.searchParams.append('offset', JSON.stringify(offset));
     api.searchParams.append('limit', limit);
     const response = await fetch(api, {});
@@ -86,11 +112,14 @@ async function fetchBlogPosts() {
   return allPosts;
 }
 
-async function fetchBlogMetadata() {
-  const infoResponse = await fetch(feedInfoEndpoint);
+async function fetchBlogMetadata(endpointUrl) {
+  const infoResponse = await fetch(endpointUrl);
   const feedInfoResult = await infoResponse.json();
   return feedInfoResult.data[0];
 }
 
-main()
-  .catch((e) => console.error(e));
+for (const feedItem of feedList) {
+  createFeed(feedItem)
+    .catch((e) => console.error(e));
+
+}
