@@ -400,7 +400,16 @@ export const slugify = (text) => (
 
 async function getConstantValues() {
   const url = '/constants.json';
-  const constants = await fetch(url).then((resp) => resp.json());
+  let constants;
+  try {
+    const response = await fetch(url).then((resp) => resp.json());
+    if (!response.ok) {
+      constants = response;
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error with constants file', error);
+  }
   return constants;
 }
 
@@ -431,7 +440,7 @@ export const extractObjectFromArray = (data) => {
 const formatValues = (values) => {
   const obj = {};
   /* eslint-disable-next-line */
-  values.forEach(({ name, value }) => obj[name] = value);
+  if (values) values.forEach(({ name, value }) => obj[name] = value);
   return obj;
 };
 
@@ -440,13 +449,15 @@ const {
   cookieValues,
   magazineConfig,
   tools,
+  headerConfig,
 } = await getConstantValues();
 
 // This data comes from the sharepoint 'constants.xlsx' file
-export const COOKIE_CONFIGS = formatValues(cookieValues.data);
-export const SEARCH_URLS = formatValues(searchUrls.data);
-export const MAGAZINE_CONFIGS = formatValues(magazineConfig.data);
 export const TOOLS_CONFIGS = formatValues(tools?.data);
+export const SEARCH_URLS = formatValues(searchUrls?.data);
+export const COOKIE_CONFIGS = formatValues(cookieValues?.data);
+export const MAGAZINE_CONFIGS = formatValues(magazineConfig?.data);
+export const HEADER_CONFIGS = formatValues(headerConfig?.data);
 
 /**
  * Check if one trust group is checked.

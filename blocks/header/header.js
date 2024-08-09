@@ -4,11 +4,14 @@ import {
   generateId,
   getTextLabel,
   getLanguagePath,
+  HEADER_CONFIGS,
 } from '../../scripts/common.js';
 import { createOptimizedPicture, getMetadata } from '../../scripts/aem.js';
 
 const blockClass = 'header';
-const disableSearch = getMetadata('disable-search').toLowerCase() === 'true';
+
+// check if the header has to have a login and/or a search button
+const { SEARCH_DISABLED } = HEADER_CONFIGS;
 
 const desktopMQ = window.matchMedia('(min-width: 1200px)');
 
@@ -106,7 +109,7 @@ const mobileActions = () => {
   </a>`;
 
   const actions = document.createRange().createContextualFragment(`
-    ${disableSearch ? '' : searchEl}
+    ${SEARCH_DISABLED.toLowerCase() === 'true' ? '' : searchEl}
     <button
       aria-label="${openMenuLabel}"
       class="${blockClass}__hamburger-menu ${blockClass}__action-link ${blockClass}__link"
