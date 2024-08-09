@@ -116,10 +116,10 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
-    const uniqueArticles = removeArtsInPage(allArticles);
-    const sortedArticles = uniqueArticles.data.sort((a, b) => a.date > b.date);
+    const uniqueArticles = allArticles && removeArtsInPage(allArticles);
+    const sortedArticles = uniqueArticles?.data.sort((a, b) => a.date > b.date);
     // After sorting aticles by date, set the chunks of the array for future pagination
-    const chunkedArticles = sortedArticles.reduce((resultArray, item, index) => {
+    const chunkedArticles = sortedArticles?.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / limitAmount);
       if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
       resultArray[chunkIndex].push(item);
