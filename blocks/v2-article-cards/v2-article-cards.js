@@ -59,7 +59,8 @@ const createCard = (article) => {
   return card;
 };
 
-const createArticleCards = (block, articles, amount = null) => {
+const createArticleCards = (block, articles = null, amount = null) => {
+  if (!articles) return;
   const articleList = createElement('div', { classes: `${blockName}__article-list` });
   articles.forEach((art) => {
     const card = createCard(art);
@@ -100,7 +101,7 @@ export default async function decorate(block) {
 
   const selectedArticles = [];
 
-  if (amountOfLinks !== 0) {
+  if (amountOfLinks !== 0 && allArticles) {
     const buttons = block.querySelectorAll('.button-container');
     buttons.forEach((a) => {
       const link = a.querySelector('a')?.href;
