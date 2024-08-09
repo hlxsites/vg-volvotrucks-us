@@ -60,7 +60,6 @@ const createCard = (article) => {
 };
 
 const createArticleCards = (block, articles = null, amount = null) => {
-  if (!articles) return;
   const articleList = createElement('div', { classes: `${blockName}__article-list` });
   articles.forEach((art) => {
     const card = createCard(art);
@@ -87,6 +86,8 @@ const removeArtsInPage = (articles) => {
 
 export default async function decorate(block) {
   const allArticles = await getJsonFromUrl(indexUrl);
+  if (!allArticles) return;
+
   const amountOfLinks = block.children.length;
   const blockClassList = [...block.classList];
 
@@ -101,7 +102,7 @@ export default async function decorate(block) {
 
   const selectedArticles = [];
 
-  if (amountOfLinks !== 0 && allArticles) {
+  if (amountOfLinks !== 0) {
     const buttons = block.querySelectorAll('.button-container');
     buttons.forEach((a) => {
       const link = a.querySelector('a')?.href;
@@ -117,7 +118,7 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
-    const uniqueArticles = allArticles && removeArtsInPage(allArticles);
+    const uniqueArticles = removeArtsInPage(allArticles);
     const sortedArticles = uniqueArticles?.data.sort((a, b) => a.date > b.date);
     // After sorting aticles by date, set the chunks of the array for future pagination
     const chunkedArticles = sortedArticles?.reduce((resultArray, item, index) => {
@@ -128,7 +129,7 @@ export default async function decorate(block) {
     }, []);
 
     // Create articles from first chunk
-    if (allArticles) createArticleCards(block, chunkedArticles[0]);
+    createArticleCards(block, chunkedArticles[0]);
   }
   unwrapDivs(block);
 }
