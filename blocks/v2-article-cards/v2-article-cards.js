@@ -127,7 +127,7 @@ export default async function decorate(block) {
     }, []);
 
     // Create articles from first chunk
-    createArticleCards(block, chunkedArticles[0]);
+    if (allArticles) createArticleCards(block, chunkedArticles[0]);
   }
   unwrapDivs(block);
 }
