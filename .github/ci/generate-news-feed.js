@@ -140,7 +140,7 @@ async function fetchBlogPosts(endpointUrl) {
  * @param {string} endpointUrl blog metadata endpoint
  * @returns {FeedMetadata} The first feed configuration
  * @todo This in the future should return all of the configurations for all markets/feeds
-*/https://www.volvotrucks.us/press-releases.json
+*/
 async function fetchBlogMetadata(endpointUrl) {
   const feedInfoResult = await getJsonFromUrl(endpointUrl);
 
