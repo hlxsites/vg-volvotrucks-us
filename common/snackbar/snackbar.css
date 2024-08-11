@@ -32,12 +32,12 @@
 }
 
 .snackbar {
-  --color-icon: var(--c-primary-white);
+  --color-icon: var(--c-white);
 
   width: 100%;
   max-width: 400px;
-  background-color: var(--c-primary-black);
-  color: var(--c-primary-white);
+  background-color: var(--c-black);
+  color: var(--c-white);
   padding: 12px 16px;
   gap: 10px;
   transition: transform var(--duration-small) var(--easing-entrance);
@@ -58,11 +58,11 @@
 }
 
 .snackbar--error {
-  background-color: var(--c-error);
+  background-color: var(--c-error-red);
 }
 
 .snackbar--success {
-  background-color: var(--c-success);
+  background-color: var(--c-success-green);
 }
 
 .snackbar p {
@@ -104,8 +104,8 @@
 }
 
 .snackbar__close-button .icon svg {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
 }
 
 .snackbar--buttons-below {

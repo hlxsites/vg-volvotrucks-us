@@ -76,21 +76,6 @@
       }
     ]
   },
-  "headerConfig": {
-    "total": 2,
-    "offset": 0,
-    "limit": 2,
-    "data": [
-      {
-        "name": "SEARCH_DISABLED",
-        "value": "false"
-      },
-      {
-        "name": "LOGIN_DISABLED",
-        "value": "false"
-      }
-    ]
-  },
   "tools": {
     "total": 4,
     "offset": 0,
@@ -111,6 +96,22 @@
       {
         "name": "TAGS_URL",
         "value": "/news-and-stories/tags.plain.html"
+      },
+      {
+        "name": "v1SectionClasses",
+        "value": "[]"
+      },
+      {
+        "name": "v2SectionClasses",
+        "value": "[]"
+      },
+      {
+        "name": "v1AllowedBlocks",
+        "value": "[\"v2-embed\",\"v2-forms\"]"
+      },
+      {
+        "name": "v2AllowedBlocks",
+        "value": "[\"embed\",\"footer\",\"fragment\",\"header\",\"iframe\",\"library-metadata\"]"
       }
     ]
   },
