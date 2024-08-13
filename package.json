@@ -1,7 +1,7 @@
 {
   "name": "@adobe/aem-boilerplate",
   "private": true,
-  "version": "18.0.0",
+  "version": "19.0.0",
   "description": "Starter project for Adobe Helix",
   "scripts": {
     "dev": "npx @adobe/helix-cli up",
