@@ -59,7 +59,7 @@ const createCard = (article) => {
   return card;
 };
 
-const createArticleCards = (block, articles, amount = null) => {
+const createArticleCards = (block, articles = null, amount = null) => {
   const articleList = createElement('div', { classes: `${blockName}__article-list` });
   articles.forEach((art) => {
     const card = createCard(art);
@@ -73,8 +73,21 @@ const createArticleCards = (block, articles, amount = null) => {
   }
 };
 
+// Remove from the list articles that may appear in previous blocks
+const removeArtsInPage = (articles) => {
+  const existingArticles = document.querySelectorAll(`h4.${blockName}__card-heading`);
+  const articleTitles = Array.from(existingArticles).map((article) => article.textContent.trim());
+  articles.data = articles.data.filter((art) => {
+    const title = art.title.split('|')[0].trim();
+    return !articleTitles.includes(title);
+  });
+  return articles;
+};
+
 export default async function decorate(block) {
   const allArticles = await getJsonFromUrl(indexUrl);
+  if (!allArticles) return;
+
   const amountOfLinks = block.children.length;
   const blockClassList = [...block.classList];
 
@@ -105,15 +118,17 @@ export default async function decorate(block) {
   if (selectedArticles.length > 0) {
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
-    const sortedArticles = allArticles.data.sort((a, b) => a.date > b.date);
+    const uniqueArticles = removeArtsInPage(allArticles);
+    const sortedArticles = uniqueArticles?.data.sort((a, b) => a.date > b.date);
     // After sorting aticles by date, set the chunks of the array for future pagination
-    const chunkedArticles = sortedArticles.reduce((resultArray, item, index) => {
+    const chunkedArticles = sortedArticles?.reduce((resultArray, item, index) => {
       const chunkIndex = Math.floor(index / limitAmount);
       if (!resultArray[chunkIndex]) resultArray[chunkIndex] = [];
       resultArray[chunkIndex].push(item);
       return resultArray;
     }, []);
-    // Create articles
+
+    // Create articles from first chunk
     createArticleCards(block, chunkedArticles[0]);
   }
   unwrapDivs(block);
