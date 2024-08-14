@@ -14,6 +14,21 @@
       }
     ]
   },
+  "headerConfig": {
+    "total": 2,
+    "offset": 0,
+    "limit": 2,
+    "data": [
+      {
+        "name": "SEARCH_DISABLED",
+        "value": "false"
+      },
+      {
+        "name": "LOGIN_DISABLED",
+        "value": "false"
+      }
+    ]
+  },
   "cookieValues": {
     "total": 10,
     "offset": 0,

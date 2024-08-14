@@ -87,12 +87,16 @@
   --f-heading-3-line-height: 110%;
 
   /* Section Header/Heading 3.5 */
+  --f-heading-3-5-font-size-mobile: 1.5rem; /* 24px */
   --f-heading-3-5-font-size: 2rem;
+  --f-heading-3-5-font-weight: 300;
   --f-heading-3-5-letter-spacing: 0;
   --f-heading-3-5-line-height: 125%;
 
   /* Volvo Novum Web Latin, 32px / 2rem, Medium, 0.25px / 0.016rem, 125% */
+  --f-heading-4-font-size-mobile: 1.5rem; /* 24px */
   --f-heading-4-font-size: 2rem; /* 32px */
+  --f-heading-4-font-weight: 500;
   --f-heading-4-letter-spacing: 0.015625rem;
   --f-heading-4-line-height: 125%;
 
@@ -120,6 +124,11 @@
   --f-body-font-size: 1rem; /* 16px */
   --f-body-letter-spacing: 0.03125rem;
   --f-body-line-height: 130%;
+
+  /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.031rem, 144% */
+  --f-body-font-size-desktop: 1.125rem; /* 18px */
+  --f-body-letter-spacing-desktop: 0.03125rem;
+  --f-body-line-height-desktop: 144%;
 
   /* Volvo Novum, 18px / 1.125rem, Regular, 0.5px / 0.03125rem, 144% */
   --f-body-2-font-size: 1.125rem; /* 18px */
