@@ -86,18 +86,22 @@ const navigate = (carousel, direction, arrowLeftButton, arrowRightButton) => {
   setCarouselPosition(carousel, index, arrowLeftButton, arrowRightButton);
 };
 
-const createArrowButton = (direction) => {
-  const button = createElement('button', { classes: [`${blockName}-arrowbutton`] });
-  button.setAttribute('aria-label', direction === 'left' ? 'Previous' : 'Next');
-  const icon = createElement('span', { classes: ['icon', `icon-arrow-${direction}`] });
-  button.append(icon);
-  return button;
-};
-
 const createArrowControls = (carousel) => {
   const arrowControls = createElement('ul', { classes: [`${blockName}-arrowcontrols`] });
-  const arrowLeftButton = createArrowButton('left');
-  const arrowRightButton = createArrowButton('right');
+
+  const arrowLeftButton = createElement('button', {
+    classes: [`${blockName}-arrowbutton`],
+    props: { 'aria-label': 'Previous' },
+  });
+  const leftIcon = createElement('span', { classes: ['icon', 'icon-arrow-left'] });
+  arrowLeftButton.append(leftIcon);
+
+  const arrowRightButton = createElement('button', {
+    classes: [`${blockName}-arrowbutton`],
+    props: { 'aria-label': 'Next' },
+  });
+  const rightIcon = createElement('span', { classes: ['icon', 'icon-arrow-right'] });
+  arrowRightButton.append(rightIcon);
 
   const leftArrowListItem = createElement('li');
   leftArrowListItem.append(arrowLeftButton);
