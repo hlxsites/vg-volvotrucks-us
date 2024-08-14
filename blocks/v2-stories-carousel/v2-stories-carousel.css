@@ -53,7 +53,7 @@ body .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   flex: 0 0 calc(100% - var(--stories-carousel-img-width)/2);
 }
 
-.v2-stories-carousel-item img {
+.v2-stories-carousel-item picture img {
   display: block;
   height: var(--stories-carousel-img-height);
   object-fit: cover;
@@ -137,6 +137,11 @@ ul.v2-stories-carousel-meta {
 
 .v2-stories-carousel-cta {
   margin-top: 16px;
+}
+
+.v2-stories-carousel-cta .icon {
+  height: 24px;
+  width: 24px;
 }
 
 /* Arrow controls */
