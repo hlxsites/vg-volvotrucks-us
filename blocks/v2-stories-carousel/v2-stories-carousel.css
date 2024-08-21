@@ -241,6 +241,7 @@ ul.v2-stories-carousel-meta {
   .v2-stories-carousel-arrowbutton:disabled,
   .v2-stories-carousel-arrowbutton:disabled:hover {
     background-color: transparent;
+    filter: opacity(0.2);
   }
 
   .v2-stories-carousel-arrowbutton .icon {
