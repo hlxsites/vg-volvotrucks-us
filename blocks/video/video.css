@@ -42,30 +42,40 @@ main > .section.video-container {
 }
 
 .video-hero .video-hero-title {
-    font-size: 4rem;
-    line-height: 1;
+    font-family: var(--ff-volvo-broadprodigital);
+    font-size: 70px;
+    line-height: 85%;
+    margin-bottom: 0;
+    text-wrap: balance;
     text-transform: uppercase;
-    margin: 0;
+    letter-spacing: 5px;
 }
 
 .video-hero .video-hero-description {
-    font-size: 1.25rem;
-    font-weight: 400;
-    line-height: 1.5;
     margin: 0;
+    font-family: var(--ff-volvo-novum-medium);
+    font-size: var(--f-heading-6-font-size);
+    line-height: var(--f-heading-6-line-height);
+    letter-spacing: var(--f-heading-6-letter-spacing);
+    font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.video-hero .video-hero-button:any-link {
-    display: block;
-    background-color: #fff;
-    color: #141411;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 300;
-    letter-spacing: 3px;
+.video-hero .video-hero-button.button.tertiary {
+    display: inline-flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 24px;
+    font-family: var(--font-family-body);
+    font-size: 14px;
+    letter-spacing: 1.25px;
+    line-height: 1.4;
+    height: 48px;
+    padding: 0 32px;
     text-transform: uppercase;
     text-decoration: none;
+    background-color: #fff;
+    color: #141411;
+    border-radius: 4px;
 }
 
 .video-hero > picture {
@@ -195,6 +205,12 @@ main > .section.video-container {
 }
 
 @media screen and (width >= 768px) {
+    .video-hero .video-hero-title {
+        font-size: 100px;
+        line-height: 85%;
+        letter-spacing: 7px;
+    }
+
     .video-card-grid {
         grid-template-columns: repeat(2, 1fr);
     }
