@@ -152,7 +152,7 @@ main > .section.video-container {
 .video-card .video-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 3/2;
 }
 
 .video-card video,
@@ -173,7 +173,7 @@ main > .section.video-container {
     width: 100%;
     height: auto;
     object-fit: cover;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 3/2;
 }
 
 .video-modal .video-container {
@@ -224,8 +224,20 @@ main > .section.video-container {
         flex-direction: row-reverse;
     }
 
+    .video-card picture,
+    .video-card .video-container picture img,
+    .video-card .video-container {
+        aspect-ratio: 1;
+    }
+
+    .video-card-grid-item:nth-child(odd):last-child .video-card picture,
+    .video-card-grid-item:nth-child(odd):last-child .video-card .video-container picture img,
+    .video-card-grid-item:nth-child(odd):last-child .video-card .video-container {
+        aspect-ratio: 16/10;
+    }
+
     .video-card-grid-item:nth-child(odd):last-child .video-container {
-        flex: 1 0 50%;
+        flex: 1 0 71%;
     }
 
     .video-card-grid-item:nth-child(odd):last-child .video-card-content {
