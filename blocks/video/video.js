@@ -84,11 +84,11 @@ async function loadVideoJs() {
 function createPlayButton(container, player) {
   const pauseIcon = document.createElement('span');
   pauseIcon.classList.add('icon');
-  pauseIcon.classList.add('icon-pause');
+  pauseIcon.classList.add('icon-pause-video');
 
   const playIcon = document.createElement('span');
   playIcon.classList.add('icon');
-  playIcon.classList.add('icon-play');
+  playIcon.classList.add('icon-play-video');
 
   const button = document.createElement('button');
   button.classList.add('custom-play-button');
@@ -282,6 +282,8 @@ async function decorateVideoCard(container, config) {
 }
 
 async function decorateHeroBlock(block, config) {
+  block.parentElement.classList.add('full-width');
+
   const container = document.createElement('div');
   container.classList.add('video-hero');
 
@@ -431,7 +433,7 @@ async function decorateVideoModal(block, config) {
 
   const playIcon = document.createElement('span');
   playIcon.classList.add('icon');
-  playIcon.classList.add('icon-play');
+  playIcon.classList.add('icon-play-video');
   playButton.append(playIcon);
   decorateIcons(playButton);
 
