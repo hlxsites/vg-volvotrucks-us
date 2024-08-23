@@ -21,7 +21,7 @@ main > .section.video-container {
     overflow: hidden;
     background-color: #53565a;
     width: 100%;
-    height: calc(100vh - var(--nav-height));
+    height: calc(100svh - calc(var(--nav-height) + var(--inpage-navigation-height) - 2px));
 }
 
 .video-hero .video-hero-content {
@@ -37,6 +37,7 @@ main > .section.video-container {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
     max-width: 500px;
     z-index: 2;
 }
@@ -155,6 +156,10 @@ main > .section.video-container {
     aspect-ratio: 3/2;
 }
 
+.video-card .video-js {
+    background-color: unset;
+}
+
 .video-card video,
 .video-card .vjs-poster img {
     object-fit: cover;
@@ -184,16 +189,16 @@ main > .section.video-container {
 .video-card .video-card-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 24px 34px;
     overflow: hidden;
+    padding: var(--v2-content-card-padding);
+    gap: var(--v2-content-card-text-gutter);
 }
 
 .video-card .video-card-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
     margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: var(--f-heading-6-font-size);
+    line-height: var(--f-heading-6-line-height);
 }
 
 .video-card .video-card-description {
@@ -204,7 +209,7 @@ main > .section.video-container {
     color: #53565a;
 }
 
-@media screen and (width >= 768px) {
+@media screen and (min-width: 768px) {
     .video-hero .video-hero-title {
         font-size: 100px;
         line-height: 85%;
@@ -231,8 +236,8 @@ main > .section.video-container {
     }
 
     .video-card-grid-item:nth-child(odd):last-child .video-card picture,
-    .video-card-grid-item:nth-child(odd):last-child .video-card .video-container picture img,
-    .video-card-grid-item:nth-child(odd):last-child .video-card .video-container {
+    .video-card-grid-item:nth-child(odd):last-child .video-container picture img,
+    .video-card-grid-item:nth-child(odd):last-child .video-container {
         aspect-ratio: 16/10;
     }
 
