@@ -11,6 +11,7 @@ jobs:
     - run: |
         echo "Status: ${{ github.event.client_payload.status }}"
         echo "Site: ${{ github.event.client_payload.site }}"
+        echo "Org: ${{ github.event.client_payload.org }}"
         echo "Path: ${{ github.event.client_payload.path }}"
   notify-connector:
     if: (github.event.client_payload.status == 200 || github.event.client_payload.status == 204) && endsWith(github.event.client_payload.path, '.md')
