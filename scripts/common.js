@@ -563,3 +563,8 @@ export const deepMerge = (target, source) => {
   });
   return target;
 };
+
+export const isDevHost = () => {
+  const devHosts = ['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'];
+  return devHosts.some((url) => window.location.host.includes(url));
+};

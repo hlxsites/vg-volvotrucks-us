@@ -1,24 +1,30 @@
-import { SEARCH_URLS } from '../../scripts/common.js';
+import { SEARCH_URLS, isDevHost } from './common.js';
 
 const { SEARCH_URL_DEV, SEARCH_URL_PROD } = SEARCH_URLS;
-const isProd = !window.location.host.includes('hlx.page') && !window.location.host.includes('localhost');
+const isProd = !isDevHost();
 const SEARCH_LINK = !isProd ? SEARCH_URL_DEV : SEARCH_URL_PROD;
 
 export async function fetchData(queryObj) {
-  const response = await fetch(
-    SEARCH_LINK,
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Content-Length': queryObj.length,
+  try {
+    const response = await fetch(
+      SEARCH_LINK,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Length': queryObj.length,
+        },
+        body: JSON.stringify(queryObj),
       },
-      body: JSON.stringify(queryObj),
-    },
-  );
+    );
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching data:', error);
+    throw error;
+  }
 }
 
 export const searchQuery = (hasFilters) => `
@@ -54,3 +60,25 @@ query Volvosuggest($term: String!, $tenant: String!, $locale: VolvoLocaleEnum!, 
     terms
   }
 }`;
+
+export const recommendQuery = () => `
+query Volvorecommend($tenant: String!, $language: VolvoLocaleEnum!, $category: String) {
+  volvorecommend(tenant: $tenant, language: $language, category: $category) {
+    items {
+      uuid
+      metadata {
+        url
+        title
+        description
+        lastModified
+      }
+      score
+    }
+    facets {
+      value
+      count
+    }
+    count
+  }
+}
+`;

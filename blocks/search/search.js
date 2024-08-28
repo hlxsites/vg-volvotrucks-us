@@ -8,7 +8,7 @@ import {
   getShowingResultsTemplate,
 } from './templates.js';
 
-import { searchQuery, fetchData } from './search-api.js';
+import { searchQuery, fetchData } from '../../scripts/search-api.js';
 
 import { fetchAutosuggest, handleArrowDown, handleArrowUp } from './autosuggest.js';
 
@@ -277,7 +277,7 @@ export default function decorate(block) {
 
   function showResults(data) {
     const { items, count, facets } = data;
-    const queryTerm = input.value;
+    const queryTerm = input.value; // TODO: it needs to be sanitized first to avoid XSS
     let resultsText = '';
     let facetsText = null;
     if (items.length > 0) { // items by query: 25, count has the total
@@ -351,7 +351,7 @@ export default function decorate(block) {
 
   async function fetchResults() {
     const searchParams = new URLSearchParams(window.location.search);
-    const queryTerm = searchParams.get(_q);
+    const queryTerm = searchParams.get(_q); // TODO: it needs to be sanitized first to avoid XSS
     const offsetVal = Number(searchParams.get(_start));
     const sortVal = searchParams.get(_sort) || 'BEST_MATCH';
 
