@@ -68,6 +68,16 @@ export default function decorate(block) {
   const sortBy = document.getElementById('searchOptionsSection');
   const listEl = block.querySelector('.autosuggest__results-container ul');
 
+  function sanitizeQueryTerm(query) {
+    return query.replace(/[<>]/g, (tag) => {
+      const replacements = {
+        '<': '&lt;',
+        '>': '&gt;',
+      };
+      return replacements[tag] || tag;
+    });
+  }
+
   function searchResults(hideAutoSuggest = true) {
     if (hideAutoSuggest) {
       listEl.textContent = '';
@@ -83,7 +93,7 @@ export default function decorate(block) {
 
   searchBtn.onclick = () => searchResults();
 
-  const onclickHanlder = (val) => {
+  const onclickHandler = (val) => {
     input.value = val;
     searchResults();
   };
@@ -95,7 +105,7 @@ export default function decorate(block) {
       role: 'option',
       'data-section-name': 'default',
     },
-  }, onclickHanlder));
+  }, onclickHandler));
 
   let liSelected;
   let next;
@@ -277,7 +287,7 @@ export default function decorate(block) {
 
   function showResults(data) {
     const { items, count, facets } = data;
-    const queryTerm = input.value; // TODO: it needs to be sanitized first to avoid XSS
+    const queryTerm = sanitizeQueryTerm(input.value);
     let resultsText = '';
     let facetsText = null;
     if (items.length > 0) { // items by query: 25, count has the total
@@ -351,7 +361,7 @@ export default function decorate(block) {
 
   async function fetchResults() {
     const searchParams = new URLSearchParams(window.location.search);
-    const queryTerm = searchParams.get(_q); // TODO: it needs to be sanitized first to avoid XSS
+    const queryTerm = sanitizeQueryTerm(searchParams.get(_q));
     const offsetVal = Number(searchParams.get(_start));
     const sortVal = searchParams.get(_sort) || 'BEST_MATCH';
 
