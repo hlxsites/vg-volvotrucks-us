@@ -27,6 +27,16 @@ export async function fetchData(queryObj) {
   }
 }
 
+export function sanitizeQueryTerm(query) {
+  return query.replace(/[<>]/g, (tag) => {
+    const replacements = {
+      '<': '&lt;',
+      '>': '&gt;',
+    };
+    return replacements[tag] || tag;
+  });
+}
+
 export const searchQuery = (hasFilters) => `
 query Volvosearch($tenant: String!, $q: String, $offset: Int, $limit: Int, $language: VolvoLocaleEnum!,
 $facets: [VolvoFacet], $sort: [VolvoSortOptionsEnum]${hasFilters ? ', $filters: [VolvoFilterItem]' : ''}) {

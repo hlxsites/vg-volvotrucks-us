@@ -8,7 +8,7 @@ import {
   getShowingResultsTemplate,
 } from './templates.js';
 
-import { searchQuery, fetchData } from '../../scripts/search-api.js';
+import { searchQuery, fetchData, sanitizeQueryTerm } from '../../scripts/search-api.js';
 
 import { fetchAutosuggest, handleArrowDown, handleArrowUp } from './autosuggest.js';
 
@@ -67,16 +67,6 @@ export default function decorate(block) {
   const summary = document.getElementById('searchResultSummarySection');
   const sortBy = document.getElementById('searchOptionsSection');
   const listEl = block.querySelector('.autosuggest__results-container ul');
-
-  function sanitizeQueryTerm(query) {
-    return query.replace(/[<>]/g, (tag) => {
-      const replacements = {
-        '<': '&lt;',
-        '>': '&gt;',
-      };
-      return replacements[tag] || tag;
-    });
-  }
 
   function searchResults(hideAutoSuggest = true) {
     if (hideAutoSuggest) {
