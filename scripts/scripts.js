@@ -32,6 +32,8 @@ import {
   addSoundcloudShowHandler,
 } from './video-helper.js';
 
+import { decorateVideos } from './video-utils.js';
+
 const LCP_BLOCKS = ['teaser-grid']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
@@ -397,6 +399,12 @@ function decorateHyperlinkImages(container) {
     });
 }
 
+async function decorateDeliveryVideos(container) {
+  await Promise.all([...container.querySelectorAll('.block')].map(async (block) => {
+    await decorateVideos(block);
+  }));
+}
+
 let modal;
 
 async function loadModalScript() {
@@ -708,6 +716,8 @@ export function decorateMain(main, head) {
   // redesign
   buildTruckLineupBlock(main);
   buildInpageNavigationBlock(main);
+
+  decorateDeliveryVideos(main);
 }
 
 /**

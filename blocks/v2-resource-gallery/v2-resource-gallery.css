@@ -157,6 +157,15 @@
   display: flex;
 }
 
+.v2-resource-gallery .video-component {
+  height: auto;
+}
+
+.v2-resource-gallery .video-component .video-play-button {
+  width: 40px;
+  height: 40px;
+}
+
 @media (min-width: 744px) {
   .v2-resource-gallery__heading-wrapper {
     flex-flow: row;

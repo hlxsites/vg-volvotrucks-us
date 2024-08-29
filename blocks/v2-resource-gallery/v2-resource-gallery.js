@@ -34,10 +34,30 @@ export default function decorate(block) {
   const rows = block.querySelectorAll(':scope > div > div');
 
   rows.forEach((row) => {
+    const video = row.querySelector('.video-component');
     const picture = row.querySelector('picture');
     const document = row.querySelector('.icon-documents');
 
-    if (picture) {
+    if (video) {
+      const listEle = createElement('div', { classes: `${blockName}__video-list-item` });
+      listEle.innerHTML = row.innerHTML;
+
+      const videoElement = listEle.querySelector('.video-component');
+      videoElement.remove();
+      video.classList.add('v2-resource-gallery__video-image');
+      listEle.prepend(video);
+
+      if (videoWrapper.children.length > 5) {
+        listEle.classList.add(`${blockName}__video-list-item--hide`);
+        listEle.setAttribute('aria-hidden', true);
+      }
+
+      const videoTitle = listEle.querySelector('h3');
+      videoTitle.classList.add(`${blockName}__video-title`);
+
+      videoWrapper.append(listEle);
+      row.innerHTML = '';
+    } else if (picture) {
       const listEle = createElement('div', { classes: `${blockName}__video-list-item` });
       listEle.innerHTML = row.innerHTML;
 

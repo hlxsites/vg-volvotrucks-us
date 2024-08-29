@@ -1,9 +1,7 @@
-import { decorateIcons, loadScript, loadCSS } from '../../scripts/aem.js';
+import { decorateIcons } from '../../scripts/aem.js';
+import { loadVideoJs } from '../../scripts/video-utils.js';
 
-const VIDEO_JS_SCRIPT = 'https://vjs.zencdn.net/8.3.0/video.min.js';
-const VIDEO_JS_CSS = 'https://vjs.zencdn.net/8.3.0/video-js.min.css';
 const SCRIPT_LOAD_DELAY = 3000;
-let videoJsScriptPromise;
 
 function getDeviceSpecificVideoUrl(videoUrl) {
   const { userAgent } = navigator;
@@ -65,20 +63,6 @@ function parseConfig(block) {
     videoUrl: getDeviceSpecificVideoUrl(videoUrl),
     posterImage,
   };
-}
-
-async function loadVideoJs() {
-  if (videoJsScriptPromise) {
-    await videoJsScriptPromise;
-    return;
-  }
-
-  videoJsScriptPromise = Promise.all([
-    loadCSS(VIDEO_JS_CSS),
-    loadScript(VIDEO_JS_SCRIPT),
-  ]);
-
-  await videoJsScriptPromise;
 }
 
 function createPlayButton(container, player) {
@@ -370,7 +354,6 @@ async function openModal(config) {
   const dialog = document.querySelector('.video-modal-dialog');
   const container = dialog.querySelector('.video-container');
   setupPlayer(config.videoUrl, container, {
-    bigPlayButton: true,
     fluid: true,
     controls: true,
     playsinline: true,
