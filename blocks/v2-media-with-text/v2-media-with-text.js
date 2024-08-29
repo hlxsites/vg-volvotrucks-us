@@ -75,7 +75,7 @@ export default async function decorate(block) {
     }
   });
 
-  const medias = block.querySelectorAll(['img', 'video', 'iframe']);
+  const medias = block.querySelectorAll(['img', 'video', 'iframe', `${blockName}__video`]);
   medias.forEach((media) => media.classList.add(`${blockName}__media`));
 
   unwrapDivs(block, { ignoreDataAlign: true });
