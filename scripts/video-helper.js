@@ -5,6 +5,7 @@ import {
   deepMerge,
   getTextLabel,
 } from './common.js';
+import { loadScript, loadCSS } from './aem.js';
 
 // videoURLRegex: verify if a given string follows a specific pattern indicating it is a video URL
 // videoIdRegex: extract the video ID from the URL
@@ -13,6 +14,10 @@ export const AEM_ASSETS = {
   videoURLRegex: /\/assets\/urn:aaid:aem:[\w-]+\/play/,
   videoIdRegex: /urn:aaid:aem:[0-9a-fA-F-]+/,
 };
+
+const VIDEO_JS_SCRIPT = 'https://vjs.zencdn.net/8.3.0/video.min.js';
+const VIDEO_JS_CSS = 'https://vjs.zencdn.net/8.3.0/video-js.min.css';
+let videoJsScriptPromise;
 
 const { aemCloudDomain, videoURLRegex } = AEM_ASSETS;
 
@@ -33,6 +38,83 @@ export const standardVideoConfig = {
 };
 
 export const videoConfigs = {};
+
+export async function loadVideoJs() {
+  if (videoJsScriptPromise) {
+    await videoJsScriptPromise;
+    return;
+  }
+
+  videoJsScriptPromise = Promise.all([
+    loadCSS(VIDEO_JS_CSS),
+    loadScript(VIDEO_JS_SCRIPT),
+  ]);
+
+  await videoJsScriptPromise;
+}
+
+function setupAutopause(videoElement, player) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        player.play();
+      } else {
+        player.pause();
+      }
+    });
+  }, {
+    threshold: [0.5],
+  });
+
+  observer.observe(videoElement);
+}
+
+export function setupPlayer(url, videoContainer, config, video) {
+  let videoElement = video;
+  if (!videoElement) {
+    videoElement = document.createElement('video');
+    videoElement.classList.add('video-js');
+    videoElement.id = `video-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  if (config.playsinline || config.autoplay) {
+    videoElement.setAttribute('playsinline', '');
+  }
+
+  videoContainer.append(videoElement);
+
+  const videojsConfig = {
+    ...config,
+    preload: config.poster && !config.autoplay ? 'none' : 'auto',
+  };
+
+  if (config.autoplay) {
+    videojsConfig.muted = true;
+    videojsConfig.loop = true;
+    videojsConfig.autoplay = true;
+  }
+
+  // eslint-disable-next-line no-undef
+  const player = videojs(videoElement, videojsConfig);
+  player.src(url);
+
+  player.ready(() => {
+    if (config.autoplay) {
+      setupAutopause(videoElement, player);
+    }
+  });
+
+  return player;
+}
+
+export function getDeviceSpecificVideoUrl(videoUrl) {
+  const { userAgent } = navigator;
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+  const isSafari = (/Safari/i).test(userAgent) && !(/Chrome/i).test(userAgent) && !(/CriOs/i).test(userAgent) && !(/Android/i).test(userAgent) && !(/Edg/i).test(userAgent);
+
+  const manifest = (isIOS || isSafari) ? 'manifest.m3u8' : 'manifest.mpd';
+  return videoUrl.replace(/manifest\.mpd|manifest\.m3u8|play/, manifest);
+}
 
 export const addVideoConfig = (videoId, props = {}) => {
   if (!videoConfigs[videoId]) {
@@ -406,7 +488,20 @@ export function createVideoWithPoster(linkEl, poster, blockName) {
       muted: false, autoplay: false, loop: true, playsinline: true, controls: true,
     });
   } else {
-    videoOrIframe = createIframe(linkUrl, { classes: `${blockName}__iframe` });
+    videoOrIframe = document.createElement('div');
+    videoOrIframe.classList.add(`${blockName}__video`);
+
+    const videoUrl = getDeviceSpecificVideoUrl(linkUrl);
+    setTimeout(async () => {
+      setupPlayer(videoUrl, videoOrIframe, {
+        muted: false,
+        autoplay: false,
+        loop: true,
+        playsinline: true,
+        controls: true,
+      });
+    }, 3000);
+
     playButton = createElement('button', {
       props: { type: 'button', class: 'v2-video__playback-button' },
     });
