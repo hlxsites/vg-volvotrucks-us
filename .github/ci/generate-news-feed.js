@@ -9,7 +9,7 @@ async function main() {
     } catch (error) {
       console.error('Error importing or processing object:', error);
     }
-  }
+  
   
   const {
     ENDPOINT,
@@ -21,10 +21,10 @@ async function main() {
   const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
   const PARSED_LIMIT = Number(LIMIT)
 
-  const allPosts = await fetchBlogPosts();
+  const allPosts = await fetchBlogPosts(ENDPOINT, PARSED_LIMIT);
   console.log(`found ${allPosts.length} posts`);
 
-  const feedMetadata = await fetchBlogMetadata();
+  const feedMetadata = await fetchBlogMetadata(FEED_INFO_ENDPOINT);
 
   const newestPost = allPosts
     .map((post) => new Date(post.publishDate * 1000))
@@ -59,22 +59,22 @@ async function main() {
   console.log('wrote file to ', TARGET_FILE);
 }
 
-async function fetchBlogPosts() {
+async function fetchBlogPosts(endpoint, limit) {
   let offset = 0;
   const allPosts = [];
 
   while (true) {
-    const api = new URL(ENDPOINT);
+    const api = new URL(endpoint);
     api.searchParams.append('offset', JSON.stringify(offset));
-    api.searchParams.append('limit', PARSED_LIMIT);
+    api.searchParams.append('limit', limit);
     const response = await fetch(api, {});
     const result = await response.json();
 
     allPosts.push(...result.data);
 
-    if (result.offset + result.PARSED_LIMIT < result.total) {
+    if (result.offset + result.limit < result.total) {
       // there are more pages
-      offset = result.offset + result.PARSED_LIMIT;
+      offset = result.offset + result.limit;
     } else {
       break;
     }
@@ -82,8 +82,8 @@ async function fetchBlogPosts() {
   return allPosts;
 }
 
-async function fetchBlogMetadata() {
-  const infoResponse = await fetch(FEED_INFO_ENDPOINT);
+async function fetchBlogMetadata(infoEndpoint) {
+  const infoResponse = await fetch(infoEndpoint);
   const feedInfoResult = await infoResponse.json();
   return feedInfoResult.data[0];
 }
