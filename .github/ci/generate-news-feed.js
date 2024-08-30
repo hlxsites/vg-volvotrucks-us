@@ -1,19 +1,26 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-import NEWS_FEED_CONFIGS from './generate-news-feed-config.js';
-
-const {
-  ENDPOINT,
-  FEED_INFO_ENDPOINT,
-  TARGET_DIRECTORY,
-  LIMIT,
-} = NEWS_FEED_CONFIGS;
-
-const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
-const PARSED_LIMIT = Number(LIMIT)
-
 async function main() {
+  let newsFeedConfigurations;
+    try {
+      const NEWS_FEED_CONFIGS = await import('/generate-news-feed-config.js');
+      newsFeedConfigurations = NEWS_FEED_CONFIGS;
+    } catch (error) {
+      console.error('Error importing or processing object:', error);
+    }
+  }
+  
+  const {
+    ENDPOINT,
+    FEED_INFO_ENDPOINT,
+    TARGET_DIRECTORY,
+    LIMIT,
+  } = newsFeedConfigurations;
+  
+  const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
+  const PARSED_LIMIT = Number(LIMIT)
+
   const allPosts = await fetchBlogPosts();
   console.log(`found ${allPosts.length} posts`);
 
