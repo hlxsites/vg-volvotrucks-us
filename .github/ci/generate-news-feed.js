@@ -1,8 +1,6 @@
 import { Feed } from 'feed';
 import fs from 'fs';
-import vars from '../../scripts/common.js';
-
-const { NEWS_FEED_CONFIGS } = vars;
+import { NEWS_FEED_CONFIGS } from '../../scripts/common.js';
 
 const {
   ENDPOINT,
