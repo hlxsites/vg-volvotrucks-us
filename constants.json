@@ -166,5 +166,5 @@
     "newsFeedConfig",
     "magazineConfig"
   ],
-  ":type": "multi-sheet"
+  ":type": "module"
 }
