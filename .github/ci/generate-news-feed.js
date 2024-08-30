@@ -10,8 +10,7 @@ async function main() {
       console.error('Error importing or processing object:', error);
     }
   
-  
-  const {
+    const {
     ENDPOINT,
     FEED_INFO_ENDPOINT,
     TARGET_DIRECTORY,
