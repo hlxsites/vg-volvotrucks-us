@@ -1,11 +1,16 @@
 import { Feed } from 'feed';
 import fs from 'fs';
+import { NEWS_FEED_CONFIGS } from '../../scripts/common.js';
 
-const endpoint = process.env.NEWS_ENDPOINT;
-const feedInfoEndpoint = process.env.NEWS_FEED_INFO_ENDPOINT;
-const targetDirectory = process.env.NEWS_TARGET_DIRECTORY;
-const targetFile = `${process.env.NEWS_TARGET_DIRECTORY}/feed.xml`;
-const limit = 1000;
+const {
+  ENDPOINT,
+  FEED_INFO_ENDPOINT,
+  TARGET_DIRECTORY,
+  LIMIT,
+} = NEWS_FEED_CONFIGS;
+
+const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
+const PARSED_LIMIT = Number(LIMIT)
 
 async function main() {
   const allPosts = await fetchBlogPosts();
@@ -39,11 +44,11 @@ async function main() {
     });
   });
 
-  if (!fs.existsSync(targetDirectory)) {
-    fs.mkdirSync(targetDirectory);
+  if (!fs.existsSync(TARGET_DIRECTORY)) {
+    fs.mkdirSync(TARGET_DIRECTORY);
   }
-  fs.writeFileSync(targetFile, feed.atom1());
-  console.log('wrote file to ', targetFile);
+  fs.writeFileSync(TARGET_FILE, feed.atom1());
+  console.log('wrote file to ', TARGET_FILE);
 }
 
 async function fetchBlogPosts() {
@@ -51,17 +56,17 @@ async function fetchBlogPosts() {
   const allPosts = [];
 
   while (true) {
-    const api = new URL(endpoint);
+    const api = new URL(ENDPOINT);
     api.searchParams.append('offset', JSON.stringify(offset));
-    api.searchParams.append('limit', limit);
+    api.searchParams.append('limit', PARSED_LIMIT);
     const response = await fetch(api, {});
     const result = await response.json();
 
     allPosts.push(...result.data);
 
-    if (result.offset + result.limit < result.total) {
+    if (result.offset + result.PARSED_LIMIT < result.total) {
       // there are more pages
-      offset = result.offset + result.limit;
+      offset = result.offset + result.PARSED_LIMIT;
     } else {
       break;
     }
@@ -70,7 +75,7 @@ async function fetchBlogPosts() {
 }
 
 async function fetchBlogMetadata() {
-  const infoResponse = await fetch(feedInfoEndpoint);
+  const infoResponse = await fetch(FEED_INFO_ENDPOINT);
   const feedInfoResult = await infoResponse.json();
   return feedInfoResult.data[0];
 }
