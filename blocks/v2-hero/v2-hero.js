@@ -1,6 +1,6 @@
 import {
-  isVideoLink,
   createVideo,
+  parseVideoLink,
 } from '../../scripts/video-helper.js';
 import {
   createElement, getTextLabel, removeEmptyTags, variantsClassesToBEM,
@@ -59,26 +59,24 @@ export default async function decorate(block) {
 
   const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
-  const link = block.querySelector('a');
-  const isVideo = link ? isVideoLink(link) : false;
-  if (isVideo) {
-    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+  const videoConfig = parseVideoLink(block);
+  let media;
+  if (videoConfig) {
+    media = createVideo(videoConfig.url, `${blockName}__video-container`, {
       muted: true,
       autoplay: true,
       loop: true,
       playsinline: true,
-    });
-    block.prepend(video);
-    link.remove();
-  }
-
-  if (picture) {
+      fill: true,
+    }, videoConfig.poster);
+  } else if (picture) {
     const img = picture.querySelector('img');
     img.classList.add(`${blockName}__image`);
     if (picture.parentElement.tagName === 'P') {
       picture.parentElement.remove();
     }
-    block.prepend(picture);
+
+    media = picture;
   }
 
   const contentWrapper = block.querySelector(':scope > div');
@@ -86,6 +84,10 @@ export default async function decorate(block) {
 
   const content = block.querySelector(':scope > div > div');
   content.classList.add(`${blockName}__content`);
+
+  if (media) {
+    block.prepend(media);
+  }
 
   // Countdown timer
   const blockSection = block.parentElement?.parentElement;
