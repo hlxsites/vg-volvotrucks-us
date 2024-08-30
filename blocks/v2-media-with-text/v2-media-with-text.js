@@ -46,7 +46,7 @@ export default async function decorate(block) {
 
         if (linkEl) {
           if (picture) {
-            const videoWithPoster = createVideoWithPoster(linkEl, picture, blockName);
+            const videoWithPoster = createVideoWithPoster(linkEl, picture, `${blockName}--video-with-poster`);
             videoButtons.forEach((button) => button.remove());
             mediaSection.append(videoWithPoster);
           } else {

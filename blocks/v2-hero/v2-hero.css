@@ -53,7 +53,7 @@
 }
 
 .v2-hero__image,
-.v2-hero__video-container {
+.v2-hero__video {
   position: absolute;
   height: 100%;
   width: 100%;

@@ -1,6 +1,5 @@
 import {
   createVideo,
-  parseVideoLink,
 } from '../../scripts/video-helper.js';
 import {
   createElement, getTextLabel, removeEmptyTags, variantsClassesToBEM,
@@ -59,16 +58,16 @@ export default async function decorate(block) {
 
   const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
-  const videoConfig = parseVideoLink(block);
+  const videoLink = block.querySelector('a');
   let media;
-  if (videoConfig) {
-    media = createVideo(videoConfig.url, `${blockName}__video-container`, {
+  if (videoLink) {
+    media = createVideo(videoLink, `${blockName}__video`, {
       muted: true,
       autoplay: true,
       loop: true,
       playsinline: true,
       fill: true,
-    }, videoConfig.poster);
+    });
   } else if (picture) {
     const img = picture.querySelector('img');
     img.classList.add(`${blockName}__image`);

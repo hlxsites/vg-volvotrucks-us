@@ -160,8 +160,7 @@ export function selectVideoLink(links, preferredType, videoType = videoTypes.bot
   return localMediaLink;
 }
 
-export function parseVideoLink(container) {
-  const link = container.querySelector('a');
+function parseVideoLink(link) {
   const isVideo = link ? isVideoLink(link) : false;
   if (!isVideo) {
     return null;
@@ -169,10 +168,10 @@ export function parseVideoLink(container) {
 
   let level = 2;
   let parent = link;
-  let posterImage;
+  let poster;
   while (parent !== null && level >= 0) {
-    posterImage = parent.querySelector('picture');
-    if (posterImage) {
+    poster = parent.querySelector('picture');
+    if (poster) {
       break;
     }
 
@@ -184,7 +183,7 @@ export function parseVideoLink(container) {
     let elementToRemove = ele;
     while (elementToRemove.parentElement !== null) {
       const children = [...elementToRemove.parentElement.children]
-        .filter((child) => child !== link && child !== posterImage && child.tagName !== 'BR');
+        .filter((child) => child !== link && child !== poster && child.tagName !== 'BR');
 
       if (children.length > 0) {
         elementToRemove.remove();
@@ -195,9 +194,8 @@ export function parseVideoLink(container) {
     }
   };
 
-  const poster = posterImage.cloneNode(true);
   removeEmptyTags(link);
-  if (posterImage) {
+  if (poster) {
     removeEmptyTags(poster);
   }
 
@@ -454,7 +452,11 @@ export function getDynamicVideoHeight(video) {
   // Get the element's height(use requestAnimationFrame to get actual height instead of 0)
   requestAnimationFrame(() => {
     const height = video.offsetHeight - 60;
-    const playbackControls = video.parentElement.querySelector('.v2-video__playback-button');
+    const playbackControls = video.parentElement?.querySelector('.v2-video__playback-button');
+    if (!playbackControls) {
+      return;
+    }
+
     playbackControls.style.top = `${height.toString()}px`;
   });
 
@@ -463,7 +465,10 @@ export function getDynamicVideoHeight(video) {
     // eslint-disable-next-line no-restricted-syntax
     for (const entry of entries) {
       const height = entry.target.offsetHeight - 60;
-      const playbackControls = video.parentElement.querySelector('.v2-video__playback-button');
+      const playbackControls = video.parentElement?.querySelector('.v2-video__playback-button');
+      if (!playbackControls) {
+        return;
+      }
       playbackControls.style.top = `${height.toString()}px`;
     }
   };
@@ -479,7 +484,7 @@ export function getDynamicVideoHeight(video) {
  * @param {string} blockName - The name of the CSS block for styling.
  * @return {HTMLElement} - The container element that holds the video and poster.
  */
-export function createVideoWithPoster(linkUrl, poster, blockName, videoConfig) {
+export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
   const deafultConfig = {
     muted: false,
     autoplay: false,
@@ -490,7 +495,7 @@ export function createVideoWithPoster(linkUrl, poster, blockName, videoConfig) {
 
   const config = videoConfig || deafultConfig;
   const videoContainer = document.createElement('div');
-  videoContainer.classList.add(`${blockName}__video-container`, `${blockName}--video-with-poster`);
+  videoContainer.classList.add(className);
 
   let videoOrIframe;
   let playButton;
@@ -499,7 +504,7 @@ export function createVideoWithPoster(linkUrl, poster, blockName, videoConfig) {
     const ele = e.currentTarget;
     const eleParent = ele.parentElement;
     const picture = eleParent?.querySelector('picture');
-    const video = eleParent?.querySelector(`${blockName}__video`);
+    const video = eleParent?.querySelector('video-wrapper');
     if (eleParent && picture) {
       ele.remove();
       picture.remove();
@@ -508,10 +513,10 @@ export function createVideoWithPoster(linkUrl, poster, blockName, videoConfig) {
   };
 
   if (isLowResolutionVideoUrl(linkUrl)) {
-    videoOrIframe = createProgressivePlaybackVideo(linkUrl, `${blockName}__video`, config);
+    videoOrIframe = createProgressivePlaybackVideo(linkUrl, 'video-wrapper', config);
   } else {
     videoOrIframe = document.createElement('div');
-    videoOrIframe.classList.add(`${blockName}__video-wrapper`);
+    videoOrIframe.classList.add('video-wrapper');
     videoOrIframe.style.width = '100%';
     videoOrIframe.style.height = '100%';
 
@@ -565,14 +570,27 @@ export function createVideoWithPoster(linkUrl, poster, blockName, videoConfig) {
  * @param {string} [videoId=''] Optional. Identifier for the video, used for external video sources.
  * @returns {HTMLElement} The created video element (<video> or <iframe>) with specified configs.
  */
-export const createVideo = (src, className = '', props = {}, posterImage = null) => {
+export const createVideo = (link, className = '', props = {}) => {
+  let src;
+  let poster;
+  if (link instanceof HTMLAnchorElement) {
+    const config = parseVideoLink(link);
+    if (!config) {
+      return null;
+    }
+
+    src = config.url;
+    poster = config.poster;
+  } else {
+    src = link;
+  }
+
   if (isLowResolutionVideoUrl(src)) {
     return createProgressivePlaybackVideo(src, className, props);
   }
 
-  if (posterImage) {
-    const blockName = className?.split('__')?.[0] || 'default';
-    return createVideoWithPoster(src, posterImage, blockName, props);
+  if (poster) {
+    return createVideoWithPoster(src, poster, className, props);
   }
 
   const match = src?.match(AEM_ASSETS.videoIdRegex);
