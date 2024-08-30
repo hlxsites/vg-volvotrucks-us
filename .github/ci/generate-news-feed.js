@@ -3,14 +3,18 @@ import fs from 'fs';
 
 async function main() {
   let newsFeedConfigurations;
+
+  async function getConfigs() {
     try {
       const NEWS_FEED_CONFIGS = await import('/generate-news-feed-config.js');
       newsFeedConfigurations = NEWS_FEED_CONFIGS;
     } catch (error) {
       console.error('Error importing or processing object:', error);
     }
-  
-    const {
+  }
+  getConfigs()
+
+  const {
     ENDPOINT,
     FEED_INFO_ENDPOINT,
     TARGET_DIRECTORY,
