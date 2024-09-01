@@ -99,6 +99,11 @@
 
 .key-facts__row--with-media {
   position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.key-facts__row--with-media .video-js {
+  background-color: unset;
 }
 
 .key-facts__image-cell {
@@ -110,6 +115,10 @@
   width: 100%;
   height: auto;
   overflow: hidden;
+}
+
+.key-facts__video {
+  flex-grow: 1;
 }
 
 .key-facts__video,
@@ -197,6 +206,7 @@
     justify-content: left;
   }
 
+  .key-facts__row.key-facts__row--with-media,
   .key-facts__row.key-facts__row--with-media img,
   .key-facts__row.key-facts__row--with-media video {
     flex-grow: 1;

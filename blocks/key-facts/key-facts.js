@@ -124,14 +124,14 @@ export default async function decorate(block) {
         block.classList.add(`${blockName}--with-media`);
         row.classList.add(`${blockName}__row--with-media`);
 
-        const video = createVideo(videoLinks[0].getAttribute('href'), `${blockName}__video`, {
+        const video = createVideo(videoLinks[0], `${blockName}__video`, {
           muted: true,
           autoplay: true,
           loop: 'loop',
           playsinline: true,
+          fill: true,
         });
         col.replaceWith(video);
-        videoLinks[0].remove();
 
         return;
       }
