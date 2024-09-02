@@ -23,21 +23,18 @@ export default function decorate(block) {
       if (videos.length > 0 || picture) {
         const li = createElement('li', { classes: [`${blockName}__item`] });
 
-        if (picture) {
-          const img = picture.lastElementChild;
-          const newPicture = createOptimizedPicture(img.src, img.alt, false);
-          li.prepend(newPicture);
-        }
-
         if (videos.length > 0) {
-          const video = createVideo(videos[0].getAttribute('href'), `${blockName}__video`, {
+          const video = createVideo(videos[0], `${blockName}__video`, {
             muted: true,
             autoplay: true,
             loop: true,
             playsinline: true,
           });
           li.prepend(video);
-          videos[0].remove();
+        } else if (picture) {
+          const img = picture.lastElementChild;
+          const newPicture = createOptimizedPicture(img.src, img.alt, false);
+          li.prepend(newPicture);
         }
 
         ul.append(li);

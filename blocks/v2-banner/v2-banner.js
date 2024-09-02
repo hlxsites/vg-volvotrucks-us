@@ -28,20 +28,17 @@ export default async function decorate(block) {
   const link = block.querySelector('a');
   const isVideo = link ? isVideoLink(link) : false;
   if (isVideo) {
-    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+    const video = createVideo(link, `${blockName}__video`, {
       muted: true,
       autoplay: true,
       loop: true,
       playsinline: true,
     });
     block.prepend(video);
-    link.remove();
 
     // prevent video to reproduce more than 3s
     video.addEventListener('timeupdate', checkVideoTime);
-  }
-
-  if (picture) {
+  } else if (picture) {
     const img = picture.querySelector('img');
     img.classList.add(`${blockName}__image`);
     if (picture.parentElement.tagName === 'P') {

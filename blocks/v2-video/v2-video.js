@@ -49,7 +49,7 @@ export default async function decorate(block) {
     block.innerHTML = '';
   }
 
-  const video = createVideo(videoLink.getAttribute('href'), `${blockName}__video`, {
+  const video = createVideo(videoLink, `${blockName}__video`, {
     muted: true,
     autoplay: true,
     loop: true,
@@ -62,8 +62,6 @@ export default async function decorate(block) {
   [...ctaButtons].forEach((button) => {
     button.classList.add(`${blockName}__button`, 'dark');
   });
-
-  videoLink.remove();
 
   block.prepend(video);
 
