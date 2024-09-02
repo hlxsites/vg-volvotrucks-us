@@ -1,4 +1,5 @@
 import {
+  isVideoLink,
   createVideo,
 } from '../../scripts/video-helper.js';
 import {
@@ -59,8 +60,9 @@ export default async function decorate(block) {
   const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
   const videoLink = block.querySelector('a');
+  const isVideo = videoLink ? isVideoLink(videoLink) : false;
   let media;
-  if (videoLink) {
+  if (isVideo) {
     media = createVideo(videoLink, `${blockName}__video`, {
       muted: true,
       autoplay: true,
