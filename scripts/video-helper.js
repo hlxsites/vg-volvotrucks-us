@@ -493,7 +493,7 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
     controls: true,
   };
 
-  const config = videoConfig || deafultConfig;
+  const config = videoConfig && Object.keys(videoConfig).length > 0 ? videoConfig : deafultConfig;
   const videoContainer = document.createElement('div');
   videoContainer.classList.add(className);
 
@@ -593,19 +593,18 @@ export const createVideo = (link, className = '', props = {}) => {
     return createVideoWithPoster(src, poster, className, props);
   }
 
-  const match = src?.match(AEM_ASSETS.videoIdRegex);
-  const [videoId] = match;
-  addVideoConfig(videoId, props);
+  const container = document.createElement('div');
+  container.classList.add(className);
 
-  return createElement('iframe', {
-    classes: className,
-    props: {
-      allow: 'autoplay; fullscreen',
-      allowfullscreen: true,
-      title: props.title,
-      src,
-    },
-  });
+  setTimeout(async () => {
+    await loadVideoJs();
+    const videoUrl = getDeviceSpecificVideoUrl(src);
+    setupPlayer(videoUrl, container, props);
+
+    setPlaybackControls(container);
+  }, 3000);
+
+  return container;
 };
 
 const getMuteSvg = () => `<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">

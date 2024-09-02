@@ -18,45 +18,36 @@
 }
 
 .v2-media-with-text__media-section .v2-media-with-text__media {
-  object-fit: cover;
-  aspect-ratio: 7/5;
   display: block;
+  aspect-ratio: 7/5;
   background-color: var(--media-background);
   border-radius: var(--border-radius);
 }
 
-
-/* Video  */
-.v2-media-with-text__media-section video.v2-media-with-text__media {
-  width: 100%;
+.v2-media-with-text__media-section img,
+.v2-media-with-text__media-section video {
+  object-fit: cover;
 }
 
-
 /* Video with poster  */
-.v2-media-with-text--video-with-poster .v2-media-with-text__media {
+.v2-media-with-text--video-with-poster {
+  position: relative;
   aspect-ratio: 1;
 }
 
-.v2-media-with-text--video-with-poster video.v2-media-with-text__media,
-.v2-media-with-text--video-with-poster iframe.v2-media-with-text__media {
-  display: none;
+/* Video  */
+.v2-media-with-text__media-section .v2-media-with-text__video.v2-media-with-text__media,
+.v2-media-with-text__media-section .v2-media-with-text--video-with-poster {
+  width: 100%;
+}
+
+.v2-media-with-text--video-with-poster img {
+  width: 100%;
+  height: 100%;
 }
 
 .v2-media-with-text--video-with-poster .icon-play-video {
   display: flex;
-}
-
-.v2-media-with-text--video-with-poster .v2-video__playback-button {
-  width: 100%;
-  height: 100%;
-  inset: 0;
-  transform: none;
-}
-
-.v2-media-with-text--video-with-poster .v2-video__playback-button .icon,
-.v2-media-with-text--video-with-poster .v2-video__playback-button .icon svg {
-  width: 72px;
-  height: 72px;
 }
 
 .v2-media-with-text__content-section,
@@ -186,13 +177,6 @@
     aspect-ratio: 4/3;
   }
 
-
-  /* Variant: video with poster  */
-  .v2-media-with-text--video-with-poster .v2-media-with-text__media {
-    aspect-ratio: 1;
-  }
-
-
   /* Variant: media-left, media-right  */
   .v2-media-with-text--media-left,
   .v2-media-with-text--media-right {
@@ -234,8 +218,7 @@
     gap: 48px;
   }
 
-
-  .v2-media-with-text__media-section video.v2-media-with-text__media {
+  .v2-media-with-text__media-section .v2-media-with-text__video.v2-media-with-text__media {
     aspect-ratio: 16/9;
   }
 
