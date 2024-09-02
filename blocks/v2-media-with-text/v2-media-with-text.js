@@ -3,12 +3,11 @@ import {
   addVideoToSection,
   createElement,
   createNewSection,
-  removeEmptyTags,
   unwrapDivs,
   variantsClassesToBEM,
 } from '../../scripts/common.js';
 import {
-  addMuteControls, createVideoWithPoster, isVideoLink, selectVideoLink,
+  addMuteControls, createVideo, isVideoLink, selectVideoLink,
 } from '../../scripts/video-helper.js';
 
 const blockName = 'v2-media-with-text';
@@ -39,15 +38,20 @@ export default async function decorate(block) {
 
       const videos = [...mediaSection.querySelectorAll('a')].filter((link) => isVideoLink(link));
       const picture = mediaSection.querySelector('picture');
-      const videoButtons = mediaSection.querySelectorAll('.button-container'); // need to remove it later from DOM
 
       if (videos.length) {
         const linkEl = selectVideoLink(videos);
 
         if (linkEl) {
           if (picture) {
-            const videoWithPoster = createVideoWithPoster(linkEl, picture, `${blockName}--video-with-poster`);
-            videoButtons.forEach((button) => button.remove());
+            const videoWithPoster = createVideo(linkEl, `${blockName}--video-with-poster`, {
+              muted: true,
+              autoplay: true,
+              loop: true,
+              playsinline: true,
+              controls: false,
+              fill: true,
+            });
             mediaSection.append(videoWithPoster);
           } else {
             mediaSection = addVideoToSection(blockName, mediaSection, linkEl);
@@ -75,9 +79,8 @@ export default async function decorate(block) {
     }
   });
 
-  const medias = block.querySelectorAll(['img', 'video', 'iframe', `${blockName}__video`]);
+  const medias = block.querySelectorAll(`.${blockName}__video`);
   medias.forEach((media) => media.classList.add(`${blockName}__media`));
 
   unwrapDivs(block, { ignoreDataAlign: true });
-  removeEmptyTags(block);
 }
