@@ -111,10 +111,12 @@ export function createNewSection(blockName, sectionName, node) {
 export function addVideoToSection(blockName, section, link) {
   const isVideo = link ? isVideoLink(link) : false;
   if (isVideo) {
-    const video = createVideo(link, `${blockName}__video`, {
-      muted: true, autoplay: true, loop: true, playsinline: true, fill: true,
+    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+      muted: true, autoplay: true, loop: true, playsinline: true,
     });
-    section.append(video);
+    const playbackControls = video.querySelector('button');
+    link.remove();
+    section.append(video, playbackControls);
   }
   return section;
 }
