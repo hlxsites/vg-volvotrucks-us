@@ -461,9 +461,10 @@ export function getDynamicVideoHeight(video) {
 
 /**
  * Creates a video element with a poster image.
- * @param {HTMLElement} linkEl - The link element that contains the video URL.
- * @param {HTMLPictureElement} poster - The URL of the poster image.
- * @param {string} blockName - The name of the CSS block for styling.
+ * @param {string} linkUrl - Video URL.
+ * @param {HTMLPictureElement} poster - Poster image.
+ * @param {string} className - The name of the CSS block for styling.
+ * @param {Object} videoConfig - Properties for video player.
  * @return {HTMLElement} - The container element that holds the video and poster.
  */
 export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
@@ -535,19 +536,14 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
 }
 
 /**
- * Creates a video element or an iframe for a video, depending on whether the video is local
+ * Creates a video element or videojs player, depending on whether the video is local
  * or not. Configures the element with specified classes, properties, and source.
  *
- * @param {string} src The source URL of the video.
- * @param {string} [className=''] Optional. CSS class names to apply to the video element or iframe.
- * @param {Object} [props={}] Optional. Properties and attributes for the video element or iframe,
- *                            including attributes like 'muted', 'autoplay', 'title'. All properties
- *                            are applied as attributes.
- * @param {boolean} [localVideo=true] Optional. Indicates if the video is a local file. If true,
- *                                    creates a <video> element with a <source> child. If false,
- *                                    creates an iframe for an external video.
- * @param {string} [videoId=''] Optional. Identifier for the video, used for external video sources.
- * @returns {HTMLElement} The created video element (<video> or <iframe>) with specified configs.
+ * @param {HTMLAnchorElement | string} src The link that contains video url or the URL of the video.
+ * @param {string} [className=''] Optional. CSS class names to apply to the video container.
+ * @param {Object} [props={}] Optional. Properties for video player,
+ *                            including attributes like 'muted', 'autoplay', 'title'.
+ * @returns {HTMLElement} The created video element or player with specified configs.
  */
 export const createVideo = (link, className = '', props = {}) => {
   let src;
