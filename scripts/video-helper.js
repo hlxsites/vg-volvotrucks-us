@@ -87,6 +87,7 @@ export function setupPlayer(url, videoContainer, config, video) {
   const videojsConfig = {
     ...config,
     preload: config.poster && !config.autoplay ? 'none' : 'auto',
+    bigPlayButton: false,
   };
 
   if (config.autoplay) {
@@ -160,31 +161,53 @@ export function selectVideoLink(links, preferredType, videoType = videoTypes.bot
   return localMediaLink;
 }
 
+function getVideoLinkContainer(link, usePosterAutoDetection) {
+  if (!usePosterAutoDetection) {
+    return link;
+  }
+
+  let poster = null;
+  let level = 2;
+  let parent = link;
+  while (parent !== null && level >= 0) {
+    poster = parent.querySelector('picture');
+    if (poster) {
+      break;
+    }
+
+    parent = parent.parentElement;
+    level -= 1;
+  }
+
+  return poster ? parent : link;
+}
+
 function parseVideoLink(link, usePosterAutoDetection) {
   const isVideo = link ? isVideoLink(link) : false;
   if (!isVideo) {
     return null;
   }
 
-  let poster = null;
-  if (usePosterAutoDetection) {
-    let level = 2;
-    let parent = link;
-    while (parent !== null && level >= 0) {
-      poster = parent.querySelector('picture');
-      if (poster) {
-        break;
-      }
-
-      parent = parent.parentElement;
-      level -= 1;
-    }
-  }
+  const container = getVideoLinkContainer(link, usePosterAutoDetection);
+  const poster = container.querySelector('picture')?.cloneNode(true);
 
   return {
     url: link.href,
     poster,
   };
+}
+
+export function cleanupVideoLink(block, link, hasPoster) {
+  const container = getVideoLinkContainer(link, hasPoster);
+  // Remove empty ancestor nodes after removing video container containing link and poster image
+  if (container) {
+    let parent = container;
+    while (parent?.parentElement?.children.length === 1 && parent?.parentElement !== block) {
+      parent = parent.parentElement;
+    }
+
+    parent.remove();
+  }
 }
 
 export function createLowResolutionBanner() {
@@ -483,14 +506,20 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
   let playButton;
 
   const showVideo = (e) => {
-    const ele = e.currentTarget;
+    const ele = e.target.closest('.v2-video__big-play-button');
     const eleParent = ele.parentElement;
     const picture = eleParent?.querySelector('picture');
     const video = eleParent?.querySelector('.video-js') || eleParent?.querySelector('video');
-    if (eleParent && picture) {
+    if (eleParent && picture && video) {
       ele.remove();
       picture.remove();
-      if (video) video.style.display = 'block';
+      video.style.display = '';
+
+      if (video.classList.contains('video-js')) {
+        video.player.play();
+      } else {
+        video.play();
+      }
     }
   };
 
@@ -501,34 +530,41 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
     videoContainer.append(videoOrIframe);
   } else {
     const videoUrl = getDeviceSpecificVideoUrl(linkUrl);
-    setTimeout(async () => {
-      await loadVideoJs();
-      const player = setupPlayer(videoUrl, videoContainer, {
-        fill: true,
-        ...config,
-      });
-
-      const videojsWrapper = videoContainer.querySelector('.video-js');
-      videojsWrapper.style.display = 'none';
-
-      if (config.autoplay) {
-        player.on('loadeddata', () => {
-          if (poster) {
-            videojsWrapper.style.display = '';
-            poster.style.display = 'none';
-            setPlaybackControls(videoContainer);
-          }
+    const loadPlayerPromise = new Promise((resolve) => {
+      setTimeout(async () => {
+        await loadVideoJs();
+        const player = setupPlayer(videoUrl, videoContainer, {
+          fill: true,
+          ...config,
         });
-      }
-    }, 3000);
+
+        const videojsWrapper = videoContainer.querySelector('.video-js');
+        videojsWrapper.style.display = 'none';
+
+        if (config.autoplay) {
+          player.on('loadeddata', () => {
+            if (poster) {
+              videojsWrapper.style.display = '';
+              poster.style.display = 'none';
+              setPlaybackControls(videoContainer);
+            }
+          });
+        }
+
+        resolve();
+      }, 3000);
+    });
 
     if (!config.autoplay) {
       playButton = createElement('button', {
-        props: { type: 'button', class: 'v2-video__playback-button' },
+        props: { type: 'button', class: 'v2-video__big-play-button' },
       });
       addPlayIcon(playButton);
 
-      playButton.addEventListener('click', showVideo);
+      playButton.addEventListener('click', async (evt) => {
+        await loadPlayerPromise;
+        showVideo(evt);
+      });
       videoContainer.append(playButton);
     }
   }
