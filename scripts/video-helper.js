@@ -15,8 +15,8 @@ export const AEM_ASSETS = {
   videoIdRegex: /urn:aaid:aem:[0-9a-fA-F-]+/,
 };
 
-const VIDEO_JS_SCRIPT = 'https://vjs.zencdn.net/8.3.0/video.min.js';
-const VIDEO_JS_CSS = 'https://vjs.zencdn.net/8.3.0/video-js.min.css';
+const VIDEO_JS_SCRIPT = '/scripts/videojs/video.min.js';
+const VIDEO_JS_CSS = '/scripts/videojs/video-js.min.css';
 let videoJsScriptPromise;
 
 const { aemCloudDomain, videoURLRegex } = AEM_ASSETS;
