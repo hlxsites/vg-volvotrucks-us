@@ -7,7 +7,7 @@ import {
   variantsClassesToBEM,
 } from '../../scripts/common.js';
 import {
-  addMuteControls, createVideo, isVideoLink, selectVideoLink,
+  addMuteControls, createVideoWithPoster, isVideoLink, selectVideoLink,
 } from '../../scripts/video-helper.js';
 
 const blockName = 'v2-media-with-text';
@@ -44,14 +44,7 @@ export default async function decorate(block) {
 
         if (linkEl) {
           if (picture) {
-            const videoWithPoster = createVideo(linkEl, `${blockName}--video-with-poster`, {
-              muted: true,
-              autoplay: true,
-              loop: true,
-              playsinline: true,
-              controls: false,
-              fill: true,
-            });
+            const videoWithPoster = createVideoWithPoster(linkEl.href, picture, `${blockName}--video-with-poster`);
             mediaSection.append(videoWithPoster);
           } else {
             mediaSection = addVideoToSection(blockName, mediaSection, linkEl);
@@ -79,7 +72,7 @@ export default async function decorate(block) {
     }
   });
 
-  const medias = block.querySelectorAll(`.${blockName}__video`);
+  const medias = block.querySelectorAll(['img', 'video', 'iframe']);
   medias.forEach((media) => media.classList.add(`${blockName}__media`));
 
   unwrapDivs(block, { ignoreDataAlign: true });

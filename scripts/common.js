@@ -114,9 +114,8 @@ export function addVideoToSection(blockName, section, link) {
     const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
       muted: true, autoplay: true, loop: true, playsinline: true,
     });
-    const playbackControls = video.querySelector('button');
     link.remove();
-    section.append(video, playbackControls);
+    section.append(video);
   }
   return section;
 }
