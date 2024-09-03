@@ -1637,6 +1637,26 @@ main.blue-contract .section.section-with-title p {
   opacity: 1;
 }
 
+.video-wrapper {
+  position: relative;
+}
+
+.video-wrapper picture {
+  position: absolute;
+  inset: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.video-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-wrapper .video-js video {
+  object-fit: cover;
+}
+
 @media (max-width: 744px) {
   .v2-content-card__item .v2-video__playback-button,
   .v2-content-card__item .v2-video__mute-controls {
