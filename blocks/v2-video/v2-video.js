@@ -1,5 +1,5 @@
 import { removeEmptyTags, variantsClassesToBEM } from '../../scripts/common.js';
-import { createVideo, setPlaybackControls } from '../../scripts/video-helper.js';
+import { createVideo } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;
@@ -66,8 +66,6 @@ export default async function decorate(block) {
   videoLink.remove();
 
   block.prepend(video);
-
-  setPlaybackControls();
 
   removeEmptyTags(block);
 

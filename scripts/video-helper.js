@@ -471,7 +471,7 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
   const deafultConfig = {
     muted: false,
     autoplay: false,
-    loop: true,
+    loop: false,
     playsinline: true,
     controls: true,
   };
