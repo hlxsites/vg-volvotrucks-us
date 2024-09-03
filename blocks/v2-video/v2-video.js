@@ -1,5 +1,5 @@
 import { removeEmptyTags, variantsClassesToBEM } from '../../scripts/common.js';
-import { createVideo } from '../../scripts/video-helper.js';
+import { createVideo, setPlaybackControls } from '../../scripts/video-helper.js';
 
 const onHoverOrScroll = (element, handler) => {
   let isInViewport = false;
@@ -49,7 +49,7 @@ export default async function decorate(block) {
     block.innerHTML = '';
   }
 
-  const video = createVideo(videoLink, `${blockName}__video`, {
+  const video = createVideo(videoLink.getAttribute('href'), `${blockName}__video`, {
     muted: true,
     autoplay: true,
     loop: true,
@@ -63,7 +63,11 @@ export default async function decorate(block) {
     button.classList.add(`${blockName}__button`, 'dark');
   });
 
+  videoLink.remove();
+
   block.prepend(video);
+
+  setPlaybackControls();
 
   removeEmptyTags(block);
 

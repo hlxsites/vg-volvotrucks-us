@@ -54,20 +54,14 @@
 
 .v2-hero__image,
 .v2-hero__video {
-  position: absolute;
   height: 100%;
-  width: 100%;
-}
-
-.v2-hero img,
-.v2-hero video {
   object-fit: cover;
-  height: 100%;
+  position: absolute;
   width: 100%;
 }
 
-.v2-hero.v2-hero--background-right img,
-.v2-hero.v2-hero--background-right video {
+.v2-hero--background-right .v2-hero__image,
+.v2-hero--background-right .v2-hero__video {
   object-position: center right;
 }
 
@@ -81,7 +75,6 @@
   min-height: calc(100svh - var(--nav-height));
   padding: var(--v2-hero-padding) var(--v2-hero-padding) var(--padding-bottom-calc);
   background: linear-gradient(180deg, rgb(255 255 255 / 40%) 0%, rgb(255 255 255 / 0%) 100%);
-  z-index: 1;
 }
 
 .v2-hero--centered .v2-hero__content-wrapper {
@@ -181,7 +174,6 @@
   padding: 2px;
   position: absolute;
   width: var(--scroll-icon-width);
-  z-index: 1;
 }
 
 .v2-hero__scroll-icon::after {
