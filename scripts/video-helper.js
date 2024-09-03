@@ -160,43 +160,25 @@ export function selectVideoLink(links, preferredType, videoType = videoTypes.bot
   return localMediaLink;
 }
 
-function parseVideoLink(link) {
+function parseVideoLink(link, usePosterAutoDetection) {
   const isVideo = link ? isVideoLink(link) : false;
   if (!isVideo) {
     return null;
   }
 
-  let level = 2;
-  let parent = link;
-  let poster;
-  while (parent !== null && level >= 0) {
-    poster = parent.querySelector('picture');
-    if (poster) {
-      break;
-    }
-
-    parent = parent.parentElement;
-    level -= 1;
-  }
-
-  const removeEmptyTags = (ele) => {
-    let elementToRemove = ele;
-    while (elementToRemove.parentElement !== null) {
-      const children = [...elementToRemove.parentElement.children]
-        .filter((child) => child !== link && child !== poster && child.tagName !== 'BR');
-
-      if (children.length > 0) {
-        elementToRemove.remove();
+  let poster = null;
+  if (usePosterAutoDetection) {
+    let level = 2;
+    let parent = link;
+    while (parent !== null && level >= 0) {
+      poster = parent.querySelector('picture');
+      if (poster) {
         break;
       }
 
-      elementToRemove = elementToRemove.parentElement;
+      parent = parent.parentElement;
+      level -= 1;
     }
-  };
-
-  removeEmptyTags(link);
-  if (poster) {
-    removeEmptyTags(poster);
   }
 
   return {
@@ -495,16 +477,15 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
 
   const config = videoConfig && Object.keys(videoConfig).length > 0 ? videoConfig : deafultConfig;
   const videoContainer = document.createElement('div');
-  videoContainer.classList.add(className);
+  videoContainer.classList.add('video-wrapper', className);
 
-  let videoOrIframe;
   let playButton;
 
   const showVideo = (e) => {
     const ele = e.currentTarget;
     const eleParent = ele.parentElement;
     const picture = eleParent?.querySelector('picture');
-    const video = eleParent?.querySelector('video-wrapper');
+    const video = eleParent?.querySelector('.video-js') || eleParent?.querySelector('video');
     if (eleParent && picture) {
       ele.remove();
       picture.remove();
@@ -512,28 +493,27 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
     }
   };
 
+  videoContainer.append(poster);
+
   if (isLowResolutionVideoUrl(linkUrl)) {
-    videoOrIframe = createProgressivePlaybackVideo(linkUrl, 'video-wrapper', config);
+    const videoOrIframe = createProgressivePlaybackVideo(linkUrl, 'video-wrapper', config);
+    videoContainer.append(videoOrIframe);
   } else {
-    videoOrIframe = document.createElement('div');
-    videoOrIframe.classList.add('video-wrapper');
-    videoOrIframe.style.width = '100%';
-    videoOrIframe.style.height = '100%';
-
-    if (poster) {
-      poster.style.position = 'absolute';
-      poster.style.inset = 0;
-      poster.style.zIndex = 1;
-    }
-
     const videoUrl = getDeviceSpecificVideoUrl(linkUrl);
     setTimeout(async () => {
       await loadVideoJs();
-      const player = setupPlayer(videoUrl, videoOrIframe, config);
+      const player = setupPlayer(videoUrl, videoContainer, {
+        fill: true,
+        ...config,
+      });
+
+      const videojsWrapper = videoContainer.querySelector('.video-js');
+      videojsWrapper.style.display = 'none';
 
       if (config.autoplay) {
         player.on('loadeddata', () => {
           if (poster) {
+            videojsWrapper.style.display = '';
             poster.style.display = 'none';
             setPlaybackControls(videoContainer);
           }
@@ -551,7 +531,6 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
       videoContainer.append(playButton);
     }
   }
-  videoContainer.append(poster, videoOrIframe);
   return videoContainer;
 }
 
@@ -573,8 +552,10 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
 export const createVideo = (link, className = '', props = {}) => {
   let src;
   let poster;
+
+  const { usePosterAutoDetection, ...videoConfig } = props;
   if (link instanceof HTMLAnchorElement) {
-    const config = parseVideoLink(link);
+    const config = parseVideoLink(link, usePosterAutoDetection);
     if (!config) {
       return null;
     }
@@ -586,11 +567,11 @@ export const createVideo = (link, className = '', props = {}) => {
   }
 
   if (isLowResolutionVideoUrl(src)) {
-    return createProgressivePlaybackVideo(src, className, props);
+    return createProgressivePlaybackVideo(src, className, videoConfig);
   }
 
   if (poster) {
-    return createVideoWithPoster(src, poster, className, props);
+    return createVideoWithPoster(src, poster, className, videoConfig);
   }
 
   const container = document.createElement('div');
@@ -599,7 +580,7 @@ export const createVideo = (link, className = '', props = {}) => {
   setTimeout(async () => {
     await loadVideoJs();
     const videoUrl = getDeviceSpecificVideoUrl(src);
-    setupPlayer(videoUrl, container, props);
+    setupPlayer(videoUrl, container, videoConfig);
 
     setPlaybackControls(container);
   }, 3000);
