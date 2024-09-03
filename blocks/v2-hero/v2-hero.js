@@ -59,25 +59,26 @@ export default async function decorate(block) {
 
   const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
-  const videoLink = block.querySelector('a');
-  const isVideo = videoLink ? isVideoLink(videoLink) : false;
-  let media;
+  const link = block.querySelector('a');
+  const isVideo = link ? isVideoLink(link) : false;
   if (isVideo) {
-    media = createVideo(videoLink, `${blockName}__video`, {
+    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
       muted: true,
       autoplay: true,
       loop: true,
       playsinline: true,
-      fill: true,
     });
-  } else if (picture) {
+    block.prepend(video);
+    link.remove();
+  }
+
+  if (picture) {
     const img = picture.querySelector('img');
     img.classList.add(`${blockName}__image`);
     if (picture.parentElement.tagName === 'P') {
       picture.parentElement.remove();
     }
-
-    media = picture;
+    block.prepend(picture);
   }
 
   const contentWrapper = block.querySelector(':scope > div');
@@ -85,10 +86,6 @@ export default async function decorate(block) {
 
   const content = block.querySelector(':scope > div > div');
   content.classList.add(`${blockName}__content`);
-
-  if (media) {
-    block.prepend(media);
-  }
 
   // Countdown timer
   const blockSection = block.parentElement?.parentElement;
