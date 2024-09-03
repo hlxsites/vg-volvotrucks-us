@@ -1,6 +1,7 @@
 import {
   isVideoLink,
   createVideo,
+  cleanupVideoLink,
 } from '../../scripts/video-helper.js';
 import {
   createElement, getTextLabel, removeEmptyTags, variantsClassesToBEM,
@@ -57,22 +58,27 @@ export default async function decorate(block) {
   // add Hero variant classnames
   variantsClassesToBEM(block.classList, variantClasses, blockName);
 
+  const contentWrapper = block.querySelector(':scope > div');
+  contentWrapper.classList.add(`${blockName}__content-wrapper`);
+
+  const content = block.querySelector(':scope > div > div');
+  content.classList.add(`${blockName}__content`);
+
   const isCompact = block.classList.contains(`${blockName}--compact`);
   const picture = block.querySelector('picture');
   const link = block.querySelector('a');
   const isVideo = link ? isVideoLink(link) : false;
   if (isVideo) {
-    const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
+    const video = createVideo(link, `${blockName}__video`, {
       muted: true,
       autoplay: true,
       loop: true,
       playsinline: true,
+      usePosterAutoDetection: true,
     });
     block.prepend(video);
-    link.remove();
-  }
-
-  if (picture) {
+    cleanupVideoLink(block, link, true);
+  } else if (picture) {
     const img = picture.querySelector('img');
     img.classList.add(`${blockName}__image`);
     if (picture.parentElement.tagName === 'P') {
@@ -80,12 +86,6 @@ export default async function decorate(block) {
     }
     block.prepend(picture);
   }
-
-  const contentWrapper = block.querySelector(':scope > div');
-  contentWrapper.classList.add(`${blockName}__content-wrapper`);
-
-  const content = block.querySelector(':scope > div > div');
-  content.classList.add(`${blockName}__content`);
 
   // Countdown timer
   const blockSection = block.parentElement?.parentElement;
