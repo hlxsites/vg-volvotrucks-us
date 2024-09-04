@@ -170,7 +170,7 @@ indices:
       image:
         select: head > meta[property="og:image"]
         value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
-      readingTime:
+      readTime:
         select: head > meta[name="readingtime"]
         value: attribute(el, "content")
       publishDate:
