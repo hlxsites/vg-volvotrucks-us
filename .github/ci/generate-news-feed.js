@@ -1,17 +1,33 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-const endpoint = process.env.NEWS_ENDPOINT;
-const feedInfoEndpoint = process.env.NEWS_FEED_INFO_ENDPOINT;
-const targetDirectory = process.env.NEWS_TARGET_DIRECTORY;
-const targetFile = `${process.env.NEWS_TARGET_DIRECTORY}/feed.xml`;
-const limit = 1000;
-
 async function main() {
-  const allPosts = await fetchBlogPosts();
+  let newsFeedConfigurations;
+
+  async function getConfigs() {
+    try {
+      const NEWS_FEED_CONFIGS = await import('/generate-news-feed-config.js');
+      newsFeedConfigurations = NEWS_FEED_CONFIGS;
+    } catch (error) {
+      console.error('Error importing or processing object:', error);
+    }
+  }
+  getConfigs()
+
+  const {
+    ENDPOINT,
+    FEED_INFO_ENDPOINT,
+    TARGET_DIRECTORY,
+    LIMIT,
+  } = newsFeedConfigurations;
+  
+  const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
+  const PARSED_LIMIT = Number(LIMIT)
+
+  const allPosts = await fetchBlogPosts(ENDPOINT, PARSED_LIMIT);
   console.log(`found ${allPosts.length} posts`);
 
-  const feedMetadata = await fetchBlogMetadata();
+  const feedMetadata = await fetchBlogMetadata(FEED_INFO_ENDPOINT);
 
   const newestPost = allPosts
     .map((post) => new Date(post.publishDate * 1000))
@@ -39,14 +55,14 @@ async function main() {
     });
   });
 
-  if (!fs.existsSync(targetDirectory)) {
-    fs.mkdirSync(targetDirectory);
+  if (!fs.existsSync(TARGET_DIRECTORY)) {
+    fs.mkdirSync(TARGET_DIRECTORY);
   }
-  fs.writeFileSync(targetFile, feed.atom1());
-  console.log('wrote file to ', targetFile);
+  fs.writeFileSync(TARGET_FILE, feed.atom1());
+  console.log('wrote file to ', TARGET_FILE);
 }
 
-async function fetchBlogPosts() {
+async function fetchBlogPosts(endpoint, limit) {
   let offset = 0;
   const allPosts = [];
 
@@ -69,8 +85,8 @@ async function fetchBlogPosts() {
   return allPosts;
 }
 
-async function fetchBlogMetadata() {
-  const infoResponse = await fetch(feedInfoEndpoint);
+async function fetchBlogMetadata(infoEndpoint) {
+  const infoResponse = await fetch(infoEndpoint);
   const feedInfoResult = await infoResponse.json();
   return feedInfoResult.data[0];
 }
