@@ -158,12 +158,24 @@ indices:
       description:
         select: head > meta[name="description"]
         value: attribute(el, "content")
+      author:
+        select: head > meta[name="author"]
+        value: attribute(el, "content")
       category:
         select: head > meta[name="category"]
         value: attribute(el, "content")
       tags:
         select: head > meta[property="article:tag"]
         values: attribute(el, "content")
+      image:
+        select: head > meta[property="og:image"]
+        value: match(attribute(el, "content"), "https:\/\/[^/]+(/.*)")
+      readingTime:
+        select: head > meta[name="readingtime"]
+        value: attribute(el, "content")
+      publishDate:
+        select: head > meta[name="publish-date"]
+        value: parseTimestamp(attribute(el, "content"), MM/DD/YYYY)
       text:
         select: main
         value: textContent(el)
