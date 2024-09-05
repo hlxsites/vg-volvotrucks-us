@@ -250,7 +250,17 @@ function fetchRecalls(e) {
   return null;
 }
 
+function checkForPlaceholderIsLoaded() {
+  const placeholder = getTextLabel('published_info');
+
+  if (placeholder) {
+    return;
+  }
+  checkForPlaceholderIsLoaded();
+}
+
 export default async function decorate(block) {
+  checkForPlaceholderIsLoaded();
   fetchRefreshDate().then((response) => {
     let refreshDate = response || 'XX-XX-XXXX';
     if (response && isFrench) {
