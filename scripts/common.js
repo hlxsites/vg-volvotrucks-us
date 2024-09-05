@@ -51,6 +51,10 @@ export async function getPlaceholders() {
   placeholders = await fetch(url).then((resp) => resp.json());
 }
 
+export function fetchPlaceholders() {
+  return placeholders;
+}
+
 export function getTextLabel(key) {
   return placeholders?.data.find((el) => el.Key === key)?.Text || key;
 }

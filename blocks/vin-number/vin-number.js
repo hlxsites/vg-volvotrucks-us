@@ -1,4 +1,9 @@
-import { getTextLabel, createElement, getJsonFromUrl } from '../../scripts/common.js';
+import {
+  getTextLabel,
+  createElement,
+  getJsonFromUrl,
+  fetchPlaceholders,
+} from '../../scripts/common.js';
 
 const docRange = document.createRange();
 const isFrench = window.location.href.indexOf('fr') > -1;
@@ -251,7 +256,7 @@ function fetchRecalls(e) {
 }
 
 function checkForPlaceholderIsLoaded() {
-  const placeholder = getTextLabel('published_info');
+  const placeholder = fetchPlaceholders();
 
   if (placeholder) {
     return;
