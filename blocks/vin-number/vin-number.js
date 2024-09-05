@@ -2,7 +2,7 @@ import {
   getTextLabel,
   createElement,
   getJsonFromUrl,
-  fetchPlaceholders,
+  getPlaceholders,
 } from '../../scripts/common.js';
 
 const docRange = document.createRange();
@@ -255,17 +255,8 @@ function fetchRecalls(e) {
   return null;
 }
 
-function checkForPlaceholderIsLoaded() {
-  const placeholder = fetchPlaceholders();
-
-  if (placeholder) {
-    return;
-  }
-  checkForPlaceholderIsLoaded();
-}
-
 export default async function decorate(block) {
-  checkForPlaceholderIsLoaded();
+  await getPlaceholders();
   fetchRefreshDate().then((response) => {
     let refreshDate = response || 'XX-XX-XXXX';
     if (response && isFrench) {
