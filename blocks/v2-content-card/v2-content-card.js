@@ -2,13 +2,13 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
   adjustPretitle,
   createElement,
-  removeEmptyTags,
   variantsClassesToBEM,
 } from '../../scripts/common.js';
 import {
   createVideo,
   getDynamicVideoHeight,
   isVideoLink,
+  cleanupVideoLink,
 } from '../../scripts/video-helper.js';
 
 const variantClasses = ['images-grid', 'images-grid-masonry', 'editorial'];
@@ -44,7 +44,20 @@ export default async function decorate(block) {
     [...headings].forEach((heading) => heading.classList.add(`${blockName}__title`));
     adjustPretitle(li);
 
-    if (picture) {
+    if (video) {
+      const newVideo = createVideo(videoLinks[0], `${blockName}__media`, {
+        muted: true,
+        autoplay: true,
+        loop: true,
+        playsinline: true,
+        usePosterAutoDetection: true,
+      });
+
+      section.prepend(newVideo);
+      cleanupVideoLink(block, videoLinks[0], true);
+
+      getDynamicVideoHeight(newVideo);
+    } else if (picture) {
       const img = picture.lastElementChild;
       // no width provided because we are using object-fit, we need the biggest option
       const newPicture = createOptimizedPicture(img.src, img.alt, false);
@@ -54,20 +67,6 @@ export default async function decorate(block) {
       section.prepend(picture);
     }
 
-    if (video) {
-      const newVideo = createVideo(videoLinks[0].getAttribute('href'), `${blockName}__media`, {
-        muted: true,
-        autoplay: true,
-        loop: true,
-        playsinline: true,
-      });
-
-      section.prepend(newVideo);
-      videoLinks[0].remove();
-
-      getDynamicVideoHeight(newVideo);
-    }
-
     // Add wrapper around the text content
     const container = createElement('div', { classes: `${blockName}__content` });
     container.innerHTML = li.innerHTML;
@@ -75,7 +74,4 @@ export default async function decorate(block) {
     section.append(container);
     li.append(section);
   });
-
-  // remove empty tags
-  removeEmptyTags(ul);
 }
