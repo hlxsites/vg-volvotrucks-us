@@ -9,7 +9,6 @@ import {
   createIframe,
   isAEMVideoUrl,
   isLowResolutionVideoUrl,
-  loadVideoJs,
   setupPlayer,
   getDeviceSpecificVideoUrl,
 } from '../../scripts/video-helper.js';
@@ -134,10 +133,8 @@ const createModal = () => {
         videoOrIframe = document.createElement('div');
         videoOrIframe.classList.add('modal-video');
 
-        await loadVideoJs();
-
         const videoUrl = getDeviceSpecificVideoUrl(newContent);
-        setupPlayer(videoUrl, videoOrIframe, {
+        await setupPlayer(videoUrl, videoOrIframe, {
           autoplay: 'any',
           disablePictureInPicture: true,
           loop: false,
