@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { loadScript, sampleRUM } from './aem.js';
+import { loadScript, loadCSS, sampleRUM } from './aem.js';
 import {
   isPerformanceAllowed,
   isTargetingAllowed,
@@ -19,6 +19,9 @@ const {
   ACC_ENG_TRACKING = false,
   TIKTOK_PIXEL_ID = false,
 } = COOKIE_CONFIGS;
+
+const VIDEO_JS_SCRIPT = '/scripts/videojs/video.min.js';
+const VIDEO_JS_CSS = '/scripts/videojs/video-js.min.css';
 
 const parsedData = JSON.parse(ACC_ENG_TRACKING);
 const splitData = extractObjectFromArray(parsedData);
@@ -219,4 +222,23 @@ async function loadTiktokPixel() {
       // 'ViewContent', 'AddToCart', 'PlaceAnOrder', 'AddPaymentInfo', 'InitiateCheckout', 'Search', 
       // 'AddToWishlist', 'Subscribe', and 'Pageview' events with appropriate parameters and comments.
    }(window, document, 'ttq');
+}
+
+async function loadVideoJs() {
+  await Promise.all([
+    loadCSS(VIDEO_JS_CSS),
+    loadScript(VIDEO_JS_SCRIPT),
+  ]);
+
+  const jsScript = document.querySelector(`head > script[src="${VIDEO_JS_SCRIPT}"]`);
+  const cssScript = document.querySelector(`head > link[href="${VIDEO_JS_CSS}"]`);
+
+  jsScript.dataset.loaded = true;
+  cssScript.dataset.loaded = true;
+  document.dispatchEvent(new Event('videojs-loaded'));
+}
+
+const hasVideo = document.querySelector('.video-js');
+if (hasVideo) {
+  loadVideoJs();
 }

@@ -1,9 +1,7 @@
-import { decorateIcons, loadScript, loadCSS } from '../../scripts/aem.js';
+import { decorateIcons } from '../../scripts/aem.js';
 
-const VIDEO_JS_SCRIPT = 'https://vjs.zencdn.net/8.3.0/video.min.js';
-const VIDEO_JS_CSS = 'https://vjs.zencdn.net/8.3.0/video-js.min.css';
-const SCRIPT_LOAD_DELAY = 3000;
-let videoJsScriptPromise;
+const VIDEO_JS_SCRIPT = '/scripts/videojs/video.min.js';
+const VIDEO_JS_CSS = '/scripts/videojs/video-js.min.css';
 
 function getDeviceSpecificVideoUrl(videoUrl) {
   const { userAgent } = navigator;
@@ -37,7 +35,7 @@ function parseConfig(block) {
 
   if (block.classList.contains('inline')) {
     const cards = [...block.children].map((child) => {
-      const posterImage = child.querySelector(' picture');
+      const posterImage = child.querySelector('picture');
       const videoUrl = child.querySelector('div:first-child a').href;
       const title = child.querySelector('h1, h2, h3')?.textContent;
       const description = child.querySelector('div:nth-child(2) > p')?.textContent;
@@ -67,18 +65,24 @@ function parseConfig(block) {
   };
 }
 
-async function loadVideoJs() {
-  if (videoJsScriptPromise) {
-    await videoJsScriptPromise;
-    return;
-  }
+async function waitForVideoJs() {
+  return new Promise((resolve) => {
+    const scriptTag = document.querySelector(`head > script[src="${VIDEO_JS_SCRIPT}"]`);
+    const cssLink = document.querySelector(`head > link[href="${VIDEO_JS_CSS}"]`);
+    const isJsLoaded = scriptTag && scriptTag.dataset.loaded;
+    const isCSSLoaded = cssLink && cssLink.dataset.loaded;
+    if (!isJsLoaded || !isCSSLoaded) {
+      const successHandler = () => {
+        document.removeEventListener('videojs-loaded', successHandler);
+        resolve();
+      };
 
-  videoJsScriptPromise = Promise.all([
-    loadCSS(VIDEO_JS_CSS),
-    loadScript(VIDEO_JS_SCRIPT),
-  ]);
+      document.addEventListener('videojs-loaded', successHandler);
+      return;
+    }
 
-  await videoJsScriptPromise;
+    resolve();
+  });
 }
 
 function createPlayButton(container, player) {
@@ -177,7 +181,7 @@ function setupAutopause(videoElement, player) {
   observer.observe(videoElement);
 }
 
-function setupPlayer(url, videoContainer, config) {
+async function setupPlayer(url, videoContainer, config) {
   const videoElement = document.createElement('video');
   videoElement.classList.add('video-js');
   videoElement.id = `video-${Math.random().toString(36).substr(2, 9)}`;
@@ -200,6 +204,8 @@ function setupPlayer(url, videoContainer, config) {
     videojsConfig.autoplay = true;
   }
 
+  await waitForVideoJs();
+
   // eslint-disable-next-line no-undef
   const player = videojs(videoElement, videojsConfig);
   player.src(url);
@@ -218,28 +224,17 @@ function setupPlayer(url, videoContainer, config) {
 }
 
 async function decorateVideoPlayer(url, videoContainer, config) {
-  async function loadPlayer() {
-    await loadVideoJs();
-
-    const posterImage = videoContainer.querySelector('picture');
-    const player = setupPlayer(url, videoContainer, config);
-    player.on('loadeddata', () => {
-      if (posterImage) {
-        posterImage.style.display = 'none';
-      }
-    });
-  }
-
   if (config.posterImage) {
     videoContainer.append(config.posterImage);
-
-    // Defer loading video.js to avoid blocking the main thread
-    setTimeout(async () => {
-      await loadPlayer();
-    }, SCRIPT_LOAD_DELAY);
-  } else {
-    await loadPlayer();
   }
+
+  const player = await setupPlayer(url, videoContainer, config);
+  player.on('loadeddata', () => {
+    const posterImage = videoContainer.querySelector('picture');
+    if (posterImage) {
+      posterImage.style.display = 'none';
+    }
+  });
 }
 
 async function decorateVideoCard(container, config) {
@@ -273,7 +268,7 @@ async function decorateVideoCard(container, config) {
 
   container.append(article);
 
-  await decorateVideoPlayer(config.videoUrl, videoContainer, {
+  decorateVideoPlayer(config.videoUrl, videoContainer, {
     autoplay: config.isAutoPlay,
     hasCustomPlayButton: true,
     fill: true,
@@ -314,7 +309,7 @@ async function decorateHeroBlock(block, config) {
   block.innerHTML = '';
   block.append(container);
 
-  await decorateVideoPlayer(config.videoUrl, container, {
+  decorateVideoPlayer(config.videoUrl, container, {
     autoplay: config.isAutoPlay,
     hasCustomPlayButton: true,
     fill: true,
@@ -365,11 +360,9 @@ function handleEscapeKey(event) {
 }
 
 async function openModal(config) {
-  await loadVideoJs();
-
   const dialog = document.querySelector('.video-modal-dialog');
   const container = dialog.querySelector('.video-container');
-  setupPlayer(config.videoUrl, container, {
+  await setupPlayer(config.videoUrl, container, {
     bigPlayButton: true,
     fluid: true,
     controls: true,
