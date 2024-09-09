@@ -3,6 +3,7 @@ import {
   addVideoToSection,
   createElement,
   createNewSection,
+  removeEmptyTags,
   unwrapDivs,
   variantsClassesToBEM,
 } from '../../scripts/common.js';
@@ -76,4 +77,5 @@ export default async function decorate(block) {
   medias.forEach((media) => media.classList.add(`${blockName}__media`));
 
   unwrapDivs(block, { ignoreDataAlign: true });
+  removeEmptyTags(block);
 }
