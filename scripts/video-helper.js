@@ -522,6 +522,7 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
       video.style.display = '';
 
       if (video.classList.contains('video-js')) {
+        video.querySelector('video').style.display = '';
         video.player.play();
       } else {
         video.play();
@@ -542,14 +543,19 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
         ...config,
       });
 
-      const videojsWrapper = videoContainer.querySelector('.video-js');
-      videojsWrapper.style.display = 'none';
+      const video = videoContainer.querySelector('.video-js');
+      video.style.display = 'none';
 
       const player = await playerSetupPromise;
       if (config.autoplay) {
         player.on('loadeddata', () => {
           if (poster) {
-            videojsWrapper.style.display = '';
+            video.style.display = '';
+            // Videojs copies all video element properties to it's wrapper
+            // remove display property that was set before loading videojs
+            if (video.parentElement.classList.contains('video-js')) {
+              video.parentElement.style.display = '';
+            }
             poster.style.display = 'none';
             setPlaybackControls(videoContainer);
           }
