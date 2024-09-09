@@ -19,7 +19,7 @@ main > .section.video-container {
 .video-hero {
     position: relative;
     overflow: hidden;
-    background-color: #53565a;
+    background-color: var(--c-grey-4);
     width: 100%;
     height: calc(100svh - calc(var(--nav-height) + var(--inpage-navigation-height) - 2px));
 }
@@ -32,7 +32,7 @@ main > .section.video-container {
     text-align: center;
     gap: 16px;
     padding: 24px;
-    color: #fff;
+    color: var(--c-white);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -144,7 +144,7 @@ main > .section.video-container {
 .video-card {
     display: flex;
     flex-direction: column;
-    background-color: #f7f7f7;
+    background-color: var(--c-grey-50);
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -206,7 +206,7 @@ main > .section.video-container {
     font-weight: 400;
     line-height: 1.5;
     margin: 0;
-    color: #53565a;
+    color: var(--c-grey-4);
 }
 
 @media screen and (min-width: 768px) {
@@ -261,7 +261,7 @@ main > .section.video-container {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: var(--c-white);
     height: 60px;
     width: 60px;
     border-radius: 50%;
@@ -274,9 +274,10 @@ main > .section.video-container {
 
 .video-component .video-play-button:hover,
 .video-component .video-play-button:focus {
-    background-color: #fff;
+    background-color: var(--c-white);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .video-component .video-play-button img,
 .video-component .video-play-button .icon {
     display: block;
@@ -293,7 +294,7 @@ main > .section.video-container {
 }
 
 .video-modal-dialog::backdrop {
-    background-color: #fff;
+    background-color: var(--c-white);
 }
 
 .video-modal {
