@@ -5,7 +5,9 @@ import {
   deepMerge,
   getTextLabel,
 } from './common.js';
-import { loadScript, loadCSS } from './aem.js';
+
+export const VIDEO_JS_SCRIPT = '/scripts/videojs/video.min.js';
+export const VIDEO_JS_CSS = '/scripts/videojs/video-js.min.css';
 
 // videoURLRegex: verify if a given string follows a specific pattern indicating it is a video URL
 // videoIdRegex: extract the video ID from the URL
@@ -14,10 +16,6 @@ export const AEM_ASSETS = {
   videoURLRegex: /\/assets\/urn:aaid:aem:[\w-]+\/play/,
   videoIdRegex: /urn:aaid:aem:[0-9a-fA-F-]+/,
 };
-
-const VIDEO_JS_SCRIPT = '/scripts/videojs/video.min.js';
-const VIDEO_JS_CSS = '/scripts/videojs/video-js.min.css';
-let videoJsScriptPromise;
 
 const { aemCloudDomain, videoURLRegex } = AEM_ASSETS;
 
@@ -39,18 +37,24 @@ export const standardVideoConfig = {
 
 export const videoConfigs = {};
 
-export async function loadVideoJs() {
-  if (videoJsScriptPromise) {
-    await videoJsScriptPromise;
-    return;
-  }
+async function waitForVideoJs() {
+  return new Promise((resolve) => {
+    const scriptTag = document.querySelector(`head > script[src="${VIDEO_JS_SCRIPT}"]`);
+    const cssLink = document.querySelector(`head > link[href="${VIDEO_JS_CSS}"]`);
+    const isJsLoaded = scriptTag && scriptTag.dataset.loaded;
+    const isCSSLoaded = cssLink && cssLink.dataset.loaded;
+    if (!isJsLoaded || !isCSSLoaded) {
+      const successHandler = () => {
+        document.removeEventListener('videojs-loaded', successHandler);
+        resolve();
+      };
 
-  videoJsScriptPromise = Promise.all([
-    loadCSS(VIDEO_JS_CSS),
-    loadScript(VIDEO_JS_SCRIPT),
-  ]);
+      document.addEventListener('videojs-loaded', successHandler);
+      return;
+    }
 
-  await videoJsScriptPromise;
+    resolve();
+  });
 }
 
 function setupAutopause(videoElement, player) {
@@ -69,7 +73,7 @@ function setupAutopause(videoElement, player) {
   observer.observe(videoElement);
 }
 
-export function setupPlayer(url, videoContainer, config, video) {
+export async function setupPlayer(url, videoContainer, config, video) {
   let videoElement = video;
   if (!videoElement) {
     videoElement = document.createElement('video');
@@ -95,6 +99,8 @@ export function setupPlayer(url, videoContainer, config, video) {
     videojsConfig.loop = true;
     videojsConfig.autoplay = true;
   }
+
+  await waitForVideoJs();
 
   // eslint-disable-next-line no-undef
   const player = videojs(videoElement, videojsConfig);
@@ -530,39 +536,37 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
     videoContainer.append(videoOrIframe);
   } else {
     const videoUrl = getDeviceSpecificVideoUrl(linkUrl);
-    const loadPlayerPromise = new Promise((resolve) => {
-      setTimeout(async () => {
-        await loadVideoJs();
-        const player = setupPlayer(videoUrl, videoContainer, {
-          fill: true,
-          ...config,
+    const loadPlayer = async () => {
+      const playerSetupPromise = setupPlayer(videoUrl, videoContainer, {
+        fill: true,
+        ...config,
+      });
+
+      const videojsWrapper = videoContainer.querySelector('.video-js');
+      videojsWrapper.style.display = 'none';
+
+      const player = await playerSetupPromise;
+      if (config.autoplay) {
+        player.on('loadeddata', () => {
+          if (poster) {
+            videojsWrapper.style.display = '';
+            poster.style.display = 'none';
+            setPlaybackControls(videoContainer);
+          }
         });
+      }
+    };
 
-        const videojsWrapper = videoContainer.querySelector('.video-js');
-        videojsWrapper.style.display = 'none';
-
-        if (config.autoplay) {
-          player.on('loadeddata', () => {
-            if (poster) {
-              videojsWrapper.style.display = '';
-              poster.style.display = 'none';
-              setPlaybackControls(videoContainer);
-            }
-          });
-        }
-
-        resolve();
-      }, 3000);
-    });
-
-    if (!config.autoplay) {
+    if (config.autoplay) {
+      loadPlayer();
+    } else {
       playButton = createElement('button', {
         props: { type: 'button', class: 'v2-video__big-play-button' },
       });
       addPlayIcon(playButton);
 
       playButton.addEventListener('click', async (evt) => {
-        await loadPlayerPromise;
+        await loadPlayer();
         showVideo(evt);
       });
       videoContainer.append(playButton);
@@ -609,13 +613,9 @@ export const createVideo = (link, className = '', props = {}) => {
   const container = document.createElement('div');
   container.classList.add(className);
 
-  setTimeout(async () => {
-    await loadVideoJs();
-    const videoUrl = getDeviceSpecificVideoUrl(src);
-    setupPlayer(videoUrl, container, videoConfig);
-
-    setPlaybackControls(container);
-  }, 3000);
+  const videoUrl = getDeviceSpecificVideoUrl(src);
+  setupPlayer(videoUrl, container, videoConfig);
+  setPlaybackControls(container);
 
   return container;
 };
