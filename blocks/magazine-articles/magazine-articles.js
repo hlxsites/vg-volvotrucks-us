@@ -1,6 +1,8 @@
 import {
   getLanguagePath,
   getOrigin,
+  getTextLabel,
+  createElement,
 } from '../../scripts/common.js';
 import {
   ffetch,
@@ -14,6 +16,7 @@ import {
   getMetadata,
   toClassName,
 } from '../../scripts/aem.js';
+import { fetchData, magazineSearchQuery } from '../../scripts/search-api.js';
 
 const locale = getMetadata('locale');
 
@@ -28,11 +31,11 @@ function buildMagazineArticle(entry) {
     readingTime,
     publishDate,
   } = entry;
-  const card = document.createElement('article');
+  const card = createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
   const pictureTag = picture.outerHTML;
   const date = new Date((publishDate * 1000) + (new Date().getTimezoneOffset() * 60000));
-  const categoryItem = document.createElement('li');
+  const categoryItem = createElement('li');
   card.innerHTML = `<a href="${path}" class="imgcover">
     ${pictureTag}
     </a>
@@ -57,7 +60,7 @@ function buildLatestMagazineArticle(entry) {
     description,
     linkText,
   } = entry;
-  const card = document.createElement('article');
+  const card = createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '590', height: '410' }]);
   const pictureTag = picture.outerHTML;
   const readMore = (linkText || 'Read more...');
@@ -87,7 +90,34 @@ async function getFilterOptions() {
   return { categoryList, topicList, truckSeriesList };
 }
 
+//#region Filter Articles
 function filterArticles(articles, activeFilters) {
+  const { category, topic, truck, search } = activeFilters;
+  console.log('filtered articles no JSON', { category, topic, truck, search, articles });
+  if (category || topic || truck) {
+    // do a query again with any of these filters
+    const tags = [];
+    if (category) {
+      tags.push(category);
+    }
+    if (topic) {
+      tags.push(topic);
+    }
+    if (truck) {
+      tags.push(truck);
+    }
+
+    // eslint-disable-next-line no-use-before-define
+    Promise.resolve(getMagazineArticles({ tags })).then((data) => {
+      console.log('%cfiltered articles no JSON', 'color:lightgreen', { data });
+      return data;
+    });
+  }
+  return articles;
+}
+// #endregion
+
+function filterArticlesJSON(articles, activeFilters) {
   let filteredArticles = articles;
 
   filteredArticles = filteredArticles.filter((n) => {
@@ -109,10 +139,11 @@ function filterArticles(articles, activeFilters) {
   return filteredArticles;
 }
 
-async function createFilter(articles, activeFilters, createDropdown, createFullText) {
+async function createFilter(articles, activeFilters, createDropdown, createInputSearch) {
+  const searchText = getTextLabel('Search');
   const [tagList, search] = await Promise.all([
     getFilterOptions(),
-    createFullText('search', activeFilters.search, 'Search'),
+    createInputSearch(searchText.toLowerCase(), activeFilters.search, searchText),
   ]);
 
   const categoryFilter = createDropdown(tagList.categoryList, activeFilters.category, 'category', 'All Categories');
@@ -136,11 +167,16 @@ async function createFilter(articles, activeFilters, createDropdown, createFullT
 }
 
 function createArticleList(block, articles, limit) {
+  console.log('%ccreateArticleList', 'color:deeppink', { block, articles, limit });
+  createList(articles, filterArticles, createFilter, buildMagazineArticle, limit, block);
+}
+
+function createArticleListJSON(block, articles, limit) {
   articles.forEach((n) => {
     n.filterTag = splitTags(n.tags);
   });
   // eslint-disable-next-line max-len
-  createList(articles, filterArticles, createFilter, buildMagazineArticle, limit, block);
+  createList(articles, filterArticlesJSON, createFilter, buildMagazineArticle, limit, block);
 }
 
 async function createLatestMagazineArticles(mainEl, magazineArticles) {
@@ -154,7 +190,74 @@ async function createLatestMagazineArticles(mainEl, magazineArticles) {
   });
 }
 
-async function getMagazineArticles(limit) {
+const tempData = [];
+
+async function getMagazineArticles({
+  limit, offset = 0, tags = null, q = 'truck',
+} = {}) {
+  const hasLimit = limit !== undefined;
+  const variables = {
+    tenant: 'franklin-vg-volvotrucks-us',
+    language: 'EN',
+    q,
+    facets: [
+      {
+        field: 'TAGS',
+      },
+    ],
+    filters: [{ field: 'CATEGORY', value: 'magazine' }],
+    limit: hasLimit ? limit : null,
+    offset,
+  };
+
+  if (tags && tags.length) {
+    tags.forEach((tag) => {
+      variables.filters.push({ field: 'TAGS', value: tag });
+    });
+  }
+
+  const rawData = await fetchData({
+    query: magazineSearchQuery(),
+    variables,
+  });
+
+  const querySuccess = rawData && rawData.data && rawData.data.volvosearch;
+
+  if (!querySuccess) {
+    return tempData;
+  }
+
+  const { items, count } = rawData.data.volvosearch;
+  // #region Test Data
+  if (items.length > 0) {
+    items[0].metadata.readTime = '12 min'; 
+    items[0].metadata.articleAuthor = 'Jonatan Lledo'; 
+    items[0].metadata.articleImage = '/news-and-stories/volvo-trucks-magazine/preserving-a-deep-history/media_1ddd9858e76322a897b672e9cfafc0bb1537be3a6.jpeg?width=1200&format=pjpg&optimize=medium'; 
+  }
+  // #endregion
+  tempData.push(...items.map((item) => ({
+    ...item.metadata,
+    filterTag: item.metadata.tags,
+    author: item.metadata.articleAuthor || getTextLabel('Volvo Trucks NA'),
+    // to avoid to show a broken image, shows the og:image from the page's metadata
+    // As soon we have a default image for articles, we can update this condition to show it
+    image: item.metadata.articleImage.endsWith('/')
+      ? getMetadata('og:image') : getOrigin() + item.metadata.articleImage,
+    path: item.uuid,
+    readingTime: /\d+/.test(item.metadata.readTime) ? item.metadata.readTime : getTextLabel('11 min'),
+    description: getTextLabel('Volvo Trucks NA'),
+  })));
+
+  if (!hasLimit && tempData.length < count) {
+    return getMagazineArticles({ limit: count, offset: tempData.length });
+  }
+  const sortedByDate = [...tempData.sort((a, b) => b.publishDate - a.publishDate)];
+  tempData.length = 0;
+  console.log('%cgetMagazineArticles', 'color:cyan', { sortedByDate });
+  return sortedByDate;
+}
+
+async function getMagazineArticlesJSON(limit) {
   const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
   let articles;
   if (limit) {
@@ -166,13 +269,23 @@ async function getMagazineArticles(limit) {
 }
 
 export default async function decorate(block) {
+  // #region Latest test
+  // if (!block.classList.contains('latest')) {
+  //   console.log('Not latest');
+  //   block.classList.add('latest');
+  // }
+  // #endregion
   const latest = block.classList.contains('latest');
   const limit = latest ? 3 : undefined;
   const limitPerPage = 8;
-  const magazineArticles = await getMagazineArticles(limit);
+  const magazineArticles = await getMagazineArticles({ limit });
+  const magazineArticlesJSON = await getMagazineArticlesJSON(limit);
+  console.log('%cmagazineArticles', 'color:gold', { magazineArticles, magazineArticlesJSON });
   if (latest) {
-    createLatestMagazineArticles(block, magazineArticles);
+    createLatestMagazineArticles(block, magazineArticlesJSON);
+    // createLatestMagazineArticles(block, magazineArticles);
   } else {
+    // createArticleListJSON(block, magazineArticlesJSON, limitPerPage);
     createArticleList(block, magazineArticles, limitPerPage);
   }
 }

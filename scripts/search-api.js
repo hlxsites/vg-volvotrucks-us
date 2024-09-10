@@ -71,24 +71,42 @@ query Volvosuggest($term: String!, $tenant: String!, $locale: VolvoLocaleEnum!, 
   }
 }`;
 
-export const recommendQuery = () => `
-query Volvorecommend($tenant: String!, $language: VolvoLocaleEnum!, $category: String) {
-  volvorecommend(tenant: $tenant, language: $language, category: $category) {
+export const magazineSearchQuery = () => `
+query Volvosearch($tenant: String!, $language: VolvoLocaleEnum!, $q: String, $facets: [VolvoFacet], $filters: [VolvoFilterItem], $limit: Int, $offset: Int) {
+  volvosearch(tenant: $tenant, language: $language, q: $q, facets: $facets, filters: $filters, limit: $limit, offset: $offset) {
+    count
+    facets {
+      field
+      items {
+        value
+        count
+      }
+    }
     items {
       uuid
       metadata {
-        url
         title
         description
+        url
         lastModified
+        language
+        articleAuthor {
+          name
+          profileImage
+        }
+        locale
+        readTime
+        location
+        media
+        contentPath
+        resourceType
+        displayDate
+        tags
+        publishDate
+        articleImage
       }
       score
     }
-    facets {
-      value
-      count
-    }
-    count
   }
 }
 `;
