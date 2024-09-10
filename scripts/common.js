@@ -450,6 +450,7 @@ const {
   magazineConfig,
   tools,
   headerConfig,
+  newsFeedConfig,
 } = await getConstantValues();
 
 // This data comes from the sharepoint 'constants.xlsx' file
@@ -458,6 +459,7 @@ export const SEARCH_URLS = formatValues(searchUrls?.data);
 export const COOKIE_CONFIGS = formatValues(cookieValues?.data);
 export const MAGAZINE_CONFIGS = formatValues(magazineConfig?.data);
 export const HEADER_CONFIGS = formatValues(headerConfig?.data);
+export const NEWS_FEED_CONFIGS = formatValues(newsFeedConfig?.data);
 
 /**
  * Check if one trust group is checked.
