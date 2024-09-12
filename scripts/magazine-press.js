@@ -210,7 +210,13 @@ export async function createList(pressReleases, filter, createFilters, buildPres
 
   function reloadFilteredList(event) {
     if (event) event.preventDefault();
-    reloadList(new URLSearchParams(new FormData(this)));
+    const params = new URLSearchParams(new FormData(this));
+    const urlParams = new URL(window.location).searchParams;
+    const page = urlParams.get('page');
+    if (page && +page > 1) {
+      params.set('page', 1);
+    }
+    reloadList(params);
   }
 
   function reloadPaginatedList(event) {
