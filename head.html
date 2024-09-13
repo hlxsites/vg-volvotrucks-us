@@ -6,21 +6,20 @@
 <script type="module">
   import { getLanguagePath } from '/scripts/common.js';
 
-  let dynamicUrl;
   try {
-    dynamicUrl = `${getLanguagePath()}constants.json`;
+    const dynamicUrl = `${getLanguagePath()}constants.json`;
+
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = dynamicUrl;
+    link.as = 'fetch';
+    link.type = 'application/json';
+    link.crossorigin = 'anonymous';
+
+    document.head.appendChild(link);
   } catch (error) {
     console.log(error);
   }
-
-  const link = document.createElement('link');
-  link.rel = 'preload';
-  link.href = dynamicUrl;
-  link.as = 'fetch';
-  link.type = 'application/json';
-  link.crossorigin = 'anonymous';
-
-  document.head.appendChild(link);
 </script>
 <link rel="stylesheet" href="/styles/styles.css" />
 <link rel="icon" href="data:," />
