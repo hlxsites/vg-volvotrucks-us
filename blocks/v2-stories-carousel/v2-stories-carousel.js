@@ -13,6 +13,9 @@ import { smoothScrollHorizontal } from '../../scripts/motion-helper.js';
 
 const blockName = 'v2-stories-carousel';
 const locale = getMetadata('locale');
+const lowLimit = 3;
+const highLimitDefault = 5;
+const highLimitRelatedArticles = 7;
 
 const updateActiveClass = (elements, targetElement) => {
   elements.forEach((el) => {
@@ -194,9 +197,9 @@ const createStoriesCarousel = (block, stories) => {
 
 export default async function decorate(block) {
   const isRelatedArticles = block.classList.contains('related-articles');
-  let limit = isRelatedArticles ? 7 : 5;
+  let limit = isRelatedArticles ? highLimitRelatedArticles : highLimitDefault;
   limit = parseFloat(block.textContent.trim()) || limit;
-  if (limit < 3) limit = 3;
+  limit = Math.max(limit, lowLimit);
 
   block.innerHTML = '';
   let stories;
