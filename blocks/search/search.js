@@ -83,7 +83,7 @@ export default function decorate(block) {
 
   searchBtn.onclick = () => searchResults();
 
-  const onclickHandler = (val) => {
+  const onClickHandler = (val) => {
     input.value = val;
     searchResults();
   };
@@ -95,7 +95,7 @@ export default function decorate(block) {
       role: 'option',
       'data-section-name': 'default',
     },
-  }, onclickHandler));
+  }, onClickHandler));
 
   let liSelected;
   let next;

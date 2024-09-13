@@ -87,38 +87,27 @@ async function getFilterOptions() {
   return { categoryList, topicList, truckSeriesList };
 }
 
-function filterArticles(articles, activeFilters) {
+async function filterArticles(articles, activeFilters) {
   const {
     category, topic, truck, search,
   } = activeFilters;
   const haveFilters = [category, topic, truck].some((filter) => !!filter);
   const hasSearch = !!search;
-  if (haveFilters || hasSearch) {
-    // do a query again with any of these filters
-    const filterOptions = {};
-    const tags = [];
-    if (category) {
-      tags.push(category.replaceAll('-', ' '));
-    }
-    if (topic) {
-      tags.push(topic.replaceAll('-', ' '));
-    }
-    if (truck) {
-      tags.push(truck.replaceAll('-', ' '));
-    }
-    if (tags.length > 0) {
-      filterOptions.tags = tags;
-    }
-    if (hasSearch) {
-      filterOptions.q = search;
-    }
-
-    // Return the promise from getMagazineArticles
-    // eslint-disable-next-line no-use-before-define
-    return getMagazineArticles(filterOptions).then((data) => data);
+  if (!haveFilters && !hasSearch) {
+    // If no filters are applied, return articles asynchronously
+    return Promise.resolve(articles);
   }
-  // If no filters are applied, return articles asynchronously too
-  return Promise.resolve(articles);
+
+  // otherwise do a query again with any of these filters
+  const tags = [category, topic, truck].filter(Boolean).map((tag) => tag.replaceAll('-', ' '));
+  const filterOptions = {
+    ...(tags.length && { tags }),
+    ...(search && { q: search }),
+  };
+
+  // Return the promise from getMagazineArticles
+  // eslint-disable-next-line no-use-before-define
+  return getMagazineArticles(filterOptions);
 }
 
 async function createFilter(articles, activeFilters, createDropdown, createInputSearch) {
@@ -189,36 +178,44 @@ async function getMagazineArticles({
     });
   }
 
-  const rawData = await fetchData({
-    query: magazineSearchQuery(),
-    variables,
-  });
+  try {
+    const rawData = await fetchData({
+      query: magazineSearchQuery(),
+      variables,
+    });
 
-  const querySuccess = rawData && rawData.data && rawData.data.volvosearch;
+    const querySuccess = rawData && rawData.data && rawData.data.volvosearch;
 
-  if (!querySuccess) {
+    if (!querySuccess) {
+      return tempData;
+    }
+
+    const { items, count } = rawData.data.volvosearch;
+    tempData.push(...items.map((item) => ({
+      ...item.metadata,
+      filterTag: item.metadata.tags,
+      author: item.metadata.articleAuthor || defaultAuthor,
+      // to avoid to show a broken image, shows the og:image from the page's metadata
+      // As soon we have a default image for articles, we can update this condition to show it
+      image: item.metadata.articleImage.endsWith('/')
+        ? getMetadata('og:image') : getOrigin() + item.metadata.articleImage,
+      path: item.uuid,
+      readingTime: /\d+/.test(item.metadata.readTime) ? item.metadata.readTime : defaultReadTime,
+    })));
+
+    if (!hasLimit && tempData.length < count) {
+      return getMagazineArticles({ limit: count, offset: tempData.length });
+    }
+    const sortedByDate = [...tempData.sort(
+      (a, b) => new Date(b.publishDate) - new Date(a.publishDate),
+    )];
+    tempData.length = 0;
+    return sortedByDate;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error fetching magazine articles:', error);
     return tempData;
   }
-
-  const { items, count } = rawData.data.volvosearch;
-  tempData.push(...items.map((item) => ({
-    ...item.metadata,
-    filterTag: item.metadata.tags,
-    author: item.metadata.articleAuthor || defaultAuthor,
-    // to avoid to show a broken image, shows the og:image from the page's metadata
-    // As soon we have a default image for articles, we can update this condition to show it
-    image: item.metadata.articleImage.endsWith('/')
-      ? getMetadata('og:image') : getOrigin() + item.metadata.articleImage,
-    path: item.uuid,
-    readingTime: /\d+/.test(item.metadata.readTime) ? item.metadata.readTime : defaultReadTime,
-  })));
-
-  if (!hasLimit && tempData.length < count) {
-    return getMagazineArticles({ limit: count, offset: tempData.length });
-  }
-  const sortedByDate = [...tempData.sort((a, b) => b.publishDate - a.publishDate)];
-  tempData.length = 0;
-  return sortedByDate;
 }
 
 export default async function decorate(block) {
