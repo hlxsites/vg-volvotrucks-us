@@ -122,11 +122,20 @@ const createArrowControls = (carousel) => {
   return arrowControls;
 };
 
-const getMagazineArticles = async (limit = 5) => {
+const getMagazineArticles = async (limit = 5, tags = []) => {
   const indexUrl = new URL(`${getLanguagePath()}magazine-articles.json`, getOrigin());
-  const articles = ffetch(indexUrl).limit(limit).all();
+  let articles = await ffetch(indexUrl).all();
 
-  return articles;
+  if (tags.length > 0) {
+    articles = articles.filter((article) => tags.some((tag) => article.tags.includes(tag)));
+  }
+
+  if (articles.length < limit) {
+    const recentArticles = await ffetch(indexUrl).limit(limit - articles.length).all();
+    articles = articles.concat(recentArticles);
+  }
+
+  return articles.slice(0, limit);
 };
 
 const buildStoryCard = (entry) => {
@@ -184,11 +193,19 @@ const createStoriesCarousel = (block, stories) => {
 };
 
 export default async function decorate(block) {
-  let limit = parseFloat(block.textContent.trim()) || 5;
+  const isRelatedArticles = block.classList.contains('related-articles');
+  let limit = isRelatedArticles ? 7 : 5;
+  limit = parseFloat(block.textContent.trim()) || limit;
   if (limit < 3) limit = 3;
 
   block.innerHTML = '';
-  const stories = await getMagazineArticles(limit);
+  let stories;
+  if (isRelatedArticles) {
+    const tags = getMetadata('article:tag').split(',').map((tag) => tag.trim());
+    stories = await getMagazineArticles(limit, tags);
+  } else {
+    stories = await getMagazineArticles(limit);
+  }
   createStoriesCarousel(block, stories);
 
   const carousel = block.querySelector(`.${blockName}-items`);
