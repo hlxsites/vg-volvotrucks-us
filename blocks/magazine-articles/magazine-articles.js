@@ -27,6 +27,7 @@ function buildMagazineArticle(entry) {
     category,
     readingTime,
     publishDate,
+    isDefaultImage,
   } = entry;
   const card = createElement('article');
   const picture = createOptimizedPicture(image, title, false, [{ width: '380', height: '214' }]);
@@ -46,6 +47,7 @@ function buildMagazineArticle(entry) {
     <li>${readingTime}</li>
     </ul>
     </div>`;
+  card.querySelector('picture').classList.toggle('default-image', isDefaultImage);
   return card;
 }
 
@@ -190,17 +192,23 @@ async function getMagazineArticles({
       return tempData;
     }
 
+    const isImageLink = (link) => link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) !== null;
+
+    const getDefaultImage = () => {
+      const logoImageURL = '/media/logo/media_10a115d2f3d50f3a22ecd2075307b4f4dcaedb366.jpeg';
+      return getOrigin() + logoImageURL;
+    };
+
     const { items, count } = rawData.data.volvosearch;
     tempData.push(...items.map((item) => ({
       ...item.metadata,
       filterTag: item.metadata.tags,
       author: item.metadata.articleAuthor || defaultAuthor,
-      // to avoid to show a broken image, shows the og:image from the page's metadata
-      // As soon we have a default image for articles, we can update this condition to show it
-      image: item.metadata.articleImage.endsWith('/')
-        ? getMetadata('og:image') : getOrigin() + item.metadata.articleImage,
+      image: isImageLink(item.metadata.articleImage)
+        ? getOrigin() + item.metadata.articleImage : getDefaultImage(),
       path: item.uuid,
       readingTime: /\d+/.test(item.metadata.readTime) ? item.metadata.readTime : defaultReadTime,
+      isDefaultImage: !isImageLink(item.metadata.articleImage),
     })));
 
     if (!hasLimit && tempData.length < count) {
