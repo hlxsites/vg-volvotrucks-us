@@ -264,9 +264,8 @@ ul.v2-truck-lineup__navigation {
   outline-offset: 1px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .v2-truck-lineup__slider-wrapper:hover .v2-truck-lineup__arrow-controls button,
-.v2-truck-lineup__arrow-controls button:focus-visible,
+.v2-truck-lineup__arrow-controls button:focus-visible, /* stylelint-disable-line no-descending-specificity */
 .v2-truck-lineup__arrow-controls:focus-within button {
   opacity: 1;
 }
