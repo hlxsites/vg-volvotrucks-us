@@ -1,111 +1,68 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-/**
- * @typedef {Object} FeedConfig
- * @property {string} link
- * @property {string} siteRoot
- * @property {string} targetFile
- * @property {string} source
- * @property {string} language
- */
+async function main() {
+  let newsFeedConfigurations;
 
-/**
- * @typedef {Object} FeedMetadata
- * @property {string} title
- * @property {string} 'site-root'
- * @property {string} link
- * @property {string} language
- * @property {string} description
- */
-
-/**
- * @typedef {Object} Post
- * @property {string} path
- * @property {string} image
- * @property {string} description
- * @property {string} lastModified
- * @property {string} publishDate
- * @property {string} tags
- * @property {string} content
- * @property {string} publishDate
- */
-
-/**
- * @type {FeedConfig[]}
- * @todo Get these from a SharePoint configuration, maybe the feedSource sheet
- */
-const feedList = [
-  {
-    targetDirectory: '../../news-and-stories/press-releases',
-    targetFileName: 'feed.xml',
-    feedSource: 'https://www.volvotrucks.us/news-and-stories/press-releases/feed-info.json',
-    postsSource: 'https://www.volvotrucks.us/press-releases.json',
-    siteRoot: 'https://www.volvotrucks.us',
-    language:	'en-US',
-  },
-];
-
-const limit = 1000;
-
-/**
- * @param feed {FeedConfig}
- * @return {Promise<void>}
- */
-async function createFeed(feedItem) {
-  const allPosts = await fetchBlogPosts(feedItem.postsSource);
-
-  if (allPosts) {
-    console.log(`Found ${allPosts.length} posts`);
-
-    const feedMetadata = await fetchBlogMetadata(feedItem.feedSource);
-
-    if (feedMetadata) {
-      const targetFile = `${feedItem.targetDirectory}/${feedItem.targetFileName}`;
-      const newestPost = allPosts.sort((a, b) => b.publishDate - a.publishDate)[0];
-      const newestPostDate = newestPost ? new Date(newestPost.publishDate * 1000) : new Date();
-      const feedConfig = {
-        title: feedMetadata.title,
-        description: feedMetadata.description,
-        id: feedMetadata.link,
-        link: feedMetadata.link,
-        updated: newestPostDate,
-        language: feedItem.language,
-      };
-      const feed = new Feed(feedConfig);
-
-      allPosts.forEach((post) => {
-        const link = feedMetadata["site-root"] + post.path;
-        const feedItemConfig = {
-          title: post.title,
-          id: link,
-          link,
-          content: post.description,
-          date: new Date(post.publishDate * 1000),
-          published: new Date(post.publishDate * 1000),
-        };
-
-        feed.addItem(feedItemConfig);
-      });
-
-      if (!fs.existsSync(feedItem.targetDirectory)) {
-        console.log('Target directory created');
-        fs.mkdirSync(feedItem.targetDirectory);
-      }
-      fs.writeFileSync(targetFile, feed.atom1());
-      console.log('Wrote file to ', targetFile);
+  async function getConfigs() {
+    try {
+      const NEWS_FEED_CONFIGS = await import('/generate-news-feed-config.js');
+      newsFeedConfigurations = NEWS_FEED_CONFIGS;
+    } catch (error) {
+      console.error('Error importing or processing object:', error);
     }
   }
+  getConfigs()
+
+  const {
+    ENDPOINT,
+    FEED_INFO_ENDPOINT,
+    TARGET_DIRECTORY,
+    LIMIT,
+  } = newsFeedConfigurations;
+  
+  const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
+  const PARSED_LIMIT = Number(LIMIT)
+
+  const allPosts = await fetchBlogPosts(ENDPOINT, PARSED_LIMIT);
+  console.log(`found ${allPosts.length} posts`);
+
+  const feedMetadata = await fetchBlogMetadata(FEED_INFO_ENDPOINT);
+
+  const newestPost = allPosts
+    .map((post) => new Date(post.publishDate * 1000))
+    .reduce((maxDate, date) => (date > maxDate ? date : maxDate), new Date(0));
+
+  const feed = new Feed({
+    title: feedMetadata.title,
+    description: feedMetadata.description,
+    id: feedMetadata.link,
+    link: feedMetadata.link,
+    updated: newestPost,
+    generator: 'AEM News feed generator (GitHub action)',
+    language: feedMetadata.lang,
+  });
+
+  allPosts.forEach((post) => {
+    const link = feedMetadata["site-root"] + post.path;
+    feed.addItem({
+      title: post.title,
+      id: link,
+      link,
+      content: post.description,
+      date: new Date(post.publishDate * 1000),
+      published: new Date(post.publishDate * 1000),
+    });
+  });
+
+  if (!fs.existsSync(TARGET_DIRECTORY)) {
+    fs.mkdirSync(TARGET_DIRECTORY);
+  }
+  fs.writeFileSync(TARGET_FILE, feed.atom1());
+  console.log('wrote file to ', TARGET_FILE);
 }
 
-/**
- * Returns a list of properties listed in the block
- * 
- * @async
- * @param {string} endpointUrl blog metadata endpoint
- * @returns {Array<Post>} the json data object
-*/
-async function fetchBlogPosts(endpointUrl) {
+async function fetchBlogPosts(endpoint, limit) {
   let offset = 0;
   const allPosts = [];
 
@@ -141,13 +98,9 @@ async function fetchBlogPosts(endpointUrl) {
  * @returns {FeedMetadata} The first feed configuration
  * @todo This in the future should return all of the configurations for all markets/feeds
 */
-async function fetchBlogMetadata(endpointUrl) {
-  const feedInfoResult = await getJsonFromUrl(endpointUrl);
-
-  if (!feedInfoResult) {
-    return null;
-  }
-
+async function fetchBlogMetadata(infoEndpoint) {
+  const infoResponse = await fetch(infoEndpoint);
+  const feedInfoResult = await infoResponse.json();
   return feedInfoResult.data[0];
 }
 
