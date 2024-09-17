@@ -93,7 +93,7 @@ body .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: calc(2 * var(--f-heading-5-font-siz) * var(--f-heading-5-line-height));
+  max-height: calc(2 * var(--f-heading-5-font-size) * var(--f-heading-5-line-height));
 }
 
 .v2-stories-carousel-text p {
