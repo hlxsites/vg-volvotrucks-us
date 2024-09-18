@@ -398,8 +398,11 @@ export const slugify = (text) => (
     .replace(/--+/g, '-')
 );
 
+/**
+ * loads the constants file where configuration values are stored
+ */
 async function getConstantValues() {
-  const url = '/constants.json';
+  const url = `${getLanguagePath()}constants.json`;
   let constants;
   try {
     const response = await fetch(url).then((resp) => resp.json());
