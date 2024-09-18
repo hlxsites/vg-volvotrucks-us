@@ -10,6 +10,7 @@ body .section.v2-stories-carousel-container .v2-stories-carousel-wrapper {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
+  max-width: none;
 }
 
 /* End Full width block */
