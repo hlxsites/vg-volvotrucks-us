@@ -242,6 +242,7 @@ async function loadVideoJs() {
 const hasVideo = document.querySelector('.video-js')
   || document.querySelector('.text-link-with-video')
   || document.querySelector('.v2-video__big-play-button')
+  || document.querySelector('.v2-resource-gallery__video-list-item .icon-play-video')
 if (hasVideo) {
   loadVideoJs();
 }
