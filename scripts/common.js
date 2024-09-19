@@ -114,9 +114,8 @@ export function addVideoToSection(blockName, section, link) {
     const video = createVideo(link.getAttribute('href'), `${blockName}__video`, {
       muted: true, autoplay: true, loop: true, playsinline: true,
     });
-    const playbackControls = video.querySelector('button');
     link.remove();
-    section.append(video, playbackControls);
+    section.append(video);
   }
   return section;
 }
@@ -267,21 +266,36 @@ export function loadDelayed() {
   // load anything that can be postponed to the latest here
 }
 
-export const removeEmptyTags = (block) => {
-  block.querySelectorAll('*').forEach((x) => {
-    const tagName = `</${x.tagName}>`;
+export const removeEmptyTags = (block, isRecursive) => {
+  const isEmpty = (node) => {
+    const tagName = `</${node.tagName}>`;
 
     // exclude iframes
-    if (x.tagName.toUpperCase() === 'IFRAME') {
-      return;
+    if (node.tagName.toUpperCase() === 'IFRAME') {
+      return false;
     }
     // checking that the tag is not autoclosed to make sure we don't remove <meta />
     // checking the innerHTML and trim it to make sure the content inside the tag is 0
-    if (
-      x.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
-      // && x.childElementCount === 0
-      && x.innerHTML.trim().length === 0) {
-      x.remove();
+    return node.outerHTML.slice(tagName.length * -1).toUpperCase() === tagName
+      && node.innerHTML.trim().length === 0;
+  };
+
+  if (isRecursive) {
+    block.querySelectorAll(':scope > *').forEach((node) => {
+      if (node.children.length > 0) {
+        removeEmptyTags(node, true);
+      }
+
+      if (isEmpty(node)) {
+        node.remove();
+      }
+    });
+    return;
+  }
+
+  block.querySelectorAll('*').forEach((node) => {
+    if (isEmpty(node)) {
+      node.remove();
     }
   });
 };

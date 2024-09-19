@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { loadScript, sampleRUM } from './aem.js';
+import { loadScript, loadCSS, sampleRUM } from './aem.js';
 import {
   isPerformanceAllowed,
   isTargetingAllowed,
@@ -7,6 +7,10 @@ import {
   extractObjectFromArray,
   COOKIE_CONFIGS,
 } from './common.js';
+import {
+  VIDEO_JS_SCRIPT,
+  VIDEO_JS_CSS,
+} from './video-helper.js';
 
 const devHosts = ['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'];
 
@@ -219,4 +223,26 @@ async function loadTiktokPixel() {
       // 'ViewContent', 'AddToCart', 'PlaceAnOrder', 'AddPaymentInfo', 'InitiateCheckout', 'Search', 
       // 'AddToWishlist', 'Subscribe', and 'Pageview' events with appropriate parameters and comments.
    }(window, document, 'ttq');
+}
+
+async function loadVideoJs() {
+  await Promise.all([
+    loadCSS(VIDEO_JS_CSS),
+    loadScript(VIDEO_JS_SCRIPT),
+  ]);
+
+  const jsScript = document.querySelector(`head > script[src="${VIDEO_JS_SCRIPT}"]`);
+  const cssScript = document.querySelector(`head > link[href="${VIDEO_JS_CSS}"]`);
+
+  jsScript.dataset.loaded = true;
+  cssScript.dataset.loaded = true;
+  document.dispatchEvent(new Event('videojs-loaded'));
+}
+
+const hasVideo = document.querySelector('.video-js')
+  || document.querySelector('.text-link-with-video')
+  || document.querySelector('.v2-video__big-play-button')
+  || document.querySelector('.v2-resource-gallery__video-list-item .icon-play-video')
+if (hasVideo) {
+  loadVideoJs();
 }
