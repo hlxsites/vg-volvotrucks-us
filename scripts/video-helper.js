@@ -415,17 +415,15 @@ function createProgressivePlaybackVideo(src, className = '', props = {}) {
   const video = createElement('video', {
     classes: className,
   });
-  if (props.muted) {
-    video.muted = props.muted;
-  }
-
-  if (props.autoplay) {
-    video.autoplay = props.autoplay;
-  }
 
   if (props) {
     Object.keys(props).forEach((propName) => {
-      video.setAttribute(propName, props[propName]);
+      const value = props[propName];
+      if (typeof value !== 'boolean') {
+        video.setAttribute(propName, value);
+      } else if (value) {
+        video.setAttribute(propName, '');
+      }
     });
   }
 
@@ -450,9 +448,11 @@ function createProgressivePlaybackVideo(src, className = '', props = {}) {
   }
 
   // set playback controls after video container is attached to dom
-  setTimeout(() => {
-    setPlaybackControls(video.parentElement);
-  }, 0);
+  if (!props.controls) {
+    setTimeout(() => {
+      setPlaybackControls(video.parentElement);
+    }, 0);
+  }
 
   video.appendChild(source);
 
@@ -496,7 +496,7 @@ export function getDynamicVideoHeight(video) {
  * @param {Object} videoConfig - Properties for video player.
  * @return {HTMLElement} - The container element that holds the video and poster.
  */
-export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
+export function createVideoWithPoster(linkUrl, poster, className, videoConfig = {}) {
   const deafultConfig = {
     muted: false,
     autoplay: false,
@@ -505,7 +505,11 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
     controls: true,
   };
 
-  const config = videoConfig && Object.keys(videoConfig).length > 0 ? videoConfig : deafultConfig;
+  const config = {
+    ...deafultConfig,
+    ...videoConfig,
+  };
+
   const videoContainer = document.createElement('div');
   videoContainer.classList.add('video-wrapper', className);
 
@@ -557,7 +561,9 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig) {
               video.parentElement.style.display = '';
             }
             poster.style.display = 'none';
-            setPlaybackControls(videoContainer);
+            if (!config.controls) {
+              setPlaybackControls(videoContainer);
+            }
           }
         });
       }
@@ -621,7 +627,9 @@ export const createVideo = (link, className = '', props = {}) => {
 
   const videoUrl = getDeviceSpecificVideoUrl(src);
   setupPlayer(videoUrl, container, videoConfig);
-  setPlaybackControls(container);
+  if (!videoConfig.controls) {
+    setPlaybackControls(container);
+  }
 
   return container;
 };
