@@ -10,12 +10,13 @@
     const dynamicUrl = `${getLanguagePath()}constants.json`;
 
     const link = document.createElement('link');
-    link.rel = 'preload';
     link.href = dynamicUrl;
-    link.as = 'fetch';
     link.type = 'application/json';
     link.crossorigin = 'anonymous';
-
+    if (!window.location.pathname.includes('truck-builder')) {
+      link.rel = 'preload';
+      link.as = 'fetch';
+    }
     document.head.appendChild(link);
   } catch (error) {
     console.log(error);
