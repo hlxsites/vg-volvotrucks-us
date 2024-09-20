@@ -6,6 +6,7 @@ import {
   loadHeader,
   buildBlock,
   decorateBlock,
+  getMetadata,
 } from './aem.js';
 // eslint-disable-next-line import/no-cycle
 import { createVideo, isVideoLink } from './video-helper.js';
@@ -239,8 +240,16 @@ export async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
   const header = doc.querySelector('header');
 
-  loadHeader(header);
-  loadFooter(doc.querySelector('footer'));
+  const disableHeader = getMetadata('disable-header').toLowerCase() === 'true';
+  const disableFooter = getMetadata('disable-footer').toLowerCase() === 'true';
+
+  if (!disableHeader) {
+    loadHeader(header);
+  }
+
+  if (!disableFooter) {
+    loadFooter(doc.querySelector('footer'));
+  }
 
   const subnav = header?.querySelector('.block.sub-nav');
   if (subnav) {
@@ -454,6 +463,7 @@ const {
   tools,
   headerConfig,
   newsFeedConfig,
+  truckConfiguratorUrls,
 } = await getConstantValues();
 
 // This data comes from the sharepoint 'constants.xlsx' file
@@ -463,6 +473,7 @@ export const COOKIE_CONFIGS = formatValues(cookieValues?.data);
 export const MAGAZINE_CONFIGS = formatValues(magazineConfig?.data);
 export const HEADER_CONFIGS = formatValues(headerConfig?.data);
 export const NEWS_FEED_CONFIGS = formatValues(newsFeedConfig?.data);
+export const TRUCK_CONFIGURATOR_URLS = formatValues(truckConfiguratorUrls?.data);
 
 /**
  * Check if one trust group is checked.
