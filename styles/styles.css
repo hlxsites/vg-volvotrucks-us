@@ -1830,3 +1830,16 @@ main.blue-contract .section.section-with-title p {
 }
 
 /* external app styles end */
+
+/* truck configurator style overrides start */
+
+.truck-configurator,
+.truck-configurator body main {
+  height: 100%;
+}
+
+.truck-configurator header {
+  display: none;
+}
+
+/* truck configurator style overrides end */
