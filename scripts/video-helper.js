@@ -8,6 +8,7 @@ import {
 
 // videoURLRegex: verify if a given string follows a specific pattern indicating it is a video URL
 // videoIdRegex: extract the video ID from the URL
+//foo bar
 export const AEM_ASSETS = {
   aemCloudDomain: '.adobeaemcloud.com',
   videoURLRegex: /\/assets\/urn:aaid:aem:[\w-]+\/play/,
