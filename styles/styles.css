@@ -674,7 +674,8 @@ main p img {
   margin: auto;
 }
 
-.redesign-v2 p {
+/* specificity needed to avoid breaking vendor styles */
+.redesign-v2 p:not(.truck-configurator p) {
   font-size: var(--f-body-font-size);
   line-height: var(--f-body-line-height);
   letter-spacing: var(--f-body-letter-spacing);
@@ -921,6 +922,7 @@ a.button.text-link-with-video::after {
   color: var(--c-white);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .low-resolution-banner p {
   margin: 0;
 }
