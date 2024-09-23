@@ -1846,6 +1846,10 @@ main.blue-contract .section.section-with-title p {
   border: none;
 }
 
+.truck-configurator #configurator button {
+  white-space: unset;
+}
+
 .truck-configurator header {
   display: none;
 }
