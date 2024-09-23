@@ -83,6 +83,7 @@ export default async function decorate(block) {
   const config = retrieveVideoConfig(block, aspectRatio);
   const video = createVideo(videoLink, `${blockName}__video`, {
     ...config,
+    fill: true,
     usePosterAutoDetection: true,
   });
 
