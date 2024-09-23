@@ -1444,7 +1444,8 @@ main.blue-contract .section.section-with-title p {
   font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.redesign-v2 .subtitle-1 {
+/* specificity needed to avoid breaking vendor styles */
+.redesign-v2 .subtitle-1:not(.truck-configurator .subtitle-1) {
   font-family: var(--ff-volvo-novum-medium);
   font-size: var(--f-subtitle-1-font-size);
   line-height: var(--f-subtitle-1-line-height);
