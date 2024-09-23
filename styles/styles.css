@@ -1857,4 +1857,9 @@ main.blue-contract .section.section-with-title p {
   display: none;
 }
 
+/* stylelint-disable-next-line selector-id-pattern */
+.truck-configurator svg #BLOCK_RECORD {
+  color: rgb(20 20 20);
+}
+
 /* truck configurator style overrides end */
