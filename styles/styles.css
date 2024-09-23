@@ -674,7 +674,8 @@ main p img {
   margin: auto;
 }
 
-.redesign-v2 p {
+/* specificity needed to avoid breaking vendor styles */
+.redesign-v2 p:not(.truck-configurator p) {
   font-size: var(--f-body-font-size);
   line-height: var(--f-body-line-height);
   letter-spacing: var(--f-body-letter-spacing);
@@ -921,6 +922,7 @@ a.button.text-link-with-video::after {
   color: var(--c-white);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .redesign-v2 .low-resolution-banner p {
   margin: 0;
 }
@@ -1440,7 +1442,8 @@ main.blue-contract .section.section-with-title p {
   font-feature-settings: 'clig' off, 'liga' off;
 }
 
-.redesign-v2 .subtitle-1 {
+/* specificity needed to avoid breaking vendor styles */
+.redesign-v2 .subtitle-1:not(.truck-configurator .subtitle-1) {
   font-family: var(--ff-volvo-novum-medium);
   font-size: var(--f-subtitle-1-font-size);
   line-height: var(--f-subtitle-1-line-height);
@@ -1855,8 +1858,25 @@ main.blue-contract .section.section-with-title p {
   height: 100%;
 }
 
+.truck-configurator #configurator img {
+  max-width: none;
+}
+
+.truck-configurator #configurator form input {
+  border: none;
+}
+
+.truck-configurator #configurator button {
+  white-space: unset;
+}
+
 .truck-configurator header {
   display: none;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+.truck-configurator svg #BLOCK_RECORD {
+  color: rgb(20 20 20);
 }
 
 /* truck configurator style overrides end */
