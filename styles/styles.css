@@ -1862,4 +1862,17 @@ main.blue-contract .section.section-with-title p {
   color: rgb(20 20 20);
 }
 
+.truck-configurator input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 50%;
+  border-width: 2px;
+}
+
+.truck-configurator #configurator input[type="radio"] + label {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
 /* truck configurator style overrides end */
