@@ -1492,8 +1492,6 @@ main.blue-contract .section.section-with-title p {
   border-color: var(--c-grey-2);
 }
 
-.redesign-v2 div:where([role="dialog"]) input:focus,
-.redesign-v2 main input:focus,
 .redesign-v2 div:where([role="dialog"]) input:focus-visible,
 .redesign-v2 main input:focus-visible {
   outline: 2px solid var(--border-focus);
@@ -1872,6 +1870,20 @@ main.blue-contract .section.section-with-title p {
 
 .truck-configurator header {
   display: none;
+}
+
+.truck-configurator input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 50%;
+  border-width: 2px;
+  margin-right: 10px;
+}
+
+.truck-configurator #configurator input[type="radio"] + label {
+  font-size: 1rem;
+  font-weight: normal;
 }
 
 /* stylelint-disable-next-line selector-id-pattern */
