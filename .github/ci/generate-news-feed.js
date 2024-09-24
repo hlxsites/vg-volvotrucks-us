@@ -13,7 +13,6 @@ async function main() {
     return newsFeedConfigurations
   }
   
-
   const {
     ENDPOINT,
     FEED_INFO_ENDPOINT,
