@@ -12,7 +12,7 @@ async function createFeed() {
       console.error('Error importing or processing object:', error);
     }
   }
-  getConfigs()
+  await getConfigs()
 
   const {
     ENDPOINT,
