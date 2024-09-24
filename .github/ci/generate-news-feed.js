@@ -1,7 +1,7 @@
 import { Feed } from 'feed';
 import fs from 'fs';
 
-async function main() {
+async function createFeed() {
   let newsFeedConfigurations;
 
   async function getConfigs() {
@@ -121,11 +121,4 @@ async function getJsonFromUrl(route) {
   return null;
 };
 
-const Init = () => {
-  for (const feedItem of feedList) {
-    createFeed(feedItem)
-      .catch((e) => console.error(e));
-  }
-}
-
-Init();
+createFeed()
