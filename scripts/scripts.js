@@ -798,7 +798,11 @@ moveClassToHtmlEl('redesign-v2');
 /* EXTERNAL APP CLASS CHECK */
 moveClassToHtmlEl('truck-configurator');
 
-if (document.documentElement.classList.contains('truck-configurator')) {
+const currentUrl = window.location.href;
+const isConfiguratorPage = document.documentElement.classList.contains('truck-configurator')
+  || currentUrl.includes('/summary?config=');
+
+if (isConfiguratorPage) {
   const allowedCountries = getMetadata('allowed-countries');
   const errorPageUrl = getMetadata('redirect-url');
   if (allowedCountries && errorPageUrl) validateCountries(allowedCountries, errorPageUrl);
@@ -809,6 +813,12 @@ if (document.documentElement.classList.contains('truck-configurator')) {
   main.append(container);
 
   const jsUrls = formatStringToArray(TRUCK_CONFIGURATOR_URLS.JS);
+  if (currentUrl.includes('/summary?config=')) {
+    document.documentElement.classList.add('external-app');
+    const truckConfiguratorBaseUrl = new URL(jsUrls[0]).origin;
+    const currentUrlHash = new URL(currentUrl).hash;
+    jsUrls.unshift(`${truckConfiguratorBaseUrl}/${currentUrlHash}`);
+  }
   const cssUrls = formatStringToArray(TRUCK_CONFIGURATOR_URLS.CSS);
 
   jsUrls.forEach((url) => {
@@ -818,14 +828,4 @@ if (document.documentElement.classList.contains('truck-configurator')) {
   cssUrls.forEach((url) => {
     loadCSS(url);
   });
-}
-
-const currentUrl = window.location.href;
-const url = new URL(currentUrl);
-
-if (url.hash.includes('/summary?config=')) {
-  const configParam = url.hash.split('config=')[1];
-  const newUrl = `${url.origin}/truck-builder?config=${configParam}`;
-
-  window.location.href = newUrl;
 }
