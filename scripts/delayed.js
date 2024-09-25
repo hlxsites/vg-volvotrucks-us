@@ -4,6 +4,7 @@ import {
   isPerformanceAllowed,
   isTargetingAllowed,
   isSocialAllowed,
+  isDevHost,
   extractObjectFromArray,
   COOKIE_CONFIGS,
 } from './common.js';
@@ -11,8 +12,6 @@ import {
   VIDEO_JS_SCRIPT,
   VIDEO_JS_CSS,
 } from './video-helper.js';
-
-const devHosts = ['localhost', 'hlx.page', 'hlx.live', 'aem.page', 'aem.live'];
 
 // COOKIE ACCEPTANCE AND IDs default to false in case no ID is present
 const { 
@@ -60,7 +59,7 @@ document.addEventListener('click', (e) => {
 
 // OneTrust Cookies Consent Notice start for volvotrucks.us
 if (!window.location.pathname.includes('srcdoc')
-  && !devHosts.some((url) => window.location.host.includes(url))) {
+  && !isDevHost()) {
   // when running on localhost in the block library host is empty but the path is srcdoc
   // on localhost/hlx.page/hlx.live the consent notice is displayed every time the page opens,
   // because the cookie is not persistent. To avoid this annoyance, disable unless on the
@@ -93,7 +92,7 @@ if (!window.location.pathname.includes('srcdoc')
   };
 }
 
-if (devHosts.some((url) => window.location.host.includes(url))) {
+if (isDevHost()) {
   import('./validate-elements.js');
 }
 
