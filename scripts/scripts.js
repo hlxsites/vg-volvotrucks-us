@@ -798,9 +798,11 @@ moveClassToHtmlEl('redesign-v2');
 /* EXTERNAL APP CLASS CHECK */
 moveClassToHtmlEl('truck-configurator');
 
-const disableHeader = getMetadata('disable-header').toLowerCase() === 'true';
+const currentUrl = window.location.href;
+const isConfiguratorPage = document.documentElement.classList.contains('truck-configurator')
+  || currentUrl.includes('/summary?config=');
 
-if (document.documentElement.classList.contains('truck-configurator')) {
+if (isConfiguratorPage) {
   const allowedCountries = getMetadata('allowed-countries');
   const errorPageUrl = getMetadata('redirect-url');
   if (allowedCountries && errorPageUrl) validateCountries(allowedCountries, errorPageUrl);
@@ -811,6 +813,12 @@ if (document.documentElement.classList.contains('truck-configurator')) {
   main.append(container);
 
   const jsUrls = formatStringToArray(TRUCK_CONFIGURATOR_URLS.JS);
+  if (currentUrl.includes('/summary?config=')) {
+    document.documentElement.classList.add('external-app');
+    const truckConfiguratorBaseUrl = new URL(jsUrls[0]).origin;
+    const currentUrlHash = new URL(currentUrl).hash;
+    jsUrls.unshift(`${truckConfiguratorBaseUrl}/${currentUrlHash}`);
+  }
   const cssUrls = formatStringToArray(TRUCK_CONFIGURATOR_URLS.CSS);
 
   jsUrls.forEach((url) => {
@@ -820,30 +828,4 @@ if (document.documentElement.classList.contains('truck-configurator')) {
   cssUrls.forEach((url) => {
     loadCSS(url);
   });
-
-  window.addEventListener('reactRouterChange', (e) => {
-    const newLocation = e.detail;
-
-    // eslint-disable-next-line no-console
-    console.info('[truck-configurator]: React Router location changed:', newLocation);
-
-    if (newLocation.pathname && newLocation.pathname !== '/' && disableHeader) {
-      document.documentElement.classList.add('truck-configurator--detail-page');
-    }
-    if (newLocation.pathname && (newLocation.pathname === '/' || newLocation.pathname === '')) {
-      document.documentElement.classList.remove('truck-configurator--detail-page');
-    }
-  });
-}
-
-if (getMetadata('truck-configurator-page')) {
-  const page = getMetadata('truck-configurator-page').toLowerCase();
-  const currentHash = window.location.hash;
-
-  if (disableHeader) {
-    document.documentElement.classList.add('truck-configurator--detail-page');
-  }
-  if (!currentHash.startsWith(`#/${page}`)) {
-    document.location.hash = `#/${page}`;
-  }
 }
