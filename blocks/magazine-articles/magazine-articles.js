@@ -192,7 +192,7 @@ async function getMagazineArticles({
       return tempData;
     }
 
-    const isImageLink = (link) => link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) !== null;
+    const isImageLink = (link) => !!link && link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) !== null;
 
     const getDefaultImage = () => {
       const logoImageURL = '/media/logo/media_10a115d2f3d50f3a22ecd2075307b4f4dcaedb366.jpeg';
