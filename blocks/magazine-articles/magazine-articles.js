@@ -192,7 +192,8 @@ async function getMagazineArticles({
       return tempData;
     }
 
-    const isImageLink = (link) => !!link && link.match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) !== null;
+    const isImageLink = (link) => `${link}`
+      .split('?')[0].match(/\.(jpeg|jpg|gif|png|svg|bmp|webp)$/) !== null;
 
     const getDefaultImage = () => {
       const logoImageURL = '/media/logo/media_10a115d2f3d50f3a22ecd2075307b4f4dcaedb366.jpeg';
@@ -203,7 +204,7 @@ async function getMagazineArticles({
     tempData.push(...items.map((item) => ({
       ...item.metadata,
       filterTag: item.metadata.tags,
-      author: item.metadata.articleAuthor || defaultAuthor,
+      author: item.metadata.articleAuthor ? item.metadata.articleAuthor.name : defaultAuthor,
       image: isImageLink(item.metadata.articleImage)
         ? getOrigin() + item.metadata.articleImage : getDefaultImage(),
       path: item.uuid,
