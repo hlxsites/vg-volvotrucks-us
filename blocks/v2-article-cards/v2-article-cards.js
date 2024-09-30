@@ -132,7 +132,6 @@ export default async function decorate(block) {
 
     if (chunkedArticles && chunkedArticles.length > 0) {
       createArticleCards(block, chunkedArticles[0]);
-      // Load the CSS file before initializing the pagination
       await loadCSS('../../common/pagination/pagination.css');
       createPagination(chunkedArticles, block, createArticleCards, 0);
     } else {
