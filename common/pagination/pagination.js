@@ -66,7 +66,8 @@ const createButton = (text, classes, onClick, isDisabled = false, icon = null, a
 const createPageButton = (pageIndex, currentPage, onClick) => {
   const isActive = pageIndex === currentPage;
   const classes = isActive ? ['pagination-button', 'active'] : ['pagination-button'];
-  const ariaLabel = `page ${pageIndex + 1}`;
+  const paginationPageAriaLabel = getTextLabel('paginationPageAriaLabel');
+  const ariaLabel = `${paginationPageAriaLabel} ${pageIndex + 1}`;
   const button = createButton(
     pageIndex + 1,
     classes,

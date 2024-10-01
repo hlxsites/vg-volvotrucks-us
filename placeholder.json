@@ -340,6 +340,10 @@
       "Text": "pagination"
     },
     {
+      "Key": "paginationPageAriaLabel",
+      "Text": "page"
+    },
+    {
       "Key": "paginationPreviousPageAriaLabel",
       "Text": "previous page"
     },
