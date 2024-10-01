@@ -6,6 +6,14 @@ import {
 } from '../../scripts/common.js';
 
 /**
+ * Creates an icon element.
+ *
+ * @param {string} iconClass - The class for the icon.
+ * @returns {HTMLElement} - The created icon element.
+ */
+const createIcon = (iconClass) => createElement('span', { classes: ['icon', iconClass] });
+
+/**
  * Creates a button element with specified text, classes, click handler,
  * disabled state, and aria-label.
  *
@@ -85,13 +93,8 @@ const createPageButton = (pageIndex, currentPage, onClick) => {
  * @returns {HTMLElement} - The created arrow button element with an aria-label for accessibility.
  */
 const createArrowButton = (direction, isDisabled, onClick) => {
-  const chevronLeft = createElement('span', { classes: ['icon', 'icon-chevron-left'] });
-  const chevronRight = createElement('span', { classes: ['icon', 'icon-chevron-right'] });
-  const previousPageAriaLabel = getTextLabel('paginationPreviousPageAriaLabel');
-  const nextPageAriaLabel = getTextLabel('paginationNextPageAriaLabel');
-
-  const icon = direction === 'prev' ? chevronLeft : chevronRight;
-  const ariaLabel = direction === 'prev' ? previousPageAriaLabel : nextPageAriaLabel;
+  const icon = direction === 'prev' ? createIcon('icon-chevron-left') : createIcon('icon-chevron-right');
+  const ariaLabel = direction === 'prev' ? getTextLabel('paginationPreviousPageAriaLabel') : getTextLabel('paginationNextPageAriaLabel');
 
   return createButton(null, ['pagination-arrow', direction], onClick, isDisabled, icon, ariaLabel);
 };
@@ -195,25 +198,35 @@ const createPaginationControls = (paginationList, currentPage, totalPages, chang
  * @param {Array} chunkedItems - Array of paginated items (each entry is a page of items).
  * @param {HTMLElement} block - The container where items and pagination controls will be displayed.
  * @param {Function} renderItems - The function to call to render items for the given page.
+ * @param {HTMLElement} contentArea - The content area where items are rendered.
  * @param {number} [currentPage=0] - The currently active page index (default is 0).
  */
 const createPagination = (chunkedItems, block, renderItems, contentArea, currentPage = 0) => {
   const totalPages = chunkedItems.length;
   let paginationNav = block.querySelector('nav.pagination-nav');
   const paginationNavAriaLabel = getTextLabel('paginationNavAriaLabel');
+
   if (!paginationNav) {
     paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': paginationNavAriaLabel } });
     block.appendChild(paginationNav);
   }
+
   const paginationList = createElement('ul', { classes: ['pagination'] });
   paginationNav.innerHTML = '';
   paginationNav.appendChild(paginationList);
+
   const changePage = debounce((newPage) => {
     if (newPage < 0 || newPage >= totalPages) return;
     contentArea.innerHTML = '';
     renderItems(contentArea, chunkedItems[newPage]);
     createPaginationControls(paginationList, newPage, totalPages, changePage);
+
+    const newActiveButton = paginationList.querySelector('.pagination-button.active');
+    if (newActiveButton) {
+      newActiveButton.focus();
+    }
   }, 200);
+
   createPaginationControls(paginationList, currentPage, totalPages, changePage);
   renderItems(contentArea, chunkedItems[currentPage]);
 };
