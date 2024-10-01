@@ -151,10 +151,8 @@ const getPageRange = (currentPage, totalPages) => {
  * @param {Function} changePage - The function to call when changing the page.
  */
 const createPaginationControls = (paginationList, currentPage, totalPages, changePage) => {
-  // Clear pagination list before appending new controls
   paginationList.innerHTML = '';
 
-  // Previous arrow button
   paginationList.appendChild(
     createArrowButton('prev', currentPage === 0, () => changePage(currentPage - 1)),
   );
@@ -162,12 +160,10 @@ const createPaginationControls = (paginationList, currentPage, totalPages, chang
   const pages = getPageRange(currentPage, totalPages);
   appendPages(paginationList, pages, currentPage, changePage);
 
-  // Next arrow button
   paginationList.appendChild(
     createArrowButton('next', currentPage === totalPages - 1, () => changePage(currentPage + 1)),
   );
 
-  // Decorate icons once pagination is appended
   decorateIcons(paginationList);
 };
 
