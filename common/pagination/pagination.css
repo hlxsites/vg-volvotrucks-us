@@ -98,3 +98,39 @@
   padding: 0 10px;
   color: var(--c-dark-blue);
 }
+
+.section--black-background {
+  /* stylelint-disable-next-line no-descending-specificity */
+  .pagination-arrow {
+    color: var(--c-grey-300);
+  }
+
+  .pagination-arrow:disabled {
+    color: #6b6b6b;
+  }
+
+  .pagination-arrow:not([disabled]):hover {
+    background-color: var(--c-grey-900);
+  }
+
+  .pagination-button {
+    color: var(--c-grey-300);
+  }
+
+  .pagination-button.active {
+    background-color: var(--c-white);
+    color: var(--c-main-black);
+  }
+
+  .pagination-button.active:hover {
+    background-color: var(--c-grey-200);
+  }
+
+  .pagination-button:hover {
+    background-color: var(--c-grey-900);
+  }
+
+  .pagination-dots {
+    color: var(--c-grey-300);
+  }
+}
