@@ -5,21 +5,23 @@ import {
 } from '../../scripts/common.js';
 
 /**
- * Creates a button element with specified text, classes, click handler, and disabled state.
+ * Creates a button element with specified text, classes, click handler,
+ * disabled state, and aria-label.
  *
  * @param {string} text - The text content of the button.
  * @param {string|string[]} classes - The CSS class or classes to apply to the button.
  * @param {Function} onClick - The click event handler function for the button.
  * @param {boolean} [isDisabled=false] - Whether the button should be disabled.
  * @param {HTMLElement} [icon] - Optional icon to append to the button.
+ * @param {string} [ariaLabel=''] - The aria-label for accessibility purposes.
  * @returns {HTMLElement} The created button element.
  */
-const createButton = (text, classes, onClick, isDisabled = false, icon = null) => {
+const createButton = (text, classes, onClick, isDisabled = false, icon = null, ariaLabel = '') => {
   const classList = Array.isArray(classes) ? classes : [classes];
 
   const button = createElement('button', {
     classes: classList,
-    props: { type: 'button' },
+    props: { type: 'button', 'aria-label': ariaLabel },
   });
 
   if (isDisabled) {
@@ -44,34 +46,51 @@ const createButton = (text, classes, onClick, isDisabled = false, icon = null) =
 };
 
 /**
- * Creates a pagination button for a specific page.
+ * Creates a pagination button for a specific page with an appropriate aria-label
+ * and aria-current for the active page.
  *
  * @param {number} pageIndex - The index of the page (0-based).
  * @param {number} currentPage - The current active page index.
  * @param {Function} onClick - The function to call when the page button is clicked.
- * @returns {HTMLElement} - The created pagination button element.
+ * @returns {HTMLElement} - The created pagination button element with an aria-label.
  */
 const createPageButton = (pageIndex, currentPage, onClick) => {
   const isActive = pageIndex === currentPage;
   const classes = isActive ? ['pagination-button', 'active'] : ['pagination-button'];
+  const ariaLabel = `page ${pageIndex + 1}`;
+  const button = createButton(
+    pageIndex + 1,
+    classes,
+    () => onClick(pageIndex),
+    false,
+    null,
+    ariaLabel,
+  );
 
-  return createButton(pageIndex + 1, classes, () => onClick(pageIndex), false, null);
+  if (isActive) {
+    button.setAttribute('aria-current', 'page');
+  }
+
+  return button;
 };
 
 /**
- * Creates an arrow button for pagination navigation (previous or next).
+ * Creates an arrow button for pagination navigation (previous or next)
+ * with an appropriate aria-label.
  *
  * @param {'prev'|'next'} direction - The direction of the arrow (previous or next).
  * @param {boolean} isDisabled - Whether the arrow button should be disabled.
  * @param {Function} onClick - The function to call when the arrow button is clicked.
- * @returns {HTMLElement} - The created arrow button element.
+ * @returns {HTMLElement} - The created arrow button element with an aria-label for accessibility.
  */
 const createArrowButton = (direction, isDisabled, onClick) => {
   const chevronLeft = createElement('span', { classes: ['icon', 'icon-chevron-left'] });
   const chevronRight = createElement('span', { classes: ['icon', 'icon-chevron-right'] });
 
   const icon = direction === 'prev' ? chevronLeft : chevronRight;
-  return createButton(null, ['pagination-arrow', direction], onClick, isDisabled, icon);
+  const ariaLabel = direction === 'prev' ? 'previous page' : 'next page';
+
+  return createButton(null, ['pagination-arrow', direction], onClick, isDisabled, icon, ariaLabel);
 };
 
 /**
@@ -143,7 +162,7 @@ const getPageRange = (currentPage, totalPages) => {
 
 /**
  * Creates and appends the pagination controls (arrows, page buttons, ellipses)
- * to the pagination container.
+ * to the pagination container, with aria-labels for accessibility.
  *
  * @param {HTMLElement} paginationList - The container where pagination controls will be appended.
  * @param {number} currentPage - The currently active page index.
@@ -179,7 +198,7 @@ const createPagination = (chunkedItems, block, renderItems, contentArea, current
   const totalPages = chunkedItems.length;
   let paginationNav = block.querySelector('nav.pagination-nav');
   if (!paginationNav) {
-    paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': 'Pagination Navigation' } });
+    paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': 'pagination' } });
     block.appendChild(paginationNav);
   }
   const paginationList = createElement('ul', { classes: ['pagination'] });
