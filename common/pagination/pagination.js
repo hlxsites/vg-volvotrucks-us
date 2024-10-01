@@ -2,6 +2,7 @@ import {
   createElement,
   debounce,
   decorateIcons,
+  getTextLabel,
 } from '../../scripts/common.js';
 
 /**
@@ -86,9 +87,11 @@ const createPageButton = (pageIndex, currentPage, onClick) => {
 const createArrowButton = (direction, isDisabled, onClick) => {
   const chevronLeft = createElement('span', { classes: ['icon', 'icon-chevron-left'] });
   const chevronRight = createElement('span', { classes: ['icon', 'icon-chevron-right'] });
+  const previousPageAriaLabel = getTextLabel('paginationPreviousPageAriaLabel');
+  const nextPageAriaLabel = getTextLabel('paginationNextPageAriaLabel');
 
   const icon = direction === 'prev' ? chevronLeft : chevronRight;
-  const ariaLabel = direction === 'prev' ? 'previous page' : 'next page';
+  const ariaLabel = direction === 'prev' ? previousPageAriaLabel : nextPageAriaLabel;
 
   return createButton(null, ['pagination-arrow', direction], onClick, isDisabled, icon, ariaLabel);
 };
@@ -197,8 +200,9 @@ const createPaginationControls = (paginationList, currentPage, totalPages, chang
 const createPagination = (chunkedItems, block, renderItems, contentArea, currentPage = 0) => {
   const totalPages = chunkedItems.length;
   let paginationNav = block.querySelector('nav.pagination-nav');
+  const paginationNavAriaLabel = getTextLabel('paginationNavAriaLabel');
   if (!paginationNav) {
-    paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': 'pagination' } });
+    paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': paginationNavAriaLabel } });
     block.appendChild(paginationNav);
   }
   const paginationList = createElement('ul', { classes: ['pagination'] });
