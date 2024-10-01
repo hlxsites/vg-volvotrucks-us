@@ -12,33 +12,34 @@ import {
  * @param {Function} onClick - The click event handler function for the button.
  * @param {boolean} [isDisabled=false] - Whether the button should be disabled.
  * @param {HTMLElement} [icon] - Optional icon to append to the button.
- * @param {string} [ariaLabel] - Optional aria-label attribute for accessibility.
  * @returns {HTMLElement} The created button element.
  */
-const createButton = (
-  text,
-  classes,
-  onClick,
-  isDisabled = false,
-  icon = null,
-  ariaLabel = null,
-) => {
+const createButton = (text, classes, onClick, isDisabled = false, icon = null) => {
   const classList = Array.isArray(classes) ? classes : [classes];
+
   const button = createElement('button', {
     classes: classList,
     props: { type: 'button' },
   });
-  if (isDisabled) button.setAttribute('disabled', 'disabled');
-  if (ariaLabel) button.setAttribute('aria-label', ariaLabel);
+
+  if (isDisabled) {
+    button.setAttribute('disabled', 'disabled');
+  }
+
   if (!isDisabled && typeof onClick === 'function') {
     button.addEventListener('click', onClick);
   }
+
   if (text) {
     const span = createElement('span');
     span.textContent = text;
     button.appendChild(span);
   }
-  if (icon) button.appendChild(icon);
+
+  if (icon) {
+    button.appendChild(icon);
+  }
+
   return button;
 };
 
@@ -53,9 +54,8 @@ const createButton = (
 const createPageButton = (pageIndex, currentPage, onClick) => {
   const isActive = pageIndex === currentPage;
   const classes = isActive ? ['pagination-button', 'active'] : ['pagination-button'];
-  const button = createButton(pageIndex + 1, classes, () => onClick(pageIndex));
-  if (isActive) button.setAttribute('aria-current', 'page');
-  return button;
+
+  return createButton(pageIndex + 1, classes, () => onClick(pageIndex), false, null);
 };
 
 /**
@@ -66,27 +66,24 @@ const createPageButton = (pageIndex, currentPage, onClick) => {
  * @param {Function} onClick - The function to call when the arrow button is clicked.
  * @returns {HTMLElement} - The created arrow button element.
  */
-const createArrowButton = (
-  direction,
-  isDisabled,
-  onClick,
-) => {
-  const icon = createElement('span', {
-    classes: direction === 'prev'
-      ? ['icon', 'icon-chevron-left']
-      : ['icon', 'icon-chevron-right'],
-  });
-  const ariaLabel = direction === 'prev'
-    ? 'Go to previous page'
-    : 'Go to next page';
-  return createButton(
-    null,
-    ['pagination-arrow', direction],
-    onClick,
-    isDisabled,
-    icon,
-    ariaLabel,
-  );
+const createArrowButton = (direction, isDisabled, onClick) => {
+  const chevronLeft = createElement('span', { classes: ['icon', 'icon-chevron-left'] });
+  const chevronRight = createElement('span', { classes: ['icon', 'icon-chevron-right'] });
+
+  const icon = direction === 'prev' ? chevronLeft : chevronRight;
+  return createButton(null, ['pagination-arrow', direction], onClick, isDisabled, icon);
+};
+
+/**
+ * Creates an ellipsis element (...) for use in the pagination
+ * when there is a gap between page numbers.
+ *
+ * @returns {HTMLElement} - The created ellipsis element.
+ */
+const createEllipsis = () => {
+  const ellipsis = createElement('li', { classes: ['pagination-dots'] });
+  ellipsis.textContent = '...';
+  return ellipsis;
 };
 
 /**
@@ -97,18 +94,11 @@ const createArrowButton = (
  * @param {number} currentPage - The current active page index.
  * @param {Function} changePage - The function to call when a page button is clicked.
  */
-const appendPages = (
-  paginationList,
-  pages,
-  currentPage,
-  changePage,
-) => {
+const appendPages = (paginationList, pages, currentPage, changePage) => {
   pages.forEach((page) => {
     const listItem = createElement('li', { classes: ['pagination-item'] });
     if (page === 'ellipsis') {
-      const ellipsis = createElement('span', { classes: ['pagination-dots'] });
-      ellipsis.textContent = '...';
-      listItem.appendChild(ellipsis);
+      listItem.appendChild(createEllipsis());
     } else {
       listItem.appendChild(createPageButton(page, currentPage, changePage));
     }
@@ -117,7 +107,8 @@ const appendPages = (
 };
 
 /**
- * Determines which pages and ellipses should be displayed in the pagination.
+ * Determines which pages and ellipses should be displayed in the pagination,
+ * depending on the current page.
  *
  * @param {number} currentPage - The current active page index.
  * @param {number} totalPages - The total number of pages.
@@ -126,11 +117,15 @@ const appendPages = (
 const getPageRange = (currentPage, totalPages) => {
   const pages = [];
   const addPageRange = (start, end) => {
-    for (let i = start; i <= end; i += 1) pages.push(i);
+    for (let i = start; i <= end; i += 1) {
+      pages.push(i);
+    }
   };
-  pages.push(0);
+
+  pages.push(0); // Always show the first page
+
   if (totalPages <= 7) {
-    addPageRange(1, totalPages - 1);
+    addPageRange(1, totalPages - 1); // Show all pages if total pages <= 7
   } else if (currentPage <= 3) {
     addPageRange(1, 4);
     pages.push('ellipsis', totalPages - 1);
@@ -142,91 +137,58 @@ const getPageRange = (currentPage, totalPages) => {
     addPageRange(currentPage - 1, currentPage + 1);
     pages.push('ellipsis', totalPages - 1);
   }
+
   return pages;
 };
 
 /**
- * Creates and appends pagination controls (arrows, page buttons, ellipses)
+ * Creates and appends the pagination controls (arrows, page buttons, ellipses)
  * to the pagination container.
  *
- * @param {HTMLElement} paginationList - The container for pagination controls.
+ * @param {HTMLElement} paginationList - The container where pagination controls will be appended.
  * @param {number} currentPage - The currently active page index.
  * @param {number} totalPages - The total number of pages.
  * @param {Function} changePage - The function to call when changing the page.
  */
-const createPaginationControls = (
-  paginationList,
-  currentPage,
-  totalPages,
-  changePage,
-) => {
+const createPaginationControls = (paginationList, currentPage, totalPages, changePage) => {
+  // Clear pagination list before appending new controls
   paginationList.innerHTML = '';
+
+  // Previous arrow button
   paginationList.appendChild(
     createArrowButton('prev', currentPage === 0, () => changePage(currentPage - 1)),
   );
+
   const pages = getPageRange(currentPage, totalPages);
   appendPages(paginationList, pages, currentPage, changePage);
+
+  // Next arrow button
   paginationList.appendChild(
     createArrowButton('next', currentPage === totalPages - 1, () => changePage(currentPage + 1)),
   );
+
+  // Decorate icons once pagination is appended
   decorateIcons(paginationList);
 };
 
 /**
- * Handles keyboard navigation for pagination controls.
- *
- * @param {HTMLElement} paginationNav - The container for pagination navigation.
- * @param {Function} changePage - The function to call when changing the page.
- * @param {number} currentPage - The currently active page index.
- * @param {number} totalPages - The total number of pages.
- */
-const handleKeyboardNavigation = (
-  paginationNav,
-  changePage,
-  currentPage,
-  totalPages,
-) => {
-  paginationNav.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft' && currentPage > 0) {
-      changePage(currentPage - 1);
-    } else if (event.key === 'ArrowRight' && currentPage < totalPages - 1) {
-      changePage(currentPage + 1);
-    }
-  });
-};
-
-/**
- * Creates and appends pagination controls (arrows, page buttons, ellipses)
- * to the block.
+ * Creates and appends the pagination controls (arrows, page buttons, ellipses) to the block.
  *
  * @param {Array} chunkedItems - Array of paginated items (each entry is a page of items).
- * @param {HTMLElement} block - The container where items and pagination controls are displayed.
+ * @param {HTMLElement} block - The container where items and pagination controls will be displayed.
  * @param {Function} renderItems - The function to call to render items for the given page.
  * @param {number} [currentPage=0] - The currently active page index (default is 0).
  */
-const createPagination = (
-  chunkedItems,
-  block,
-  renderItems,
-  currentPage = 0,
-) => {
+const createPagination = (chunkedItems, block, renderItems, contentArea, currentPage = 0) => {
   const totalPages = chunkedItems.length;
   let paginationNav = block.querySelector('nav.pagination-nav');
   if (!paginationNav) {
-    paginationNav = createElement('nav', {
-      classes: ['pagination-nav'],
-      props: { 'aria-label': 'Pagination Navigation', tabindex: 0 },
-    });
+    paginationNav = createElement('nav', { classes: ['pagination-nav'], props: { 'aria-label': 'Pagination Navigation' } });
     block.appendChild(paginationNav);
   }
   const paginationList = createElement('ul', { classes: ['pagination'] });
   paginationNav.innerHTML = '';
   paginationNav.appendChild(paginationList);
-  let contentArea = block.querySelector('.pagination-content');
-  if (!contentArea) {
-    contentArea = createElement('div', { classes: ['pagination-content'] });
-    block.insertBefore(contentArea, paginationNav);
-  }
   const changePage = debounce((newPage) => {
     if (newPage < 0 || newPage >= totalPages) return;
     contentArea.innerHTML = '';
@@ -235,7 +197,6 @@ const createPagination = (
   }, 200);
   createPaginationControls(paginationList, currentPage, totalPages, changePage);
   renderItems(contentArea, chunkedItems[currentPage]);
-  handleKeyboardNavigation(paginationNav, changePage, currentPage, totalPages);
 };
 
 export default createPagination;

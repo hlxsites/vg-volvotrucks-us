@@ -118,6 +118,7 @@ export default async function decorate(block) {
   }
 
   if (selectedArticles.length > 0) {
+    block.querySelector('.pagination-content')?.remove();
     createArticleCards(block, selectedArticles, amountOfLinks);
   } else {
     const uniqueArticles = removeArtsInPage(allArticles);
@@ -131,9 +132,13 @@ export default async function decorate(block) {
     }, []);
 
     if (chunkedArticles && chunkedArticles.length > 0) {
-      createArticleCards(block, chunkedArticles[0]);
+      let contentArea = block.querySelector('.pagination-content');
+      if (!contentArea) {
+        contentArea = createElement('div', { classes: ['pagination-content'] });
+        block.appendChild(contentArea);
+      }
       await loadCSS('../../common/pagination/pagination.css');
-      createPagination(chunkedArticles, block, createArticleCards, 0);
+      createPagination(chunkedArticles, block, createArticleCards, contentArea, 0);
     } else {
       // eslint-disable-next-line no-console
       console.error('No chunked articles created.');
