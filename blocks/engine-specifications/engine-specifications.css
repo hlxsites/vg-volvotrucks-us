@@ -423,8 +423,9 @@ main .section .engine-specifications-wrapper {
   font-size: var(--f-body-font-size);
 }
 
-.redesign-v2 .performance .engine-rating .rating-item a,
-.redesign-v2 .performance .engine-rating .rating-item a:visited {
+/* stylelint-disable-next-line no-descending-specificity */
+.redesign-v2 .performance a,
+.redesign-v2 .performance a:visited {
   text-decoration: none;
   cursor: pointer;
   padding-bottom: 12px;
