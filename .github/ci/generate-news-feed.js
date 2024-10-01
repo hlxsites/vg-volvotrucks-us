@@ -2,24 +2,23 @@ import { Feed } from 'feed';
 import fs from 'fs';
 
 async function main() {
-  let newsFeedConfigurations;
-
   async function getConfigs() {
+    let newsFeedConfigurations;
     try {
       const NEWS_FEED_CONFIGS = await import('/generate-news-feed-config.js');
       newsFeedConfigurations = NEWS_FEED_CONFIGS;
     } catch (error) {
       console.error('Error importing or processing object:', error);
     }
+    return newsFeedConfigurations
   }
-  getConfigs()
-
+  
   const {
     ENDPOINT,
     FEED_INFO_ENDPOINT,
     TARGET_DIRECTORY,
     LIMIT,
-  } = newsFeedConfigurations;
+  } = await getConfigs();
   
   const TARGET_FILE = `${TARGET_DIRECTORY}/feed.xml`;
   const PARSED_LIMIT = Number(LIMIT)
