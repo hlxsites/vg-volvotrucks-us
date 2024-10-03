@@ -565,9 +565,6 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig = 
               video.parentElement.style.display = '';
             }
             poster.style.display = 'none';
-            if (!config.controls) {
-              setPlaybackControls(videoContainer);
-            }
           }
         });
       }
@@ -575,6 +572,9 @@ export function createVideoWithPoster(linkUrl, poster, className, videoConfig = 
 
     if (config.autoplay) {
       loadPlayer();
+      if (!config.controls) {
+        setPlaybackControls(videoContainer);
+      }
     } else {
       playButton = createElement('button', {
         props: { type: 'button', class: 'v2-video__big-play-button' },
