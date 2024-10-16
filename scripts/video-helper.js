@@ -95,9 +95,10 @@ export async function setupPlayer(url, videoContainer, config, video) {
   };
 
   if (config.autoplay) {
-    videojsConfig.muted = true;
+    videojsConfig.muted = false;
     videojsConfig.loop = true;
     videojsConfig.autoplay = true;
+    videojsConfig.controls = true;
   }
 
   await waitForVideoJs();
